@@ -1,11 +1,10 @@
-import Header from 'common/components/Header/Header'
 import React from 'react'
-
+import Weather from './components/weather'
 
 function Home() {
   return (
     <div>
-      <Header/>
+        <Weather/>
     </div>
   )
 }

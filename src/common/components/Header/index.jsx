@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styles from "./Header.module.css";
 import LogoSomo from "../../../assets/logo_Somo.png"
 import { CaretDownOutlined, SearchOutlined  } from "@ant-design/icons";
 import { Dropdown, Space, Select } from "antd";
@@ -60,12 +59,12 @@ function Header() {
   };
 
   return (
-    <nav className={styles.navBar}>
-      <div className={styles.navLeft}>
-        <div className={styles.logo}>
+    <nav className="navBar">
+      <div className="navLeft">
+        <div className="logo">
           <img src={LogoSomo} alt="" />
         </div>
-        <div className={styles.searchBar}>
+        <div className="searchBar">
           <SearchInput
             placeholder={<div><SearchOutlined style={{ marginRight: "8px" }} />
           Tìm kiếm</div>}
@@ -79,8 +78,8 @@ function Header() {
         </div>
       </div>
 
-      <div className={styles.navRight}>
-        <div className={styles.quickAdd}>
+      <div className="navRight">
+        <div className="quickAdd">
           <Select
             defaultValue="quickadd"
             style={{
@@ -121,7 +120,7 @@ function Header() {
             ]}
           />
         </div>
-        <div className={styles.profile}>
+        <div className="profile">
           <Dropdown
             menu={{
               items,
@@ -136,7 +135,7 @@ function Header() {
             </a>
           </Dropdown>
         </div>
-        <div className={styles.language}>
+        <div className="language">
           <Select
             defaultValue="lightmode"
             style={{
