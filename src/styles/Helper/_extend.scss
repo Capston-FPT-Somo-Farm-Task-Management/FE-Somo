@@ -1,0 +1,34 @@
+// --breakpoint-desktop: 1280px;
+@mixin desktop-xxl() {
+    @media (min-width: 1280px) {
+      @content;
+    }
+  }
+  // --breakpoint-desktop: 1200px;
+  @mixin desktop-xl() {
+    @media (max-width: 1200px) {
+      @content;
+    }
+  }
+  
+  // --breakpoint-lg: 992px;
+  @mixin tablet-lg() {
+    @media (max-width: 992px) {
+      @content;
+    }
+  }
+  
+  // --breakpoint-md: 768px;
+  @mixin mobile-md() {
+    @media (max-width: 768px) {
+      @content;
+    }
+  }
+  
+  // --breakpoint-sm: 576px;
+  @mixin mobile-sm() {
+    @media (max-width: 576px) {
+      @content;
+    }
+  }
+  

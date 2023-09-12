@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import styles from "./Header.module.css";
-import LogoSomo from "../../assets/logo_Somo.png";
+import LogoSomo from "../../../assets/logo_Somo.png"
 import { CaretDownOutlined, SearchOutlined  } from "@ant-design/icons";
 import { Dropdown, Space, Select } from "antd";
 
@@ -58,23 +57,14 @@ function Header() {
   const handleOpenChange = (flag) => {
     setOpen(flag);
   };
-  // const languageItem = [
-  //   {
-  //     label: 'Tiếng Anh',
-  //     key: '1',
-  //   },
-  //   {
-  //     label: 'Tiếng Việt',
-  //     key: '2',
-  //   },
-  // ];
+
   return (
-    <nav className={styles.navBar}>
-      <div className={styles.navLeft}>
-        <div className={styles.logo}>
+    <nav className="navBar">
+      <div className="navLeft">
+        <div className="logo">
           <img src={LogoSomo} alt="" />
         </div>
-        <div className={styles.searchBar}>
+        <div className="searchBar">
           <SearchInput
             placeholder={<div><SearchOutlined style={{ marginRight: "8px" }} />
           Tìm kiếm</div>}
@@ -88,8 +78,8 @@ function Header() {
         </div>
       </div>
 
-      <div className={styles.navRight}>
-        <div className={styles.quickAdd}>
+      <div className="navRight">
+        <div className="quickAdd">
           <Select
             defaultValue="quickadd"
             style={{
@@ -130,7 +120,7 @@ function Header() {
             ]}
           />
         </div>
-        <div className={styles.profile}>
+        <div className="profile">
           <Dropdown
             menu={{
               items,
@@ -145,9 +135,9 @@ function Header() {
             </a>
           </Dropdown>
         </div>
-        <div className={styles.language}>
+        <div className="language">
           <Select
-            defaultValue="vietnamese"
+            defaultValue="lightmode"
             style={{
               width: 150,
             }}
@@ -156,12 +146,12 @@ function Header() {
               {
                 options: [
                   {
-                    label: "Tiếng Việt",
-                    value: "vietnamese",
+                    label: "Giao diện sáng",
+                    value: "lightmode",
                   },
                   {
-                    label: "Tiếng Anh",
-                    value: "english",
+                    label: "Giao diện tối",
+                    value: "darkmode",
                   },
                 ],
               },
