@@ -30,6 +30,10 @@ html {
   margin: 0 auto;
 }
 
+.content-wrapper {
+  display: flex;
+}
+
 .navBar {
   display: flex;
   justify-content: space-around;
@@ -57,4 +61,8 @@ html {
 }
 .navBar .navRight .profile {
   font-size: 16px;
+}
+
+.sideBar {
+  border-right: 1px solid black;
 }/*# sourceMappingURL=index.css.map */
