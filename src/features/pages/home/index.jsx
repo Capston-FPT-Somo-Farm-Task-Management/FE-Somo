@@ -1,10 +1,10 @@
 import React from 'react'
-import Header from '../../components/Header/Header'
+import Weather from './components/weather'
 
 function Home() {
   return (
     <div>
-      <Header/>
+        <Weather/>
     </div>
   )
 }
