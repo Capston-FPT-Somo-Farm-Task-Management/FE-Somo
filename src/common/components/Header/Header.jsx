@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Header.module.css";
-import LogoSomo from "../../assets/logo_Somo.png";
+import LogoSomo from "../../../assets/logo_Somo.png"
 import { CaretDownOutlined, SearchOutlined  } from "@ant-design/icons";
 import { Dropdown, Space, Select } from "antd";
 
@@ -58,16 +58,7 @@ function Header() {
   const handleOpenChange = (flag) => {
     setOpen(flag);
   };
-  // const languageItem = [
-  //   {
-  //     label: 'Tiếng Anh',
-  //     key: '1',
-  //   },
-  //   {
-  //     label: 'Tiếng Việt',
-  //     key: '2',
-  //   },
-  // ];
+
   return (
     <nav className={styles.navBar}>
       <div className={styles.navLeft}>
@@ -147,7 +138,7 @@ function Header() {
         </div>
         <div className={styles.language}>
           <Select
-            defaultValue="vietnamese"
+            defaultValue="lightmode"
             style={{
               width: 150,
             }}
@@ -156,12 +147,12 @@ function Header() {
               {
                 options: [
                   {
-                    label: "Tiếng Việt",
-                    value: "vietnamese",
+                    label: "Giao diện sáng",
+                    value: "lightmode",
                   },
                   {
-                    label: "Tiếng Anh",
-                    value: "english",
+                    label: "Giao diện tối",
+                    value: "darkmode",
                   },
                 ],
               },
