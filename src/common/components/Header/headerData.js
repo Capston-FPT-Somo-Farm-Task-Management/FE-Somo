@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 export const quickAdd = [
   {
     options: [
@@ -66,6 +68,10 @@ export const userDropdown = [
         Đăng xuất
       </a>
     ),
+  },
+  {
+    key: '3',
+    label: <Link to="/login">Đăng nhập</Link>,
   },
 ]
 
