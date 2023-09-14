@@ -1,8 +1,12 @@
-import React from 'react'
-import { ScheduleOutlined, CheckCircleOutlined } from '@ant-design/icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHorseHead, faSeedling } from '@fortawesome/free-solid-svg-icons'
-import { faMap } from '@fortawesome/free-regular-svg-icons'
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHorseHead, faSeedling } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMap,
+  faCalendarDays,
+  faCircleCheck,
+} from "@fortawesome/free-regular-svg-icons";
+import { Link } from "react-router-dom";
 
 export function getItem(label, key, icon, children, type) {
   return {
@@ -11,24 +15,31 @@ export function getItem(label, key, icon, children, type) {
     children,
     label,
     type,
-  }
+  };
 }
 export const menuItem = [
-  getItem('Lịch trình', 'sub1', <ScheduleOutlined />),
-  getItem('Nhiệm vụ', 'sub2', <CheckCircleOutlined />),
-  getItem('Chăn nuôi', 'sub3', <FontAwesomeIcon icon={faHorseHead} />, [
-    getItem('Động vật', '1'),
-    getItem('Chăn nuôi bầy đàn', '2'),
-    getItem('Chăn thả', '3'),
+  getItem(
+    <Link to="/schedule">Lịch trình</Link>,
+    "sub1",
+    <FontAwesomeIcon icon={faCalendarDays} />,
+    null,
+    null,
+    "/schedule"
+  ),
+  getItem(<Link to="/task">Nhiệm vụ</Link>, "sub2", <FontAwesomeIcon icon={faCircleCheck} />),
+  getItem("Chăn nuôi", "sub3", <FontAwesomeIcon icon={faHorseHead} />, [
+    getItem(<Link to="/livestock">Động vật</Link>, "1"),
+    getItem("Chăn nuôi bầy đàn", "2"),
+    getItem("Chăn thả", "3"),
   ]),
-  getItem('Trồng trọt', 'sub4', <FontAwesomeIcon icon={faSeedling} />, [
-    getItem('Cây trồng của tôi', '4'),
-    getItem('Vị trí phát triển', '5'),
-    getItem('Kế hoạch trồng trọt', '6'),
-    getItem('Vị trí trồng trọt', '7'),
-    getItem('So sánh năng suất', '8'),
+  getItem("Trồng trọt", "sub4", <FontAwesomeIcon icon={faSeedling} />, [
+    getItem(<Link to="/plants">Cây trồng của tôi</Link>, "4"),
+    getItem("Vị trí phát triển", "5"),
+    getItem("Kế hoạch trồng trọt", "6"),
+    getItem("Vị trí trồng trọt", "7"),
+    getItem("So sánh năng suất", "8"),
   ]),
-  getItem('Bản đồ trang trại', 'sub5', <FontAwesomeIcon icon={faMap} />),
-]
+  getItem("Bản đồ trang trại", "sub5", <FontAwesomeIcon icon={faMap} />),
+];
 
-export const rootSubmenuKeys = ['sub3', 'sub4']
+export const rootSubmenuKeys = ["sub3", "sub4"];

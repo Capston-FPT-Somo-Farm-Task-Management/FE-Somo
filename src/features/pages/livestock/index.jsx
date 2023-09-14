@@ -2,7 +2,7 @@ import React from 'react'
 
 function LiveStock() {
   return (
-    <div>LiveStock</div>
+    <div>Chăn nuôi</div>
   )
 }
 
