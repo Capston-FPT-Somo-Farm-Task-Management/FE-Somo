@@ -1,15 +1,16 @@
-import React from 'react'
-import LogoSomo from '../../../assets/logo_Somo.png'
-import { CaretDownOutlined } from '@ant-design/icons'
-import { Dropdown, Space, Select, Input } from 'antd'
-import { quickAdd, themeMode, userName, userDropdown } from './headerData'
+import React from "react";
+import LogoSomo from "../../../assets/logo_Somo.png";
+import { Link } from "react-router-dom";
+import { CaretDownOutlined } from "@ant-design/icons";
+import { Dropdown, Space, Select, Input } from "antd";
+import { quickAdd, themeMode, userName, userDropdown } from "./headerData";
 
 function Header() {
   const handleChange = (value) => {
-    console.log(`selected ${value}`)
-  }
-  const { Search } = Input
-  const onSearch = (value, _e, info) => console.log(info?.source, value)
+    console.log(`selected ${value}`);
+  };
+  const { Search } = Input;
+  const onSearch = (value, _e, info) => console.log(info?.source, value);
 
   return (
     <>
@@ -17,7 +18,9 @@ function Header() {
         <div className="navLeft">
           {/* Logo */}
           <div className="logo">
-            <img src={LogoSomo} alt="" />
+            <Link to="/">
+              <img src={LogoSomo} alt="" />
+            </Link>
           </div>
 
           {/* Search */}
@@ -28,7 +31,7 @@ function Header() {
                 allowClear
                 onSearch={onSearch}
                 style={{
-                  marginLeft: '15px',
+                  marginLeft: "15px",
                   width: 300,
                 }}
               />
@@ -51,7 +54,7 @@ function Header() {
 
           {/* userDropdown */}
           <div className="profile">
-            <Dropdown menu={{ items: userDropdown }} trigger={['click']}>
+            <Dropdown menu={{ items: userDropdown }} trigger={["click"]}>
               <a onClick={(e) => e.preventDefault()}>
                 <Space>
                   {userName}
@@ -75,7 +78,7 @@ function Header() {
         </div>
       </nav>
     </>
-  )
+  );
 }
 
-export default Header
+export default Header;
