@@ -3,6 +3,7 @@ import { menuItem, rootSubmenuKeys } from './sidebarData'
 import { Menu } from 'antd'
 
 function Sidebar() {
+  const [defaultOpenKeys, setDefaultOpenKeys] = useState(['sub3', 'sub4']);
   const [openKeys, setOpenKeys] = useState(['sub1'])
   const onOpenChange = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1)
@@ -16,10 +17,12 @@ function Sidebar() {
     <div className="sideBar">
       <Menu
         mode="inline"
+        // defaultOpenKeys={defaultOpenKeys}
         openKeys={openKeys}
         onOpenChange={onOpenChange}
         style={{
           width: 256,
+          height: "100%"
         }}
         items={menuItem}
       />
