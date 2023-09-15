@@ -4,7 +4,7 @@ export const quickAdd = [
   {
     options: [
       {
-        label: 'Chọn nhanh',
+        label: 'Thêm nhanh',
         value: 'quickAdd',
       },
     ],
