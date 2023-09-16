@@ -1,14 +1,8 @@
 import React from 'react'
-import Task from '../..'
-
 
 function Calendar() {
   return (
-    <div>
-            <Task/>
-
-      Lịch
-    </div>
+    <div>Calendar</div>
   )
 }
 
