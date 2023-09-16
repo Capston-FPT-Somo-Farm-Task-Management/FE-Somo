@@ -1,4 +1,4 @@
 const Register = () => {
-  return <div>index</div>
+  return <div>index abcde</div>
 }
 export default Register
