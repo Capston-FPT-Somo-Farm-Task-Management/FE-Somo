@@ -36,6 +36,10 @@ html {
   width: 100%;
 }
 
+.content {
+  padding: 20px;
+}
+
 .navBar {
   display: flex;
   justify-content: space-around;
@@ -67,4 +71,8 @@ html {
 .sideBar {
   box-shadow: 3px 0px 2px 0 rgba(94, 98, 105, 0.2);
   height: 90vh;
+}
+
+.task h3 {
+  font-size: 24px;
 }/*# sourceMappingURL=index.css.map */
