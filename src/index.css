@@ -73,40 +73,34 @@ html {
   height: 90vh;
 }
 
-.form-task {
+.ant-modal {
+  top: 24px;
+}
+.ant-modal .ant-modal-title {
+  font-size: 20px;
+}
+.ant-modal .ant-modal-content {
+  height: auto !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.ant-modal .ant-modal-content .ant-modal-body {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+.ant-modal .ant-modal-content .ant-modal-body .form-task {
   display: flex;
   justify-content: space-around;
   flex-direction: row;
 }
-.form-task .form-left {
+.ant-modal .ant-modal-content .ant-modal-body .form-task .form-left {
   width: 70%;
   padding-right: 20px;
 }
-.form-task .form-left .description .ql-editor {
+.ant-modal .ant-modal-content .ant-modal-body .form-task .form-left .description .ql-editor {
   min-height: 150px;
 }
-.form-task .form-right {
+.ant-modal .ant-modal-content .ant-modal-body .form-task .form-right {
   width: 30%;
-}
-.form-task .form-right .start-time {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
-.form-task .form-right .start-time .ant-select {
-  width: 48%;
-}
-.form-task .form-right .due-date {
-  margin-top: 24px;
-}
-.form-task .form-right .due-time {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
-.form-task .form-right .due-time .ant-select {
-  width: 48%;
-}
-.form-task .form-right .repeats {
-  margin-top: 24px;
 }/*# sourceMappingURL=index.css.map */

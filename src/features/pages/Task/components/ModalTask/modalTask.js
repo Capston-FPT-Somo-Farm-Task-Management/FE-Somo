@@ -1,14 +1,3 @@
-export const associatedItem = [
-  {
-    label: "Trồng trọt",
-    value: "plants",
-  },
-  {
-    label: "Chăn nuôi",
-    value: "livestock",
-  },
-];
-
 export const statusItem = [
     {
       label: "Đang làm",

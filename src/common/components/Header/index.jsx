@@ -43,7 +43,7 @@ function Header() {
           {/* quickAdd */}
           <div className="quickAdd">
             <Select
-              defaultValue="quickAdd"
+              defaultValue="Thêm nhanh"
               style={{
                 width: 150,
               }}
