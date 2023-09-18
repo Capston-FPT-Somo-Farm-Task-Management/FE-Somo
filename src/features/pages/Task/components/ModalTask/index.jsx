@@ -85,7 +85,7 @@ function ModalTask() {
               <Form.Item label="Chọn khoảng thời gian làm">
                 <RangePicker
                   showTime
-                  format="DD/MM/YYYY HH:mm:ss"
+                  format="DD/MM/YYYY HH:mm"
                   onChange={onRangeChange}
                   placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
                 />
