@@ -27,6 +27,7 @@ function ModalTask() {
   const statusDefault = "Đang làm";
   const repeatDefault = "Không lặp lại";
   const { RangePicker } = DatePicker;
+
   const onRangeChange = (dates, dateStrings) => {
     if (dates) {
       console.log("From: ", dates[0], ", to: ", dates[1]);
