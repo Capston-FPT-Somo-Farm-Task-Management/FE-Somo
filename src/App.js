@@ -17,13 +17,13 @@ import AnimalGroup from 'features/pages/Animals/AnimalGroup'
 import AddAnimalGroup from 'features/pages/Animals/AnimalGroup/components/AddAnimalGroup/AddAnimalGroup'
 
 function App() {
-  const location = useLocation()
+  const location = useLocation();
 
   // Function to check if the current location matches certain paths
   const ShowSidebarAndHeader = () => {
-    const { pathname } = location
-    return !['/login', '/logout'].includes(pathname)
-  }
+    const { pathname } = location;
+    return !["/login", "/logout"].includes(pathname);
+  };
   return (
     <div className="App">
       {ShowSidebarAndHeader() && <Header />}
@@ -55,7 +55,7 @@ function App() {
         </Routes>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

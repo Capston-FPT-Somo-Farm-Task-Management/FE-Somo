@@ -1,8 +1,14 @@
 import React from 'react'
+import ModalTask from '../ModalTask'
 
 function Calendar() {
   return (
-    <div>Calendar</div>
+    <div>
+      <ModalTask/>
+      <div>
+        Lịch
+      </div>
+    </div>
   )
 }
 

@@ -1,5 +1,8 @@
 .ant-modal{
-  top: 24px !important;
+  top: 24px;
+  .ant-modal-title{
+    font-size: 20px;
+  }
   .ant-modal-content {
     height: auto !important;
     display: flex;
