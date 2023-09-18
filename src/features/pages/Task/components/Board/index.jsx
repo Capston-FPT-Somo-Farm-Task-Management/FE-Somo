@@ -1,8 +1,14 @@
 import React from 'react'
+import ModalTask from '../ModalTask'
 
 function Board() {
   return (
-    <div>Board</div>
+    <div>
+      <ModalTask/>
+      <div>
+        Bảng
+      </div>
+    </div>
   )
 }
 

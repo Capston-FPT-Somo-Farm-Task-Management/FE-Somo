@@ -27,6 +27,7 @@ function ModalTask() {
   const statusDefault = "Đang làm";
   const repeatDefault = "Không lặp lại";
   const { RangePicker } = DatePicker;
+
   const onRangeChange = (dates, dateStrings) => {
     if (dates) {
       console.log("From: ", dates[0], ", to: ", dates[1]);
@@ -55,7 +56,6 @@ function ModalTask() {
         onOk={handleOk}
         onCancel={handleCancel}
         width={1000}
-        style={{ top: "40px" }}
         footer={[
           <Button key="cancel" onClick={handleCancel}>
             Đóng
@@ -79,11 +79,6 @@ function ModalTask() {
                   value={description}
                   onChange={setDescription}
                 />
-              </Form.Item>
-            </div>
-            <div className="associated">
-              <Form.Item label="Liên quan đến">
-                <Select options={associatedItem} />
               </Form.Item>
             </div>
             <div className="date">
