@@ -1,56 +1,44 @@
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 export const quickAdd = [
   {
+    label: "Chăn nuôi",
     options: [
       {
-        label: 'Thêm nhanh',
-        value: 'quickAdd',
+        label: "Cho ăn",
+        value: "feed",
+      },
+      {
+        label: "Tắm",
+        value: "bath",
       },
     ],
   },
   {
-    label: 'Chăn nuôi',
+    label: "Trồng trọt",
     options: [
       {
-        label: 'Cho ăn',
-        value: 'feed',
-      },
-      {
-        label: 'Tắm',
-        value: 'bath',
+        label: "Tưới cây",
+        value: "Yiminghe",
       },
     ],
   },
-  {
-    label: 'Trồng trọt',
-    options: [
-      {
-        label: 'Tưới cây',
-        value: 'Yiminghe',
-      },
-    ],
-  },
-]
+];
 
 export const themeMode = [
   {
-    options: [
-      {
-        label: 'Giao diện sáng',
-        value: 'lightMode',
-      },
-      {
-        label: 'Giao diện tối',
-        value: 'darkMode',
-      },
-    ],
+    label: "Giao diện sáng",
+    value: "lightMode",
   },
-]
+  {
+    label: "Giao diện tối",
+    value: "darkMode",
+  },
+];
 
 export const userDropdown = [
   {
-    key: '1',
+    key: "1",
     label: (
       <a target="_blank" href="https://www.antgroup.com">
         Hồ sơ
@@ -58,7 +46,7 @@ export const userDropdown = [
     ),
   },
   {
-    key: '2',
+    key: "2",
     label: (
       <a
         target="_blank"
@@ -70,9 +58,9 @@ export const userDropdown = [
     ),
   },
   {
-    key: '3',
+    key: "3",
     label: <Link to="/login">Đăng nhập</Link>,
   },
-]
+];
 
-export const userName = 'Nguyễn Khánh Trình'
+export const userName = "Nguyễn Khánh Trình";
