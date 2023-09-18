@@ -1,40 +1,31 @@
-.form-task {
-  display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-  .form-left {
-    width: 70%;
-    padding-right: 20px;
-    .description {
-      .ql-editor {
-        min-height: 150px;
+.ant-modal{
+  top: 24px !important;
+  .ant-modal-content {
+    height: auto !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .ant-modal-body {
+      flex-grow: 1;
+      overflow-y: auto;
+      .form-task {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: row;
+        .form-left {
+          width: 70%;
+          padding-right: 20px;
+          .description {
+            .ql-editor {
+              min-height: 150px;
+            }
+          }
+        }
+        .form-right {
+          width: 30%;
+        }
       }
     }
   }
-  .form-right {
-    width: 30%;
-    .start-time{
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        .ant-select{
-            width: 48%;
-        }
-    }
-    .due-date{
-        margin-top: 24px;
-        
-    }
-    .due-time{
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        .ant-select{
-            width: 48%;
-        }
-    }
-    .repeats{
-        margin-top: 24px;
-    }
-  }
+  
 }
