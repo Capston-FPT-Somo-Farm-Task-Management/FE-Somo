@@ -33,7 +33,7 @@ export const menuItem = [
   ),
   getItem('Chăn nuôi', 'sub3', <FontAwesomeIcon icon={faHorseHead} />, [
     getItem(<Link to="/animals">Động vật</Link>, '1'),
-    getItem('Chăn nuôi bầy đàn', '2'),
+    getItem(<Link to="/animal-group">Chăn nuôi bầy đàn</Link>, '2'),
     getItem('Chăn thả', '3'),
   ]),
   getItem('Trồng trọt', 'sub4', <FontAwesomeIcon icon={faSeedling} />, [

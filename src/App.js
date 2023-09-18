@@ -9,11 +9,12 @@ import Task from 'features/pages/Task'
 import List from 'features/pages/Task/components/List'
 import Board from 'features/pages/Task/components/Board'
 import Calendar from 'features/pages/Task/components/Calendar'
-
 import Plants from 'features/pages/Plants'
 import Home from 'features/pages/Home'
-import Animals from 'features/pages/Animals'
-import AddAnimals from 'features/pages/Animals/components/AddAnimals/AddAnimals'
+import Animals from 'features/pages/Animals/Animals'
+import AddAnimals from 'features/pages/Animals/Animals/components/AddAnimals/AddAnimals'
+import AnimalGroup from 'features/pages/Animals/AnimalGroup'
+import AddAnimalGroup from 'features/pages/Animals/AnimalGroup/components/AddAnimalGroup/AddAnimalGroup'
 
 function App() {
   const location = useLocation()
@@ -46,6 +47,10 @@ function App() {
           <Route path="/animals" element={<Animals />} />
           <Route path="/animals/new" element={<AddAnimals />} />
 
+          {/* Animal Group */}
+          <Route path="/animal-group" element={<AnimalGroup />} />
+          <Route path="/animal-group/new" element={<AddAnimalGroup />} />
+          {/* Plants */}
           <Route path="/plants" element={<Plants />} />
         </Routes>
       </div>
