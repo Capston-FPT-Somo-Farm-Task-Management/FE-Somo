@@ -1,8 +1,14 @@
 import React from 'react'
+import ModalTask from '../ModalTask'
 
 function List() {
   return (
-    <div>List</div>
+    <div>
+      <ModalTask/>
+      <div>
+        Danh sách
+      </div>
+    </div>
   )
 }
 

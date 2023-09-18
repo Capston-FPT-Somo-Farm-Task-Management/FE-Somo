@@ -73,6 +73,10 @@ html {
   height: 90vh;
 }
 
+.content h3 {
+  font-size: 24px;
+}
+
 .ant-modal {
   top: 24px;
 }
