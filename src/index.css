@@ -135,13 +135,13 @@ html {
   background: #fff;
   text-align: left;
 }
-.list .to-do-list .table tbody th {
+.list .to-do-list .table tbody td {
   padding: 10px;
   min-height: 36px;
   vertical-align: middle;
 }
 .list .to-do-list .table tbody .task-color {
-  width: 4px;
+  width: 2px;
   padding: 0;
 }
 .list .to-do-list .table tbody .task-complete-icon svg {

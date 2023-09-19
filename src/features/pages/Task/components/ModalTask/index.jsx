@@ -9,16 +9,17 @@ import {
   Space,
   Row,
   Col,
+  Steps, theme, message 
 } from "antd";
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import {
   assignItem,
-  associatedItem,
   priorityItem,
   repeatItem,
   statusItem,
+  steps,
 } from "./modalTask";
 
 function ModalTask() {
@@ -45,12 +46,65 @@ function ModalTask() {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  //steps
+  const { token } = theme.useToken()
+  const [current, setCurrent] = useState(0)
+
+  const next = () => {
+    setCurrent(current + 1)
+  }
+  const prev = () => {
+    setCurrent(current - 1)
+  }
+  const items = steps.map((item) => ({
+    key: item.title,
+    title: item.title,
+  }))
   return (
     <>
       <Button type="primary" onClick={showModal}>
         Thêm công việc
       </Button>
       <Modal
+              title="Tạo mới"
+              open={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+            >
+              <Steps size="large" current={current} items={items} />
+              <div >{steps[current].content}</div>
+              <div
+                style={{
+                  marginTop: 24,
+                }}
+              >
+                {current < steps.length - 1 && (
+                  <Button type="primary" onClick={() => next()}>
+                    Next
+                  </Button>
+                )}
+                {current === steps.length - 1 && (
+                  <Button
+                    type="primary"
+                    onClick={() => message.success('Processing complete!')}
+                  >
+                    Done
+                  </Button>
+                )}
+                {current > 0 && (
+                  <Button
+                    style={{
+                      margin: '0 8px',
+                    }}
+                    onClick={() => prev()}
+                  >
+                    Previous
+                  </Button>
+                )}
+              </div>
+            </Modal>
+      {/* <Modal
         title="Thêm công việc"
         open={isModalOpen}
         onOk={handleOk}
@@ -143,7 +197,7 @@ function ModalTask() {
             </div>
           </div>
         </Form>
-      </Modal>
+      </Modal> */}
     </>
   );
 }

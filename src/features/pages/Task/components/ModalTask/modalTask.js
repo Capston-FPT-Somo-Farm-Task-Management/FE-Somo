@@ -1,3 +1,23 @@
+import SecondModal from './components/SecondModal/index';
+import FirstModal from './components/FirstModal/index';
+import ThirdModal from './components/ThirdModal';
+
+export const steps = [
+
+  {
+    title: 'Chọn loại công việc',
+    content: <FirstModal/>,
+  },
+  {
+    title: 'Chọn loại công việc',
+    content: <SecondModal/>,
+  },
+  {
+    title: 'Thêm công việc',
+    content: <ThirdModal/>,
+  },
+]
+
 export const statusItem = [
     {
       label: "Đang làm",
