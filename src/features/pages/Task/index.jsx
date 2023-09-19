@@ -12,8 +12,8 @@ function Task() {
     <div className='content'>
     <h3>Nhiệm vụ</h3>
     <Tabs defaultActiveKey="1">
-        <TabPane tab="Danh sách" key="1" style={{width: "100%"}}>
-          <List />
+        <TabPane tab="Danh sách" key="1" >
+          <List style={{width: "100%"}}/>
         </TabPane>
         <TabPane tab="Bảng" key="2">
           <Board />
