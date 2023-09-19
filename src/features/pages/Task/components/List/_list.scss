@@ -1,7 +1,72 @@
-.list{
-    width: 100%;
-    .list-header{
-        display: flex;
-        justify-content: space-evenly;
+.list {
+  width: 100%;
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+  }
+  .to-do-list {
+    padding-top: 15px;
+    .table {
+      width: 100%;
+      max-width: 100%;
+      thead {
+        th {
+          text-transform: capitalize;
+          font-size: 14px;
+          font-weight: bold;
+          color: #393f44;
+          padding: 10px;
+          border-top: 1px solid #e3e3e3;
+          border-bottom: 2px solid #e3e3e3;
+          background: #fff;
+          text-align: left;
+        }
+      }
+      tbody {
+        th {
+          padding: 10px;
+          min-height: 36px;
+          vertical-align: middle;
+        }
+        .task-color {
+          width: 4px;
+          padding: 0;
+        }
+        .task-complete-icon svg {
+          font-size: 26px;
+          text-decoration: none;
+          font-weight: bold;
+          color: #e3e3e3;
+        }
+        .main-col {
+          min-width: 350px;
+          .sub-text {
+            color: #393f44;
+            font-size: 0.7em;
+          }
+        }
+        .show-print {
+          .priority {
+            font-weight: normal;
+            padding: 3px 6px;
+            border-radius: 12px;
+            font-size: 65%;
+            margin-left: 2px;
+            margin-right: 2px;
+            background-color: #f0ad4e;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+          }
+        }
+        .grid-actions {
+          svg {
+            color: #393f44;
+          }
+        }
+      }
     }
+  }
 }
