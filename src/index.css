@@ -78,7 +78,7 @@ html {
 }
 
 .ant-modal {
-  top: 24px;
+  top: 50px;
 }
 .ant-modal .ant-modal-title {
   font-size: 20px;
@@ -107,4 +107,12 @@ html {
 }
 .ant-modal .ant-modal-content .ant-modal-body .form-task .form-right {
   width: 30%;
+}
+
+.list {
+  width: 100%;
+}
+.list .list-header {
+  display: flex;
+  justify-content: space-evenly;
 }/*# sourceMappingURL=index.css.map */
