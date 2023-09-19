@@ -37,7 +37,7 @@ export const menuItem = [
     getItem('Chăn thả', '3'),
   ]),
   getItem('Trồng trọt', 'sub4', <FontAwesomeIcon icon={faSeedling} />, [
-    getItem(<Link to="/plants">Cây trồng của tôi</Link>, '4'),
+    getItem(<Link to="/crops">Cây trồng</Link>, '4'),
     getItem('Vị trí phát triển', '5'),
     getItem('Kế hoạch trồng trọt', '6'),
     getItem('Vị trí trồng trọt', '7'),
