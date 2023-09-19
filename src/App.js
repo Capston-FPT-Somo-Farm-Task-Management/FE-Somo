@@ -6,21 +6,21 @@ import Register from 'features/authentication/Register'
 import Forgot from 'features/authentication/Forgot'
 import Schedule from 'features/pages/Schedule'
 import Task from 'features/pages/Task'
-import Plants from 'features/pages/Plants'
 import Home from 'features/pages/Home'
 import Animals from 'features/pages/Animals/Animals'
 import AddAnimals from 'features/pages/Animals/Animals/components/AddAnimals/AddAnimals'
-import AnimalGroup from 'features/pages/Animals/AnimalGroup'
 import AddAnimalGroup from 'features/pages/Animals/AnimalGroup/components/AddAnimalGroup/AddAnimalGroup'
+import AnimalGroup from 'features/pages/Animals/AnimalGroup'
+import MyCrops from 'features/pages/Plants/MyCrops'
 
 function App() {
-  const location = useLocation();
+  const location = useLocation()
 
   // Function to check if the current location matches certain paths
   const ShowSidebarAndHeader = () => {
-    const { pathname } = location;
-    return !["/login", "/logout"].includes(pathname);
-  };
+    const { pathname } = location
+    return !['/login', '/logout'].includes(pathname)
+  }
   return (
     <div className="App">
       {ShowSidebarAndHeader() && <Header />}
@@ -34,7 +34,7 @@ function App() {
           <Route path="/schedule" element={<Schedule />} />
 
           {/* task */}
-          <Route path="/task" element={<Task />}/>
+          <Route path="/task" element={<Task />} />
 
           {/* Animals */}
           <Route path="/animals" element={<Animals />} />
@@ -43,12 +43,13 @@ function App() {
           {/* Animal Group */}
           <Route path="/animal-group" element={<AnimalGroup />} />
           <Route path="/animal-group/new" element={<AddAnimalGroup />} />
+
           {/* Plants */}
-          <Route path="/plants" element={<Plants />} />
+          <Route path="/crops" element={<MyCrops />} />
         </Routes>
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
