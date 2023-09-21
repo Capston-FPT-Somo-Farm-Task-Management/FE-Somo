@@ -1,20 +1,11 @@
 import React from 'react'
 import { Form, Input, Select } from 'antd'
-import { animalType, animalSex, animalStatus } from './AddAnimalsData'
+import { animalSex, animalStatus, animalType } from './AddAndSearchAnimalsData'
 
 const AddAnimals = () => {
   return (
     <>
-      <div className="">
-        <div>
-          <h1>Tạo mới</h1>
-        </div>
-      </div>
       <Form>
-        <div>
-          <h1>Thông tin</h1>
-        </div>
-
         {/* Animal Name */}
         <Form.Item label="Tên" name="name">
           <Input placeholder="Nhập tên động vật" />

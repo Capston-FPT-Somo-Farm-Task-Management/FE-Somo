@@ -1,4 +1,4 @@
-import AddCropTypeAndPlant from './components/AddCropTypeAndPlant/AddCropTypeAndPlant'
+import AddCropTypeAndPlant from './components/AddPlantAndPlantType/AddPlantAndPlantType'
 
 const MyCrops = () => {
   return (
