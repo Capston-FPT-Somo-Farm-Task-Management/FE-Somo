@@ -1,3 +1,20 @@
+import AddAnimals from './AddAnimals'
+
+export const steps = [
+  {
+    title: 'Cây trồng',
+    content: <AddAnimals />,
+  },
+  {
+    title: 'Chi tiết',
+    content: 'Second-content',
+  },
+  {
+    title: 'Hoàn thành',
+    content: 'Third-content',
+  },
+]
+
 export const animalType = [
   {
     label: 'Heo',
@@ -41,12 +58,12 @@ export const animalSex = [
 
 export const animalStatus = [
   {
-    label: 'Tốt',
+    label: 'Sống',
     value: 'active',
     id: '1',
   },
   {
-    label: 'Bệnh',
+    label: 'Chết',
     value: 'sick',
     id: '2',
   },
