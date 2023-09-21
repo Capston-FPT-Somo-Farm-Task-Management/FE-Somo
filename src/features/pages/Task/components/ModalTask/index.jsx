@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { Button, Modal, Steps } from "antd";
 
-import { steps } from "./modalTask";
 import FirstModal from "./components/FirstModal";
 import SecondModal from "./components/SecondModal";
 import ThirdModal from "./components/ThirdModal";
+import { steps } from "./modalTaskData";
 
 const { Step } = Steps;
 
 function ModalTask() {
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedType, setSelectedType] = useState(null);
-
+  const [selectedOption, setSelectedOption] = useState(null);
   const handleNext = (type) => {
     setSelectedType(type);
     setCurrentStep(currentStep + 1);
@@ -31,18 +31,25 @@ function ModalTask() {
     });
   };
 
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+    setCurrentStep(currentStep + 1);
+  };
+
   const renderStepContent = (step) => {
     switch (step) {
       case 0:
         return <FirstModal onNext={handleNext} />;
       case 1:
-        return <SecondModal type={selectedType} />;
+        return <SecondModal type={selectedType} onOptionSelect={handleOptionSelect} />;
       case 2:
-        return <ThirdModal />;
+        return <ThirdModal option={selectedOption} />;
       default:
         return null;
     }
   };
+
+  
 
   return (
     <>
