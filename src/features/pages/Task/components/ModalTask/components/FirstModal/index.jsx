@@ -1,9 +1,16 @@
-import React from 'react'
+import React from 'react';
 
-function FirstModal() {
+function FirstModal({ onNext }) {
+  const handleSelection = (type) => {
+    onNext(type);
+  };
+
   return (
-    <div>FirstModal</div>
-  )
+    <div>
+      <button onClick={() => handleSelection('livestock')}>Chăn nuôi</button>
+      <button onClick={() => handleSelection('planting')}>Trồng trọt</button>
+    </div>
+  );
 }
 
-export default FirstModal
+export default FirstModal;
