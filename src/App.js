@@ -8,7 +8,6 @@ import Schedule from 'features/pages/Schedule'
 import Task from 'features/pages/Task'
 import Home from 'features/pages/Home'
 import Animals from 'features/pages/Animals/Animals'
-import AddAnimalGroup from 'features/pages/Animals/AnimalGroup/components/AddAnimalGroup/AddAnimalGroup'
 import AnimalGroup from 'features/pages/Animals/AnimalGroup'
 import MyCrops from 'features/pages/Plants/MyCrops'
 
@@ -40,7 +39,6 @@ function App() {
 
           {/* Animal Group */}
           <Route path="/animal-group" element={<AnimalGroup />} />
-          <Route path="/animal-group/new" element={<AddAnimalGroup />} />
 
           {/* Plants */}
           <Route path="/crops" element={<MyCrops />} />
