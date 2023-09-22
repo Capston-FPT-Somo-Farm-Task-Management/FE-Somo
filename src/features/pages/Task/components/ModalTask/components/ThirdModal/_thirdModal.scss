@@ -1,0 +1,61 @@
+.task-specific-animal {
+  display: flex;
+  justify-content: space-around;
+  .form-left {
+    width: 45%;
+  }
+  .form-right {
+    width: 45%;
+    .description {
+      .ql-editor {
+        min-height: 150px;
+      }
+    }
+  }
+}
+.task-whole-barn {
+  display: flex;
+  justify-content: space-around;
+  .form-left {
+    width: 45%;
+  }
+  .form-right {
+    width: 45%;
+    .description {
+      .ql-editor {
+        min-height: 150px;
+      }
+    }
+  }
+}
+.task-specific-plant {
+    display: flex;
+    justify-content: space-around;
+    .form-left {
+      width: 45%;
+    }
+    .form-right {
+      width: 45%;
+      .description {
+        .ql-editor {
+          min-height: 150px;
+        }
+      }
+    }
+  }
+
+.task-whole-garden {
+  display: flex;
+  justify-content: space-around;
+  .form-left {
+    width: 45%;
+  }
+  .form-right {
+    width: 45%;
+    .description {
+      .ql-editor {
+        min-height: 150px;
+      }
+    }
+  }
+}
