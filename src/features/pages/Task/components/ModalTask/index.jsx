@@ -9,7 +9,7 @@ import { steps } from "./modalTaskData";
 const { Step } = Steps;
 
 function ModalTask() {
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(-1);
   const [selectedType, setSelectedType] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const handleNext = (type) => {
@@ -23,10 +23,10 @@ function ModalTask() {
 
   const handleFinish = () => {
     // Handle finishing steps
-    setCurrentStep(0);
+    setCurrentStep(-1);
     setSelectedType(null);
     Modal.success({
-      title: "Processing Complete",
+      title: "Bạn đã thêm thành công",
       content: "Your task has been processed successfully.",
     });
   };
@@ -41,7 +41,12 @@ function ModalTask() {
       case 0:
         return <FirstModal onNext={handleNext} />;
       case 1:
-        return <SecondModal type={selectedType} onOptionSelect={handleOptionSelect} />;
+        return (
+          <SecondModal
+            type={selectedType}
+            onOptionSelect={handleOptionSelect}
+          />
+        );
       case 2:
         return <ThirdModal option={selectedOption} />;
       default:
@@ -49,18 +54,17 @@ function ModalTask() {
     }
   };
 
-  
-
   return (
     <>
       <Button type="primary" onClick={() => setCurrentStep(0)}>
         Thêm công việc
       </Button>
       <Modal
-        title="Tạo mới"
+        title="Thêm công việc"
         visible={currentStep > -1}
         onCancel={() => setCurrentStep(-1)}
         footer={null}
+        width={800}
       >
         <Steps current={currentStep} size="small">
           {steps.map((item) => (
@@ -68,20 +72,15 @@ function ModalTask() {
           ))}
         </Steps>
         <div style={{ marginTop: 24 }}>{renderStepContent(currentStep)}</div>
-        <div style={{ marginTop: 24 }}>
+        <div style={{ marginTop: 24, display: "flex", justifyContent: "flex-end" }}>
           {currentStep > 0 && (
-            <Button style={{ margin: '0 8px' }} onClick={handleBack}>
-              Back
-            </Button>
-          )}
-          {currentStep < steps.length - 1 && (
-            <Button type="primary" onClick={() => setCurrentStep(currentStep + 1)}>
-              Next
+            <Button style={{ margin: "0 8px" }} onClick={handleBack}>
+              Trở lại
             </Button>
           )}
           {currentStep === steps.length - 1 && (
             <Button type="primary" onClick={handleFinish}>
-              Done
+              Thêm
             </Button>
           )}
         </div>
