@@ -1,4 +1,6 @@
-import AddAnimals from './AddAnimals'
+import AddAnimals from './FirstStepAddAnimal'
+import FirstStepAddAnimalGroup from '../../../AnimalGroup/components/AddAnimalGroup/FirstStepAddAnimalGroup'
+import SecondStepAddAnimalGroup from 'features/pages/Animals/AnimalGroup/components/AddAnimalGroup/SecondStepAddAnimalGroup'
 
 export const steps = [
   {
@@ -66,5 +68,21 @@ export const animalStatus = [
     label: 'Chết',
     value: 'sick',
     id: '2',
+  },
+]
+
+//-----------------------------------------
+export const stepsType = [
+  {
+    title: 'Nhóm',
+    content: <FirstStepAddAnimalGroup />,
+  },
+  {
+    title: 'Chi tiết',
+    content: <SecondStepAddAnimalGroup />,
+  },
+  {
+    title: 'Hoàn thành',
+    content: 'Third-content',
   },
 ]

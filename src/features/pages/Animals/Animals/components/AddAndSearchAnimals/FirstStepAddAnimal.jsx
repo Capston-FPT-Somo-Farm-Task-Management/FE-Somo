@@ -1,8 +1,8 @@
 import React from 'react'
 import { Form, Input, Select } from 'antd'
-import { animalSex, animalStatus, animalType } from './AddAndSearchAnimalsData'
+import { animalSex, animalStatus, animalType } from './AddAnimalData'
 
-const AddAnimals = () => {
+const FirstStepAddAnimal = () => {
   return (
     <>
       <Form>
@@ -37,4 +37,4 @@ const AddAnimals = () => {
     </>
   )
 }
-export default AddAnimals
+export default FirstStepAddAnimal

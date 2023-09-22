@@ -5,7 +5,7 @@ import { Button, Modal, Steps, message, theme } from 'antd'
 import { steps, stepsType } from './AddPlantAndPlantTypeData'
 
 const AddPlantAndPlantType = () => {
-  // Modal
+  // Modal Plant
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const showModal = () => {
@@ -45,6 +45,7 @@ const AddPlantAndPlantType = () => {
   }
   // -------------------------------------------
 
+  // Modal Plant Type
   const [isModalOpenType, setIsModalOpenType] = useState(false)
 
   const showModalType = () => {
