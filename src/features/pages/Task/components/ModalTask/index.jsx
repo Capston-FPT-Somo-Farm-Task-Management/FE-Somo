@@ -1,148 +1,90 @@
-import {
-  Button,
-  Input,
-  Modal,
-  Form,
-  Select,
-  DatePicker,
-  ColorPicker,
-  Space,
-  Row,
-  Col,
-} from "antd";
 import React, { useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import {
-  assignItem,
-  associatedItem,
-  priorityItem,
-  repeatItem,
-  statusItem,
-} from "./modalTask";
+import { Button, Modal, Steps } from "antd";
+
+import FirstModal from "./components/FirstModal";
+import SecondModal from "./components/SecondModal";
+import ThirdModal from "./components/ThirdModal";
+import { steps } from "./modalTaskData";
+
+const { Step } = Steps;
 
 function ModalTask() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [description, setDescription] = useState("");
-  const statusDefault = "Đang làm";
-  const repeatDefault = "Không lặp lại";
-  const { RangePicker } = DatePicker;
+  const [currentStep, setCurrentStep] = useState(0);
+  const [selectedType, setSelectedType] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const handleNext = (type) => {
+    setSelectedType(type);
+    setCurrentStep(currentStep + 1);
+  };
 
-  const onRangeChange = (dates, dateStrings) => {
-    if (dates) {
-      console.log("From: ", dates[0], ", to: ", dates[1]);
-      console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
-    } else {
-      console.log("Clear");
+  const handleBack = () => {
+    setCurrentStep(currentStep - 1);
+  };
+
+  const handleFinish = () => {
+    // Handle finishing steps
+    setCurrentStep(0);
+    setSelectedType(null);
+    Modal.success({
+      title: "Processing Complete",
+      content: "Your task has been processed successfully.",
+    });
+  };
+
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+    setCurrentStep(currentStep + 1);
+  };
+
+  const renderStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return <FirstModal onNext={handleNext} />;
+      case 1:
+        return <SecondModal type={selectedType} onOptionSelect={handleOptionSelect} />;
+      case 2:
+        return <ThirdModal option={selectedOption} />;
+      default:
+        return null;
     }
   };
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+
+  
+
   return (
     <>
-      <Button type="primary" onClick={showModal}>
+      <Button type="primary" onClick={() => setCurrentStep(0)}>
         Thêm công việc
       </Button>
       <Modal
-        title="Thêm công việc"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        width={1000}
-        footer={[
-          <Button key="cancel" onClick={handleCancel}>
-            Đóng
-          </Button>,
-          <Button key="submit" type="primary" onClick={handleOk}>
-            Thêm
-          </Button>,
-        ]}
+        title="Tạo mới"
+        visible={currentStep > -1}
+        onCancel={() => setCurrentStep(-1)}
+        footer={null}
       >
-        <Form layout="vertical" className="form-task">
-          <div className="form-left">
-            <div className="title">
-              <Form.Item label="Tiêu đề">
-                <Input placeholder="Ví dụ: Cho heo ăn" />
-              </Form.Item>
-            </div>
-            <div className="description">
-              <Form.Item label="Mô tả">
-                <ReactQuill
-                  placeholder="Thêm mô tả chi tiết cho công việc"
-                  value={description}
-                  onChange={setDescription}
-                />
-              </Form.Item>
-            </div>
-            <div className="date">
-              <Form.Item label="Chọn khoảng thời gian làm">
-                <RangePicker
-                  showTime
-                  format="DD/MM/YYYY HH:mm"
-                  onChange={onRangeChange}
-                  placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
-                />
-              </Form.Item>
-            </div>
-          </div>
-          <div className="form-right">
-            <div className="status">
-              <Form.Item label="Trạng thái">
-                <Select value={statusDefault} options={statusItem} />
-              </Form.Item>
-            </div>
-            <div className="assigned-to">
-              <Form.Item label="Giao cho">
-                <Select options={assignItem} />
-              </Form.Item>
-            </div>
-            <div className="priority">
-              <Form.Item label="Mức độ ưu tiên">
-                <Select options={priorityItem} />
-              </Form.Item>
-            </div>
-
-            <div className="repeats">
-              <Form.Item label="Lặp lại">
-                <Select value={repeatDefault} options={repeatItem} />
-              </Form.Item>
-            </div>
-            <div className="color-task">
-              <Row align="middle">
-                <Space>
-                  <span>Chọn màu của công việc: </span>
-                  <Col>
-                    <ColorPicker
-                      showText
-                      panelRender={(panel) => (
-                        <div className="custom-panel">
-                          <div
-                            style={{
-                              fontSize: 12,
-                              color: "rgba(0, 0, 0, 0.88)",
-                              lineHeight: "20px",
-                              marginBottom: 8,
-                            }}
-                          >
-                            Color Picker
-                          </div>
-                          {panel}
-                        </div>
-                      )}
-                    />
-                  </Col>
-                </Space>
-              </Row>
-            </div>
-          </div>
-        </Form>
+        <Steps current={currentStep} size="small">
+          {steps.map((item) => (
+            <Step key={item.title} title={item.title} />
+          ))}
+        </Steps>
+        <div style={{ marginTop: 24 }}>{renderStepContent(currentStep)}</div>
+        <div style={{ marginTop: 24 }}>
+          {currentStep > 0 && (
+            <Button style={{ margin: '0 8px' }} onClick={handleBack}>
+              Back
+            </Button>
+          )}
+          {currentStep < steps.length - 1 && (
+            <Button type="primary" onClick={() => setCurrentStep(currentStep + 1)}>
+              Next
+            </Button>
+          )}
+          {currentStep === steps.length - 1 && (
+            <Button type="primary" onClick={handleFinish}>
+              Done
+            </Button>
+          )}
+        </div>
       </Modal>
     </>
   );

@@ -135,13 +135,13 @@ html {
   background: #fff;
   text-align: left;
 }
-.list .to-do-list .table tbody th {
+.list .to-do-list .table tbody td {
   padding: 10px;
   min-height: 36px;
   vertical-align: middle;
 }
 .list .to-do-list .table tbody .task-color {
-  width: 4px;
+  width: 2px;
   padding: 0;
 }
 .list .to-do-list .table tbody .task-complete-icon svg {
@@ -173,4 +173,89 @@ html {
 }
 .list .to-do-list .table tbody .grid-actions svg {
   color: #393f44;
+}
+
+.first-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.first-modal .livestock button {
+  font-size: 30px;
+  padding: 15px 20px;
+  border-radius: 10px;
+  background-color: #ffedd8;
+}
+.first-modal .livestock button .button-item {
+  display: flex;
+}
+.first-modal .livestock button .button-item .button-icon {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.first-modal .livestock button .button-item .button-icon svg {
+  font-size: 50px;
+  color: #a47148;
+}
+.first-modal .livestock button .button-item .button-text {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.first-modal .livestock button .button-item .button-text h6 {
+  font-size: 24px;
+}
+.first-modal .livestock button .button-item .button-text span {
+  font-size: 14px;
+  text-align: left;
+}
+.first-modal .planting button {
+  font-size: 30px;
+  padding: 15px 25px;
+  margin-top: 10px;
+  border-radius: 10px;
+  background-color: #054a29;
+  border: 1px solid white;
+  box-shadow: 0 0 0 3em #054a29 inset;
+  transition: all 500ms ease;
+}
+.first-modal .planting button .button-item {
+  display: flex;
+}
+.first-modal .planting button .button-item .button-icon {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.first-modal .planting button .button-item .button-icon svg {
+  font-size: 50px;
+  color: #3fa34d;
+}
+.first-modal .planting button .button-item .button-text {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: white;
+}
+.first-modal .planting button .button-item .button-text h6 {
+  font-size: 24px;
+}
+.first-modal .planting button .button-item .button-text span {
+  font-size: 14px;
+  text-align: left;
+}
+.first-modal .planting button:hover {
+  box-shadow: 0 0 0 1px #f7fff7 inset;
+  background-color: #f7fff7;
+  border: 1px solid black;
+  transition: all 500ms ease;
+}
+.first-modal .planting button:hover .button-text {
+  color: black;
 }/*# sourceMappingURL=index.css.map */
