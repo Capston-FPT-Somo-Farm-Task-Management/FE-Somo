@@ -79,35 +79,10 @@ html {
 }
 
 .ant-modal {
-  top: 50px;
+  top: 20px;
 }
 .ant-modal .ant-modal-title {
-  font-size: 20px;
-}
-.ant-modal .ant-modal-content {
-  height: auto !important;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.ant-modal .ant-modal-content .ant-modal-body {
-  flex-grow: 1;
-  overflow-y: auto;
-}
-.ant-modal .ant-modal-content .ant-modal-body .form-task {
-  display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-}
-.ant-modal .ant-modal-content .ant-modal-body .form-task .form-left {
-  width: 70%;
-  padding-right: 20px;
-}
-.ant-modal .ant-modal-content .ant-modal-body .form-task .form-left .description .ql-editor {
-  min-height: 150px;
-}
-.ant-modal .ant-modal-content .ant-modal-body .form-task .form-right {
-  width: 30%;
+  font-size: 24px;
 }
 
 .list {
@@ -183,9 +158,13 @@ html {
 }
 .first-modal .livestock button {
   font-size: 30px;
-  padding: 15px 20px;
+  padding: 20px 20px;
   border-radius: 10px;
-  background-color: #ffedd8;
+  background-color: #2a4870;
+  border: 1px solid white;
+  box-shadow: 0 0 0 3em #2a4870 inset;
+  transition: all 400ms ease;
+  cursor: pointer;
 }
 .first-modal .livestock button .button-item {
   display: flex;
@@ -198,30 +177,45 @@ html {
 }
 .first-modal .livestock button .button-item .button-icon svg {
   font-size: 50px;
-  color: #a47148;
+  color: #d4a276;
 }
 .first-modal .livestock button .button-item .button-text {
   width: 50%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  color: white;
 }
 .first-modal .livestock button .button-item .button-text h6 {
   font-size: 24px;
 }
 .first-modal .livestock button .button-item .button-text span {
+  color: #ced4da;
   font-size: 14px;
   text-align: left;
 }
+.first-modal .livestock button:hover {
+  box-shadow: 0 0 0 1px #333533 inset;
+  background-color: transparent;
+  border: 1px solid #333533;
+  transition: all 400ms ease;
+}
+.first-modal .livestock button:hover .button-text {
+  color: #333533;
+}
+.first-modal .livestock button:hover .button-text span {
+  color: #333533;
+}
 .first-modal .planting button {
   font-size: 30px;
-  padding: 15px 25px;
+  padding: 20px 25px;
   margin-top: 10px;
   border-radius: 10px;
   background-color: #054a29;
   border: 1px solid white;
   box-shadow: 0 0 0 3em #054a29 inset;
-  transition: all 500ms ease;
+  transition: all 400ms ease;
+  cursor: pointer;
 }
 .first-modal .planting button .button-item {
   display: flex;
@@ -247,15 +241,293 @@ html {
   font-size: 24px;
 }
 .first-modal .planting button .button-item .button-text span {
+  color: #ced4da;
   font-size: 14px;
   text-align: left;
 }
 .first-modal .planting button:hover {
-  box-shadow: 0 0 0 1px #f7fff7 inset;
-  background-color: #f7fff7;
-  border: 1px solid black;
-  transition: all 500ms ease;
+  box-shadow: 0 0 0 1px #333533 inset;
+  background-color: transparent;
+  border: 1px solid #333533;
+  transition: all 400ms ease;
 }
 .first-modal .planting button:hover .button-text {
-  color: black;
+  color: #333533;
+}
+.first-modal .planting button:hover .button-text span {
+  color: #333533;
+}
+
+.second-modal-planting {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.second-modal-planting .specific-plant button {
+  font-size: 30px;
+  padding: 20px 20px;
+  border-radius: 10px;
+  background-color: #054a29;
+  border: 1px solid white;
+  box-shadow: 0 0 0 3em #054a29 inset;
+  transition: all 400ms ease;
+  cursor: pointer;
+}
+.second-modal-planting .specific-plant button .button-item {
+  display: flex;
+}
+.second-modal-planting .specific-plant button .button-item .button-icon {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.second-modal-planting .specific-plant button .button-item .button-icon svg {
+  font-size: 50px;
+  color: #3fa34d;
+}
+.second-modal-planting .specific-plant button .button-item .button-text {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: white;
+}
+.second-modal-planting .specific-plant button .button-item .button-text h6 {
+  font-size: 24px;
+}
+.second-modal-planting .specific-plant button .button-item .button-text span {
+  color: #ced4da;
+  font-size: 14px;
+  text-align: left;
+}
+.second-modal-planting .specific-plant button:hover {
+  box-shadow: 0 0 0 1px #333533 inset;
+  background-color: transparent;
+  border: 1px solid #333533;
+  transition: all 400ms ease;
+}
+.second-modal-planting .specific-plant button:hover .button-text {
+  color: #333533;
+}
+.second-modal-planting .specific-plant button:hover .button-text span {
+  color: #333533;
+}
+.second-modal-planting .whole-garden button {
+  font-size: 30px;
+  padding: 20px 35px;
+  margin-top: 10px;
+  border-radius: 10px;
+  background-color: #054a29;
+  border: 1px solid white;
+  box-shadow: 0 0 0 3em #054a29 inset;
+  transition: all 400ms ease;
+  cursor: pointer;
+}
+.second-modal-planting .whole-garden button .button-item {
+  display: flex;
+}
+.second-modal-planting .whole-garden button .button-item .button-icon {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.second-modal-planting .whole-garden button .button-item .button-icon svg {
+  font-size: 50px;
+  color: #3fa34d;
+  margin-right: 13px;
+}
+.second-modal-planting .whole-garden button .button-item .button-text {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: white;
+}
+.second-modal-planting .whole-garden button .button-item .button-text h6 {
+  font-size: 24px;
+}
+.second-modal-planting .whole-garden button .button-item .button-text span {
+  color: #ced4da;
+  font-size: 14px;
+  text-align: left;
+}
+.second-modal-planting .whole-garden button:hover {
+  box-shadow: 0 0 0 1px #333533 inset;
+  background-color: transparent;
+  border: 1px solid #333533;
+  transition: all 400ms ease;
+}
+.second-modal-planting .whole-garden button:hover .button-text {
+  color: #333533;
+}
+.second-modal-planting .whole-garden button:hover .button-text span {
+  color: #333533;
+}
+
+.second-modal-livestock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.second-modal-livestock .specific-animal button {
+  font-size: 30px;
+  padding: 20px 20px;
+  border-radius: 10px;
+  background-color: #2a4870;
+  border: 1px solid white;
+  box-shadow: 0 0 0 3em #2a4870 inset;
+  transition: all 400ms ease;
+  cursor: pointer;
+}
+.second-modal-livestock .specific-animal button .button-item {
+  display: flex;
+}
+.second-modal-livestock .specific-animal button .button-item .button-icon {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.second-modal-livestock .specific-animal button .button-item .button-icon svg {
+  font-size: 50px;
+  color: #d4a276;
+}
+.second-modal-livestock .specific-animal button .button-item .button-text {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: white;
+}
+.second-modal-livestock .specific-animal button .button-item .button-text h6 {
+  font-size: 24px;
+}
+.second-modal-livestock .specific-animal button .button-item .button-text span {
+  color: #ced4da;
+  font-size: 14px;
+  text-align: left;
+}
+.second-modal-livestock .specific-animal button:hover {
+  box-shadow: 0 0 0 1px #333533 inset;
+  background-color: transparent;
+  border: 1px solid #333533;
+  transition: all 400ms ease;
+}
+.second-modal-livestock .specific-animal button:hover .button-text {
+  color: #333533;
+}
+.second-modal-livestock .specific-animal button:hover .button-text span {
+  color: #333533;
+}
+.second-modal-livestock .whole-barn button {
+  font-size: 30px;
+  padding: 20px 22px;
+  margin-top: 10px;
+  border-radius: 10px;
+  background-color: #2a4870;
+  border: 1px solid white;
+  box-shadow: 0 0 0 3em #2a4870 inset;
+  transition: all 400ms ease;
+  cursor: pointer;
+}
+.second-modal-livestock .whole-barn button .button-item {
+  display: flex;
+}
+.second-modal-livestock .whole-barn button .button-item .button-icon {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.second-modal-livestock .whole-barn button .button-item .button-icon svg {
+  font-size: 50px;
+  color: #d4a276;
+  margin-right: 13px;
+}
+.second-modal-livestock .whole-barn button .button-item .button-text {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: white;
+}
+.second-modal-livestock .whole-barn button .button-item .button-text h6 {
+  font-size: 24px;
+}
+.second-modal-livestock .whole-barn button .button-item .button-text span {
+  color: #ced4da;
+  font-size: 14px;
+  text-align: left;
+}
+.second-modal-livestock .whole-barn button:hover {
+  box-shadow: 0 0 0 1px #333533 inset;
+  background-color: transparent;
+  border: 1px solid #333533;
+  transition: all 400ms ease;
+}
+.second-modal-livestock .whole-barn button:hover .button-text {
+  color: #333533;
+}
+.second-modal-livestock .whole-barn button:hover .button-text span {
+  color: #333533;
+}
+
+.task-specific-animal {
+  display: flex;
+  justify-content: space-around;
+}
+.task-specific-animal .form-left {
+  width: 45%;
+}
+.task-specific-animal .form-right {
+  width: 45%;
+}
+.task-specific-animal .form-right .description .ql-editor {
+  min-height: 150px;
+}
+
+.task-whole-barn {
+  display: flex;
+  justify-content: space-around;
+}
+.task-whole-barn .form-left {
+  width: 45%;
+}
+.task-whole-barn .form-right {
+  width: 45%;
+}
+.task-whole-barn .form-right .description .ql-editor {
+  min-height: 150px;
+}
+
+.task-specific-plant {
+  display: flex;
+  justify-content: space-around;
+}
+.task-specific-plant .form-left {
+  width: 45%;
+}
+.task-specific-plant .form-right {
+  width: 45%;
+}
+.task-specific-plant .form-right .description .ql-editor {
+  min-height: 150px;
+}
+
+.task-whole-garden {
+  display: flex;
+  justify-content: space-around;
+}
+.task-whole-garden .form-left {
+  width: 45%;
+}
+.task-whole-garden .form-right {
+  width: 45%;
+}
+.task-whole-garden .form-right .description .ql-editor {
+  min-height: 150px;
 }/*# sourceMappingURL=index.css.map */

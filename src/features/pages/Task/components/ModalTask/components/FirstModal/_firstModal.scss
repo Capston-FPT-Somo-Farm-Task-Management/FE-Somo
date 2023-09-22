@@ -7,10 +7,13 @@
   .livestock {
     button {
       font-size: 30px;
-      padding: 15px 20px;
+      padding: 20px 20px;
       border-radius: 10px;
-      background-color: #ffedd8;
-
+      background-color: #2a4870;
+      border: 1px solid white;
+      box-shadow: 0 0 0 3em #2a4870 inset;
+      transition: all 400ms ease;
+      cursor: pointer;
       .button-item {
         display: flex;
         .button-icon {
@@ -20,7 +23,7 @@
           justify-content: center;
           svg {
             font-size: 50px;
-            color: #a47148;
+            color: #d4a276;
           }
         }
         .button-text {
@@ -28,13 +31,27 @@
           display: flex;
           flex-direction: column;
           align-items: flex-start;
+          color: white;
           h6 {
             font-size: 24px;
           }
           span {
+            color: #ced4da;
             font-size: 14px;
             text-align: left;
           }
+        }
+      }
+    }
+    button:hover {
+      box-shadow: 0 0 0 1px #333533 inset;
+      background-color: transparent;
+      border: 1px solid #333533;
+      transition: all 400ms ease;
+      .button-text {
+        color: #333533;
+        span {
+          color: #333533;
         }
       }
     }
@@ -42,13 +59,14 @@
   .planting {
     button {
       font-size: 30px;
-      padding: 15px 25px;
+      padding: 20px 25px;
       margin-top: 10px;
       border-radius: 10px;
       background-color: #054a29;
       border: 1px solid white;
       box-shadow: 0 0 0 3em #054a29 inset;
-      transition: all 500ms ease;
+      transition: all 400ms ease;
+      cursor: pointer;
       .button-item {
         display: flex;
         .button-icon {
@@ -71,19 +89,23 @@
             font-size: 24px;
           }
           span {
+            color: #ced4da;
             font-size: 14px;
             text-align: left;
           }
         }
       }
     }
-    button:hover{
-        box-shadow: 0 0 0 1px #f7fff7 inset;
-      background-color: #f7fff7;
-      border: 1px solid black;
-      transition: all 500ms ease;
-      .button-text{
-        color: black;
+    button:hover {
+      box-shadow: 0 0 0 1px #333533 inset;
+      background-color: transparent;
+      border: 1px solid #333533;
+      transition: all 400ms ease;
+      .button-text {
+        color: #333533;
+        span {
+          color: #333533;
+        }
       }
     }
   }
