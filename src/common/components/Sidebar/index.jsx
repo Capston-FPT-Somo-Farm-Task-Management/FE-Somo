@@ -2,19 +2,19 @@ import React, { useState } from 'react'
 import { menuItem, rootSubmenuKeys } from './sidebarData'
 import { Menu } from 'antd'
 import Sider from 'antd/es/layout/Sider'
-import logoSomo from "../../../assets/logo_Somo.png"
+import logoSomo from '../../../assets/logo_Somo.png'
 
 function Sidebar() {
   const [defaultOpenKeys, setDefaultOpenKeys] = useState(['sub3', 'sub4'])
   const [openKeys, setOpenKeys] = useState(['sub1'])
   const onOpenChange = (keys) => {
-    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1)
     if (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-      setOpenKeys(keys);
+      setOpenKeys(keys)
     } else {
-      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+      setOpenKeys(latestOpenKey ? [latestOpenKey] : [])
     }
-  };
+  }
   return (
     <Sider
       style={{ marginRight: '25px' }}
@@ -28,11 +28,10 @@ function Sidebar() {
         console.log(collapsed, type)
       }}
     >
-      <div className="logo-somo">
-        <img src={logoSomo} alt='logo'/>
-      </div>
-
       <div className="sideBar">
+        <div className="logo-somo">
+          <img src={logoSomo} alt="logo" />
+        </div>
         <Menu
           mode="inline"
           // defaultOpenKeys={defaultOpenKeys}
@@ -49,4 +48,4 @@ function Sidebar() {
   )
 }
 
-export default Sidebar;
+export default Sidebar
