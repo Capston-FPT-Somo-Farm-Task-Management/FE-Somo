@@ -42,27 +42,27 @@ function ThirdModal({ option }) {
         <div className="form-left">
           <div className="area">
             <Form.Item label="Khu vực">
-              <Select options={areaItem} />
+              <Select onChange={handleChange} options={areaItem} />
             </Form.Item>
           </div>
           <div className="zone">
             <Form.Item label="Vùng">
-              <Select options={zoneItem} />
+              <Select onChange={handleChange} options={zoneItem} />
             </Form.Item>
           </div>
           <div className="barn">
             <Form.Item label="Chuồng">
-              <Select options={barnItem} />
+              <Select onChange={handleChange} options={barnItem} />
             </Form.Item>
           </div>
           <div className="animal-id">
             <Form.Item label="Id con vật">
-              <Select options={animalIdItem} />
+              <Select onChange={handleChange} options={animalIdItem} />
             </Form.Item>
           </div>
           <div className="priority">
             <Form.Item label="Độ ưu tiên">
-              <Select options={priorityItem} />
+              <Select onChange={handleChange} options={priorityItem} />
             </Form.Item>
           </div>
           <div className="date">
@@ -77,12 +77,12 @@ function ThirdModal({ option }) {
           </div>
           <div className="remind">
             <Form.Item label="Nhắc lại sau">
-              <Select options={remindItem} />
+              <Select onChange={handleChange} options={remindItem} />
             </Form.Item>
           </div>
           <div className="repeat">
             <Form.Item label="Lặp lại">
-              <Select options={repeatItem} />
+              <Select onChange={handleChange} options={repeatItem} />
             </Form.Item>
           </div>
         </div>
@@ -94,22 +94,22 @@ function ThirdModal({ option }) {
           </div>
           <div className="task-type">
             <Form.Item label="Loại nhiệm vụ">
-              <Select options={taskTypeItem} />
+              <Select onChange={handleChange} options={taskTypeItem} />
             </Form.Item>
           </div>
           <div className="worker">
             <Form.Item label="Người thực hiện">
-              <Select options={workerItem} />
+              <Select onChange={handleChange} options={workerItem} />
             </Form.Item>
           </div>
           <div className="supervisor">
             <Form.Item label="Người giám sát">
-              <Select options={supervisorItem} />
+              <Select onChange={handleChange} options={supervisorItem} />
             </Form.Item>
           </div>
           <div className="material">
             <Form.Item label="Dụng cụ">
-              <Select options={materialItem} />
+              <Select onChange={handleChange} options={materialItem} />
             </Form.Item>
           </div>
           <div className="description">
@@ -130,22 +130,22 @@ function ThirdModal({ option }) {
         <div className="form-left">
           <div className="area">
             <Form.Item label="Khu vực">
-              <Select options={areaItem} />
+              <Select onChange={handleChange} options={areaItem} />
             </Form.Item>
           </div>
           <div className="zone">
             <Form.Item label="Vùng">
-              <Select options={zoneItem} />
+              <Select onChange={handleChange} options={zoneItem} />
             </Form.Item>
           </div>
           <div className="barn">
             <Form.Item label="Chuồng">
-              <Select options={barnItem} />
+              <Select onChange={handleChange} options={barnItem} />
             </Form.Item>
           </div>
           <div className="priority">
             <Form.Item label="Độ ưu tiên">
-              <Select options={priorityItem} />
+              <Select onChange={handleChange} options={priorityItem} />
             </Form.Item>
           </div>
           <div className="date">
@@ -160,12 +160,12 @@ function ThirdModal({ option }) {
           </div>
           <div className="remind">
             <Form.Item label="Nhắc lại sau">
-              <Select options={remindItem} />
+              <Select onChange={handleChange} options={remindItem} />
             </Form.Item>
           </div>
           <div className="repeat">
             <Form.Item label="Lặp lại">
-              <Select options={repeatItem} />
+              <Select onChange={handleChange} options={repeatItem} />
             </Form.Item>
           </div>
         </div>
@@ -177,22 +177,22 @@ function ThirdModal({ option }) {
           </div>
           <div className="task-type">
             <Form.Item label="Loại nhiệm vụ">
-              <Select options={taskTypeItem} />
+              <Select onChange={handleChange} options={taskTypeItem} />
             </Form.Item>
           </div>
           <div className="worker">
             <Form.Item label="Người thực hiện">
-              <Select options={workerItem} />
+              <Select onChange={handleChange} options={workerItem} />
             </Form.Item>
           </div>
           <div className="supervisor">
             <Form.Item label="Người giám sát">
-              <Select options={supervisorItem} />
+              <Select onChange={handleChange} options={supervisorItem} />
             </Form.Item>
           </div>
           <div className="material">
             <Form.Item label="Dụng cụ">
-              <Select options={materialItem} />
+              <Select onChange={handleChange} options={materialItem} />
             </Form.Item>
           </div>
           <div className="description">
@@ -214,27 +214,27 @@ function ThirdModal({ option }) {
         <div className="form-left">
           <div className="area">
             <Form.Item label="Khu vực">
-              <Select options={areaItem} />
+              <Select onChange={handleChange} options={areaItem} />
             </Form.Item>
           </div>
           <div className="zone">
             <Form.Item label="Vùng">
-              <Select options={zoneItem} />
+              <Select onChange={handleChange} options={zoneItem} />
             </Form.Item>
           </div>
           <div className="garden">
             <Form.Item label="Vườn">
-              <Select options={gardenItem} />
+              <Select onChange={handleChange} options={gardenItem} />
             </Form.Item>
           </div>
           <div className="animal-id">
             <Form.Item label="Id cây trồng">
-              <Select options={plantIdItem} />
+              <Select onChange={handleChange} options={plantIdItem} />
             </Form.Item>
           </div>
           <div className="priority">
             <Form.Item label="Độ ưu tiên">
-              <Select options={priorityItem} />
+              <Select onChange={handleChange} options={priorityItem} />
             </Form.Item>
           </div>
           <div className="date">
@@ -249,12 +249,12 @@ function ThirdModal({ option }) {
           </div>
           <div className="remind">
             <Form.Item label="Nhắc lại sau">
-              <Select options={remindItem} />
+              <Select onChange={handleChange} options={remindItem} />
             </Form.Item>
           </div>
           <div className="repeat">
             <Form.Item label="Lặp lại">
-              <Select options={repeatItem} />
+              <Select onChange={handleChange} options={repeatItem} />
             </Form.Item>
           </div>
         </div>
@@ -266,22 +266,22 @@ function ThirdModal({ option }) {
           </div>
           <div className="task-type">
             <Form.Item label="Loại nhiệm vụ">
-              <Select options={taskTypeItem} />
+              <Select onChange={handleChange} options={taskTypeItem} />
             </Form.Item>
           </div>
           <div className="worker">
             <Form.Item label="Người thực hiện">
-              <Select options={workerItem} />
+              <Select onChange={handleChange} options={workerItem} />
             </Form.Item>
           </div>
           <div className="supervisor">
             <Form.Item label="Người giám sát">
-              <Select options={supervisorItem} />
+              <Select onChange={handleChange} options={supervisorItem} />
             </Form.Item>
           </div>
           <div className="material">
             <Form.Item label="Dụng cụ">
-              <Select options={materialItem} />
+              <Select onChange={handleChange} options={materialItem} />
             </Form.Item>
           </div>
           <div className="description">
@@ -303,22 +303,22 @@ function ThirdModal({ option }) {
         <div className="form-left">
           <div className="area">
             <Form.Item label="Khu vực">
-              <Select options={areaItem} />
+              <Select onChange={handleChange} options={areaItem} />
             </Form.Item>
           </div>
           <div className="zone">
             <Form.Item label="Vùng">
-              <Select options={zoneItem} />
+              <Select onChange={handleChange} options={zoneItem} />
             </Form.Item>
           </div>
           <div className="barn">
             <Form.Item label="Vườn">
-              <Select options={gardenItem} />
+              <Select onChange={handleChange} options={gardenItem} />
             </Form.Item>
           </div>
           <div className="priority">
             <Form.Item label="Độ ưu tiên">
-              <Select options={priorityItem} />
+              <Select onChange={handleChange} options={priorityItem} />
             </Form.Item>
           </div>
           <div className="date">
@@ -333,12 +333,12 @@ function ThirdModal({ option }) {
           </div>
           <div className="remind">
             <Form.Item label="Nhắc lại sau">
-              <Select options={remindItem} />
+              <Select onChange={handleChange} options={remindItem} />
             </Form.Item>
           </div>
           <div className="repeat">
             <Form.Item label="Lặp lại">
-              <Select options={repeatItem} />
+              <Select onChange={handleChange} options={repeatItem} />
             </Form.Item>
           </div>
         </div>
@@ -350,22 +350,22 @@ function ThirdModal({ option }) {
           </div>
           <div className="task-type">
             <Form.Item label="Loại nhiệm vụ">
-              <Select options={taskTypeItem} />
+              <Select onChange={handleChange} options={taskTypeItem} />
             </Form.Item>
           </div>
           <div className="worker">
             <Form.Item label="Người thực hiện">
-              <Select options={workerItem} />
+              <Select onChange={handleChange} options={workerItem} />
             </Form.Item>
           </div>
           <div className="supervisor">
             <Form.Item label="Người giám sát">
-              <Select options={supervisorItem} />
+              <Select onChange={handleChange} options={supervisorItem} />
             </Form.Item>
           </div>
           <div className="material">
             <Form.Item label="Dụng cụ">
-              <Select options={materialItem} />
+              <Select onChange={handleChange} options={materialItem} />
             </Form.Item>
           </div>
           <div className="description">
@@ -378,6 +378,7 @@ function ThirdModal({ option }) {
             </Form.Item>
           </div>
         </div>
+        
       </Form>
     );
   }
