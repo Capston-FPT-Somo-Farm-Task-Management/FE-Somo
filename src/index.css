@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap');
 body {
   box-sizing: border-box;
-  font-family: "Nunito Sans", sans-serif;
+  font-family: 'Nunito Sans', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #fff !important;
@@ -41,6 +41,16 @@ html {
   width: 100%;
 }
 
+@media screen and (min-width: 992px) {
+  .ant-layout-sider {
+    overflow: auto;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+  }
+}
 .navBar {
   display: flex;
   justify-content: space-around;
@@ -71,7 +81,7 @@ html {
 
 .sideBar {
   box-shadow: 3px 0px 2px 0 rgba(94, 98, 105, 0.2);
-  height: 90vh;
+  height: 100vh;
 }
 
 .content h3 {
@@ -542,4 +552,15 @@ html {
 
 .plant-content h3 {
   font-size: 24px;
-}/*# sourceMappingURL=index.css.map */
+}
+
+.first-step-plant {
+  display: flex;
+  justify-content: space-around;
+}
+.first-step-plant .form-left {
+  width: 45%;
+}
+.first-step-plant .form-right {
+  width: 45%;
+} /*# sourceMappingURL=index.css.map */

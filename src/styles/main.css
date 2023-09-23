@@ -39,4 +39,15 @@ html {
 .content {
   padding: 20px;
   width: 100%;
+}
+
+@media screen and (min-width: 992px) {
+  .ant-layout-sider {
+    overflow: auto;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+  }
 }/*# sourceMappingURL=main.css.map */

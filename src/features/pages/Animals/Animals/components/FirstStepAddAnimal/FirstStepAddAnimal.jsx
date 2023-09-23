@@ -1,6 +1,10 @@
 import React from 'react'
 import { Form, Input, Select } from 'antd'
-import { animalSex, animalStatus, animalType } from './AddAnimalData'
+import {
+  animalSex,
+  animalStatus,
+  animalType,
+} from '../AddAndSearchAnimals/AddAnimalData'
 
 const FirstStepAddAnimal = () => {
   return (
