@@ -38,9 +38,8 @@ const AddPlantAndPlantType = () => {
     lineHeight: '400px',
     textAlign: 'center',
     color: token.colorTextTertiary,
-    backgroundColor: token.colorFillAlter,
+    // backgroundColor: token.colorFillAlter,
     borderRadius: token.borderRadiusLG,
-    border: `1px dashed ${token.colorBorder}`,
     marginTop: 16,
   }
   // -------------------------------------------
@@ -75,10 +74,8 @@ const AddPlantAndPlantType = () => {
 
   return (
     <>
-      <div>
-        <div>
-          <h1>Cây trồng</h1>
-        </div>
+      <div className="plant-content content">
+        <h3>Cây trồng</h3>
 
         <div>
           <span>

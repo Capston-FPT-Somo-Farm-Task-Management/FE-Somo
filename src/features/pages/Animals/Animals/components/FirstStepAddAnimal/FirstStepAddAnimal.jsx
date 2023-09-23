@@ -1,11 +1,15 @@
 import React from 'react'
 import { Form, Input, Select } from 'antd'
-import { animalSex, animalStatus, animalType } from './AddAnimalData'
+import {
+  animalSex,
+  animalStatus,
+  animalType,
+} from '../AddAndSearchAnimals/AddAnimalData'
 
 const FirstStepAddAnimal = () => {
   return (
     <>
-      <Form>
+      <Form layout="vertical">
         {/* Animal Name */}
         <Form.Item label="Tên" name="name">
           <Input placeholder="Nhập tên động vật" />

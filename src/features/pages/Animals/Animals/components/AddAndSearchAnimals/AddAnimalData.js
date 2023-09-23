@@ -1,11 +1,11 @@
-import AddAnimals from './FirstStepAddAnimal'
-import FirstStepAddAnimalGroup from '../../../AnimalGroup/components/AddAnimalGroup/FirstStepAddAnimalGroup'
-import SecondStepAddAnimalGroup from 'features/pages/Animals/AnimalGroup/components/AddAnimalGroup/SecondStepAddAnimalGroup'
+import FirstStepAddAnimalGroup from '../../../AnimalGroup/components/FirstStepAddAnimalGroup/FirstStepAddAnimalGroup'
+import SecondStepAddAnimalGroup from 'features/pages/Animals/AnimalGroup/components/SecondStepAddAnimalGroup/SecondStepAddAnimalGroup'
+import FirstStepAddAnimal from '../FirstStepAddAnimal/FirstStepAddAnimal'
 
 export const steps = [
   {
     title: 'Cây trồng',
-    content: <AddAnimals />,
+    content: <FirstStepAddAnimal />,
   },
   {
     title: 'Chi tiết',

@@ -11,7 +11,7 @@ const FirstStepAddPlantType = () => {
 
   return (
     <>
-      <Form>
+      <Form layout="vertical">
         {/* Plant Type Name */}
         <Form.Item label="Tên loại cây" name="name">
           <Input />

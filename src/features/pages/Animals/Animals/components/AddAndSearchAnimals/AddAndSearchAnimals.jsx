@@ -42,7 +42,6 @@ const AddAndSearchAnimals = () => {
     color: token.colorTextTertiary,
     backgroundColor: token.colorFillAlter,
     borderRadius: token.borderRadiusLG,
-    border: `1px dashed ${token.colorBorder}`,
     marginTop: 16,
   }
 
@@ -76,11 +75,11 @@ const AddAndSearchAnimals = () => {
 
   return (
     <>
-      <div className="content">
-        <h1>Chăn nuôi</h1>
+      <div className="animal-content content">
+        <h3>Chăn nuôi</h3>
 
-        <div className="group">
-          <span className="button-add">
+        <div>
+          <span>
             {/* Add Animal*/}
             <Button type="primary" onClick={showModal}>
               Tạo mới
