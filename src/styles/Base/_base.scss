@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap');
 body {
   box-sizing: border-box;
-  font-family: "Nunito Sans", sans-serif;
+  font-family: 'Nunito Sans', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #fff !important;
@@ -16,24 +16,25 @@ body {
 p {
   margin: 0;
 }
+
 html {
   font-size: 62.5%;
   scroll-behavior: smooth;
 }
+
 .container {
   max-width: 115.2rem;
   padding: auto 3.2rem;
   margin: 0 auto;
 }
 
-
-.content-wrapper{
+.content-wrapper {
   display: flex;
   height: 100%;
   width: 100%;
 }
 
-.content{
+.content {
   padding: 20px;
   width: 100%;
 }

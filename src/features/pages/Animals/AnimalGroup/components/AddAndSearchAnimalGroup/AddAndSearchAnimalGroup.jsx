@@ -38,19 +38,16 @@ const AddAndSearchAnimalGroup = () => {
     color: token.colorTextTertiary,
     backgroundColor: token.colorFillAlter,
     borderRadius: token.borderRadiusLG,
-    border: `1px dashed ${token.colorBorder}`,
     marginTop: 16,
   }
 
   return (
     <>
-      <div>
-        <div>
-          <h1>Chăn nuôi</h1>
-        </div>
+      <div className="animal-group-content content">
+        <h3>Chăn nuôi bầy đàn</h3>
 
         <div>
-          <Button type="default" onClick={showModalType}>
+          <Button type="primary" onClick={showModalType}>
             Tạo theo nhóm
           </Button>
 
