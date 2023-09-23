@@ -78,8 +78,8 @@ const AddAndSearchAnimals = () => {
       <div className="animal-content content">
         <h3>Chăn nuôi</h3>
 
-        <div className="group">
-          <span className="button-add">
+        <div>
+          <span>
             {/* Add Animal*/}
             <Button type="primary" onClick={showModal}>
               Tạo mới

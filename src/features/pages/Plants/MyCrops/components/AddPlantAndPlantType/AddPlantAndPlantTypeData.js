@@ -1,6 +1,5 @@
-// import AddPlantAndPlantType from './AddPlantAndPlantType'
-import FirstStepAddPlant from './FirstStepAddPlant'
-import FirstStepAddPlantType from './FirstStepAddPlantType'
+import FirstStepAddPlant from '../FirstStepAddPlant/FirstStepAddPlant'
+import FirstStepAddPlantType from '../FirstStepAddPlantType/FirstStepAddPlantType'
 
 export const steps = [
   {

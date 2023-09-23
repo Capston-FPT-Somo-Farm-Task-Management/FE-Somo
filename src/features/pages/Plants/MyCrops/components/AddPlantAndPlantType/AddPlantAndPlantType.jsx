@@ -38,7 +38,7 @@ const AddPlantAndPlantType = () => {
     lineHeight: '400px',
     textAlign: 'center',
     color: token.colorTextTertiary,
-    backgroundColor: token.colorFillAlter,
+    // backgroundColor: token.colorFillAlter,
     borderRadius: token.borderRadiusLG,
     marginTop: 16,
   }

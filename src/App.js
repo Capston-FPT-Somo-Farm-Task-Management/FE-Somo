@@ -14,11 +14,11 @@ import MyCrops from 'features/pages/Plants/MyCrops'
 function App() {
   const location = useLocation()
 
+  // Function to check if the current location matches certain paths
   const ShowSidebarAndHeader = () => {
     const { pathname } = location
-    return !['/login'].includes(pathname)
+    return !['/login', '/logout'].includes(pathname)
   }
-
   return (
     <div className="App">
       {ShowSidebarAndHeader() && <Header />}

@@ -542,4 +542,15 @@ html {
 
 .plant-content h3 {
   font-size: 24px;
+}
+
+.first-step-plant {
+  display: flex;
+  justify-content: space-around;
+}
+.first-step-plant .form-left {
+  width: 45%;
+}
+.first-step-plant .form-right {
+  width: 45%;
 }/*# sourceMappingURL=index.css.map */
