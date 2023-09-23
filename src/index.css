@@ -530,4 +530,16 @@ html {
 }
 .task-whole-garden .form-right .description .ql-editor {
   min-height: 150px;
+}
+
+.animal-content h3 {
+  font-size: 24px;
+}
+
+.animal-group-content h3 {
+  font-size: 24px;
+}
+
+.plant-content h3 {
+  font-size: 24px;
 }/*# sourceMappingURL=index.css.map */

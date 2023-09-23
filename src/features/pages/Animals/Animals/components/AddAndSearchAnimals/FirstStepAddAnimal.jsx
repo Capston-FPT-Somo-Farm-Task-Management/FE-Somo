@@ -5,7 +5,7 @@ import { animalSex, animalStatus, animalType } from './AddAnimalData'
 const FirstStepAddAnimal = () => {
   return (
     <>
-      <Form>
+      <Form layout="vertical">
         {/* Animal Name */}
         <Form.Item label="Tên" name="name">
           <Input placeholder="Nhập tên động vật" />

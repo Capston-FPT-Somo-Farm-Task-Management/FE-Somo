@@ -5,7 +5,7 @@ const { TextArea } = Input
 const AddAnimalGroup = () => {
   return (
     <>
-      <div className="">
+      <div>
         <div>
           <h1>Tạo mới theo nhóm</h1>
         </div>

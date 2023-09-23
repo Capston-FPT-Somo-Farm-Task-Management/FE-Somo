@@ -4,7 +4,7 @@ const { TextArea } = Input
 const FirstStepAddAnimalGroup = () => {
   return (
     <>
-      <Form>
+      <Form layout="vertical">
         {/* Animal Group Name */}
         <Form.Item label="Tên nhóm" name="animalGroupName">
           <Input />
