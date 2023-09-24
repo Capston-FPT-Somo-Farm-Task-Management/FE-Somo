@@ -77,102 +77,100 @@ const AddPlantAndPlantType = () => {
       <div className="plant-content content">
         <h3>Cây trồng</h3>
 
-        <div>
-          <span>
-            {/* Add Plant*/}
-            <Button type="primary" onClick={showModal}>
-              Tạo mới cây
-            </Button>
+        <div className="plant-type">
+          {/* Add Plant*/}
+          <Button type="primary" onClick={showModal}>
+            Tạo mới cây
+          </Button>
 
-            <Modal
-              title="Tạo mới"
-              open={isModalOpen}
-              onOk={handleOk}
-              onCancel={handleCancel}
+          <Modal
+            title="Tạo mới"
+            open={isModalOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
+          >
+            <Steps size="large" current={current} items={items} />
+            <div style={contentStyle}>{steps[current].content}</div>
+            <div
+              style={{
+                marginTop: 24,
+              }}
             >
-              <Steps size="large" current={current} items={items} />
-              <div style={contentStyle}>{steps[current].content}</div>
-              <div
-                style={{
-                  marginTop: 24,
-                }}
-              >
-                {current < steps.length - 1 && (
-                  <Button type="primary" onClick={() => next()}>
-                    Next
-                  </Button>
-                )}
-                {current === steps.length - 1 && (
-                  <Button
-                    type="primary"
-                    onClick={() => message.success('Processing complete!')}
-                  >
-                    Done
-                  </Button>
-                )}
-                {current > 0 && (
-                  <Button
-                    style={{
-                      margin: '0 8px',
-                    }}
-                    onClick={() => prev()}
-                  >
-                    Previous
-                  </Button>
-                )}
-              </div>
-            </Modal>
+              {current < steps.length - 1 && (
+                <Button type="primary" onClick={() => next()}>
+                  Next
+                </Button>
+              )}
+              {current === steps.length - 1 && (
+                <Button
+                  type="primary"
+                  onClick={() => message.success('Processing complete!')}
+                >
+                  Done
+                </Button>
+              )}
+              {current > 0 && (
+                <Button
+                  style={{
+                    margin: '0 8px',
+                  }}
+                  onClick={() => prev()}
+                >
+                  Previous
+                </Button>
+              )}
+            </div>
+          </Modal>
 
-            {/* Add Plant Type */}
-            <Button type="default" onClick={showModalType}>
-              Tạo mới loại cây
-            </Button>
+          {/* Add Plant Type */}
+          <Button type="default" onClick={showModalType}>
+            Tạo mới loại cây
+          </Button>
 
-            <Modal
-              title="Tạo mới"
-              open={isModalOpenType}
-              onOk={handleOkPlantType}
-              onCancel={handleCancelPlantType}
+          <Modal
+            title="Tạo mới"
+            open={isModalOpenType}
+            onOk={handleOkPlantType}
+            onCancel={handleCancelPlantType}
+          >
+            <Steps size="large" current={currentType} items={itemsType} />
+            <div style={contentStyle}>{stepsType[currentType].content}</div>
+            <div
+              style={{
+                marginTop: 24,
+              }}
             >
-              <Steps size="large" current={currentType} items={itemsType} />
-              <div style={contentStyle}>{stepsType[currentType].content}</div>
-              <div
-                style={{
-                  marginTop: 24,
-                }}
-              >
-                {currentType < stepsType.length - 1 && (
-                  <Button type="primary" onClick={() => nextType()}>
-                    Next
-                  </Button>
-                )}
-                {currentType === stepsType.length - 1 && (
-                  <Button
-                    type="primary"
-                    onClick={() => message.success('Processing complete!')}
-                  >
-                    Done
-                  </Button>
-                )}
-                {currentType > 0 && (
-                  <Button
-                    style={{
-                      margin: '0 8px',
-                    }}
-                    onClick={() => prevType()}
-                  >
-                    Previous
-                  </Button>
-                )}
-              </div>
-            </Modal>
+              {currentType < stepsType.length - 1 && (
+                <Button type="primary" onClick={() => nextType()}>
+                  Next
+                </Button>
+              )}
+              {currentType === stepsType.length - 1 && (
+                <Button
+                  type="primary"
+                  onClick={() => message.success('Processing complete!')}
+                >
+                  Done
+                </Button>
+              )}
+              {currentType > 0 && (
+                <Button
+                  style={{
+                    margin: '0 8px',
+                  }}
+                  onClick={() => prevType()}
+                >
+                  Previous
+                </Button>
+              )}
+            </div>
+          </Modal>
 
-            <Button type="dashed">
-              <Link to="">
-                <DashOutlined />
-              </Link>
-            </Button>
-          </span>
+          <Button type="dashed">
+            <Link to="">
+              <DashOutlined />
+            </Link>
+          </Button>
         </div>
       </div>
     </>
