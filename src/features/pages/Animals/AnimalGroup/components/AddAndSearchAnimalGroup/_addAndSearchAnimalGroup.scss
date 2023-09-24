@@ -1,0 +1,18 @@
+.animal-group-content {
+  h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  .animal-group-operate {
+    display: flex;
+    justify-content: space-between;
+
+    .animal-group-operate-left {
+      display: flex;
+      gap: 15px;
+    }
+    .animal-group-operate-right {
+      margin-left: auto;
+    }
+  }
+}

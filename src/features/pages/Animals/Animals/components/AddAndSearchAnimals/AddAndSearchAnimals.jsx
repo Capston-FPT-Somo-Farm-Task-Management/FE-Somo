@@ -78,8 +78,8 @@ const AddAndSearchAnimals = () => {
       <div className="animal-content content">
         <h3>Chăn nuôi</h3>
 
-        <div>
-          <span>
+        <div className="animal-operate">
+          <div className="animal-operate-left">
             {/* Add Animal*/}
             <Button type="primary" onClick={showModal}>
               Tạo mới
@@ -174,8 +174,8 @@ const AddAndSearchAnimals = () => {
                 <DashOutlined />
               </Link>
             </Button>
-          </span>
-          <span className="search-animal">
+          </div>
+          <div className="animal-operate-right">
             <Search
               placeholder="Tìm kiếm"
               allowClear
@@ -184,7 +184,7 @@ const AddAndSearchAnimals = () => {
                 width: 300,
               }}
             />
-          </span>
+          </div>
         </div>
       </div>
     </>
