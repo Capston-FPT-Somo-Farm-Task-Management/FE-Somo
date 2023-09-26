@@ -1,12 +1,12 @@
 import { Form, Input, Select } from 'antd'
 import {
-  animalType,
+  cropType,
   plantArea,
   plantField,
   plantZone,
-} from '../AddAndSearchAnimalGroup/AddAnimalGroupData'
+} from '../AddAndSearchCropGroup/AddCropGroupData'
 
-const FirstStepAddAnimalGroup = () => {
+const FirstStepAddCropGroup = () => {
   const showDate = new Date()
   const displayCurrentDate =
     showDate.getDate() +
@@ -16,19 +16,16 @@ const FirstStepAddAnimalGroup = () => {
     showDate.getFullYear()
   return (
     <>
-      <Form layout="vertical" className="first-step-animal-group">
+      <Form layout="vertical" className="first-step-crop-group">
         <div className="form-left">
           {/* Animal Group Name */}
-          <Form.Item label="Tên chuồng" name="animalGroupName">
-            <Input placeholder="Nhập tên chuồng" />
+          <Form.Item label="Tên vườn" name="cropGroupName">
+            <Input placeholder="Nhập tên vườn" />
           </Form.Item>
 
           {/* Animal Type */}
-          <Form.Item label="Loại vật nuôi">
-            <Select
-              placeholder="Chọn loại vật nuôi"
-              options={animalType}
-            ></Select>
+          <Form.Item label="Loại cây">
+            <Select placeholder="Chọn loại cây" options={cropType}></Select>
           </Form.Item>
           {/* Animal Quantity */}
           <Form.Item label="Số lượng" name="quantity">
@@ -65,4 +62,4 @@ const FirstStepAddAnimalGroup = () => {
     </>
   )
 }
-export default FirstStepAddAnimalGroup
+export default FirstStepAddCropGroup

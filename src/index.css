@@ -603,7 +603,64 @@ html {
   font-size: 24px;
   margin-bottom: 20px;
 }
-.plant-content .plant-type {
+.plant-content .plant-operate {
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
+}
+.plant-content .plant-operate .plant-operate-left {
+  display: flex;
+  gap: 15px;
+}
+.plant-content .plant-operate .plant-operate-right {
+  margin-left: auto;
+  width: 300px;
+}
+
+.first-step-animal {
+  display: flex;
+  justify-content: space-around;
+}
+.first-step-animal .form-left {
+  width: 45%;
+}
+.first-step-animal .form-right {
+  width: 45%;
+}
+
+.first-step-animal-group {
+  display: flex;
+  justify-content: space-around;
+}
+.first-step-animal-group .form-left {
+  width: 45%;
+}
+.first-step-animal-group .form-right {
+  width: 45%;
+}
+
+.crop-group-content h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.crop-group-content .crop-group-operate {
+  display: flex;
+  justify-content: space-between;
+}
+.crop-group-content .crop-group-operate .crop-group-operate-left {
+  display: flex;
+  gap: 15px;
+}
+.crop-group-content .crop-group-operate .crop-group-operate-right {
+  margin-left: auto;
+}
+
+.first-step-crop-group {
+  display: flex;
+  justify-content: space-around;
+}
+.first-step-crop-group .form-left {
+  width: 45%;
+}
+.first-step-crop-group .form-right {
+  width: 45%;
 }/*# sourceMappingURL=index.css.map */

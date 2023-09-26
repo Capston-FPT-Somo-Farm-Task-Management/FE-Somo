@@ -33,12 +33,12 @@ export const menuItem = [
   ),
   getItem('Chăn nuôi', 'sub3', <FontAwesomeIcon icon={faHorseHead} />, [
     getItem(<Link to="/animals">Động vật</Link>, '1'),
-    getItem(<Link to="/animal-group">Chăn nuôi bầy đàn</Link>, '2'),
+    getItem(<Link to="/animal-group">Chuồng</Link>, '2'),
     getItem('Chăn thả', '3'),
   ]),
   getItem('Trồng trọt', 'sub4', <FontAwesomeIcon icon={faSeedling} />, [
     getItem(<Link to="/crops">Cây trồng</Link>, '4'),
-    getItem('Vị trí phát triển', '5'),
+    getItem(<Link to="/crop-group">Vườn</Link>, '5'),
     getItem('Kế hoạch trồng trọt', '6'),
     getItem('Vị trí trồng trọt', '7'),
     getItem('So sánh năng suất', '8'),
