@@ -5,7 +5,7 @@ export const columns = [
     title: 'Tên',
     dataIndex: 'name',
     key: 'name',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <h4>{text}</h4>,
   },
   {
     title: 'Id',

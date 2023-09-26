@@ -82,7 +82,7 @@ const AddAndSearchAnimals = () => {
           <div className="animal-operate-left">
             {/* Add Animal*/}
             <Button type="primary" onClick={showModal}>
-              Tạo mới
+              Thêm vật nuôi
             </Button>
 
             <Modal
@@ -125,9 +125,8 @@ const AddAndSearchAnimals = () => {
             </Modal>
 
             {/* Add group */}
-
             <Button type="default" onClick={showModalType}>
-              Tạo theo nhóm
+              Thêm chuồng
             </Button>
 
             <Modal
@@ -175,6 +174,7 @@ const AddAndSearchAnimals = () => {
               </Link>
             </Button>
           </div>
+
           <div className="animal-operate-right">
             <Search
               placeholder="Tìm kiếm"

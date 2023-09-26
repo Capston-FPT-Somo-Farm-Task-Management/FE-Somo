@@ -1,19 +1,19 @@
 import { Button, Modal, Steps, message, theme } from 'antd'
-import React, { useState } from 'react'
 import Search from 'antd/es/input/Search'
-import { stepsType } from 'features/pages/Animals/Animals/components/AddAndSearchAnimals/AddAnimalData'
+import { useState } from 'react'
+import { stepsType } from './AddCropGroupData'
 
-const AddAndSearchAnimalGroup = () => {
+const AddAndSearchCropGroup = () => {
   const [isModalOpenType, setIsModalOpenType] = useState(false)
 
   const showModalType = () => {
     setIsModalOpenType(true)
   }
 
-  const handleOkAnimalGroup = () => {
+  const handleOkCropGroup = () => {
     setIsModalOpenType(false)
   }
-  const handleCancelAnimalGroup = () => {
+  const handleCancelCropGroup = () => {
     setIsModalOpenType(false)
   }
 
@@ -43,20 +43,20 @@ const AddAndSearchAnimalGroup = () => {
 
   return (
     <>
-      <div className="animal-group-content content">
-        <h3>Chuồng</h3>
+      <div className="crop-group-content content">
+        <h3>Vườn</h3>
 
-        <div className="animal-group-operate">
-          <div className="animal-group-operate-left">
+        <div className="crop-group-operate">
+          <div className="crop-group-operate-left">
             <Button type="primary" onClick={showModalType}>
-              Thêm chuồng
+              Thêm vườn
             </Button>
 
             <Modal
               title="Tạo mới"
               open={isModalOpenType}
-              onOk={handleOkAnimalGroup}
-              onCancel={handleCancelAnimalGroup}
+              onOk={handleOkCropGroup}
+              onCancel={handleCancelCropGroup}
             >
               <Steps size="large" current={currentType} items={itemsType} />
               <div style={contentStyle}>{stepsType[currentType].content}</div>
@@ -92,7 +92,7 @@ const AddAndSearchAnimalGroup = () => {
             </Modal>
           </div>
 
-          <div className="animal-group-operate-right">
+          <div className="crop-group-operate-right">
             <Search
               placeholder="Tìm kiếm"
               allowClear
@@ -107,4 +107,4 @@ const AddAndSearchAnimalGroup = () => {
     </>
   )
 }
-export default AddAndSearchAnimalGroup
+export default AddAndSearchCropGroup

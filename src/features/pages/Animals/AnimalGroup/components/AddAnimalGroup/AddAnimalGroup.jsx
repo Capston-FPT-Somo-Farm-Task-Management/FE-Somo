@@ -7,7 +7,7 @@ const AddAnimalGroup = () => {
     <>
       <div>
         <div>
-          <h1>Tạo mới theo nhóm</h1>
+          <h1>Thêm chuồng</h1>
         </div>
       </div>
       <Form>

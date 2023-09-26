@@ -1,18 +1,18 @@
-.plant-content {
+.crop-group-content {
   h3 {
     font-size: 24px;
     margin-bottom: 20px;
   }
-  .plant-operate {
+  .crop-group-operate {
     display: flex;
     justify-content: space-between;
-    .plant-operate-left {
+
+    .crop-group-operate-left {
       display: flex;
       gap: 15px;
     }
-    .plant-operate-right {
+    .crop-group-operate-right {
       margin-left: auto;
-      width: 300px;
     }
   }
 }

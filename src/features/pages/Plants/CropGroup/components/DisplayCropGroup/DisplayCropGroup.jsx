@@ -1,7 +1,7 @@
 import { Table } from 'antd'
-import { columns, data, onChange } from './DisplayAnimalGroupData'
+import { columns, data, onChange } from './DisplayCropGroupData'
 
-const DisplayAnimalGroup = () => {
+const DisplayCropGroup = () => {
   return (
     <Table
       columns={columns}
@@ -11,4 +11,4 @@ const DisplayAnimalGroup = () => {
     />
   )
 }
-export default DisplayAnimalGroup
+export default DisplayCropGroup
