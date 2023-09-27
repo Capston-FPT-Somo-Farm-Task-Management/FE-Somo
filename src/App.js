@@ -2,7 +2,6 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import SignIn from 'features/authentication/SignIn'
 import Register from 'features/authentication/Register'
 import Forgot from 'features/authentication/Forgot'
-import Schedule from 'features/pages/Schedule'
 import Task from 'features/pages/Task'
 import Home from 'features/pages/Home'
 import Animals from 'features/pages/Animals/Animals'
@@ -12,6 +11,7 @@ import { Layout } from 'antd'
 
 import Sidebar from 'common/components/Sidebar'
 import CropGroup from 'features/pages/Plants/CropGroup'
+import Schedule from 'features/pages/Schedule'
 
 function App() {
   const location = useLocation()

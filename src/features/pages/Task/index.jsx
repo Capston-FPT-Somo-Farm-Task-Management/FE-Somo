@@ -17,9 +17,6 @@ function Task() {
         <TabPane tab="Bảng" key="2">
           <Board />
         </TabPane>
-        <TabPane tab="Lịch" key="3">
-          <CalendarTask />
-        </TabPane>
       </Tabs>
     </div>
   )

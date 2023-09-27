@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap");
 body {
   box-sizing: border-box;
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #fff !important;
@@ -35,6 +35,9 @@ html {
 .content {
   padding: 20px;
   width: 100%;
+  h3 {
+    font-size: 24px;
+  }
 }
 @media screen and (min-width: 992px) {
   .ant-layout-sider {
@@ -46,4 +49,3 @@ html {
     bottom: 0;
   }
 }
-
