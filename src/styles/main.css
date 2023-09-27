@@ -40,6 +40,9 @@ html {
   padding: 20px;
   width: 100%;
 }
+.content h3 {
+  font-size: 24px;
+}
 
 @media screen and (min-width: 992px) {
   .ant-layout-sider {

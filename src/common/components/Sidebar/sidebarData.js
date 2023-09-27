@@ -21,10 +21,7 @@ export const menuItem = [
   getItem(
     <Link to="/schedule">Lịch trình</Link>,
     'sub1',
-    <FontAwesomeIcon icon={faCalendarDays} />,
-    null,
-    null,
-    '/schedule'
+    <FontAwesomeIcon icon={faCalendarDays} />
   ),
   getItem(
     <Link to="/task">Nhiệm vụ</Link>,
