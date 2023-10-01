@@ -1,6 +1,7 @@
 @import './styles/main.scss';
 @import './common/components/Header/header';
-@import './common/components/Sidebar/sidebar';
+@import "./common/components/Sidebar/components/SidebarComp/sideBarComp";
+@import "./common/components/Sidebar/sideBar";
 @import './features/pages/Task/task';
 @import './features/pages/Task/components/ModalTask/modalTask';
 @import './features/pages/Task/components/List/list';
