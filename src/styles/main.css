@@ -44,13 +44,20 @@ html {
   font-size: 24px;
 }
 
-@media screen and (min-width: 992px) {
-  .ant-layout-sider {
-    overflow: auto;
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
+.ant-layout {
+  background: #fff;
+}
+@media (max-width: 991px) {
+  .ant-layout {
+    display: block;
+  }
+}
+
+.site-layout {
+  margin-left: 200px;
+}
+@media (max-width: 991px) {
+  .site-layout {
+    margin: 0;
   }
 }/*# sourceMappingURL=main.css.map */

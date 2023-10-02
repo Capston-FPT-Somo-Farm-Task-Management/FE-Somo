@@ -1,0 +1,51 @@
+@import "../../../../../styles/Helper/mixin";
+.ant-layout-sider {
+  box-shadow: 3px 0px 2px 0 rgba(94, 98, 105, 0.2);
+  overflow: auto;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  .logoSomo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #f5f5f5;
+    padding: 10px 0px;
+    img {
+      width: 80%;
+    }
+  }
+}
+
+.header-tablet {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px;
+  border-bottom: 1px solid #f5f5f5;
+  .logoSomo {
+    width: 45%;
+
+    img {
+      width: 40%;
+
+      @include tablet {
+        width: 50%;
+      }
+      @include mobile {
+        width: 60%;
+      }
+      @include mobile-sm{
+        width: 70%;
+      }
+    }
+  }
+  .menu-popover {
+    width: 45%;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
