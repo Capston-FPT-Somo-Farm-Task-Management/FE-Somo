@@ -32,9 +32,6 @@ function App() {
           <Sidebar />
           <Layout
             className="site-layout"
-            style={{
-              marginLeft: 200,
-            }}
           >
             <Content
               style={{
