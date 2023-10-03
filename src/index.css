@@ -44,16 +44,24 @@ html {
   font-size: 24px;
 }
 
-@media screen and (min-width: 992px) {
-  .ant-layout-sider {
-    overflow: auto;
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
+.ant-layout {
+  background: #fff;
+}
+@media (max-width: 991px) {
+  .ant-layout {
+    display: block;
   }
 }
+
+.site-layout {
+  margin-left: 200px;
+}
+@media (max-width: 991px) {
+  .site-layout {
+    margin: 0;
+  }
+}
+
 .navBar {
   display: flex;
   justify-content: space-around;
@@ -82,16 +90,59 @@ html {
   font-size: 16px;
 }
 
-.sideBar .logo-somo {
+.ant-layout-sider {
+  box-shadow: 3px 0px 2px 0 rgba(94, 98, 105, 0.2);
+  overflow: auto;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+.ant-layout-sider .logoSomo {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 10px;
   border-bottom: 1px solid #f5f5f5;
-  padding-bottom: 10px;
+  padding: 10px 0px;
 }
-.sideBar .logo-somo img {
+.ant-layout-sider .logoSomo img {
   width: 80%;
+}
+
+.header-tablet {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px;
+  border-bottom: 1px solid #f5f5f5;
+}
+.header-tablet .logoSomo {
+  width: 45%;
+}
+.header-tablet .logoSomo img {
+  width: 40%;
+}
+@media (max-width: 991px) {
+  .header-tablet .logoSomo img {
+    width: 50%;
+  }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+  .header-tablet .logoSomo img {
+    width: 60%;
+  }
+}
+@media (max-width: 479px) {
+  .header-tablet .logoSomo img {
+    width: 70%;
+  }
+}
+.header-tablet .menu-popover {
+  width: 45%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .ant-modal {
