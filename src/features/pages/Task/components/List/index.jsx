@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ModalTask from "../ModalTask";
 import { Input, Space } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,6 +11,11 @@ import {
   CheckCircleOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
+import axios from "axios";
+import { useSelector, useDispatch } from 'react-redux';
+import { getTasks } from "features/slice/task/taskSlice";
+
+
 
 const items = [
   {
@@ -33,6 +38,14 @@ const items = [
 function List() {
   const { Search } = Input;
   const onSearch = (value, _e, info) => console.log(info?.source, value);
+
+  const task = useSelector((state) => state.task.data)
+  console.log(task);
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getTasks())
+  }, [])
   return (
     <div className="list">
       <div className="list-header">
