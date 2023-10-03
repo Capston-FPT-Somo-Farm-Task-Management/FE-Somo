@@ -15,7 +15,7 @@ import Schedule from "features/pages/Schedule";
 import { Content } from "antd/es/layout/layout";
 import React from "react";
 import Sider from "antd/es/layout/Sider";
-import { menuItem } from "common/components/Sidebar/components/SidebarComp/sidebarData";
+import { menuItem } from "common/components/Sidebar/sidebarData";
 
 function App() {
   const location = useLocation();
