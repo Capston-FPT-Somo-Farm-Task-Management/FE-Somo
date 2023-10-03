@@ -39,6 +39,8 @@ function Sidebar() {
           <Menu
             theme="light"
             mode="inline"
+            onOpenChange={onOpenChange}
+            openKeys={openKeys}
             defaultSelectedKeys={["4"]}
             items={menuItem}
             style={{ borderInlineEnd: 0 }}
