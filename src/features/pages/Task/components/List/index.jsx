@@ -12,8 +12,10 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
+import { useSelector, useDispatch } from 'react-redux';
+import { getTasks } from "features/slice/task/taskSlice";
 
-const url = "https://somofarmtaskmanagement.azurewebsites.net/api/FarmTask";
+
 
 const items = [
   {
@@ -37,16 +39,13 @@ function List() {
   const { Search } = Input;
   const onSearch = (value, _e, info) => console.log(info?.source, value);
 
-  const fetchData = async () => {
-    try {
-      const resp = await axios(url);
-      console.log(resp);
-    } catch (error) {}
-  };
+  const task = useSelector((state) => state.task.data)
+  console.log(task);
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    dispatch(getTasks())
+  }, [])
   return (
     <div className="list">
       <div className="list-header">

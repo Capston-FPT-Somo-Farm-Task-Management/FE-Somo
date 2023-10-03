@@ -2,7 +2,7 @@ import { Button, Form, Input, Modal, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAreas } from 'features/slice/area/areaSlice'
 import { useEffect } from 'react'
-import { getZoneByArea } from 'features/slice/zone/zoneSlice'
+import { getZoneByAreaPlant } from 'features/slice/zone/zoneSlice'
 import { useState } from 'react'
 import { getPlantType } from 'features/slice/plantType/plantTypeSlice'
 import { createPlant } from 'features/slice/plant/plantSlice'
@@ -25,7 +25,7 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
 
   useEffect(() => {
     if (selectedAreaId) {
-      dispatch(getZoneByArea(selectedAreaId))
+      dispatch(getZoneByAreaPlant(selectedAreaId))
     }
   }, [selectedAreaId])
 
@@ -36,7 +36,6 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
   const cancelModal = () => {
     closeModal()
   }
-
   const onFinish = (values) => {
     const finalValues = {
       ...values,

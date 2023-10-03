@@ -23,10 +23,8 @@ export const createPlant = createAsyncThunk(
       const response = await axios.post(baseUrl + '/Plant', data, {
         headers: {
           'Content-Type': 'application/json',
-        },
-        // body: JSON.stringify(data),
+        },     
       })
-      // const result = await response.json()
       return response.data
     } catch (error) {
       rejectWithValue(error)
