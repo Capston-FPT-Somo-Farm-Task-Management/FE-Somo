@@ -49,7 +49,6 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
   const cancelModal = () => {
     closeModal()
   }
-
   const onFinish = (values) => {
     const finalValues = {
       ...values,
