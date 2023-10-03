@@ -6,15 +6,21 @@ import { getZoneByAreaPlant } from 'features/slice/zone/zoneSlice'
 import { useState } from 'react'
 import { getPlantType } from 'features/slice/plantType/plantTypeSlice'
 import { createPlant } from 'features/slice/plant/plantSlice'
+import { getFieldByZonePlant } from 'features/slice/field/fieldSlice'
 
 const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
   const [selectedAreaId, setSelectedAreaId] = useState(null)
+  const [selectedZoneId, setSelectedZoneId] = useState(null)
 
   const area = useSelector((state) => state.area.data)
   const zone = useSelector((state) => state.zone.data)
+  const field = useSelector((state) => state.field.data)
+
   const plantType = useSelector((state) => state.plantType.data)
   const dataPlantType = plantType.data
+  
   const dataZone = zone.data
+  const dataField = field.data
 
   const dispatch = useDispatch()
 
@@ -27,10 +33,17 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
     if (selectedAreaId) {
       dispatch(getZoneByAreaPlant(selectedAreaId))
     }
-  }, [selectedAreaId])
+    if (selectedZoneId) {
+      dispatch(getFieldByZonePlant(selectedZoneId))
+    }
+  }, [selectedAreaId, selectedZoneId])
 
-  const handleSelectChange = (value) => {
+  const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value)
+  }
+
+  const handleSelectZoneChange = (value) => {
+    setSelectedZoneId(value)
   }
 
   const cancelModal = () => {
@@ -41,15 +54,15 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
       ...values,
       height: parseFloat(values.height),
     }
-    console.log(finalValues)
     dispatch(createPlant(finalValues))
   }
-  
+
   return (
     <>
       <Modal
         title="Tạo mới cây trồng"
         open={isModalOpen}
+        onCancel={closeModal}
         footer={[
           <Button form="createPlant" type="dashed" htmlType="reset">
             Làm mới
@@ -116,17 +129,33 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
                   label: item.name,
                   value: item.id,
                 }))}
-                onChange={handleSelectChange}
+                onChange={handleSelectAreaChange}
               ></Select>
             </Form.Item>
 
             {/* Zone */}
-            <Form.Item label="Vùng" required name="fieldId">
+            <Form.Item label="Vùng" required>
               <Select
                 placeholder="Chọn vùng"
                 options={
                   Array.isArray(dataZone)
                     ? dataZone.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }))
+                    : []
+                }
+                onChange={handleSelectZoneChange}
+              ></Select>
+            </Form.Item>
+
+            {/* Field */}
+            <Form.Item label="Vườn" required name="fieldId">
+              <Select
+                placeholder="Chọn vườn"
+                options={
+                  Array.isArray(dataField)
+                    ? dataField.map((item) => ({
                         label: item.name,
                         value: item.id,
                       }))

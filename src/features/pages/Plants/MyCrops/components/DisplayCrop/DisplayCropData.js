@@ -13,13 +13,13 @@ export const columns = [
     key: 'habitantTypeName',
   },
   {
-    title: 'ID',
-    dataIndex: 'id',
-    key: 'id',
-    sorter: (a, b) => a.id - b.id,
+    title: 'Mã cây trồng',
+    dataIndex: 'externalId',
+    key: 'externalId',
+    sorter: (a, b) => a.externalId - b.externalId,
   },
   {
-    title: 'Khu đất',
+    title: 'Vườn',
     dataIndex: 'fieldName',
     key: 'fieldName',
   },
