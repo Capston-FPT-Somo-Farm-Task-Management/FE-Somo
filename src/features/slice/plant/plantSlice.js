@@ -24,9 +24,8 @@ export const createPlant = createAsyncThunk(
         headers: {
           'Content-Type': 'application/json',
         },
-        // body: JSON.stringify(data),
       })
-      // const result = await response.json()
+      console.log(response.data)
       return response.data
     } catch (error) {
       rejectWithValue(error)

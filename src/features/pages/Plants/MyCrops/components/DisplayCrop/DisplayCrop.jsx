@@ -1,11 +1,12 @@
 import { Table } from 'antd'
 import { columns, onChange } from './DisplayCropData'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { getPlants } from 'features/slice/plant/plantSlice'
 
 const DisplayCrop = () => {
   const plant = useSelector((state) => state.plant.data)
+  console.log(plant)
 
   const dispatch = useDispatch()
 
