@@ -1,44 +1,18 @@
 import { Button, Modal, Steps, message, theme } from 'antd'
 import React, { useState } from 'react'
 import Search from 'antd/es/input/Search'
-import { stepsType } from 'features/pages/Animals/Animals/components/AddAndSearchAnimals/AddAnimalData'
+import { stepsType } from 'features/pages/Animals/Animals/components/AddAnimalAndAnimalType/AddAnimalAndAnimalTypeData'
+import FirstStepAddAnimalGroup from '../FirstStepAddAnimalGroup/FirstStepAddAnimalGroup'
 
 const AddAndSearchAnimalGroup = () => {
-  const [isModalOpenType, setIsModalOpenType] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const showModalType = () => {
-    setIsModalOpenType(true)
+  const openModal = () => {
+    setIsModalOpen(true)
   }
 
-  const handleOkAnimalGroup = () => {
-    setIsModalOpenType(false)
-  }
-  const handleCancelAnimalGroup = () => {
-    setIsModalOpenType(false)
-  }
-
-  // Steps
-  const [currentType, setCurrentType] = useState(0)
-
-  const nextType = () => {
-    setCurrentType(currentType + 1)
-  }
-  const prevType = () => {
-    setCurrentType(currentType - 1)
-  }
-  const itemsType = stepsType.map((itemType) => ({
-    key: itemType.title,
-    title: itemType.title,
-  }))
-
-  const { token } = theme.useToken()
-  const contentStyle = {
-    lineHeight: '400px',
-    textAlign: 'center',
-    color: token.colorTextTertiary,
-    backgroundColor: token.colorFillAlter,
-    borderRadius: token.borderRadiusLG,
-    marginTop: 16,
+  const closeModal = () => {
+    setIsModalOpen(false)
   }
 
   return (
@@ -48,48 +22,14 @@ const AddAndSearchAnimalGroup = () => {
 
         <div className="animal-group-operate">
           <div className="animal-group-operate-left">
-            <Button type="primary" onClick={showModalType}>
+            <Button type="primary" onClick={openModal}>
               Thêm chuồng
             </Button>
 
-            <Modal
-              title="Tạo mới"
-              open={isModalOpenType}
-              onOk={handleOkAnimalGroup}
-              onCancel={handleCancelAnimalGroup}
-            >
-              <Steps size="large" current={currentType} items={itemsType} />
-              <div style={contentStyle}>{stepsType[currentType].content}</div>
-              <div
-                style={{
-                  marginTop: 24,
-                }}
-              >
-                {currentType < stepsType.length - 1 && (
-                  <Button type="primary" onClick={() => nextType()}>
-                    Next
-                  </Button>
-                )}
-                {currentType === stepsType.length - 1 && (
-                  <Button
-                    type="primary"
-                    onClick={() => message.success('Processing complete!')}
-                  >
-                    Done
-                  </Button>
-                )}
-                {currentType > 0 && (
-                  <Button
-                    style={{
-                      margin: '0 8px',
-                    }}
-                    onClick={() => prevType()}
-                  >
-                    Previous
-                  </Button>
-                )}
-              </div>
-            </Modal>
+            <FirstStepAddAnimalGroup
+              isModalOpen={isModalOpen}
+              closeModal={closeModal}
+            />
           </div>
 
           <div className="animal-group-operate-right">

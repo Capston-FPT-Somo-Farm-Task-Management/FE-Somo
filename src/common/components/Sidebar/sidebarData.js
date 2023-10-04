@@ -5,6 +5,8 @@ import {
   faMap,
   faCalendarDays,
   faCircleCheck,
+  faClone,
+  faSquare,
 } from '@fortawesome/free-regular-svg-icons'
 import { Link } from 'react-router-dom'
 
@@ -40,7 +42,17 @@ export const menuItem = [
     getItem('Vị trí trồng trọt', '7'),
     getItem('So sánh năng suất', '8'),
   ]),
-  getItem('Bản đồ trang trại', 'sub5', <FontAwesomeIcon icon={faMap} />),
+  getItem(
+    <Link to="/area">Khu vực</Link>,
+    'sub5',
+    <FontAwesomeIcon icon={faClone} />
+  ),
+  getItem(
+    <Link to="/zone">Vùng</Link>,
+    'sub6',
+    <FontAwesomeIcon icon={faSquare} />
+  ),
+  getItem('Bản đồ trang trại', 'sub7', <FontAwesomeIcon icon={faMap} />),
 ]
 
 export const rootSubmenuKeys = ['sub3', 'sub4']

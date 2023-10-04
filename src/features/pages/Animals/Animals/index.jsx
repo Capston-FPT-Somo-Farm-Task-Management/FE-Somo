@@ -1,12 +1,12 @@
 import React from 'react'
 
-import AddAndSearchAnimals from './components/AddAndSearchAnimals/AddAndSearchAnimals'
 import DisplayAnimal from './components/DisplayAnimal/DisplayAnimal'
+import AddAnimalAndAnimalType from './components/AddAnimalAndAnimalType/AddAnimalAndAnimalType'
 
 const Animals = () => {
   return (
     <>
-      <AddAndSearchAnimals />
+      <AddAnimalAndAnimalType />
       <DisplayAnimal />
     </>
   )
