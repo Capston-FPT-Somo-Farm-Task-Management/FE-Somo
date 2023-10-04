@@ -6,10 +6,8 @@
   }
   .form-right {
     width: 45%;
-    .description {
-      .ql-editor {
-        min-height: 150px;
-      }
+    .ql-editor {
+      min-height: 150px;
     }
   }
 }
@@ -29,20 +27,18 @@
   }
 }
 .task-specific-plant {
-    display: flex;
-    justify-content: space-around;
-    .form-left {
-      width: 45%;
-    }
-    .form-right {
-      width: 45%;
-      .description {
-        .ql-editor {
-          min-height: 150px;
-        }
-      }
+  display: flex;
+  justify-content: space-around;
+  .form-left {
+    width: 45%;
+  }
+  .form-right {
+    width: 45%;
+    .ql-editor {
+      min-height: 150px;
     }
   }
+}
 
 .task-whole-garden {
   display: flex;
@@ -52,10 +48,8 @@
   }
   .form-right {
     width: 45%;
-    .description {
-      .ql-editor {
-        min-height: 150px;
-      }
+    .ql-editor {
+      min-height: 150px;
     }
   }
 }
