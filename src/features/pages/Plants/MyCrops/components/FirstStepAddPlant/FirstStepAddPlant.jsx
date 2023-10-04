@@ -1,26 +1,26 @@
-import { Button, Form, Input, Modal, Select } from 'antd'
+import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAreas } from 'features/slice/area/areaSlice'
 import { useEffect } from 'react'
-import { getZoneByAreaPlant } from 'features/slice/zone/zoneSlice'
 import { useState } from 'react'
 import { getPlantType } from 'features/slice/plantType/plantTypeSlice'
 import { createPlant } from 'features/slice/plant/plantSlice'
-import { getFieldByZonePlant } from 'features/slice/field/fieldSlice'
+import { getZoneByAreaPlant } from 'features/slice/zone/zonePlantSlice'
+import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
 
 const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
   const [selectedAreaId, setSelectedAreaId] = useState(null)
   const [selectedZoneId, setSelectedZoneId] = useState(null)
 
   const area = useSelector((state) => state.area.data)
-  const zone = useSelector((state) => state.zone.data)
-  const field = useSelector((state) => state.field.data)
+  const zonePlant = useSelector((state) => state.zonePlant.data)
+  const fieldByZone = useSelector((state) => state.fieldByZone.data)
 
   const plantType = useSelector((state) => state.plantType.data)
   const dataPlantType = plantType.data
-  
-  const dataZone = zone.data
-  const dataField = field.data
+
+  const dataZonePlant = zonePlant.data
+  const dataFieldByZone = fieldByZone.data
 
   const dispatch = useDispatch()
 
@@ -34,7 +34,7 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
       dispatch(getZoneByAreaPlant(selectedAreaId))
     }
     if (selectedZoneId) {
-      dispatch(getFieldByZonePlant(selectedZoneId))
+      dispatch(getFieldByZone(selectedZoneId))
     }
   }, [selectedAreaId, selectedZoneId])
 
@@ -50,11 +50,8 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
     closeModal()
   }
   const onFinish = (values) => {
-    const finalValues = {
-      ...values,
-      height: parseFloat(values.height),
-    }
-    dispatch(createPlant(finalValues))
+    dispatch(createPlant(values))
+    closeModal()
   }
 
   return (
@@ -89,17 +86,44 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
         >
           <div className="form-left">
             {/* ID Plant */}
-            <Form.Item label="Mã cây trồng" required name="externalId">
+            <Form.Item
+              label="Mã cây trồng"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập mã cây trồng',
+                },
+              ]}
+              name="externalId"
+            >
               <Input placeholder="Nhập mã cây trồng" />
             </Form.Item>
 
             {/* Plant  Name */}
-            <Form.Item label="Tên cây trồng" required name="name">
+            <Form.Item
+              label="Tên cây trồng"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập tên cây trồng',
+                },
+              ]}
+              name="name"
+            >
               <Input placeholder="Nhập tên cây trồng" />
             </Form.Item>
 
             {/* Plant Type */}
-            <Form.Item label="Loại cây" required name="habitantTypeId">
+            <Form.Item
+              label="Loại cây"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn loại cây trồng',
+                },
+              ]}
+              name="habitantTypeId"
+            >
               <Select
                 placeholder="Chọn loại cây"
                 options={dataPlantType?.map((type) => ({
@@ -112,17 +136,29 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
             {/* Height Name */}
             <Form.Item
               label="Chiều cao cây trồng (m)"
-              required
-              rules={{ type: 'number' }}
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập chiều cao cây trồng',
+                },
+              ]}
               name="height"
             >
-              <Input placeholder="Nhập chiều cao" type="number" min={0} />
+              <InputNumber style={{ width: '100%' }} min={0} />
             </Form.Item>
           </div>
 
           <div className="form-right">
             {/* Area */}
-            <Form.Item label="Khu vực" required>
+            <Form.Item
+              label="Khu vực"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn khu vực',
+                },
+              ]}
+            >
               <Select
                 placeholder="Chọn khu vực"
                 options={area?.map((item) => ({
@@ -134,12 +170,20 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
             </Form.Item>
 
             {/* Zone */}
-            <Form.Item label="Vùng" required>
+            <Form.Item
+              label="Vùng"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn vùng',
+                },
+              ]}
+            >
               <Select
                 placeholder="Chọn vùng"
                 options={
-                  Array.isArray(dataZone)
-                    ? dataZone.map((item) => ({
+                  Array.isArray(dataZonePlant)
+                    ? dataZonePlant.map((item) => ({
                         label: item.name,
                         value: item.id,
                       }))
@@ -150,12 +194,21 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
             </Form.Item>
 
             {/* Field */}
-            <Form.Item label="Vườn" required name="fieldId">
+            <Form.Item
+              label="Vườn"
+              name="fieldId"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn vườn',
+                },
+              ]}
+            >
               <Select
                 placeholder="Chọn vườn"
                 options={
-                  Array.isArray(dataField)
-                    ? dataField.map((item) => ({
+                  Array.isArray(dataFieldByZone)
+                    ? dataFieldByZone.map((item) => ({
                         label: item.name,
                         value: item.id,
                       }))

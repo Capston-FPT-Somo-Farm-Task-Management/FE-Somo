@@ -12,19 +12,6 @@ export const getZones = createAsyncThunk('zones/getZones', async () => {
   }
 })
 
-export const getZoneByAreaPlant = createAsyncThunk(
-  'zones/getZoneByAreaPlant',
-  async (areaId) => {
-    try {
-      const { data } = await axios.get(baseUrl + `/Zone/AreaPlant(${areaId})`)
-      console.log(data)
-      return data
-    } catch (error) {
-      console.log(error)
-    }
-  }
-)
-
 const zoneSlice = createSlice({
   name: 'zone',
   initialState: {
@@ -43,20 +30,6 @@ const zoneSlice = createSlice({
         state.data = action.payload
       })
       .addCase(getZones.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
-        state.data = []
-      })
-
-      .addCase(getZoneByAreaPlant.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(getZoneByAreaPlant.fulfilled, (state, action) => {
-        state.loading = false
-        state.error = ''
-        state.data = action.payload
-      })
-      .addCase(getZoneByAreaPlant.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
         state.data = []
