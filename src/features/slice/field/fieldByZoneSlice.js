@@ -2,11 +2,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { baseUrl } from 'features/api/baseUrl'
 
-export const getZoneByAreaPlant = createAsyncThunk(
-  'zonePlant/getZoneByAreaPlant',
-  async (areaId) => {
+export const getFieldByZone = createAsyncThunk(
+  'fieldPlant/getFieldByZonePlant',
+  async (zoneId) => {
     try {
-      const { data } = await axios.get(baseUrl + `/Zone/AreaPlant(${areaId})`)
+      const { data } = await axios.get(baseUrl + `/Field/Zone(${zoneId})`)
       console.log(data)
       return data
     } catch (error) {
@@ -15,8 +15,8 @@ export const getZoneByAreaPlant = createAsyncThunk(
   }
 )
 
-const zonePlantSlice = createSlice({
-  name: 'zonePlant',
+const fieldByZoneSlice = createSlice({
+  name: 'fieldByZone',
   initialState: {
     data: [],
     loading: false,
@@ -24,16 +24,16 @@ const zonePlantSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(getZoneByAreaPlant.pending, (state) => {
+
+      .addCase(getFieldByZone.pending, (state) => {
         state.loading = true
       })
-      .addCase(getZoneByAreaPlant.fulfilled, (state, action) => {
+      .addCase(getFieldByZone.fulfilled, (state, action) => {
         state.loading = false
         state.error = ''
         state.data = action.payload
-        console.log(action.payload)
       })
-      .addCase(getZoneByAreaPlant.rejected, (state, action) => {
+      .addCase(getFieldByZone.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
         state.data = []
@@ -41,4 +41,4 @@ const zonePlantSlice = createSlice({
   },
 })
 
-export default zonePlantSlice.reducer
+export default fieldByZoneSlice.reducer
