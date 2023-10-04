@@ -20,6 +20,7 @@ import "react-quill/dist/quill.snow.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getAreas } from "../../../../../../slice/area/areaSlice";
 import { getZoneByAreaPlant } from "../../../../../../slice/zone/zonePlantSlice";
+import { getZoneByAreaLivestock } from "../../../../../../slice/zone/zoneLivestockSlice";
 
 function ThirdModal({ option }) {
   const [description, setDescription] = useState("");
@@ -31,7 +32,7 @@ function ThirdModal({ option }) {
   const dataPlantZone = zonePlant.data;
   const zoneLivestock = useSelector((state) => state.zoneLivestock.data);
   const dataLivestockZone = zoneLivestock.data;
-  console.log(dataPlantZone);
+  console.log(dataLivestockZone);
   const { RangePicker } = DatePicker;
   const onRangeChange = (dates, dateStrings) => {
     if (dates) {
@@ -51,6 +52,7 @@ function ThirdModal({ option }) {
   useEffect(() => {
     if (selectedAreaId) {
       dispatch(getZoneByAreaPlant(selectedAreaId));
+      dispatch(getZoneByAreaLivestock(selectedAreaId));
     }
   }, [selectedAreaId]);
 
