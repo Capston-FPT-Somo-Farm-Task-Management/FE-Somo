@@ -581,7 +581,7 @@ html {
 .task-specific-plant .form-right {
   width: 45%;
 }
-.task-specific-plant .form-right .description .ql-editor {
+.task-specific-plant .form-right .ql-editor {
   min-height: 150px;
 }
 
@@ -595,7 +595,7 @@ html {
 .task-whole-garden .form-right {
   width: 45%;
 }
-.task-whole-garden .form-right .description .ql-editor {
+.task-whole-garden .form-right .ql-editor {
   min-height: 150px;
 }
 
