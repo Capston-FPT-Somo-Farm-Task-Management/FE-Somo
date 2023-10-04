@@ -6,7 +6,6 @@ import { getPlants } from 'features/slice/plant/plantSlice'
 
 const DisplayCrop = () => {
   const plant = useSelector((state) => state.plant.data)
-  console.log(plant)
 
   const dispatch = useDispatch()
 
