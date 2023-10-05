@@ -34,7 +34,7 @@ const FirstStepAddAnimalGroup = ({ isModalOpen, closeModal }) => {
   const onFinish = (values) => {
     const finalValues = {
       ...values,
-      status: 1,
+      status: 2,
     }
     console.log(finalValues)
     dispatch(createField(finalValues))
