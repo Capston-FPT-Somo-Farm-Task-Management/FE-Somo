@@ -6,6 +6,12 @@ import areaReducer from './slice/area/areaSlice'
 import zoneReducer from './slice/zone/zoneSlice'
 import zonePlantReducer from './slice/zone/zonePlantSlice'
 import zoneAnimalReducer from './slice/zone/zoneAnimalSlice'
+import priorityReducer from "./slice/priority/prioritySlice"
+import taskTypePlantReducer from './slice/task/taskTypePlant'
+import taskTypeLivestockReducer from './slice/task/taskTypeAnimal'
+import memberReducer from "./slice/member/memberSlice"
+import employeeReducer from "./slice/employee/employeeSlice"
+import materialReducer from "./slice/material/materialSlice"
 import fieldReducer from './slice/field/fieldSlice'
 import fieldPlantReducer from './slice/field/fieldPlantSlice'
 import fieldAnimalReducer from './slice/field/fieldAnimalSlice'
@@ -21,6 +27,12 @@ export const store = configureStore({
     zone: zoneReducer,
     zonePlant: zonePlantReducer,
     zoneAnimal: zoneAnimalReducer,
+    priority: priorityReducer,
+    taskTypePlant: taskTypePlantReducer,
+    taskTypeLivestock: taskTypeLivestockReducer,
+    member: memberReducer,
+    employee: employeeReducer,
+    material: materialReducer,
     field: fieldReducer,
     fieldPlant: fieldPlantReducer,
     fieldAnimal: fieldAnimalReducer,
