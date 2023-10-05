@@ -28,6 +28,9 @@ function ModalTask() {
     Modal.success({
       title: "Bạn đã thêm thành công",
       content: "Your task has been processed successfully.",
+      onOk: () => {
+        window.location.reload(); // Tải lại trang khi người dùng ấn nút "OK" trên modal
+      },
     });
   };
 
@@ -79,7 +82,7 @@ function ModalTask() {
             </Button>
           )}
           {currentStep === steps.length - 1 && (
-            <Button type="primary" onClick={handleFinish}>
+            <Button type="primary" onClick={handleFinish} form="createTask" htmlType="submit">
               Thêm
             </Button>
           )}

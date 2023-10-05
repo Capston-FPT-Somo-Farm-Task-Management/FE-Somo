@@ -34,6 +34,8 @@ const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
   const dataZoneAnimal = zoneAnimal.data
   const dataFieldByZone = fieldByZone.data
 
+  console.log(dataFieldByZone);
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -70,6 +72,7 @@ const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
       ),
     }
     dispatch(createAnimal(finalValues))
+    
     closeModal()
   }
 
