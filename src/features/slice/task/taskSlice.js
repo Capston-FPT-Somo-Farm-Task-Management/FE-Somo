@@ -4,7 +4,7 @@ import { baseUrl } from 'features/api/baseUrl'
 
 export const getTasks = createAsyncThunk('tasks/getTasks', async () => {
     try {
-      const { data } = await axios.get(baseUrl + '/FarmTask', {
+      const { data } = await axios.get(baseUrl + '/FarmTask/TaskActive', {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -17,20 +17,23 @@ export const getTasks = createAsyncThunk('tasks/getTasks', async () => {
 
   export const createTask = createAsyncThunk(
     'tasks/createTask',
-    async (data, { rejectWithValue }) => {
-      console.log(data)
+    async (data) => {
+      console.log(data);
+      console.log(data.farmTask.memberId);
       try {
-        const response = await axios.post(baseUrl + '/FarmTask', data, {
+        const response = await axios.post(baseUrl + `/FarmTask?memberId=${data.farmTask.memberId}`, data, {
           headers: {
             'Content-Type': 'application/json',
           },
-        })
-        return response.data
+        });
+        console.log(response);
+        console.log(response.data);
+        return response.data;
       } catch (error) {
-        rejectWithValue(error)
+        throw error; 
       }
     }
-  )
+  );
 
   const taskSlice = createSlice({
     name: 'task',
@@ -59,8 +62,13 @@ export const getTasks = createAsyncThunk('tasks/getTasks', async () => {
           state.loading = true
         })
         .addCase(createTask.fulfilled, (state, action) => {
+          if (Array.isArray(state.data)) {
+            state.data.push(action.payload.task) 
+          } else {
+            state.data = [action.payload.task]
+          }
+        
           state.loading = false
-          state.data.push(action.payload)
         })
         .addCase(createTask.rejected, (state, action) => {
           state.loading = false

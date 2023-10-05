@@ -158,63 +158,7 @@ html {
 .list .list-header {
   display: flex;
   justify-content: space-between;
-}
-.list .to-do-list {
-  padding-top: 15px;
-}
-.list .to-do-list .table {
-  width: 100%;
-  max-width: 100%;
-}
-.list .to-do-list .table thead th {
-  text-transform: capitalize;
-  font-size: 14px;
-  font-weight: bold;
-  color: #393f44;
-  padding: 10px;
-  border-top: 1px solid #e3e3e3;
-  border-bottom: 2px solid #e3e3e3;
-  background: #fff;
-  text-align: left;
-}
-.list .to-do-list .table tbody td {
-  padding: 10px;
-  min-height: 36px;
-  vertical-align: middle;
-}
-.list .to-do-list .table tbody .task-color {
-  width: 2px;
-  padding: 0;
-}
-.list .to-do-list .table tbody .task-complete-icon svg {
-  font-size: 26px;
-  text-decoration: none;
-  font-weight: bold;
-  color: #e3e3e3;
-}
-.list .to-do-list .table tbody .main-col {
-  min-width: 350px;
-}
-.list .to-do-list .table tbody .main-col .sub-text {
-  color: #393f44;
-  font-size: 0.7em;
-}
-.list .to-do-list .table tbody .show-print .priority {
-  font-weight: normal;
-  padding: 3px 6px;
-  border-radius: 12px;
-  font-size: 65%;
-  margin-left: 2px;
-  margin-right: 2px;
-  background-color: #f0ad4e;
-  line-height: 1;
-  color: #fff;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-}
-.list .to-do-list .table tbody .grid-actions svg {
-  color: #393f44;
+  margin-bottom: 10px;
 }
 
 .first-modal {

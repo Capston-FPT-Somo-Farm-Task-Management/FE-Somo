@@ -6,7 +6,7 @@ export const getFieldByZone = createAsyncThunk(
   'fieldPlant/getFieldByZonePlant',
   async (zoneId) => {
     try {
-      const { data } = await axios.get(baseUrl + `/Field/Zone(${zoneId})`)
+      const { data } = await axios.get(baseUrl + `/Field/Active/Zone(${zoneId})`)
       console.log(data)
       return data
     } catch (error) {
