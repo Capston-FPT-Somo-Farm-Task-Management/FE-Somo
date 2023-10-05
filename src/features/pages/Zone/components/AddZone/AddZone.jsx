@@ -1,9 +1,9 @@
 import { Button } from 'antd'
-import React, { useState } from 'react'
 import Search from 'antd/es/input/Search'
-import FirstStepAddAnimalGroup from '../FirstStepAddAnimalGroup/FirstStepAddAnimalGroup'
+import { useState } from 'react'
+import FormAddZone from '../FormAddZone/FormAddZone'
 
-const AddAndSearchAnimalGroup = () => {
+const AddZone = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => {
@@ -17,18 +17,14 @@ const AddAndSearchAnimalGroup = () => {
   return (
     <>
       <div className="animal-group-content content">
-        <h3>Chuồng</h3>
+        <h3>Vùng</h3>
 
         <div className="animal-group-operate">
           <div className="animal-group-operate-left">
             <Button type="primary" onClick={openModal}>
-              Thêm chuồng
+              Thêm vùng
             </Button>
-
-            <FirstStepAddAnimalGroup
-              isModalOpen={isModalOpen}
-              closeModal={closeModal}
-            />
+            <FormAddZone isModalOpen={isModalOpen} closeModal={closeModal} />
           </div>
 
           <div className="animal-group-operate-right">
@@ -46,4 +42,4 @@ const AddAndSearchAnimalGroup = () => {
     </>
   )
 }
-export default AddAndSearchAnimalGroup
+export default AddZone
