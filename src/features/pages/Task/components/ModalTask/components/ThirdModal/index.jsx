@@ -5,7 +5,7 @@ import "react-quill/dist/quill.snow.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getAreas } from "../../../../../../slice/area/areaSlice";
 import { getZoneByAreaPlant } from "../../../../../../slice/zone/zonePlantSlice";
-import { getZoneByAreaLivestock } from "../../../../../../slice/zone/zoneLivestockSlice";
+import { getZoneByAreaAnimal } from "features/slice/zone/zoneAnimalSlice";
 import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
 import { getTaskTypePlant } from "features/slice/task/taskTypePlant";
 import { getTaskTypeLivestock } from "features/slice/task/taskTypeAnimal";
@@ -22,8 +22,8 @@ function ThirdModal({ option }) {
   const zonePlant = useSelector((state) => state.zonePlant.data);
   const dataPlantZone = zonePlant.data;
 
-  const zoneLivestock = useSelector((state) => state.zoneLivestock.data);
-  const dataLivestockZone = zoneLivestock.data;
+  const zoneAnimal = useSelector((state) => state.zoneAnimal.data);
+  const dataAnimalZone = zoneAnimal.data;
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
   const dataFieldByZone = fieldByZone.data;
@@ -50,14 +50,14 @@ function ThirdModal({ option }) {
   const { RangePicker } = DatePicker;
   const onRangeChange = (dates, dateStrings) => {
     if (dates) {
-      console.log("From: ", dates[0], ", to: ", dates[1]);
-      console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
+      console.log('From: ', dates[0], ', to: ', dates[1])
+      console.log('From: ', dateStrings[0], ', to: ', dateStrings[1])
     } else {
-      console.log("Clear");
+      console.log('Clear')
     }
-  };
+  }
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getAreas());
@@ -70,8 +70,8 @@ function ThirdModal({ option }) {
 
   useEffect(() => {
     if (selectedAreaId) {
-      dispatch(getZoneByAreaPlant(selectedAreaId));
-      dispatch(getZoneByAreaLivestock(selectedAreaId));
+      dispatch(getZoneByAreaPlant(selectedAreaId))
+      dispatch(getZoneByAreaAnimal(selectedAreaId))
     }
     if (selectedZoneId) {
       dispatch(getFieldByZone(selectedZoneId));
@@ -86,8 +86,8 @@ function ThirdModal({ option }) {
   };
 
   const handleChange = (value) => {
-    console.log(`selected ${value}`);
-  };
+    console.log(`selected ${value}`)
+  }
 
   if (option === "specificAnimal") {
     return (
@@ -106,7 +106,7 @@ function ThirdModal({ option }) {
           <Form.Item label="Vùng" required>
             <Select
               onChange={handleSelectZoneChange}
-              options={dataLivestockZone?.map((item) => ({
+              options={dataAnimalZone?.map((item) => ({
                 label: item.name,
                 value: item.id,
               }))}
@@ -191,8 +191,8 @@ function ThirdModal({ option }) {
           </Form.Item>
         </div>
       </Form>
-    );
-  } else if (option === "wholeBarn") {
+    )
+  } else if (option === 'wholeBarn') {
     return (
       <Form layout="vertical" className="task-whole-barn">
         <div className="form-left">
@@ -209,7 +209,7 @@ function ThirdModal({ option }) {
           <Form.Item label="Vùng" required>
             <Select
               onChange={handleSelectZoneChange}
-              options={dataLivestockZone?.map((item) => ({
+              options={dataAnimalZone?.map((item) => ({
                 label: item.name,
                 value: item.id,
               }))}
@@ -286,8 +286,8 @@ function ThirdModal({ option }) {
           </Form.Item>
         </div>
       </Form>
-    );
-  } else if (option === "specificPlant") {
+    )
+  } else if (option === 'specificPlant') {
     return (
       <div>
         <Form layout="vertical" className="task-specific-plant">
@@ -330,7 +330,7 @@ function ThirdModal({ option }) {
                 showTime
                 format="DD/MM/YYYY HH:mm"
                 onChange={onRangeChange}
-                placeholder={["Ngày giờ bắt đầu", "Ngày giờ kết thúc"]}
+                placeholder={['Ngày giờ bắt đầu', 'Ngày giờ kết thúc']}
               />
             </Form.Item>
             <Form.Item label="Nhắc lại sau">
@@ -482,9 +482,9 @@ function ThirdModal({ option }) {
           </Form.Item>
         </div>
       </Form>
-    );
+    )
   }
-  return null;
+  return null
 }
 
-export default ThirdModal;
+export default ThirdModal

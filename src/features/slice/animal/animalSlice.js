@@ -20,7 +20,7 @@ export const createAnimal = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     console.log(data)
     try {
-      const response = await axios.post(baseUrl + '/Animal', data, {
+      const response = await axios.post(baseUrl + '/Livestock', data, {
         headers: {
           'Content-Type': 'application/json',
         },

@@ -81,7 +81,6 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
           layout="vertical"
           className="first-step-plant"
           id="createPlant"
-          initialValues={{ height: 0 }}
           onFinish={onFinish}
         >
           <div className="form-left">
@@ -144,7 +143,7 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
               ]}
               name="height"
             >
-              <InputNumber style={{ width: '100%' }} min={0} />
+              <InputNumber min={0} />
             </Form.Item>
           </div>
 

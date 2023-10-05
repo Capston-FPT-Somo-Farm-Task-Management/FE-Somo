@@ -2,7 +2,7 @@ import { Space } from 'antd'
 
 export const columns = [
   {
-    title: 'Tên cây',
+    title: 'Tên cây trồng',
     dataIndex: 'name',
     key: 'name',
     render: (text) => <h4>{text}</h4>,
