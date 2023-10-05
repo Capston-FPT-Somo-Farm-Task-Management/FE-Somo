@@ -16,7 +16,7 @@ export const getTasks = createAsyncThunk('tasks/getTasks', async () => {
   })
 
   export const createTask = createAsyncThunk(
-    'plants/createTask',
+    'tasks/createTask',
     async (data, { rejectWithValue }) => {
       console.log(data)
       try {
