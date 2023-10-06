@@ -27,14 +27,10 @@ const FirstStepAddCropGroup = ({ isModalOpen, closeModal }) => {
     setSelectedAreaId(value)
   }
 
-  const cancelModal = () => {
-    closeModal()
-  }
-
   const onFinish = (values) => {
     const finalValues = {
       ...values,
-      status: 1,
+      status: 0,
     }
     dispatch(createField(finalValues))
     closeModal()
@@ -54,7 +50,7 @@ const FirstStepAddCropGroup = ({ isModalOpen, closeModal }) => {
             form="createCropGroup"
             type="primary"
             danger
-            onClick={cancelModal}
+            onClick={closeModal}
           >
             Huỷ
           </Button>,

@@ -27,14 +27,10 @@ const FirstStepAddAnimalGroup = ({ isModalOpen, closeModal }) => {
     setSelectedAreaId(value)
   }
 
-  const cancelModal = () => {
-    closeModal()
-  }
-
   const onFinish = (values) => {
     const finalValues = {
       ...values,
-      status: 2,
+      status: 1,
     }
     console.log(finalValues)
     dispatch(createField(finalValues))
@@ -55,7 +51,7 @@ const FirstStepAddAnimalGroup = ({ isModalOpen, closeModal }) => {
             form="createAnimalGroup"
             type="primary"
             danger
-            onClick={cancelModal}
+            onClick={closeModal}
           >
             Huỷ
           </Button>,
