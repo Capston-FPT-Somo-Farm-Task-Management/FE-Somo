@@ -34,10 +34,12 @@ const FirstStepAddCropGroup = ({ isModalOpen, closeModal }) => {
   const onFinish = (values) => {
     const finalValues = {
       ...values,
-      status: 1,
+      status: 0,
     }
     dispatch(createField(finalValues))
     closeModal()
+
+    window.location.reload();
   }
 
   return (

@@ -18,6 +18,7 @@ import Sider from 'antd/es/layout/Sider'
 import { menuItem } from 'common/components/Sidebar/sidebarData'
 import Area from 'features/pages/Area'
 import Zone from 'features/pages/Zone'
+import TaskDetail from 'features/pages/Task/components/TaskDetail'
 
 function App() {
   const location = useLocation()
@@ -49,7 +50,6 @@ function App() {
 
                   {/* task */}
                   <Route path="/task" element={<Task />} />
-
                   {/* Animals */}
                   <Route path="/animals" element={<Animals />} />
 
