@@ -14,6 +14,18 @@ export const getTasks = createAsyncThunk('tasks/getTasks', async () => {
       console.log(error)
     }
   })
+// export const getTaskById = createAsyncThunk('tasks/getTaskById', async (taskId) => {
+//     try {
+//       const { data } = await axios.get(baseUrl + `/FarmTask/${taskId}`, {
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//       })
+//       return data
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   })
 
   export const createTask = createAsyncThunk(
     'tasks/createTask',
@@ -57,6 +69,19 @@ export const getTasks = createAsyncThunk('tasks/getTasks', async () => {
           state.error = action.payload
           state.data = []
         })
+        // .addCase(getTaskById.pending, (state) => {
+        //   state.loading = true
+        // })
+        // .addCase(getTaskById.fulfilled, (state, action) => {
+        //   state.loading = false
+        //   state.error = ''
+        //   state.data = action.payload
+        // })
+        // .addCase(getTaskById.rejected, (state, action) => {
+        //   state.loading = false
+        //   state.error = action.payload
+        //   state.data = []
+        // })
   
         .addCase(createTask.pending, (state) => {
           state.loading = true
