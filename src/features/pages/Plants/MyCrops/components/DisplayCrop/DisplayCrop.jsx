@@ -1,30 +1,11 @@
-import { Table } from 'antd'
-import { columns, onChange } from './DisplayCropData'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { getPlants } from 'features/slice/plant/plantSlice'
+import { Tabs } from 'antd'
+import { itemTabs } from './DisplayCropData'
 
 const DisplayCrop = () => {
-  const plant = useSelector((state) => state.plant.data)
-
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(getPlants())
-  }, [])
-
   return (
-    <Table
-      rowKey="id"
-      columns={columns}
-      dataSource={plant}
-      onChange={onChange}
-      rowSelection={{
-        onSelect: (record) => {
-          console.log({ record })
-        },
-      }}
-    />
+    <>
+      <Tabs defaultActiveKey="1" items={itemTabs} />
+    </>
   )
 }
 export default DisplayCrop

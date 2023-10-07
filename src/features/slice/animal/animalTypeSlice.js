@@ -3,7 +3,7 @@ import axios from 'axios'
 import { baseUrl } from 'features/api/baseUrl'
 
 export const getAnimalType = createAsyncThunk(
-  'AnimalTypes/getAnimalTypes',
+  'animalTypes/getAnimalTypes',
   async () => {
     try {
       const { data } = await axios.get(baseUrl + '/HabitantType/LivestockType')
@@ -17,7 +17,7 @@ export const getAnimalType = createAsyncThunk(
 const animalTypeSlice = createSlice({
   name: 'animalType',
   initialState: {
-    data: [],
+    data: {},
     loading: false,
     error: '',
   },

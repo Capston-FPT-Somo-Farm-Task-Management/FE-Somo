@@ -30,7 +30,7 @@ const AddPlantAndPlantType = () => {
   return (
     <>
       <div className="plant-content content">
-        <h3>Cây trồng</h3>
+        <h3>Trồng trọt</h3>
 
         <div className="plant-operate">
           <div className="plant-operate-left">
