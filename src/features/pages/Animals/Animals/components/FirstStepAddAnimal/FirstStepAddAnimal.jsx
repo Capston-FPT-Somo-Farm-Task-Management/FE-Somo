@@ -34,8 +34,6 @@ const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
   const dataZoneAnimal = zoneAnimal.data
   const dataFieldByZone = fieldByZone.data
 
-  console.log(dataFieldByZone);
-
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -60,10 +58,6 @@ const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
     setSelectedZoneId(value)
   }
 
-  const cancelModal = () => {
-    closeModal()
-  }
-
   const onFinish = (values) => {
     const finalValues = {
       ...values,
@@ -72,7 +66,7 @@ const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
       ),
     }
     dispatch(createAnimal(finalValues))
-    
+
     closeModal()
   }
 
@@ -108,7 +102,7 @@ const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
             form="createAnimal"
             type="primary"
             danger
-            onClick={cancelModal}
+            onClick={closeModal}
           >
             Huỷ
           </Button>,

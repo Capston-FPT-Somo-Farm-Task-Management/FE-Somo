@@ -18,6 +18,7 @@ export const getFieldPlant = createAsyncThunk(
   }
 )
 
+
 const fieldPlantSlice = createSlice({
   name: 'fieldPlant',
   initialState: {

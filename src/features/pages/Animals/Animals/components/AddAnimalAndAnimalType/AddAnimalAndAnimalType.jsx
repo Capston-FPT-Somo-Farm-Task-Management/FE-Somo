@@ -8,6 +8,7 @@ import FirstStepAddAnimalType from '../FirstStepAddAnimalType/FirstStepAddAnimal
 
 const AddAnimalAndAnimalType = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpenType, setIsModalOpenType] = useState(false)
 
   const openModal = () => {
     setIsModalOpen(true)
@@ -17,7 +18,7 @@ const AddAnimalAndAnimalType = () => {
     setIsModalOpen(false)
   }
 
-  const [isModalOpenType, setIsModalOpenType] = useState(false)
+  // Type
 
   const openModalType = () => {
     setIsModalOpenType(true)
