@@ -35,6 +35,8 @@ const FirstStepAddAnimalGroup = ({ isModalOpen, closeModal }) => {
     console.log(finalValues)
     dispatch(createField(finalValues))
     closeModal()
+
+    window.location.reload();
   }
 
   return (

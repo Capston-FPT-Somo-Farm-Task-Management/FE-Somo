@@ -68,6 +68,8 @@ const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
     dispatch(createAnimal(finalValues))
 
     closeModal()
+
+    window.location.reload();
   }
 
   const disabledDate = (current) => {

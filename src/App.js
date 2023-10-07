@@ -15,6 +15,7 @@ import { Content } from 'antd/es/layout/layout'
 import React from 'react'
 import Area from 'features/pages/Area'
 import Zone from 'features/pages/Zone'
+import TaskDetail from 'features/pages/Task/components/TaskDetail'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -48,7 +49,6 @@ function App() {
 
                   {/* task */}
                   <Route path="/task" element={<Task />} />
-
                   {/* Animals */}
                   <Route path="/animals" element={<Animals />} />
 
