@@ -34,8 +34,6 @@ const FirstStepAddCropGroup = ({ isModalOpen, closeModal }) => {
     }
     dispatch(createField(finalValues))
     closeModal()
-
-    window.location.reload();
   }
 
   return (
@@ -75,11 +73,25 @@ const FirstStepAddCropGroup = ({ isModalOpen, closeModal }) => {
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng tên vườn',
+                  message: 'Vui lòng nhập tên vườn',
                 },
               ]}
             >
               <Input placeholder="Nhập tên vườn" />
+            </Form.Item>
+
+            {/*  Code */}
+            <Form.Item
+              label="Mã vườn"
+              name="code"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập mã vườn',
+                },
+              ]}
+            >
+              <Input placeholder="Nhập mã vườn" />
             </Form.Item>
 
             {/* Square*/}

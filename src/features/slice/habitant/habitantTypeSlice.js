@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { baseUrl } from 'features/api/baseUrl'
+import { toast } from 'react-toastify'
 
 export const createHabitantType = createAsyncThunk(
   'habitantType/createHabitantType',
@@ -19,10 +20,21 @@ export const createHabitantType = createAsyncThunk(
   }
 )
 
+export const deleteHabitantType = createAsyncThunk(
+  'habitantType/deleteHabitantType',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(baseUrl + `/HabitantType/Delete/${id}`)
+      return response.data
+    } catch (error) {
+      return rejectWithValue(error)
+    }
+  }
+)
 const habitantTypeSlice = createSlice({
   name: 'animalType',
   initialState: {
-    data: {},
+    data: [],
     loading: false,
     error: '',
   },
@@ -34,9 +46,23 @@ const habitantTypeSlice = createSlice({
       })
       .addCase(createHabitantType.fulfilled, (state, action) => {
         state.loading = false
+        toast.success('Tạo mới thành công')
         state.data = action.payload
       })
       .addCase(createHabitantType.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+
+      .addCase(deleteHabitantType.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(deleteHabitantType.fulfilled, (state, action) => {
+        state.loading = false
+        toast.success(`Xoá thành công`)
+        state.data = action.payload
+      })
+      .addCase(deleteHabitantType.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
       })

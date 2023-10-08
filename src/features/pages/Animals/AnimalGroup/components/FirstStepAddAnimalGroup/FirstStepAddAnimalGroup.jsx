@@ -35,8 +35,6 @@ const FirstStepAddAnimalGroup = ({ isModalOpen, closeModal }) => {
     console.log(finalValues)
     dispatch(createField(finalValues))
     closeModal()
-
-    window.location.reload();
   }
 
   return (
@@ -81,6 +79,19 @@ const FirstStepAddAnimalGroup = ({ isModalOpen, closeModal }) => {
               ]}
             >
               <Input placeholder="Nhập tên chuồng" />
+            </Form.Item>
+
+            <Form.Item
+              label="Mã chuồng"
+              name="code"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập mã chuồng',
+                },
+              ]}
+            >
+              <Input placeholder="Nhập mã chuồng" />
             </Form.Item>
 
             {/* Square*/}

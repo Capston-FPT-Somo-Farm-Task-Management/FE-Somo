@@ -1,6 +1,7 @@
 import { Button, Form, Input, InputNumber, Modal } from 'antd'
 import { createHabitantType } from 'features/slice/habitant/habitantTypeSlice'
 import { useDispatch } from 'react-redux'
+const { TextArea } = Input
 
 const FirstStepAddAnimalType = ({ isModalOpenType, closeModalType }) => {
   const dispatch = useDispatch()
@@ -36,25 +37,38 @@ const FirstStepAddAnimalType = ({ isModalOpenType, closeModalType }) => {
           </Button>,
         ]}
       >
-        <Form layout="vertical" id="createAnimalType" onFinish={onFinish}>
-          {/* Plant Type Name */}
-          <Form.Item
-            label="Tên loại vật nuôi"
-            name="name"
-            rules={[
-              { required: true, message: 'Vui lòng nhập tên loại vật nuôi' },
-            ]}
-          >
-            <Input placeholder="Nhập tên loại vật nuôi" />
-          </Form.Item>
+        <Form
+          layout="vertical"
+          id="createAnimalType"
+          onFinish={onFinish}
+          className="first-step-animal-type"
+        >
+          <div className="form-left">
+            {/* Plant Type Name */}
+            <Form.Item
+              label="Tên loại vật nuôi"
+              name="name"
+              rules={[
+                { required: true, message: 'Vui lòng nhập tên loại vật nuôi' },
+              ]}
+            >
+              <Input placeholder="Nhập tên loại vật nuôi" />
+            </Form.Item>
 
-          <Form.Item
-            label="Số lượng"
-            name="quantity"
-            rules={[{ required: true, message: 'Vui lòng nhập số lượng' }]}
-          >
-            <InputNumber min={1} addonAfter="Con" />
-          </Form.Item>
+            <Form.Item label="Nguồn gốc" name="origin">
+              <Input placeholder="Nhập nguồn gốc vật nuôi" />
+            </Form.Item>
+
+            <Form.Item label="Môi trường sống" name="environment">
+              <Input placeholder="Nhập môi trường sống của vật nuôi" />
+            </Form.Item>
+          </div>
+
+          <div className="form-right">
+            <Form.Item label="Mô tả" name="description">
+              <TextArea placeholder="Nhập mô tả" showCount maxLength={120} />
+            </Form.Item>
+          </div>
         </Form>
       </Modal>
     </>

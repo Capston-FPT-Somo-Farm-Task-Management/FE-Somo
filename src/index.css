@@ -618,6 +618,17 @@ html {
   width: 45%;
 }
 
+.first-step-animal-type {
+  display: flex;
+  justify-content: space-around;
+}
+.first-step-animal-type .form-left {
+  width: 45%;
+}
+.first-step-animal-type .form-right {
+  width: 45%;
+}
+
 .first-step-animal-group {
   display: flex;
   justify-content: space-around;
@@ -653,5 +664,16 @@ html {
   width: 45%;
 }
 .first-step-crop-group .form-right {
+  width: 45%;
+}
+
+.first-step-plan-type {
+  display: flex;
+  justify-content: space-around;
+}
+.first-step-plan-type .form-left {
+  width: 45%;
+}
+.first-step-plan-type .form-right {
   width: 45%;
 }/*# sourceMappingURL=index.css.map */
