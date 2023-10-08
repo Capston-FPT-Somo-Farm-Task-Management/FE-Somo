@@ -40,7 +40,7 @@ function List() {
 
   const task = useSelector((state) => state.task.data);
   const dataTask = task.data;
-  console.log(task);
+  console.log(dataTask);
   const dispatch = useDispatch();
 
   useEffect(() => {

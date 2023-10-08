@@ -130,6 +130,10 @@ function ThirdModal({ option }) {
     dispatch(createTask(transformedValues));
   };
 
+  const disabledDate = (current) => {
+    return current && current > dayjs().startOf('day')
+  }
+
   const { TextArea } = Input;
 
   if (option === "specificAnimal") {
@@ -219,7 +223,7 @@ function ThirdModal({ option }) {
             <DatePicker
               placeholder="Chọn thời gian bắt đầu"
               format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-              // disabledTime={disabledDateTime}
+              disabledTime={disabledDate}
               showTime={{
                 defaultValue: dayjs("00:00:00", "HH:mm:ss"),
               }}
@@ -238,7 +242,7 @@ function ThirdModal({ option }) {
             <DatePicker
               placeholder="Chọn thời gian kết thúc"
               format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-              // disabledTime={disabledDateTime}
+              disabledTime={disabledDate}
               showTime={{
                 defaultValue: dayjs("00:00:00", "HH:mm:ss"),
               }}
@@ -409,7 +413,7 @@ function ThirdModal({ option }) {
             <DatePicker
               placeholder="Chọn thời gian bắt đầu"
               format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-              // disabledTime={disabledDateTime}
+              disabledTime={disabledDate}
               showTime={{
                 defaultValue: dayjs("00:00:00", "HH:mm:ss"),
               }}
@@ -428,7 +432,7 @@ function ThirdModal({ option }) {
             <DatePicker
               placeholder="Chọn thời gian kết thúc"
               format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-              // disabledTime={disabledDateTime}
+              disabledTime={disabledDate}
               showTime={{
                 defaultValue: dayjs("00:00:00", "HH:mm:ss"),
               }}
@@ -621,7 +625,7 @@ function ThirdModal({ option }) {
               <DatePicker
                 placeholder="Chọn thời gian bắt đầu"
                 format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-                // disabledTime={disabledDateTime}
+                disabledTime={disabledDate}
                 showTime={{
                   defaultValue: dayjs("00:00:00", "HH:mm:ss"),
                 }}
@@ -640,7 +644,7 @@ function ThirdModal({ option }) {
               <DatePicker
                 placeholder="Chọn thời gian kết thúc"
                 format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-                // disabledTime={disabledDateTime}
+                disabledTime={disabledDate}
                 showTime={{
                   defaultValue: dayjs("00:00:00", "HH:mm:ss"),
                 }}
@@ -820,7 +824,7 @@ function ThirdModal({ option }) {
             <DatePicker
               placeholder="Chọn thời gian bắt đầu"
               format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-              // disabledTime={disabledDateTime}
+              disabledTime={disabledDate}
               showTime={{
                 defaultValue: dayjs("00:00:00", "HH:mm:ss"),
               }}
@@ -839,7 +843,7 @@ function ThirdModal({ option }) {
             <DatePicker
               placeholder="Chọn thời gian kết thúc"
               format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-              // disabledTime={disabledDateTime}
+              disabledTime={disabledDate}
               showTime={{
                 defaultValue: dayjs("00:00:00", "HH:mm:ss"),
               }}
