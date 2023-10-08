@@ -9,15 +9,16 @@ import zoneAnimalReducer from './slice/zone/zoneAnimalSlice'
 import zoneTypeReducer from './slice/zone/zoneTypeSlice'
 import taskTypePlantReducer from './slice/task/taskTypePlant'
 import taskTypeLivestockReducer from './slice/task/taskTypeAnimal'
-import memberReducer from "./slice/member/memberSlice"
-import employeeReducer from "./slice/employee/employeeSlice"
-import materialReducer from "./slice/material/materialSlice"
+import memberReducer from './slice/member/memberSlice'
+import employeeReducer from './slice/employee/employeeSlice'
+import materialReducer from './slice/material/materialSlice'
 import fieldReducer from './slice/field/fieldSlice'
 import fieldPlantReducer from './slice/field/fieldPlantSlice'
 import fieldAnimalReducer from './slice/field/fieldAnimalSlice'
 import fieldByZoneReducer from './slice/field/fieldByZoneSlice'
 import plantTypeReducer from './slice/plantType/plantTypeSlice'
 import taskReducer from './slice/task/taskSlice'
+import habitantTypeReducer from './slice/habitant/habitantTypeSlice'
 
 export const store = configureStore({
   reducer: {
@@ -40,5 +41,6 @@ export const store = configureStore({
     plantType: plantTypeReducer,
     animalType: animalTypeReducer,
     task: taskReducer,
+    habitantType: habitantTypeReducer,
   },
 })
