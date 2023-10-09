@@ -2,21 +2,18 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { baseUrl } from 'features/api/baseUrl'
 
-export const getMember = createAsyncThunk('members/getMembers', async () => {
+export const getReceiver = createAsyncThunk('receivers/getReceiver', async (farmId) => {
     try {
-      const { data } = await axios.get(baseUrl + '/Member', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const { data } = await axios.get(baseUrl + `/Member/Supervisor/Farm(${farmId})`)
+      console.log(data);
       return data
     } catch (error) {
       console.log(error)
     }
   })
 
-const memberSlice = createSlice({
-  name: "members",
+const receiverSlice = createSlice({
+  name: "receivers",
   initialState: {
     data: [],
     loading: false,
@@ -25,16 +22,16 @@ const memberSlice = createSlice({
   extraReducers(builder) {
     builder
 
-      .addCase(getMember.pending, (state) => {
+      .addCase(getReceiver.pending, (state) => {
         state.loading = true;
       })
-      .addCase(getMember.fulfilled, (state, action) => {
+      .addCase(getReceiver.fulfilled, (state, action) => {
         state.loading = false;
         state.error = "";
         state.data = action.payload;
         console.log(action.payload);
       })
-      .addCase(getMember.rejected, (state, action) => {
+      .addCase(getReceiver.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
         state.data = [];
@@ -42,4 +39,4 @@ const memberSlice = createSlice({
   },
 });
 
-export default memberSlice.reducer;
+export default receiverSlice.reducer;

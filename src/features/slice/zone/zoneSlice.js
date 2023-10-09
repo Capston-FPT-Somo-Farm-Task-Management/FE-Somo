@@ -2,9 +2,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { baseUrl } from 'features/api/baseUrl'
 
-export const getZones = createAsyncThunk('zones/getZones', async () => {
+export const getZoneActive = createAsyncThunk('zones/getZoneActive', async () => {
   try {
-    const { data } = await axios.get(baseUrl + '/Zone')
+    const { data } = await axios.get(baseUrl + '/Zone/Active')
     return data
   } catch (error) {
     console.log(error)
@@ -38,15 +38,15 @@ const zoneSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(getZones.pending, (state) => {
+      .addCase(getZoneActive.pending, (state) => {
         state.loading = true
       })
-      .addCase(getZones.fulfilled, (state, action) => {
+      .addCase(getZoneActive.fulfilled, (state, action) => {
         state.loading = false
         state.error = action.error
         state.data = action.payload
       })
-      .addCase(getZones.rejected, (state, action) => {
+      .addCase(getZoneActive.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
         state.data = []

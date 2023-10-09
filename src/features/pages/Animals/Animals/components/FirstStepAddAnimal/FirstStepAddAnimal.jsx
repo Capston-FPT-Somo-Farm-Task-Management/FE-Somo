@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAnimalType } from 'features/slice/animal/animalTypeSlice'
 import { createAnimal } from 'features/slice/animal/animalSlice'
 import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
-import { getAreas } from 'features/slice/area/areaSlice'
+import { getAreaActive } from 'features/slice/area/areaSlice'
 import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { DatePicker } from 'antd'
@@ -37,7 +37,7 @@ const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getAreas())
+    dispatch(getAreaActive())
     dispatch(getAnimalType())
   }, [])
 

@@ -1,7 +1,7 @@
 import { Table } from 'antd'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getZones } from 'features/slice/zone/zoneSlice'
+import { getZoneActive } from 'features/slice/zone/zoneSlice'
 import { columns, onChange } from './DisplayZoneData'
 
 const DisplayZone = () => {
@@ -10,7 +10,7 @@ const DisplayZone = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getZones())
+    dispatch(getZoneActive())
   }, [])
 
   return (

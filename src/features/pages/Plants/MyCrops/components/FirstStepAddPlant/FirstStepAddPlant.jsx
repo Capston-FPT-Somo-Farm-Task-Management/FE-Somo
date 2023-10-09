@@ -1,6 +1,6 @@
 import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAreas } from 'features/slice/area/areaSlice'
+import { getAreaActive } from 'features/slice/area/areaSlice'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { getPlantType } from 'features/slice/plantType/plantTypeSlice'
@@ -25,7 +25,7 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getAreas())
+    dispatch(getAreaActive())
     dispatch(getPlantType())
   }, [])
 

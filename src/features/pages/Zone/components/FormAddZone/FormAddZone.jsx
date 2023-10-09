@@ -1,5 +1,5 @@
 import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
-import { getAreas } from 'features/slice/area/areaSlice'
+import { getAreaActive } from 'features/slice/area/areaSlice'
 import { createZone } from 'features/slice/zone/zoneSlice'
 import { getZoneType } from 'features/slice/zone/zoneTypeSlice'
 import { useEffect } from 'react'
@@ -12,7 +12,7 @@ const FormAddZone = ({ isModalOpen, closeModal }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getAreas())
+    dispatch(getAreaActive())
     dispatch(getZoneType())
   }, [])
 

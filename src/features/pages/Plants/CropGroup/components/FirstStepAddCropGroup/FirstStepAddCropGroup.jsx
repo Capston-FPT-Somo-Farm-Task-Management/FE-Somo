@@ -1,6 +1,6 @@
 import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAreas } from 'features/slice/area/areaSlice'
+import { getAreaActive } from 'features/slice/area/areaSlice'
 import { useEffect, useState } from 'react'
 import { getZoneByAreaPlant } from 'features/slice/zone/zonePlantSlice'
 import { createField } from 'features/slice/field/fieldSlice'
@@ -14,7 +14,7 @@ const FirstStepAddCropGroup = ({ isModalOpen, closeModal }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getAreas())
+    dispatch(getAreaActive())
   }, [])
 
   useEffect(() => {

@@ -1,87 +1,85 @@
-import { DatePicker, Form, Input, Select } from "antd";
-import React, { useState, useEffect } from "react";
-import "react-quill/dist/quill.snow.css";
-import { useSelector, useDispatch } from "react-redux";
-import { getAreas } from "../../../../../../slice/area/areaSlice";
-import { getZoneByAreaPlant } from "../../../../../../slice/zone/zonePlantSlice";
-import { getZoneByAreaAnimal } from "features/slice/zone/zoneAnimalSlice";
-import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
-import { getTaskTypePlant } from "features/slice/task/taskTypePlant";
-import { getTaskTypeLivestock } from "features/slice/task/taskTypeAnimal";
-import { getMember } from "features/slice/member/memberSlice";
-import { getEmployee } from "features/slice/employee/employeeSlice";
-import { getMaterial } from "features/slice/material/materialSlice";
-import { getAnimals } from "features/slice/animal/animalSlice";
-import { createTask } from "features/slice/task/taskSlice";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import dayjs from "dayjs";
-dayjs.extend(customParseFormat);
+import { DatePicker, Form, Input, Select } from 'antd'
+import React, { useState, useEffect } from 'react'
+import 'react-quill/dist/quill.snow.css'
+import { useSelector, useDispatch } from 'react-redux'
+import { getAreaActive } from '../../../../../../slice/area/areaSlice'
+import { getZoneByAreaPlant } from '../../../../../../slice/zone/zonePlantSlice'
+import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
+import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
+import { getTaskTypePlant } from 'features/slice/task/taskTypePlant'
+import { getTaskTypeLivestock } from 'features/slice/task/taskTypeAnimal'
+import { getReceiver } from 'features/slice/receiver/receiverSlice'
+import { getEmployee } from 'features/slice/employee/employeeSlice'
+import { getMaterial } from 'features/slice/material/materialSlice'
+import { getAnimals } from 'features/slice/animal/animalSlice'
+import { createTask } from 'features/slice/task/taskSlice'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+import dayjs from 'dayjs'
+dayjs.extend(customParseFormat)
 
 function ThirdModal({ option }) {
-  const [description, setDescription] = useState("");
-  const [selectedAreaId, setSelectedAreaId] = useState(null);
-  const [selectedZoneId, setSelectedZoneId] = useState(null);
+  const [description, setDescription] = useState('')
+  const [selectedAreaId, setSelectedAreaId] = useState(null)
+  const [selectedZoneId, setSelectedZoneId] = useState(null)
   // const [employeesValue, setEmployeesValue] = useState(0);
-  const [priorityValue, setPriorityValue] = useState("");
-  const [remindValue, setRemindValue] = useState(0);
-  const [repeatValue, setRepeatValue] = useState("Không");
+  const [priorityValue, setPriorityValue] = useState('')
+  const [remindValue, setRemindValue] = useState(0)
+  const [repeatValue, setRepeatValue] = useState('Không')
 
-  const area = useSelector((state) => state.area.data);
-  const zonePlant = useSelector((state) => state.zonePlant.data);
-  const dataPlantZone = zonePlant.data;
+  const area = useSelector((state) => state.area.data)
+  const zonePlant = useSelector((state) => state.zonePlant.data)
+  const dataPlantZone = zonePlant.data
 
-  const zoneAnimal = useSelector((state) => state.zoneAnimal.data);
-  const dataAnimalZone = zoneAnimal.data;
+  const zoneAnimal = useSelector((state) => state.zoneAnimal.data)
+  const dataAnimalZone = zoneAnimal.data
 
-  const animal = useSelector((state) => state.animal.data);
+  const animal = useSelector((state) => state.animal.data)
 
-  const fieldByZone = useSelector((state) => state.fieldByZone.data);
-  const dataFieldByZone = fieldByZone.data;
+  const fieldByZone = useSelector((state) => state.fieldByZone.data)
+  const dataFieldByZone = fieldByZone.data
 
-  const taskTypePlant = useSelector((state) => state.taskTypePlant.data);
-  const dataTaskTypePlant = taskTypePlant.data;
+  const taskTypePlant = useSelector((state) => state.taskTypePlant.data)
+  const dataTaskTypePlant = taskTypePlant.data
 
-  const taskTypeLivestock = useSelector(
-    (state) => state.taskTypeLivestock.data
-  );
-  const dataTaskTypeLivestock = taskTypeLivestock.data;
+  const taskTypeLivestock = useSelector((state) => state.taskTypeLivestock.data)
+  const dataTaskTypeLivestock = taskTypeLivestock.data
 
-  const member = useSelector((state) => state.member.data);
-  const dataMember = member.data;
+  const receiver = useSelector((state) => state.receiver.data)
+  const dataReceiver = receiver.data
 
-  const dataEmployee = useSelector((state) => state.employee.data);
+  const dataEmployee = useSelector((state) => state.employee.data)
 
-  const material = useSelector((state) => state.material.data);
-  const dataMaterial = material.data;
+  const material = useSelector((state) => state.material.data)
+  const dataMaterial = material.data
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getAreas());
-    dispatch(getTaskTypePlant());
-    dispatch(getTaskTypeLivestock());
-    dispatch(getAnimals());
-    dispatch(getMember());
-    dispatch(getEmployee());
-    dispatch(getMaterial());
-  }, []);
+    dispatch(getAreaActive())
+    dispatch(getTaskTypePlant())
+    dispatch(getTaskTypeLivestock())
+    dispatch(getAnimals())
+    dispatch(getReceiver())
+    dispatch(getEmployee())
+    dispatch(getMaterial())
+  }, [])
 
   useEffect(() => {
     if (selectedAreaId) {
-      dispatch(getZoneByAreaPlant(selectedAreaId));
-      dispatch(getZoneByAreaAnimal(selectedAreaId));
+      dispatch(getZoneByAreaPlant(selectedAreaId))
+      dispatch(getZoneByAreaAnimal(selectedAreaId))
     }
     if (selectedZoneId) {
-      dispatch(getFieldByZone(selectedZoneId));
+      dispatch(getFieldByZone(selectedZoneId))
     }
-  }, [selectedAreaId, selectedZoneId]);
+  }, [selectedAreaId, selectedZoneId])
 
   const handleSelectAreaChange = (value) => {
-    setSelectedAreaId(value);
-  };
+    setSelectedAreaId(value)
+  }
   const handleSelectZoneChange = (value) => {
-    setSelectedZoneId(value);
-  };
+    setSelectedZoneId(value)
+  }
 
   const transformData = (originalData) => {
     const transformedData = {
@@ -104,16 +102,16 @@ function ThirdModal({ option }) {
         liveStockId: originalData.liveStockId, // Assuming externalId corresponds to plantId
         remind: originalData.remind, // You might want to fill this with an appropriate value
       },
-    };
+    }
 
-    return transformedData;
-  };
+    return transformedData
+  }
 
   const onFinish = (values) => {
     const finalValues = {
       ...values,
-      startDate: dayjs(values.startDate).format("YYYY-MM-DD[T]HH:mm:ss.SSS"),
-      endDate: dayjs(values.endDate).format("YYYY-MM-DD[T]HH:mm:ss.SSS"),
+      startDate: dayjs(values.startDate).format('YYYY-MM-DD[T]HH:mm:ss.SSS'),
+      endDate: dayjs(values.endDate).format('YYYY-MM-DD[T]HH:mm:ss.SSS'),
       // employeeIds: employeesValue,
       priority: priorityValue,
       remind: remindValue,
@@ -121,22 +119,23 @@ function ThirdModal({ option }) {
       description: description,
       iterations: 0,
       receiverId: 1,
+      memberId: 1,
       otherId: null,
       plantId: null,
-    };
+    }
 
-    const transformedValues = transformData(finalValues);
+    const transformedValues = transformData(finalValues)
 
-    dispatch(createTask(transformedValues));
-  };
-
-  const disabledDate = (current) => {
-    return current && current > dayjs().startOf('day')
+    dispatch(createTask(transformedValues))
   }
 
-  const { TextArea } = Input;
+  const disabledDate = (current) => {
+    return current && current < dayjs().startOf('day')
+  }
 
-  if (option === "specificAnimal") {
+  const { TextArea } = Input
+
+  if (option === 'specificAnimal') {
     return (
       <Form
         layout="vertical"
@@ -150,7 +149,7 @@ function ThirdModal({ option }) {
             rules={[
               {
                 required: true,
-                message: "Vui lòng chọn khu vực",
+                message: 'Vui lòng chọn khu vực',
               },
             ]}
             required
@@ -169,7 +168,7 @@ function ThirdModal({ option }) {
             rules={[
               {
                 required: true,
-                message: "Vui lòng chọn vùng",
+                message: 'Vui lòng chọn vùng',
               },
             ]}
             required
@@ -215,7 +214,7 @@ function ThirdModal({ option }) {
             rules={[
               {
                 required: true,
-                message: "Vui lòng chọn thời gian bắt đầu",
+                message: 'Vui lòng chọn thời gian bắt đầu',
               },
             ]}
             name="startDate"
@@ -223,9 +222,9 @@ function ThirdModal({ option }) {
             <DatePicker
               placeholder="Chọn thời gian bắt đầu"
               format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-              disabledTime={disabledDate}
+              disabledDate={disabledDate}
               showTime={{
-                defaultValue: dayjs("00:00:00", "HH:mm:ss"),
+                defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
               }}
             />
           </Form.Item>
@@ -234,7 +233,7 @@ function ThirdModal({ option }) {
             rules={[
               {
                 required: true,
-                message: "Vui lòng chọn khoảng thời gian kết thúc",
+                message: 'Vui lòng chọn khoảng thời gian kết thúc',
               },
             ]}
             name="endDate"
@@ -242,9 +241,9 @@ function ThirdModal({ option }) {
             <DatePicker
               placeholder="Chọn thời gian kết thúc"
               format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-              disabledTime={disabledDate}
+              disabledDate={disabledDate}
               showTime={{
-                defaultValue: dayjs("00:00:00", "HH:mm:ss"),
+                defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
               }}
             />
           </Form.Item>
@@ -280,9 +279,9 @@ function ThirdModal({ option }) {
               }))}
             />
           </Form.Item>
-          <Form.Item label="Người giám sát" name="memberId"  required>
+          <Form.Item label="Người giám sát" name="receiverId" required>
             <Select
-              options={dataMember?.map((item) => ({
+              options={dataReceiver?.map((item) => ({
                 label: item.name,
                 value: item.id,
               }))}
@@ -320,7 +319,7 @@ function ThirdModal({ option }) {
             </Select>
           </Form.Item>
 
-          {repeatValue !== "Không" && (
+          {repeatValue !== 'Không' && (
             <>
               <Form.Item label="Lặp mỗi" name="iterations">
                 <Select />
@@ -333,8 +332,8 @@ function ThirdModal({ option }) {
           )}
         </div>
       </Form>
-    );
-  } else if (option === "wholeBarn") {
+    )
+  } else if (option === 'wholeBarn') {
     return (
       <Form
         layout="vertical"
@@ -348,7 +347,7 @@ function ThirdModal({ option }) {
             rules={[
               {
                 required: true,
-                message: "Vui lòng chọn khu vực",
+                message: 'Vui lòng chọn khu vực',
               },
             ]}
             required
@@ -367,7 +366,7 @@ function ThirdModal({ option }) {
             rules={[
               {
                 required: true,
-                message: "Vui lòng chọn vùng",
+                message: 'Vui lòng chọn vùng',
               },
             ]}
             required
@@ -405,7 +404,7 @@ function ThirdModal({ option }) {
             rules={[
               {
                 required: true,
-                message: "Vui lòng chọn thời gian bắt đầu",
+                message: 'Vui lòng chọn thời gian bắt đầu',
               },
             ]}
             name="startDate"
@@ -413,9 +412,9 @@ function ThirdModal({ option }) {
             <DatePicker
               placeholder="Chọn thời gian bắt đầu"
               format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-              disabledTime={disabledDate}
+              disabledDate={disabledDate}
               showTime={{
-                defaultValue: dayjs("00:00:00", "HH:mm:ss"),
+                defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
               }}
             />
           </Form.Item>
@@ -424,7 +423,7 @@ function ThirdModal({ option }) {
             rules={[
               {
                 required: true,
-                message: "Vui lòng chọn khoảng thời gian kết thúc",
+                message: 'Vui lòng chọn khoảng thời gian kết thúc',
               },
             ]}
             name="endDate"
@@ -432,9 +431,9 @@ function ThirdModal({ option }) {
             <DatePicker
               placeholder="Chọn thời gian kết thúc"
               format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-              disabledTime={disabledDate}
+              disabledDate={disabledDate}
               showTime={{
-                defaultValue: dayjs("00:00:00", "HH:mm:ss"),
+                defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
               }}
             />
           </Form.Item>
@@ -470,9 +469,9 @@ function ThirdModal({ option }) {
               }))}
             />
           </Form.Item>
-          <Form.Item label="Người giám sát" name="memberId"  required>
+          <Form.Item label="Người giám sát" name="receiverId" required>
             <Select
-              options={dataMember?.map((item) => ({
+              options={dataReceiver?.map((item) => ({
                 label: item.name,
                 value: item.id,
               }))}
@@ -517,23 +516,23 @@ function ThirdModal({ option }) {
             rules={[
               {
                 required: true,
-                message: "Vui lòng chọn khoảng thời gian kết thúc",
+                message: 'Vui lòng chọn khoảng thời gian kết thúc',
               },
             ]}
           >
             <DatePicker
               placeholder="Chọn thời gian kết thúc"
               format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-              // disabledTime={disabledDateTime}
+              disabledDate={disabledDate}
               showTime={{
-                defaultValue: dayjs("00:00:00", "HH:mm:ss"),
+                defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
               }}
             />
           </Form.Item>
         </div>
       </Form>
-    );
-  } else if (option === "specificPlant") {
+    )
+  } else if (option === 'specificPlant') {
     return (
       <div>
         <Form
@@ -548,7 +547,7 @@ function ThirdModal({ option }) {
               rules={[
                 {
                   required: true,
-                  message: "Vui lòng chọn khu vực",
+                  message: 'Vui lòng chọn khu vực',
                 },
               ]}
               required
@@ -566,7 +565,7 @@ function ThirdModal({ option }) {
               rules={[
                 {
                   required: true,
-                  message: "Vui lòng chọn vùng",
+                  message: 'Vui lòng chọn vùng',
                 },
               ]}
               required
@@ -593,7 +592,7 @@ function ThirdModal({ option }) {
               rules={[
                 {
                   required: true,
-                  message: "Vui lòng nhập mã cây trồng",
+                  message: 'Vui lòng nhập mã cây trồng',
                 },
               ]}
               name="externalId"
@@ -617,7 +616,7 @@ function ThirdModal({ option }) {
               rules={[
                 {
                   required: true,
-                  message: "Vui lòng chọn thời gian bắt đầu",
+                  message: 'Vui lòng chọn thời gian bắt đầu',
                 },
               ]}
               name="startDate"
@@ -625,9 +624,9 @@ function ThirdModal({ option }) {
               <DatePicker
                 placeholder="Chọn thời gian bắt đầu"
                 format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-                disabledTime={disabledDate}
+                disabledDate={disabledDate}
                 showTime={{
-                  defaultValue: dayjs("00:00:00", "HH:mm:ss"),
+                  defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
                 }}
               />
             </Form.Item>
@@ -636,7 +635,7 @@ function ThirdModal({ option }) {
               rules={[
                 {
                   required: true,
-                  message: "Vui lòng chọn khoảng thời gian kết thúc",
+                  message: 'Vui lòng chọn khoảng thời gian kết thúc',
                 },
               ]}
               name="endDate"
@@ -644,9 +643,9 @@ function ThirdModal({ option }) {
               <DatePicker
                 placeholder="Chọn thời gian kết thúc"
                 format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-                disabledTime={disabledDate}
+                disabledDate={disabledDate}
                 showTime={{
-                  defaultValue: dayjs("00:00:00", "HH:mm:ss"),
+                  defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
                 }}
               />
             </Form.Item>
@@ -672,24 +671,24 @@ function ThirdModal({ option }) {
               />
             </Form.Item>
             <Form.Item label="Người thực hiện" name="employeeIds" required>
-            <Select
-              // mode="multiple"
-              // value={employeesValue}
-              // onChange={(value) => setEmployeesValue(value)}
-              options={dataEmployee?.map((item) => ({
-                label: item.name,
-                value: item.id,
-              }))}
-            />
-          </Form.Item>
-          <Form.Item label="Người giám sát" name="memberId"  required>
-            <Select
-              options={dataMember?.map((item) => ({
-                label: item.name,
-                value: item.id,
-              }))}
-            />
-          </Form.Item>
+              <Select
+                // mode="multiple"
+                // value={employeesValue}
+                // onChange={(value) => setEmployeesValue(value)}
+                options={dataEmployee?.map((item) => ({
+                  label: item.name,
+                  value: item.id,
+                }))}
+              />
+            </Form.Item>
+            <Form.Item label="Người giám sát" name="receiverId" required>
+              <Select
+                options={dataReceiver?.map((item) => ({
+                  label: item.name,
+                  value: item.id,
+                }))}
+              />
+            </Form.Item>
             <Form.Item label="Dụng cụ">
               <Select
                 options={dataMaterial?.map((item) => ({
@@ -729,24 +728,24 @@ function ThirdModal({ option }) {
               rules={[
                 {
                   required: true,
-                  message: "Vui lòng chọn khoảng thời gian kết thúc",
+                  message: 'Vui lòng chọn khoảng thời gian kết thúc',
                 },
               ]}
             >
               <DatePicker
                 placeholder="Chọn thời gian kết thúc"
                 format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-                // disabledTime={disabledDateTime}
+                disabledDate={disabledDate}
                 showTime={{
-                  defaultValue: dayjs("00:00:00", "HH:mm:ss"),
+                  defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
                 }}
               />
             </Form.Item>
           </div>
         </Form>
       </div>
-    );
-  } else if (option === "wholeGarden") {
+    )
+  } else if (option === 'wholeGarden') {
     return (
       <Form
         layout="vertical"
@@ -760,7 +759,7 @@ function ThirdModal({ option }) {
             rules={[
               {
                 required: true,
-                message: "Vui lòng chọn khu vực",
+                message: 'Vui lòng chọn khu vực',
               },
             ]}
             required
@@ -778,7 +777,7 @@ function ThirdModal({ option }) {
             rules={[
               {
                 required: true,
-                message: "Vui lòng chọn vùng",
+                message: 'Vui lòng chọn vùng',
               },
             ]}
             required
@@ -816,7 +815,7 @@ function ThirdModal({ option }) {
             rules={[
               {
                 required: true,
-                message: "Vui lòng chọn thời gian bắt đầu",
+                message: 'Vui lòng chọn thời gian bắt đầu',
               },
             ]}
             name="startDate"
@@ -824,9 +823,9 @@ function ThirdModal({ option }) {
             <DatePicker
               placeholder="Chọn thời gian bắt đầu"
               format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-              disabledTime={disabledDate}
+              disabledDate={disabledDate}
               showTime={{
-                defaultValue: dayjs("00:00:00", "HH:mm:ss"),
+                defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
               }}
             />
           </Form.Item>
@@ -835,7 +834,7 @@ function ThirdModal({ option }) {
             rules={[
               {
                 required: true,
-                message: "Vui lòng chọn khoảng thời gian kết thúc",
+                message: 'Vui lòng chọn khoảng thời gian kết thúc',
               },
             ]}
             name="endDate"
@@ -843,9 +842,9 @@ function ThirdModal({ option }) {
             <DatePicker
               placeholder="Chọn thời gian kết thúc"
               format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-              disabledTime={disabledDate}
+              disabledDate={disabledDate}
               showTime={{
-                defaultValue: dayjs("00:00:00", "HH:mm:ss"),
+                defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
               }}
             />
           </Form.Item>
@@ -881,9 +880,9 @@ function ThirdModal({ option }) {
               }))}
             />
           </Form.Item>
-          <Form.Item label="Người giám sát" name="memberId"  required>
+          <Form.Item label="Người giám sát" name="receiverId" required>
             <Select
-              options={dataMember?.map((item) => ({
+              options={dataReceiver?.map((item) => ({
                 label: item.name,
                 value: item.id,
               }))}
@@ -928,24 +927,24 @@ function ThirdModal({ option }) {
             rules={[
               {
                 required: true,
-                message: "Vui lòng chọn khoảng thời gian kết thúc",
+                message: 'Vui lòng chọn khoảng thời gian kết thúc',
               },
             ]}
           >
             <DatePicker
               placeholder="Chọn thời gian kết thúc"
               format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-              // disabledTime={disabledDateTime}
+              disabledDate={disabledDate}
               showTime={{
-                defaultValue: dayjs("00:00:00", "HH:mm:ss"),
+                defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
               }}
             />
           </Form.Item>
         </div>
       </Form>
-    );
+    )
   }
-  return null;
+  return null
 }
 
-export default ThirdModal;
+export default ThirdModal

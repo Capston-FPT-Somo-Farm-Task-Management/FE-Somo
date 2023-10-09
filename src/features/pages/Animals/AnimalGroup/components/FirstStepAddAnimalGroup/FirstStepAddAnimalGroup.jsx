@@ -1,7 +1,7 @@
 import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { getAreas } from 'features/slice/area/areaSlice'
+import { getAreaActive } from 'features/slice/area/areaSlice'
 import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
 import { createField } from 'features/slice/field/fieldSlice'
 
@@ -14,7 +14,7 @@ const FirstStepAddAnimalGroup = ({ isModalOpen, closeModal }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getAreas())
+    dispatch(getAreaActive())
   }, [])
 
   useEffect(() => {

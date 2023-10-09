@@ -2,9 +2,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { baseUrl } from 'features/api/baseUrl'
 
-export const getAreas = createAsyncThunk('areas/getAreas', async () => {
+export const getAreaActive = createAsyncThunk('areas/getAreas', async () => {
   try {
-    const { data } = await axios.get(baseUrl + '/Area')
+    const { data } = await axios.get(baseUrl + '/Area/Active')
     // console.log(data)
     return data
   } catch (error) {
@@ -21,15 +21,15 @@ const areaSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(getAreas.pending, (state) => {
+      .addCase(getAreaActive.pending, (state) => {
         state.loading = true
       })
-      .addCase(getAreas.fulfilled, (state, action) => {
+      .addCase(getAreaActive.fulfilled, (state, action) => {
         state.loading = false
         state.error = ''
         state.data = action.payload
       })
-      .addCase(getAreas.rejected, (state, action) => {
+      .addCase(getAreaActive.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
         state.data = []

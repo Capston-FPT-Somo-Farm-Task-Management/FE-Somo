@@ -12,12 +12,21 @@ export const getFarm = createAsyncThunk('farm/getFarm', async () => {
   }
 })
 
+const initialState = {
+  data: [],
+  loading: false, 
+  error: '',
+  farmId: null
+}
+
 const farmSlice = createSlice({
   name: 'farm',
-  initialState: {
-    data: [],
-    loading: false,
-    error: '',
+  initialState,
+  
+  reducers: {
+    setFarmId: (state, action) => {
+      state.farmId = action.payload;
+    }
   },
   extraReducers(builder) {
     builder

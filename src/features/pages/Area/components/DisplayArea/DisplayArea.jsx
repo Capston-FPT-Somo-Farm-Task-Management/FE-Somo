@@ -1,5 +1,5 @@
 import { Table } from 'antd'
-import { getAreas } from 'features/slice/area/areaSlice'
+import { getAreaActive } from 'features/slice/area/areaSlice'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { columns, onChange } from './DisplayAreaData'
@@ -10,7 +10,7 @@ const DisplayArea = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getAreas())
+    dispatch(getAreaActive())
   }, [])
 
   return (
