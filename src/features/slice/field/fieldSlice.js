@@ -13,7 +13,8 @@ export const createField = createAsyncThunk(
         },
       })
       console.log(response.data)
-      return response.data
+      console.log(response)
+      return response.data.data
     } catch (error) {
       rejectWithValue(error)
     }
@@ -23,6 +24,7 @@ export const createField = createAsyncThunk(
 export const deleteField = createAsyncThunk(
   'fields/deleteField',
   async (id, { rejectWithValue }) => {
+    console.log(id)
     try {
       const response = await axios.put(baseUrl + `/Field/Delete/${id}`)
       return response.data
@@ -47,11 +49,12 @@ const fieldSlice = createSlice({
       .addCase(createField.fulfilled, (state, action) => {
         state.loading = false
         state.data.push(action.payload)
-        toast.success(`Thêm mới thành công ${action.payload.name}`)
+        toast.success(`Thêm mới thành công`)
       })
       .addCase(createField.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
+        toast.error('Trùng')
       })
 
       .addCase(deleteField.pending, (state) => {
@@ -59,8 +62,8 @@ const fieldSlice = createSlice({
       })
       .addCase(deleteField.fulfilled, (state, action) => {
         state.loading = false
-        toast.success(`Xoá thành công`)
         state.data = action.payload
+        toast.success(`Xoá thành công`)
       })
       .addCase(deleteField.rejected, (state, action) => {
         state.loading = false

@@ -1,24 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Button,
-  Form,
-  Input,
-  InputNumber,
-  Modal,
-  Radio,
-  Select,
-  Space,
-} from 'antd'
+import { Button, Form, Input, InputNumber, Modal, Radio, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAnimalType } from 'features/slice/animal/animalTypeSlice'
 import { createAnimal } from 'features/slice/animal/animalSlice'
 import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
-import { getAreas } from 'features/slice/area/areaSlice'
+import { getAreaActive } from 'features/slice/area/areaSlice'
 import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
-import customParseFormat from 'dayjs/plugin/customParseFormat'
-import { DatePicker } from 'antd'
-import dayjs from 'dayjs'
-dayjs.extend(customParseFormat)
 
 const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
   const [selectedAreaId, setSelectedAreaId] = useState(null)
@@ -37,7 +24,7 @@ const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getAreas())
+    dispatch(getAreaActive())
     dispatch(getAnimalType())
   }, [])
 
@@ -61,34 +48,11 @@ const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
   const onFinish = (values) => {
     const finalValues = {
       ...values,
-      dateOfBirth: dayjs(values.dateOfBirth).format(
-        'YYYY-MM-DD[T]HH:mm:ss.SSS'
-      ),
     }
     dispatch(createAnimal(finalValues))
 
     closeModal()
-
-    window.location.reload();
   }
-
-  const disabledDate = (current) => {
-    return current && current > dayjs().endOf('day')
-  }
-
-  // const range = (start, end) => {
-  //   const result = []
-  //   for (let i = start; i < end; i++) {
-  //     result.push(i)
-  //   }
-  //   return result
-  // }
-
-  // const disabledDateTime = () => ({
-  //   disabledHours: () => range(0, 24).splice(4, 20),
-  //   disabledMinutes: () => range(30, 60),
-  //   disabledSeconds: () => [55, 56],
-  // })
 
   return (
     <>
@@ -166,28 +130,6 @@ const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
                   value: type.id,
                 }))}
               ></Select>
-            </Form.Item>
-
-            {/* Date of Birth */}
-            <Form.Item
-              label="Ngày sinh"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng chọn ngày sinh của vật nuôi',
-                },
-              ]}
-              name="dateOfBirth"
-            >
-              <DatePicker
-                placeholder="Chọn ngày sinh"
-                format="YYYY-MM-DD[T]HH:mm:ss.SSS"
-                disabledDate={disabledDate}
-                // disabledTime={disabledDateTime}
-                showTime={{
-                  defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
-                }}
-              />
             </Form.Item>
 
             {/* Weight */}
