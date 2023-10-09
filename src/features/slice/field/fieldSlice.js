@@ -13,7 +13,8 @@ export const createField = createAsyncThunk(
         },
       })
       console.log(response.data)
-      return response.data
+      console.log(response)
+      return response.data.data
     } catch (error) {
       rejectWithValue(error)
     }
@@ -53,6 +54,7 @@ const fieldSlice = createSlice({
       .addCase(createField.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
+        toast.error('Trùng')
       })
 
       .addCase(deleteField.pending, (state) => {

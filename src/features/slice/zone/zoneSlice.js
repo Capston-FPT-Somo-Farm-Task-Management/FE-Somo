@@ -1,15 +1,19 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { baseUrl } from 'features/api/baseUrl'
+import { toast } from 'react-toastify'
 
-export const getZones = createAsyncThunk('zones/getZones', async () => {
-  try {
-    const { data } = await axios.get(baseUrl + '/Zone')
-    return data
-  } catch (error) {
-    console.log(error)
+export const getZoneActive = createAsyncThunk(
+  'zones/getZoneActive',
+  async () => {
+    try {
+      const { data } = await axios.get(baseUrl + '/Zone/Active')
+      return data
+    } catch (error) {
+      console.log(error)
+    }
   }
-})
+)
 
 export const createZone = createAsyncThunk(
   'zones/createZone',
@@ -29,6 +33,19 @@ export const createZone = createAsyncThunk(
   }
 )
 
+export const deleteZone = createAsyncThunk(
+  'areas/deleteZone',
+  async (id, { rejectWithValue }) => {
+    console.log(id)
+    try {
+      const response = await axios.put(baseUrl + `/Zone/Delete/${id}`)
+      return response.data
+    } catch (error) {
+      return rejectWithValue(error)
+    }
+  }
+)
+
 const zoneSlice = createSlice({
   name: 'zone',
   initialState: {
@@ -38,15 +55,15 @@ const zoneSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(getZones.pending, (state) => {
+      .addCase(getZoneActive.pending, (state) => {
         state.loading = true
       })
-      .addCase(getZones.fulfilled, (state, action) => {
+      .addCase(getZoneActive.fulfilled, (state, action) => {
         state.loading = false
         state.error = action.error
         state.data = action.payload
       })
-      .addCase(getZones.rejected, (state, action) => {
+      .addCase(getZoneActive.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
         state.data = []
@@ -57,9 +74,22 @@ const zoneSlice = createSlice({
       })
       .addCase(createZone.fulfilled, (state, action) => {
         state.loading = false
-        state.data.push(action.payload)
+        state.data = action.payload
       })
       .addCase(createZone.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+
+      .addCase(deleteZone.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(deleteZone.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = action.payload
+        toast.success(`Xoá thành công`)
+      })
+      .addCase(deleteZone.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
       })
