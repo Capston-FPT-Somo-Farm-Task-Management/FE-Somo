@@ -114,7 +114,7 @@ const FirstStepAddAnimalGroup = ({ isModalOpen, closeModal }) => {
             <Form.Item label="Khu vực">
               <Select
                 placeholder="Chọn khu vực"
-                options={area?.map((item) => ({
+                options={area.data.map((item) => ({
                   label: item.name,
                   value: item.id,
                 }))}
