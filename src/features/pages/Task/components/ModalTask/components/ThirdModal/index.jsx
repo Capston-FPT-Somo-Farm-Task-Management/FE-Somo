@@ -27,6 +27,7 @@ function ThirdModal({ option }) {
   const [repeatValue, setRepeatValue] = useState('Không')
 
   const area = useSelector((state) => state.area.data)
+  
   const zonePlant = useSelector((state) => state.zonePlant.data)
   const dataPlantZone = zonePlant.data
 
@@ -47,10 +48,14 @@ function ThirdModal({ option }) {
   const receiver = useSelector((state) => state.receiver.data)
   const dataReceiver = receiver.data
 
+  console.log(dataReceiver);
+
   const dataEmployee = useSelector((state) => state.employee.data)
 
   const material = useSelector((state) => state.material.data)
   const dataMaterial = material.data
+
+  console.log(area.data);
 
   const dispatch = useDispatch()
 
@@ -157,7 +162,7 @@ function ThirdModal({ option }) {
             <Select
               onChange={handleSelectAreaChange}
               placeholder="chọn khu vực"
-              options={area?.map((item) => ({
+              options={area.data?.map((item) => ({
                 label: item.name,
                 value: item.id,
               }))}
@@ -355,7 +360,7 @@ function ThirdModal({ option }) {
             <Select
               onChange={handleSelectAreaChange}
               placeholder="chọn khu vực"
-              options={area?.map((item) => ({
+              options={area.data?.map((item) => ({
                 label: item.name,
                 value: item.id,
               }))}
@@ -554,7 +559,7 @@ function ThirdModal({ option }) {
             >
               <Select
                 onChange={handleSelectAreaChange}
-                options={area?.map((item) => ({
+                options={area.data?.map((item) => ({
                   label: item.name,
                   value: item.id,
                 }))}
@@ -766,7 +771,205 @@ function ThirdModal({ option }) {
           >
             <Select
               onChange={handleSelectAreaChange}
-              options={area?.map((item) => ({
+              options={area.data?.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }))}
+            />
+          </Form.Item>
+          <Form.Item
+            label="Vùng"
+            rules={[
+              {
+                required: true,
+                message: 'Vui lòng chọn vùng',
+              },
+            ]}
+            required
+          >
+            <Select
+              onChange={handleSelectZoneChange}
+              options={dataPlantZone?.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }))}
+            />
+          </Form.Item>
+          <Form.Item label="Vườn" name="fieldId">
+            <Select
+              options={dataFieldByZone?.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }))}
+            />
+          </Form.Item>
+          <Form.Item label="Độ ưu tiên" required>
+            <Select
+              value={priorityValue}
+              onChange={(value) => setPriorityValue(value)}
+            >
+              <Select.Option value="lowest">Thấp nhất</Select.Option>
+              <Select.Option value="low">Thấp</Select.Option>
+              <Select.Option value="medium">Trung bình</Select.Option>
+              <Select.Option value="high">Cao</Select.Option>
+              <Select.Option value="highest">Cao nhất</Select.Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label="Chọn thời gian bắt đầu"
+            rules={[
+              {
+                required: true,
+                message: 'Vui lòng chọn thời gian bắt đầu',
+              },
+            ]}
+            name="startDate"
+          >
+            <DatePicker
+              placeholder="Chọn thời gian bắt đầu"
+              format="YYYY-MM-DD[T]HH:mm:ss.SSS"
+              disabledDate={disabledDate}
+              showTime={{
+                defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
+              }}
+            />
+          </Form.Item>
+          <Form.Item
+            label="Chọn thời gian kết thúc"
+            rules={[
+              {
+                required: true,
+                message: 'Vui lòng chọn khoảng thời gian kết thúc',
+              },
+            ]}
+            name="endDate"
+          >
+            <DatePicker
+              placeholder="Chọn thời gian kết thúc"
+              format="YYYY-MM-DD[T]HH:mm:ss.SSS"
+              disabledDate={disabledDate}
+              showTime={{
+                defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
+              }}
+            />
+          </Form.Item>
+          <Form.Item label="Mô tả" name="description">
+            <TextArea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={4}
+              placeholder="Thêm mô tả chi tiết cho công việc"
+            />
+          </Form.Item>
+        </div>
+        <div className="form-right">
+          <Form.Item label="Tên công việc" required>
+            <Input placeholder="Nhập tên công việc" />
+          </Form.Item>
+          <Form.Item label="Loại nhiệm vụ" required>
+            <Select
+              options={dataTaskTypePlant?.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }))}
+            />
+          </Form.Item>
+          <Form.Item label="Người thực hiện" name="employeeIds" required>
+            <Select
+              // mode="multiple"
+              // value={employeesValue}
+              // onChange={(value) => setEmployeesValue(value)}
+              options={dataEmployee?.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }))}
+            />
+          </Form.Item>
+          <Form.Item label="Người giám sát" name="receiverId" required>
+            <Select
+              options={dataReceiver?.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }))}
+            />
+          </Form.Item>
+          <Form.Item label="Dụng cụ">
+            <Select
+              options={dataMaterial?.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }))}
+            />
+          </Form.Item>
+          <Form.Item label="Nhắc lại" name="remind">
+            <Select
+              value={remindValue}
+              onChange={(value) => setRemindValue(value)}
+            >
+              <Select.Option value="0">0</Select.Option>
+              <Select.Option value="5">5</Select.Option>
+              <Select.Option value="10">10</Select.Option>
+              <Select.Option value="15">15</Select.Option>
+              <Select.Option value="20">20</Select.Option>
+            </Select>
+          </Form.Item>
+          <Form.Item label="Lặp lại" name="repeat">
+            <Select
+              value={repeatValue}
+              onChange={(value) => setRepeatValue(value)}
+            >
+              <Select.Option value="Không">Không</Select.Option>
+              <Select.Option value="Hàng ngày">Hàng ngày</Select.Option>
+              <Select.Option value="Hàng tuần">Hàng tuần</Select.Option>
+              <Select.Option value="Hàng tháng">Hàng tháng</Select.Option>
+            </Select>
+          </Form.Item>
+          <Form.Item label="Lặp mỗi" name="iterations">
+            <Select />
+          </Form.Item>
+          <Form.Item
+            label="Lặp đến ngày"
+            rules={[
+              {
+                required: true,
+                message: 'Vui lòng chọn khoảng thời gian kết thúc',
+              },
+            ]}
+          >
+            <DatePicker
+              placeholder="Chọn thời gian kết thúc"
+              format="YYYY-MM-DD[T]HH:mm:ss.SSS"
+              disabledDate={disabledDate}
+              showTime={{
+                defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
+              }}
+            />
+          </Form.Item>
+        </div>
+      </Form>
+    )
+  }else if (option === 'other') {
+    return (
+      <Form
+        layout="vertical"
+        className="task-whole-garden"
+        onFinish={onFinish}
+        id="createTask"
+      >
+        <div className="form-left">
+          <Form.Item
+            label="Khu vực"
+            rules={[
+              {
+                required: true,
+                message: 'Vui lòng chọn khu vực',
+              },
+            ]}
+            required
+          >
+            <Select
+              onChange={handleSelectAreaChange}
+              options={area.data?.map((item) => ({
                 label: item.name,
                 value: item.id,
               }))}

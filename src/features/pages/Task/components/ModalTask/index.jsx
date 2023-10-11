@@ -67,7 +67,7 @@ function ModalTask() {
         visible={currentStep > -1}
         onCancel={() => setCurrentStep(-1)}
         footer={null}
-        width={800}
+        width={900}
       >
         <Steps current={currentStep} size="small">
           {steps.map((item) => (

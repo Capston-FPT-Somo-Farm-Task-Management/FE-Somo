@@ -64,6 +64,19 @@ const FormAddZone = ({ isModalOpen, closeModal }) => {
               <Input placeholder="Nhập tên vùng" />
             </Form.Item>
 
+            <Form.Item
+              label="Mã vùng"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập mã vùng',
+                },
+              ]}
+              name="code"
+            >
+              <Input placeholder="Nhập mã vùng" />
+            </Form.Item>
+
             {/* Area */}
             <Form.Item
               label="Diện tích vùng (m2)"
@@ -112,7 +125,7 @@ const FormAddZone = ({ isModalOpen, closeModal }) => {
             >
               <Select
                 placeholder="Chọn khu vực"
-                options={area?.map((item) => ({
+                options={area.data?.map((item) => ({
                   label: item.name,
                   value: item.id,
                 }))}

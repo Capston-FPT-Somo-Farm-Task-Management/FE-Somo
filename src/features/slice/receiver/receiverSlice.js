@@ -4,7 +4,7 @@ import { baseUrl } from 'features/api/baseUrl'
 
 export const getReceiver = createAsyncThunk('receivers/getReceiver', async (farmId) => {
     try {
-      const { data } = await axios.get(baseUrl + `/Member/Supervisor/Farm(${farmId})`)
+      const { data } = await axios.get(baseUrl + '/Member')
       console.log(data);
       return data
     } catch (error) {

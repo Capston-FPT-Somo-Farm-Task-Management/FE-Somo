@@ -4,7 +4,7 @@ import { itemTabs } from './DisplayCropData'
 const DisplayCrop = () => {
   return (
     <>
-      <Tabs defaultActiveKey="1" items={itemTabs} />
+      <Tabs defaultActiveKey="1" items={itemTabs} type="card" />
     </>
   )
 }
