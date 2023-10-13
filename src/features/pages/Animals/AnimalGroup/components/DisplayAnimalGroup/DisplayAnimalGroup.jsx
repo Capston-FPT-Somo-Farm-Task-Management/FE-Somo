@@ -24,7 +24,7 @@ const DisplayAnimalGroup = () => {
   return (
     <Table dataSource={field} rowKey="id" on>
       <Column
-        title="Tên vườn"
+        title="Tên chuồng"
         dataIndex="name"
         key="1"
         render={(text) => <h4>{text}</h4>}

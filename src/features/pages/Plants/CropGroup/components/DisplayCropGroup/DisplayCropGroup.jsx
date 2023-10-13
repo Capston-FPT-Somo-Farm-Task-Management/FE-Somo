@@ -8,7 +8,6 @@ import { deleteField } from 'features/slice/field/fieldSlice'
 const DisplayCropGroup = () => {
   const fieldPlant = useSelector((state) => state.fieldPlant.data)
   const field = fieldPlant.data
-  console.log(fieldPlant)
 
   const dispatch = useDispatch()
 
