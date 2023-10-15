@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Route, Routes, Outlet  } from 'react-router-dom'
 import SignIn from 'features/authentication/SignIn'
 import Register from 'features/authentication/Register'
 import Forgot from 'features/authentication/Forgot'
@@ -20,16 +20,9 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
-  const location = useLocation()
 
-  // Function to check if the current location matches certain paths
-  const ShowSidebarAndHeader = () => {
-    const { pathname } = location
-    return !['/login', '/logout'].includes(pathname)
-  }
   return (
     <div className="App">
-      {ShowSidebarAndHeader() && (
         <Layout hasSider>
           <Sidebar />
           <Layout className="site-layout">
@@ -42,7 +35,7 @@ function App() {
               <div style={{ padding: '24px', width: '100%' }}>
                 <Routes>
                   <Route path="/*" element={<Home />} exact />
-                  <Route path="/login" element={<SignIn />} />
+                  <Route path="/login" element={<SignIn /> }  />
                   <Route path="/register" element={<Register />} />
                   <Route path="/forgot" element={<Forgot />} />
                   <Route path="/schedule" element={<Schedule />} />
@@ -69,7 +62,6 @@ function App() {
             </Content>
           </Layout>
         </Layout>
-      )}
       <ToastContainer
         position="top-right"
         autoClose={3000}

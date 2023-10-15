@@ -1,6 +1,6 @@
 import { Form, Button, Checkbox, Input } from 'antd'
 import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons'
-import { Link } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 
 const SignIn = () => {
   const handleSignIn = (values) => {
@@ -68,6 +68,7 @@ const SignIn = () => {
           Or <Link to="/register">register now!</Link>
         </Form.Item>
       </Form>
+      <Outlet />
     </>
   )
 }
