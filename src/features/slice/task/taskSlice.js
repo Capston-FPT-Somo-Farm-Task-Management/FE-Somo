@@ -33,7 +33,7 @@ export const getTasks = createAsyncThunk('tasks/getTasks', async () => {
       console.log(data);
       console.log(data.farmTask.memberId);
       try {
-        const response = await axios.post(baseUrl + `/FarmTask?memberId=${data.farmTask.memberId}`, data, {
+        const response = await axios.post(baseUrl + `/FarmTask?memberId=5`, data, {
           headers: {
             'Content-Type': 'application/json',
           },

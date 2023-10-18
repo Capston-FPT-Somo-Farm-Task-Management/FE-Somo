@@ -8,23 +8,27 @@ import { getZoneByAreaAnimal } from "features/slice/zone/zoneAnimalSlice";
 import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
 import { getTaskTypePlant } from "features/slice/task/taskTypePlant";
 import { getTaskTypeLivestock } from "features/slice/task/taskTypeAnimal";
-import { getReceiver } from "features/slice/receiver/receiverSlice";
+import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
 import { getEmployee } from "features/slice/employee/employeeSlice";
 import { getMaterial } from "features/slice/material/materialSlice";
 import { getAnimals } from "features/slice/animal/animalSlice";
 import { createTask } from "features/slice/task/taskSlice";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import dayjs from "dayjs";
+import MultiDatePicker from "react-multi-date-picker";
+
 dayjs.extend(customParseFormat);
 
 function ThirdModal({ option }) {
   const [description, setDescription] = useState("");
   const [selectedAreaId, setSelectedAreaId] = useState(null);
   const [selectedZoneId, setSelectedZoneId] = useState(null);
-  // const [employeesValue, setEmployeesValue] = useState(0);
+  const [employeesValue, setEmployeesValue] = useState(0);
+  const [materialsValue, setMaterialsValue] = useState(0);
   const [priorityValue, setPriorityValue] = useState("");
   const [remindValue, setRemindValue] = useState(0);
   const [repeatValue, setRepeatValue] = useState(false);
+  const [startDate, setStartDate] = useState();
 
   const area = useSelector((state) => state.area.data);
 
@@ -48,10 +52,10 @@ function ThirdModal({ option }) {
   );
   const dataTaskTypeLivestock = taskTypeLivestock.data;
 
-  const receiver = useSelector((state) => state.receiver.data);
-  const dataReceiver = receiver.data;
+  const supervisor = useSelector((state) => state.supervisor.data);
+  const dataSupervisor = supervisor.data;
 
-  console.log(dataReceiver);
+  console.log(dataSupervisor);
 
   const dataEmployee = useSelector((state) => state.employee.data);
 
@@ -67,7 +71,7 @@ function ThirdModal({ option }) {
     dispatch(getTaskTypePlant());
     dispatch(getTaskTypeLivestock());
     dispatch(getAnimals());
-    dispatch(getReceiver());
+    dispatch(getSupervisor());
     dispatch(getEmployee());
     dispatch(getMaterial());
   }, []);
@@ -91,25 +95,24 @@ function ThirdModal({ option }) {
 
   const transformData = (originalData) => {
     const transformedData = {
-      employeeIds: [originalData.employeeIds],
-      materialIds: [originalData.materialIds],
-      dates: [originalData.dates],
+      employeeIds: originalData.employeeIds,
+      materialIds: originalData.materialIds,
+      dates: originalData.dates,
       farmTask: {
         name: originalData.name,
         startDate: originalData.startDate,
         endDate: originalData.endDate,
         description: originalData.description,
         priority: originalData.priority,
-        repeat: originalData.repeat,
-        iterations: originalData.iterations,
+        isRepeat: originalData.isRepeat,
         suppervisorId: originalData.suppervisorId,
         fieldId: originalData.fieldId,
         taskTypeId: originalData.taskTypeId,
         managerId: originalData.managerId,
         otherId: originalData.otherId,
-        plantId: originalData.plantId, // Assuming externalId corresponds to plantId
-        liveStockId: originalData.liveStockId, // Assuming externalId corresponds to plantId
-        remind: originalData.remind, // You might want to fill this with an appropriate value
+        plantId: originalData.plantId,
+        liveStockId: originalData.liveStockId,
+        remind: originalData.remind,
       },
     };
 
@@ -117,21 +120,32 @@ function ThirdModal({ option }) {
   };
 
   const onFinish = (values) => {
+    const startDateFormatted = dayjs(startDate).format(
+      "YYYY-MM-DD[T]HH:mm:ss.SSS"
+    );
+
+    const startTime = dayjs(startDate).format("HH:mm:ss.SSS");
+
+    const selectedDates = values.dates.map((date) =>
+      dayjs(date).format("YYYY-MM-DD")
+    );
+
+    const combinedDates = selectedDates.map((date) => `${date}T${startTime}`);
+
     const finalValues = {
       ...values,
-      startDate: dayjs(values.startDate).format("YYYY-MM-DD[T]HH:mm:ss.SSS"),
+      startDate: startDateFormatted,
       endDate: dayjs(values.endDate).format("YYYY-MM-DD[T]HH:mm:ss.SSS"),
-      dates: dayjs(values.dates).format("YYYY-MM-DD[T]HH:mm:ss.SSS"),
+      dates: combinedDates,
       // employeeIds: employeesValue,
       priority: priorityValue,
       remind: remindValue,
-      repeat: repeatValue,
+      isRepeat: repeatValue,
       description: description,
-      iterations: 0,
-      suppervisorId: 1,
-      managerId: 1,
-      otherId: null,
-      plantId: null,
+      suppervisorId: 11,
+      managerId: 5,
+      otherId: 0,
+      plantId: 0,
     };
 
     const transformedValues = transformData(finalValues);
@@ -192,7 +206,12 @@ function ThirdModal({ option }) {
               }))}
             />
           </Form.Item>
-          <Form.Item label="Chuồng" name="fieldId" required>
+          <Form.Item label="Chuồng" name="fieldId" required rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn chuồng',
+                },
+              ]}>
             <Select
               placeholder="Chọn chuồng"
               options={dataFieldByZone?.map((item) => ({
@@ -201,7 +220,12 @@ function ThirdModal({ option }) {
               }))}
             />
           </Form.Item>
-          <Form.Item label="Mã vật nuôi" name="liveStockId" required>
+          <Form.Item label="Mã vật nuôi" name="liveStockId" required rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn mã vật nuôi',
+                },
+              ]}>
             <Select
               placeholder="Chọn mã vật nuôi"
               options={dataAnimal?.map((item) => ({
@@ -210,7 +234,12 @@ function ThirdModal({ option }) {
               }))}
             />
           </Form.Item>
-          <Form.Item label="Độ ưu tiên" name="priority" required>
+          <Form.Item label="Độ ưu tiên" name="priority" required rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn độ ưu tiên',
+                },
+              ]}>
             <Select
               value={priorityValue}
               onChange={(value) => setPriorityValue(value)}
@@ -265,16 +294,26 @@ function ThirdModal({ option }) {
             <TextArea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              rows={4}
+              rows={5}
               placeholder="Thêm mô tả chi tiết cho công việc"
             />
           </Form.Item>
         </div>
         <div className="form-right">
-          <Form.Item label="Tên công việc" name="name" required>
+          <Form.Item label="Tên công việc" name="name" required rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập tên công việc',
+                },
+              ]}>
             <Input placeholder="Nhập tên công việc" />
           </Form.Item>
-          <Form.Item label="Loại nhiệm vụ" name="taskTypeId" required>
+          <Form.Item label="Loại nhiệm vụ" name="taskTypeId" required rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn loại nhiệm vụ',
+                },
+              ]}>
             <Select
               placeholder="Chọn loại nhiệm vụ"
               options={dataTaskTypeLivestock?.map((item) => ({
@@ -283,11 +322,16 @@ function ThirdModal({ option }) {
               }))}
             />
           </Form.Item>
-          <Form.Item label="Người thực hiện" name="employeeIds" required>
+          <Form.Item label="Người thực hiện" name="employeeIds" required rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn người thực hiện',
+                },
+              ]}>
             <Select
-              // mode="multiple"
-              // value={employeesValue}
-              // onChange={(value) => setEmployeesValue(value)}
+              mode="multiple"
+              value={employeesValue}
+              onChange={(value) => setEmployeesValue(value)}
               placeholder="Chọn người thực hiện"
               options={dataEmployee?.map((item) => ({
                 label: item.name,
@@ -295,18 +339,31 @@ function ThirdModal({ option }) {
               }))}
             />
           </Form.Item>
-          <Form.Item label="Người giám sát" name="receiverId" required>
+          <Form.Item label="Người giám sát" name="suppervisorId" required rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn người giám sát',
+                },
+              ]}>
             <Select
               placeholder="Chọn người giám sát"
-              options={dataReceiver?.map((item) => ({
+              options={dataSupervisor?.map((item) => ({
                 label: item.name,
                 value: item.id,
               }))}
             />
           </Form.Item>
-          <Form.Item label="Dụng cụ" name="materialIds">
+          <Form.Item label="Dụng cụ" name="materialIds" required rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn dụng cụ sử dụng',
+                },
+              ]}>
             <Select
               placeholder="Chọn dụng cụ"
+              mode="multiple"
+              value={materialsValue}
+              onChange={(value) => setMaterialsValue(value)}
               options={dataMaterial?.map((item) => ({
                 label: item.name,
                 value: item.id,
@@ -315,8 +372,8 @@ function ThirdModal({ option }) {
           </Form.Item>
           <Form.Item label="Nhắc lại" name="remind">
             <Select
-              value={remindValue}
-              onChange={(value) => setRemindValue(value)}
+              value={remindValue.toString()}
+              onChange={(value) => setRemindValue(parseInt(value, 10))}
               placeholder="Không"
             >
               <Select.Option value="0">Không</Select.Option>
@@ -338,8 +395,12 @@ function ThirdModal({ option }) {
           </Form.Item>
 
           {repeatValue && (
-            <Form.Item label="Lặp những ngày" rules={[{ required: true }]}>
-              <DatePicker placeholder="Chọn những ngày lặp" />
+            <Form.Item
+              label="Lặp những ngày"
+              name="dates"
+              rules={[{ required: true }]}
+            >
+              <MultiDatePicker  multiple format="YYYY-MM-DD" />
             </Form.Item>
           )}
         </div>
@@ -456,7 +517,7 @@ function ThirdModal({ option }) {
             <TextArea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              rows={4}
+              rows={5}
               placeholder="Thêm mô tả chi tiết cho công việc"
             />
           </Form.Item>
@@ -476,9 +537,9 @@ function ThirdModal({ option }) {
           </Form.Item>
           <Form.Item label="Người thực hiện" name="employeeIds" required>
             <Select
-              // mode="multiple"
-              // value={employeesValue}
-              // onChange={(value) => setEmployeesValue(value)}
+              mode="multiple"
+              value={employeesValue}
+              onChange={(value) => setEmployeesValue(value)}
               placeholder="Chọn người thực hiện"
               options={dataEmployee?.map((item) => ({
                 label: item.name,
@@ -486,18 +547,21 @@ function ThirdModal({ option }) {
               }))}
             />
           </Form.Item>
-          <Form.Item label="Người giám sát" name="receiverId" required>
+          <Form.Item label="Người giám sát" name="suppervisorId" required>
             <Select
               placeholder="Chọn người giám sát"
-              options={dataReceiver?.map((item) => ({
+              options={dataSupervisor?.map((item) => ({
                 label: item.name,
                 value: item.id,
               }))}
             />
           </Form.Item>
-          <Form.Item label="Dụng cụ">
+          <Form.Item label="Dụng cụ" name="materialIds">
             <Select
               placeholder="Chọn dụng cụ"
+              mode="multiple"
+              value={materialsValue}
+              onChange={(value) => setMaterialsValue(value)}
               options={dataMaterial?.map((item) => ({
                 label: item.name,
                 value: item.id,
@@ -660,7 +724,7 @@ function ThirdModal({ option }) {
               <TextArea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                rows={4}
+                rows={5}
                 placeholder="Thêm mô tả chi tiết cho công việc"
               />
             </Form.Item>
@@ -680,9 +744,9 @@ function ThirdModal({ option }) {
             </Form.Item>
             <Form.Item label="Người thực hiện" name="employeeIds" required>
               <Select
-                // mode="multiple"
-                // value={employeesValue}
-                // onChange={(value) => setEmployeesValue(value)}
+                mode="multiple"
+                value={employeesValue}
+                onChange={(value) => setEmployeesValue(value)}
                 placeholder="Chọn người thực hiện"
                 options={dataEmployee?.map((item) => ({
                   label: item.name,
@@ -690,18 +754,22 @@ function ThirdModal({ option }) {
                 }))}
               />
             </Form.Item>
-            <Form.Item label="Người giám sát" name="receiverId" required>
+            <Form.Item label="Người giám sát" name="suppervisorId" required>
               <Select
                 placeholder="Chọn người giám sát"
-                options={dataReceiver?.map((item) => ({
+                options={dataSupervisor?.map((item) => ({
                   label: item.name,
                   value: item.id,
                 }))}
               />
             </Form.Item>
-            <Form.Item label="Dụng cụ">
+
+            <Form.Item label="Dụng cụ" name="materialIds">
               <Select
                 placeholder="Chọn dụng cụ"
+                mode="multiple"
+                value={materialsValue}
+                onChange={(value) => setMaterialsValue(value)}
                 options={dataMaterial?.map((item) => ({
                   label: item.name,
                   value: item.id,
@@ -851,7 +919,7 @@ function ThirdModal({ option }) {
             <TextArea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              rows={4}
+              rows={5}
               placeholder="Thêm mô tả chi tiết cho công việc"
             />
           </Form.Item>
@@ -871,9 +939,9 @@ function ThirdModal({ option }) {
           </Form.Item>
           <Form.Item label="Người thực hiện" name="employeeIds" required>
             <Select
-              // mode="multiple"
-              // value={employeesValue}
-              // onChange={(value) => setEmployeesValue(value)}
+              mode="multiple"
+              value={employeesValue}
+              onChange={(value) => setEmployeesValue(value)}
               placeholder="Chọn người thực hiện"
               options={dataEmployee?.map((item) => ({
                 label: item.name,
@@ -881,18 +949,21 @@ function ThirdModal({ option }) {
               }))}
             />
           </Form.Item>
-          <Form.Item label="Người giám sát" name="receiverId" required>
+          <Form.Item label="Người giám sát" name="suppervisorId" required>
             <Select
               placeholder="Chọn người giám sát"
-              options={dataReceiver?.map((item) => ({
+              options={dataSupervisor?.map((item) => ({
                 label: item.name,
                 value: item.id,
               }))}
             />
           </Form.Item>
-          <Form.Item label="Dụng cụ">
+          <Form.Item label="Dụng cụ" name="materialIds">
             <Select
               placeholder="Chọn dụng cụ"
+              mode="multiple"
+              value={materialsValue}
+              onChange={(value) => setMaterialsValue(value)}
               options={dataMaterial?.map((item) => ({
                 label: item.name,
                 value: item.id,
@@ -1038,7 +1109,7 @@ function ThirdModal({ option }) {
             <TextArea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              rows={4}
+              rows={5}
               placeholder="Thêm mô tả chi tiết cho công việc"
             />
           </Form.Item>
@@ -1057,9 +1128,9 @@ function ThirdModal({ option }) {
           </Form.Item>
           <Form.Item label="Người thực hiện" name="employeeIds" required>
             <Select
-              // mode="multiple"
-              // value={employeesValue}
-              // onChange={(value) => setEmployeesValue(value)}
+              mode="multiple"
+              value={employeesValue}
+              onChange={(value) => setEmployeesValue(value)}
               options={dataEmployee?.map((item) => ({
                 label: item.name,
                 value: item.id,
@@ -1068,7 +1139,7 @@ function ThirdModal({ option }) {
           </Form.Item>
           <Form.Item label="Người giám sát" name="receiverId" required>
             <Select
-              options={dataReceiver?.map((item) => ({
+              options={dataSupervisor?.map((item) => ({
                 label: item.name,
                 value: item.id,
               }))}
@@ -1076,6 +1147,9 @@ function ThirdModal({ option }) {
           </Form.Item>
           <Form.Item label="Dụng cụ">
             <Select
+              mode="multiple"
+              value={materialsValue}
+              onChange={(value) => setMaterialsValue(value)}
               options={dataMaterial?.map((item) => ({
                 label: item.name,
                 value: item.id,
@@ -1105,9 +1179,6 @@ function ThirdModal({ option }) {
               <Select.Option value="Hàng tuần">Hàng tuần</Select.Option>
               <Select.Option value="Hàng tháng">Hàng tháng</Select.Option>
             </Select>
-          </Form.Item>
-          <Form.Item label="Lặp mỗi" name="iterations">
-            <Select />
           </Form.Item>
           <Form.Item
             label="Lặp đến ngày"
