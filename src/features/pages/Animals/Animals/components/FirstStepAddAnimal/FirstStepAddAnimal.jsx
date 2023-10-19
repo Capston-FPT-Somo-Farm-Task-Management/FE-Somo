@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { Button, Form, Input, InputNumber, Modal, Radio, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAnimalType } from 'features/slice/animal/animalTypeSlice'
-import { createAnimal } from 'features/slice/animal/animalSlice'
+import {
+  createAnimal,
+  getAnimalActive,
+} from 'features/slice/animal/animalSlice'
 import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
 import { getAreaActive } from 'features/slice/area/areaSlice'
 import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
@@ -47,11 +50,19 @@ const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
 
   const onFinish = (values) => {
     const finalValues = {
-      ...values,
+      name: values.name,
+      externalId: values.externalId,
+      weight: values.weight,
+      gender: values.gender,
+      habitantTypeId: values.habitantTypeId,
+      fieldId: values.fieldId,
     }
-    dispatch(createAnimal(finalValues))
-
-    closeModal()
+    dispatch(createAnimal(finalValues)).then(() => {
+      dispatch(getAnimalActive())
+      setTimeout(() => {
+        closeModal()
+      }, 500)
+    })
   }
 
   return (
@@ -133,17 +144,8 @@ const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
             </Form.Item>
 
             {/* Weight */}
-            <Form.Item
-              label="Cân nặng vật nuôi (kg)"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập cân nặng vật nuôi',
-                },
-              ]}
-              name="weight"
-            >
-              <InputNumber min={0} />
+            <Form.Item label="Cân nặng vật nuôi (kg)" name="weight">
+              <InputNumber min={0} addonAfter="kg" />
             </Form.Item>
 
             <Form.Item
@@ -167,6 +169,7 @@ const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
             {/* Area */}
             <Form.Item
               label="Khu vực"
+              name="areaId"
               rules={[
                 {
                   required: true,
@@ -187,6 +190,7 @@ const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
             {/* Zone */}
             <Form.Item
               label="Vùng"
+              name="zoneId"
               rules={[
                 {
                   required: true,

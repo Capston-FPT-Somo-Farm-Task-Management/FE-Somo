@@ -20,13 +20,43 @@ export const createHabitantType = createAsyncThunk(
   }
 )
 
+export const updateHabitantType = createAsyncThunk(
+  'habitantType/updateHabitantType',
+  async (data, { rejectWithValue }) => {
+    console.log(data)
+    try {
+      const response = await axios.put(
+        baseUrl + `/HabitantType/${data.id}`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      if (response.status === 200) {
+        toast.success(response.data.message)
+      }
+      return response.json()
+    } catch (error) {
+      rejectWithValue(error)
+    }
+  }
+)
+
 export const deleteHabitantType = createAsyncThunk(
   'habitantType/deleteHabitantType',
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.put(baseUrl + `/HabitantType/Delete/${id}`)
+      if (response.status === 200) {
+        toast.success(response.data.message)
+      } else if (response.status === 400) {
+        toast.warning(response.message)
+      }
       return response.data
     } catch (error) {
+      toast.error(error.response.data.message)
       return rejectWithValue(error)
     }
   }
@@ -37,6 +67,11 @@ const habitantTypeSlice = createSlice({
     data: [],
     loading: false,
     error: '',
+  },
+  reducers: {
+    clearHabitantType: (state) => {
+      state.data = null
+    },
   },
   extraReducers(builder) {
     builder
@@ -54,12 +89,23 @@ const habitantTypeSlice = createSlice({
         state.error = action.payload
       })
 
+      .addCase(updateHabitantType.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(updateHabitantType.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = [action.payload]
+      })
+      .addCase(updateHabitantType.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+
       .addCase(deleteHabitantType.pending, (state) => {
         state.loading = true
       })
       .addCase(deleteHabitantType.fulfilled, (state, action) => {
         state.loading = false
-        toast.success(`Xoá thành công`)
         state.data = action.payload
       })
       .addCase(deleteHabitantType.rejected, (state, action) => {
@@ -70,3 +116,4 @@ const habitantTypeSlice = createSlice({
 })
 
 export default habitantTypeSlice.reducer
+export const { clearHabitantType } = habitantTypeSlice.actions

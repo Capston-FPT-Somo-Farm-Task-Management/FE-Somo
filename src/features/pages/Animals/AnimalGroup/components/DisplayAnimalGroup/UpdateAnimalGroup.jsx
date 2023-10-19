@@ -1,16 +1,23 @@
-import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { Button, Form, Select, Input, InputNumber, Modal } from 'antd'
 import { getAreaActive } from 'features/slice/area/areaSlice'
+import { updateHabitantType } from 'features/slice/habitant/habitantTypeSlice'
 import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
-import { createField } from 'features/slice/field/fieldSlice'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-const FirstStepAddAnimalGroup = ({ isModalOpen, closeModal }) => {
+const UpdateAnimalGroup = ({
+  isModalOpen,
+  closeModal,
+  selectedData,
+  loadData,
+}) => {
   const [selectedAreaId, setSelectedAreaId] = useState(null)
 
   const area = useSelector((state) => state.area.data)
+
   const zoneAnimal = useSelector((state) => state.zoneAnimal.data)
   const dataZoneAnimal = zoneAnimal.data
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -24,104 +31,122 @@ const FirstStepAddAnimalGroup = ({ isModalOpen, closeModal }) => {
   }, [selectedAreaId])
 
   const handleSelectAreaChange = (value) => {
+    console.log(selectedData)
     setSelectedAreaId(value)
   }
 
   const onFinish = (values) => {
     const finalValues = {
-      ...values,
+      id: selectedData.id,
+      name: values.name,
       status: 1,
+      code: values.code,
+      area: values.square,
+      zoneId: values.zone.value,
     }
-    console.log(finalValues)
-    dispatch(createField(finalValues))
-    closeModal()
+    dispatch(updateHabitantType(finalValues)).then(() => {
+      loadData()
+      setTimeout(() => {
+        closeModal()
+      }, 500)
+    })
   }
 
   return (
     <>
       <Modal
-        title="Tạo chuồng"
+        title="Cập nhật chuồng"
         open={isModalOpen}
+        closeIcon
         onCancel={closeModal}
         footer={[
-          <Button form="createAnimalGroup" type="dashed" htmlType="reset">
-            Làm mới
-          </Button>,
           <Button
-            form="createAnimalGroup"
+            form="updateAnimalGroup"
             type="primary"
+            htmlType="reset"
             danger
             onClick={closeModal}
           >
             Huỷ
           </Button>,
-          <Button form="createAnimalGroup" type="primary" htmlType="submit">
-            Hoàn thành
+          <Button form="updateAnimalGroup" type="primary" htmlType="submit">
+            Cập nhật
           </Button>,
         ]}
       >
         <Form
           layout="vertical"
-          className="first-step-animal-group"
-          id="createAnimalGroup"
+          className="first-step-animal"
+          id="updateAnimalGroup"
           onFinish={onFinish}
         >
           <div className="form-left">
-            {/*  Name */}
+            {/* ID Animal */}
+            <Form.Item
+              label="Mã chuồng"
+              initialValue={selectedData ? selectedData.code : ''}
+              name="code"
+            >
+              <Input readOnly />
+            </Form.Item>
+
+            {/* Name Animal */}
             <Form.Item
               label="Tên chuồng"
-              name="name"
               rules={[
                 {
                   required: true,
                   message: 'Vui lòng nhập tên chuồng',
                 },
               ]}
+              initialValue={selectedData ? selectedData.name : ''}
+              name="name"
             >
               <Input placeholder="Nhập tên chuồng" />
             </Form.Item>
 
+            {/* Area */}
             <Form.Item
-              label="Mã chuồng"
-              name="code"
+              label="Diện tích chuồng"
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng nhập mã chuồng',
+                  message: 'Vui lòng nhập diện tích chuồng',
                 },
               ]}
+              initialValue={selectedData ? selectedData.area : ''}
+              name="square"
             >
-              <Input placeholder="Nhập mã chuồng" />
-            </Form.Item>
-
-            {/* Square*/}
-            <Form.Item
-              label="Diện tích"
-              name="area"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập diện tích',
-                },
-              ]}
-            >
-              <InputNumber style={{ width: '100%' }} addonAfter="m2" min={0} />
+              <InputNumber min={0} addonAfter="m2" />
             </Form.Item>
           </div>
 
           <div className="form-right">
             {/* Area */}
-            <Form.Item label="Khu vực">
+            <Form.Item
+              label="Khu vực"
+              name="area"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn khu vực',
+                },
+              ]}
+              initialValue={
+                selectedData
+                  ? {
+                      label: selectedData.areaName,
+                      value: selectedData.areaId,
+                    }
+                  : ''
+              }
+            >
               <Select
                 placeholder="Chọn khu vực"
-                options={
-                  Array.isArray(area.data)
-                    ? area.data.map((item) => ({
-                        label: item.name,
-                        value: item.id,
-                      }))
-                    : []
-                }
+                options={area.data?.map((item) => ({
+                  label: item.name,
+                  value: item.id,
+                }))}
                 onChange={handleSelectAreaChange}
               ></Select>
             </Form.Item>
@@ -129,13 +154,21 @@ const FirstStepAddAnimalGroup = ({ isModalOpen, closeModal }) => {
             {/* Zone */}
             <Form.Item
               label="Vùng"
-              name="zoneId"
+              name="zone"
               rules={[
                 {
                   required: true,
                   message: 'Vui lòng chọn vùng',
                 },
               ]}
+              initialValue={
+                selectedData
+                  ? {
+                      label: selectedData.zoneName,
+                      value: selectedData.zoneId,
+                    }
+                  : ''
+              }
             >
               <Select
                 placeholder="Chọn vùng"
@@ -155,4 +188,4 @@ const FirstStepAddAnimalGroup = ({ isModalOpen, closeModal }) => {
     </>
   )
 }
-export default FirstStepAddAnimalGroup
+export default UpdateAnimalGroup

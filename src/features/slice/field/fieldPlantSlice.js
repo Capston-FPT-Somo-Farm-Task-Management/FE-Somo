@@ -6,7 +6,7 @@ export const getFieldPlant = createAsyncThunk(
   'fieldPlant/getFieldPlant',
   async () => {
     try {
-      const { data } = await axios.get(baseUrl + '/Field/Plant', {
+      const { data } = await axios.get(baseUrl + '/Field/Plant/Active', {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -17,7 +17,6 @@ export const getFieldPlant = createAsyncThunk(
     }
   }
 )
-
 
 const fieldPlantSlice = createSlice({
   name: 'fieldPlant',

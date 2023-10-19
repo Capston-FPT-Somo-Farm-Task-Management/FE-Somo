@@ -11,7 +11,7 @@ import { getTaskTypeLivestock } from 'features/slice/task/taskTypeAnimal'
 import { getMember } from 'features/slice/member/memberSlice'
 import { getEmployee } from 'features/slice/employee/employeeSlice'
 import { getMaterial } from 'features/slice/material/materialSlice'
-import { getAnimals } from 'features/slice/animal/animalSlice'
+import { getAnimalActive, getAnimals } from 'features/slice/animal/animalSlice'
 import { createTask } from 'features/slice/task/taskSlice'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import dayjs from 'dayjs'
@@ -58,7 +58,7 @@ function ThirdModal({ option }) {
     dispatch(getAreaActive())
     dispatch(getTaskTypePlant())
     dispatch(getTaskTypeLivestock())
-    dispatch(getAnimals())
+    dispatch(getAnimalActive())
     dispatch(getMember())
     dispatch(getEmployee())
     dispatch(getMaterial())

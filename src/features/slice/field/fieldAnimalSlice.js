@@ -6,7 +6,7 @@ export const getFieldAnimal = createAsyncThunk(
   'fieldAnimal/getFieldAnimal',
   async () => {
     try {
-      const { data } = await axios.get(baseUrl + '/Field/Livestock', {
+      const { data } = await axios.get(baseUrl + '/Field/Livestock/Active', {
         headers: {
           'Content-Type': 'application/json',
         },
