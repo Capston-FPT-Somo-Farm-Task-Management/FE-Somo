@@ -1,7 +1,6 @@
 import {
   deleteAnimal,
   getAnimalActive,
-  getAnimals,
 } from 'features/slice/animal/animalSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
@@ -12,15 +11,17 @@ const TableDisplayAnimal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
   const animal = useSelector((state) => state.animal.data)
-  const dataAnimalActive = animal.data
+
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getAnimalActive())
-  }, [])
+  }, [dispatch])
 
   const handleDelete = (id) => {
-    dispatch(deleteAnimal(id))
+    dispatch(deleteAnimal(id)).then(() => {
+      loadData()
+    })
   }
 
   const openModal = (record) => {
@@ -32,9 +33,13 @@ const TableDisplayAnimal = () => {
     setIsModalOpen(false)
   }
 
+  const loadData = () => {
+    dispatch(getAnimalActive())
+  }
+
   return (
     <>
-      <Table dataSource={dataAnimalActive} rowKey="id">
+      <Table dataSource={animal ? animal.data : ''} rowKey="id">
         <Column
           title="Tên vật nuôi"
           dataIndex="name"
@@ -80,6 +85,7 @@ const TableDisplayAnimal = () => {
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}
+        loadData={loadData}
       />
     </>
   )

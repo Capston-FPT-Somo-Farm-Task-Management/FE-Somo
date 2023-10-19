@@ -1,15 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { baseUrl } from 'features/api/baseUrl'
+import { Exception } from 'sass'
 
 export const getAnimalType = createAsyncThunk(
   'animalTypes/getAnimalTypes',
   async () => {
     try {
-      const { data } = await axios.get(baseUrl + '/HabitantType/LivestockType')
+      const { data } = await axios.get(
+        baseUrl + '/HabitantType/LivestockType/Active'
+      )
       return data
     } catch (error) {
-      console.log(error)
+      throw Exception(error)
     }
   }
 )

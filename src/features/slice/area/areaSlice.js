@@ -22,8 +22,12 @@ export const deleteArea = createAsyncThunk(
     console.log(id)
     try {
       const response = await axios.put(baseUrl + `/Area/Delete/${id}`)
-      return response.data
+      if (response.status === 200) {
+        toast.success(response.data.message)
+        return response.data
+      }
     } catch (error) {
+      toast.error(error.response.data.message)
       return rejectWithValue(error)
     }
   }
@@ -58,7 +62,6 @@ const areaSlice = createSlice({
       .addCase(deleteArea.fulfilled, (state, action) => {
         state.loading = false
         state.data = action.payload
-        toast.success(`Xoá thành công`)
       })
       .addCase(deleteArea.rejected, (state, action) => {
         state.loading = false

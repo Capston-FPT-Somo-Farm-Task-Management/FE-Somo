@@ -1,46 +1,37 @@
-import { Button, Form, Input, InputNumber, Modal, Radio, Select } from 'antd'
-import { updateAnimal } from 'features/slice/animal/animalSlice'
-import { getAnimalType } from 'features/slice/animal/animalTypeSlice'
+import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
 import { getAreaActive } from 'features/slice/area/areaSlice'
 import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
-import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
+import { updatePlant } from 'features/slice/plant/plantSlice'
+import { getPlantType } from 'features/slice/plantType/plantTypeSlice'
+import { getZoneByAreaPlant } from 'features/slice/zone/zonePlantSlice'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const UpdateAnimal = ({ isModalOpen, closeModal, selectedData, loadData }) => {
+const UpdateCrop = ({ isModalOpen, closeModal, selectedData, loadData }) => {
   const [selectedAreaId, setSelectedAreaId] = useState(null)
   const [selectedZoneId, setSelectedZoneId] = useState(null)
-  const [gender, setGender] = useState(true)
 
   const area = useSelector((state) => state.area.data)
 
-  const zoneAnimal = useSelector((state) => state.zoneAnimal.data)
-  const dataZoneAnimal = zoneAnimal.data
+  const zonePlant = useSelector((state) => state.zonePlant.data)
+  const dataZonePlant = zonePlant.data
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data)
   const dataFieldByZone = fieldByZone.data
 
-  const animalType = useSelector((state) => state.animalType.data)
-  const dataAnimalType = animalType.data
+  const plantType = useSelector((state) => state.plantType.data)
+  const dataPlantType = plantType.data
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (isModalOpen) {
-      if (selectedData) {
-        setGender(selectedData.gender)
-      }
-    }
-  }, [isModalOpen, selectedData])
-
-  useEffect(() => {
     dispatch(getAreaActive())
-    dispatch(getAnimalType())
+    dispatch(getPlantType())
   }, [])
 
   useEffect(() => {
     if (selectedAreaId) {
-      dispatch(getZoneByAreaAnimal(selectedAreaId))
+      dispatch(getZoneByAreaPlant(selectedAreaId))
     }
     if (selectedZoneId) {
       dispatch(getFieldByZone(selectedZoneId))
@@ -61,19 +52,17 @@ const UpdateAnimal = ({ isModalOpen, closeModal, selectedData, loadData }) => {
       id: selectedData.id,
       name: values.name,
       externalId: values.externalId,
-      weight: values.weight,
-      gender: values.gender,
+      height: values.height,
       habitantTypeId: values.habitantType.value,
       fieldId: values.field.value,
     }
-    dispatch(updateAnimal(finalValues)).then(() => {
+    dispatch(updatePlant(finalValues)).then(() => {
       loadData()
       setTimeout(() => {
         closeModal()
       }, 500)
     })
   }
-
   return (
     <>
       <Modal
@@ -83,7 +72,7 @@ const UpdateAnimal = ({ isModalOpen, closeModal, selectedData, loadData }) => {
         onCancel={closeModal}
         footer={[
           <Button
-            form="updateAnimal"
+            form="updatePlant"
             type="primary"
             htmlType="reset"
             danger
@@ -91,15 +80,15 @@ const UpdateAnimal = ({ isModalOpen, closeModal, selectedData, loadData }) => {
           >
             Huỷ
           </Button>,
-          <Button form="updateAnimal" type="primary" htmlType="submit">
+          <Button form="updatePlant" type="primary" htmlType="submit">
             Cập nhật
           </Button>,
         ]}
       >
         <Form
           layout="vertical"
-          className="first-step-animal"
-          id="updateAnimal"
+          className="first-step-plant"
+          id="updatePlant"
           onFinish={onFinish}
         >
           <div className="form-left">
@@ -114,26 +103,26 @@ const UpdateAnimal = ({ isModalOpen, closeModal, selectedData, loadData }) => {
 
             {/* Name Animal */}
             <Form.Item
-              label="Tên vật nuôi"
+              label="Tên cây trồng"
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng nhập tên vật nuôi',
+                  message: 'Vui lòng nhập tên cây trồng',
                 },
               ]}
               initialValue={selectedData ? selectedData.name : ''}
               name="name"
             >
-              <Input placeholder="Nhập tên vật nuôi" />
+              <Input placeholder="Nhập tên cây trồng" />
             </Form.Item>
 
             {/* Animal Type */}
             <Form.Item
-              label="Loại vật nuôi"
+              label="Loại cây trồng"
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng chọn loại vật nuôi',
+                  message: 'Vui lòng chọn loại cây trồng',
                 },
               ]}
               name="habitantType"
@@ -147,44 +136,27 @@ const UpdateAnimal = ({ isModalOpen, closeModal, selectedData, loadData }) => {
               }
             >
               <Select
-                placeholder="Chọn loại vật nuôi"
-                options={dataAnimalType?.map((type) => ({
+                placeholder="Chọn loại cây trồng"
+                options={dataPlantType?.map((type) => ({
                   label: type.name,
                   value: type.id,
                 }))}
               ></Select>
             </Form.Item>
 
-            {/* Weight */}
+            {/* Height */}
             <Form.Item
-              label="Cân nặng vật nuôi (kg)"
+              label="Chiều cao cây trồng (m)"
               rules={[
                 {
                   required: true,
                   message: 'Vui lòng nhập cân nặng vật nuôi',
                 },
               ]}
-              initialValue={selectedData ? selectedData.weight : ''}
-              name="weight"
+              initialValue={selectedData ? selectedData.height : ''}
+              name="height"
             >
-              <InputNumber min={0} />
-            </Form.Item>
-
-            <Form.Item
-              label="Giới tính"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng chọn giới tính vật nuôi',
-                },
-              ]}
-              name="gender"
-              initialValue={gender}
-            >
-              <Radio.Group>
-                <Radio value={true}>Đực/Trống</Radio>
-                <Radio value={false}>Cái/Mái</Radio>
-              </Radio.Group>
+              <InputNumber min={0} addonAfter="m" />
             </Form.Item>
           </div>
 
@@ -240,8 +212,8 @@ const UpdateAnimal = ({ isModalOpen, closeModal, selectedData, loadData }) => {
               <Select
                 placeholder="Chọn vùng"
                 options={
-                  Array.isArray(dataZoneAnimal)
-                    ? dataZoneAnimal.map((item) => ({
+                  Array.isArray(dataZonePlant)
+                    ? dataZonePlant.map((item) => ({
                         label: item.name,
                         value: item.id,
                       }))
@@ -288,4 +260,4 @@ const UpdateAnimal = ({ isModalOpen, closeModal, selectedData, loadData }) => {
     </>
   )
 }
-export default UpdateAnimal
+export default UpdateCrop

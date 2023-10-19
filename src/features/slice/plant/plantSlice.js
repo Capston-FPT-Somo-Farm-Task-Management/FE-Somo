@@ -3,19 +3,6 @@ import axios from 'axios'
 import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
 
-export const getPlants = createAsyncThunk('plants/getPlants', async () => {
-  try {
-    const { data } = await axios.get(baseUrl + '/Plant', {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    return data
-  } catch (error) {
-    console.log(error)
-  }
-})
-
 export const getPlantActive = createAsyncThunk(
   'plants/getPlantActive',
   async () => {
@@ -48,6 +35,22 @@ export const createPlant = createAsyncThunk(
   }
 )
 
+export const updatePlant = createAsyncThunk(
+  'plants/updatePlant',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(baseUrl + `/Plant/${data.id}`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      return response.json()
+    } catch (error) {
+      rejectWithValue(error)
+    }
+  }
+)
+
 export const deletePlant = createAsyncThunk(
   'plants/deletePlant',
   async (id, { rejectWithValue }) => {
@@ -68,22 +71,13 @@ const plantSlice = createSlice({
     loading: false,
     error: '',
   },
+  reducers: {
+    clearPlant: (state) => {
+      state.data = null
+    },
+  },
   extraReducers(builder) {
     builder
-      //getPlant
-      .addCase(getPlants.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(getPlants.fulfilled, (state, action) => {
-        state.loading = false
-        state.error = ''
-        state.data = action.payload
-      })
-      .addCase(getPlants.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
-        state.data = []
-      })
 
       // getPlantActive
       .addCase(getPlantActive.pending, (state) => {
@@ -112,6 +106,18 @@ const plantSlice = createSlice({
         state.error = action.payload
       })
 
+      .addCase(updatePlant.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(updatePlant.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = [action.payload]
+      })
+      .addCase(updatePlant.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+
       .addCase(deletePlant.pending, (state) => {
         state.loading = true
       })
@@ -128,3 +134,4 @@ const plantSlice = createSlice({
 })
 
 export default plantSlice.reducer
+export const { clearPlant } = plantSlice.actions
