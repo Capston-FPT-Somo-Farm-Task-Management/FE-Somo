@@ -2,22 +2,10 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
-
-export const getAnimals = createAsyncThunk('animals/getAnimals', async () => {
-  try {
-    const { data } = await axios.get(baseUrl + '/Livestock', {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    return data
-  } catch (error) {
-    console.log(error)
-  }
-})
+import { Exception } from 'sass'
 
 export const getAnimalActive = createAsyncThunk(
-  'plants/getAnimalActive',
+  'animals/getAnimalActive',
   async () => {
     try {
       const { data } = await axios.get(baseUrl + '/Livestock/Active', {
@@ -27,7 +15,7 @@ export const getAnimalActive = createAsyncThunk(
       })
       return data
     } catch (error) {
-      console.log(error)
+      throw Exception(error)
     }
   }
 )
@@ -42,7 +30,31 @@ export const createAnimal = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       })
+      if (response.status === 200) {
+        toast.success(response.data.message)
+      }
       return response.data.data
+    } catch (error) {
+      toast.error(error.response.data.message)
+      rejectWithValue(error)
+    }
+  }
+)
+
+export const updateAnimal = createAsyncThunk(
+  'animals/updateAnimal',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        baseUrl + `/Livestock/${data.id}`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      return response.json()
     } catch (error) {
       rejectWithValue(error)
     }
@@ -55,8 +67,12 @@ export const deleteAnimal = createAsyncThunk(
     console.log(id)
     try {
       const response = await axios.put(baseUrl + `/Livestock/Delete/${id}`)
+      if (response.status === 200) {
+        toast.success(response.data.message)
+      }
       return response.data
     } catch (error) {
+      toast.error(error.response.data.message)
       return rejectWithValue(error)
     }
   }
@@ -69,22 +85,13 @@ const animalSlice = createSlice({
     loading: false,
     error: '',
   },
+  reducers: {
+    clearAnimal: (state) => {
+      state.data = null
+    },
+  },
   extraReducers(builder) {
     builder
-      .addCase(getAnimals.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(getAnimals.fulfilled, (state, action) => {
-        state.loading = false
-        state.error = ''
-        state.data = action.payload
-      })
-      .addCase(getAnimals.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
-        state.data = []
-      })
-
       // getAnimalActive
       .addCase(getAnimalActive.pending, (state) => {
         state.loading = true
@@ -112,12 +119,23 @@ const animalSlice = createSlice({
         state.error = action.payload
       })
 
+      .addCase(updateAnimal.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(updateAnimal.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = [action.payload]
+      })
+      .addCase(updateAnimal.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+
       .addCase(deleteAnimal.pending, (state) => {
         state.loading = true
       })
       .addCase(deleteAnimal.fulfilled, (state, action) => {
         state.loading = false
-        toast.success(`Xoá thành công`)
         state.data = action.payload
       })
       .addCase(deleteAnimal.rejected, (state, action) => {
@@ -128,3 +146,4 @@ const animalSlice = createSlice({
 })
 
 export default animalSlice.reducer
+export const { clearAnimal } = animalSlice.actions

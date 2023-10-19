@@ -12,9 +12,28 @@ export const createField = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       })
-      console.log(response.data)
-      console.log(response)
-      return response.data.data
+      if (response.status === 200) {
+        toast.success(response.data.message)
+        return response.data.data
+      }
+    } catch (error) {
+      toast.error(error.response.data.message)
+      return rejectWithValue(error.response.data.message)
+    }
+  }
+)
+
+export const getFields = createAsyncThunk(
+  'fields/getFields',
+  async ({ rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(baseUrl + '/Field/Active', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+      return data
     } catch (error) {
       rejectWithValue(error)
     }
@@ -24,11 +43,14 @@ export const createField = createAsyncThunk(
 export const deleteField = createAsyncThunk(
   'fields/deleteField',
   async (id, { rejectWithValue }) => {
-    console.log(id)
     try {
       const response = await axios.put(baseUrl + `/Field/Delete/${id}`)
+      if (response.status === 200) {
+        toast.success(response.data.message)
+      }
       return response.data
     } catch (error) {
+      toast.error(error.response.data.message)
       return rejectWithValue(error)
     }
   }
@@ -43,18 +65,31 @@ const fieldSlice = createSlice({
   },
   extraReducers(builder) {
     builder
+
+      .addCase(getFields.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(getFields.fulfilled, (state, action) => {
+        state.loading = false
+        state.error = ''
+        state.data = action.payload
+      })
+      .addCase(getFields.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+        state.data = []
+      })
+
       .addCase(createField.pending, (state) => {
         state.loading = true
       })
       .addCase(createField.fulfilled, (state, action) => {
         state.loading = false
-        state.data.push(action.payload)
-        toast.success(`Thêm mới thành công`)
+        state.data = [action.payload]
       })
       .addCase(createField.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
-        toast.error('Trùng')
       })
 
       .addCase(deleteField.pending, (state) => {
@@ -63,7 +98,6 @@ const fieldSlice = createSlice({
       .addCase(deleteField.fulfilled, (state, action) => {
         state.loading = false
         state.data = action.payload
-        toast.success(`Xoá thành công`)
       })
       .addCase(deleteField.rejected, (state, action) => {
         state.loading = false
