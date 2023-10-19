@@ -1,17 +1,12 @@
 import React, { useEffect } from "react";
 import ModalTask from "../ModalTask";
 import { Input, Space, Table } from "antd";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
-import { Link } from "react-router-dom";
-import { Dropdown } from "antd";
+
 import {
-  MoreOutlined,
   EditOutlined,
   CheckCircleOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { getTasks } from "features/slice/task/taskSlice";
 import { taskTitle, onChange } from "./listTaskData";
@@ -40,7 +35,7 @@ function List() {
 
   const task = useSelector((state) => state.task.data);
   const dataTask = task.data;
-  console.log(task);
+  console.log(dataTask);
   const dispatch = useDispatch();
 
   useEffect(() => {
