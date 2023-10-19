@@ -11,7 +11,8 @@ import { getTaskTypeLivestock } from "features/slice/task/taskTypeAnimal";
 import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
 import { getEmployee } from "features/slice/employee/employeeSlice";
 import { getMaterial } from "features/slice/material/materialSlice";
-import { getAnimalActive, getAnimals } from "features/slice/animal/animalSlice";
+import { getAnimalActive } from "features/slice/animal/animalSlice";
+import { getPlantActive } from "features/slice/plant/plantSlice";
 import { createTask } from "features/slice/task/taskSlice";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import dayjs from "dayjs";
@@ -40,6 +41,11 @@ function ThirdModal({ option }) {
 
   const animal = useSelector((state) => state.animal.data);
   const dataAnimal = animal.data;
+
+  const plant = useSelector((state) => state.plant.data);
+  const dataPlant = plant.data;
+
+  console.log(dataPlant);
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
   const dataFieldByZone = fieldByZone.data;
@@ -71,6 +77,7 @@ function ThirdModal({ option }) {
     dispatch(getTaskTypePlant());
     dispatch(getTaskTypeLivestock());
     dispatch(getAnimalActive());
+    dispatch(getPlantActive());
     dispatch(getSupervisor());
     dispatch(getEmployee());
     dispatch(getMaterial());
@@ -145,7 +152,6 @@ function ThirdModal({ option }) {
       suppervisorId: 11,
       managerId: 5,
       otherId: 0,
-      plantId: 0,
     };
 
     const transformedValues = transformData(finalValues);
@@ -206,12 +212,17 @@ function ThirdModal({ option }) {
               }))}
             />
           </Form.Item>
-          <Form.Item label="Chuồng" name="fieldId" required rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng chọn chuồng',
-                },
-              ]}>
+          <Form.Item
+            label="Chuồng"
+            name="fieldId"
+            required
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng chọn chuồng",
+              },
+            ]}
+          >
             <Select
               placeholder="Chọn chuồng"
               options={dataFieldByZone?.map((item) => ({
@@ -220,12 +231,17 @@ function ThirdModal({ option }) {
               }))}
             />
           </Form.Item>
-          <Form.Item label="Mã vật nuôi" name="liveStockId" required rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng chọn mã vật nuôi',
-                },
-              ]}>
+          <Form.Item
+            label="Mã vật nuôi"
+            name="liveStockId"
+            required
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng chọn mã vật nuôi",
+              },
+            ]}
+          >
             <Select
               placeholder="Chọn mã vật nuôi"
               options={dataAnimal?.map((item) => ({
@@ -234,12 +250,17 @@ function ThirdModal({ option }) {
               }))}
             />
           </Form.Item>
-          <Form.Item label="Độ ưu tiên" name="priority" required rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng chọn độ ưu tiên',
-                },
-              ]}>
+          <Form.Item
+            label="Độ ưu tiên"
+            name="priority"
+            required
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng chọn độ ưu tiên",
+              },
+            ]}
+          >
             <Select
               value={priorityValue}
               onChange={(value) => setPriorityValue(value)}
@@ -300,20 +321,30 @@ function ThirdModal({ option }) {
           </Form.Item>
         </div>
         <div className="form-right">
-          <Form.Item label="Tên công việc" name="name" required rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập tên công việc',
-                },
-              ]}>
+          <Form.Item
+            label="Tên công việc"
+            name="name"
+            required
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập tên công việc",
+              },
+            ]}
+          >
             <Input placeholder="Nhập tên công việc" />
           </Form.Item>
-          <Form.Item label="Loại nhiệm vụ" name="taskTypeId" required rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng chọn loại nhiệm vụ',
-                },
-              ]}>
+          <Form.Item
+            label="Loại nhiệm vụ"
+            name="taskTypeId"
+            required
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng chọn loại nhiệm vụ",
+              },
+            ]}
+          >
             <Select
               placeholder="Chọn loại nhiệm vụ"
               options={dataTaskTypeLivestock?.map((item) => ({
@@ -322,12 +353,17 @@ function ThirdModal({ option }) {
               }))}
             />
           </Form.Item>
-          <Form.Item label="Người thực hiện" name="employeeIds" required rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng chọn người thực hiện',
-                },
-              ]}>
+          <Form.Item
+            label="Người thực hiện"
+            name="employeeIds"
+            required
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng chọn người thực hiện",
+              },
+            ]}
+          >
             <Select
               mode="multiple"
               value={employeesValue}
@@ -339,12 +375,17 @@ function ThirdModal({ option }) {
               }))}
             />
           </Form.Item>
-          <Form.Item label="Người giám sát" name="suppervisorId" required rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng chọn người giám sát',
-                },
-              ]}>
+          <Form.Item
+            label="Người giám sát"
+            name="suppervisorId"
+            required
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng chọn người giám sát",
+              },
+            ]}
+          >
             <Select
               placeholder="Chọn người giám sát"
               options={dataSupervisor?.map((item) => ({
@@ -353,12 +394,17 @@ function ThirdModal({ option }) {
               }))}
             />
           </Form.Item>
-          <Form.Item label="Dụng cụ" name="materialIds" required rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng chọn dụng cụ sử dụng',
-                },
-              ]}>
+          <Form.Item
+            label="Dụng cụ"
+            name="materialIds"
+            required
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng chọn dụng cụ sử dụng",
+              },
+            ]}
+          >
             <Select
               placeholder="Chọn dụng cụ"
               mode="multiple"
@@ -400,7 +446,7 @@ function ThirdModal({ option }) {
               name="dates"
               rules={[{ required: true }]}
             >
-              <MultiDatePicker  multiple format="YYYY-MM-DD" />
+              <MultiDatePicker multiple format="YYYY-MM-DD" />
             </Form.Item>
           )}
         </div>
@@ -593,8 +639,12 @@ function ThirdModal({ option }) {
           </Form.Item>
 
           {repeatValue && (
-            <Form.Item label="Lặp những ngày" rules={[{ required: true }]}>
-              <DatePicker placeholder="Chọn những ngày lặp" />
+            <Form.Item
+              label="Lặp những ngày"
+              name="dates"
+              rules={[{ required: true }]}
+            >
+              <MultiDatePicker multiple format="YYYY-MM-DD" />
             </Form.Item>
           )}
         </div>
@@ -659,27 +709,44 @@ function ThirdModal({ option }) {
             </Form.Item>
             <Form.Item
               label="Mã cây trồng"
+              name="plantId"
+              required
               rules={[
                 {
                   required: true,
                   message: "Vui lòng nhập mã cây trồng",
                 },
               ]}
-              name="externalId"
             >
-              <Input placeholder="Nhập mã cây trồng" />
+              <Select
+                placeholder="Chọn mã cây trồng"
+                options={dataPlant?.map((item) => ({
+                  label: item.name,
+                  value: item.id,
+                }))}
+              />
             </Form.Item>
-            <Form.Item label="Độ ưu tiên" required>
+            <Form.Item
+              label="Độ ưu tiên"
+              name="priority"
+              required
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn độ ưu tiên",
+                },
+              ]}
+            >
               <Select
                 value={priorityValue}
                 onChange={(value) => setPriorityValue(value)}
                 placeholder="Chọn độ ưu tiên"
               >
-                <Select.Option value="lowest">Thấp nhất</Select.Option>
-                <Select.Option value="low">Thấp</Select.Option>
-                <Select.Option value="medium">Trung bình</Select.Option>
-                <Select.Option value="high">Cao</Select.Option>
-                <Select.Option value="highest">Cao nhất</Select.Option>
+                <Select.Option value="Thấp nhất">Thấp nhất</Select.Option>
+                <Select.Option value="Thấp">Thấp</Select.Option>
+                <Select.Option value="Trung bình">Trung bình</Select.Option>
+                <Select.Option value="Cao">Cao</Select.Option>
+                <Select.Option value="Cao nhất">Cao nhất</Select.Option>
               </Select>
             </Form.Item>
             <Form.Item
@@ -730,10 +797,30 @@ function ThirdModal({ option }) {
             </Form.Item>
           </div>
           <div className="form-right">
-            <Form.Item label="Tên công việc" required>
+            <Form.Item
+              label="Tên công việc"
+              name="name"
+              required
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng nhập tên công việc",
+                },
+              ]}
+            >
               <Input placeholder="Nhập tên công việc" />
             </Form.Item>
-            <Form.Item label="Loại nhiệm vụ" required>
+            <Form.Item
+              label="Loại nhiệm vụ"
+              name="taskTypeId"
+              required
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn loại nhiệm vụ",
+                },
+              ]}
+            >
               <Select
                 placeholder="Chọn loại nhiệm vụ"
                 options={dataTaskTypePlant?.map((item) => ({
@@ -801,8 +888,12 @@ function ThirdModal({ option }) {
             </Form.Item>
 
             {repeatValue && (
-              <Form.Item label="Lặp những ngày" rules={[{ required: true }]}>
-                <DatePicker placeholder="Chọn những ngày lặp" />
+              <Form.Item
+                label="Lặp những ngày"
+                name="dates"
+                rules={[{ required: true }]}
+              >
+                <MultiDatePicker multiple format="YYYY-MM-DD" />
               </Form.Item>
             )}
           </div>
@@ -995,8 +1086,12 @@ function ThirdModal({ option }) {
           </Form.Item>
 
           {repeatValue && (
-            <Form.Item label="Lặp những ngày" rules={[{ required: true }]}>
-              <DatePicker placeholder="Chọn những ngày lặp" />
+            <Form.Item
+              label="Lặp những ngày"
+              name="dates"
+              rules={[{ required: true }]}
+            >
+              <MultiDatePicker multiple format="YYYY-MM-DD" />
             </Form.Item>
           )}
         </div>
