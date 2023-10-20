@@ -44,6 +44,7 @@ const TaskDetail = ({ visible, onCancel, taskData, option, type }) => {
         );
       }
     }
+    console.log(plantName)
     return null;
   };
 

@@ -43,16 +43,6 @@ export const taskTitle = [
     key: 'status',
   },
 
-  {
-    title: 'Tuỳ chọn',
-    key: 'action',
-    render: (_, record) => (
-      <Space size="small">
-        <a>Xoá</a>
-        <a>Sửa</a>
-      </Space>
-    ),
-  },
 ]
 
 export const onChange = (sorter) => {

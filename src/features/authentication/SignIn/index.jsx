@@ -59,7 +59,6 @@ const SignIn = () => {
           </Button>
         </Form.Item>
       </Form>
-      <Outlet />
     </>
   )
 }
