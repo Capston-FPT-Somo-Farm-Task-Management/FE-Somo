@@ -1,4 +1,4 @@
-@import "../../../styles/Helper/mixin";
+@import '../../../styles/Helper/mixin';
 .ant-layout-sider {
   box-shadow: 3px 0px 2px 0 rgba(94, 98, 105, 0.2);
   overflow: auto;
@@ -38,7 +38,7 @@
       @include mobile {
         width: 60%;
       }
-      @include mobile-sm{
+      @include mobile-sm {
         width: 70%;
       }
     }

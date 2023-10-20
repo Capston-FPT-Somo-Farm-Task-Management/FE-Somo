@@ -2,7 +2,6 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHorseHead, faSeedling } from '@fortawesome/free-solid-svg-icons'
 import {
-  faMap,
   faCalendarDays,
   faCircleCheck,
   faClone,
@@ -33,14 +32,10 @@ export const menuItem = [
   getItem('Chăn nuôi', 'sub3', <FontAwesomeIcon icon={faHorseHead} />, [
     getItem(<Link to="/animals">Động vật</Link>, '1'),
     getItem(<Link to="/animal-group">Chuồng</Link>, '2'),
-    getItem('Chăn thả', '3'),
   ]),
   getItem('Trồng trọt', 'sub4', <FontAwesomeIcon icon={faSeedling} />, [
-    getItem(<Link to="/crops">Cây trồng</Link>, '4'),
-    getItem(<Link to="/crop-group">Vườn</Link>, '5'),
-    getItem('Kế hoạch trồng trọt', '6'),
-    getItem('Vị trí trồng trọt', '7'),
-    getItem('So sánh năng suất', '8'),
+    getItem(<Link to="/crops">Cây trồng</Link>, '3'),
+    getItem(<Link to="/crop-group">Vườn</Link>, '4'),
   ]),
   getItem(
     <Link to="/area">Khu vực</Link>,
@@ -52,7 +47,6 @@ export const menuItem = [
     'sub6',
     <FontAwesomeIcon icon={faSquare} />
   ),
-  getItem('Bản đồ trang trại', 'sub7', <FontAwesomeIcon icon={faMap} />),
 ]
 
 export const rootSubmenuKeys = ['sub3', 'sub4']
