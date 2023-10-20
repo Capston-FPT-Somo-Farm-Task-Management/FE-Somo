@@ -1,35 +1,31 @@
-import { Form, Button, Checkbox, Input } from 'antd'
-import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons'
-import { Link, Outlet } from 'react-router-dom'
+import { Form, Button, Input } from 'antd'
+import { LockOutlined, UserOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { postLogin } from 'features/slice/user/userSlice'
 
 const SignIn = () => {
-  const handleSignIn = (values) => {
-    console.log('Received values of form: ', values)
+  const dispatch = useDispatch()
+
+  const onFinish = (values) => {
+    dispatch(postLogin(values))
   }
 
   return (
     <>
-      <Form
-        name="normal_login"
-        className="login-form"
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={handleSignIn}
-      >
+      <Form name="login" className="login-form" onFinish={onFinish}>
         <Form.Item
-          name="email"
+          name="username"
           rules={[
             {
               required: true,
-              message: 'Please input your Email!',
+              message: 'Vui lòng nhập tài khoản',
             },
           ]}
         >
           <Input
-            prefix={<MailOutlined className="site-form-item-icon" />}
-            placeholder="Email"
-            type="email"
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            placeholder="Tên đăng nhập"
           />
         </Form.Item>
         <Form.Item
@@ -37,23 +33,19 @@ const SignIn = () => {
           rules={[
             {
               required: true,
-              message: 'Please input your Password!',
+              message: 'Vui lòng nhập mật khẩu',
             },
           ]}
         >
           <Input
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
-            placeholder="Password"
+            placeholder="Mật khẩu"
           />
         </Form.Item>
         <Form.Item>
-          <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
-
           <Link className="login-form-forgot" to="/forgot">
-            Forgot password
+            Quên mật khẩu
           </Link>
         </Form.Item>
 
@@ -65,11 +57,11 @@ const SignIn = () => {
           >
             Log in
           </Button>
-          Or <Link to="/register">register now!</Link>
         </Form.Item>
       </Form>
       <Outlet />
     </>
   )
 }
+
 export default SignIn
