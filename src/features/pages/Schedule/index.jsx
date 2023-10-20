@@ -1,87 +1,87 @@
-import { Badge, Calendar } from "antd";
-import React from "react";
+import { Badge, Calendar } from 'antd'
+import React from 'react'
 
 const getListData = (value) => {
-  let listData;
+  let listData
   switch (value.date()) {
     case 8:
       listData = [
         {
-          type: "warning",
-          content: "This is warning event.",
+          type: 'warning',
+          content: 'This is warning event.',
         },
         {
-          type: "success",
-          content: "This is usual event.",
+          type: 'success',
+          content: 'This is usual event.',
         },
-      ];
-      break;
+      ]
+      break
     case 10:
       listData = [
         {
-          type: "warning",
-          content: "This is warning event.",
+          type: 'warning',
+          content: 'This is warning event.',
         },
         {
-          type: "success",
-          content: "This is usual event.",
+          type: 'success',
+          content: 'This is usual event.',
         },
         {
-          type: "error",
-          content: "This is error event.",
+          type: 'error',
+          content: 'This is error event.',
         },
-      ];
-      break;
+      ]
+      break
     case 15:
       listData = [
         {
-          type: "warning",
-          content: "This is warning event",
+          type: 'warning',
+          content: 'This is warning event',
         },
         {
-          type: "success",
-          content: "This is very long usual event......",
+          type: 'success',
+          content: 'This is very long usual event......',
         },
         {
-          type: "error",
-          content: "This is error event 1.",
+          type: 'error',
+          content: 'This is error event 1.',
         },
         {
-          type: "error",
-          content: "This is error event 2.",
+          type: 'error',
+          content: 'This is error event 2.',
         },
         {
-          type: "error",
-          content: "This is error event 3.",
+          type: 'error',
+          content: 'This is error event 3.',
         },
         {
-          type: "error",
-          content: "This is error event 4.",
+          type: 'error',
+          content: 'This is error event 4.',
         },
-      ];
-      break;
+      ]
+      break
     default:
   }
-  return listData || [];
-};
+  return listData || []
+}
 const getMonthData = (value) => {
   if (value.month() === 8) {
-    return 1394;
+    return 1394
   }
-};
+}
 
 function Schedule() {
   const monthCellRender = (value) => {
-    const num = getMonthData(value);
+    const num = getMonthData(value)
     return num ? (
       <div className="notes-month">
         <section>{num}</section>
         <span>Backlog number</span>
       </div>
-    ) : null;
-  };
+    ) : null
+  }
   const dateCellRender = (value) => {
-    const listData = getListData(value);
+    const listData = getListData(value)
     return (
       <ul className="events">
         {listData.map((item) => (
@@ -90,19 +90,19 @@ function Schedule() {
           </li>
         ))}
       </ul>
-    );
-  };
+    )
+  }
   const cellRender = (current, info) => {
-    if (info.type === "date") return dateCellRender(current);
-    if (info.type === "month") return monthCellRender(current);
-    return info.originNode;
-  };
+    if (info.type === 'date') return dateCellRender(current)
+    if (info.type === 'month') return monthCellRender(current)
+    return info.originNode
+  }
   return (
     <div className="content">
-    <h3>Lịch trình</h3>
+      <h3>Lịch trình</h3>
       <Calendar cellRender={cellRender} />
     </div>
-  );
+  )
 }
 
-export default Schedule;
+export default Schedule
