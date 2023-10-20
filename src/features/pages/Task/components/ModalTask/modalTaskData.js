@@ -28,6 +28,16 @@ export const steps = [
           },
         ],
       },
+      {
+        label: 'Khác',
+        value: 'other',
+        nextStep: [
+          {
+            title: 'Thêm công việc',
+            content: <ThirdModal other/>,
+          },
+        ]
+      }
     ],
   },
   {
@@ -49,6 +59,10 @@ export const steps = [
       {
         label: 'Cả vườn',
         value: 'wholeGarden',
+      },
+      {
+        label: 'Khác',
+        value: 'other',
       },
     ],
   },

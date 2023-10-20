@@ -67,7 +67,7 @@ function ModalTask() {
         visible={currentStep > -1}
         onCancel={() => setCurrentStep(-1)}
         footer={null}
-        width={800}
+        width={900}
       >
         <Steps current={currentStep} size="small">
           {steps.map((item) => (
@@ -75,14 +75,21 @@ function ModalTask() {
           ))}
         </Steps>
         <div style={{ marginTop: 24 }}>{renderStepContent(currentStep)}</div>
-        <div style={{ marginTop: 24, display: "flex", justifyContent: "flex-end" }}>
+        <div
+          style={{ marginTop: 24, display: "flex", justifyContent: "flex-end" }}
+        >
           {currentStep > 0 && (
             <Button style={{ margin: "0 8px" }} onClick={handleBack}>
               Trở lại
             </Button>
           )}
           {currentStep === steps.length - 1 && (
-            <Button type="primary" onClick={handleFinish} form="createTask" htmlType="submit">
+            <Button
+              type="primary"
+              onClick={handleFinish}
+              form="createTask"
+              htmlType="submit"
+            >
               Thêm
             </Button>
           )}
