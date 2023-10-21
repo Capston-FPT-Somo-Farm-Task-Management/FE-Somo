@@ -18,6 +18,7 @@ export function getItem(label, key, icon, children, type) {
     type,
   }
 }
+
 export const menuItem = [
   getItem(
     <Link to="/schedule">Lịch trình</Link>,
