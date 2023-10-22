@@ -1,7 +1,4 @@
 import { Button, Form, Input, InputNumber, Modal } from 'antd'
-import { getAreaByFarmId } from 'features/slice/area/areaByFarm'
-import { createArea } from 'features/slice/area/areaSlice'
-import { useDispatch } from 'react-redux'
 
 const FormAddArea = ({ isModalOpen, closeModal, onFinishCreate }) => {
   const onFinish = (values) => {
