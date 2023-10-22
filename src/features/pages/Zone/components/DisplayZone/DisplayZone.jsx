@@ -1,66 +1,83 @@
-import { Button, Table } from 'antd'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { deleteZone, getZoneActive } from 'features/slice/zone/zoneSlice'
-import { columns, onChange } from './DisplayZoneData'
+import { Badge, Button, Table } from 'antd'
 import Column from 'antd/es/table/Column'
+import { useState } from 'react'
+import UpdateZone from './UpdateZone'
 
-const DisplayZone = () => {
-  const zone = useSelector((state) => state.zone.data)
+const DisplayZone = ({
+  zoneByFarm,
+  onFinishDelete,
+  onFinishUpdate,
+  farmId,
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedData, setSelectedData] = useState(null)
 
-  // const zoneData = zone.data.value
-  const dispatch = useDispatch()
+  const openModal = (record) => {
+    setSelectedData(record)
+    setIsModalOpen(true)
+  }
 
-  useEffect(() => {
-    dispatch(getZoneActive())
-  }, [])
-
-  const handleDelete = (id) => {
-    deleteZone(id)
+  const closeModal = () => {
+    setIsModalOpen(false)
   }
   return (
-    // <Table
-    //   rowKey="id"
-    //   columns={columns}
-    //   // dataSource={zoneData}
-    //   onChange={onChange}
-    //   rowSelection={{
-    //     onSelect: (record) => {
-    //       console.log({ record })
-    //     },
-    //   }}
-    // />
+    <>
+      <Table rowKey="id" dataSource={zoneByFarm ? zoneByFarm.data : null}>
+        <Column title="Tên vùng" dataIndex="name" key="1" />
+        <Column title="Mã vùng" dataIndex="code" key="2" />
+        <Column title="Diện tích" dataIndex="farmArea" key="3" />
+        <Column title="Loại vùng" dataIndex="zoneTypeName" key="4" />
+        <Column title="Tên khu vực" dataIndex="areaName" key="5" />
+        <Column
+          title="Trạng thái"
+          dataIndex="status"
+          key="6"
+          render={(status) =>
+            status === 'Active' ? (
+              <Badge status="success" text="Active" />
+            ) : (
+              <Badge status="error" text="Inactive" />
+            )
+          }
+        />
+        <Column
+          title="Đổi trạng thái"
+          key="7"
+          dataIndex="id"
+          render={(_, record) => (
+            <Button
+              size="middle"
+              danger
+              onClick={() => onFinishDelete(record.id)}
+            >
+              Đổi
+            </Button>
+          )}
+        />
 
-    <Table rowKey="id">
-      <Column title="Tên khu vực" dataIndex="name" key="1" />
-      <Column title="Diện tích" dataIndex="fArea" key="2" />
-      <Column title="Tên trang trại" dataIndex="farmName" key="3" />
-      <Column
-        title="Xoá"
-        key="4"
-        dataIndex="id"
-        render={(_, record) => (
-          <Button size="middle" danger onClick={() => handleDelete(record.id)}>
-            Xoá
-          </Button>
-        )}
+        <Column
+          title="Cập nhật"
+          key="5"
+          dataIndex="id"
+          render={(_, record) => (
+            <Button
+              type="primary"
+              size="middle"
+              onClick={() => openModal(record)}
+            >
+              Cập nhật
+            </Button>
+          )}
+        />
+      </Table>
+      <UpdateZone
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        selectedData={selectedData}
+        onFinishUpdate={onFinishUpdate}
+        farmId={farmId}
       />
-
-      {/* <Column
-        title="Cập nhật"
-        key="5"
-        dataIndex="id"
-        render={(_, record) => (
-          <Button
-            type="primary"
-            size="middle"
-            onClick={() => console.log('ss')}
-          >
-            Cập nhật
-          </Button>
-        )}
-      /> */}
-    </Table>
+    </>
   )
 }
 export default DisplayZone

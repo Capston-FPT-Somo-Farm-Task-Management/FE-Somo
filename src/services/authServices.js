@@ -30,6 +30,15 @@ const getUserName = () => {
   return null
 }
 
+const getUserId = () => {
+  const token = getToken()
+  if (token) {
+    const payload = jwt_decode(token)
+    return payload?.Id
+  }
+  return null
+}
+
 const isLoggedIn = () => {
   const token = getToken()
   if (token) {
@@ -47,6 +56,7 @@ export const authServices = {
   getToken,
   getRole,
   getUserName,
+  getUserId,
   isLoggedIn,
   logOut,
 }

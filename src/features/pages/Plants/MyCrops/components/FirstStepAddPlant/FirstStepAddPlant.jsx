@@ -1,6 +1,6 @@
 import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAreaActive, getAreas } from 'features/slice/area/areaSlice'
+import { getAreaActive } from 'features/slice/area/areaSlice'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { getPlantType } from 'features/slice/plantType/plantTypeSlice'
@@ -46,9 +46,6 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
     setSelectedZoneId(value)
   }
 
-  const cancelModal = () => {
-    closeModal()
-  }
   const onFinish = (values) => {
     dispatch(createPlant(values))
     closeModal()
@@ -64,12 +61,7 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
           <Button form="createPlant" type="dashed" htmlType="reset">
             Làm mới
           </Button>,
-          <Button
-            form="createPlant"
-            type="primary"
-            danger
-            onClick={cancelModal}
-          >
+          <Button form="createPlant" type="primary" danger onClick={closeModal}>
             Huỷ
           </Button>,
           <Button form="createPlant" type="primary" htmlType="submit">
