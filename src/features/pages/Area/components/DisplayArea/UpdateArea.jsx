@@ -1,46 +1,46 @@
 import { Button, Form, Input, InputNumber, Modal } from 'antd'
-import { getAreaByFarmId } from 'features/slice/area/areaByFarm'
-import { createArea } from 'features/slice/area/areaSlice'
-import { useDispatch } from 'react-redux'
 
-const FormAddArea = ({ isModalOpen, closeModal, farmId }) => {
-  const dispatch = useDispatch()
-
+const UpdateArea = ({
+  isModalOpen,
+  closeModal,
+  selectedData,
+  onFinishUpdate,
+}) => {
   const onFinish = (values) => {
     const finalValues = {
-      farmId: farmId,
+      id: selectedData.id,
       ...values,
     }
-    dispatch(createArea(finalValues)).then(() => {
-      dispatch(getAreaByFarmId(farmId))
-      setTimeout(() => {
-        closeModal()
-      }, 500)
-    })
+    onFinishUpdate(finalValues)
+    closeModal()
   }
 
   return (
     <>
       <Modal
-        title="Tạo mới khu vực"
+        title="Cập nhật khu vực"
         open={isModalOpen}
+        closeIcon
         onCancel={closeModal}
         footer={[
-          <Button form="createArea" type="dashed" htmlType="reset">
-            Làm mới
-          </Button>,
-          <Button form="createArea" type="primary" danger onClick={closeModal}>
+          <Button
+            form="updateArea"
+            type="primary"
+            htmlType="reset"
+            danger
+            onClick={closeModal}
+          >
             Huỷ
           </Button>,
-          <Button form="createArea" type="primary" htmlType="submit">
-            Hoàn thành
+          <Button form="updateArea" type="primary" htmlType="submit">
+            Cập nhật
           </Button>,
         ]}
       >
         <Form
           layout="vertical"
           className="first-step-area"
-          id="createArea"
+          id="updateArea"
           onFinish={onFinish}
         >
           {/* Area Name */}
@@ -53,6 +53,7 @@ const FormAddArea = ({ isModalOpen, closeModal, farmId }) => {
               },
             ]}
             name="name"
+            initialValue={selectedData ? selectedData.name : ''}
           >
             <Input placeholder="Nhập tên khu vực" />
           </Form.Item>
@@ -67,6 +68,7 @@ const FormAddArea = ({ isModalOpen, closeModal, farmId }) => {
               },
             ]}
             name="code"
+            initialValue={selectedData ? selectedData.code : ''}
           >
             <Input placeholder="Nhập mã cây trồng" />
           </Form.Item>
@@ -80,6 +82,7 @@ const FormAddArea = ({ isModalOpen, closeModal, farmId }) => {
               },
             ]}
             name="fArea"
+            initialValue={selectedData ? selectedData.fArea : ''}
           >
             <InputNumber min={0} addonAfter="m2" />
           </Form.Item>
@@ -88,4 +91,4 @@ const FormAddArea = ({ isModalOpen, closeModal, farmId }) => {
     </>
   )
 }
-export default FormAddArea
+export default UpdateArea
