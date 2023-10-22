@@ -14,6 +14,18 @@ export const getAreaByFarmId = createAsyncThunk(
   }
 )
 
+export const getAreaActiveByFarmId = createAsyncThunk(
+  'areas/getAreaActiveByFarmId',
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(baseUrl + `/Area/Active/Farm(${id})`)
+      return data
+    } catch (error) {
+      rejectWithValue(error.message)
+    }
+  }
+)
+
 const areaByFarmSlice = createSlice({
   name: 'areaByFarm',
   initialState: {
@@ -37,6 +49,20 @@ const areaByFarmSlice = createSlice({
         state.data = action.payload
       })
       .addCase(getAreaByFarmId.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+        state.data = []
+      })
+
+      .addCase(getAreaActiveByFarmId.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(getAreaActiveByFarmId.fulfilled, (state, action) => {
+        state.loading = false
+        state.error = ''
+        state.data = action.payload
+      })
+      .addCase(getAreaActiveByFarmId.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
         state.data = []

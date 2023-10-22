@@ -70,7 +70,7 @@ const UpdateArea = ({
             name="code"
             initialValue={selectedData ? selectedData.code : ''}
           >
-            <Input placeholder="Nhập mã cây trồng" />
+            <Input placeholder="Nhập mã khu vực" />
           </Form.Item>
 
           <Form.Item

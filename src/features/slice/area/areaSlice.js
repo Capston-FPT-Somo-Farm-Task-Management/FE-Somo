@@ -40,7 +40,6 @@ export const updateArea = createAsyncThunk(
   'areas/updateArea',
   async (data, { rejectWithValue }) => {
     try {
-      console.log(data)
       const response = await axios.put(baseUrl + `/Area/${data.id}`, data, {
         headers: {
           'Content-Type': 'application/json',
@@ -60,7 +59,6 @@ export const updateArea = createAsyncThunk(
 export const deleteArea = createAsyncThunk(
   'areas/deleteArea',
   async (id, { rejectWithValue }) => {
-    console.log(id)
     try {
       const response = await axios.put(baseUrl + `/Area/Delete/${id}`)
       if (response.status === 200) {

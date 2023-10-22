@@ -75,7 +75,6 @@ const DisplayArea = ({
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}
-        loadData={loadData}
         onFinishUpdate={onFinishUpdate}
       />
     </>
