@@ -18,29 +18,55 @@ export const getZoneActive = createAsyncThunk(
 export const createZone = createAsyncThunk(
   'zones/createZone',
   async (data, { rejectWithValue }) => {
-    console.log(data)
     try {
       const response = await axios.post(baseUrl + '/Zone', data, {
         headers: {
           'Content-Type': 'application/json',
         },
       })
-      console.log(response.data)
-      return response.data
+      if (response.status === 200) {
+        toast.success(response.data.message)
+        return response.data.data
+      }
     } catch (error) {
+      toast.error(error.response.data.message)
+      rejectWithValue(error)
+    }
+  }
+)
+
+export const updateZone = createAsyncThunk(
+  'zones/updateZone',
+  async (data, { rejectWithValue }) => {
+    console.log(data)
+    try {
+      const response = await axios.put(baseUrl + `/Zone/${data.id}`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      if (response.status === 200) {
+        toast.success(response.data.message)
+      }
+      return response.json()
+    } catch (error) {
+      toast.error(error.response.data.message)
       rejectWithValue(error)
     }
   }
 )
 
 export const deleteZone = createAsyncThunk(
-  'areas/deleteZone',
+  'zones/deleteZone',
   async (id, { rejectWithValue }) => {
-    console.log(id)
     try {
       const response = await axios.put(baseUrl + `/Zone/Delete/${id}`)
-      return response.data
+      if (response.status === 200) {
+        toast.success('Đổi trạng thái thành công')
+        return response.data
+      }
     } catch (error) {
+      toast.error(error.response.data.message)
       return rejectWithValue(error)
     }
   }
@@ -81,13 +107,24 @@ const zoneSlice = createSlice({
         state.error = action.payload
       })
 
+      .addCase(updateZone.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(updateZone.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = [action.payload]
+      })
+      .addCase(updateZone.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+
       .addCase(deleteZone.pending, (state) => {
         state.loading = true
       })
       .addCase(deleteZone.fulfilled, (state, action) => {
         state.loading = false
         state.data = action.payload
-        toast.success(`Xoá thành công`)
       })
       .addCase(deleteZone.rejected, (state, action) => {
         state.loading = false
