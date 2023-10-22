@@ -3,7 +3,7 @@ import Search from 'antd/es/input/Search'
 import { useState } from 'react'
 import FormAddArea from '../FormAddArea/FormAddArea'
 
-const AddArea = ({ farmId, onFinishCreate }) => {
+const AddArea = ({ onFinishCreate }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => {
@@ -28,7 +28,6 @@ const AddArea = ({ farmId, onFinishCreate }) => {
             <FormAddArea
               isModalOpen={isModalOpen}
               closeModal={closeModal}
-              farmId={farmId}
               onFinishCreate={onFinishCreate}
             />
           </div>
