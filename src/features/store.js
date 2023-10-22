@@ -5,6 +5,7 @@ import animalTypeReducer from './slice/animal/animalTypeSlice'
 import areaReducer from './slice/area/areaSlice'
 import areaByFarmReducer from './slice/area/areaByFarm'
 import zoneReducer from './slice/zone/zoneSlice'
+import zoneByFarmReducer from './slice/zone/zoneByFarm'
 import zonePlantReducer from './slice/zone/zonePlantSlice'
 import zoneAnimalReducer from './slice/zone/zoneAnimalSlice'
 import zoneTypeReducer from './slice/zone/zoneTypeSlice'
@@ -29,6 +30,7 @@ export const store = configureStore({
     area: areaReducer,
     areaByFarm: areaByFarmReducer,
     zone: zoneReducer,
+    zoneByFarm: zoneByFarmReducer,
     zonePlant: zonePlantReducer,
     zoneAnimal: zoneAnimalReducer,
     zoneType: zoneTypeReducer,
