@@ -20,6 +20,7 @@ const DisplayArea = ({
   const closeModal = () => {
     setIsModalOpen(false)
   }
+
   return (
     <>
       <Table rowKey="id" dataSource={areaByFarm ? areaByFarm.data : null}>

@@ -3,20 +3,10 @@ import { getAreaByFarmId } from 'features/slice/area/areaByFarm'
 import { createArea } from 'features/slice/area/areaSlice'
 import { useDispatch } from 'react-redux'
 
-const FormAddArea = ({ isModalOpen, closeModal, farmId }) => {
-  const dispatch = useDispatch()
-
+const FormAddArea = ({ isModalOpen, closeModal, onFinishCreate }) => {
   const onFinish = (values) => {
-    const finalValues = {
-      farmId: farmId,
-      ...values,
-    }
-    dispatch(createArea(finalValues)).then(() => {
-      dispatch(getAreaByFarmId(farmId))
-      setTimeout(() => {
-        closeModal()
-      }, 500)
-    })
+    onFinishCreate(values)
+    closeModal()
   }
 
   return (
