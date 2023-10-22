@@ -1,82 +1,89 @@
-import { Route, Routes, Outlet  } from 'react-router-dom'
-import SignIn from 'features/authentication/SignIn'
-import Register from 'features/authentication/Register'
-import Forgot from 'features/authentication/Forgot'
-import Task from 'features/pages/Task'
-import Home from 'features/pages/Home'
-import Animals from 'features/pages/Animals/Animals'
-import AnimalGroup from 'features/pages/Animals/AnimalGroup'
-import MyCrops from 'features/pages/Plants/MyCrops'
 import { Layout } from 'antd'
 import Sidebar from 'common/components/Sidebar'
-import CropGroup from 'features/pages/Plants/CropGroup'
-import Schedule from 'features/pages/Schedule'
-import { Content } from 'antd/es/layout/layout'
-import React from 'react'
+import SignIn from 'features/authentication/SignIn'
+import AnimalGroup from 'features/pages/Animals/AnimalGroup'
+import Animals from 'features/pages/Animals/Animals'
 import Area from 'features/pages/Area'
+import CropGroup from 'features/pages/Plants/CropGroup'
+import MyCrops from 'features/pages/Plants/MyCrops'
+import Schedule from 'features/pages/Schedule'
+import Task from 'features/pages/Task'
 import Zone from 'features/pages/Zone'
-import TaskDetail from 'features/pages/Task/components/TaskDetail'
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import jwt_decode from 'jwt-decode'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Navigate, Route, Routes } from 'react-router-dom'
 
-function App() {
+const { Content } = Layout
+
+const AppRoutes = () => {
+  const user = useSelector((state) => state.user)
+  const [role, setRole] = useState(null)
+  const [token, setToken] = useState(localStorage.getItem('somoFarm'))
+
+  useEffect(() => {
+    if (token) {
+      const decodedToken = jwt_decode(token)
+      const decodedRole =
+        decodedToken[
+          'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
+        ]
+      setRole(decodedRole)
+    }
+  }, [token])
 
   return (
-    <div className="App">
-        <Layout hasSider>
-          <Sidebar />
-          <Layout className="site-layout">
-            <Content
-              style={{
-                margin: '24px 16px 0',
-                overflow: 'initial',
-              }}
-            >
-              <div style={{ padding: '24px', width: '100%' }}>
-                <Routes>
-                  <Route path="/*" element={<Home />} exact />
-                  <Route path="/login" element={<SignIn /> }  />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="/forgot" element={<Forgot />} />
-                  <Route path="/schedule" element={<Schedule />} />
+    <>
+      <Layout hasSider>
+        {role === 'Manager' && token && <Sidebar />}
+        <Layout className="site-layout">
+          <Content
+            style={{
+              margin: '24px 16px 0',
+              overflow: 'initial',
+            }}
+          >
+            <div style={{ padding: '24px', width: '100%' }}>
+              <Routes>
+                {/* {(user === null || user === undefined || token === null) && ( */}
+                {!token && (
+                  <>
+                    <Route
+                      path="/*"
+                      element={<Navigate to="/login" replace />}
+                    />
+                    <Route path="/login" element={<SignIn />} />
+                  </>
+                )}
 
-                  {/* task */}
-                  <Route path="/task" element={<Task />} />
-                  {/* Animals */}
-                  <Route path="/animals" element={<Animals />} />
+                {/* <>
+                  <Route path="/" element={<Navigate to="/login" replace />} />
+                </> */}
+                {/* )} */}
 
-                  {/* Animal Group */}
-                  <Route path="/animal-group" element={<AnimalGroup />} />
-
-                  {/* Crop */}
-                  <Route path="/crops" element={<MyCrops />} />
-
-                  {/* Crop Group */}
-                  <Route path="/crop-group" element={<CropGroup />} />
-
-                  <Route path="/area" element={<Area />} />
-
-                  <Route path="/zone" element={<Zone />} />
-                </Routes>
-              </div>
-            </Content>
-          </Layout>
+                {role === 'Manager' && token && (
+                  <>
+                    <Route
+                      path="/"
+                      element={<Navigate to="/schedule" replace />}
+                    />
+                    <Route path="/schedule" element={<Schedule />} />
+                    <Route path="/task" element={<Task />} />
+                    <Route path="/animals" element={<Animals />} />
+                    <Route path="/animal-group" element={<AnimalGroup />} />
+                    <Route path="/crops" element={<MyCrops />} />
+                    <Route path="/crop-group" element={<CropGroup />} />
+                    <Route path="/area" element={<Area />} />
+                    <Route path="/zone" element={<Zone />} />
+                  </>
+                )}
+              </Routes>
+            </div>
+          </Content>
         </Layout>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        toastStyle={{ width: '300px', minHeight: '80px', fontSize: '16px' }}
-      />
-    </div>
+      </Layout>
+    </>
   )
 }
 
-export default App
+export default AppRoutes

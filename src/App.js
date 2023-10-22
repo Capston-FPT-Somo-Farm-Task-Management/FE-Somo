@@ -1,14 +1,14 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import AppRoutes from 'router/AppRoutes'
+import AppRoute from 'router/AppRoute'
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <AppRoutes />
+        <AppRoute />
       </BrowserRouter>
       <ToastContainer
         position="top-right"

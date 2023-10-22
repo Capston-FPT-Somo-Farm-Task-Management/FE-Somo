@@ -43,7 +43,6 @@ function Sidebar() {
             mode="inline"
             onOpenChange={onOpenChange}
             openKeys={openKeys}
-            // defaultSelectedKeys={['4']}
             items={menuItem}
             style={{ borderInlineEnd: 0 }}
           />
@@ -56,13 +55,11 @@ function Sidebar() {
           </div>
           <div className="menu-popover">
             <Popover
-              // defaultSelectedKeys={['4']}
               placement="bottomRight"
               content={
                 <Menu
                   theme="light"
                   mode="inline"
-                  // defaultSelectedKeys={['4']}
                   items={menuItem}
                   style={{ borderInlineEnd: 0 }}
                 />
