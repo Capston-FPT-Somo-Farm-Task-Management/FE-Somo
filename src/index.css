@@ -161,6 +161,16 @@ html {
   margin-bottom: 10px;
 }
 
+.task-name {
+  cursor: pointer;
+}
+
+.task-name:hover {
+  text-decoration: underline;
+  color: #007bff;
+  opacity: 0.8;
+}
+
 .column-container {
   background-color: #f4f5f7;
   border-radius: 2.5px;

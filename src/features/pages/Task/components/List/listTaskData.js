@@ -1,4 +1,3 @@
-import { Space } from 'antd'
 import dayjs from 'dayjs';
 
 
@@ -7,7 +6,7 @@ export const taskTitle = [
     title: 'Tên nhiệm vụ',
     dataIndex: 'name',
     key: 'name',
-    render: (text) => <h4>{text}</h4>,
+    render: (text) => <h4 className="task-name" data-name-clicked="true">{text}</h4>,
   },
   {
     title: 'Ngày bắt đầu',

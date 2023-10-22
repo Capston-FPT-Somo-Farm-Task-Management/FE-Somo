@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Input, Space, Table } from "antd";
-import dayjs from "dayjs";
-import { EditOutlined, CheckCircleOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
-import { getTasks } from "features/slice/task/taskSlice";
+import { getTasks, deleteTask } from "features/slice/task/taskSlice";
 import { taskTitle, onChange } from "./listTaskData"; // Đảm bảo bạn đã import TaskDetailModal
 import TaskDetail from "../TaskDetail";
 import ModalTask from "../ModalTask";
+
 
 const List = () => {
   const { Search } = Input;
@@ -21,11 +20,17 @@ const List = () => {
     dispatch(getTasks());
   }, []);
 
+  const handleDelete = (id) => {
+    dispatch(deleteTask(id, { status: 4 })).then(() => {
+      loadData();
+    });
+  };
+
   const [selectedTask, setSelectedTask] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const openModal = (task) => {
-    setSelectedTask(task);
+  const openModal = (record) => {
+    setSelectedTask(record);
     setModalVisible(true);
   };
 
@@ -33,6 +38,10 @@ const List = () => {
     setSelectedTask(null);
     setModalVisible(false);
   };
+
+  const loadData = () => {
+    dispatch(getTasks())
+  }
 
   return (
     <div className="list">
@@ -61,8 +70,8 @@ const List = () => {
             key: "action",
             render: (_, record) => (
               <Space size="small">
-                <a onClick={() => console.log("Xoá", record)}>Xoá</a>
-                <a onClick={() => console.log("Sửa", record)}>Sửa</a>
+                <a onClick={() => handleDelete(record.id)}>Xoá</a>
+                <a >Sửa</a>
               </Space>
             ),
           },
@@ -77,12 +86,20 @@ const List = () => {
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {
-              openModal(record);
+              const isNameClicked = event.target.dataset.nameClicked === "true";
+
+              if (isNameClicked) {
+                openModal(record);
+              }
             },
           };
         }}
       />
-      <TaskDetail visible={modalVisible} onCancel={closeModal} taskData={selectedTask}  />
+      <TaskDetail
+        visible={modalVisible}
+        onCancel={closeModal}
+        taskData={selectedTask}
+      />
     </div>
   );
 };

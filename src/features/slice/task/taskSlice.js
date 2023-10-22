@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { baseUrl } from 'features/api/baseUrl'
+import { toast } from 'react-toastify'
 
 export const getTasks = createAsyncThunk('tasks/getTasks', async () => {
     try {
@@ -46,6 +47,23 @@ export const getTasks = createAsyncThunk('tasks/getTasks', async () => {
       }
     }
   );
+
+  export const deleteTask = createAsyncThunk(
+    'tasks/deleteTask',
+    async (id, { rejectWithValue }) => {
+      console.log(id)
+      try {
+        const response = await axios.put(baseUrl + `/FarmTask/ChangeStatus/${id}`, { status: 4 },)
+        if (response.status === 200) {
+          toast.success(response.data.message)
+        }
+        return response.data
+      } catch (error) {
+        toast.error(error.response.data.message)
+        return rejectWithValue(error)
+      }
+    }
+  )
 
   const taskSlice = createSlice({
     name: 'task',
@@ -96,6 +114,17 @@ export const getTasks = createAsyncThunk('tasks/getTasks', async () => {
           state.loading = false
         })
         .addCase(createTask.rejected, (state, action) => {
+          state.loading = false
+          state.error = action.payload
+        })
+        .addCase(deleteTask.pending, (state) => {
+          state.loading = true
+        })
+        .addCase(deleteTask.fulfilled, (state, action) => {
+          state.loading = false
+          state.data = action.payload
+        })
+        .addCase(deleteTask.rejected, (state, action) => {
           state.loading = false
           state.error = action.payload
         })
