@@ -13,6 +13,7 @@ import {
 
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { authServices } from 'services/authServices'
+import { toast } from 'react-toastify'
 
 const { Sider } = Layout
 
@@ -31,8 +32,10 @@ const SideMenu = () => {
 
   const logout = () => {
     authServices.logOut()
+    toast.success('Đăng xuất thành công')
   }
 
+  
   const onCollapse = (collapsed) => setCollapsed(collapsed)
   return (
     <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>

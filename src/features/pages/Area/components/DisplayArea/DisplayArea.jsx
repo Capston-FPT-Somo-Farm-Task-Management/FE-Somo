@@ -1,54 +1,83 @@
-import { Button, Table } from 'antd'
-import { deleteArea, getAreaActive } from 'features/slice/area/areaSlice'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { Badge, Button, Table } from 'antd'
 import Column from 'antd/es/table/Column'
+import UpdateArea from './UpdateArea'
+import { useState } from 'react'
 
-const DisplayArea = () => {
-  const area = useSelector((state) => state.area.data)
+const DisplayArea = ({
+  areaByFarm,
+  onFinishDelete,
+  loadData,
+  onFinishUpdate,
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedData, setSelectedData] = useState(null)
 
-  const dispatch = useDispatch()
+  const openModal = (record) => {
+    setSelectedData(record)
+    setIsModalOpen(true)
+  }
 
-  useEffect(() => {
-    dispatch(getAreaActive())
-  }, [])
-
-  const handleDelete = (id) => {
-    console.log(id)
-    dispatch(deleteArea(id))
+  const closeModal = () => {
+    setIsModalOpen(false)
   }
 
   return (
-    <Table rowKey="id" dataSource={area.data}>
-      <Column title="Tên khu vực" dataIndex="name" key="1" />
-      <Column title="Diện tích" dataIndex="fArea" key="2" />
-      <Column title="Tên trang trại" dataIndex="farmName" key="3" />
-      <Column
-        title="Xoá"
-        key="4"
-        dataIndex="id"
-        render={(_, record) => (
-          <Button size="middle" danger onClick={() => handleDelete(record.id)}>
-            Xoá
-          </Button>
-        )}
-      />
+    <>
+      <Table rowKey="id" dataSource={areaByFarm ? areaByFarm.data : null}>
+        {/* <Column title="Mã khu vực" dataIndex="nameCode" key="1" /> */}
+        <Column title="Tên khu vực" dataIndex="name" key="1" />
+        <Column title="Mã khu vực" dataIndex="code" key="2" />
+        <Column title="Diện tích" dataIndex="fArea" key="3" />
+        <Column title="Tên trang trại" dataIndex="farmName" key="4" />
+        <Column
+          title="Trạng thái"
+          dataIndex="status"
+          key="5"
+          render={(status) =>
+            status === 'Active' ? (
+              <Badge status="success" text="Active" />
+            ) : (
+              <Badge status="error" text="Inactive" />
+            )
+          }
+        />
+        <Column
+          title="Đổi trạng thái"
+          key="6"
+          dataIndex="id"
+          render={(_, record) => (
+            <Button
+              size="middle"
+              danger
+              onClick={() => onFinishDelete(record.id)}
+            >
+              Đổi
+            </Button>
+          )}
+        />
 
-      {/* <Column
-        title="Cập nhật"
-        key="5"
-        dataIndex="id"
-        render={(_, record) => (
-          <Button
-            type="primary"
-            size="middle"
-            onClick={() => console.log('ss')}
-          >
-            Cập nhật
-          </Button>
-        )}
-      /> */}
-    </Table>
+        <Column
+          title="Cập nhật"
+          key="7"
+          dataIndex="id"
+          render={(_, record) => (
+            <Button
+              type="primary"
+              size="middle"
+              onClick={() => openModal(record)}
+            >
+              Cập nhật
+            </Button>
+          )}
+        />
+      </Table>
+      <UpdateArea
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        selectedData={selectedData}
+        onFinishUpdate={onFinishUpdate}
+      />
+    </>
   )
 }
 export default DisplayArea

@@ -39,7 +39,6 @@ const UpdateCrop = ({ isModalOpen, closeModal, selectedData, loadData }) => {
   }, [selectedAreaId, selectedZoneId])
 
   const handleSelectAreaChange = (value) => {
-    console.log(selectedData)
     setSelectedAreaId(value)
   }
 

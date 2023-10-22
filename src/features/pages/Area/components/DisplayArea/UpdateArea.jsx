@@ -1,33 +1,46 @@
 import { Button, Form, Input, InputNumber, Modal } from 'antd'
 
-const FormAddArea = ({ isModalOpen, closeModal, onFinishCreate }) => {
+const UpdateArea = ({
+  isModalOpen,
+  closeModal,
+  selectedData,
+  onFinishUpdate,
+}) => {
   const onFinish = (values) => {
-    onFinishCreate(values)
+    const finalValues = {
+      id: selectedData.id,
+      ...values,
+    }
+    onFinishUpdate(finalValues)
     closeModal()
   }
 
   return (
     <>
       <Modal
-        title="Tạo mới khu vực"
+        title="Cập nhật khu vực"
         open={isModalOpen}
+        closeIcon
         onCancel={closeModal}
         footer={[
-          <Button form="createArea" type="dashed" htmlType="reset">
-            Làm mới
-          </Button>,
-          <Button form="createArea" type="primary" danger onClick={closeModal}>
+          <Button
+            form="updateArea"
+            type="primary"
+            htmlType="reset"
+            danger
+            onClick={closeModal}
+          >
             Huỷ
           </Button>,
-          <Button form="createArea" type="primary" htmlType="submit">
-            Hoàn thành
+          <Button form="updateArea" type="primary" htmlType="submit">
+            Cập nhật
           </Button>,
         ]}
       >
         <Form
           layout="vertical"
           className="first-step-area"
-          id="createArea"
+          id="updateArea"
           onFinish={onFinish}
         >
           {/* Area Name */}
@@ -40,6 +53,7 @@ const FormAddArea = ({ isModalOpen, closeModal, onFinishCreate }) => {
               },
             ]}
             name="name"
+            initialValue={selectedData ? selectedData.name : ''}
           >
             <Input placeholder="Nhập tên khu vực" />
           </Form.Item>
@@ -54,8 +68,9 @@ const FormAddArea = ({ isModalOpen, closeModal, onFinishCreate }) => {
               },
             ]}
             name="code"
+            initialValue={selectedData ? selectedData.code : ''}
           >
-            <Input placeholder="Nhập mã cây trồng" />
+            <Input placeholder="Nhập mã khu vực" />
           </Form.Item>
 
           <Form.Item
@@ -67,6 +82,7 @@ const FormAddArea = ({ isModalOpen, closeModal, onFinishCreate }) => {
               },
             ]}
             name="fArea"
+            initialValue={selectedData ? selectedData.fArea : ''}
           >
             <InputNumber min={0} addonAfter="m2" />
           </Form.Item>
@@ -75,4 +91,4 @@ const FormAddArea = ({ isModalOpen, closeModal, onFinishCreate }) => {
     </>
   )
 }
-export default FormAddArea
+export default UpdateArea

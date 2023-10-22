@@ -2,14 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
-import { authServices } from 'services/authServices'
 
 export const postLogin = createAsyncThunk(
   'user/postLogin',
   async (data, { rejectWithValue }) => {
     try {
       const response = await axios.post(baseUrl + '/login', data)
-      console.log(response.data.accessToken)
       localStorage.setItem('somoFarm', response.data.accessToken)
       toast.success('Đăng nhập thành công')
       return response.data
@@ -27,11 +25,7 @@ const userSlice = createSlice({
     loading: false,
     error: '',
   },
-  //   reducers: {
-  //     clearPlant: (state) => {
-  //       state.data = null
-  //     },
-  //   },
+
   extraReducers(builder) {
     builder
       .addCase(postLogin.pending, (state) => {

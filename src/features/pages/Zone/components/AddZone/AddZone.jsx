@@ -3,7 +3,7 @@ import Search from 'antd/es/input/Search'
 import { useState } from 'react'
 import FormAddZone from '../FormAddZone/FormAddZone'
 
-const AddZone = () => {
+const AddZone = ({ onFinishCreate, farmId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => {
@@ -24,7 +24,13 @@ const AddZone = () => {
             <Button type="primary" onClick={openModal}>
               Thêm vùng
             </Button>
-            <FormAddZone isModalOpen={isModalOpen} closeModal={closeModal} />
+
+            <FormAddZone
+              isModalOpen={isModalOpen}
+              closeModal={closeModal}
+              onFinishCreate={onFinishCreate}
+              farmId={farmId}
+            />
           </div>
 
           <div className="animal-group-operate-right">

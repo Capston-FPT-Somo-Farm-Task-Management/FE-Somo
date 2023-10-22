@@ -16,14 +16,53 @@ export const getAreaActive = createAsyncThunk(
   }
 )
 
+export const createArea = createAsyncThunk(
+  'areas/createArea',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(baseUrl + '/Area', data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      if (response.status === 200) {
+        toast.success(response.data.message)
+        return response.data.data
+      }
+    } catch (error) {
+      toast.error(error.response.data.message)
+      rejectWithValue(error)
+    }
+  }
+)
+
+export const updateArea = createAsyncThunk(
+  'areas/updateArea',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(baseUrl + `/Area/${data.id}`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      if (response.status === 200) {
+        toast.success(response.data.message)
+      }
+      return response.json()
+    } catch (error) {
+      toast.error(error.response.data.message)
+      rejectWithValue(error)
+    }
+  }
+)
+
 export const deleteArea = createAsyncThunk(
   'areas/deleteArea',
   async (id, { rejectWithValue }) => {
-    console.log(id)
     try {
       const response = await axios.put(baseUrl + `/Area/Delete/${id}`)
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Đổi trạng thái thành công')
         return response.data
       }
     } catch (error) {
@@ -39,6 +78,11 @@ const areaSlice = createSlice({
     data: [],
     loading: false,
     error: '',
+  },
+  reducers: {
+    clearArea: (state) => {
+      state.data = null
+    },
   },
   extraReducers(builder) {
     builder
@@ -56,6 +100,30 @@ const areaSlice = createSlice({
         state.data = []
       })
 
+      .addCase(createArea.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(createArea.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = action.payload
+      })
+      .addCase(createArea.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+
+      .addCase(updateArea.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(updateArea.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = [action.payload]
+      })
+      .addCase(updateArea.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+
       .addCase(deleteArea.pending, (state) => {
         state.loading = true
       })
@@ -71,3 +139,4 @@ const areaSlice = createSlice({
 })
 
 export default areaSlice.reducer
+export const { clearArea } = areaSlice.actions

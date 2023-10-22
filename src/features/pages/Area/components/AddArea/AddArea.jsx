@@ -1,8 +1,9 @@
 import { Button } from 'antd'
 import Search from 'antd/es/input/Search'
 import { useState } from 'react'
+import FormAddArea from '../FormAddArea/FormAddArea'
 
-const AddArea = () => {
+const AddArea = ({ onFinishCreate }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => {
@@ -24,10 +25,11 @@ const AddArea = () => {
               Thêm khu vực
             </Button>
 
-            {/* <FirstStepAddAnimalGroup
+            <FormAddArea
               isModalOpen={isModalOpen}
               closeModal={closeModal}
-            /> */}
+              onFinishCreate={onFinishCreate}
+            />
           </div>
 
           <div className="animal-group-operate-right">
