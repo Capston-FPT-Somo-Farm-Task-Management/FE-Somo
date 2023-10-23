@@ -1,35 +1,13 @@
-import React, { useEffect } from "react";
-import ModalTask from "../ModalTask";
+import React, { useEffect, useState } from "react";
 import { Input, Space, Table } from "antd";
-
-import {
-  EditOutlined,
-  CheckCircleOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
-import { getTasks } from "features/slice/task/taskSlice";
-import { taskTitle, onChange } from "./listTaskData";
+import { getTasks, deleteTask } from "features/slice/task/taskSlice";
+import { taskTitle, onChange } from "./listTaskData"; // Đảm bảo bạn đã import TaskDetailModal
+import TaskDetail from "../TaskDetail";
+import ModalTask from "../ModalTask";
 
-const items = [
-  {
-    icon: <EditOutlined />,
-    label: <a href="https://www.antgroup.com">Sửa công việc</a>,
-    key: "0",
-  },
-  {
-    icon: <CheckCircleOutlined />,
-    label: <a href="https://www.aliyun.com">Đánh dấu hoàn thành</a>,
-    key: "1",
-  },
-  {
-    icon: <DeleteOutlined />,
-    label: <a href="https://www.aliyun.com">Xóa</a>,
-    key: "2",
-  },
-];
 
-function List() {
+const List = () => {
   const { Search } = Input;
   const onSearch = (value, _e, info) => console.log(info?.source, value);
 
@@ -41,6 +19,30 @@ function List() {
   useEffect(() => {
     dispatch(getTasks());
   }, []);
+
+  const handleDelete = (id) => {
+    dispatch(deleteTask(id)).then(() => {
+      loadData();
+    });
+  };
+
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const openModal = (record) => {
+    setSelectedTask(record);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setSelectedTask(null);
+    setModalVisible(false);
+  };
+
+  const loadData = () => {
+    dispatch(getTasks())
+  }
+
   return (
     <div className="list">
       <div className="list-header">
@@ -61,7 +63,19 @@ function List() {
       </div>
       <Table
         rowKey="id"
-        columns={taskTitle}
+        columns={[
+          ...taskTitle,
+          {
+            title: "Tuỳ chọn",
+            key: "action",
+            render: (_, record) => (
+              <Space size="small">
+                <a onClick={() => handleDelete(record.id)}>Xoá</a>
+                <a >Sửa</a>
+              </Space>
+            ),
+          },
+        ]}
         dataSource={dataTask}
         onChange={onChange}
         rowSelection={{
@@ -69,9 +83,25 @@ function List() {
             console.log({ record });
           },
         }}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              const isNameClicked = event.target.dataset.nameClicked === "true";
+
+              if (isNameClicked) {
+                openModal(record);
+              }
+            },
+          };
+        }}
+      />
+      <TaskDetail
+        visible={modalVisible}
+        onCancel={closeModal}
+        taskData={selectedTask}
       />
     </div>
   );
-}
+};
 
 export default List;

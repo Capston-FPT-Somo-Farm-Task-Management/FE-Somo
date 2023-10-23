@@ -7,7 +7,7 @@ const LayoutWithRoute = ({ children }) => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <SideMenu />
-      <Layout>
+      <Layout className="site-layout">
         <Content style={{ margin: '20px 16px' }}>{children}</Content>
       </Layout>
     </Layout>
