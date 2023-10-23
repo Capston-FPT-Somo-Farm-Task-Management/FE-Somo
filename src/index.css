@@ -682,4 +682,182 @@ html {
 }
 .first-step-plan-type .form-right {
   width: 45%;
+}
+
+body {
+  background-image: linear-gradient(to bottom right, #849b5c, #bfffc7) !important;
+  height: 100vh;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  padding: 20px;
+}
+.wrapper #formContent {
+  border-radius: 10px 10px 10px 10px;
+  background: #fff;
+  padding: 30px;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  padding: 0px;
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+.wrapper #formContent h2 {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block;
+  margin: 40px 8px 10px 8px;
+  color: #cccccc;
+}
+.wrapper #formContent .inactive {
+  color: #cccccc;
+}
+.wrapper #formContent .active {
+  color: #0d0d0d;
+  border-bottom: 2px solid #8EAD48;
+}
+.wrapper #formContent .fadeIn {
+  opacity: 0;
+  animation: fadeIn ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+}
+.wrapper #formContent .fadeIn.first {
+  animation-delay: 0.4s;
+  padding: 10px 0px;
+}
+.wrapper #formContent .fadeIn.first img {
+  width: 50%;
+}
+.wrapper #formContent .fadeIn.second {
+  animation-delay: 0.6s;
+}
+.wrapper #formContent .fadeIn.third {
+  animation-delay: 0.8s;
+}
+.wrapper #formContent .fadeIn.fourth {
+  animation-delay: 1s;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.wrapper #formContent .btn-login {
+  background-color: rgba(142, 173, 72, 0.8);
+  border: none;
+  color: white;
+  padding: 10px 80px 40px 80px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 20px;
+  box-shadow: 0 10px 30px 0 rgba(142, 173, 72, 0.4);
+  border-radius: 5px 5px 5px 5px;
+  margin: 5px 20px 40px 20px;
+  transition: all 0.3s ease-in-out;
+}
+.wrapper #formContent .btn-login:hover {
+  background-color: #8EAD48;
+}
+.wrapper #formContent .btn-login:active {
+  transform: scale(0.95);
+}
+.wrapper #formContent input[type=text], .wrapper #formContent input[type=password] {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 85%;
+  border: 2px solid #f6f6f6;
+  transition: all 0.5s ease-in-out;
+  border-radius: 5px 5px 5px 5px;
+}
+.wrapper #formContent input[type=text]:focus {
+  background-color: #fff;
+  border-bottom: 2px solid #8EAD48;
+}
+.wrapper #formContent input[type=password]:focus {
+  background-color: #fff;
+  border-bottom: 2px solid #8EAD48;
+}
+.wrapper #formContent input[type=text]:placeholder {
+  color: #cccccc;
+}
+.wrapper #formContent input[type=password]:placeholder {
+  color: #cccccc;
+}
+.wrapper #formContent #formFooter {
+  background-color: #f6f6f6;
+  border-top: 1px solid #dce8f1;
+  padding: 25px;
+  text-align: center;
+  border-radius: 0 0 10px 10px;
+  font-size: 20px;
+}
+.wrapper #formContent #formFooter a {
+  color: #8EAD48;
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 400;
+}
+.wrapper #formContent #formFooter .underlineHover:after {
+  display: block;
+  left: 0;
+  bottom: -10px;
+  width: 0;
+  height: 2px;
+  background-color: #8EAD48;
+  content: "";
+  transition: width 0.2s;
+}
+.wrapper #formContent #formFooter .underlineHover:hover {
+  color: #0d0d0d;
+}
+.wrapper #formContent #formFooter .underlineHover:hover:after {
+  width: 100%;
+}
+
+.fadeInDown {
+  animation-name: fadeInDown;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* Simple CSS3 Fade-in Animation */
+/* Simple CSS3 Fade-in Animation */
+/* OTHERS */
+*:focus {
+  outline: none;
+}
+
+#icon {
+  width: 60%;
 }/*# sourceMappingURL=index.css.map */

@@ -1,5 +1,4 @@
 import { Badge, Calendar } from 'antd'
-import Sidebar from 'common/components/Sidebar'
 import React from 'react'
 
 const getListData = (value) => {

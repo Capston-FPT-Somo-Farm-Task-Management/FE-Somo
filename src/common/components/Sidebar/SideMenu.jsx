@@ -45,7 +45,6 @@ const SideMenu = () => {
     toast.success("Đăng xuất thành công");
   };
 
-  const onCollapse = (collapsed) => setCollapsed(collapsed);
   return (
     <div className="sider">
       {isDesktop && (
