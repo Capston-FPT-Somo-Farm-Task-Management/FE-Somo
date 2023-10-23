@@ -159,6 +159,14 @@ html {
   justify-content: space-between;
   margin-bottom: 10px;
 }
+.list .menu-icon {
+  font-size: 20px;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
 
 .task-name {
   cursor: pointer;
@@ -684,19 +692,15 @@ html {
   width: 45%;
 }
 
-body {
-  background-image: linear-gradient(to bottom right, #849b5c, #bfffc7) !important;
-  height: 100vh;
-}
-
 .wrapper {
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: center;
   width: 100%;
   min-height: 100%;
   padding: 20px;
+  background-image: linear-gradient(to bottom right, #849b5c, #bfffc7) !important;
+  height: 100vh;
 }
 .wrapper #formContent {
   border-radius: 10px 10px 10px 10px;
