@@ -28,7 +28,7 @@ export const getTasks = createAsyncThunk("tasks/getTasks", async () => {
 //     }
 //   })
 
-export const createTask = createAsyncThunk("tasks/createTask", async (data) => {
+export const createTask = createAsyncThunk("tasks/createTask", async (data, id) => {
   console.log(data);
   console.log(data.farmTask.memberId);
   try {
