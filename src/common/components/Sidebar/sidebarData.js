@@ -1,12 +1,13 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHorseHead, faSeedling } from '@fortawesome/free-solid-svg-icons'
+import { faHorseHead, faCow, faTree, faSeedling } from '@fortawesome/free-solid-svg-icons'
 import {
-  faCalendarDays,
-  faCircleCheck,
-  faClone,
-  faSquare,
-} from '@fortawesome/free-regular-svg-icons'
+  CalendarOutlined,
+  AimOutlined,
+  BorderOutlined,
+  BlockOutlined,
+  LogoutOutlined,
+} from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 
 export function getItem(label, key, icon, children, type) {
@@ -22,32 +23,49 @@ export function getItem(label, key, icon, children, type) {
 export const menuItem = [
   getItem(
     <Link to="/schedule">Lịch trình</Link>,
-    'sub1',
-    <FontAwesomeIcon icon={faCalendarDays} />
+    '/',
+    <FontAwesomeIcon icon={CalendarOutlined} />
   ),
   getItem(
-    <Link to="/task">Nhiệm vụ</Link>,
-    'sub2',
-    <FontAwesomeIcon icon={faCircleCheck} />
+    <Link to="/task">Công việc</Link>,
+    '/task',
+    <FontAwesomeIcon icon={AimOutlined} />
   ),
-  getItem('Chăn nuôi', 'sub3', <FontAwesomeIcon icon={faHorseHead} />, [
-    getItem(<Link to="/animals">Động vật</Link>, '1'),
-    getItem(<Link to="/animal-group">Chuồng</Link>, '2'),
-  ]),
-  getItem('Trồng trọt', 'sub4', <FontAwesomeIcon icon={faSeedling} />, [
-    getItem(<Link to="/crops">Cây trồng</Link>, '3'),
-    getItem(<Link to="/crop-group">Vườn</Link>, '4'),
-  ]),
   getItem(
     <Link to="/area">Khu vực</Link>,
-    'sub5',
-    <FontAwesomeIcon icon={faClone} />
+    '/area',
+    <FontAwesomeIcon icon={BorderOutlined} />
   ),
   getItem(
     <Link to="/zone">Vùng</Link>,
-    'sub6',
-    <FontAwesomeIcon icon={faSquare} />
+    '/zone',
+    <FontAwesomeIcon icon={BlockOutlined} />
   ),
+  getItem(
+    <Link to="/animals">Vật nuôi</Link>,
+    '/animals',
+    <FontAwesomeIcon icon={faHorseHead} />
+  ),
+  getItem(
+    <Link to="/animal-group">Chuồng</Link>,
+    '/animal-group',
+    <FontAwesomeIcon icon={faCow} />
+  ),
+  getItem(
+    <Link to="/plants">Cây trồng</Link>,
+    '/plants',
+    <FontAwesomeIcon icon={faTree} />
+  ),
+  getItem(
+    <Link to="/crop-group">Vườn</Link>,
+    '/crop-group',
+    <FontAwesomeIcon icon={faSeedling} />
+  ),
+  getItem(
+    <Link to="/login">Đăng xuất</Link>,
+    '/login',
+    <FontAwesomeIcon icon={LogoutOutlined} />
+  )
 ]
 
 export const rootSubmenuKeys = ['sub3', 'sub4']

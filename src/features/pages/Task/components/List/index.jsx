@@ -21,7 +21,7 @@ const List = () => {
   }, []);
 
   const handleDelete = (id) => {
-    dispatch(deleteTask(id, { status: 4 })).then(() => {
+    dispatch(deleteTask(id)).then(() => {
       loadData();
     });
   };
