@@ -48,7 +48,7 @@ function ModalTask() {
           />
         );
       case 2:
-        return <ThirdModal option={selectedOption} />;
+        return <ThirdModal  option={selectedOption} />;
       default:
         return null;
     }

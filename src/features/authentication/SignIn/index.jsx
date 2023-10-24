@@ -21,8 +21,8 @@ const SignIn = () => {
   };
 
   return (
-    <>
-      <div className="wrapper fadeInDown">
+    <div className="wrapper">
+      <div className="fadeInDown">
         <div id="formContent">
           <h2 className="active">Đăng nhập</h2>
           <h2 className="inactive underlineHover">Đăng ký</h2>
@@ -79,7 +79,7 @@ const SignIn = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
