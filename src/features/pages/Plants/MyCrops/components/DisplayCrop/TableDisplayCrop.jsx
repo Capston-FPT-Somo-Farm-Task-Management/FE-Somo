@@ -1,24 +1,33 @@
-import { Button, Table } from 'antd'
-import { useDispatch, useSelector } from 'react-redux'
+import { Badge, Button, Table } from 'antd'
+import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { deletePlant, getPlantActive } from 'features/slice/plant/plantSlice'
 import Column from 'antd/es/table/Column'
 import UpdateCrop from './UpdateCrop'
+import { getPlantByFarmId } from 'features/slice/plant/plantByFarm'
+import { getMemberById } from 'features/slice/user/memberSlice'
+import { authServices } from 'services/authServices'
+import { useDispatch } from 'react-redux'
 
 const TableDisplayCrop = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
-  const plant = useSelector((state) => state.plant.data)
-  const dataPlantActive = plant.data
 
   const dispatch = useDispatch()
 
+  const member = useSelector((state) => state.member.data)
+  const plantByFarm = useSelector((state) => state.plantByFarm.data)
+  const farmId = member.farmId
+
   useEffect(() => {
-    dispatch(getPlantActive())
+    dispatch(getMemberById(authServices.getUserId()))
+    dispatch(getPlantByFarmId(farmId))
   }, [dispatch])
 
   const handleDelete = (id) => {
-    dispatch(deletePlant(id))
+    dispatch(deletePlant(id)).then(() => {
+      loadData()
+    })
   }
 
   const openModal = (record) => {
@@ -31,12 +40,12 @@ const TableDisplayCrop = () => {
   }
 
   const loadData = () => {
-    dispatch(getPlantActive())
+    dispatch(getPlantByFarmId(farmId))
   }
 
   return (
     <>
-      <Table dataSource={dataPlantActive} rowKey="id">
+      <Table dataSource={plantByFarm ? plantByFarm.data : null} rowKey="id">
         <Column
           title="Tên cây trồng"
           dataIndex="name"
@@ -44,13 +53,26 @@ const TableDisplayCrop = () => {
           render={(text) => <h4>{text}</h4>}
         />
         <Column title="Mã cây trồng" dataIndex="externalId" key="2" />
-        <Column title="Khu vực" dataIndex="areaName" key="3" />
+        <Column title="Vườn" dataIndex="fieldName" key="3" />
         <Column title="Vùng" dataIndex="zoneName" key="4" />
-        <Column title="Vườn" dataIndex="fieldName" key="5" />
+        <Column title="Khu vực" dataIndex="areaName" key="5" />
+
+        <Column
+          title="Trạng thái"
+          dataIndex="status"
+          key="6"
+          render={(status) =>
+            status === 'Active' ? (
+              <Badge status="success" text="Active" />
+            ) : (
+              <Badge status="error" text="Inactive" />
+            )
+          }
+        />
 
         <Column
           title="Tuỳ chọn"
-          key="6"
+          key="7"
           dataIndex="id"
           render={(_, record) => (
             <Button
@@ -58,7 +80,7 @@ const TableDisplayCrop = () => {
               danger
               onClick={() => handleDelete(record.id)}
             >
-              Xoá
+              Đổi
             </Button>
           )}
         />
