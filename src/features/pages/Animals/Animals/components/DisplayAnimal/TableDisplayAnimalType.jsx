@@ -1,7 +1,7 @@
 import { getAnimalType } from 'features/slice/animal/animalTypeSlice'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Table } from 'antd'
+import { Badge, Button, Table } from 'antd'
 import Column from 'antd/es/table/Column'
 import { deleteHabitantType } from 'features/slice/habitant/habitantTypeSlice'
 import UpdateAnimalType from './UpdateAnimalType'
@@ -48,8 +48,21 @@ const TableDisplayAnimalType = () => {
         <Column title="Nguồn gốc" dataIndex="origin" key="2" />
         <Column title="Môi trường sống" dataIndex="environment" key="3" />
         <Column title="Mô tả" dataIndex="description" key="4" />
+
         <Column
-          title="Tuỳ chọn"
+          title="Trạng thái"
+          dataIndex="isActive"
+          key="5"
+          render={(isActive) =>
+            isActive === true ? (
+              <Badge status="success" text="Active" />
+            ) : (
+              <Badge status="error" text="Inactive" />
+            )
+          }
+        />
+        <Column
+          title="Đổi trạng thái"
           key="5"
           dataIndex="id"
           render={(_, record) => (
@@ -58,7 +71,7 @@ const TableDisplayAnimalType = () => {
               danger
               onClick={() => handleDelete(record.id)}
             >
-              Xoá
+              Đổi
             </Button>
           )}
         />

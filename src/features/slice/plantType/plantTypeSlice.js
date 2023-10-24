@@ -6,9 +6,7 @@ export const getPlantType = createAsyncThunk(
   'plantTypes/getPlantTypes',
   async () => {
     try {
-      const { data } = await axios.get(
-        baseUrl + '/HabitantType/PlantType/Active'
-      )
+      const { data } = await axios.get(baseUrl + '/HabitantType/PlantType')
       return data
     } catch (error) {
       console.log(error)

@@ -54,8 +54,12 @@ export const updateAnimal = createAsyncThunk(
           },
         }
       )
+      if (response.status === 200) {
+        toast.success(response.data.message)
+      }
       return response.json()
     } catch (error) {
+      toast.error(error.response.data.message)
       rejectWithValue(error)
     }
   }
@@ -64,7 +68,6 @@ export const updateAnimal = createAsyncThunk(
 export const deleteAnimal = createAsyncThunk(
   'animals/deleteAnimal',
   async (id, { rejectWithValue }) => {
-    console.log(id)
     try {
       const response = await axios.put(baseUrl + `/Livestock/Delete/${id}`)
       if (response.status === 200) {

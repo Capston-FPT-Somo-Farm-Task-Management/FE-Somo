@@ -59,6 +59,7 @@ export const updateZone = createAsyncThunk(
 export const deleteZone = createAsyncThunk(
   'zones/deleteZone',
   async (id, { rejectWithValue }) => {
+    console.log(id)
     try {
       const response = await axios.put(baseUrl + `/Zone/Delete/${id}`)
       if (response.status === 200) {

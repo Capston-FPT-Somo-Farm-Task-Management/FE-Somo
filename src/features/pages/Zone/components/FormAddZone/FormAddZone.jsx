@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux'
 const FormAddZone = ({ isModalOpen, closeModal, onFinishCreate, farmId }) => {
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const zoneType = useSelector((state) => state.zoneType.data)
-  console.log(areaByFarm)
   const dispatch = useDispatch()
 
   useEffect(() => {

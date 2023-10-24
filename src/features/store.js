@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import plantReducer from './slice/plant/plantSlice'
 import animalReducer from './slice/animal/animalSlice'
 import animalTypeReducer from './slice/animal/animalTypeSlice'
+import animalByFarmReducer from './slice/animal/animalByFarm'
 import areaReducer from './slice/area/areaSlice'
 import areaByFarmReducer from './slice/area/areaByFarm'
 import zoneReducer from './slice/zone/zoneSlice'
@@ -18,7 +19,9 @@ import fieldReducer from './slice/field/fieldSlice'
 import fieldPlantReducer from './slice/field/fieldPlantSlice'
 import fieldAnimalReducer from './slice/field/fieldAnimalSlice'
 import fieldByZoneReducer from './slice/field/fieldByZoneSlice'
+import fieldByFarmReducer from './slice/field/fieldByFarm'
 import plantTypeReducer from './slice/plantType/plantTypeSlice'
+import plantByFarmReducer from './slice/plant/plantByFarm'
 import taskReducer from './slice/task/taskSlice'
 import subTaskReducer from "./slice/subTask/subTaskSlice"
 import habitantTypeReducer from './slice/habitant/habitantTypeSlice'
@@ -44,8 +47,11 @@ export const store = configureStore({
     fieldPlant: fieldPlantReducer,
     fieldAnimal: fieldAnimalReducer,
     fieldByZone: fieldByZoneReducer,
+    fieldByFarm: fieldByFarmReducer,
     plantType: plantTypeReducer,
+    plantByFarm: plantByFarmReducer,
     animalType: animalTypeReducer,
+    animalByFarm: animalByFarmReducer,
     task: taskReducer,
     subTask: subTaskReducer,
     habitantType: habitantTypeReducer,

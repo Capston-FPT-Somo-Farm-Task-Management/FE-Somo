@@ -40,6 +40,26 @@ export const getFields = createAsyncThunk(
   }
 )
 
+export const updateField = createAsyncThunk(
+  'fields/updateField',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(baseUrl + `/Field/${data.id}`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      if (response.status === 200) {
+        toast.success(response.data.message)
+      }
+      return response.json()
+    } catch (error) {
+      toast.error(error.response.data.message)
+      rejectWithValue(error)
+    }
+  }
+)
+
 export const deleteField = createAsyncThunk(
   'fields/deleteField',
   async (id, { rejectWithValue }) => {
@@ -88,6 +108,18 @@ const fieldSlice = createSlice({
         state.data = [action.payload]
       })
       .addCase(createField.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+
+      .addCase(updateField.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(updateField.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = [action.payload]
+      })
+      .addCase(updateField.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
       })
