@@ -39,6 +39,7 @@ export const updateHabitantType = createAsyncThunk(
       }
       return response.json()
     } catch (error) {
+      toast.error(error.response.data.message)
       rejectWithValue(error)
     }
   }

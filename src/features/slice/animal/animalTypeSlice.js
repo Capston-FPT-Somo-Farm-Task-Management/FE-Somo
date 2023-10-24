@@ -7,9 +7,7 @@ export const getAnimalType = createAsyncThunk(
   'animalTypes/getAnimalTypes',
   async () => {
     try {
-      const { data } = await axios.get(
-        baseUrl + '/HabitantType/LivestockType/Active'
-      )
+      const { data } = await axios.get(baseUrl + '/HabitantType/LivestockType')
       return data
     } catch (error) {
       throw Exception(error)
