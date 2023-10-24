@@ -48,7 +48,6 @@ const UpdateAnimal = ({ isModalOpen, closeModal, selectedData, loadData }) => {
   }, [selectedAreaId, selectedZoneId])
 
   const handleSelectAreaChange = (value) => {
-    console.log(selectedData)
     setSelectedAreaId(value)
   }
 
@@ -66,6 +65,7 @@ const UpdateAnimal = ({ isModalOpen, closeModal, selectedData, loadData }) => {
       habitantTypeId: values.habitantType.value,
       fieldId: values.field.value,
     }
+    console.log(finalValues)
     dispatch(updateAnimal(finalValues)).then(() => {
       loadData()
       setTimeout(() => {
@@ -106,10 +106,16 @@ const UpdateAnimal = ({ isModalOpen, closeModal, selectedData, loadData }) => {
             {/* ID Animal */}
             <Form.Item
               label="Mã vật nuôi"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập mã vật nuôi',
+                },
+              ]}
               initialValue={selectedData ? selectedData.externalId : ''}
               name="externalId"
             >
-              <Input placeholder="Nhập mã vật nuôi" readOnly />
+              <Input placeholder="Nhập mã vật nuôi" />
             </Form.Item>
 
             {/* Name Animal */}

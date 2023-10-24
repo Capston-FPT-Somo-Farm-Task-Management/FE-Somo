@@ -1,28 +1,15 @@
-import { Button, Table } from 'antd'
-import { columns, data, onChange } from './DisplayAnimalGroupData'
-import { useDispatch, useSelector } from 'react-redux'
-import { getFieldAnimal } from 'features/slice/field/fieldAnimalSlice'
-import { useEffect, useState } from 'react'
+import { Badge, Button, Table } from 'antd'
+import { useState } from 'react'
 import Column from 'antd/es/table/Column'
-import { deleteField } from 'features/slice/field/fieldSlice'
 import UpdateAnimalGroup from './UpdateAnimalGroup'
 
-const DisplayAnimalGroup = () => {
+const DisplayAnimalGroup = ({
+  fieldByFarm,
+  onFinishDelete,
+  onFinishUpdate,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
-  const fieldAnimal = useSelector((state) => state.fieldAnimal.data)
-  const field = fieldAnimal.data
-
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(getFieldAnimal())
-  }, [])
-
-  const handleDelete = (id) => {
-    console.log(id)
-    dispatch(deleteField(id))
-  }
 
   const openModal = (record) => {
     setSelectedData(record)
@@ -33,40 +20,51 @@ const DisplayAnimalGroup = () => {
     setIsModalOpen(false)
   }
 
-  const loadData = () => {
-    dispatch(getFieldAnimal())
-  }
-
   return (
     <>
-      <Table dataSource={field} rowKey="id" on>
+      <Table dataSource={fieldByFarm ? fieldByFarm.data : null} rowKey="id" on>
         <Column
           title="Tên chuồng"
           dataIndex="name"
           key="1"
           render={(text) => <h4>{text}</h4>}
         />
-        <Column title="Vùng" dataIndex="zoneName" key="2" />
+        <Column title="Mã chuồng" dataIndex="code" key="2" />
         <Column title="Diện tích" dataIndex="area" key="3" />
+        <Column title="Vùng" dataIndex="zoneName" key="4" />
+        <Column title="Khu vực" dataIndex="areaName" key="5" />
 
         <Column
-          title="Tuỳ chọn"
-          key="4"
+          title="Trạng thái"
+          dataIndex="isDelete"
+          key="6"
+          render={(isDelete) =>
+            isDelete === false ? (
+              <Badge status="success" text="Active" />
+            ) : (
+              <Badge status="error" text="Inactive" />
+            )
+          }
+        />
+
+        <Column
+          title="Đổi trạng thái"
+          key="7"
           dataIndex="id"
           render={(_, record) => (
             <Button
               size="middle"
               danger
-              onClick={() => handleDelete(record.id)}
+              onClick={() => onFinishDelete(record.id)}
             >
-              Xoá
+              Đổi
             </Button>
           )}
         />
 
         <Column
           title="Cập nhật"
-          key="5"
+          key="8"
           dataIndex="id"
           render={(_, record) => (
             <Button
@@ -83,7 +81,7 @@ const DisplayAnimalGroup = () => {
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}
-        loadData={loadData}
+        onFinishUpdate={onFinishUpdate}
       />
     </>
   )

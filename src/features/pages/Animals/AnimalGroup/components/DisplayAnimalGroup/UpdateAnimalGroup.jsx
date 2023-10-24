@@ -1,6 +1,5 @@
 import { Button, Form, Select, Input, InputNumber, Modal } from 'antd'
 import { getAreaActive } from 'features/slice/area/areaSlice'
-import { updateHabitantType } from 'features/slice/habitant/habitantTypeSlice'
 import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,7 +8,7 @@ const UpdateAnimalGroup = ({
   isModalOpen,
   closeModal,
   selectedData,
-  loadData,
+  onFinishUpdate,
 }) => {
   const [selectedAreaId, setSelectedAreaId] = useState(null)
 
@@ -31,7 +30,6 @@ const UpdateAnimalGroup = ({
   }, [selectedAreaId])
 
   const handleSelectAreaChange = (value) => {
-    console.log(selectedData)
     setSelectedAreaId(value)
   }
 
@@ -44,12 +42,9 @@ const UpdateAnimalGroup = ({
       area: values.square,
       zoneId: values.zone.value,
     }
-    dispatch(updateHabitantType(finalValues)).then(() => {
-      loadData()
-      setTimeout(() => {
-        closeModal()
-      }, 500)
-    })
+    console.log(finalValues)
+    onFinishUpdate(finalValues)
+    closeModal()
   }
 
   return (
@@ -84,10 +79,16 @@ const UpdateAnimalGroup = ({
             {/* ID Animal */}
             <Form.Item
               label="Mã chuồng"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập mã chuồng',
+                },
+              ]}
               initialValue={selectedData ? selectedData.code : ''}
               name="code"
             >
-              <Input readOnly />
+              <Input placeholder="Nhập mã chuồng" />
             </Form.Item>
 
             {/* Name Animal */}

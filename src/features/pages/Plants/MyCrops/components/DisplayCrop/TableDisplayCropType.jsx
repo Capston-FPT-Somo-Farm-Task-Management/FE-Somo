@@ -1,4 +1,4 @@
-import { Button, Table } from 'antd'
+import { Badge, Button, Table } from 'antd'
 import { getPlantType } from 'features/slice/plantType/plantTypeSlice'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -47,9 +47,22 @@ const TableDisplayCropType = () => {
         <Column title="Nguồn gốc" dataIndex="origin" key="2" />
         <Column title="Môi trường sống" dataIndex="environment" key="3" />
         <Column title="Mô tả" dataIndex="description" key="4" />
+
         <Column
-          title="Tuỳ chọn"
+          title="Trạng thái"
+          dataIndex="isActive"
           key="5"
+          render={(isActive) =>
+            isActive === true ? (
+              <Badge status="success" text="Active" />
+            ) : (
+              <Badge status="error" text="Inactive" />
+            )
+          }
+        />
+        <Column
+          title="Đổi trạng thái"
+          key="6"
           dataIndex="id"
           render={(_, record) => (
             <Button
@@ -57,14 +70,14 @@ const TableDisplayCropType = () => {
               danger
               onClick={() => handleDelete(record.id)}
             >
-              Xoá
+              Đổi
             </Button>
           )}
         />
 
         <Column
           title="Cập nhật"
-          key="6"
+          key="7"
           dataIndex="id"
           render={(_, record) => (
             <Button

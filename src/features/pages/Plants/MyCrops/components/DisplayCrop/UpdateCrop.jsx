@@ -93,7 +93,7 @@ const UpdateCrop = ({ isModalOpen, closeModal, selectedData, loadData }) => {
           <div className="form-left">
             {/* ID Animal */}
             <Form.Item
-              label="Mã vật nuôi"
+              label="Mã cây trồng"
               initialValue={selectedData ? selectedData.externalId : ''}
               name="externalId"
             >

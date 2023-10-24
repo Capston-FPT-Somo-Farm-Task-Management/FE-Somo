@@ -1,26 +1,11 @@
-import { Button, Table } from 'antd'
-import { useDispatch, useSelector } from 'react-redux'
-import { getFieldPlant } from 'features/slice/field/fieldPlantSlice'
-import { useEffect, useState } from 'react'
+import { Badge, Button, Table } from 'antd'
+import { useState } from 'react'
 import Column from 'antd/es/table/Column'
-import { deleteField } from 'features/slice/field/fieldSlice'
 import UpdateCropGroup from './UpdateCropGroup'
 
-const DisplayCropGroup = () => {
+const DisplayCropGroup = ({ fieldByFarm, onFinishDelete, onFinishUpdate }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
-  const fieldPlant = useSelector((state) => state.fieldPlant.data)
-  const field = fieldPlant.data
-
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(getFieldPlant())
-  }, [dispatch])
-
-  const handleDelete = (id) => {
-    dispatch(deleteField(id))
-  }
 
   const openModal = (record) => {
     setSelectedData(record)
@@ -31,13 +16,9 @@ const DisplayCropGroup = () => {
     setIsModalOpen(false)
   }
 
-  const loadData = () => {
-    dispatch(getFieldPlant())
-  }
-
   return (
     <>
-      <Table dataSource={field} rowKey="id" on>
+      <Table dataSource={fieldByFarm ? fieldByFarm.data : null} rowKey="id" on>
         <Column
           title="Tên vườn"
           dataIndex="name"
@@ -45,27 +26,40 @@ const DisplayCropGroup = () => {
           render={(text) => <h4>{text}</h4>}
         />
         <Column title="Mã vườn" dataIndex="code" key="2" />
-        <Column title="Vùng" dataIndex="zoneName" key="3" />
-        <Column title="Diện tích" dataIndex="area" key="4" />
+        <Column title="Diện tích" dataIndex="area" key="3" />
+        <Column title="Vùng" dataIndex="zoneName" key="4" />
+        <Column title="Khu vực" dataIndex="areaName" key="5" />
 
         <Column
-          title="Tuỳ chọn"
+          title="Trạng thái"
+          dataIndex="isDelete"
           key="5"
+          render={(isDelete) =>
+            isDelete === false ? (
+              <Badge status="success" text="Active" />
+            ) : (
+              <Badge status="error" text="Inactive" />
+            )
+          }
+        />
+        <Column
+          title="Đổi trạng thái"
+          key="6"
           dataIndex="id"
           render={(_, record) => (
             <Button
               size="middle"
               danger
-              onClick={() => handleDelete(record.id)}
+              onClick={() => onFinishDelete(record.id)}
             >
-              Xoá
+              Đổi
             </Button>
           )}
         />
 
         <Column
           title="Cập nhật"
-          key="6"
+          key="7"
           dataIndex="id"
           render={(_, record) => (
             <Button
@@ -82,7 +76,7 @@ const DisplayCropGroup = () => {
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}
-        loadData={loadData}
+        onFinishUpdate={onFinishUpdate}
       />
     </>
   )
