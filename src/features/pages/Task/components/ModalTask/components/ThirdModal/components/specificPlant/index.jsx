@@ -150,13 +150,14 @@ function SpecificPlant() {
       <div className="form-left">
         <Form.Item
           label="Khu vực"
+          required
           rules={[
             {
               required: true,
               message: "Vui lòng chọn khu vực",
             },
           ]}
-          required
+          name="area"
         >
           <Select
             onChange={handleSelectAreaChange}
@@ -169,13 +170,14 @@ function SpecificPlant() {
         </Form.Item>
         <Form.Item
           label="Vùng"
+          required
           rules={[
             {
               required: true,
               message: "Vui lòng chọn vùng",
             },
           ]}
-          required
+          name="zone"
         >
           <Select
             onChange={handleSelectZoneChange}
@@ -187,7 +189,17 @@ function SpecificPlant() {
           />
         </Form.Item>
 
-        <Form.Item label="Vườn" name="fieldId">
+        <Form.Item
+          label="Vườn"
+          name="fieldId"
+          required
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng chọn vườn",
+            },
+          ]}
+        >
           <Select
             placeholder="Chọn vườn"
             options={dataFieldByZone?.map((item) => ({
@@ -318,7 +330,17 @@ function SpecificPlant() {
             }))}
           />
         </Form.Item>
-        <Form.Item label="Người thực hiện" name="employeeIds" required>
+        <Form.Item
+          label="Người thực hiện"
+          name="employeeIds"
+          required
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng chọn người thực hiện",
+            },
+          ]}
+        >
           <Select
             mode="multiple"
             value={employeesValue}
@@ -330,7 +352,17 @@ function SpecificPlant() {
             }))}
           />
         </Form.Item>
-        <Form.Item label="Người giám sát" name="suppervisorId" required>
+        <Form.Item
+          label="Người giám sát"
+          name="suppervisorId"
+          required
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng chọn người giám sát",
+            },
+          ]}
+        >
           <Select
             placeholder="Chọn người giám sát"
             options={dataSupervisor?.map((item) => ({
@@ -340,7 +372,17 @@ function SpecificPlant() {
           />
         </Form.Item>
 
-        <Form.Item label="Dụng cụ" name="materialIds">
+        <Form.Item
+          label="Dụng cụ"
+          name="materialIds"
+          required
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng chọn dụng cụ sử dụng",
+            },
+          ]}
+        >
           <Select
             placeholder="Chọn dụng cụ"
             mode="multiple"

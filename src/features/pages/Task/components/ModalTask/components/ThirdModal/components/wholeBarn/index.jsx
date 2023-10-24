@@ -145,13 +145,14 @@ function WholeBarn() {
       <div className="form-left">
         <Form.Item
           label="Khu vực"
+          required
           rules={[
             {
               required: true,
               message: "Vui lòng chọn khu vực",
             },
           ]}
-          required
+          name="area"
         >
           <Select
             onChange={handleSelectAreaChange}
@@ -164,13 +165,14 @@ function WholeBarn() {
         </Form.Item>
         <Form.Item
           label="Vùng"
+          required
           rules={[
             {
               required: true,
               message: "Vui lòng chọn vùng",
             },
           ]}
-          required
+          name="zone"
         >
           <Select
             onChange={handleSelectZoneChange}

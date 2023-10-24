@@ -1,17 +1,16 @@
-import { DatePicker, Form, Input, Select } from 'antd';
-import React, { useEffect, useState } from 'react'
+import { DatePicker, Form, Input, Select } from "antd";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAreaActive } from 'features/slice/area/areaSlice';
-import { getZoneActive } from 'features/slice/zone/zoneSlice';
-import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice';
-import { getTaskType } from 'features/slice/task/taskType';
-import { getEmployee } from 'features/slice/employee/employeeSlice';
-import { getSupervisor } from 'features/slice/supervisor/supervisorSlice';
-import { getMaterial } from 'features/slice/material/materialSlice';
-import dayjs from 'dayjs';
+import { getAreaActive } from "features/slice/area/areaSlice";
+import { getZoneActive } from "features/slice/zone/zoneSlice";
+import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
+import { getEmployee } from "features/slice/employee/employeeSlice";
+import { getTaskType } from "features/slice/task/taskTypeSlice";
+import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
+import { getMaterial } from "features/slice/material/materialSlice";
+import dayjs from "dayjs";
 import MultiDatePicker from "react-multi-date-picker";
-import TextArea from 'antd/es/input/TextArea';
-
+import TextArea from "antd/es/input/TextArea";
 
 function Other() {
   const [selectedAreaId, setSelectedAreaId] = useState(null);
@@ -23,7 +22,6 @@ function Other() {
   const [remindValue, setRemindValue] = useState(0);
   const [repeatValue, setRepeatValue] = useState(false);
 
-
   const dispatch = useDispatch();
 
   const area = useSelector((state) => state.area.data);
@@ -34,9 +32,7 @@ function Other() {
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
   const dataFieldByZone = fieldByZone.data;
 
-  const taskType = useSelector(
-    (state) => state.taskType.data
-  );
+  const taskType = useSelector((state) => state.taskType.data);
 
   const dataEmployee = useSelector((state) => state.employee.data);
 
@@ -74,7 +70,6 @@ function Other() {
     return current && current < dayjs().startOf("day");
   };
 
-
   return (
     <Form
       layout="vertical"
@@ -85,16 +80,18 @@ function Other() {
       <div className="form-left">
         <Form.Item
           label="Khu vực"
+          required
           rules={[
             {
               required: true,
               message: "Vui lòng chọn khu vực",
             },
           ]}
-          required
+          name="area"
         >
           <Select
             onChange={handleSelectAreaChange}
+            placeholder="Chọn khu vực"
             options={area.data?.map((item) => ({
               label: item.name,
               value: item.id,
@@ -103,40 +100,54 @@ function Other() {
         </Form.Item>
         <Form.Item
           label="Vùng"
+          required
           rules={[
             {
               required: true,
               message: "Vui lòng chọn vùng",
             },
           ]}
-          required
+          name="zone"
         >
           <Select
             onChange={handleSelectZoneChange}
+            placeholder="Chọn vùng"
             options={dataZone?.map((item) => ({
               label: item.name,
               value: item.id,
             }))}
           />
         </Form.Item>
-        <Form.Item label="Vườn" name="fieldId">
+        <Form.Item label="Địa điểm cụ thể" name="fieldId">
           <Select
+            placeholder="Địa điểm cụ thể"
             options={dataFieldByZone?.map((item) => ({
               label: item.name,
               value: item.id,
             }))}
           />
         </Form.Item>
-        <Form.Item label="Độ ưu tiên" required>
+        <Form.Item
+          label="Độ ưu tiên"
+          name="priority"
+          required
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng chọn độ ưu tiên",
+            },
+          ]}
+        >
           <Select
             value={priorityValue}
             onChange={(value) => setPriorityValue(value)}
+            placeholder="Chọn độ ưu tiên"
           >
-            <Select.Option value="lowest">Thấp nhất</Select.Option>
-            <Select.Option value="low">Thấp</Select.Option>
-            <Select.Option value="medium">Trung bình</Select.Option>
-            <Select.Option value="high">Cao</Select.Option>
-            <Select.Option value="highest">Cao nhất</Select.Option>
+            <Select.Option value="Thấp nhất">Thấp nhất</Select.Option>
+            <Select.Option value="Thấp">Thấp</Select.Option>
+            <Select.Option value="Trung bình">Trung bình</Select.Option>
+            <Select.Option value="Cao">Cao</Select.Option>
+            <Select.Option value="Cao nhất">Cao nhất</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item
@@ -187,38 +198,92 @@ function Other() {
         </Form.Item>
       </div>
       <div className="form-right">
-        <Form.Item label="Tên công việc" required>
+        <Form.Item
+          label="Tên công việc"
+          name="name"
+          required
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng nhập tên công việc",
+            },
+          ]}
+        >
           <Input placeholder="Nhập tên công việc" />
         </Form.Item>
-        <Form.Item label="Loại nhiệm vụ" required>
+        <Form.Item
+          label="Loại nhiệm vụ"
+          name="taskTypeId"
+          required
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng chọn loại nhiệm vụ",
+            },
+          ]}
+        >
           <Select
+            placeholder="Chọn loại nhiệm vụ"
             options={taskType?.map((item) => ({
               label: item.name,
               value: item.id,
             }))}
           />
         </Form.Item>
-        <Form.Item label="Người thực hiện" name="employeeIds" required>
+        <Form.Item
+          label="Người thực hiện"
+          name="employeeIds"
+          required
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng chọn người thực hiện",
+            },
+          ]}
+        >
           <Select
             mode="multiple"
             value={employeesValue}
             onChange={(value) => setEmployeesValue(value)}
+            placeholder="Chọn người thực hiện"
             options={dataEmployee?.map((item) => ({
               label: item.name,
               value: item.id,
             }))}
           />
         </Form.Item>
-        <Form.Item label="Người giám sát" name="receiverId" required>
+        <Form.Item
+          label="Người giám sát"
+          name="suppervisorId"
+          required
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng chọn người giám sát",
+            },
+          ]}
+        >
           <Select
+            placeholder="Chọn người giám sát"
             options={dataSupervisor?.map((item) => ({
               label: item.name,
               value: item.id,
             }))}
           />
         </Form.Item>
-        <Form.Item label="Dụng cụ">
+        <Form.Item
+          label="Dụng cụ"
+          name="materialIds"
+          required
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng chọn dụng cụ sử dụng",
+            },
+          ]}
+        >
           <Select
+            placeholder="Chọn dụng cụ"
             mode="multiple"
             value={materialsValue}
             onChange={(value) => setMaterialsValue(value)}
@@ -230,15 +295,15 @@ function Other() {
         </Form.Item>
         <Form.Item label="Nhắc lại" name="remind">
           <Select
-            value={remindValue}
-            onChange={(value) => setRemindValue(value)}
+            value={remindValue.toString()}
+            onChange={(value) => setRemindValue(parseInt(value, 10))}
             placeholder="Không"
           >
-            <Select.Option value="0">0</Select.Option>
-            <Select.Option value="5">5</Select.Option>
-            <Select.Option value="10">10</Select.Option>
-            <Select.Option value="15">15</Select.Option>
-            <Select.Option value="20">20</Select.Option>
+            <Select.Option value="0">Không</Select.Option>
+            <Select.Option value="5">Sau 5 phút</Select.Option>
+            <Select.Option value="10">Sau 10 phút</Select.Option>
+            <Select.Option value="15">Sau 15 phút</Select.Option>
+            <Select.Option value="20">Sau 20 phút</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item label="Lặp lại" name="isRepeat">
@@ -266,4 +331,4 @@ function Other() {
   );
 }
 
-export default Other
+export default Other;

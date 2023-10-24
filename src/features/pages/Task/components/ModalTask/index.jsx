@@ -21,16 +21,6 @@ function ModalTask() {
     setCurrentStep(currentStep - 1);
   };
 
-  const handleFinish = () => {
-    // Handle finishing steps
-    setCurrentStep(-1);
-    setSelectedType(null);
-    Modal.success({
-      title: "Bạn đã thêm thành công",
-      content: "Your task has been processed successfully.",
-    });
-  };
-
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setCurrentStep(currentStep + 1);
@@ -83,7 +73,6 @@ function ModalTask() {
           {currentStep === steps.length - 1 && (
             <Button
               type="primary"
-              onClick={handleFinish}
               form="createTask"
               htmlType="submit"
             >
