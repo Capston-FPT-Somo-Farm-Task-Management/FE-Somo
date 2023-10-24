@@ -5,5 +5,21 @@
     justify-content: space-between;
     margin-bottom: 10px;
   }
-  
+  .menu-icon {
+    font-size: 20px; 
+    color: black; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+}
+
+.task-name{
+  cursor: pointer;
+}
+.task-name:hover{
+  text-decoration: underline;
+  color: #007bff;
+  opacity: 0.8;
 }

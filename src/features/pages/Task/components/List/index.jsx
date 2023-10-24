@@ -1,46 +1,101 @@
-import React, { useEffect } from "react";
-import ModalTask from "../ModalTask";
-import { Input, Space, Table } from "antd";
-
-import {
-  EditOutlined,
-  CheckCircleOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+import { Button, Form, Input, Modal, Select, Space, Table } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { getTasks } from "features/slice/task/taskSlice";
-import { taskTitle, onChange } from "./listTaskData";
+import { getTasks, deleteTask } from "features/slice/task/taskSlice";
+import { getEmployee } from "features/slice/employee/employeeSlice";
+import { createSubTask } from "features/slice/subTask/subTaskSlice";
+import { taskTitle, onChange } from "./listTaskData"; // Đảm bảo bạn đã import TaskDetailModal
+import TaskDetail from "../TaskDetail";
+import ModalTask from "../ModalTask";
+import { Menu, Dropdown } from "antd";
+import {
+  MoreOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  PlusCircleOutlined,
+} from "@ant-design/icons";
+import TextArea from "antd/es/input/TextArea";
 
-const items = [
-  {
-    icon: <EditOutlined />,
-    label: <a href="https://www.antgroup.com">Sửa công việc</a>,
-    key: "0",
-  },
-  {
-    icon: <CheckCircleOutlined />,
-    label: <a href="https://www.aliyun.com">Đánh dấu hoàn thành</a>,
-    key: "1",
-  },
-  {
-    icon: <DeleteOutlined />,
-    label: <a href="https://www.aliyun.com">Xóa</a>,
-    key: "2",
-  },
-];
+const List = () => {
+  const [addSubtaskVisible, setAddSubtaskVisible] = useState(false);
+  // const [employeesValue, setEmployeesValue] = useState(0);
+  const [description, setDescription] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
-function List() {
+
+
   const { Search } = Input;
-  const onSearch = (value, _e, info) => console.log(info?.source, value);
+  const onSearch = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+  };
 
   const task = useSelector((state) => state.task.data);
   const dataTask = task.data;
+  const filteredData = dataTask && dataTask.filter(task => task.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
+
   console.log(dataTask);
+
+  const dataEmployee = useSelector((state) => state.employee.data);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getTasks());
+    dispatch(getEmployee());
+
   }, []);
+
+  const handleMenuClick = (e, record) => {
+    if (e.key === "edit") {
+      // Xử lý khi người dùng chọn "Sửa"
+      console.log("Edit", record);
+    } else if (e.key === "delete") {
+      // Xử lý khi người dùng chọn "Xóa"
+      handleDelete(record.id);
+    }
+  };
+
+  const handleDelete = (id) => {
+    dispatch(deleteTask(id)).then(() => {
+      loadData();
+    });
+  };
+
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const openModal = (record) => {
+    setSelectedTask(record);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setSelectedTask(null);
+    setModalVisible(false);
+  };
+
+  const openAddSubtaskModal = () => {
+    setAddSubtaskVisible(true);
+  };
+
+  const closeAddSubtaskModal = () => {
+    setAddSubtaskVisible(false);
+  };
+
+  const loadData = () => {
+    dispatch(getTasks());
+  };
+
+  const onFinish = (values) => {
+    const finalValues = {
+      ...values,
+    }
+    console.log(finalValues)
+    dispatch(createSubTask(finalValues))
+    closeModal()
+  }
+
   return (
     <div className="list">
       <div className="list-header">
@@ -48,9 +103,9 @@ function List() {
         <div>
           <Space direction="vertical">
             <Search
-              placeholder="Tìm kiếm"
+              placeholder="Tìm kiếm theo tên"
               allowClear
-              onSearch={onSearch}
+              onChange={onSearch} 
               style={{
                 marginLeft: "15px",
                 width: 500,
@@ -61,17 +116,150 @@ function List() {
       </div>
       <Table
         rowKey="id"
-        columns={taskTitle}
-        dataSource={dataTask}
+        columns={[
+          ...taskTitle,
+          {
+            title: "Tuỳ chọn",
+            key: "action",
+            render: (_, record) => (
+              <Dropdown
+                placement="bottomRight"
+                overlay={
+                  <Menu onClick={(e) => handleMenuClick(e, record)}>
+                    <Menu.Item key="subTask">
+                      <span onClick={openAddSubtaskModal}>
+                        <PlusCircleOutlined
+                          style={{ color: "green", marginRight: "8px" }}
+                        />
+                        Thêm công việc con
+                      </span>
+                    </Menu.Item>
+                    <Menu.Item key="edit">
+                      <span>
+                        <EditOutlined
+                          style={{ color: "gold", marginRight: "8px" }}
+                        />
+                        Sửa
+                      </span>
+                    </Menu.Item>
+                    <Menu.Item key="delete">
+                      <span>
+                        <DeleteOutlined
+                          style={{ color: "red", marginRight: "8px" }}
+                        />
+                        Xóa
+                      </span>
+                    </Menu.Item>
+                  </Menu>
+                }
+              >
+                <a
+                  className="ant-dropdown-link"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  <MoreOutlined className="menu-icon" />
+                </a>
+              </Dropdown>
+            ),
+          },
+        ]}
+        dataSource={filteredData}
         onChange={onChange}
         rowSelection={{
           onSelect: (record) => {
             console.log({ record });
           },
         }}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              const isNameClicked = event.target.dataset.nameClicked === "true";
+
+              if (isNameClicked) {
+                openModal(record);
+              }
+            },
+          };
+        }}
       />
+      <TaskDetail
+        visible={modalVisible}
+        onCancel={closeModal}
+        taskData={selectedTask}
+      />
+      <Modal
+        title="Thêm công việc con"
+        visible={addSubtaskVisible}
+        onCancel={closeAddSubtaskModal}
+        footer={[
+          <Button form="createSubTask" type="dashed" htmlType="reset">
+            Làm mới
+          </Button>,
+          <Button
+            form="createSubTask"
+            type="primary"
+            danger
+            onClick={closeModal}
+          >
+            Huỷ
+          </Button>,
+          <Button form="createSubTask" type="primary" htmlType="submit">
+            Hoàn thành
+          </Button>,
+        ]}
+      >
+        <Form
+          layout="vertical"
+          id="createSubTask"
+          onFinish={onFinish}
+        >
+          <Form.Item
+            label="Tên công việc con"
+            name="name"
+            required
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập tên công việc con",
+              },
+            ]}
+          >
+            <Input placeholder="Nhập tên công việc con" />
+          </Form.Item>
+          <Form.Item
+          label="Người thực hiện"
+          name="employeeIds"
+          required
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng chọn người thực hiện",
+            },
+          ]}
+        >
+          <Select
+            // mode="multiple"
+            // value={employeesValue}
+            // onChange={(value) => setEmployeesValue(value)}
+            placeholder="Chọn người thực hiện"
+            options={dataEmployee?.map((item) => ({
+              label: item.name,
+              value: item.id,
+            }))}
+          />
+        </Form.Item>
+        <Form.Item label="Mô tả" name="description">
+          <TextArea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            rows={5}
+            placeholder="Thêm mô tả chi tiết cho công việc"
+          />
+        </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
-}
+};
 
 export default List;

@@ -1,45 +1,96 @@
-// import React, { useEffect } from 'react'
-// import { useParams } from 'react-router-dom';
-// import { useSelector, useDispatch } from "react-redux";
-// import { getTaskById } from 'features/slice/task/taskSlice';
+import React, { useState, useEffect } from "react";
+import { Modal } from "antd";
+import dayjs from "dayjs";
 
-// function TaskDetail() {
-//     const { taskId } = useParams();
+const TaskDetail = ({ visible, onCancel, taskData, option, type }) => {
 
-//     const task = useSelector((state) => state.task.data);
+  if (!taskData) {
+    return null;
+  }
 
-//     const dispatch = useDispatch(); 
+  const {
+    externalId,
+    fieldStatus,
+    name,
+    taskTypeName,
+    startDate,
+    endDate,
+    priority,
+    employeeName,
+    managerName,
+    status,
+    areaName,
+    zoneName,
+    fieldName,
+    liveStockName,
+    plantName,
+    materialName,
+    description,
+  } = taskData;
 
-//     useEffect(() => {
-//         dispatch(getTaskById(taskId));
-//       }, [taskId])
-//       console.log(task);
-//   return (
-//     <div>
-//     <h1>{task.farmTask.data.name}</h1>
-    
-//     <p>Thời gian bắt đầu: {task.farmTask.startDate}</p>
+  const renderSubFields = () => {
+    if (externalId) {
+      if (fieldStatus === 'Động vật') {
+        return (
+          <p>
+            <strong>Mã vật nuôi:</strong> {liveStockName}
+          </p>
+        );
+      } else if (fieldStatus === 'Thực vật') {
+        return (
+          <p>
+            <strong>Mã cây trồng:</strong> {plantName}
+          </p>
+        );
+      }
+    }
+    console.log(plantName)
+    return null;
+  };
 
-//     <p>Thời gian kết thúc: {task.farmTask.endDate}</p>
+  return (
+    <Modal title={name} visible={visible} onCancel={onCancel} footer={null}>
+      <p>
+        <strong>Loại nhiệm vụ:</strong> {taskTypeName}
+      </p>
+      <p>
+        <strong>Ngày bắt đầu:</strong>{" "}
+        {dayjs(startDate).format("HH:mm DD/MM/YYYY")}
+      </p>
+      <p>
+        <strong>Ngày kết thúc:</strong>{" "}
+        {dayjs(endDate).format("HH:mm DD/MM/YYYY")}
+      </p>
+      <p>
+        <strong>Ưu tiên:</strong> {priority}
+      </p>
+      <p>
+        <strong>Người thực hiện:</strong> {employeeName}
+      </p>
+      <p>
+        <strong>Người giám sát:</strong> {managerName}
+      </p>
+      <p>
+        <strong>Trạng thái:</strong> {status}
+      </p>
+      <p>
+        <strong>Khu vực:</strong> {areaName}
+      </p>
+      <p>
+        <strong>Vùng:</strong> {zoneName}
+      </p>
+      {renderSubFields()}
+      <p>
+        <strong>Vị trí:</strong> {fieldName}
+      </p>
+      <p>
+        <strong>Dụng cụ:</strong> {materialName}
+      </p>
+      <p>
+        <strong>Mô tả:</strong> {description}
+      </p>
+    </Modal>
+  );
+};
 
-//     <p>Mô tả: {task.farmTask.description}</p>
-
-//     <p>Độ ưu tiên: {task.farmTask.priority}</p>
-
-//     <p>Lặp lại: {task.farmTask.repeat}</p>
-
-//     <p>Số lần lặp: {task.farmTask.iterations}</p>
-
-//     <p>Người nhận: {task.farmTask.receiverId}</p>
-
-//     <p>Vị trí: {task.farmTask.fieldId}</p>
-
-//     <p>Loại task: {task.farmTask.taskTypeId}</p>
-
-//     <p>Người thực hiện: {task.farmTask.memberId}</p>
-    
-//   </div> 
-//   )
-// }
-
-// export default TaskDetail
+export default TaskDetail;

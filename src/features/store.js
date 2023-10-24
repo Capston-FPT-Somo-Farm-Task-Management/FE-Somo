@@ -23,6 +23,7 @@ import fieldByFarmReducer from './slice/field/fieldByFarm'
 import plantTypeReducer from './slice/plantType/plantTypeSlice'
 import plantByFarmReducer from './slice/plant/plantByFarm'
 import taskReducer from './slice/task/taskSlice'
+import subTaskReducer from "./slice/subTask/subTaskSlice"
 import habitantTypeReducer from './slice/habitant/habitantTypeSlice'
 import memberReducer from './slice/user/memberSlice'
 
@@ -52,6 +53,7 @@ export const store = configureStore({
     animalType: animalTypeReducer,
     animalByFarm: animalByFarmReducer,
     task: taskReducer,
+    subTask: subTaskReducer,
     habitantType: habitantTypeReducer,
     member: memberReducer,
   },
