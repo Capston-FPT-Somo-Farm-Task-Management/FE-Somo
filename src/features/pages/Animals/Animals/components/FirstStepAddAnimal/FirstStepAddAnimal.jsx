@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { Button, Form, Input, InputNumber, Modal, Radio, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAnimalType } from 'features/slice/animal/animalTypeSlice'
-import {
-  createAnimal,
-  getAnimalActive,
-} from 'features/slice/animal/animalSlice'
 import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
 import { getAreaActive } from 'features/slice/area/areaSlice'
 import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
 
-const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
+const FirstStepAddAnimal = ({
+  isModalOpen,
+  closeModal,
+  onFinishCreateAnimal,
+}) => {
   const [selectedAreaId, setSelectedAreaId] = useState(null)
   const [selectedZoneId, setSelectedZoneId] = useState(null)
 
@@ -57,12 +57,8 @@ const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
       habitantTypeId: values.habitantTypeId,
       fieldId: values.fieldId,
     }
-    dispatch(createAnimal(finalValues)).then(() => {
-      dispatch(getAnimalActive())
-      setTimeout(() => {
-        closeModal()
-      }, 500)
-    })
+    onFinishCreateAnimal(finalValues)
+    closeModal()
   }
 
   return (
@@ -214,17 +210,17 @@ const FirstStepAddAnimal = ({ isModalOpen, closeModal }) => {
 
             {/* Field */}
             <Form.Item
-              label="Vườn"
+              label="Chuồng"
               name="fieldId"
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng chọn vườn',
+                  message: 'Vui lòng chọn chuồng',
                 },
               ]}
             >
               <Select
-                placeholder="Chọn vườn"
+                placeholder="Chọn chuồng"
                 options={
                   Array.isArray(dataFieldByZone)
                     ? dataFieldByZone.map((item) => ({

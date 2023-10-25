@@ -1,7 +1,44 @@
 import { Tabs } from 'antd'
-import { itemTabs } from './DisplayAnimalData'
+import TableDisplayAnimal from './TableDisplayAnimal'
+import TableDisplayAnimalType from './TableDisplayAnimalType'
 
-const DisplayAnimal = () => {
-  return <Tabs defaultActiveKey="1" items={itemTabs} type="card" />
+const DisplayAnimal = ({
+  animalByFarm,
+  onFinishUpdateAnimal,
+  onFinishDeleteAnimal,
+  animalType,
+  onFinishDeleteAnimalType,
+  onFinishUpdateAnimalType,
+}) => {
+  return (
+    <Tabs
+      defaultActiveKey="1"
+      type="card"
+      items={[
+        {
+          key: '1',
+          label: 'Vật nuôi',
+          children: (
+            <TableDisplayAnimal
+              animalByFarm={animalByFarm}
+              onFinishUpdateAnimal={onFinishUpdateAnimal}
+              onFinishDeleteAnimal={onFinishDeleteAnimal}
+            />
+          ),
+        },
+        {
+          key: '2',
+          label: 'Loại vật nuôi',
+          children: (
+            <TableDisplayAnimalType
+              animalType={animalType}
+              onFinishUpdateAnimalType={onFinishUpdateAnimalType}
+              onFinishDeleteAnimalType={onFinishDeleteAnimalType}
+            />
+          ),
+        },
+      ]}
+    />
+  )
 }
 export default DisplayAnimal

@@ -1,34 +1,18 @@
-import {
-  deleteAnimal,
-  getAnimalActive,
-} from 'features/slice/animal/animalSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Badge, Button, Table } from 'antd'
 import Column from 'antd/es/table/Column'
 import UpdateAnimal from './UpdateAnimal'
-import { getAnimalByFarmId } from 'features/slice/animal/animalByFarm'
-import { authServices } from 'services/authServices'
-import { getMemberById } from 'features/slice/user/memberSlice'
-const TableDisplayAnimal = () => {
+
+const TableDisplayAnimal = ({
+  animalByFarm,
+  onFinishDeleteAnimal,
+  onFinishUpdateAnimal,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
 
-  const dispatch = useDispatch()
-
-  const member = useSelector((state) => state.member.data)
-  const animalByFarm = useSelector((state) => state.animalByFarm.data)
-  const farmId = member.farmId
-
-  useEffect(() => {
-    dispatch(getMemberById(authServices.getUserId()))
-    dispatch(getAnimalByFarmId(farmId))
-  }, [dispatch])
-
   const handleDelete = (id) => {
-    dispatch(deleteAnimal(id)).then(() => {
-      loadData()
-    })
+    onFinishDeleteAnimal(id)
   }
 
   const openModal = (record) => {
@@ -38,10 +22,6 @@ const TableDisplayAnimal = () => {
 
   const closeModal = () => {
     setIsModalOpen(false)
-  }
-
-  const loadData = () => {
-    dispatch(getAnimalByFarmId(farmId))
   }
 
   return (
@@ -105,7 +85,7 @@ const TableDisplayAnimal = () => {
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}
-        loadData={loadData}
+        onFinishUpdateAnimal={onFinishUpdateAnimal}
       />
     </>
   )

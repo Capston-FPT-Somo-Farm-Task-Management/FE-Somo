@@ -28,8 +28,12 @@ export const createPlant = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       })
-      return response.data.data
+      if (response.status === 200) {
+        toast.success(response.data.message)
+        return response.data.data
+      }
     } catch (error) {
+      toast.error(error.response.data.message)
       rejectWithValue(error)
     }
   }

@@ -1,26 +1,18 @@
-import { getAnimalType } from 'features/slice/animal/animalTypeSlice'
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
 import { Badge, Button, Table } from 'antd'
 import Column from 'antd/es/table/Column'
-import { deleteHabitantType } from 'features/slice/habitant/habitantTypeSlice'
 import UpdateAnimalType from './UpdateAnimalType'
 
-const TableDisplayAnimalType = () => {
+const TableDisplayAnimalType = ({
+  animalType,
+  onFinishDeleteAnimalType,
+  onFinishUpdateAnimalType,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
-  const animalType = useSelector((state) => state.animalType.data)
-
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(getAnimalType())
-  }, [dispatch])
 
   const handleDelete = (id) => {
-    dispatch(deleteHabitantType(id)).then(() => {
-      loadData()
-    })
+    onFinishDeleteAnimalType(id)
   }
 
   const openModal = (record) => {
@@ -30,10 +22,6 @@ const TableDisplayAnimalType = () => {
 
   const closeModal = () => {
     setIsModalOpen(false)
-  }
-
-  const loadData = () => {
-    dispatch(getAnimalType())
   }
 
   return (
@@ -95,7 +83,7 @@ const TableDisplayAnimalType = () => {
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}
-        loadData={loadData}
+        onFinishUpdateAnimalType={onFinishUpdateAnimalType}
       />
     </>
   )
