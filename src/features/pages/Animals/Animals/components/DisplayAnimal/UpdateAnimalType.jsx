@@ -9,7 +9,7 @@ const UpdateAnimalType = ({
   isModalOpen,
   closeModal,
   selectedData,
-  loadData,
+  onFinishUpdateAnimalType,
 }) => {
   const dispatch = useDispatch()
 
@@ -27,12 +27,8 @@ const UpdateAnimalType = ({
       description: values.description,
     }
 
-    dispatch(updateHabitantType(finalValues)).then(() => {
-      loadData()
-      setTimeout(() => {
-        closeModal()
-      }, 500)
-    })
+    onFinishUpdateAnimalType(finalValues)
+    closeModal()
   }
 
   return (

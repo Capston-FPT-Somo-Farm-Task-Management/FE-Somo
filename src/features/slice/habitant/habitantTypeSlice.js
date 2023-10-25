@@ -12,9 +12,12 @@ export const createHabitantType = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       })
-      console.log(response.data)
-      return response.data
+      if (response.status === 200) {
+        toast.success(response.data.message)
+        return response.data
+      }
     } catch (error) {
+      toast.error(error.response.data.message)
       rejectWithValue(error)
     }
   }
@@ -52,10 +55,8 @@ export const deleteHabitantType = createAsyncThunk(
       const response = await axios.put(baseUrl + `/HabitantType/Delete/${id}`)
       if (response.status === 200) {
         toast.success(response.data.message)
-      } else if (response.status === 400) {
-        toast.warning(response.message)
+        return response.data
       }
-      return response.data
     } catch (error) {
       toast.error(error.response.data.message)
       return rejectWithValue(error)

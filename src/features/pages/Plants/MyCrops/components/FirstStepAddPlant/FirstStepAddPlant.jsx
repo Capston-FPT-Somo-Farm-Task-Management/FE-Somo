@@ -4,7 +4,7 @@ import { getAreaActive } from 'features/slice/area/areaSlice'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { getPlantType } from 'features/slice/plantType/plantTypeSlice'
-import { createPlant } from 'features/slice/plant/plantSlice'
+import { createPlant, getPlantActive } from 'features/slice/plant/plantSlice'
 import { getZoneByAreaPlant } from 'features/slice/zone/zonePlantSlice'
 import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
 
@@ -47,8 +47,12 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
   }
 
   const onFinish = (values) => {
-    dispatch(createPlant(values))
-    closeModal()
+    dispatch(createPlant(values)).then(() => {
+      dispatch(getPlantActive())
+      setTimeout(() => {
+        closeModal()
+      }, 500)
+    })
   }
 
   return (
@@ -143,6 +147,7 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
             {/* Area */}
             <Form.Item
               label="Khu vực"
+              name="areaId"
               rules={[
                 {
                   required: true,
@@ -163,6 +168,7 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
             {/* Zone */}
             <Form.Item
               label="Vùng"
+              name="zoneId"
               rules={[
                 {
                   required: true,

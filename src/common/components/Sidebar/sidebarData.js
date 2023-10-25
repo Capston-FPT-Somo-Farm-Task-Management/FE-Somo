@@ -1,6 +1,11 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHorseHead, faCow, faTree, faSeedling } from '@fortawesome/free-solid-svg-icons'
+import {
+  faHorseHead,
+  faCow,
+  faTree,
+  faSeedling,
+} from '@fortawesome/free-solid-svg-icons'
 import {
   CalendarOutlined,
   AimOutlined,
@@ -65,7 +70,7 @@ export const menuItem = [
     <Link to="/login">Đăng xuất</Link>,
     '/login',
     <FontAwesomeIcon icon={LogoutOutlined} />
-  )
+  ),
 ]
 
 export const rootSubmenuKeys = ['sub3', 'sub4']
