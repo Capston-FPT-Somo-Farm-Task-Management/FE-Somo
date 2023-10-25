@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "antd";
 import dayjs from "dayjs";
+import { useSelector } from "react-redux";
 
-const TaskDetail = ({ visible, onCancel, taskData, option, type }) => {
-
+const TaskDetail = ({ visible, onCancel, taskData }) => {
+  const evidenceData = useSelector((state) => state.evidence.data);
+  const dataEvidence = evidenceData.data;
+  console.log(dataEvidence);
   if (!taskData) {
     return null;
   }
@@ -30,13 +33,13 @@ const TaskDetail = ({ visible, onCancel, taskData, option, type }) => {
 
   const renderSubFields = () => {
     if (externalId) {
-      if (fieldStatus === 'Động vật') {
+      if (fieldStatus === "Động vật") {
         return (
           <p>
             <strong>Mã vật nuôi:</strong> {liveStockName}
           </p>
         );
-      } else if (fieldStatus === 'Thực vật') {
+      } else if (fieldStatus === "Thực vật") {
         return (
           <p>
             <strong>Mã cây trồng:</strong> {plantName}
@@ -44,7 +47,7 @@ const TaskDetail = ({ visible, onCancel, taskData, option, type }) => {
         );
       }
     }
-    console.log(plantName)
+    console.log(plantName);
     return null;
   };
 
@@ -89,6 +92,22 @@ const TaskDetail = ({ visible, onCancel, taskData, option, type }) => {
       <p>
         <strong>Mô tả:</strong> {description}
       </p>
+      <div className="evidence">
+        <h2>Bằng chứng:</h2>
+          {dataEvidence && dataEvidence.length > 0 ? (
+            dataEvidence.map((evidence) => (
+              <div key={evidence.id}>
+                <p>{evidence.time}</p>
+                <p>{evidence.description}</p>
+                <div className="img-evidence">
+                  <img src={evidence.urlImage} alt="evidence" />
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>Chưa có bằng chứng báo cáo</p>
+          )}
+      </div>
     </Modal>
   );
 };

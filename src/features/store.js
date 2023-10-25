@@ -10,6 +10,7 @@ import zoneByFarmReducer from './slice/zone/zoneByFarm'
 import zonePlantReducer from './slice/zone/zonePlantSlice'
 import zoneAnimalReducer from './slice/zone/zoneAnimalSlice'
 import zoneTypeReducer from './slice/zone/zoneTypeSlice'
+import taskTypeReducer from "./slice/task/taskTypeSlice"
 import taskTypePlantReducer from './slice/task/taskTypePlant'
 import taskTypeLivestockReducer from './slice/task/taskTypeAnimal'
 import supervisorReducer from './slice/supervisor/supervisorSlice'
@@ -23,6 +24,7 @@ import fieldByFarmReducer from './slice/field/fieldByFarm'
 import plantTypeReducer from './slice/plantType/plantTypeSlice'
 import plantByFarmReducer from './slice/plant/plantByFarm'
 import taskReducer from './slice/task/taskSlice'
+import evidenceReducer from "./slice/task/taskEvidenceSlice"
 import subTaskReducer from "./slice/subTask/subTaskSlice"
 import habitantTypeReducer from './slice/habitant/habitantTypeSlice'
 import memberReducer from './slice/user/memberSlice'
@@ -38,6 +40,7 @@ export const store = configureStore({
     zonePlant: zonePlantReducer,
     zoneAnimal: zoneAnimalReducer,
     zoneType: zoneTypeReducer,
+    taskType: taskTypeReducer,
     taskTypePlant: taskTypePlantReducer,
     taskTypeLivestock: taskTypeLivestockReducer,
     supervisor: supervisorReducer,
@@ -53,6 +56,7 @@ export const store = configureStore({
     animalType: animalTypeReducer,
     animalByFarm: animalByFarmReducer,
     task: taskReducer,
+    evidence: evidenceReducer,
     subTask: subTaskReducer,
     habitantType: habitantTypeReducer,
     member: memberReducer,

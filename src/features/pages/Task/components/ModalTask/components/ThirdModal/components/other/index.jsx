@@ -1,67 +1,58 @@
-import React, { useEffect, useState } from "react";
 import { DatePicker, Form, Input, Select } from "antd";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAreaActive } from "features/slice/area/areaSlice";
-import { getZoneByAreaPlant } from "features/slice/zone/zonePlantSlice";
+import { getZoneActive } from "features/slice/zone/zoneSlice";
 import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
-import { getTaskTypePlant } from "features/slice/task/taskTypePlant";
-import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
 import { getEmployee } from "features/slice/employee/employeeSlice";
+import { getTaskType } from "features/slice/task/taskTypeSlice";
+import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
 import { getMaterial } from "features/slice/material/materialSlice";
-import { getPlantActive } from "features/slice/plant/plantSlice";
-import { createTask } from "features/slice/task/taskSlice";
 import dayjs from "dayjs";
 import MultiDatePicker from "react-multi-date-picker";
+import TextArea from "antd/es/input/TextArea";
 
-function SpecificPlant() {
+function Other() {
   const [selectedAreaId, setSelectedAreaId] = useState(null);
   const [selectedZoneId, setSelectedZoneId] = useState(null);
+  const [priorityValue, setPriorityValue] = useState("");
+  const [description, setDescription] = useState("");
   const [employeesValue, setEmployeesValue] = useState(0);
   const [materialsValue, setMaterialsValue] = useState(0);
-  const [priorityValue, setPriorityValue] = useState("");
   const [remindValue, setRemindValue] = useState(0);
   const [repeatValue, setRepeatValue] = useState(false);
-  const [startDate, setStartDate] = useState();
-  const [description, setDescription] = useState("");
+
+  const dispatch = useDispatch();
 
   const area = useSelector((state) => state.area.data);
 
-  const zonePlant = useSelector((state) => state.zonePlant.data);
-  const dataPlantZone = zonePlant.data;
-
-  const plant = useSelector((state) => state.plant.data);
-  const dataPlant = plant.data;
+  const zone = useSelector((state) => state.zone.data);
+  const dataZone = zone.data;
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
   const dataFieldByZone = fieldByZone.data;
 
-  const taskTypePlant = useSelector((state) => state.taskTypePlant.data);
-  const dataTaskTypePlant = taskTypePlant.data;
+  const taskType = useSelector((state) => state.taskType.data);
+
+  const dataEmployee = useSelector((state) => state.employee.data);
 
   const supervisor = useSelector((state) => state.supervisor.data);
   const dataSupervisor = supervisor.data;
 
-  console.log(dataSupervisor);
-
-  const dataEmployee = useSelector((state) => state.employee.data);
-
   const material = useSelector((state) => state.material.data);
   const dataMaterial = material.data;
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getAreaActive());
-    dispatch(getTaskTypePlant());
-    dispatch(getPlantActive());
-    dispatch(getSupervisor());
+    dispatch(getTaskType());
     dispatch(getEmployee());
+    dispatch(getSupervisor());
     dispatch(getMaterial());
   }, []);
 
   useEffect(() => {
     if (selectedAreaId) {
-      dispatch(getZoneByAreaPlant(selectedAreaId));
+      dispatch(getZoneActive(selectedAreaId));
     }
     if (selectedZoneId) {
       dispatch(getFieldByZone(selectedZoneId));
@@ -75,76 +66,15 @@ function SpecificPlant() {
     setSelectedZoneId(value);
   };
 
-  const transformData = (originalData) => {
-    const transformedData = {
-      employeeIds: originalData.employeeIds,
-      materialIds: originalData.materialIds,
-      dates: originalData.dates,
-      farmTask: {
-        name: originalData.name,
-        startDate: originalData.startDate,
-        endDate: originalData.endDate,
-        description: originalData.description,
-        priority: originalData.priority,
-        isRepeat: originalData.isRepeat,
-        suppervisorId: originalData.suppervisorId,
-        fieldId: originalData.fieldId,
-        taskTypeId: originalData.taskTypeId,
-        managerId: originalData.managerId,
-        otherId: originalData.otherId,
-        plantId: originalData.plantId,
-        liveStockId: originalData.liveStockId,
-        remind: originalData.remind,
-      },
-    };
-
-    return transformedData;
-  };
-
-  const onFinish = (values) => {
-    const startDateFormatted = dayjs(startDate).format(
-      "YYYY-MM-DD[T]HH:mm:ss.SSS"
-    );
-
-    const startTime = dayjs(startDate).format("HH:mm:ss.SSS");
-
-    const selectedDates = values.dates.map((date) =>
-      dayjs(date).format("YYYY-MM-DD")
-    );
-
-    const combinedDates = selectedDates.map((date) => `${date}T${startTime}`);
-
-    const finalValues = {
-      ...values,
-      startDate: startDateFormatted,
-      endDate: dayjs(values.endDate).format("YYYY-MM-DD[T]HH:mm:ss.SSS"),
-      dates: combinedDates,
-      // employeeIds: employeesValue,
-      priority: priorityValue,
-      remind: remindValue,
-      isRepeat: repeatValue,
-      description: description,
-      suppervisorId: 11,
-      managerId: 5,
-      otherId: 0,
-    };
-
-    const transformedValues = transformData(finalValues);
-
-    dispatch(createTask(transformedValues));
-  };
-
   const disabledDate = (current) => {
     return current && current < dayjs().startOf("day");
   };
 
-  const { TextArea } = Input;
-
   return (
     <Form
       layout="vertical"
-      className="task-specific-plant"
-      onFinish={onFinish}
+      className="task-whole-garden"
+      // onFinish={onFinish}
       id="createTask"
     >
       <div className="form-left">
@@ -182,46 +112,16 @@ function SpecificPlant() {
           <Select
             onChange={handleSelectZoneChange}
             placeholder="Chọn vùng"
-            options={dataPlantZone?.map((item) => ({
+            options={dataZone?.map((item) => ({
               label: item.name,
               value: item.id,
             }))}
           />
         </Form.Item>
-
-        <Form.Item
-          label="Vườn"
-          name="fieldId"
-          required
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn vườn",
-            },
-          ]}
-        >
+        <Form.Item label="Địa điểm cụ thể" name="fieldId">
           <Select
-            placeholder="Chọn vườn"
+            placeholder="Địa điểm cụ thể"
             options={dataFieldByZone?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
-          />
-        </Form.Item>
-        <Form.Item
-          label="Mã cây trồng"
-          name="plantId"
-          required
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng nhập mã cây trồng",
-            },
-          ]}
-        >
-          <Select
-            placeholder="Chọn mã cây trồng"
-            options={dataPlant?.map((item) => ({
               label: item.name,
               value: item.id,
             }))}
@@ -324,7 +224,7 @@ function SpecificPlant() {
         >
           <Select
             placeholder="Chọn loại nhiệm vụ"
-            options={dataTaskTypePlant?.map((item) => ({
+            options={taskType?.map((item) => ({
               label: item.name,
               value: item.id,
             }))}
@@ -371,7 +271,6 @@ function SpecificPlant() {
             }))}
           />
         </Form.Item>
-
         <Form.Item
           label="Dụng cụ"
           name="materialIds"
@@ -396,15 +295,15 @@ function SpecificPlant() {
         </Form.Item>
         <Form.Item label="Nhắc lại" name="remind">
           <Select
-            value={remindValue}
-            onChange={(value) => setRemindValue(value)}
+            value={remindValue.toString()}
+            onChange={(value) => setRemindValue(parseInt(value, 10))}
             placeholder="Không"
           >
-            <Select.Option value="0">0</Select.Option>
-            <Select.Option value="5">5</Select.Option>
-            <Select.Option value="10">10</Select.Option>
-            <Select.Option value="15">15</Select.Option>
-            <Select.Option value="20">20</Select.Option>
+            <Select.Option value="0">Không</Select.Option>
+            <Select.Option value="5">Sau 5 phút</Select.Option>
+            <Select.Option value="10">Sau 10 phút</Select.Option>
+            <Select.Option value="15">Sau 15 phút</Select.Option>
+            <Select.Option value="20">Sau 20 phút</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item label="Lặp lại" name="isRepeat">
@@ -432,4 +331,4 @@ function SpecificPlant() {
   );
 }
 
-export default SpecificPlant;
+export default Other;

@@ -301,6 +301,51 @@ html {
   transition: 0.4s ease-in-out;
   opacity: 0.75;
 }
+.first-modal .other {
+  overflow: hidden;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+.first-modal .other button {
+  padding: 20px 65px;
+  background-color: #2c6e49;
+  transition: 0.4s ease-in-out;
+  border: 1px solid #2c6e49;
+  cursor: pointer;
+}
+.first-modal .other button .button-item {
+  display: flex;
+}
+.first-modal .other button .button-item .button-icon {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.first-modal .other button .button-item .button-icon svg {
+  font-size: 50px;
+  color: #fefee3;
+}
+.first-modal .other button .button-item .button-text {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #fefee3;
+}
+.first-modal .other button .button-item .button-text h6 {
+  font-size: 24px;
+}
+.first-modal .other button .button-item .button-text span {
+  color: #e6e8e6;
+  font-size: 14px;
+  text-align: left;
+}
+.first-modal .other button:hover {
+  transform: scale(1.1);
+  transition: 0.4s ease-in-out;
+  opacity: 0.75;
+}
 
 .second-modal-livestock {
   display: flex;
@@ -557,6 +602,13 @@ html {
   min-height: 150px;
 }
 
+.evidence .img-evidence {
+  width: 80%;
+}
+.evidence .img-evidence img {
+  width: 100%;
+}
+
 .plant-content h3 {
   font-size: 24px;
 }
@@ -693,16 +745,18 @@ html {
 }
 
 .wrapper {
+  background-image: linear-gradient(to bottom right, #849b5c, #bfffc7) !important;
+  height: 100vh;
+}
+.wrapper .fadeInDown {
   display: flex;
   align-items: center;
   flex-direction: column;
   width: 100%;
   min-height: 100%;
   padding: 20px;
-  background-image: linear-gradient(to bottom right, #849b5c, #bfffc7) !important;
-  height: 100vh;
 }
-.wrapper #formContent {
+.wrapper .fadeInDown #formContent {
   border-radius: 10px 10px 10px 10px;
   background: #fff;
   padding: 30px;
@@ -713,7 +767,7 @@ html {
   box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
   text-align: center;
 }
-.wrapper #formContent h2 {
+.wrapper .fadeInDown #formContent h2 {
   text-align: center;
   font-size: 16px;
   font-weight: 600;
@@ -722,33 +776,30 @@ html {
   margin: 40px 8px 10px 8px;
   color: #cccccc;
 }
-.wrapper #formContent .inactive {
-  color: #cccccc;
-}
-.wrapper #formContent .active {
+.wrapper .fadeInDown #formContent .active {
   color: #0d0d0d;
   border-bottom: 2px solid #8EAD48;
 }
-.wrapper #formContent .fadeIn {
+.wrapper .fadeInDown #formContent .fadeIn {
   opacity: 0;
   animation: fadeIn ease-in 1;
   animation-fill-mode: forwards;
   animation-duration: 1s;
 }
-.wrapper #formContent .fadeIn.first {
+.wrapper .fadeInDown #formContent .fadeIn.first {
   animation-delay: 0.4s;
   padding: 10px 0px;
 }
-.wrapper #formContent .fadeIn.first img {
+.wrapper .fadeInDown #formContent .fadeIn.first img {
   width: 50%;
 }
-.wrapper #formContent .fadeIn.second {
+.wrapper .fadeInDown #formContent .fadeIn.second {
   animation-delay: 0.6s;
 }
-.wrapper #formContent .fadeIn.third {
+.wrapper .fadeInDown #formContent .fadeIn.third {
   animation-delay: 0.8s;
 }
-.wrapper #formContent .fadeIn.fourth {
+.wrapper .fadeInDown #formContent .fadeIn.fourth {
   animation-delay: 1s;
 }
 @keyframes fadeIn {
@@ -759,7 +810,7 @@ html {
     opacity: 1;
   }
 }
-.wrapper #formContent .btn-login {
+.wrapper .fadeInDown #formContent .btn-login {
   background-color: rgba(142, 173, 72, 0.8);
   border: none;
   color: white;
@@ -774,13 +825,13 @@ html {
   margin: 5px 20px 40px 20px;
   transition: all 0.3s ease-in-out;
 }
-.wrapper #formContent .btn-login:hover {
+.wrapper .fadeInDown #formContent .btn-login:hover {
   background-color: #8EAD48;
 }
-.wrapper #formContent .btn-login:active {
+.wrapper .fadeInDown #formContent .btn-login:active {
   transform: scale(0.95);
 }
-.wrapper #formContent input[type=text], .wrapper #formContent input[type=password] {
+.wrapper .fadeInDown #formContent input[type=text], .wrapper .fadeInDown #formContent input[type=password] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -795,21 +846,21 @@ html {
   transition: all 0.5s ease-in-out;
   border-radius: 5px 5px 5px 5px;
 }
-.wrapper #formContent input[type=text]:focus {
+.wrapper .fadeInDown #formContent input[type=text]:focus {
   background-color: #fff;
   border-bottom: 2px solid #8EAD48;
 }
-.wrapper #formContent input[type=password]:focus {
+.wrapper .fadeInDown #formContent input[type=password]:focus {
   background-color: #fff;
   border-bottom: 2px solid #8EAD48;
 }
-.wrapper #formContent input[type=text]:placeholder {
+.wrapper .fadeInDown #formContent input[type=text]:placeholder {
   color: #cccccc;
 }
-.wrapper #formContent input[type=password]:placeholder {
+.wrapper .fadeInDown #formContent input[type=password]:placeholder {
   color: #cccccc;
 }
-.wrapper #formContent #formFooter {
+.wrapper .fadeInDown #formContent #formFooter {
   background-color: #f6f6f6;
   border-top: 1px solid #dce8f1;
   padding: 25px;
@@ -817,13 +868,13 @@ html {
   border-radius: 0 0 10px 10px;
   font-size: 20px;
 }
-.wrapper #formContent #formFooter a {
+.wrapper .fadeInDown #formContent #formFooter a {
   color: #8EAD48;
   display: inline-block;
   text-decoration: none;
   font-weight: 400;
 }
-.wrapper #formContent #formFooter .underlineHover:after {
+.wrapper .fadeInDown #formContent #formFooter .underlineHover:after {
   display: block;
   left: 0;
   bottom: -10px;
@@ -833,14 +884,13 @@ html {
   content: "";
   transition: width 0.2s;
 }
-.wrapper #formContent #formFooter .underlineHover:hover {
+.wrapper .fadeInDown #formContent #formFooter .underlineHover:hover {
   color: #0d0d0d;
 }
-.wrapper #formContent #formFooter .underlineHover:hover:after {
+.wrapper .fadeInDown #formContent #formFooter .underlineHover:hover:after {
   width: 100%;
 }
-
-.fadeInDown {
+.wrapper .fadeInDown {
   animation-name: fadeInDown;
   animation-duration: 1s;
   animation-fill-mode: both;
@@ -854,14 +904,4 @@ html {
     opacity: 1;
     transform: none;
   }
-}
-/* Simple CSS3 Fade-in Animation */
-/* Simple CSS3 Fade-in Animation */
-/* OTHERS */
-*:focus {
-  outline: none;
-}
-
-#icon {
-  width: 60%;
 }/*# sourceMappingURL=index.css.map */

@@ -140,6 +140,10 @@ function SpecificAnimal() {
     return current && current < dayjs().startOf("day");
   };
 
+  const isDateDisabled = (current) => {
+    return current.isBefore(MultiDatePicker.now, "day");
+  };
+
   const { TextArea } = Input;
 
   return (
@@ -152,13 +156,14 @@ function SpecificAnimal() {
       <div className="form-left">
         <Form.Item
           label="Khu vực"
+          required
           rules={[
             {
               required: true,
               message: "Vui lòng chọn khu vực",
             },
           ]}
-          required
+          name="area" 
         >
           <Select
             onChange={handleSelectAreaChange}
@@ -171,13 +176,14 @@ function SpecificAnimal() {
         </Form.Item>
         <Form.Item
           label="Vùng"
+          required
           rules={[
             {
               required: true,
               message: "Vui lòng chọn vùng",
             },
           ]}
-          required
+          name="zone"
         >
           <Select
             onChange={handleSelectZoneChange}
@@ -420,9 +426,8 @@ function SpecificAnimal() {
           <Form.Item
             label="Lặp những ngày"
             name="dates"
-            rules={[{ required: true }]}
           >
-            <MultiDatePicker multiple format="YYYY-MM-DD" />
+            <MultiDatePicker multiple format="YYYY-MM-DD" disabledDate={isDateDisabled} />
           </Form.Item>
         )}
       </div>
