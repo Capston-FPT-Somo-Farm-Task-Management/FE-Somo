@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 
-import { Button, Layout, Menu, Popover } from "antd";
+import { Button, Layout, Menu, Popover } from 'antd'
 import {
   DashboardOutlined,
   TeamOutlined,
@@ -12,38 +12,39 @@ import {
   MenuOutlined,
   AppstoreOutlined,
   LogoutOutlined,
-} from "@ant-design/icons";
-import logoSomo from "../../../assets/logo_Somo.png"
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { authServices } from "services/authServices";
-import { toast } from "react-toastify";
+  FormatPainterOutlined,
+} from '@ant-design/icons'
+import logoSomo from '../../../assets/logo_Somo.png'
+import { Link, useLocation } from 'react-router-dom'
+import { authServices } from 'services/authServices'
+import { toast } from 'react-toastify'
 import {
   useDesktopMediaQuery,
   useTabletMediaQuery,
-} from "common/hooks/responsive";
+} from 'common/hooks/responsive'
 
-const { Sider } = Layout;
+const { Sider } = Layout
 
 const SideMenu = () => {
-  const [userName, setUserName] = useState();
-  const [userRole, setUserRole] = useState();
-  const [collapsed, setCollapsed] = useState(false);
-  const location = useLocation();
+  const [userName, setUserName] = useState()
+  const [userRole, setUserRole] = useState()
+  const [collapsed, setCollapsed] = useState(false)
+  const location = useLocation()
 
-  const isDesktop = useDesktopMediaQuery();
-  const isTablet = useTabletMediaQuery();
+  const isDesktop = useDesktopMediaQuery()
+  const isTablet = useTabletMediaQuery()
 
   useEffect(() => {
-    const role = authServices.getRole();
-    setUserRole(role);
-    const userName = authServices.getUserName();
-    setUserName(userName);
-  }, []);
+    const role = authServices.getRole()
+    setUserRole(role)
+    const userName = authServices.getUserName()
+    setUserName(userName)
+  }, [])
 
   const logout = () => {
-    authServices.logOut();
-    toast.success("Đăng xuất thành công");
-  };
+    authServices.logOut()
+    toast.success('Đăng xuất thành công')
+  }
 
   return (
     <div className="sider">
@@ -51,9 +52,9 @@ const SideMenu = () => {
         <Sider
           theme="light"
           style={{
-            overflow: "auto",
-            height: "100vh",
-            position: "fixed",
+            overflow: 'auto',
+            height: '100vh',
+            position: 'fixed',
             left: 0,
             top: 0,
             bottom: 0,
@@ -86,7 +87,7 @@ const SideMenu = () => {
             </Menu.Item>
 
             <Menu.Item key="/zone">
-            <TableOutlined />
+              <TableOutlined />
               <span>Vùng</span>
               <Link to="/zone"></Link>
             </Menu.Item>
@@ -98,7 +99,7 @@ const SideMenu = () => {
             </Menu.Item>
 
             <Menu.Item key="/animal-group">
-            <AppstoreOutlined />
+              <AppstoreOutlined />
               <span>Chuồng</span>
               <Link to="/animal-group"></Link>
             </Menu.Item>
@@ -110,9 +111,15 @@ const SideMenu = () => {
             </Menu.Item>
 
             <Menu.Item key="/crop-group">
-            <AppstoreOutlined />
+              <AppstoreOutlined />
               <span>Vườn</span>
               <Link to="/crop-group"></Link>
+            </Menu.Item>
+
+            <Menu.Item key="/material">
+              <FormatPainterOutlined />
+              <span>Công cụ</span>
+              <Link to="/material"></Link>
             </Menu.Item>
 
             <Menu.Item key="/login" onClick={logout}>
@@ -202,7 +209,7 @@ const SideMenu = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default SideMenu;
+export default SideMenu

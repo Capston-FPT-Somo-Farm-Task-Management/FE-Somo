@@ -7,7 +7,12 @@ import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const UpdateAnimal = ({ isModalOpen, closeModal, selectedData, loadData }) => {
+const UpdateAnimal = ({
+  isModalOpen,
+  closeModal,
+  selectedData,
+  onFinishUpdateAnimal,
+}) => {
   const [selectedAreaId, setSelectedAreaId] = useState(null)
   const [selectedZoneId, setSelectedZoneId] = useState(null)
   const [gender, setGender] = useState(true)
@@ -36,7 +41,7 @@ const UpdateAnimal = ({ isModalOpen, closeModal, selectedData, loadData }) => {
   useEffect(() => {
     dispatch(getAreaActive())
     dispatch(getAnimalType())
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     if (selectedAreaId) {
@@ -65,13 +70,8 @@ const UpdateAnimal = ({ isModalOpen, closeModal, selectedData, loadData }) => {
       habitantTypeId: values.habitantType.value,
       fieldId: values.field.value,
     }
-    console.log(finalValues)
-    dispatch(updateAnimal(finalValues)).then(() => {
-      loadData()
-      setTimeout(() => {
-        closeModal()
-      }, 500)
-    })
+    onFinishUpdateAnimal(finalValues)
+    closeModal()
   }
 
   return (

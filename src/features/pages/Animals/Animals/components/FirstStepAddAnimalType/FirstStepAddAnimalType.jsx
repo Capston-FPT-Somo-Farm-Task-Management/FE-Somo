@@ -1,22 +1,18 @@
-import { Button, Form, Input, InputNumber, Modal } from 'antd'
-import { getAnimalType } from 'features/slice/animal/animalTypeSlice'
-import { createHabitantType } from 'features/slice/habitant/habitantTypeSlice'
-import { useDispatch } from 'react-redux'
+import { Button, Form, Input, Modal } from 'antd'
 const { TextArea } = Input
 
-const FirstStepAddAnimalType = ({ isModalOpenType, closeModalType }) => {
-  const dispatch = useDispatch()
+const FirstStepAddAnimalType = ({
+  isModalOpenType,
+  closeModalType,
+  onFinishCreateAnimalType,
+}) => {
   const onFinish = (values) => {
     const finalValues = {
       ...values,
       status: 1,
     }
-    dispatch(createHabitantType(finalValues)).then(() => {
-      dispatch(getAnimalType())
-      setTimeout(() => {
-        closeModalType()
-      }, 500)
-    })
+    onFinishCreateAnimalType(finalValues)
+    closeModalType()
   }
 
   return (

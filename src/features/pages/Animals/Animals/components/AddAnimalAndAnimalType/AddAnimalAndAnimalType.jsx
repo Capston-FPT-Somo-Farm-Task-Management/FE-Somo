@@ -6,7 +6,10 @@ import Search from 'antd/es/input/Search'
 import FirstStepAddAnimal from '../FirstStepAddAnimal/FirstStepAddAnimal'
 import FirstStepAddAnimalType from '../FirstStepAddAnimalType/FirstStepAddAnimalType'
 
-const AddAnimalAndAnimalType = () => {
+const AddAnimalAndAnimalType = ({
+  onFinishCreateAnimal,
+  onFinishCreateAnimalType,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isModalOpenType, setIsModalOpenType] = useState(false)
 
@@ -42,6 +45,7 @@ const AddAnimalAndAnimalType = () => {
             <FirstStepAddAnimal
               isModalOpen={isModalOpen}
               closeModal={closeModal}
+              onFinishCreateAnimal={onFinishCreateAnimal}
             />
 
             {/* Add Animal Type */}
@@ -51,6 +55,7 @@ const AddAnimalAndAnimalType = () => {
             <FirstStepAddAnimalType
               isModalOpenType={isModalOpenType}
               closeModalType={closeModalType}
+              onFinishCreateAnimalType={onFinishCreateAnimalType}
             />
 
             <Button type="dashed">

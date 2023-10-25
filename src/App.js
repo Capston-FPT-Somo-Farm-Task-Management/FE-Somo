@@ -1,5 +1,6 @@
+import Notification from 'common/components/Notification'
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import AppRoute from 'router/AppRoute'
@@ -10,6 +11,7 @@ function App() {
       <BrowserRouter>
         <AppRoute />
       </BrowserRouter>
+      <Notification />
       <ToastContainer
         position="top-right"
         autoClose={3000}
