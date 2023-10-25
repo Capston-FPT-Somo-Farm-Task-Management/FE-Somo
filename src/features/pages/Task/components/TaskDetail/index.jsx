@@ -92,17 +92,21 @@ const TaskDetail = ({ visible, onCancel, taskData }) => {
       <p>
         <strong>Mô tả:</strong> {description}
       </p>
-      <div>
-        <h2>Evidence:</h2>
-        <ul>
+      <div className="evidence">
+        <h2>Bằng chứng:</h2>
           {dataEvidence && dataEvidence.length > 0 ? (
             dataEvidence.map((evidence) => (
-              <li key={evidence.id}>{evidence.description}</li>
+              <div key={evidence.id}>
+                <p>{evidence.time}</p>
+                <p>{evidence.description}</p>
+                <div className="img-evidence">
+                  <img src={evidence.urlImage} alt="evidence" />
+                </div>
+              </div>
             ))
           ) : (
-            <p>No evidence available</p>
+            <p>Chưa có bằng chứng báo cáo</p>
           )}
-        </ul>
       </div>
     </Modal>
   );

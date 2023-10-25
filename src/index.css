@@ -602,6 +602,13 @@ html {
   min-height: 150px;
 }
 
+.evidence .img-evidence {
+  width: 80%;
+}
+.evidence .img-evidence img {
+  width: 100%;
+}
+
 .plant-content h3 {
   font-size: 24px;
 }
