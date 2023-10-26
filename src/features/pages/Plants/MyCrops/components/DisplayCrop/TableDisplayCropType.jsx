@@ -91,6 +91,7 @@ const TableDisplayCropType = () => {
         />
       </Table>
       <UpdateCropType
+        key={selectedData ? selectedData.id : null}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}
