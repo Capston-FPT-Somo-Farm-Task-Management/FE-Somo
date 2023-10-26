@@ -82,6 +82,7 @@ const TableDisplayAnimal = ({
         />
       </Table>
       <UpdateAnimal
+        key={selectedData ? selectedData.id : null}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}
