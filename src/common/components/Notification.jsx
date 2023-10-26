@@ -14,15 +14,19 @@ const Notification = () => {
       toast.success(
         `${payload?.notification?.title}: ${payload?.notification?.body}`,
         {
-          duration: 60000,
+          duration: 10000,
           position: 'top-right',
+          style: {
+            fontSize: '16px',
+            width: '400px',
+          },
         }
       )
     })
     return () => {
       unsubscribe.catch((err) => console.log('failed: ', err))
     }
-  }, [notification])
+  }, [])
   return (
     <div>
       <Toaster />

@@ -19,11 +19,11 @@ export const requestPermission = () => {
     if (permission === 'granted') {
       console.log('Notification User Permission Granted.')
       return getToken(messaging, {
-        vapidKey: `BOM4UJBk2hDpUNvpSgOSZD2lnI0XVU6kloCtUPPgVdBbGh-sccIqTbbVfINmPCnot5PwQY4rok8lRqGEf5zuBfU`,
+        vapidKey: `BMaIt04Zu9XSxs9ul32Ha-OAm56qr3FhfM6CQQI0r5_Ju-h8_4gb1D_kyf5XLTzsPobAwqDjK7bSxr7uzG4_aDI`,
       })
         .then((currentToken) => {
           if (currentToken) {
-            console.log('Client Token: ', currentToken)
+            console.log(currentToken)
           } else {
             console.log('Failed to generate the app registration token.')
           }
@@ -45,6 +45,7 @@ requestPermission()
 export const onMessageListener = () =>
   new Promise((resolve) => {
     onMessage(messaging, (payload) => {
+      console.log(payload)
       resolve(payload)
     })
   })
