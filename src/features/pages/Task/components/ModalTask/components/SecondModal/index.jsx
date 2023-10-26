@@ -1,4 +1,4 @@
-import React, { useEffect }  from "react";
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHorse,
@@ -6,6 +6,7 @@ import {
   faTree,
   faCow,
 } from "@fortawesome/free-solid-svg-icons";
+import ThirdModal from "../ThirdModal";
 
 function SecondModal({ type, onOptionSelect }) {
   const handleOptionSelect = (option) => {
@@ -78,7 +79,7 @@ function SecondModal({ type, onOptionSelect }) {
       </div>
     );
   }
-
+  handleOptionSelect("other");
   return null;
 }
 

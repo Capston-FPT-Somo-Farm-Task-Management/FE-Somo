@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { getTasks, deleteTask } from "features/slice/task/taskSlice";
 import { getEmployee } from "features/slice/employee/employeeSlice";
 import { createSubTask } from "features/slice/subTask/subTaskSlice";
-import { taskTitle, onChange } from "./listTaskData"; // Đảm bảo bạn đã import TaskDetailModal
+import { taskTitle, onChange } from "./listTaskData";
+import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
 import TaskDetail from "../TaskDetail";
 import ModalTask from "../ModalTask";
 import { Menu, Dropdown } from "antd";
@@ -22,8 +23,6 @@ const List = () => {
   const [description, setDescription] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-
-
   const { Search } = Input;
   const onSearch = (e) => {
     const value = e.target.value;
@@ -32,8 +31,11 @@ const List = () => {
 
   const task = useSelector((state) => state.task.data);
   const dataTask = task.data;
-  const filteredData = dataTask && dataTask.filter(task => task.name.toLowerCase().includes(searchTerm.toLowerCase()));
-
+  const filteredData =
+    dataTask &&
+    dataTask.filter((task) =>
+      task.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   console.log(dataTask);
 
@@ -43,7 +45,6 @@ const List = () => {
   useEffect(() => {
     dispatch(getTasks());
     dispatch(getEmployee());
-
   }, []);
 
   const handleMenuClick = (e, record) => {
@@ -90,11 +91,11 @@ const List = () => {
   const onFinish = (values) => {
     const finalValues = {
       ...values,
-    }
-    console.log(finalValues)
-    dispatch(createSubTask(finalValues))
-    closeModal()
-  }
+    };
+    console.log(finalValues);
+    dispatch(createSubTask(finalValues));
+    closeModal();
+  };
 
   return (
     <div className="list">
@@ -105,7 +106,7 @@ const List = () => {
             <Search
               placeholder="Tìm kiếm theo tên"
               allowClear
-              onChange={onSearch} 
+              onChange={onSearch}
               style={{
                 marginLeft: "15px",
                 width: 500,
@@ -172,11 +173,12 @@ const List = () => {
         }}
         onRow={(record, rowIndex) => {
           return {
-            onClick: (event) => {
+            onClick: async (event) => {
               const isNameClicked = event.target.dataset.nameClicked === "true";
 
               if (isNameClicked) {
                 openModal(record);
+                await dispatch(getEvidenceByTaskId(record.id));
               }
             },
           };
@@ -208,11 +210,7 @@ const List = () => {
           </Button>,
         ]}
       >
-        <Form
-          layout="vertical"
-          id="createSubTask"
-          onFinish={onFinish}
-        >
+        <Form layout="vertical" id="createSubTask" onFinish={onFinish}>
           <Form.Item
             label="Tên công việc con"
             name="name"
@@ -227,35 +225,35 @@ const List = () => {
             <Input placeholder="Nhập tên công việc con" />
           </Form.Item>
           <Form.Item
-          label="Người thực hiện"
-          name="employeeIds"
-          required
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn người thực hiện",
-            },
-          ]}
-        >
-          <Select
-            // mode="multiple"
-            // value={employeesValue}
-            // onChange={(value) => setEmployeesValue(value)}
-            placeholder="Chọn người thực hiện"
-            options={dataEmployee?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
-          />
-        </Form.Item>
-        <Form.Item label="Mô tả" name="description">
-          <TextArea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={5}
-            placeholder="Thêm mô tả chi tiết cho công việc"
-          />
-        </Form.Item>
+            label="Người thực hiện"
+            name="employeeIds"
+            required
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng chọn người thực hiện",
+              },
+            ]}
+          >
+            <Select
+              // mode="multiple"
+              // value={employeesValue}
+              // onChange={(value) => setEmployeesValue(value)}
+              placeholder="Chọn người thực hiện"
+              options={dataEmployee?.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }))}
+            />
+          </Form.Item>
+          <Form.Item label="Mô tả" name="description">
+            <TextArea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={5}
+              placeholder="Thêm mô tả chi tiết cho công việc"
+            />
+          </Form.Item>
         </Form>
       </Modal>
     </div>

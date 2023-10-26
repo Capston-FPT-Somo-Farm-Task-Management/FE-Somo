@@ -5,11 +5,14 @@ import SpecificAnimal from "./components/specificAnimal";
 import WholeBarn from "./components/wholeBarn";
 import SpecificPlant from "./components/specificPlant";
 import WholeGarden from "./components/wholeGarden";
+import Other from "./components/other";
 
 dayjs.extend(customParseFormat);
 
 function ThirdModal({ option }) {
-  if (option === "specificAnimal") {
+  if (option === "other") {
+    return <Other />;
+  } else if (option === "specificAnimal") {
     return <SpecificAnimal />;
   } else if (option === "wholeBarn") {
     return <WholeBarn />;
