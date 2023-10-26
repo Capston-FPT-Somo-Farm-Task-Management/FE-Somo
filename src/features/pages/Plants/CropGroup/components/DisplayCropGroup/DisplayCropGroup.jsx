@@ -73,6 +73,7 @@ const DisplayCropGroup = ({ fieldByFarm, onFinishDelete, onFinishUpdate }) => {
         />
       </Table>
       <UpdateCropGroup
+        key={selectedData ? selectedData.id : null}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}
