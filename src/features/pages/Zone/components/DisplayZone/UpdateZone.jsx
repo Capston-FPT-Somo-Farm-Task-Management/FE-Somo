@@ -3,7 +3,7 @@ import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
 const UpdateZone = ({
   areaByFarm,
   zoneType,
-  onFinishUpdate,
+  onFinishUpdateZone,
   selectedData,
   isModalOpen,
   closeModal,
@@ -13,7 +13,7 @@ const UpdateZone = ({
       id: selectedData.id,
       ...values,
     }
-    onFinishUpdate(finalValues)
+    onFinishUpdateZone(finalValues)
     closeModal()
   }
 

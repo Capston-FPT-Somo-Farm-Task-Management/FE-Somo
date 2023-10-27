@@ -29,19 +29,19 @@ const Zone = () => {
     dispatch(getZoneType())
   }, [dispatch])
 
-  const onFinishCreate = (values) => {
+  const onFinishCreateZone = (values) => {
     dispatch(createZone(values)).then(() => {
       loadData()
     })
   }
 
-  const onFinishUpdate = (values) => {
+  const onFinishUpdateZone = (values) => {
     dispatch(updateZone(values)).then(() => {
       loadData()
     })
   }
 
-  const onFinishDelete = (id) => {
+  const onFinishDeleteZone = (id) => {
     dispatch(deleteZone(id)).then(() => {
       loadData()
     })
@@ -56,14 +56,14 @@ const Zone = () => {
       <AddZone
         areaByFarm={areaByFarm}
         zoneType={zoneType}
-        onFinishCreate={onFinishCreate}
+        onFinishCreateZone={onFinishCreateZone}
       />
       <DisplayZone
         areaByFarm={areaByFarm}
         zoneByFarm={zoneByFarm}
         zoneType={zoneType}
-        onFinishUpdate={onFinishUpdate}
-        onFinishDelete={onFinishDelete}
+        onFinishUpdateZone={onFinishUpdateZone}
+        onFinishDeleteZone={onFinishDeleteZone}
       />
     </>
   )
