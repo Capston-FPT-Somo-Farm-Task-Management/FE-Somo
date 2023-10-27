@@ -9,7 +9,6 @@ export const getEvidenceByTaskId  = createAsyncThunk('evidenceByTaskId/getEviden
           'Content-Type': 'application/json',
         },
       })
-      console.log(taskId);
       return data
     } catch (error) {
       console.log(error)

@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 const TaskDetail = ({ visible, onCancel, taskData }) => {
   const evidenceData = useSelector((state) => state.evidence.data);
   const dataEvidence = evidenceData.data;
-  console.log(dataEvidence);
   if (!taskData) {
     return null;
   }
