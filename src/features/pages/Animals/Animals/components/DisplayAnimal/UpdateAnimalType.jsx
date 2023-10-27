@@ -1,6 +1,5 @@
 import { Button, Form, Input, Modal } from 'antd'
 import { getAnimalType } from 'features/slice/animal/animalTypeSlice'
-import { updateHabitantType } from 'features/slice/habitant/habitantTypeSlice'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 const { TextArea } = Input

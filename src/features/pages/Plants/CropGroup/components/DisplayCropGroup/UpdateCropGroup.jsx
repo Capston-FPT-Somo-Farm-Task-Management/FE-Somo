@@ -9,20 +9,15 @@ const UpdateCropGroup = ({
   isModalOpen,
   closeModal,
   selectedData,
-  loadData,
+  areaByFarm,
+  onFinishUpdate,
 }) => {
+  const dispatch = useDispatch()
+  const [form] = Form.useForm()
   const [selectedAreaId, setSelectedAreaId] = useState(null)
-
-  const area = useSelector((state) => state.area.data)
 
   const zonePlant = useSelector((state) => state.zonePlant.data)
   const dataZonePlant = zonePlant.data
-
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(getAreaActive())
-  }, [])
 
   useEffect(() => {
     if (selectedAreaId) {
@@ -31,8 +26,10 @@ const UpdateCropGroup = ({
   }, [selectedAreaId])
 
   const handleSelectAreaChange = (value) => {
-    console.log(selectedData)
     setSelectedAreaId(value)
+    form.setFieldsValue({
+      zone: null,
+    })
   }
 
   const onFinish = (values) => {
@@ -42,14 +39,10 @@ const UpdateCropGroup = ({
       status: 0,
       code: values.code,
       area: values.square,
-      zoneId: values.zone.value,
+      zoneId: typeof values.zone === 'object' ? values.zone.value : values.zone,
     }
-    dispatch(updateHabitantType(finalValues)).then(() => {
-      loadData()
-      setTimeout(() => {
-        closeModal()
-      }, 500)
-    })
+    onFinishUpdate(finalValues)
+    closeModal()
   }
 
   return (
@@ -79,14 +72,21 @@ const UpdateCropGroup = ({
           className="first-step-animal"
           id="updatePlantGroup"
           onFinish={onFinish}
+          form={form}
         >
           <div className="form-left">
             <Form.Item
               label="Mã vườn"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập mã chuồng',
+                },
+              ]}
               initialValue={selectedData ? selectedData.code : ''}
               name="code"
             >
-              <Input readOnly />
+              <Input placeholder="Nhập mã vườn" />
             </Form.Item>
 
             {/* Name Animal */}
@@ -142,10 +142,14 @@ const UpdateCropGroup = ({
             >
               <Select
                 placeholder="Chọn khu vực"
-                options={area.data?.map((item) => ({
-                  label: item.name,
-                  value: item.id,
-                }))}
+                options={
+                  areaByFarm && areaByFarm.data
+                    ? areaByFarm.data.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }))
+                    : null
+                }
                 onChange={handleSelectAreaChange}
               ></Select>
             </Form.Item>
@@ -172,12 +176,12 @@ const UpdateCropGroup = ({
               <Select
                 placeholder="Chọn vùng"
                 options={
-                  Array.isArray(dataZonePlant)
-                    ? dataZonePlant.map((item) => ({
+                  zonePlant && zonePlant.data
+                    ? zonePlant.data.map((item) => ({
                         label: item.name,
                         value: item.id,
                       }))
-                    : []
+                    : null
                 }
               ></Select>
             </Form.Item>

@@ -3,12 +3,7 @@ import Column from 'antd/es/table/Column'
 import UpdateArea from './UpdateArea'
 import { useState } from 'react'
 
-const DisplayArea = ({
-  areaByFarm,
-  onFinishDelete,
-  loadData,
-  onFinishUpdate,
-}) => {
+const DisplayArea = ({ areaByFarm, onFinishDelete, onFinishUpdate }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
 
@@ -24,7 +19,6 @@ const DisplayArea = ({
   return (
     <>
       <Table rowKey="id" dataSource={areaByFarm ? areaByFarm.data : null}>
-        {/* <Column title="Mã khu vực" dataIndex="nameCode" key="1" /> */}
         <Column title="Tên khu vực" dataIndex="name" key="1" />
         <Column title="Mã khu vực" dataIndex="code" key="2" />
         <Column title="Diện tích" dataIndex="fArea" key="3" />
@@ -72,6 +66,7 @@ const DisplayArea = ({
         />
       </Table>
       <UpdateArea
+        key={selectedData ? selectedData.id : null}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}

@@ -7,6 +7,7 @@ import FirstStepAddAnimal from '../FirstStepAddAnimal/FirstStepAddAnimal'
 import FirstStepAddAnimalType from '../FirstStepAddAnimalType/FirstStepAddAnimalType'
 
 const AddAnimalAndAnimalType = ({
+  areaByFarm,
   onFinishCreateAnimal,
   onFinishCreateAnimalType,
 }) => {
@@ -45,6 +46,7 @@ const AddAnimalAndAnimalType = ({
             <FirstStepAddAnimal
               isModalOpen={isModalOpen}
               closeModal={closeModal}
+              areaByFarm={areaByFarm}
               onFinishCreateAnimal={onFinishCreateAnimal}
             />
 

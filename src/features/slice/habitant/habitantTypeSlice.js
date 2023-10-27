@@ -83,7 +83,6 @@ const habitantTypeSlice = createSlice({
       })
       .addCase(createHabitantType.fulfilled, (state, action) => {
         state.loading = false
-        toast.success('Tạo mới thành công')
         state.data = action.payload
       })
       .addCase(createHabitantType.rejected, (state, action) => {

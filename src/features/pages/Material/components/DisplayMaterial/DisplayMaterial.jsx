@@ -1,15 +1,9 @@
 import { Badge, Button, Table } from 'antd'
 import Column from 'antd/es/table/Column'
 import { useState } from 'react'
-import UpdateZone from './UpdateZone'
+import UpdateMaterial from './UpdateMaterial'
 
-const DisplayZone = ({
-  areaByFarm,
-  zoneByFarm,
-  zoneType,
-  onFinishUpdate,
-  onFinishDelete,
-}) => {
+const DisplayMaterial = ({ material, onFinishDelete, onFinishUpdate }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
 
@@ -19,20 +13,22 @@ const DisplayZone = ({
   }
 
   const closeModal = () => {
+    setSelectedData(null)
     setIsModalOpen(false)
   }
+
   return (
     <>
-      <Table rowKey="id" dataSource={zoneByFarm ? zoneByFarm.data : null}>
-        <Column title="Tên vùng" dataIndex="name" key="1" />
-        <Column title="Mã vùng" dataIndex="code" key="2" />
-        <Column title="Diện tích" dataIndex="farmArea" key="3" />
-        <Column title="Loại vùng" dataIndex="zoneTypeName" key="4" />
-        <Column title="Tên khu vực" dataIndex="areaName" key="5" />
+      <Table
+        rowKey="id"
+        dataSource={material ? material.data : null}
+        pagination={true}
+      >
+        <Column title="Tên công cụ" dataIndex="name" key="1" />
         <Column
           title="Trạng thái"
           dataIndex="status"
-          key="6"
+          key="2"
           render={(status) =>
             status === 'Active' ? (
               <Badge status="success" text="Active" />
@@ -43,7 +39,7 @@ const DisplayZone = ({
         />
         <Column
           title="Đổi trạng thái"
-          key="7"
+          key="3"
           dataIndex="id"
           render={(_, record) => (
             <Button
@@ -58,7 +54,7 @@ const DisplayZone = ({
 
         <Column
           title="Cập nhật"
-          key="8"
+          key="4"
           dataIndex="id"
           render={(_, record) => (
             <Button
@@ -71,16 +67,14 @@ const DisplayZone = ({
           )}
         />
       </Table>
-      <UpdateZone
+      <UpdateMaterial
         key={selectedData ? selectedData.id : null}
-        areaByFarm={areaByFarm}
-        zoneType={zoneType}
-        onFinishUpdate={onFinishUpdate}
-        selectedData={selectedData}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        selectedData={selectedData}
+        onFinishUpdate={onFinishUpdate}
       />
     </>
   )
 }
-export default DisplayZone
+export default DisplayMaterial

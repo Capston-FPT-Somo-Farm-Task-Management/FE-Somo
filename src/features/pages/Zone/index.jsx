@@ -11,16 +11,22 @@ import {
   deleteZone,
   updateZone,
 } from 'features/slice/zone/zoneSlice'
+import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarm'
+import { getZoneType } from 'features/slice/zone/zoneTypeSlice'
 
 const Zone = () => {
   const dispatch = useDispatch()
   const member = useSelector((state) => state.member.data)
-  const zoneByFarm = useSelector((state) => state.zoneByFarm.data)
   const farmId = member.farmId
+  const areaByFarm = useSelector((state) => state.areaByFarm.data)
+  const zoneByFarm = useSelector((state) => state.zoneByFarm.data)
+  const zoneType = useSelector((state) => state.zoneType.data)
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
+    dispatch(getAreaActiveByFarmId(farmId))
     dispatch(getZoneByFarmId(farmId))
+    dispatch(getZoneType())
   }, [dispatch])
 
   const onFinishCreate = (values) => {
@@ -47,13 +53,17 @@ const Zone = () => {
 
   return (
     <>
-      <AddZone onFinishCreate={onFinishCreate} farmId={farmId} />
+      <AddZone
+        areaByFarm={areaByFarm}
+        zoneType={zoneType}
+        onFinishCreate={onFinishCreate}
+      />
       <DisplayZone
+        areaByFarm={areaByFarm}
         zoneByFarm={zoneByFarm}
-        loadData={loadData}
-        onFinishDelete={onFinishDelete}
+        zoneType={zoneType}
         onFinishUpdate={onFinishUpdate}
-        farmId={farmId}
+        onFinishDelete={onFinishDelete}
       />
     </>
   )

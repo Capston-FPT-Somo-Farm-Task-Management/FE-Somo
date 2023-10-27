@@ -17,10 +17,12 @@ import {
   deleteHabitantType,
   updateHabitantType,
 } from 'features/slice/habitant/habitantTypeSlice'
+import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarm'
 
 const Animals = () => {
   const member = useSelector((state) => state.member.data)
   const animalByFarm = useSelector((state) => state.animalByFarm.data)
+  const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const farmId = member.farmId
 
   const animalType = useSelector((state) => state.animalType.data)
@@ -30,6 +32,7 @@ const Animals = () => {
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
     dispatch(getAnimalByFarmId(farmId))
+    dispatch(getAreaActiveByFarmId(farmId))
   }, [dispatch])
 
   const onFinishCreateAnimal = (values) => {
@@ -85,14 +88,16 @@ const Animals = () => {
   return (
     <>
       <AddAnimalAndAnimalType
+        areaByFarm={areaByFarm}
         onFinishCreateAnimal={onFinishCreateAnimal}
         onFinishCreateAnimalType={onFinishCreateAnimalType}
       />
       <DisplayAnimal
+        areaByFarm={areaByFarm}
         animalByFarm={animalByFarm}
+        animalType={animalType}
         onFinishDeleteAnimal={onFinishDeleteAnimal}
         onFinishUpdateAnimal={onFinishUpdateAnimal}
-        animalType={animalType}
         onFinishDeleteAnimalType={onFinishDeleteAnimalType}
         onFinishUpdateAnimalType={onFinishUpdateAnimalType}
       />

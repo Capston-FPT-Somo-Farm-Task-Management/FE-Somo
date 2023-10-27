@@ -1,21 +1,19 @@
 import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAreaActive, getAreas } from 'features/slice/area/areaSlice'
 import { useEffect, useState } from 'react'
 import { getZoneByAreaPlant } from 'features/slice/zone/zonePlantSlice'
-import { createField } from 'features/slice/field/fieldSlice'
 
-const FirstStepAddCropGroup = ({ isModalOpen, closeModal }) => {
+const FirstStepAddCropGroup = ({
+  isModalOpen,
+  closeModal,
+  areaByFarm,
+  onFinishCreate,
+}) => {
+  const dispatch = useDispatch()
+  const [form] = Form.useForm()
   const [selectedAreaId, setSelectedAreaId] = useState(null)
 
-  const area = useSelector((state) => state.area.data)
   const zonePlant = useSelector((state) => state.zonePlant.data)
-  const dataZonePlant = zonePlant.data
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(getAreaActive())
-  }, [])
 
   useEffect(() => {
     if (selectedAreaId) {
@@ -25,6 +23,9 @@ const FirstStepAddCropGroup = ({ isModalOpen, closeModal }) => {
 
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value)
+    form.setFieldsValue({
+      zoneId: null,
+    })
   }
 
   const onFinish = (values) => {
@@ -32,7 +33,7 @@ const FirstStepAddCropGroup = ({ isModalOpen, closeModal }) => {
       ...values,
       status: 0,
     }
-    dispatch(createField(finalValues))
+    onFinishCreate(finalValues)
     closeModal()
   }
 
@@ -64,6 +65,7 @@ const FirstStepAddCropGroup = ({ isModalOpen, closeModal }) => {
           className="first-step-crop-group"
           id="createCropGroup"
           onFinish={onFinish}
+          form={form}
         >
           <div className="form-left">
             {/*  Name */}
@@ -111,13 +113,26 @@ const FirstStepAddCropGroup = ({ isModalOpen, closeModal }) => {
 
           <div className="form-right">
             {/* Area */}
-            <Form.Item label="Khu vực">
+            <Form.Item
+              label="Khu vực"
+              name="areaId"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn khu vực',
+                },
+              ]}
+            >
               <Select
                 placeholder="Chọn khu vực"
-                options={area.data?.map((item) => ({
-                  label: item.name,
-                  value: item.id,
-                }))}
+                options={
+                  areaByFarm && areaByFarm.data
+                    ? areaByFarm.data.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }))
+                    : null
+                }
                 onChange={handleSelectAreaChange}
               ></Select>
             </Form.Item>
@@ -136,12 +151,12 @@ const FirstStepAddCropGroup = ({ isModalOpen, closeModal }) => {
               <Select
                 placeholder="Chọn vùng"
                 options={
-                  Array.isArray(dataZonePlant)
-                    ? dataZonePlant.map((item) => ({
+                  zonePlant && zonePlant.data
+                    ? zonePlant.data.map((item) => ({
                         label: item.name,
                         value: item.id,
                       }))
-                    : []
+                    : null
                 }
               ></Select>
             </Form.Item>
