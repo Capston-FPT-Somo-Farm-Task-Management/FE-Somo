@@ -1,21 +1,18 @@
 import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { getAreaActive } from 'features/slice/area/areaSlice'
 import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
-import { createField } from 'features/slice/field/fieldSlice'
 
-const FirstStepAddAnimalGroup = ({ isModalOpen, closeModal }) => {
-  const [selectedAreaId, setSelectedAreaId] = useState(null)
-
-  const area = useSelector((state) => state.area.data)
-  const zoneAnimal = useSelector((state) => state.zoneAnimal.data)
-  const dataZoneAnimal = zoneAnimal.data
+const FirstStepAddAnimalGroup = ({
+  isModalOpen,
+  closeModal,
+  areaByFarm,
+  onFinishCreate,
+}) => {
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(getAreaActive())
-  }, [])
+  const [form] = Form.useForm()
+  const [selectedAreaId, setSelectedAreaId] = useState(null)
+  const zoneAnimal = useSelector((state) => state.zoneAnimal.data)
 
   useEffect(() => {
     if (selectedAreaId) {
@@ -25,6 +22,9 @@ const FirstStepAddAnimalGroup = ({ isModalOpen, closeModal }) => {
 
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value)
+    form.setFieldsValue({
+      zoneId: null,
+    })
   }
 
   const onFinish = (values) => {
@@ -32,8 +32,7 @@ const FirstStepAddAnimalGroup = ({ isModalOpen, closeModal }) => {
       ...values,
       status: 1,
     }
-    console.log(finalValues)
-    dispatch(createField(finalValues))
+    onFinishCreate(finalValues)
     closeModal()
   }
 
@@ -65,6 +64,7 @@ const FirstStepAddAnimalGroup = ({ isModalOpen, closeModal }) => {
           className="first-step-animal-group"
           id="createAnimalGroup"
           onFinish={onFinish}
+          form={form}
         >
           <div className="form-left">
             {/*  Name */}
@@ -111,16 +111,25 @@ const FirstStepAddAnimalGroup = ({ isModalOpen, closeModal }) => {
 
           <div className="form-right">
             {/* Area */}
-            <Form.Item label="Khu vực">
+            <Form.Item
+              label="Khu vực"
+              name="areaId"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn khu vực',
+                },
+              ]}
+            >
               <Select
                 placeholder="Chọn khu vực"
                 options={
-                  Array.isArray(area.data)
-                    ? area.data.map((item) => ({
+                  areaByFarm && areaByFarm.data
+                    ? areaByFarm.data.map((item) => ({
                         label: item.name,
                         value: item.id,
                       }))
-                    : []
+                    : null
                 }
                 onChange={handleSelectAreaChange}
               ></Select>
@@ -140,12 +149,12 @@ const FirstStepAddAnimalGroup = ({ isModalOpen, closeModal }) => {
               <Select
                 placeholder="Chọn vùng"
                 options={
-                  Array.isArray(dataZoneAnimal)
-                    ? dataZoneAnimal.map((item) => ({
+                  zoneAnimal && zoneAnimal.data
+                    ? zoneAnimal.data.map((item) => ({
                         label: item.name,
                         value: item.id,
                       }))
-                    : []
+                    : null
                 }
               ></Select>
             </Form.Item>
