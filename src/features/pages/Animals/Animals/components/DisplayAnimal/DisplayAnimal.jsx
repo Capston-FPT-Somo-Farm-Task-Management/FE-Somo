@@ -3,6 +3,7 @@ import TableDisplayAnimal from './TableDisplayAnimal'
 import TableDisplayAnimalType from './TableDisplayAnimalType'
 
 const DisplayAnimal = ({
+  areaByFarm,
   animalByFarm,
   onFinishUpdateAnimal,
   onFinishDeleteAnimal,
@@ -20,6 +21,7 @@ const DisplayAnimal = ({
           label: 'Vật nuôi',
           children: (
             <TableDisplayAnimal
+              areaByFarm={areaByFarm}
               animalByFarm={animalByFarm}
               onFinishUpdateAnimal={onFinishUpdateAnimal}
               onFinishDeleteAnimal={onFinishDeleteAnimal}

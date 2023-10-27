@@ -1,34 +1,32 @@
 import { Button, Form, Input, InputNumber, Modal, Radio, Select } from 'antd'
-import { updateAnimal } from 'features/slice/animal/animalSlice'
-import { getAnimalType } from 'features/slice/animal/animalTypeSlice'
-import { getAreaActive } from 'features/slice/area/areaSlice'
+import { getAnimalTypeActive } from 'features/slice/animal/animalTypeSlice'
 import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
 import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 const UpdateAnimal = ({
+  areaByFarm,
   isModalOpen,
   closeModal,
   selectedData,
   onFinishUpdateAnimal,
 }) => {
+  const [form] = Form.useForm()
+  const dispatch = useDispatch()
+
   const [selectedAreaId, setSelectedAreaId] = useState(null)
   const [selectedZoneId, setSelectedZoneId] = useState(null)
   const [gender, setGender] = useState(true)
 
-  const area = useSelector((state) => state.area.data)
-
   const zoneAnimal = useSelector((state) => state.zoneAnimal.data)
-  const dataZoneAnimal = zoneAnimal.data
-
   const fieldByZone = useSelector((state) => state.fieldByZone.data)
-  const dataFieldByZone = fieldByZone.data
 
-  const animalType = useSelector((state) => state.animalType.data)
-  const dataAnimalType = animalType.data
+  const animalTypeActive = useSelector((state) => state.animalType.data)
 
-  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getAnimalTypeActive())
+  }, [dispatch])
 
   useEffect(() => {
     if (isModalOpen) {
@@ -39,18 +37,23 @@ const UpdateAnimal = ({
   }, [isModalOpen, selectedData])
 
   useEffect(() => {
-    dispatch(getAreaActive())
-    dispatch(getAnimalType())
-  }, [dispatch])
-
-  useEffect(() => {
     if (selectedAreaId) {
       dispatch(getZoneByAreaAnimal(selectedAreaId))
+      form.setFieldsValue({
+        zone: null,
+        field: null,
+      })
     }
+  }, [selectedAreaId, isModalOpen])
+
+  useEffect(() => {
     if (selectedZoneId) {
       dispatch(getFieldByZone(selectedZoneId))
+      form.setFieldsValue({
+        field: null,
+      })
     }
-  }, [selectedAreaId, selectedZoneId])
+  }, [selectedZoneId, isModalOpen])
 
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value)
@@ -101,6 +104,7 @@ const UpdateAnimal = ({
           className="first-step-animal"
           id="updateAnimal"
           onFinish={onFinish}
+          form={form}
         >
           <div className="form-left">
             {/* ID Animal */}
@@ -154,10 +158,14 @@ const UpdateAnimal = ({
             >
               <Select
                 placeholder="Chọn loại vật nuôi"
-                options={dataAnimalType?.map((type) => ({
-                  label: type.name,
-                  value: type.id,
-                }))}
+                options={
+                  animalTypeActive && animalTypeActive.data
+                    ? animalTypeActive.data.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }))
+                    : null
+                }
               ></Select>
             </Form.Item>
 
@@ -216,10 +224,14 @@ const UpdateAnimal = ({
             >
               <Select
                 placeholder="Chọn khu vực"
-                options={area.data?.map((item) => ({
-                  label: item.name,
-                  value: item.id,
-                }))}
+                options={
+                  areaByFarm && areaByFarm.data
+                    ? areaByFarm.data.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }))
+                    : null
+                }
                 onChange={handleSelectAreaChange}
               ></Select>
             </Form.Item>
@@ -246,12 +258,12 @@ const UpdateAnimal = ({
               <Select
                 placeholder="Chọn vùng"
                 options={
-                  Array.isArray(dataZoneAnimal)
-                    ? dataZoneAnimal.map((item) => ({
+                  zoneAnimal && zoneAnimal.data
+                    ? zoneAnimal.data.map((item) => ({
                         label: item.name,
                         value: item.id,
                       }))
-                    : []
+                    : null
                 }
                 onChange={handleSelectZoneChange}
               ></Select>
@@ -259,12 +271,12 @@ const UpdateAnimal = ({
 
             {/* Field */}
             <Form.Item
-              label="Vườn"
+              label="Chuồng"
               name="field"
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng chọn vườn',
+                  message: 'Vui lòng chọn chuồng',
                 },
               ]}
               initialValue={
@@ -277,14 +289,14 @@ const UpdateAnimal = ({
               }
             >
               <Select
-                placeholder="Chọn vườn"
+                placeholder="Chọn chuồng"
                 options={
-                  Array.isArray(dataFieldByZone)
-                    ? dataFieldByZone.map((item) => ({
+                  fieldByZone && fieldByZone.data
+                    ? fieldByZone.data.map((item) => ({
                         label: item.name,
                         value: item.id,
                       }))
-                    : []
+                    : null
                 }
               ></Select>
             </Form.Item>
