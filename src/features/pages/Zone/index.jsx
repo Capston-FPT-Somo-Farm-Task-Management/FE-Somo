@@ -4,38 +4,44 @@ import DisplayZone from './components/DisplayZone/DisplayZone'
 import { useSelector } from 'react-redux'
 import { getMemberById } from 'features/slice/user/memberSlice'
 import { authServices } from 'services/authServices'
-import { getZoneByFarmId } from 'features/slice/zone/zoneByFarm'
+import { getZoneByFarmId } from 'features/slice/zone/zoneByFarmSlice'
 import { useEffect } from 'react'
 import {
   createZone,
   deleteZone,
   updateZone,
 } from 'features/slice/zone/zoneSlice'
+import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarmSlice'
+import { getZoneType } from 'features/slice/zone/zoneTypeSlice'
 
 const Zone = () => {
   const dispatch = useDispatch()
   const member = useSelector((state) => state.member.data)
-  const zoneByFarm = useSelector((state) => state.zoneByFarm.data)
   const farmId = member.farmId
+  const areaByFarm = useSelector((state) => state.areaByFarm.data)
+  const zoneByFarm = useSelector((state) => state.zoneByFarm.data)
+  const zoneType = useSelector((state) => state.zoneType.data)
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
+    dispatch(getAreaActiveByFarmId(farmId))
     dispatch(getZoneByFarmId(farmId))
+    dispatch(getZoneType())
   }, [dispatch])
 
-  const onFinishCreate = (values) => {
+  const onFinishCreateZone = (values) => {
     dispatch(createZone(values)).then(() => {
       loadData()
     })
   }
 
-  const onFinishUpdate = (values) => {
+  const onFinishUpdateZone = (values) => {
     dispatch(updateZone(values)).then(() => {
       loadData()
     })
   }
 
-  const onFinishDelete = (id) => {
+  const onFinishDeleteZone = (id) => {
     dispatch(deleteZone(id)).then(() => {
       loadData()
     })
@@ -47,13 +53,17 @@ const Zone = () => {
 
   return (
     <>
-      <AddZone onFinishCreate={onFinishCreate} farmId={farmId} />
+      <AddZone
+        areaByFarm={areaByFarm}
+        zoneType={zoneType}
+        onFinishCreateZone={onFinishCreateZone}
+      />
       <DisplayZone
+        areaByFarm={areaByFarm}
         zoneByFarm={zoneByFarm}
-        loadData={loadData}
-        onFinishDelete={onFinishDelete}
-        onFinishUpdate={onFinishUpdate}
-        farmId={farmId}
+        zoneType={zoneType}
+        onFinishUpdateZone={onFinishUpdateZone}
+        onFinishDeleteZone={onFinishDeleteZone}
       />
     </>
   )

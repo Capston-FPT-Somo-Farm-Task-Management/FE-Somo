@@ -9,7 +9,6 @@ export const getZoneByAreaAnimal = createAsyncThunk(
       const { data } = await axios.get(
         baseUrl + `/Zone/AreaLivestock(${areaId})`
       )
-      console.log(data)
       return data
     } catch (error) {
       console.log(error)

@@ -4,7 +4,7 @@ import DisplayArea from './components/DisplayArea/DisplayArea'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { getMemberById } from 'features/slice/user/memberSlice'
-import { getAreaByFarmId } from 'features/slice/area/areaByFarm'
+import { getAreaByFarmId } from 'features/slice/area/areaByFarmSlice'
 import { authServices } from 'services/authServices'
 import {
   createArea,

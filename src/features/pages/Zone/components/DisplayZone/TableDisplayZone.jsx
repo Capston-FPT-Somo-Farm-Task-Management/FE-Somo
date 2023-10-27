@@ -1,19 +1,17 @@
-import { useState } from 'react'
 import { Badge, Button, Table } from 'antd'
 import Column from 'antd/es/table/Column'
-import UpdateAnimalType from './UpdateAnimalType'
+import { useState } from 'react'
+import UpdateZone from './UpdateZone'
 
-const TableDisplayAnimalType = ({
-  animalType,
-  onFinishDeleteAnimalType,
-  onFinishUpdateAnimalType,
+const TableDisplayZone = ({
+  areaByFarm,
+  zoneByFarm,
+  zoneType,
+  onFinishUpdateZone,
+  onFinishDeleteZone,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
-
-  const handleDelete = (id) => {
-    onFinishDeleteAnimalType(id)
-  }
 
   const openModal = (record) => {
     setSelectedData(record)
@@ -23,26 +21,20 @@ const TableDisplayAnimalType = ({
   const closeModal = () => {
     setIsModalOpen(false)
   }
-
   return (
     <>
-      <Table dataSource={animalType ? animalType.data : ''} rowKey="id">
-        <Column
-          title="Tên vật nuôi"
-          dataIndex="name"
-          key="1"
-          render={(text) => <h4>{text}</h4>}
-        />
-        <Column title="Nguồn gốc" dataIndex="origin" key="2" />
-        <Column title="Môi trường sống" dataIndex="environment" key="3" />
-        <Column title="Mô tả" dataIndex="description" key="4" />
-
+      <Table rowKey="id" dataSource={zoneByFarm ? zoneByFarm.data : null}>
+        <Column title="Tên vùng" dataIndex="name" key="1" />
+        <Column title="Mã vùng" dataIndex="code" key="2" />
+        <Column title="Diện tích" dataIndex="farmArea" key="3" />
+        <Column title="Loại vùng" dataIndex="zoneTypeName" key="4" />
+        <Column title="Tên khu vực" dataIndex="areaName" key="5" />
         <Column
           title="Trạng thái"
-          dataIndex="isActive"
-          key="5"
-          render={(isActive) =>
-            isActive === true ? (
+          dataIndex="status"
+          key="6"
+          render={(status) =>
+            status === 'Active' ? (
               <Badge status="success" text="Active" />
             ) : (
               <Badge status="error" text="Inactive" />
@@ -51,13 +43,13 @@ const TableDisplayAnimalType = ({
         />
         <Column
           title="Đổi trạng thái"
-          key="5"
+          key="7"
           dataIndex="id"
           render={(_, record) => (
             <Button
               size="middle"
               danger
-              onClick={() => handleDelete(record.id)}
+              onClick={() => onFinishDeleteZone(record.id)}
             >
               Đổi
             </Button>
@@ -66,7 +58,7 @@ const TableDisplayAnimalType = ({
 
         <Column
           title="Cập nhật"
-          key="6"
+          key="8"
           dataIndex="id"
           render={(_, record) => (
             <Button
@@ -79,14 +71,16 @@ const TableDisplayAnimalType = ({
           )}
         />
       </Table>
-      <UpdateAnimalType
+      <UpdateZone
         key={selectedData ? selectedData.id : null}
+        areaByFarm={areaByFarm}
+        zoneType={zoneType}
+        onFinishUpdateZone={onFinishUpdateZone}
+        selectedData={selectedData}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
-        selectedData={selectedData}
-        onFinishUpdateAnimalType={onFinishUpdateAnimalType}
       />
     </>
   )
 }
-export default TableDisplayAnimalType
+export default TableDisplayZone

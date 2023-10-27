@@ -1,5 +1,4 @@
 import { Button, Form, Select, Input, InputNumber, Modal } from 'antd'
-import { getAreaActive } from 'features/slice/area/areaSlice'
 import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,20 +7,14 @@ const UpdateAnimalGroup = ({
   isModalOpen,
   closeModal,
   selectedData,
+  areaByFarm,
   onFinishUpdate,
 }) => {
+  const dispatch = useDispatch()
+  const [form] = Form.useForm()
   const [selectedAreaId, setSelectedAreaId] = useState(null)
 
-  const area = useSelector((state) => state.area.data)
-
   const zoneAnimal = useSelector((state) => state.zoneAnimal.data)
-  const dataZoneAnimal = zoneAnimal.data
-
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(getAreaActive())
-  }, [])
 
   useEffect(() => {
     if (selectedAreaId) {
@@ -31,6 +24,9 @@ const UpdateAnimalGroup = ({
 
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value)
+    form.setFieldsValue({
+      zone: null,
+    })
   }
 
   const onFinish = (values) => {
@@ -40,9 +36,8 @@ const UpdateAnimalGroup = ({
       status: 1,
       code: values.code,
       area: values.square,
-      zoneId: values.zone.value,
+      zoneId: typeof values.zone === 'object' ? values.zone.value : values.zone,
     }
-    console.log(finalValues)
     onFinishUpdate(finalValues)
     closeModal()
   }
@@ -74,6 +69,7 @@ const UpdateAnimalGroup = ({
           className="first-step-animal"
           id="updateAnimalGroup"
           onFinish={onFinish}
+          form={form}
         >
           <div className="form-left">
             {/* ID Animal */}
@@ -139,15 +135,19 @@ const UpdateAnimalGroup = ({
                       label: selectedData.areaName,
                       value: selectedData.areaId,
                     }
-                  : ''
+                  : null
               }
             >
               <Select
                 placeholder="Chọn khu vực"
-                options={area.data?.map((item) => ({
-                  label: item.name,
-                  value: item.id,
-                }))}
+                options={
+                  areaByFarm && areaByFarm.data
+                    ? areaByFarm.data.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }))
+                    : null
+                }
                 onChange={handleSelectAreaChange}
               ></Select>
             </Form.Item>
@@ -168,18 +168,18 @@ const UpdateAnimalGroup = ({
                       label: selectedData.zoneName,
                       value: selectedData.zoneId,
                     }
-                  : ''
+                  : null
               }
             >
               <Select
                 placeholder="Chọn vùng"
                 options={
-                  Array.isArray(dataZoneAnimal)
-                    ? dataZoneAnimal.map((item) => ({
+                  zoneAnimal && zoneAnimal.data
+                    ? zoneAnimal.data.map((item) => ({
                         label: item.name,
                         value: item.id,
                       }))
-                    : []
+                    : null
                 }
               ></Select>
             </Form.Item>

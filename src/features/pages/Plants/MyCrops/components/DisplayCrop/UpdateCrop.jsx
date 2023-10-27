@@ -1,42 +1,51 @@
 import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
-import { getAreaActive } from 'features/slice/area/areaSlice'
 import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
-import { updatePlant } from 'features/slice/plant/plantSlice'
-import { getPlantType } from 'features/slice/plantType/plantTypeSlice'
+import { getPlantTypeActive } from 'features/slice/plant/plantTypeSlice'
 import { getZoneByAreaPlant } from 'features/slice/zone/zonePlantSlice'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const UpdateCrop = ({ isModalOpen, closeModal, selectedData, loadData }) => {
+const UpdateCrop = ({
+  areaByFarm,
+  isModalOpen,
+  closeModal,
+  selectedData,
+  onFinishUpdatePlant,
+}) => {
+  const [form] = Form.useForm()
+  const dispatch = useDispatch()
+
   const [selectedAreaId, setSelectedAreaId] = useState(null)
   const [selectedZoneId, setSelectedZoneId] = useState(null)
 
-  const area = useSelector((state) => state.area.data)
-
   const zonePlant = useSelector((state) => state.zonePlant.data)
-  const dataZonePlant = zonePlant.data
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data)
-  const dataFieldByZone = fieldByZone.data
 
-  const plantType = useSelector((state) => state.plantType.data)
-  const dataPlantType = plantType.data
-
-  const dispatch = useDispatch()
+  const plantTypeActive = useSelector((state) => state.plantType.data)
 
   useEffect(() => {
-    dispatch(getAreaActive())
-    dispatch(getPlantType())
-  }, [])
+    dispatch(getPlantTypeActive())
+  }, [dispatch])
 
   useEffect(() => {
     if (selectedAreaId) {
       dispatch(getZoneByAreaPlant(selectedAreaId))
+      form.setFieldsValue({
+        zone: null,
+        field: null,
+      })
     }
+  }, [selectedAreaId, isModalOpen])
+
+  useEffect(() => {
     if (selectedZoneId) {
       dispatch(getFieldByZone(selectedZoneId))
+      form.setFieldsValue({
+        field: null,
+      })
     }
-  }, [selectedAreaId, selectedZoneId])
+  }, [selectedZoneId, isModalOpen])
 
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value)
@@ -52,16 +61,18 @@ const UpdateCrop = ({ isModalOpen, closeModal, selectedData, loadData }) => {
       name: values.name,
       externalId: values.externalId,
       height: values.height,
-      habitantTypeId: values.habitantType.value,
-      fieldId: values.field.value,
+      habitantTypeId:
+        typeof values.habitantType === 'object'
+          ? values.habitantType.value
+          : values.habitantType,
+      fieldId:
+        typeof values.field === 'object' ? values.field.value : values.field,
     }
-    dispatch(updatePlant(finalValues)).then(() => {
-      loadData()
-      setTimeout(() => {
-        closeModal()
-      }, 500)
-    })
+    console.log(finalValues)
+    onFinishUpdatePlant(finalValues)
+    closeModal()
   }
+
   return (
     <>
       <Modal
@@ -89,15 +100,22 @@ const UpdateCrop = ({ isModalOpen, closeModal, selectedData, loadData }) => {
           className="first-step-plant"
           id="updatePlant"
           onFinish={onFinish}
+          form={form}
         >
           <div className="form-left">
             {/* ID Animal */}
             <Form.Item
               label="Mã cây trồng"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập mã cây trồng',
+                },
+              ]}
               initialValue={selectedData ? selectedData.externalId : ''}
               name="externalId"
             >
-              <Input placeholder="Nhập mã vật nuôi" readOnly />
+              <Input placeholder="Nhập mã cây trồng" />
             </Form.Item>
 
             {/* Name Animal */}
@@ -136,10 +154,14 @@ const UpdateCrop = ({ isModalOpen, closeModal, selectedData, loadData }) => {
             >
               <Select
                 placeholder="Chọn loại cây trồng"
-                options={dataPlantType?.map((type) => ({
-                  label: type.name,
-                  value: type.id,
-                }))}
+                options={
+                  plantTypeActive && plantTypeActive.data
+                    ? plantTypeActive.data.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }))
+                    : null
+                }
               ></Select>
             </Form.Item>
 
@@ -181,10 +203,14 @@ const UpdateCrop = ({ isModalOpen, closeModal, selectedData, loadData }) => {
             >
               <Select
                 placeholder="Chọn khu vực"
-                options={area.data?.map((item) => ({
-                  label: item.name,
-                  value: item.id,
-                }))}
+                options={
+                  areaByFarm && areaByFarm.data
+                    ? areaByFarm.data.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }))
+                    : null
+                }
                 onChange={handleSelectAreaChange}
               ></Select>
             </Form.Item>
@@ -211,12 +237,12 @@ const UpdateCrop = ({ isModalOpen, closeModal, selectedData, loadData }) => {
               <Select
                 placeholder="Chọn vùng"
                 options={
-                  Array.isArray(dataZonePlant)
-                    ? dataZonePlant.map((item) => ({
+                  zonePlant && zonePlant.data
+                    ? zonePlant.data.map((item) => ({
                         label: item.name,
                         value: item.id,
                       }))
-                    : []
+                    : null
                 }
                 onChange={handleSelectZoneChange}
               ></Select>
@@ -244,12 +270,12 @@ const UpdateCrop = ({ isModalOpen, closeModal, selectedData, loadData }) => {
               <Select
                 placeholder="Chọn vườn"
                 options={
-                  Array.isArray(dataFieldByZone)
-                    ? dataFieldByZone.map((item) => ({
+                  fieldByZone && fieldByZone.data
+                    ? fieldByZone.data.map((item) => ({
                         label: item.name,
                         value: item.id,
                       }))
-                    : []
+                    : null
                 }
               ></Select>
             </Form.Item>

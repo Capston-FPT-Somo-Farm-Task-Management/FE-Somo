@@ -4,6 +4,7 @@ import Column from 'antd/es/table/Column'
 import UpdateAnimal from './UpdateAnimal'
 
 const TableDisplayAnimal = ({
+  areaByFarm,
   animalByFarm,
   onFinishDeleteAnimal,
   onFinishUpdateAnimal,
@@ -82,9 +83,11 @@ const TableDisplayAnimal = ({
         />
       </Table>
       <UpdateAnimal
+        key={selectedData ? selectedData.id : null}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}
+        areaByFarm={areaByFarm}
         onFinishUpdateAnimal={onFinishUpdateAnimal}
       />
     </>

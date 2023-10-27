@@ -1,6 +1,5 @@
 import { Button, Form, Input, Modal } from 'antd'
-import { updateHabitantType } from 'features/slice/habitant/habitantTypeSlice'
-import { getPlantType } from 'features/slice/plantType/plantTypeSlice'
+import { getPlantType } from 'features/slice/plant/plantTypeSlice'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 const { TextArea } = Input
@@ -9,7 +8,7 @@ const UpdateCropType = ({
   isModalOpen,
   closeModal,
   selectedData,
-  loadData,
+  onFinishUpdatePlantType,
 }) => {
   const dispatch = useDispatch()
 
@@ -26,13 +25,8 @@ const UpdateCropType = ({
       environment: values.environment,
       description: values.description,
     }
-    console.log(finalValues)
-    dispatch(updateHabitantType(finalValues)).then(() => {
-      loadData()
-      setTimeout(() => {
-        closeModal()
-      }, 300)
-    })
+    onFinishUpdatePlantType(finalValues)
+    closeModal()
   }
   return (
     <>

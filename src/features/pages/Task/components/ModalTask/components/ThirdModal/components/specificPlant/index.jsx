@@ -4,12 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAreaActive } from "features/slice/area/areaSlice";
 import { getZoneByAreaPlant } from "features/slice/zone/zonePlantSlice";
 import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
-import { getTaskTypePlant } from "features/slice/task/taskTypePlant";
+import { getTaskTypePlant } from "features/slice/task/taskTypePlantSlice";
 import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
 import { getEmployee } from "features/slice/employee/employeeSlice";
 import { getMaterial } from "features/slice/material/materialSlice";
 import { getPlantActive } from "features/slice/plant/plantSlice";
-import { createTask } from "features/slice/task/taskSlice";
+import { getTasks, createTask } from "features/slice/task/taskSlice";
 import dayjs from "dayjs";
 import MultiDatePicker from "react-multi-date-picker";
 
@@ -75,6 +75,10 @@ function SpecificPlant() {
     setSelectedZoneId(value);
   };
 
+  const loadData = () => {
+    dispatch(getTasks());
+  };
+
   const transformData = (originalData) => {
     const transformedData = {
       employeeIds: originalData.employeeIds,
@@ -108,21 +112,25 @@ function SpecificPlant() {
 
     const startTime = dayjs(startDate).format("HH:mm:ss.SSS");
 
-    const selectedDates = values.dates.map((date) =>
-      dayjs(date).format("YYYY-MM-DD")
-    );
+    const selectedDates = values.dates || [];
 
     const combinedDates = selectedDates.map((date) => `${date}T${startTime}`);
+
+    const remindValueToSend = remindValue || 0;
+
+    const repeatValueToSend = repeatValue || false;
+
+    const datesToSend = repeatValueToSend ? combinedDates : [];
 
     const finalValues = {
       ...values,
       startDate: startDateFormatted,
       endDate: dayjs(values.endDate).format("YYYY-MM-DD[T]HH:mm:ss.SSS"),
-      dates: combinedDates,
+      dates: datesToSend,
       // employeeIds: employeesValue,
       priority: priorityValue,
-      remind: remindValue,
-      isRepeat: repeatValue,
+      remind: remindValueToSend,
+      isRepeat: repeatValueToSend,
       description: description,
       suppervisorId: 11,
       managerId: 5,
@@ -131,7 +139,8 @@ function SpecificPlant() {
 
     const transformedValues = transformData(finalValues);
 
-    dispatch(createTask(transformedValues));
+    dispatch(createTask(transformedValues)).then(() => {
+      loadData()});
   };
 
   const disabledDate = (current) => {
@@ -396,15 +405,15 @@ function SpecificPlant() {
         </Form.Item>
         <Form.Item label="Nhắc lại" name="remind">
           <Select
-            value={remindValue}
-            onChange={(value) => setRemindValue(value)}
+            value={remindValue.toString()}
+            onChange={(value) => setRemindValue(parseInt(value, 10))}
             placeholder="Không"
           >
-            <Select.Option value="0">0</Select.Option>
-            <Select.Option value="5">5</Select.Option>
-            <Select.Option value="10">10</Select.Option>
-            <Select.Option value="15">15</Select.Option>
-            <Select.Option value="20">20</Select.Option>
+            <Select.Option value="0">Không</Select.Option>
+            <Select.Option value="5">Sau 5 phút</Select.Option>
+            <Select.Option value="10">Sau 10 phút</Select.Option>
+            <Select.Option value="15">Sau 15 phút</Select.Option>
+            <Select.Option value="20">Sau 20 phút</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item label="Lặp lại" name="isRepeat">
@@ -419,11 +428,7 @@ function SpecificPlant() {
         </Form.Item>
 
         {repeatValue && (
-          <Form.Item
-            label="Lặp những ngày"
-            name="dates"
-            rules={[{ required: true }]}
-          >
+          <Form.Item label="Lặp những ngày" name="dates">
             <MultiDatePicker multiple format="YYYY-MM-DD" />
           </Form.Item>
         )}

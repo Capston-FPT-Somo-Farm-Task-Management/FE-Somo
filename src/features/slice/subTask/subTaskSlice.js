@@ -3,9 +3,23 @@ import axios from "axios";
 import { baseUrl } from "features/api/baseUrl";
 import { toast } from "react-toastify";
 
+export const getSubTasksByTaskId = createAsyncThunk(
+  'subTasks/getSubTasksByTaskId',
+  async (taskId) => {
+    try {
+      const { data } = await axios.get(baseUrl + `/FarmSubTask/Task(${taskId})`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const createSubTask = createAsyncThunk("subTasks/createSubTask", async (data) => {
-    console.log(data);
-    console.log(data.farmTask.memberId);
     try {
       const response = await axios.post(baseUrl + `/FarmSubTask/Task`, data, {
         headers: {
@@ -34,15 +48,21 @@ export const createSubTask = createAsyncThunk("subTasks/createSubTask", async (d
           state.loading = true;
         })
         .addCase(createSubTask.fulfilled, (state, action) => {
-          if (Array.isArray(state.data)) {
-            state.data.push(action.payload.task);
-          } else {
-            state.data = [action.payload.task];
-          }
-  
           state.loading = false;
+          state.data = action.payload;
         })
         .addCase(createSubTask.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        })
+        .addCase(getSubTasksByTaskId.pending, (state) => {
+          state.loading = true;
+        })
+        .addCase(getSubTasksByTaskId.fulfilled, (state, action) => {
+          state.loading = false;
+          state.data = action.payload;
+        })
+        .addCase(getSubTasksByTaskId.rejected, (state, action) => {
           state.loading = false;
           state.error = action.payload;
         })

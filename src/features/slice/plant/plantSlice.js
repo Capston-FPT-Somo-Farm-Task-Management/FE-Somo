@@ -14,7 +14,7 @@ export const getPlantActive = createAsyncThunk(
       })
       return data
     } catch (error) {
-      console.log(error)
+      throw error
     }
   }
 )
@@ -48,8 +48,13 @@ export const updatePlant = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       })
+      if (response.status === 200) {
+        toast.success(response.data.message)
+        return response.data.data
+      }
       return response.json()
     } catch (error) {
+      toast.error(error.response.data.message)
       rejectWithValue(error)
     }
   }

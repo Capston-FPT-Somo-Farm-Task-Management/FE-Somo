@@ -192,6 +192,12 @@ const SideMenu = () => {
                     <Link to="/crop-group"></Link>
                   </Menu.Item>
 
+                  <Menu.Item key="/material">
+                    <FormatPainterOutlined />
+                    <span>Công cụ</span>
+                    <Link to="/material"></Link>
+                  </Menu.Item>
+
                   <Menu.Item key="/login" onClick={logout}>
                     <LogoutOutlined />
                     <span>Đăng xuất</span>

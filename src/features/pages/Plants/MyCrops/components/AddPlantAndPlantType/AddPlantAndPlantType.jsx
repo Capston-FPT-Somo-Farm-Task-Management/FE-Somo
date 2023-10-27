@@ -6,7 +6,11 @@ import Search from 'antd/es/input/Search'
 import FirstStepAddPlant from '../FirstStepAddPlant/FirstStepAddPlant'
 import FirstStepAddPlantType from '../FirstStepAddPlantType/FirstStepAddPlantType'
 
-const AddPlantAndPlantType = () => {
+const AddPlantAndPlantType = ({
+  areaByFarm,
+  onFinishCreatePlant,
+  onFinishCreatePlantType,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => {
@@ -41,6 +45,8 @@ const AddPlantAndPlantType = () => {
             <FirstStepAddPlant
               isModalOpen={isModalOpen}
               closeModal={closeModal}
+              areaByFarm={areaByFarm}
+              onFinishCreatePlant={onFinishCreatePlant}
             />
 
             {/* Add Plant Type */}
@@ -50,6 +56,7 @@ const AddPlantAndPlantType = () => {
             <FirstStepAddPlantType
               isModalOpenType={isModalOpenType}
               closeModalType={closeModalType}
+              onFinishCreatePlantType={onFinishCreatePlantType}
             />
 
             <Button type="dashed">

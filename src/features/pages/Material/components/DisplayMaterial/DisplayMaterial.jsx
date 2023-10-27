@@ -1,19 +1,11 @@
-import { useState } from 'react'
 import { Badge, Button, Table } from 'antd'
 import Column from 'antd/es/table/Column'
-import UpdateAnimalType from './UpdateAnimalType'
+import { useState } from 'react'
+import UpdateMaterial from './UpdateMaterial'
 
-const TableDisplayAnimalType = ({
-  animalType,
-  onFinishDeleteAnimalType,
-  onFinishUpdateAnimalType,
-}) => {
+const DisplayMaterial = ({ material, onFinishDelete, onFinishUpdate }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
-
-  const handleDelete = (id) => {
-    onFinishDeleteAnimalType(id)
-  }
 
   const openModal = (record) => {
     setSelectedData(record)
@@ -21,28 +13,24 @@ const TableDisplayAnimalType = ({
   }
 
   const closeModal = () => {
+    setSelectedData(null)
     setIsModalOpen(false)
   }
 
   return (
     <>
-      <Table dataSource={animalType ? animalType.data : ''} rowKey="id">
-        <Column
-          title="Tên vật nuôi"
-          dataIndex="name"
-          key="1"
-          render={(text) => <h4>{text}</h4>}
-        />
-        <Column title="Nguồn gốc" dataIndex="origin" key="2" />
-        <Column title="Môi trường sống" dataIndex="environment" key="3" />
-        <Column title="Mô tả" dataIndex="description" key="4" />
-
+      <Table
+        rowKey="id"
+        dataSource={material ? material.data : null}
+        pagination={true}
+      >
+        <Column title="Tên công cụ" dataIndex="name" key="1" />
         <Column
           title="Trạng thái"
-          dataIndex="isActive"
-          key="5"
-          render={(isActive) =>
-            isActive === true ? (
+          dataIndex="status"
+          key="2"
+          render={(status) =>
+            status === 'Active' ? (
               <Badge status="success" text="Active" />
             ) : (
               <Badge status="error" text="Inactive" />
@@ -51,13 +39,13 @@ const TableDisplayAnimalType = ({
         />
         <Column
           title="Đổi trạng thái"
-          key="5"
+          key="3"
           dataIndex="id"
           render={(_, record) => (
             <Button
               size="middle"
               danger
-              onClick={() => handleDelete(record.id)}
+              onClick={() => onFinishDelete(record.id)}
             >
               Đổi
             </Button>
@@ -66,7 +54,7 @@ const TableDisplayAnimalType = ({
 
         <Column
           title="Cập nhật"
-          key="6"
+          key="4"
           dataIndex="id"
           render={(_, record) => (
             <Button
@@ -79,14 +67,14 @@ const TableDisplayAnimalType = ({
           )}
         />
       </Table>
-      <UpdateAnimalType
+      <UpdateMaterial
         key={selectedData ? selectedData.id : null}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}
-        onFinishUpdateAnimalType={onFinishUpdateAnimalType}
+        onFinishUpdate={onFinishUpdate}
       />
     </>
   )
 }
-export default TableDisplayAnimalType
+export default DisplayMaterial

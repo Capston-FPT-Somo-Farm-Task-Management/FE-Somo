@@ -3,7 +3,12 @@ import { useState } from 'react'
 import Column from 'antd/es/table/Column'
 import UpdateCropGroup from './UpdateCropGroup'
 
-const DisplayCropGroup = ({ fieldByFarm, onFinishDelete, onFinishUpdate }) => {
+const DisplayCropGroup = ({
+  areaByFarm,
+  fieldByFarm,
+  onFinishDelete,
+  onFinishUpdate,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
 
@@ -73,9 +78,11 @@ const DisplayCropGroup = ({ fieldByFarm, onFinishDelete, onFinishUpdate }) => {
         />
       </Table>
       <UpdateCropGroup
+        key={selectedData ? selectedData.id : null}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}
+        areaByFarm={areaByFarm}
         onFinishUpdate={onFinishUpdate}
       />
     </>

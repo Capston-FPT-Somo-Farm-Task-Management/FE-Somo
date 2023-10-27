@@ -67,18 +67,6 @@ const areaByFarmSlice = createSlice({
         state.error = action.payload
         state.data = []
       })
-
-    //   .addCase(deleteArea.pending, (state) => {
-    //     state.loading = true
-    //   })
-    //   .addCase(deleteArea.fulfilled, (state, action) => {
-    //     state.loading = false
-    //     state.data = action.payload
-    //   })
-    //   .addCase(deleteArea.rejected, (state, action) => {
-    //     state.loading = false
-    //     state.error = action.payload
-    //   })
   },
 })
 

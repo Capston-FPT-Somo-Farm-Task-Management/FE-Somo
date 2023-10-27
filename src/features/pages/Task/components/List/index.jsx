@@ -3,7 +3,10 @@ import { Button, Form, Input, Modal, Select, Space, Table } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { getTasks, deleteTask } from "features/slice/task/taskSlice";
 import { getEmployee } from "features/slice/employee/employeeSlice";
-import { createSubTask } from "features/slice/subTask/subTaskSlice";
+import {
+  getSubTasksByTaskId,
+  createSubTask,
+} from "features/slice/subTask/subTaskSlice";
 import { taskTitle, onChange } from "./listTaskData";
 import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
 import TaskDetail from "../TaskDetail";
@@ -14,17 +17,21 @@ import {
   EditOutlined,
   DeleteOutlined,
   PlusCircleOutlined,
+  FileTextOutlined,
 } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
 
 const List = () => {
+  const [subTasks, setSubTasks] = useState([]);
+  const [subTaskModalVisible, setSubTaskModalVisible] = useState(false);
   const [addSubtaskVisible, setAddSubtaskVisible] = useState(false);
   // const [employeesValue, setEmployeesValue] = useState(0);
   const [description, setDescription] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [pageIndex, setPageIndex] = useState(5);  
+  const [pageIndex, setPageIndex] = useState(5);
   const [pageSize, setPageSize] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
+  const [currentTaskId, setCurrentTaskId] = useState(0);
 
   const { Search } = Input;
   const onSearch = (e) => {
@@ -43,6 +50,9 @@ const List = () => {
   console.log(dataTask);
 
   const dataEmployee = useSelector((state) => state.employee.data);
+  const subTask = useSelector((state) => state.subTask.data);
+  const dataSubTask = subTask.data;
+  console.log(dataSubTask);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -86,8 +96,16 @@ const List = () => {
     setModalVisible(false);
   };
 
-  const openAddSubtaskModal = () => {
+  const openAddSubtaskModal = (record) => {
+    setCurrentTaskId(record.id);
     setAddSubtaskVisible(true);
+  };
+  const openSubtaskModal = (record) => {
+    setCurrentTaskId(record.id);
+    setSubTaskModalVisible(true);
+    dispatch(getSubTasksByTaskId(record.id)).then((data) => {
+      setSubTasks(data.payload);
+    });
   };
 
   const closeAddSubtaskModal = () => {
@@ -101,10 +119,12 @@ const List = () => {
   const onFinish = (values) => {
     const finalValues = {
       ...values,
+      taskId: currentTaskId, // Thêm taskId vào object finalValues
     };
     console.log(finalValues);
     dispatch(createSubTask(finalValues));
     closeModal();
+    closeAddSubtaskModal();
   };
 
   return (
@@ -128,12 +148,12 @@ const List = () => {
       <Table
         rowKey="id"
         pagination={{
-        current: pageIndex,
-        pageSize: pageSize,
-        total: task.total,
-        showSizeChanger: true,
-        pageSizeOptions: ['10', '20', '30'], // Có thể tùy chỉnh số lượng item mỗi trang ở đây
-      }}
+          current: pageIndex,
+          pageSize: pageSize,
+          total: task.total,
+          showSizeChanger: true,
+          pageSizeOptions: ["10", "20", "30"], // Có thể tùy chỉnh số lượng item mỗi trang ở đây
+        }}
         columns={[
           ...taskTitle,
           {
@@ -145,11 +165,19 @@ const List = () => {
                 overlay={
                   <Menu onClick={(e) => handleMenuClick(e, record)}>
                     <Menu.Item key="subTask">
-                      <span onClick={openAddSubtaskModal}>
+                      <span onClick={() => openAddSubtaskModal(record)}>
                         <PlusCircleOutlined
                           style={{ color: "green", marginRight: "8px" }}
                         />
                         Thêm công việc con
+                      </span>
+                    </Menu.Item>
+                    <Menu.Item key="viewSubTask">
+                      <span onClick={() => openSubtaskModal(record)}>
+                        <FileTextOutlined
+                          style={{ color: "green", marginRight: "8px" }}
+                        />
+                        Xem công việc con
                       </span>
                     </Menu.Item>
                     <Menu.Item key="edit">
@@ -243,7 +271,7 @@ const List = () => {
           </Form.Item>
           <Form.Item
             label="Người thực hiện"
-            name="employeeIds"
+            name="employeeId"
             required
             rules={[
               {
@@ -272,6 +300,30 @@ const List = () => {
             />
           </Form.Item>
         </Form>
+      </Modal>
+      <Modal
+        title="Công việc con"
+        visible={subTaskModalVisible}
+        onCancel={() => setSubTaskModalVisible(false)}
+        footer={[
+          <Button type="primary" onClick={() => setSubTaskModalVisible(false)}>
+            Đóng
+          </Button>,
+        ]}
+      >
+        <div className="subTask">
+          {dataSubTask ? (
+            dataSubTask.map((subTask) => (
+              <div key={subTask.taskId}>
+                <p>{subTask.name}</p>
+                <p>{subTask.employeeName}</p>
+                <p>{subTask.description}</p>
+              </div>
+            ))
+          ) : (
+            <p>Chưa có công việc con</p>
+          )}
+        </div>
       </Modal>
     </div>
   );

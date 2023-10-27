@@ -10,6 +10,7 @@ import Task from 'features/pages/Task'
 import Zone from 'features/pages/Zone'
 import { Route, Routes } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
+import Material from 'features/pages/Material'
 
 const AppRoute = () => {
   return (
@@ -91,6 +92,17 @@ const AppRoute = () => {
           <PrivateRoute>
             <LayoutWithRoute>
               <CropGroup />
+            </LayoutWithRoute>
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/material"
+        element={
+          <PrivateRoute>
+            <LayoutWithRoute>
+              <Material />
             </LayoutWithRoute>
           </PrivateRoute>
         }
