@@ -22,6 +22,9 @@ const List = () => {
   // const [employeesValue, setEmployeesValue] = useState(0);
   const [description, setDescription] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [pageIndex, setPageIndex] = useState(5);  
+  const [pageSize, setPageSize] = useState(10);
+  const [totalPages, setTotalPages] = useState(1);
 
   const { Search } = Input;
   const onSearch = (e) => {
@@ -43,9 +46,16 @@ const List = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getTasks());
+    dispatch(getTasks({ pageIndex, pageSize })).then((data) => {
+      setTotalPages(Math.ceil(data.total / pageSize));
+    });
     dispatch(getEmployee());
-  }, []);
+  }, [pageIndex, pageSize]);
+
+  const onChange = (pagination) => {
+    setPageIndex(pagination.current);
+    setPageSize(pagination.pageSize);
+  };
 
   const handleMenuClick = (e, record) => {
     if (e.key === "edit") {
@@ -117,6 +127,13 @@ const List = () => {
       </div>
       <Table
         rowKey="id"
+        pagination={{
+        current: pageIndex,
+        pageSize: pageSize,
+        total: task.total,
+        showSizeChanger: true,
+        pageSizeOptions: ['10', '20', '30'], // Có thể tùy chỉnh số lượng item mỗi trang ở đây
+      }}
         columns={[
           ...taskTitle,
           {

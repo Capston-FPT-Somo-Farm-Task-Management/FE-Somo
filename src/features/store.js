@@ -28,6 +28,7 @@ import evidenceReducer from "./slice/task/taskEvidenceSlice"
 import subTaskReducer from "./slice/subTask/subTaskSlice"
 import habitantTypeReducer from './slice/habitant/habitantTypeSlice'
 import memberReducer from './slice/user/memberSlice'
+import statusReducer from "./slice/status/statusSlice"
 
 export const store = configureStore({
   reducer: {
@@ -60,5 +61,6 @@ export const store = configureStore({
     subTask: subTaskReducer,
     habitantType: habitantTypeReducer,
     member: memberReducer,
+    status: statusReducer,
   },
 })

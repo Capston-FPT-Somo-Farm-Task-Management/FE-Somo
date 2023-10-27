@@ -2,9 +2,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { baseUrl } from 'features/api/baseUrl'
 
-export const getMaterial = createAsyncThunk('materials/getMaterials', async () => {
+export const getStatus = createAsyncThunk('status/getStatus', async () => {
     try {
-      const { data } = await axios.get(baseUrl + '/Material', {
+      const { data } = await axios.get(baseUrl + '/FarmTask/Status', {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -15,8 +15,8 @@ export const getMaterial = createAsyncThunk('materials/getMaterials', async () =
     }
   })
 
-const materialSlice = createSlice({
-  name: "material",
+const statusSlice = createSlice({
+  name: "status",
   initialState: {
     data: [],
     loading: false,
@@ -25,16 +25,16 @@ const materialSlice = createSlice({
   extraReducers(builder) {
     builder
 
-      .addCase(getMaterial.pending, (state) => {
+      .addCase(getStatus.pending, (state) => {
         state.loading = true;
       })
-      .addCase(getMaterial.fulfilled, (state, action) => {
+      .addCase(getStatus.fulfilled, (state, action) => {
         state.loading = false;
         state.error = "";
         state.data = action.payload;
         console.log(action.payload);
       })
-      .addCase(getMaterial.rejected, (state, action) => {
+      .addCase(getStatus.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
         state.data = [];
@@ -42,4 +42,4 @@ const materialSlice = createSlice({
   },
 });
 
-export default materialSlice.reducer;
+export default statusSlice.reducer;

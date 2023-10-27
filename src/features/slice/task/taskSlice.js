@@ -4,9 +4,9 @@ import { baseUrl } from "features/api/baseUrl";
 import { toast } from "react-toastify";
 import { authServices } from "services/authServices";
 
-export const getTasks = createAsyncThunk("tasks/getTasks", async () => {
+export const getTasks = createAsyncThunk("tasks/getTasks", async ({ pageIndex, pageSize }) => {
   try {
-    const { data } = await axios.get(baseUrl + "/FarmTask/TaskActive", {
+    const { data } = await axios.get(baseUrl + `/FarmTask/TaskActive/Page(${pageIndex})/PageSize(${pageSize})`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -84,6 +84,7 @@ const taskSlice = createSlice({
         state.loading = false;
         state.error = "";
         state.data = action.payload;
+        state.total = action.payload.total;
       })
       .addCase(getTasks.rejected, (state, action) => {
         state.loading = false;
