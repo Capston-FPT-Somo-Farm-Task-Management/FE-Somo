@@ -2,7 +2,7 @@ import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import { getPlantTypeActive } from 'features/slice/plantType/plantTypeSlice'
+import { getPlantTypeActive } from 'features/slice/plant/plantTypeSlice'
 import { getZoneByAreaPlant } from 'features/slice/zone/zonePlantSlice'
 import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
 

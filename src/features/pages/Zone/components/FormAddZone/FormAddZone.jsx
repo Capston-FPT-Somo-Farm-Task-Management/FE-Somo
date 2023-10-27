@@ -3,12 +3,12 @@ import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
 const FormAddZone = ({
   isModalOpen,
   closeModal,
-  onFinishCreate,
+  onFinishCreateZone,
   areaByFarm,
   zoneType,
 }) => {
   const onFinish = (values) => {
-    onFinishCreate(values)
+    onFinishCreateZone(values)
     closeModal()
   }
   return (

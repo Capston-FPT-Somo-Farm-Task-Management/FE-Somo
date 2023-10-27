@@ -4,14 +4,14 @@ import DisplayZone from './components/DisplayZone/DisplayZone'
 import { useSelector } from 'react-redux'
 import { getMemberById } from 'features/slice/user/memberSlice'
 import { authServices } from 'services/authServices'
-import { getZoneByFarmId } from 'features/slice/zone/zoneByFarm'
+import { getZoneByFarmId } from 'features/slice/zone/zoneByFarmSlice'
 import { useEffect } from 'react'
 import {
   createZone,
   deleteZone,
   updateZone,
 } from 'features/slice/zone/zoneSlice'
-import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarm'
+import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarmSlice'
 import { getZoneType } from 'features/slice/zone/zoneTypeSlice'
 
 const Zone = () => {
@@ -29,19 +29,19 @@ const Zone = () => {
     dispatch(getZoneType())
   }, [dispatch])
 
-  const onFinishCreate = (values) => {
+  const onFinishCreateZone = (values) => {
     dispatch(createZone(values)).then(() => {
       loadData()
     })
   }
 
-  const onFinishUpdate = (values) => {
+  const onFinishUpdateZone = (values) => {
     dispatch(updateZone(values)).then(() => {
       loadData()
     })
   }
 
-  const onFinishDelete = (id) => {
+  const onFinishDeleteZone = (id) => {
     dispatch(deleteZone(id)).then(() => {
       loadData()
     })
@@ -56,14 +56,14 @@ const Zone = () => {
       <AddZone
         areaByFarm={areaByFarm}
         zoneType={zoneType}
-        onFinishCreate={onFinishCreate}
+        onFinishCreateZone={onFinishCreateZone}
       />
       <DisplayZone
         areaByFarm={areaByFarm}
         zoneByFarm={zoneByFarm}
         zoneType={zoneType}
-        onFinishUpdate={onFinishUpdate}
-        onFinishDelete={onFinishDelete}
+        onFinishUpdateZone={onFinishUpdateZone}
+        onFinishDeleteZone={onFinishDeleteZone}
       />
     </>
   )

@@ -1,76 +1,74 @@
-import React, { useEffect, useState } from "react";
-import { DatePicker, Form, Input, Select } from "antd";
-import { useSelector, useDispatch } from "react-redux";
-import { getAreaActive } from "features/slice/area/areaSlice";
-import { getZoneByAreaAnimal } from "features/slice/zone/zoneAnimalSlice";
-import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
-import { getTaskTypeLivestock } from "features/slice/task/taskTypeAnimal";
-import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
-import { getEmployee } from "features/slice/employee/employeeSlice";
-import { getMaterial } from "features/slice/material/materialSlice";
-import { createTask } from "features/slice/task/taskSlice";
-import dayjs from "dayjs";
-import MultiDatePicker from "react-multi-date-picker";
+import React, { useEffect, useState } from 'react'
+import { DatePicker, Form, Input, Select } from 'antd'
+import { useSelector, useDispatch } from 'react-redux'
+import { getAreaActive } from 'features/slice/area/areaSlice'
+import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
+import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
+import { getTaskTypeLivestock } from 'features/slice/task/taskTypeAnimalSlice'
+import { getSupervisor } from 'features/slice/supervisor/supervisorSlice'
+import { getEmployee } from 'features/slice/employee/employeeSlice'
+import { getMaterial } from 'features/slice/material/materialSlice'
+import { createTask } from 'features/slice/task/taskSlice'
+import dayjs from 'dayjs'
+import MultiDatePicker from 'react-multi-date-picker'
 
 function WholeBarn() {
-  const [selectedAreaId, setSelectedAreaId] = useState(null);
-  const [selectedZoneId, setSelectedZoneId] = useState(null);
-  const [employeesValue, setEmployeesValue] = useState(0);
-  const [materialsValue, setMaterialsValue] = useState(0);
-  const [priorityValue, setPriorityValue] = useState("");
-  const [remindValue, setRemindValue] = useState(0);
-  const [repeatValue, setRepeatValue] = useState(false);
-  const [startDate, setStartDate] = useState();
-  const [description, setDescription] = useState("");
+  const [selectedAreaId, setSelectedAreaId] = useState(null)
+  const [selectedZoneId, setSelectedZoneId] = useState(null)
+  const [employeesValue, setEmployeesValue] = useState(0)
+  const [materialsValue, setMaterialsValue] = useState(0)
+  const [priorityValue, setPriorityValue] = useState('')
+  const [remindValue, setRemindValue] = useState(0)
+  const [repeatValue, setRepeatValue] = useState(false)
+  const [startDate, setStartDate] = useState()
+  const [description, setDescription] = useState('')
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const area = useSelector((state) => state.area.data);
+  const area = useSelector((state) => state.area.data)
 
-  const zoneAnimal = useSelector((state) => state.zoneAnimal.data);
-  const dataAnimalZone = zoneAnimal.data;
+  const zoneAnimal = useSelector((state) => state.zoneAnimal.data)
+  const dataAnimalZone = zoneAnimal.data
 
-  const fieldByZone = useSelector((state) => state.fieldByZone.data);
-  const dataFieldByZone = fieldByZone.data;
+  const fieldByZone = useSelector((state) => state.fieldByZone.data)
+  const dataFieldByZone = fieldByZone.data
 
-  const taskTypeLivestock = useSelector(
-    (state) => state.taskTypeLivestock.data
-  );
-  const dataTaskTypeLivestock = taskTypeLivestock.data;
+  const taskTypeLivestock = useSelector((state) => state.taskTypeLivestock.data)
+  const dataTaskTypeLivestock = taskTypeLivestock.data
 
-  const supervisor = useSelector((state) => state.supervisor.data);
-  const dataSupervisor = supervisor.data;
+  const supervisor = useSelector((state) => state.supervisor.data)
+  const dataSupervisor = supervisor.data
 
-  console.log(dataSupervisor);
+  console.log(dataSupervisor)
 
-  const dataEmployee = useSelector((state) => state.employee.data);
+  const dataEmployee = useSelector((state) => state.employee.data)
 
-  const material = useSelector((state) => state.material.data);
-  const dataMaterial = material.data;
+  const material = useSelector((state) => state.material.data)
+  const dataMaterial = material.data
 
   useEffect(() => {
-    dispatch(getAreaActive());
-    dispatch(getTaskTypeLivestock());
-    dispatch(getSupervisor());
-    dispatch(getEmployee());
-    dispatch(getMaterial());
-  }, []);
+    dispatch(getAreaActive())
+    dispatch(getTaskTypeLivestock())
+    dispatch(getSupervisor())
+    dispatch(getEmployee())
+    dispatch(getMaterial())
+  }, [])
 
   useEffect(() => {
     if (selectedAreaId) {
-      dispatch(getZoneByAreaAnimal(selectedAreaId));
+      dispatch(getZoneByAreaAnimal(selectedAreaId))
     }
     if (selectedZoneId) {
-      dispatch(getFieldByZone(selectedZoneId));
+      dispatch(getFieldByZone(selectedZoneId))
     }
-  }, [selectedAreaId, selectedZoneId]);
+  }, [selectedAreaId, selectedZoneId])
 
   const handleSelectAreaChange = (value) => {
-    setSelectedAreaId(value);
-  };
+    setSelectedAreaId(value)
+  }
   const handleSelectZoneChange = (value) => {
-    setSelectedZoneId(value);
-  };
+    setSelectedZoneId(value)
+  }
 
   const transformData = (originalData) => {
     const transformedData = {
@@ -93,28 +91,28 @@ function WholeBarn() {
         liveStockId: originalData.liveStockId,
         remind: originalData.remind,
       },
-    };
+    }
 
-    return transformedData;
-  };
+    return transformedData
+  }
 
   const onFinish = (values) => {
     const startDateFormatted = dayjs(startDate).format(
-      "YYYY-MM-DD[T]HH:mm:ss.SSS"
-    );
+      'YYYY-MM-DD[T]HH:mm:ss.SSS'
+    )
 
-    const startTime = dayjs(startDate).format("HH:mm:ss.SSS");
+    const startTime = dayjs(startDate).format('HH:mm:ss.SSS')
 
     const selectedDates = values.dates.map((date) =>
-      dayjs(date).format("YYYY-MM-DD")
-    );
+      dayjs(date).format('YYYY-MM-DD')
+    )
 
-    const combinedDates = selectedDates.map((date) => `${date}T${startTime}`);
+    const combinedDates = selectedDates.map((date) => `${date}T${startTime}`)
 
     const finalValues = {
       ...values,
       startDate: startDateFormatted,
-      endDate: dayjs(values.endDate).format("YYYY-MM-DD[T]HH:mm:ss.SSS"),
+      endDate: dayjs(values.endDate).format('YYYY-MM-DD[T]HH:mm:ss.SSS'),
       dates: combinedDates,
       // employeeIds: employeesValue,
       priority: priorityValue,
@@ -124,24 +122,26 @@ function WholeBarn() {
       suppervisorId: 11,
       managerId: 5,
       otherId: 0,
-    };
+    }
 
-    const transformedValues = transformData(finalValues);
+    const transformedValues = transformData(finalValues)
 
-    dispatch(createTask(transformedValues));
-  };
+    dispatch(createTask(transformedValues))
+  }
 
   const disabledDate = (current) => {
-    return current && current < dayjs().startOf("day");
-  };
+    return current && current < dayjs().startOf('day')
+  }
 
-  const { TextArea } = Input;
+  const { TextArea } = Input
 
   return (
-    <Form layout="vertical"
-    className="task-whole-barn"
-    onFinish={onFinish}
-    id="createTask">
+    <Form
+      layout="vertical"
+      className="task-whole-barn"
+      onFinish={onFinish}
+      id="createTask"
+    >
       <div className="form-left">
         <Form.Item
           label="Khu vực"
@@ -149,7 +149,7 @@ function WholeBarn() {
           rules={[
             {
               required: true,
-              message: "Vui lòng chọn khu vực",
+              message: 'Vui lòng chọn khu vực',
             },
           ]}
           name="area"
@@ -169,7 +169,7 @@ function WholeBarn() {
           rules={[
             {
               required: true,
-              message: "Vui lòng chọn vùng",
+              message: 'Vui lòng chọn vùng',
             },
           ]}
           name="zone"
@@ -190,7 +190,7 @@ function WholeBarn() {
           rules={[
             {
               required: true,
-              message: "Vui lòng chọn chuồng",
+              message: 'Vui lòng chọn chuồng',
             },
           ]}
         >
@@ -209,7 +209,7 @@ function WholeBarn() {
           rules={[
             {
               required: true,
-              message: "Vui lòng chọn độ ưu tiên",
+              message: 'Vui lòng chọn độ ưu tiên',
             },
           ]}
         >
@@ -230,7 +230,7 @@ function WholeBarn() {
           rules={[
             {
               required: true,
-              message: "Vui lòng chọn thời gian bắt đầu",
+              message: 'Vui lòng chọn thời gian bắt đầu',
             },
           ]}
           name="startDate"
@@ -240,7 +240,7 @@ function WholeBarn() {
             format="YYYY-MM-DD[T]HH:mm:ss.SSS"
             disabledDate={disabledDate}
             showTime={{
-              defaultValue: dayjs("00:00:00", "HH:mm:ss"),
+              defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
             }}
           />
         </Form.Item>
@@ -249,7 +249,7 @@ function WholeBarn() {
           rules={[
             {
               required: true,
-              message: "Vui lòng chọn khoảng thời gian kết thúc",
+              message: 'Vui lòng chọn khoảng thời gian kết thúc',
             },
           ]}
           name="endDate"
@@ -259,7 +259,7 @@ function WholeBarn() {
             format="YYYY-MM-DD[T]HH:mm:ss.SSS"
             disabledDate={disabledDate}
             showTime={{
-              defaultValue: dayjs("00:00:00", "HH:mm:ss"),
+              defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
             }}
           />
         </Form.Item>
@@ -280,7 +280,7 @@ function WholeBarn() {
           rules={[
             {
               required: true,
-              message: "Vui lòng nhập tên công việc",
+              message: 'Vui lòng nhập tên công việc',
             },
           ]}
         >
@@ -293,7 +293,7 @@ function WholeBarn() {
           rules={[
             {
               required: true,
-              message: "Vui lòng chọn loại nhiệm vụ",
+              message: 'Vui lòng chọn loại nhiệm vụ',
             },
           ]}
         >
@@ -312,7 +312,7 @@ function WholeBarn() {
           rules={[
             {
               required: true,
-              message: "Vui lòng chọn người thực hiện",
+              message: 'Vui lòng chọn người thực hiện',
             },
           ]}
         >
@@ -334,7 +334,7 @@ function WholeBarn() {
           rules={[
             {
               required: true,
-              message: "Vui lòng chọn người giám sát",
+              message: 'Vui lòng chọn người giám sát',
             },
           ]}
         >
@@ -353,7 +353,7 @@ function WholeBarn() {
           rules={[
             {
               required: true,
-              message: "Vui lòng chọn dụng cụ sử dụng",
+              message: 'Vui lòng chọn dụng cụ sử dụng',
             },
           ]}
         >
@@ -384,7 +384,7 @@ function WholeBarn() {
         <Form.Item label="Lặp lại" name="isRepeat">
           <Select
             value={repeatValue}
-            onChange={(value) => setRepeatValue(value === "Có")}
+            onChange={(value) => setRepeatValue(value === 'Có')}
             placeholder="Không"
           >
             <Select.Option value="Không">Không</Select.Option>
@@ -403,7 +403,7 @@ function WholeBarn() {
         )}
       </div>
     </Form>
-  );
+  )
 }
 
-export default WholeBarn;
+export default WholeBarn
