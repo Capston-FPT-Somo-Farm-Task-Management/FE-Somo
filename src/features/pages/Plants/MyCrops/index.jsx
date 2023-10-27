@@ -3,8 +3,8 @@ import AddCropTypeAndPlant from './components/AddPlantAndPlantType/AddPlantAndPl
 import DisplayCrop from './components/DisplayCrop/DisplayCrop'
 import { useDispatch } from 'react-redux'
 import { getMemberById } from 'features/slice/user/memberSlice'
-import { getPlantByFarmId } from 'features/slice/plant/plantByFarm'
-import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarm'
+import { getPlantByFarmId } from 'features/slice/plant/plantByFarmSlice'
+import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarmSlice'
 import { authServices } from 'services/authServices'
 import { useEffect } from 'react'
 import {
@@ -17,7 +17,7 @@ import {
   deleteHabitantType,
   updateHabitantType,
 } from 'features/slice/habitant/habitantTypeSlice'
-import { getPlantType } from 'features/slice/plantType/plantTypeSlice'
+import { getPlantType } from 'features/slice/plant/plantTypeSlice'
 
 const MyCrops = () => {
   const member = useSelector((state) => state.member.data)

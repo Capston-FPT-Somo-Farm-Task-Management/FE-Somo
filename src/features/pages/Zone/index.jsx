@@ -4,14 +4,14 @@ import DisplayZone from './components/DisplayZone/DisplayZone'
 import { useSelector } from 'react-redux'
 import { getMemberById } from 'features/slice/user/memberSlice'
 import { authServices } from 'services/authServices'
-import { getZoneByFarmId } from 'features/slice/zone/zoneByFarm'
+import { getZoneByFarmId } from 'features/slice/zone/zoneByFarmSlice'
 import { useEffect } from 'react'
 import {
   createZone,
   deleteZone,
   updateZone,
 } from 'features/slice/zone/zoneSlice'
-import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarm'
+import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarmSlice'
 import { getZoneType } from 'features/slice/zone/zoneTypeSlice'
 
 const Zone = () => {

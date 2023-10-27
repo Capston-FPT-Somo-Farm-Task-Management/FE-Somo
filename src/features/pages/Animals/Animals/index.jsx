@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import DisplayAnimal from './components/DisplayAnimal/DisplayAnimal'
 import AddAnimalAndAnimalType from './components/AddAnimalAndAnimalType/AddAnimalAndAnimalType'
 import { useSelector } from 'react-redux'
-import { getAnimalByFarmId } from 'features/slice/animal/animalByFarm'
+import { getAnimalByFarmId } from 'features/slice/animal/animalByFarmSlice'
 import { useDispatch } from 'react-redux'
 import { getMemberById } from 'features/slice/user/memberSlice'
 import { authServices } from 'services/authServices'
@@ -17,7 +17,7 @@ import {
   deleteHabitantType,
   updateHabitantType,
 } from 'features/slice/habitant/habitantTypeSlice'
-import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarm'
+import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarmSlice'
 
 const Animals = () => {
   const member = useSelector((state) => state.member.data)

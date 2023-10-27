@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux'
 import AddAndSearchCropGroup from './components/AddAndSearchCropGroup/AddAndSearchCropGroup'
 import DisplayCropGroup from './components/DisplayCropGroup/DisplayCropGroup'
 import { useSelector } from 'react-redux'
-import { getFieldPlantByFarmId } from 'features/slice/field/fieldByFarm'
+import { getFieldPlantByFarmId } from 'features/slice/field/fieldByFarmSlice'
 import { getMemberById } from 'features/slice/user/memberSlice'
 import { useEffect } from 'react'
 import { authServices } from 'services/authServices'
@@ -11,7 +11,7 @@ import {
   deleteField,
   updateField,
 } from 'features/slice/field/fieldSlice'
-import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarm'
+import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarmSlice'
 
 const CropGroup = () => {
   const dispatch = useDispatch()
