@@ -4,10 +4,11 @@ import { useState } from 'react'
 import UpdateZone from './UpdateZone'
 
 const DisplayZone = ({
+  areaByFarm,
   zoneByFarm,
-  onFinishDelete,
+  zoneType,
   onFinishUpdate,
-  farmId,
+  onFinishDelete,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
@@ -57,7 +58,7 @@ const DisplayZone = ({
 
         <Column
           title="Cập nhật"
-          key="5"
+          key="8"
           dataIndex="id"
           render={(_, record) => (
             <Button
@@ -72,11 +73,12 @@ const DisplayZone = ({
       </Table>
       <UpdateZone
         key={selectedData ? selectedData.id : null}
+        areaByFarm={areaByFarm}
+        zoneType={zoneType}
+        onFinishUpdate={onFinishUpdate}
+        selectedData={selectedData}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
-        selectedData={selectedData}
-        onFinishUpdate={onFinishUpdate}
-        farmId={farmId}
       />
     </>
   )

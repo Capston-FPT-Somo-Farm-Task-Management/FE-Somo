@@ -1,19 +1,12 @@
 import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
-import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarm'
-import { getZoneType } from 'features/slice/zone/zoneTypeSlice'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
-const FormAddZone = ({ isModalOpen, closeModal, onFinishCreate, farmId }) => {
-  const areaByFarm = useSelector((state) => state.areaByFarm.data)
-  const zoneType = useSelector((state) => state.zoneType.data)
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(getAreaActiveByFarmId(farmId))
-    dispatch(getZoneType())
-  }, [dispatch])
-
+const FormAddZone = ({
+  isModalOpen,
+  closeModal,
+  onFinishCreate,
+  areaByFarm,
+  zoneType,
+}) => {
   const onFinish = (values) => {
     onFinishCreate(values)
     closeModal()
