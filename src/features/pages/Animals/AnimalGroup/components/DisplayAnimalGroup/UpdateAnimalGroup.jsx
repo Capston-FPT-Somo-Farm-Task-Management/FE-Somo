@@ -36,7 +36,7 @@ const UpdateAnimalGroup = ({
       status: 1,
       code: values.code,
       area: values.square,
-      zoneId: values.zone.value,
+      zoneId: typeof values.zone === 'object' ? values.zone.value : values.zone,
     }
     onFinishUpdate(finalValues)
     closeModal()

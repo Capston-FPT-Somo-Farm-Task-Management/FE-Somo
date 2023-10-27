@@ -1,33 +1,19 @@
 import { Badge, Button, Table } from 'antd'
-import { useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
-import { deletePlant, getPlantActive } from 'features/slice/plant/plantSlice'
+import { useState } from 'react'
 import Column from 'antd/es/table/Column'
 import UpdateCrop from './UpdateCrop'
-import { getPlantByFarmId } from 'features/slice/plant/plantByFarm'
-import { getMemberById } from 'features/slice/user/memberSlice'
-import { authServices } from 'services/authServices'
-import { useDispatch } from 'react-redux'
 
-const TableDisplayCrop = () => {
+const TableDisplayCrop = ({
+  areaByFarm,
+  plantByFarm,
+  onFinishDeletePlant,
+  onFinishUpdatePlant,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
 
-  const dispatch = useDispatch()
-
-  const member = useSelector((state) => state.member.data)
-  const plantByFarm = useSelector((state) => state.plantByFarm.data)
-  const farmId = member.farmId
-
-  useEffect(() => {
-    dispatch(getMemberById(authServices.getUserId()))
-    dispatch(getPlantByFarmId(farmId))
-  }, [dispatch])
-
   const handleDelete = (id) => {
-    dispatch(deletePlant(id)).then(() => {
-      loadData()
-    })
+    onFinishDeletePlant(id)
   }
 
   const openModal = (record) => {
@@ -37,10 +23,6 @@ const TableDisplayCrop = () => {
 
   const closeModal = () => {
     setIsModalOpen(false)
-  }
-
-  const loadData = () => {
-    dispatch(getPlantByFarmId(farmId))
   }
 
   return (
@@ -105,7 +87,8 @@ const TableDisplayCrop = () => {
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}
-        loadData={loadData}
+        areaByFarm={areaByFarm}
+        onFinishUpdatePlant={onFinishUpdatePlant}
       />
     </>
   )

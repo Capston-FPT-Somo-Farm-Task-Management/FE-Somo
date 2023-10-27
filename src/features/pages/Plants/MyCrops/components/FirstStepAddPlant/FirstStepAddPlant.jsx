@@ -1,42 +1,49 @@
 import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAreaActive } from 'features/slice/area/areaSlice'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import { getPlantType } from 'features/slice/plantType/plantTypeSlice'
-import { createPlant, getPlantActive } from 'features/slice/plant/plantSlice'
+import { getPlantTypeActive } from 'features/slice/plantType/plantTypeSlice'
 import { getZoneByAreaPlant } from 'features/slice/zone/zonePlantSlice'
 import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
 
-const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
+const FirstStepAddPlant = ({
+  isModalOpen,
+  closeModal,
+  areaByFarm,
+  onFinishCreatePlant,
+}) => {
+  const [form] = Form.useForm()
+  const dispatch = useDispatch()
   const [selectedAreaId, setSelectedAreaId] = useState(null)
   const [selectedZoneId, setSelectedZoneId] = useState(null)
 
-  const area = useSelector((state) => state.area.data)
   const zonePlant = useSelector((state) => state.zonePlant.data)
   const fieldByZone = useSelector((state) => state.fieldByZone.data)
 
-  const plantType = useSelector((state) => state.plantType.data)
-  const dataPlantType = plantType.data
-
-  const dataZonePlant = zonePlant.data
-  const dataFieldByZone = fieldByZone.data
-
-  const dispatch = useDispatch()
+  const plantTypeActive = useSelector((state) => state.plantType.data)
 
   useEffect(() => {
-    dispatch(getAreaActive())
-    dispatch(getPlantType())
-  }, [])
+    dispatch(getPlantTypeActive())
+  }, [dispatch])
 
   useEffect(() => {
     if (selectedAreaId) {
       dispatch(getZoneByAreaPlant(selectedAreaId))
+      form.setFieldsValue({
+        zoneId: null,
+        fieldId: null,
+      })
     }
+  }, [selectedAreaId])
+
+  useEffect(() => {
     if (selectedZoneId) {
       dispatch(getFieldByZone(selectedZoneId))
+      form.setFieldsValue({
+        fieldId: null,
+      })
     }
-  }, [selectedAreaId, selectedZoneId])
+  }, [selectedZoneId])
 
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value)
@@ -47,12 +54,8 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
   }
 
   const onFinish = (values) => {
-    dispatch(createPlant(values)).then(() => {
-      dispatch(getPlantActive())
-      setTimeout(() => {
-        closeModal()
-      }, 500)
-    })
+    onFinishCreatePlant(values)
+    closeModal()
   }
 
   return (
@@ -78,6 +81,7 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
           className="first-step-plant"
           id="createPlant"
           onFinish={onFinish}
+          form={form}
         >
           <div className="form-left">
             {/* ID Plant */}
@@ -121,10 +125,14 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
             >
               <Select
                 placeholder="Chọn loại cây"
-                options={dataPlantType?.map((type) => ({
-                  label: type.name,
-                  value: type.id,
-                }))}
+                options={
+                  plantTypeActive && plantTypeActive.data
+                    ? plantTypeActive.data.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }))
+                    : null
+                }
               ></Select>
             </Form.Item>
 
@@ -157,10 +165,14 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
             >
               <Select
                 placeholder="Chọn khu vực"
-                options={area.data?.map((item) => ({
-                  label: item.name,
-                  value: item.id,
-                }))}
+                options={
+                  areaByFarm && areaByFarm.data
+                    ? areaByFarm.data.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }))
+                    : null
+                }
                 onChange={handleSelectAreaChange}
               ></Select>
             </Form.Item>
@@ -179,12 +191,12 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
               <Select
                 placeholder="Chọn vùng"
                 options={
-                  Array.isArray(dataZonePlant)
-                    ? dataZonePlant.map((item) => ({
+                  zonePlant && zonePlant.data
+                    ? zonePlant.data.map((item) => ({
                         label: item.name,
                         value: item.id,
                       }))
-                    : []
+                    : null
                 }
                 onChange={handleSelectZoneChange}
               ></Select>
@@ -204,12 +216,12 @@ const FirstStepAddPlant = ({ isModalOpen, closeModal }) => {
               <Select
                 placeholder="Chọn vườn"
                 options={
-                  Array.isArray(dataFieldByZone)
-                    ? dataFieldByZone.map((item) => ({
+                  fieldByZone && fieldByZone.data
+                    ? fieldByZone.data.map((item) => ({
                         label: item.name,
                         value: item.id,
                       }))
-                    : []
+                    : null
                 }
               ></Select>
             </Form.Item>

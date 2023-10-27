@@ -1,25 +1,18 @@
 import { Badge, Button, Table } from 'antd'
-import { getPlantType } from 'features/slice/plantType/plantTypeSlice'
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
 import Column from 'antd/es/table/Column'
-import { deleteHabitantType } from 'features/slice/habitant/habitantTypeSlice'
 import UpdateCropType from './UpdateCropType'
 
-const TableDisplayCropType = () => {
+const TableDisplayCropType = ({
+  plantType,
+  onFinishDeletePlantType,
+  onFinishUpdatePlantType,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
-  const plantType = useSelector((state) => state.plantType.data)
-  const dataPlantType = plantType.data
-
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(getPlantType())
-  }, [dispatch])
 
   const handleDelete = (id) => {
-    dispatch(deleteHabitantType(id))
+    onFinishDeletePlantType(id)
   }
 
   const openModal = (record) => {
@@ -31,13 +24,9 @@ const TableDisplayCropType = () => {
     setIsModalOpen(false)
   }
 
-  const loadData = () => {
-    dispatch(getPlantType())
-  }
-
   return (
     <>
-      <Table dataSource={dataPlantType} rowKey="id">
+      <Table dataSource={plantType ? plantType.data : ''} rowKey="id">
         <Column
           title="Tên cây trồng"
           dataIndex="name"
@@ -95,7 +84,7 @@ const TableDisplayCropType = () => {
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}
-        loadData={loadData}
+        onFinishUpdatePlantType={onFinishUpdatePlantType}
       />
     </>
   )

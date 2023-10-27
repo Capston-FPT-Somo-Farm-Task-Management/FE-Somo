@@ -70,8 +70,12 @@ const UpdateAnimal = ({
       externalId: values.externalId,
       weight: values.weight,
       gender: values.gender,
-      habitantTypeId: values.habitantType.value,
-      fieldId: values.field.value,
+      habitantTypeId:
+        typeof values.habitantType === 'object'
+          ? values.habitantType.value
+          : values.habitantType,
+      fieldId:
+        typeof values.field === 'object' ? values.field.value : values.field,
     }
     onFinishUpdateAnimal(finalValues)
     closeModal()

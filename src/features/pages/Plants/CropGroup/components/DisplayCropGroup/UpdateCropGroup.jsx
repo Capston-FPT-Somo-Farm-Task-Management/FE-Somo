@@ -39,7 +39,7 @@ const UpdateCropGroup = ({
       status: 0,
       code: values.code,
       area: values.square,
-      zoneId: values.zone.value,
+      zoneId: typeof values.zone === 'object' ? values.zone.value : values.zone,
     }
     onFinishUpdate(finalValues)
     closeModal()
@@ -77,10 +77,16 @@ const UpdateCropGroup = ({
           <div className="form-left">
             <Form.Item
               label="Mã vườn"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập mã chuồng',
+                },
+              ]}
               initialValue={selectedData ? selectedData.code : ''}
               name="code"
             >
-              <Input readOnly />
+              <Input placeholder="Nhập mã vườn" />
             </Form.Item>
 
             {/* Name Animal */}

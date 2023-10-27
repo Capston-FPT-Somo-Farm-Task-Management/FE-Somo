@@ -1,16 +1,17 @@
 import { Button, Form, Input, Modal } from 'antd'
-import { createHabitantType } from 'features/slice/habitant/habitantTypeSlice'
-import { useDispatch } from 'react-redux'
 const { TextArea } = Input
 
-const FirstStepAddPlantType = ({ isModalOpenType, closeModalType }) => {
-  const dispatch = useDispatch()
+const FirstStepAddPlantType = ({
+  isModalOpenType,
+  closeModalType,
+  onFinishCreatePlantType,
+}) => {
   const onFinish = (values) => {
     const finalValues = {
       ...values,
       status: 0,
     }
-    dispatch(createHabitantType(finalValues))
+    onFinishCreatePlantType(finalValues)
     closeModalType()
   }
 
