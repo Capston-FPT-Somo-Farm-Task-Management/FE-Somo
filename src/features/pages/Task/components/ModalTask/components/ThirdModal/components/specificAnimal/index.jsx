@@ -216,7 +216,7 @@ function SpecificAnimal() {
           <Select
             placeholder="Chọn chuồng"
             options={dataFieldByZone?.map((item) => ({
-              label: item.name,
+              label: item.nameCode,
               value: item.id,
             }))}
           />

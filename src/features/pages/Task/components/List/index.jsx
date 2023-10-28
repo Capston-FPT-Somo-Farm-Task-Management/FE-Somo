@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, Input, Modal, Select, Space, Table } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { getTasks, deleteTask } from "features/slice/task/taskSlice";
-import { getEmployee } from "features/slice/employee/employeeSlice";
+import { getEmployeeByTask } from "features/slice/employee/employeeByTask";
 import {
   getSubTasksByTaskId,
   createSubTask,
@@ -32,6 +32,7 @@ const List = () => {
   const [pageSize, setPageSize] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
   const [currentTaskId, setCurrentTaskId] = useState(0);
+  const [availableEmployees, setAvailableEmployees] = useState([]);
 
   const { Search } = Input;
   const onSearch = (e) => {
@@ -46,21 +47,24 @@ const List = () => {
     dataTask.filter((task) =>
       task.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
-  console.log(dataTask);
-
-  const dataEmployee = useSelector((state) => state.employee.data);
   const subTask = useSelector((state) => state.subTask.data);
-  const dataSubTask = subTask.data;
-  console.log(dataSubTask);
+
+  // console.log(dataSubTask);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getTasks({ pageIndex, pageSize })).then((data) => {
       setTotalPages(Math.ceil(data.total / pageSize));
     });
-    dispatch(getEmployee());
-  }, [pageIndex, pageSize]);
+    
+  }, [pageIndex, pageSize ]);
+
+  useEffect(() => {
+    dispatch(getEmployeeByTask(currentTaskId)).then((data) => {
+      setAvailableEmployees(data.payload); 
+      console.log(data.payload);
+    });
+  },[currentTaskId])
 
   const onChange = (pagination) => {
     setPageIndex(pagination.current);
@@ -119,10 +123,11 @@ const List = () => {
   const onFinish = (values) => {
     const finalValues = {
       ...values,
-      taskId: currentTaskId, // Thêm taskId vào object finalValues
+      taskId: currentTaskId,
     };
     console.log(finalValues);
     dispatch(createSubTask(finalValues));
+    loadData();
     closeModal();
     closeAddSubtaskModal();
   };
@@ -281,11 +286,8 @@ const List = () => {
             ]}
           >
             <Select
-              // mode="multiple"
-              // value={employeesValue}
-              // onChange={(value) => setEmployeesValue(value)}
               placeholder="Chọn người thực hiện"
-              options={dataEmployee?.map((item) => ({
+              options={availableEmployees.data?.map((item) => ({
                 label: item.name,
                 value: item.id,
               }))}
@@ -312,8 +314,8 @@ const List = () => {
         ]}
       >
         <div className="subTask">
-          {dataSubTask ? (
-            dataSubTask.map((subTask) => (
+          {subTask ? (
+            subTask.data?.map((subTask) => (
               <div key={subTask.taskId}>
                 <p>{subTask.name}</p>
                 <p>{subTask.employeeName}</p>

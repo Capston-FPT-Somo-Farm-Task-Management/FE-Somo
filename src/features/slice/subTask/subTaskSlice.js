@@ -19,18 +19,22 @@ export const getSubTasksByTaskId = createAsyncThunk(
   }
 );
 
-export const createSubTask = createAsyncThunk("subTasks/createSubTask", async (data) => {
+
+
+export const createSubTask = createAsyncThunk("subTasks/createSubTask", async (data, {rejectWithValue}) => {
     try {
       const response = await axios.post(baseUrl + `/FarmSubTask/Task`, data, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      console.log(response);
-      console.log(response.data);
-      return response.data;
+      if (response.status === 200) {
+        toast.success(response.data.message)
+        return response.data.data
+      }
     } catch (error) {
-      throw error;
+      toast.error(error.response.data.message)
+      rejectWithValue(error)
     }
   });
 

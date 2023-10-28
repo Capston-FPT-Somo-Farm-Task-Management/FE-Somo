@@ -30,6 +30,22 @@ const TaskDetail = ({ visible, onCancel, taskData }) => {
     description,
   } = taskData;
 
+  const renderImages = () => {
+    if (dataEvidence && dataEvidence.length > 0) {
+      return dataEvidence.map((evidence, index) => (
+        <div key={index}>
+          <p>{evidence.time}</p>
+          <p>{evidence.description}</p>
+          <div className="img-evidence">
+            <img src={evidence.urlImage} alt={`evidence-${index}`} />
+          </div>
+        </div>
+      ));
+    } else {
+      return <p>Chưa có bằng chứng báo cáo</p>;
+    }
+  };
+
   const renderSubFields = () => {
     if (externalId) {
       if (fieldStatus === "Động vật") {

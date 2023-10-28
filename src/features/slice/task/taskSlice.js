@@ -29,7 +29,8 @@ export const getTaskById = createAsyncThunk('tasks/getTaskById', async (taskId) 
     }
   })
 
-export const createTask = createAsyncThunk("tasks/createTask", async (data, id) => {
+
+export const createTask = createAsyncThunk("tasks/createTask", async (data, {rejectWithValue}) => {
   console.log(data);
   console.log(data.farmTask.memberId);
   try {
@@ -38,11 +39,13 @@ export const createTask = createAsyncThunk("tasks/createTask", async (data, id) 
         "Content-Type": "application/json",
       },
     });
-    console.log(response);
-    console.log(response.data);
-    return response.data;
+    if (response.status === 200) {
+      toast.success(response.data.message)
+      return response.data.data
+    }
   } catch (error) {
-    throw error;
+    toast.error(error.response.data.message)
+      rejectWithValue(error)
   }
 });
 
