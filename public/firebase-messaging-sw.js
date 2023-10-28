@@ -1,9 +1,10 @@
-importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js')
-importScripts(
-  'https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js'
-)
+// Scripts for firebase and firebase messaging
+// eslint-disable-next-line no-undef
+importScripts('https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js')
+// eslint-disable-next-line no-undef
+importScripts('https://www.gstatic.com/firebasejs/8.2.0/firebase-messaging.js')
 
-//the Firebase config object
+// Initialize the Firebase app in the service worker by passing the generated config
 const firebaseConfig = {
   apiKey: 'AIzaSyDKF3MhWbAJYgVlce_y7czrvuddJqLjEeY',
   authDomain: 'somotaskmanagement.firebaseapp.com',
@@ -14,15 +15,24 @@ const firebaseConfig = {
   measurementId: 'G-WMJMD9Q5SJ',
 }
 
+// eslint-disable-next-line no-undef
 firebase.initializeApp(firebaseConfig)
+
+// Retrieve firebase messaging
+// eslint-disable-next-line no-undef
 const messaging = firebase.messaging()
 
 messaging.onBackgroundMessage(function (payload) {
   console.log('Received background message ', payload)
+
   const notificationTitle = payload.notification.title
   const notificationOptions = {
     body: payload.notification.body,
   }
 
-  self.registration.showNotification(notificationTitle, notificationOptions)
+  // eslint-disable-next-line no-restricted-globals
+  return self.registration.showNotification(
+    notificationTitle,
+    notificationOptions
+  )
 })

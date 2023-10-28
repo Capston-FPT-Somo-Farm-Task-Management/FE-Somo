@@ -15,7 +15,7 @@ import {
   FormatPainterOutlined,
 } from '@ant-design/icons'
 import logoSomo from '../../../assets/logo_Somo.png'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { authServices } from 'services/authServices'
 import { toast } from 'react-toastify'
 import {
@@ -30,6 +30,7 @@ const SideMenu = () => {
   const [userRole, setUserRole] = useState()
   const [collapsed, setCollapsed] = useState(false)
   const location = useLocation()
+  const navigate = useNavigate()
 
   const isDesktop = useDesktopMediaQuery()
   const isTablet = useTabletMediaQuery()
@@ -44,6 +45,7 @@ const SideMenu = () => {
   const logout = () => {
     authServices.logOut()
     toast.success('Đăng xuất thành công')
+    navigate('/login')
   }
 
   return (
@@ -68,10 +70,10 @@ const SideMenu = () => {
             mode="inline"
             defaultSelectedKeys={[location.pathname]}
           >
-            <Menu.Item key="/">
+            <Menu.Item key="/schedule">
               <CalendarOutlined />
               <span>Lịch trình</span>
-              <Link to="/"></Link>
+              <Link to="/schedule"></Link>
             </Menu.Item>
 
             <Menu.Item key="/task">

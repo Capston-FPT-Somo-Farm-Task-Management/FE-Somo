@@ -1,24 +1,24 @@
-import React from "react";
-import { Form, Button, Input } from "antd";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Link, useNavigate } from "react-router-dom";
-import logoSomo from "../../../assets/logo_Somo.png";
-import { postLogin } from "features/slice/user/userSlice";
-import { useDispatch } from "react-redux";
-import { authServices } from "services/authServices";
+import React from 'react'
+import { Form, Button, Input } from 'antd'
+import { LockOutlined, UserOutlined } from '@ant-design/icons'
+import { Link, useNavigate } from 'react-router-dom'
+import logoSomo from '../../../assets/logo_Somo.png'
+import { postLogin } from 'features/slice/user/userSlice'
+import { useDispatch } from 'react-redux'
+import { authServices } from 'services/authServices'
 
 const SignIn = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const onFinish = (values) => {
     dispatch(postLogin(values)).then(() => {
-      if (authServices.getRole() === "Manager") {
-        navigate("/");
-      } else if (authServices.getRole() === "Admin") {
-        navigate("/");
+      if (authServices.getRole() === 'Manager') {
+        navigate('/schedule')
+      } else if (authServices.getRole() === 'Admin') {
+        navigate('/admin-home')
       }
-    });
-  };
+    })
+  }
 
   return (
     <div className="wrapper">
@@ -29,28 +29,25 @@ const SignIn = () => {
             <img src={logoSomo} id="icon" alt="User Icon" />
           </div>
 
-          <Form name="login" className="login-form" onFinish={onFinish} >
+          <Form name="login" className="login-form" onFinish={onFinish}>
             <Form.Item
               name="username"
               rules={[
                 {
                   required: true,
-                  message: "Please enter your username",
+                  message: 'Please enter your username',
                 },
               ]}
-              style={{margin: 0}}
+              style={{ margin: 0 }}
             >
-              <Input
-                className="fadeIn second"
-                placeholder="Tên đăng nhập"
-              />
+              <Input className="fadeIn second" placeholder="Tên đăng nhập" />
             </Form.Item>
             <Form.Item
               name="password"
               rules={[
                 {
                   required: true,
-                  message: "Please enter your password",
+                  message: 'Please enter your password',
                 },
               ]}
             >
@@ -65,7 +62,7 @@ const SignIn = () => {
                 type="primary"
                 htmlType="submit"
                 className="btn-login"
-                style={{margin: 0}}
+                style={{ margin: 0 }}
               >
                 Đăng nhập
               </Button>
@@ -79,7 +76,7 @@ const SignIn = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SignIn;
+export default SignIn
