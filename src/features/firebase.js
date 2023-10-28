@@ -10,42 +10,33 @@ const firebaseConfig = {
   measurementId: 'G-WMJMD9Q5SJ',
 }
 
-const app = initializeApp(firebaseConfig)
-const messaging = getMessaging(app)
+export const firebase = initializeApp(firebaseConfig)
+const messaging = getMessaging()
 
-export const requestPermission = () => {
-  console.log('Requesting User Permission......')
-  Notification.requestPermission().then((permission) => {
-    if (permission === 'granted') {
-      console.log('Notification User Permission Granted.')
-      return getToken(messaging, {
-        vapidKey: `BMaIt04Zu9XSxs9ul32Ha-OAm56qr3FhfM6CQQI0r5_Ju-h8_4gb1D_kyf5XLTzsPobAwqDjK7bSxr7uzG4_aDI`,
-      })
-        .then((currentToken) => {
-          if (currentToken) {
-            console.log(currentToken)
-          } else {
-            console.log('Failed to generate the app registration token.')
-          }
-        })
-        .catch((err) => {
-          console.log(
-            'An error occurred when requesting to receive the token.',
-            err
-          )
-        })
-    } else {
-      console.log('User Permission Denied.')
-    }
+export const requestForToken = () => {
+  return getToken(messaging, {
+    vapidKey:
+      'BMtIB-3Lg6nNAH9Pc4Nm8hn--Ht7G1nUAVhUGt4R8AUiQ25ftoYj8Kp9WuzKMoAIqqGewapkl_BbERweTkZvXi4',
   })
+    .then((currentToken) => {
+      if (currentToken) {
+        console.log(currentToken)
+        // Perform any other neccessary action with the token
+      } else {
+        // Show permission request UI
+        console.log(
+          'No registration token available. Request permission to generate one.'
+        )
+      }
+    })
+    .catch((err) => {
+      console.log('An error occurred while retrieving token. ', err)
+    })
 }
-
-requestPermission()
 
 export const onMessageListener = () =>
   new Promise((resolve) => {
     onMessage(messaging, (payload) => {
-      console.log(payload)
       resolve(payload)
     })
   })
