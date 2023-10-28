@@ -9,6 +9,7 @@ import {
 } from "features/slice/subTask/subTaskSlice";
 import { taskTitle, onChange } from "./listTaskData";
 import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
+import { getStatus } from "features/slice/status/statusSlice";
 import TaskDetail from "../TaskDetail";
 import ModalTask from "../ModalTask";
 import { Menu, Dropdown } from "antd";
@@ -20,6 +21,7 @@ import {
   FileTextOutlined,
 } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
+import StatusTabs from "./components/StatusTabs";
 
 const List = () => {
   const [subTasks, setSubTasks] = useState([]);
@@ -28,43 +30,44 @@ const List = () => {
   // const [employeesValue, setEmployeesValue] = useState(0);
   const [description, setDescription] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [pageIndex, setPageIndex] = useState(5);
+  const [pageIndex, setPageIndex] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [totalPages, setTotalPages] = useState(1);
   const [currentTaskId, setCurrentTaskId] = useState(0);
   const [availableEmployees, setAvailableEmployees] = useState([]);
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [status, setStatus] = useState(0);
 
   const { Search } = Input;
+  const [form] = Form.useForm();
   const onSearch = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
   };
 
   const task = useSelector((state) => state.task.data);
-  const dataTask = task.data;
-  const filteredData =
-    dataTask &&
-    dataTask.filter((task) =>
-      task.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  console.log(task);
+
+  const dataTotalPages = useSelector((state) => state.task.totalPages);
+  console.log(dataTotalPages);
+
+
   const subTask = useSelector((state) => state.subTask.data);
 
   // console.log(dataSubTask);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getTasks({ pageIndex, pageSize })).then((data) => {
-      setTotalPages(Math.ceil(data.total / pageSize));
-    });
-    
-  }, [pageIndex, pageSize ]);
+    dispatch(getTasks({ pageIndex, pageSize, status }))
+    dispatch(getStatus());
+  }, [pageIndex, pageSize, status ]);
 
   useEffect(() => {
     dispatch(getEmployeeByTask(currentTaskId)).then((data) => {
-      setAvailableEmployees(data.payload); 
+      setAvailableEmployees(data.payload);
       console.log(data.payload);
     });
-  },[currentTaskId])
+  }, [currentTaskId]);
 
   const onChange = (pagination) => {
     setPageIndex(pagination.current);
@@ -82,13 +85,8 @@ const List = () => {
   };
 
   const handleDelete = (id) => {
-    dispatch(deleteTask(id)).then(() => {
-      loadData();
-    });
+    dispatch(deleteTask(id));
   };
-
-  const [selectedTask, setSelectedTask] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = (record) => {
     setSelectedTask(record);
@@ -103,6 +101,7 @@ const List = () => {
   const openAddSubtaskModal = (record) => {
     setCurrentTaskId(record.id);
     setAddSubtaskVisible(true);
+    form.resetFields();
   };
   const openSubtaskModal = (record) => {
     setCurrentTaskId(record.id);
@@ -116,8 +115,9 @@ const List = () => {
     setAddSubtaskVisible(false);
   };
 
-  const loadData = () => {
-    dispatch(getTasks());
+  const handleTabChange = (key) => {
+    setPageIndex(1); // Reset trang về 1 khi thay đổi tab
+    setStatus(Number(key)); // Cập nhật status được chọn
   };
 
   const onFinish = (values) => {
@@ -126,10 +126,12 @@ const List = () => {
       taskId: currentTaskId,
     };
     console.log(finalValues);
-    dispatch(createSubTask(finalValues));
-    loadData();
-    closeModal();
-    closeAddSubtaskModal();
+    dispatch(createSubTask(finalValues)).then(() => {
+      dispatch(getSubTasksByTaskId(currentTaskId)).then((data) => {
+        setSubTasks(data.payload);
+        dispatch(getTasks({ pageIndex, pageSize, status }))
+      });
+    });
   };
 
   return (
@@ -138,6 +140,7 @@ const List = () => {
         <ModalTask />
         <div>
           <Space direction="vertical">
+          <StatusTabs onTabChange={handleTabChange} />
             <Search
               placeholder="Tìm kiếm theo tên"
               allowClear
@@ -155,7 +158,7 @@ const List = () => {
         pagination={{
           current: pageIndex,
           pageSize: pageSize,
-          total: task.total,
+          total: dataTotalPages * pageSize,
           showSizeChanger: true,
           pageSizeOptions: ["10", "20", "30"], // Có thể tùy chỉnh số lượng item mỗi trang ở đây
         }}
@@ -214,7 +217,7 @@ const List = () => {
             ),
           },
         ]}
-        dataSource={filteredData}
+        dataSource={task}
         onChange={onChange}
         rowSelection={{
           onSelect: (record) => {
@@ -260,7 +263,12 @@ const List = () => {
           </Button>,
         ]}
       >
-        <Form layout="vertical" id="createSubTask" onFinish={onFinish}>
+        <Form
+          layout="vertical"
+          form={form}
+          id="createSubTask"
+          onFinish={onFinish}
+        >
           <Form.Item
             label="Tên công việc con"
             name="name"

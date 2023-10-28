@@ -4,19 +4,20 @@ import { baseUrl } from "features/api/baseUrl";
 import { toast } from "react-toastify";
 import { authServices } from "services/authServices";
 
-export const getTasks = createAsyncThunk("tasks/getTasks", async ({ pageIndex, pageSize }) => {
+export const getTasks = createAsyncThunk("tasks/getTasks", async ({ pageIndex, pageSize, status,  }, {rejectWithValue}) => {
   try {
-    const { data } = await axios.get(baseUrl + `/FarmTask/TaskActive/Page(${pageIndex})/PageSize(${pageSize})`, {
+    const { data } = await axios.get(baseUrl + `/FarmTask/PageIndex(${pageIndex})/PageSize(${pageSize})/Manager(${authServices.getUserId()})/Status(${status})/Date`, {
       headers: {
         "Content-Type": "application/json",
       },
     });
+    console.log(data);
     return data;
   } catch (error) {
-    console.log(error);
+    rejectWithValue(error.message)
   }
 });
-export const getTaskById = createAsyncThunk('tasks/getTaskById', async (taskId) => {
+export const getTaskById = createAsyncThunk('tasks/getTaskById', async (taskId, {rejectWithValue}) => {
     try {
       const { data } = await axios.get(baseUrl + `/FarmTask/${taskId}`, {
         headers: {
@@ -25,7 +26,7 @@ export const getTaskById = createAsyncThunk('tasks/getTaskById', async (taskId) 
       })
       return data
     } catch (error) {
-      console.log(error)
+      rejectWithValue(error.message)
     }
   })
 
@@ -77,6 +78,7 @@ const taskSlice = createSlice({
     data: [],
     loading: false,
     error: "",
+    totalPages: 0,
   },
   extraReducers(builder) {
     builder
@@ -85,9 +87,9 @@ const taskSlice = createSlice({
       })
       .addCase(getTasks.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = "";
-        state.data = action.payload;
-        state.total = action.payload.total;
+        state.error = ''
+        state.data = action.payload.data.farmTasks;
+        state.totalPages = action.payload.data.totalPages;
       })
       .addCase(getTasks.rejected, (state, action) => {
         state.loading = false;

@@ -21,9 +21,16 @@ function ModalTask() {
     setCurrentStep(currentStep - 1);
   };
 
+  const handleFinish = () => {
+    // Handle finishing steps
+    setCurrentStep(-1);
+    setSelectedType(null);
+  };
+
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setCurrentStep(currentStep + 1);
+    
   };
 
   const renderStepContent = (step) => {
@@ -75,6 +82,7 @@ function ModalTask() {
               type="primary"
               form="createTask"
               htmlType="submit"
+              onClick={handleFinish}
             >
               Thêm
             </Button>

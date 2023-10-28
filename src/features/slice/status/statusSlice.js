@@ -32,7 +32,6 @@ const statusSlice = createSlice({
         state.loading = false;
         state.error = "";
         state.data = action.payload;
-        console.log(action.payload);
       })
       .addCase(getStatus.rejected, (state, action) => {
         state.loading = false;

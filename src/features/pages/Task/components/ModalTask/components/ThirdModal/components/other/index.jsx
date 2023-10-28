@@ -22,12 +22,13 @@ function Other() {
   const [remindValue, setRemindValue] = useState(0);
   const [repeatValue, setRepeatValue] = useState(false);
 
+  const [form] = Form.useForm();
+
   const dispatch = useDispatch();
 
   const area = useSelector((state) => state.area.data);
 
   const zone = useSelector((state) => state.zone.data);
-  const dataZone = zone.data;
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
   const dataFieldByZone = fieldByZone.data;
@@ -50,14 +51,25 @@ function Other() {
     dispatch(getMaterial());
   }, []);
 
+
   useEffect(() => {
     if (selectedAreaId) {
       dispatch(getZoneActive(selectedAreaId));
+      form.setFieldsValue({
+        zoneId: null,
+        fieldId: null,
+      });
     }
+  }, [selectedAreaId]);
+
+  useEffect(() => {
     if (selectedZoneId) {
       dispatch(getFieldByZone(selectedZoneId));
+      form.setFieldsValue({
+        fieldId: null,
+      });
     }
-  }, [selectedAreaId, selectedZoneId]);
+  }, [selectedZoneId]);
 
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value);
@@ -76,6 +88,7 @@ function Other() {
       className="task-whole-garden"
       // onFinish={onFinish}
       id="createTask"
+      form={form}
     >
       <div className="form-left">
         <Form.Item
@@ -87,15 +100,19 @@ function Other() {
               message: "Vui lòng chọn khu vực",
             },
           ]}
-          name="area"
+          name="areaId"
         >
           <Select
             onChange={handleSelectAreaChange}
             placeholder="Chọn khu vực"
-            options={area.data?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
+            options={
+              area && area.data
+                ? area.data.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  }))
+                : null
+            }
           />
         </Form.Item>
         <Form.Item
@@ -107,15 +124,19 @@ function Other() {
               message: "Vui lòng chọn vùng",
             },
           ]}
-          name="zone"
+          name="zoneId"
         >
           <Select
             onChange={handleSelectZoneChange}
             placeholder="Chọn vùng"
-            options={dataZone?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
+            options={
+              zone && zone.data
+                ? zone.data.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  }))
+                : null
+            }
           />
         </Form.Item>
         <Form.Item label="Địa điểm cụ thể" name="fieldId">

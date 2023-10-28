@@ -6,32 +6,44 @@ import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
 import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
 import { getTaskTypeLivestock } from 'features/slice/task/taskTypeAnimalSlice'
 import { getSupervisor } from 'features/slice/supervisor/supervisorSlice'
-import { getEmployee } from 'features/slice/employee/employeeSlice'
+import { getEmployeeByTaskTypeAndFarmId } from 'features/slice/employee/employeeSlice'
 import { getMaterial } from 'features/slice/material/materialSlice'
-import { createTask } from 'features/slice/task/taskSlice'
+import { getTasks, createTask } from 'features/slice/task/taskSlice'
+import { getMemberById } from 'features/slice/user/memberSlice'
+import { authServices } from 'services/authServices'
 import dayjs from 'dayjs'
 import MultiDatePicker from 'react-multi-date-picker'
 
 function WholeBarn() {
-  const [selectedAreaId, setSelectedAreaId] = useState(null)
-  const [selectedZoneId, setSelectedZoneId] = useState(null)
-  const [employeesValue, setEmployeesValue] = useState(0)
-  const [materialsValue, setMaterialsValue] = useState(0)
-  const [priorityValue, setPriorityValue] = useState('')
-  const [remindValue, setRemindValue] = useState(0)
-  const [repeatValue, setRepeatValue] = useState(false)
-  const [startDate, setStartDate] = useState()
-  const [description, setDescription] = useState('')
+  const [selectedAreaId, setSelectedAreaId] = useState(null);
+  const [selectedZoneId, setSelectedZoneId] = useState(null);
+  const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(null);
+  const [selectedFarmId, setSelectedFarmId] = useState(null);
+  const [employeesValue, setEmployeesValue] = useState(0);
+  const [materialsValue, setMaterialsValue] = useState(0);
+  const [priorityValue, setPriorityValue] = useState("");
+  const [remindValue, setRemindValue] = useState(0);
+  const [repeatValue, setRepeatValue] = useState(false);
+  const [startDate, setStartDate] = useState();
+  const [description, setDescription] = useState("");
+  const [pageIndex, setPageIndex] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [status, setStatus] = useState(0);
+
+  const [form] = Form.useForm();
+
 
   const dispatch = useDispatch()
+
+  const member = useSelector((state) => state.member.data);
+
+  const farmId = member.farmId;
 
   const area = useSelector((state) => state.area.data)
 
   const zoneAnimal = useSelector((state) => state.zoneAnimal.data)
-  const dataAnimalZone = zoneAnimal.data
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data)
-  const dataFieldByZone = fieldByZone.data
 
   const taskTypeLivestock = useSelector((state) => state.taskTypeLivestock.data)
   const dataTaskTypeLivestock = taskTypeLivestock.data
@@ -50,25 +62,62 @@ function WholeBarn() {
     dispatch(getAreaActive())
     dispatch(getTaskTypeLivestock())
     dispatch(getSupervisor())
-    dispatch(getEmployee())
     dispatch(getMaterial())
-  }, [])
+    dispatch(getMemberById(authServices.getUserId()));
+  }, [selectedTaskTypeId])
 
   useEffect(() => {
     if (selectedAreaId) {
-      dispatch(getZoneByAreaAnimal(selectedAreaId))
+      dispatch(getZoneByAreaAnimal(selectedAreaId));
+      form.setFieldsValue({
+        zoneId: null,
+        fieldId: null,
+      });
     }
+  }, [selectedAreaId]);
+
+  useEffect(() => {
     if (selectedZoneId) {
-      dispatch(getFieldByZone(selectedZoneId))
+      dispatch(getFieldByZone(selectedZoneId));
+      form.setFieldsValue({
+        fieldId: null,
+      });
     }
-  }, [selectedAreaId, selectedZoneId])
+  }, [selectedZoneId]);
+
+  useEffect(() => {
+    if (selectedTaskTypeId) {
+      dispatch(
+        getEmployeeByTaskTypeAndFarmId({
+          taskTypeId: selectedTaskTypeId,
+          farmId: farmId,
+        })
+      );
+      form.setFieldsValue({
+        employeeIds: null
+      });
+    }
+  }, [selectedTaskTypeId]);
 
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value)
   }
-  const handleSelectZoneChange = (value) => {
-    setSelectedZoneId(value)
-  }
+  const handleSelectZoneChange = async (value) => {
+    setSelectedZoneId(value);
+  
+    try {
+      await dispatch(getEmployeeByTaskTypeAndFarmId({
+        taskTypeId: selectedTaskTypeId, // Sử dụng selectedTaskTypeId ở đây
+        farmId: selectedFarmId,
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+    const handleTaskTypeChange = (value) => {
+      setSelectedTaskTypeId(value);
+    };
 
   const transformData = (originalData) => {
     const transformedData = {
@@ -123,14 +172,15 @@ function WholeBarn() {
       remind: remindValueToSend,
       isRepeat: repeatValueToSend,
       description: description,
-      suppervisorId: 11,
-      managerId: 5,
+      managerId: member.id,
       otherId: 0,
     }
 
     const transformedValues = transformData(finalValues)
 
-    dispatch(createTask(transformedValues))
+    dispatch(createTask(transformedValues)).then(() => {
+      dispatch(getTasks({ pageIndex, pageSize, status }));
+    });
   }
 
   const disabledDate = (current) => {
@@ -145,6 +195,7 @@ function WholeBarn() {
       className="task-whole-barn"
       onFinish={onFinish}
       id="createTask"
+      form={form}
     >
       <div className="form-left">
         <Form.Item
@@ -156,15 +207,19 @@ function WholeBarn() {
               message: 'Vui lòng chọn khu vực',
             },
           ]}
-          name="area"
+          name="areaId"
         >
           <Select
             onChange={handleSelectAreaChange}
             placeholder="Chọn khu vực"
-            options={area.data?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
+            options={
+              area && area.data
+                ? area.data.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  }))
+                : null
+            }
           />
         </Form.Item>
         <Form.Item
@@ -176,15 +231,19 @@ function WholeBarn() {
               message: 'Vui lòng chọn vùng',
             },
           ]}
-          name="zone"
+          name="zoneId"
         >
           <Select
             onChange={handleSelectZoneChange}
             placeholder="Chọn vùng"
-            options={dataAnimalZone?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
+            options={
+              zoneAnimal && zoneAnimal.data
+                ? zoneAnimal.data.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  }))
+                : null
+            }
           />
         </Form.Item>
         <Form.Item
@@ -200,10 +259,14 @@ function WholeBarn() {
         >
           <Select
             placeholder="Chọn chuồng"
-            options={dataFieldByZone?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
+            options={
+              fieldByZone && fieldByZone.data
+                ? fieldByZone.data.map((item) => ({
+                    label: item.nameCode,
+                    value: item.id,
+                  }))
+                : null
+            }
           />
         </Form.Item>
         <Form.Item
@@ -291,22 +354,23 @@ function WholeBarn() {
           <Input placeholder="Nhập tên công việc" />
         </Form.Item>
         <Form.Item
-          label="Loại nhiệm vụ"
+          label="Loại công việc"
           name="taskTypeId"
           required
           rules={[
             {
               required: true,
-              message: 'Vui lòng chọn loại nhiệm vụ',
+              message: 'Vui lòng chọn loại công việc',
             },
           ]}
         >
           <Select
-            placeholder="Chọn loại nhiệm vụ"
+            placeholder="Chọn loại công việc"
             options={dataTaskTypeLivestock?.map((item) => ({
               label: item.name,
               value: item.id,
             }))}
+            onChange={handleTaskTypeChange}
           />
         </Form.Item>
         <Form.Item
@@ -325,10 +389,14 @@ function WholeBarn() {
             value={employeesValue}
             onChange={(value) => setEmployeesValue(value)}
             placeholder="Chọn người thực hiện"
-            options={dataEmployee?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
+            options={
+              dataEmployee && dataEmployee.data
+                ? dataEmployee.data.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  }))
+                : null
+            }
           />
         </Form.Item>
         <Form.Item

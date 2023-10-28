@@ -48,21 +48,22 @@ const TaskDetail = ({ visible, onCancel, taskData }) => {
 
   const renderSubFields = () => {
     if (externalId) {
-      if (fieldStatus === "Động vật") {
-        return (
-          <p>
-            <strong>Mã vật nuôi:</strong> {liveStockName}
-          </p>
-        );
-      } else if (fieldStatus === "Thực vật") {
+      if (fieldStatus === "Thực vật") {
         return (
           <p>
             <strong>Mã cây trồng:</strong> {plantName}
           </p>
         );
+      } else if (fieldStatus === "Động vật") {
+        return (
+          <p>
+            <strong>Mã vật nuôi:</strong> {liveStockName}
+          </p>
+        );
       }
     }
     console.log(plantName);
+    console.log(fieldStatus);
     return null;
   };
 
@@ -109,19 +110,19 @@ const TaskDetail = ({ visible, onCancel, taskData }) => {
       </p>
       <div className="evidence">
         <h2>Bằng chứng:</h2>
-          {dataEvidence && dataEvidence.length > 0 ? (
-            dataEvidence.map((evidence) => (
-              <div key={evidence.id}>
-                <p>{evidence.time}</p>
-                <p>{evidence.description}</p>
-                <div className="img-evidence">
-                  <img src={evidence.urlImage} alt="evidence" />
-                </div>
+        {dataEvidence && dataEvidence.length > 0 ? (
+          dataEvidence.map((evidence) => (
+            <div key={evidence.id}>
+              <p>{evidence.time}</p>
+              <p>{evidence.description}</p>
+              <div className="img-evidence">
+                <img src={evidence.urlImage} alt="evidence" />
               </div>
-            ))
-          ) : (
-            <p>Chưa có bằng chứng báo cáo</p>
-          )}
+            </div>
+          ))
+        ) : (
+          <p>Chưa có bằng chứng báo cáo</p>
+        )}
       </div>
     </Modal>
   );
