@@ -5,21 +5,20 @@ import { toast } from "react-toastify";
 
 export const getSubTasksByTaskId = createAsyncThunk(
   'subTasks/getSubTasksByTaskId',
-  async (taskId) => {
+  async (taskId, {rejectWithValue}) => {
     try {
       const { data } = await axios.get(baseUrl + `/FarmSubTask/Task(${taskId})`, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
+      
       return data;
     } catch (error) {
-      console.log(error);
+      rejectWithValue(error.message)
     }
   }
 );
-
-
 
 export const createSubTask = createAsyncThunk("subTasks/createSubTask", async (data, {rejectWithValue}) => {
     try {
@@ -30,6 +29,7 @@ export const createSubTask = createAsyncThunk("subTasks/createSubTask", async (d
       });
       if (response.status === 200) {
         toast.success(response.data.message)
+        console.log(response);
         return response.data.data
       }
     } catch (error) {

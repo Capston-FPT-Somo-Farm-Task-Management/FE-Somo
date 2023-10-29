@@ -16,7 +16,7 @@ import { authServices } from "services/authServices";
 import dayjs from "dayjs";
 import MultiDatePicker from "react-multi-date-picker";
 
-function SpecificAnimal() {
+function SpecificAnimal({onTaskAdded, onDateChange}) {
   const [selectedAreaId, setSelectedAreaId] = useState(null);
   const [selectedZoneId, setSelectedZoneId] = useState(null);
   const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(null);
@@ -26,11 +26,13 @@ function SpecificAnimal() {
   const [priorityValue, setPriorityValue] = useState("");
   const [remindValue, setRemindValue] = useState(0);
   const [repeatValue, setRepeatValue] = useState(false);
-  const [startDate, setStartDate] = useState();
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [description, setDescription] = useState("");
   const [pageIndex, setPageIndex] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [status, setStatus] = useState(0);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const [form] = Form.useForm();
 
@@ -80,13 +82,6 @@ function SpecificAnimal() {
     dispatch(getMemberById(authServices.getUserId()));
   }, []);
 
-  // const handleTaskTypeChange = (taskTypeId, farmId) => {
-  //   setSelectedTaskTypeId(taskTypeId);
-  //   setSelectedFarmId(farmId);
-
-  //   dispatch(getEmployeeByTaskType({ taskTypeId, farmId }));
-  // };
-
   useEffect(() => {
     if (selectedAreaId) {
       dispatch(getZoneByAreaAnimal(selectedAreaId));
@@ -115,7 +110,7 @@ function SpecificAnimal() {
         })
       );
       form.setFieldsValue({
-        employeeIds: null
+        employeeIds: null,
       });
     }
   }, [selectedTaskTypeId]);
@@ -172,8 +167,11 @@ function SpecificAnimal() {
     const startDateFormatted = dayjs(startDate).format(
       "YYYY-MM-DD[T]HH:mm:ss.SSS"
     );
+    const endDateFormatted = dayjs(endDate).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
 
     const startTime = dayjs(startDate).format("HH:mm:ss.SSS");
+
+    const endTime = dayjs(endDate).format("HH:mm:ss.SSS");
 
     const selectedDates = values.dates || [];
 
@@ -188,7 +186,7 @@ function SpecificAnimal() {
     const finalValues = {
       ...values,
       startDate: startDateFormatted,
-      endDate: dayjs(values.endDate).format("YYYY-MM-DD[T]HH:mm:ss.SSS"),
+      endDate: endDateFormatted,
       dates: datesToSend,
       // employeeIds: employeesValue,
       priority: priorityValue,
@@ -202,7 +200,8 @@ function SpecificAnimal() {
     const transformedValues = transformData(finalValues);
 
     dispatch(createTask(transformedValues)).then(() => {
-      dispatch(getTasks({ pageIndex, pageSize, status }));
+      onDateChange();
+      onTaskAdded();
     });
   };
 
@@ -356,6 +355,7 @@ function SpecificAnimal() {
             showTime={{
               defaultValue: dayjs("00:00:00", "HH:mm:ss"),
             }}
+            onChange={(date, dateString) => setStartDate(dateString)}
           />
         </Form.Item>
         <Form.Item
@@ -375,6 +375,7 @@ function SpecificAnimal() {
             showTime={{
               defaultValue: dayjs("00:00:00", "HH:mm:ss"),
             }}
+            onChange={(date, dateString) => setEndDate(dateString)}
           />
         </Form.Item>
         <Form.Item label="Mô tả" name="description">

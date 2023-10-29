@@ -24,7 +24,29 @@ export const taskTitle = [
     title: 'Ưu tiên',
     dataIndex: 'priority',
     key: 'priority',
-    sorter: (a, b) => a.priority - b.priority,
+    render: (text) => {
+      let color = '';
+      switch (text) {
+        case 'Cao nhất':
+          color = '#f94144';
+          break;
+        case 'Cao':
+          color = '#f3722c';
+          break;
+        case 'Trung bình':
+          color = '#f9c74f';
+          break;
+        case 'Thấp':
+          color = '#90be6d';
+          break;
+        case 'Thấp nhất':
+          color = '#277da1';
+          break;
+        default:
+          color = '';
+      }
+      return <span style={{ color }}>{text}</span>;
+    },
   },
   {
     title: 'Giao cho',

@@ -4,9 +4,10 @@ import { baseUrl } from "features/api/baseUrl";
 import { toast } from "react-toastify";
 import { authServices } from "services/authServices";
 
-export const getTasks = createAsyncThunk("tasks/getTasks", async ({ pageIndex, pageSize, status,  }, {rejectWithValue}) => {
+export const getTasks = createAsyncThunk("tasks/getTasks", async ({ pageIndex, pageSize, status, date  }, {rejectWithValue}) => {
   try {
-    const { data } = await axios.get(baseUrl + `/FarmTask/PageIndex(${pageIndex})/PageSize(${pageSize})/Manager(${authServices.getUserId()})/Status(${status})/Date`, {
+    const formattedDate = date ? date.toISOString().split('T')[0] : '';
+    const { data } = await axios.get(baseUrl + `/FarmTask/PageIndex(${pageIndex})/PageSize(${pageSize})/Manager(${authServices.getUserId()})/Status(${status})/Date?date=${formattedDate}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -32,8 +33,6 @@ export const getTaskById = createAsyncThunk('tasks/getTaskById', async (taskId, 
 
 
 export const createTask = createAsyncThunk("tasks/createTask", async (data, {rejectWithValue}) => {
-  console.log(data);
-  console.log(data.farmTask.memberId);
   try {
     const response = await axios.post(baseUrl + `/FarmTask?memberId=${authServices.getUserId()}`, data, {
       headers: {

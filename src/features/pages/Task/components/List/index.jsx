@@ -12,7 +12,7 @@ import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
 import { getStatus } from "features/slice/status/statusSlice";
 import TaskDetail from "../TaskDetail";
 import ModalTask from "../ModalTask";
-import { Menu, Dropdown } from "antd";
+import { Menu, Dropdown, DatePicker } from "antd";
 import {
   MoreOutlined,
   EditOutlined,
@@ -37,6 +37,7 @@ const List = () => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [status, setStatus] = useState(0);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const { Search } = Input;
   const [form] = Form.useForm();
@@ -46,11 +47,8 @@ const List = () => {
   };
 
   const task = useSelector((state) => state.task.data);
-  console.log(task);
 
   const dataTotalPages = useSelector((state) => state.task.totalPages);
-  console.log(dataTotalPages);
-
 
   const subTask = useSelector((state) => state.subTask.data);
 
@@ -58,14 +56,13 @@ const List = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getTasks({ pageIndex, pageSize, status }))
+    dispatch(getTasks({ pageIndex, pageSize, status, date: selectedDate }));
     dispatch(getStatus());
-  }, [pageIndex, pageSize, status ]);
+  }, [pageIndex, pageSize, status, selectedDate]);
 
   useEffect(() => {
     dispatch(getEmployeeByTask(currentTaskId)).then((data) => {
       setAvailableEmployees(data.payload);
-      console.log(data.payload);
     });
   }, [currentTaskId]);
 
@@ -76,10 +73,8 @@ const List = () => {
 
   const handleMenuClick = (e, record) => {
     if (e.key === "edit") {
-      // Xử lý khi người dùng chọn "Sửa"
       console.log("Edit", record);
     } else if (e.key === "delete") {
-      // Xử lý khi người dùng chọn "Xóa"
       handleDelete(record.id);
     }
   };
@@ -116,8 +111,22 @@ const List = () => {
   };
 
   const handleTabChange = (key) => {
-    setPageIndex(1); // Reset trang về 1 khi thay đổi tab
-    setStatus(Number(key)); // Cập nhật status được chọn
+    setPageIndex(1); 
+    setStatus(Number(key)); 
+  };
+
+  const handleTaskAdded = () => {
+    setPageIndex(1);
+  };
+
+  const handleResetDate = () => {
+    setSelectedDate(null); 
+  };
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    setPageIndex(1); 
+    // dispatch(getTasks({ pageIndex: 1, pageSize, status, date: selectedDate }));
   };
 
   const onFinish = (values) => {
@@ -125,11 +134,11 @@ const List = () => {
       ...values,
       taskId: currentTaskId,
     };
-    console.log(finalValues);
     dispatch(createSubTask(finalValues)).then(() => {
       dispatch(getSubTasksByTaskId(currentTaskId)).then((data) => {
         setSubTasks(data.payload);
-        dispatch(getTasks({ pageIndex, pageSize, status }))
+        dispatch(getTasks({ pageIndex, pageSize, status, date: selectedDate }));
+        setAddSubtaskVisible(false);
       });
     });
   };
@@ -137,10 +146,19 @@ const List = () => {
   return (
     <div className="list">
       <div className="list-header">
-        <ModalTask />
+        <ModalTask
+          onTaskAdded={handleTaskAdded}
+          onDateChange={handleDateChange}
+        />
         <div>
           <Space direction="vertical">
-          <StatusTabs onTabChange={handleTabChange} />
+            <DatePicker
+              style={{ marginLeft: "15px" }}
+              value={selectedDate}
+              onChange={handleDateChange}
+            />
+            <Button onClick={handleResetDate}>Đặt lại</Button>
+            <StatusTabs onTabChange={handleTabChange} />
             <Search
               placeholder="Tìm kiếm theo tên"
               allowClear
@@ -153,90 +171,94 @@ const List = () => {
           </Space>
         </div>
       </div>
-      <Table
-        rowKey="id"
-        pagination={{
-          current: pageIndex,
-          pageSize: pageSize,
-          total: dataTotalPages * pageSize,
-          showSizeChanger: true,
-          pageSizeOptions: ["10", "20", "30"], // Có thể tùy chỉnh số lượng item mỗi trang ở đây
-        }}
-        columns={[
-          ...taskTitle,
-          {
-            title: "Tuỳ chọn",
-            key: "action",
-            render: (_, record) => (
-              <Dropdown
-                placement="bottomRight"
-                overlay={
-                  <Menu onClick={(e) => handleMenuClick(e, record)}>
-                    <Menu.Item key="subTask">
-                      <span onClick={() => openAddSubtaskModal(record)}>
-                        <PlusCircleOutlined
-                          style={{ color: "green", marginRight: "8px" }}
-                        />
-                        Thêm công việc con
-                      </span>
-                    </Menu.Item>
-                    <Menu.Item key="viewSubTask">
-                      <span onClick={() => openSubtaskModal(record)}>
-                        <FileTextOutlined
-                          style={{ color: "green", marginRight: "8px" }}
-                        />
-                        Xem công việc con
-                      </span>
-                    </Menu.Item>
-                    <Menu.Item key="edit">
-                      <span>
-                        <EditOutlined
-                          style={{ color: "gold", marginRight: "8px" }}
-                        />
-                        Sửa
-                      </span>
-                    </Menu.Item>
-                    <Menu.Item key="delete">
-                      <span>
-                        <DeleteOutlined
-                          style={{ color: "red", marginRight: "8px" }}
-                        />
-                        Xóa
-                      </span>
-                    </Menu.Item>
-                  </Menu>
-                }
-              >
-                <a
-                  className="ant-dropdown-link"
-                  onClick={(e) => e.preventDefault()}
+      {task && (
+        <Table
+          rowKey="id"
+          pagination={{
+            current: pageIndex,
+            pageSize: pageSize,
+            total: dataTotalPages * pageSize,
+            showSizeChanger: true,
+            pageSizeOptions: ["10", "20", "30"],
+          }}
+          columns={[
+            ...taskTitle,
+            {
+              title: "Tuỳ chọn",
+              key: "action",
+              render: (_, record) => (
+                <Dropdown
+                  placement="bottomRight"
+                  overlay={
+                    <Menu onClick={(e) => handleMenuClick(e, record)}>
+                      <Menu.Item key="subTask">
+                        <span onClick={() => openAddSubtaskModal(record)}>
+                          <PlusCircleOutlined
+                            style={{ color: "green", marginRight: "8px" }}
+                          />
+                          Thêm công việc con
+                        </span>
+                      </Menu.Item>
+                      <Menu.Item key="viewSubTask">
+                        <span onClick={() => openSubtaskModal(record)}>
+                          <FileTextOutlined
+                            style={{ color: "green", marginRight: "8px" }}
+                          />
+                          Xem công việc con
+                        </span>
+                      </Menu.Item>
+                      <Menu.Item key="edit">
+                        <span>
+                          <EditOutlined
+                            style={{ color: "gold", marginRight: "8px" }}
+                          />
+                          Sửa
+                        </span>
+                      </Menu.Item>
+                      <Menu.Item key="delete">
+                        <span>
+                          <DeleteOutlined
+                            style={{ color: "red", marginRight: "8px" }}
+                          />
+                          Xóa
+                        </span>
+                      </Menu.Item>
+                    </Menu>
+                  }
                 >
-                  <MoreOutlined className="menu-icon" />
-                </a>
-              </Dropdown>
-            ),
-          },
-        ]}
-        dataSource={task}
-        onChange={onChange}
-        rowSelection={{
-          onSelect: (record) => {
-            console.log({ record });
-          },
-        }}
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: async (event) => {
-              const isNameClicked = event.target.dataset.nameClicked === "true";
-
-              if (isNameClicked) {
-                openModal(record);
-                await dispatch(getEvidenceByTaskId(record.id));
-              }
+                  <a
+                    className="ant-dropdown-link"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    <MoreOutlined className="menu-icon" />
+                  </a>
+                </Dropdown>
+              ),
             },
-          };
-        }}
-      />
+          ]}
+          
+          dataSource={task}
+          onChange={onChange}
+          rowSelection={{
+            onSelect: (record) => {
+              console.log({ record });
+            },
+          }}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: async (event) => {
+                const isNameClicked =
+                  event.target.dataset.nameClicked === "true";
+
+                if (isNameClicked) {
+                  openModal(record);
+                  await dispatch(getEvidenceByTaskId(record.id));
+                }
+              },
+            };
+          }}
+        />
+      )}
       <TaskDetail
         visible={modalVisible}
         onCancel={closeModal}
@@ -320,14 +342,16 @@ const List = () => {
             Đóng
           </Button>,
         ]}
+        
       >
         <div className="subTask">
-          {subTask ? (
-            subTask.data?.map((subTask) => (
-              <div key={subTask.taskId}>
-                <p>{subTask.name}</p>
-                <p>{subTask.employeeName}</p>
-                <p>{subTask.description}</p>
+          {subTasks && subTasks.data ? (
+            subTasks.data.map((subTaskItem) => (
+              <div key={subTaskItem.taskId}>
+              {console.log(subTaskItem.taskId)}
+                <p>{subTaskItem.name}</p>
+                <p>{subTaskItem.employeeName}</p>
+                <p>{subTaskItem.description}</p>
               </div>
             ))
           ) : (

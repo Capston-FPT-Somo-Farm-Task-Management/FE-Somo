@@ -14,7 +14,7 @@ import { authServices } from 'services/authServices'
 import dayjs from 'dayjs'
 import MultiDatePicker from 'react-multi-date-picker'
 
-function WholeBarn() {
+function WholeBarn({onTaskAdded, onDateChange}) {
   const [selectedAreaId, setSelectedAreaId] = useState(null);
   const [selectedZoneId, setSelectedZoneId] = useState(null);
   const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(null);
@@ -24,7 +24,8 @@ function WholeBarn() {
   const [priorityValue, setPriorityValue] = useState("");
   const [remindValue, setRemindValue] = useState(0);
   const [repeatValue, setRepeatValue] = useState(false);
-  const [startDate, setStartDate] = useState();
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [description, setDescription] = useState("");
   const [pageIndex, setPageIndex] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -146,9 +147,8 @@ function WholeBarn() {
   }
 
   const onFinish = (values) => {
-    const startDateFormatted = dayjs(startDate).format(
-      'YYYY-MM-DD[T]HH:mm:ss.SSS'
-    )
+    const startDateFormatted = dayjs(startDate).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+    const endDateFormatted = dayjs(endDate).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
 
     const startTime = dayjs(startDate).format('HH:mm:ss.SSS')
 
@@ -165,7 +165,7 @@ function WholeBarn() {
     const finalValues = {
       ...values,
       startDate: startDateFormatted,
-      endDate: dayjs(values.endDate).format('YYYY-MM-DD[T]HH:mm:ss.SSS'),
+      endDate: endDateFormatted,
       dates: datesToSend,
       // employeeIds: employeesValue,
       priority: priorityValue,
@@ -179,7 +179,8 @@ function WholeBarn() {
     const transformedValues = transformData(finalValues)
 
     dispatch(createTask(transformedValues)).then(() => {
-      dispatch(getTasks({ pageIndex, pageSize, status }));
+      onDateChange();
+      onTaskAdded();
     });
   }
 
@@ -309,6 +310,7 @@ function WholeBarn() {
             showTime={{
               defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
             }}
+            onChange={(date, dateString) => setStartDate(dateString)}
           />
         </Form.Item>
         <Form.Item
@@ -328,6 +330,7 @@ function WholeBarn() {
             showTime={{
               defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
             }}
+            onChange={(date, dateString) => setEndDate(dateString)}
           />
         </Form.Item>
         <Form.Item label="Mô tả" name="description">
