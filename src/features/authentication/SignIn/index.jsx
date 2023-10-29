@@ -10,12 +10,13 @@ import { authServices } from 'services/authServices'
 const SignIn = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
   const onFinish = (values) => {
     dispatch(postLogin(values)).then(() => {
       if (authServices.getRole() === 'Manager') {
         navigate('/schedule')
       } else if (authServices.getRole() === 'Admin') {
-        navigate('/admin-home')
+        navigate('/statistic-farm')
       }
     })
   }

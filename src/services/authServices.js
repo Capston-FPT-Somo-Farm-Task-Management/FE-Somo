@@ -50,6 +50,7 @@ const isLoggedIn = () => {
 
 const logOut = () => {
   localStorage.removeItem('somoFarm')
+  localStorage.clear()
 }
 
 export const authServices = {

@@ -25,7 +25,7 @@ import {
 
 const { Sider } = Layout
 
-const SideMenu = () => {
+const AdminSideMenu = () => {
   const [userName, setUserName] = useState()
   const [userRole, setUserRole] = useState()
   const [collapsed, setCollapsed] = useState(false)
@@ -70,58 +70,64 @@ const SideMenu = () => {
             mode="inline"
             defaultSelectedKeys={[location.pathname]}
           >
-            <Menu.Item key="/schedule">
-              <CalendarOutlined />
-              <span>Lịch trình</span>
-              <Link to="/schedule"></Link>
-            </Menu.Item>
-
-            <Menu.Item key="/task">
+            {/* <Menu.Item key="/statistic-task">
               <AimOutlined />
               <span>Công việc</span>
-              <Link to="/task"></Link>
+              <Link to="/statistic-task"></Link>
+            </Menu.Item> */}
+
+            <Menu.Item key="/statistic-farm">
+              <BorderOutlined />
+              <span>Trang trại</span>
+              <Link to="/statistic-farm"></Link>
             </Menu.Item>
 
-            <Menu.Item key="/area">
+            <Menu.Item key="/statistic-area">
               <BorderOutlined />
               <span>Khu vực</span>
-              <Link to="/area"></Link>
+              <Link to="/statistic-area"></Link>
             </Menu.Item>
 
-            <Menu.Item key="/zone">
+            <Menu.Item key="/statistic-zone">
               <TableOutlined />
               <span>Vùng</span>
-              <Link to="/zone"></Link>
+              <Link to="/statistic-zone"></Link>
             </Menu.Item>
-
-            <Menu.Item key="/animals">
+            {/* 
+            <Menu.Item key="/statistic-animal">
               <TeamOutlined />
               <span>Vật nuôi</span>
-              <Link to="/animals"></Link>
+              <Link to="/statistic-animal"></Link>
             </Menu.Item>
 
-            <Menu.Item key="/animal-group">
+            <Menu.Item key="/statistic-animal-group">
               <AppstoreOutlined />
               <span>Chuồng</span>
-              <Link to="/animal-group"></Link>
+              <Link to="/statistic-animal-group"></Link>
             </Menu.Item>
 
-            <Menu.Item key="/plants">
+            <Menu.Item key="/statistic-plant">
               <DashboardOutlined />
               <span>Cây trồng</span>
-              <Link to="/plants"></Link>
+              <Link to="/statistic-plant"></Link>
             </Menu.Item>
 
-            <Menu.Item key="/crop-group">
+            <Menu.Item key="/statistic-crop-group">
               <AppstoreOutlined />
               <span>Vườn</span>
-              <Link to="/crop-group"></Link>
+              <Link to="/statistic-crop-group"></Link>
             </Menu.Item>
 
-            <Menu.Item key="/material">
+            <Menu.Item key="/statistic-material">
               <FormatPainterOutlined />
               <span>Công cụ</span>
-              <Link to="/material"></Link>
+              <Link to="/statistic-material"></Link>
+            </Menu.Item> */}
+
+            <Menu.Item key="/statistic-member">
+              <BorderOutlined />
+              <span>Thành viên</span>
+              <Link to="/statistic-member"></Link>
             </Menu.Item>
 
             <Menu.Item key="/login" onClick={logout}>
@@ -146,58 +152,57 @@ const SideMenu = () => {
                   mode="inline"
                   defaultSelectedKeys={[location.pathname]}
                 >
-                  <Menu.Item key="/schedule">
-                    <CalendarOutlined />
-                    <span>Lịch trình</span>
-                    <Link to="/schedule"></Link>
+                  <Menu.Item key="/statistic-farm">
+                    <BorderOutlined />
+                    <span>Trang trại</span>
+                    <Link to="/statistic-farm"></Link>
                   </Menu.Item>
-
-                  <Menu.Item key="/task">
+                  <Menu.Item key="/statistic-task">
                     <AimOutlined />
                     <span>Công việc</span>
-                    <Link to="/task"></Link>
+                    <Link to="/statistic-task"></Link>
                   </Menu.Item>
 
-                  <Menu.Item key="/area">
+                  <Menu.Item key="/statistic-area">
                     <BorderOutlined />
                     <span>Khu vực</span>
-                    <Link to="/area"></Link>
+                    <Link to="/statistic-area"></Link>
                   </Menu.Item>
 
-                  <Menu.Item key="/zone">
-                    <BlockOutlined />
+                  <Menu.Item key="/statistic-zone">
+                    <TableOutlined />
                     <span>Vùng</span>
-                    <Link to="/zone"></Link>
+                    <Link to="/statistic-zone"></Link>
                   </Menu.Item>
 
-                  <Menu.Item key="/animals">
+                  <Menu.Item key="/statistic-animal">
                     <TeamOutlined />
                     <span>Vật nuôi</span>
-                    <Link to="/animals"></Link>
+                    <Link to="/statistic-animal"></Link>
                   </Menu.Item>
 
-                  <Menu.Item key="/animal-group">
-                    <TeamOutlined />
+                  <Menu.Item key="/statistic-animal-group">
+                    <AppstoreOutlined />
                     <span>Chuồng</span>
-                    <Link to="/animal-group"></Link>
+                    <Link to="/statistic-animal-group"></Link>
                   </Menu.Item>
 
-                  <Menu.Item key="/plants">
+                  <Menu.Item key="/statistic-plant">
                     <DashboardOutlined />
                     <span>Cây trồng</span>
-                    <Link to="/plants"></Link>
+                    <Link to="/statistic-plant"></Link>
                   </Menu.Item>
 
-                  <Menu.Item key="/crop-group">
-                    <DashboardOutlined />
+                  <Menu.Item key="/statistic-crop-group">
+                    <AppstoreOutlined />
                     <span>Vườn</span>
-                    <Link to="/crop-group"></Link>
+                    <Link to="/statistic-crop-group"></Link>
                   </Menu.Item>
 
-                  <Menu.Item key="/material">
+                  <Menu.Item key="/statistic-material">
                     <FormatPainterOutlined />
                     <span>Công cụ</span>
-                    <Link to="/material"></Link>
+                    <Link to="/statistic-material"></Link>
                   </Menu.Item>
 
                   <Menu.Item key="/login" onClick={logout}>
@@ -220,4 +225,4 @@ const SideMenu = () => {
   )
 }
 
-export default SideMenu
+export default AdminSideMenu
