@@ -38,6 +38,19 @@ export const createSubTask = createAsyncThunk("subTasks/createSubTask", async (d
     }
   });
 
+  export const deleteSubTask = createAsyncThunk(
+    'subTasks/deleteSubTask',
+    async ({taskId, employeeId}, { rejectWithValue }) => {
+      try {
+        const response = await axios.put(baseUrl + `/FarmSubTask/Delete/Task(${taskId})/Employee(${employeeId})`)
+        return response.data
+      } catch (error) {
+        return rejectWithValue(error)
+      }
+    }
+  )
+  
+
   const subTaskSlice = createSlice({
     name: "subTask",
     initialState: {
@@ -47,7 +60,17 @@ export const createSubTask = createAsyncThunk("subTasks/createSubTask", async (d
     },
     extraReducers(builder) {
       builder
-  
+        .addCase(getSubTasksByTaskId.pending, (state) => {
+          state.loading = true;
+        })
+        .addCase(getSubTasksByTaskId.fulfilled, (state, action) => {
+          state.loading = false;
+          state.data = action.payload;
+        })
+        .addCase(getSubTasksByTaskId.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        })
         .addCase(createSubTask.pending, (state) => {
           state.loading = true;
         })
@@ -59,16 +82,17 @@ export const createSubTask = createAsyncThunk("subTasks/createSubTask", async (d
           state.loading = false;
           state.error = action.payload;
         })
-        .addCase(getSubTasksByTaskId.pending, (state) => {
-          state.loading = true;
+        .addCase(deleteSubTask.pending, (state) => {
+          state.loading = true
         })
-        .addCase(getSubTasksByTaskId.fulfilled, (state, action) => {
-          state.loading = false;
-          state.data = action.payload;
+        .addCase(deleteSubTask.fulfilled, (state, action) => {
+          state.loading = false
+          toast.success(`Xoá thành công`)
+          state.data = action.payload
         })
-        .addCase(getSubTasksByTaskId.rejected, (state, action) => {
-          state.loading = false;
-          state.error = action.payload;
+        .addCase(deleteSubTask.rejected, (state, action) => {
+          state.loading = false
+          state.error = action.payload
         })
     },
   });

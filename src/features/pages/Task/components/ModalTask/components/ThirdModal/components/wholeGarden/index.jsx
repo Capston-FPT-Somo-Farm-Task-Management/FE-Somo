@@ -94,7 +94,7 @@ function WholeGarden({onTaskAdded, onDateChange}) {
         })
       );
       form.setFieldsValue({
-        employeeIds: null
+        employeeIds: undefined
       });
     }
   }, [selectedTaskTypeId]);

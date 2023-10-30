@@ -16,7 +16,7 @@ import { authServices } from "services/authServices";
 import dayjs from "dayjs";
 import MultiDatePicker from "react-multi-date-picker";
 
-function SpecificAnimal({onTaskAdded, onDateChange}) {
+function SpecificAnimal({ onTaskAdded, onDateChange }) {
   const [selectedAreaId, setSelectedAreaId] = useState(null);
   const [selectedZoneId, setSelectedZoneId] = useState(null);
   const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(null);
@@ -29,10 +29,6 @@ function SpecificAnimal({onTaskAdded, onDateChange}) {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [description, setDescription] = useState("");
-  const [pageIndex, setPageIndex] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [status, setStatus] = useState(0);
-  const [selectedDate, setSelectedDate] = useState(null);
 
   const [form] = Form.useForm();
 
@@ -110,10 +106,12 @@ function SpecificAnimal({onTaskAdded, onDateChange}) {
         })
       );
       form.setFieldsValue({
-        employeeIds: null,
+        employeeIds: undefined,
       });
     }
   }, [selectedTaskTypeId]);
+
+  
 
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value);
@@ -414,10 +412,14 @@ function SpecificAnimal({onTaskAdded, onDateChange}) {
         >
           <Select
             placeholder="Chọn loại công việc"
-            options={dataTaskTypeLivestock?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
+            options={
+              dataTaskTypeLivestock && dataTaskTypeLivestock
+                ? dataTaskTypeLivestock.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  }))
+                : null
+            }
             onChange={handleTaskTypeChange}
           />
         </Form.Item>

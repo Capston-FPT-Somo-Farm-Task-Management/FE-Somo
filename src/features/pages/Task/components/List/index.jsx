@@ -6,6 +6,7 @@ import { getEmployeeByTask } from "features/slice/employee/employeeByTask";
 import {
   getSubTasksByTaskId,
   createSubTask,
+  deleteSubTask,
 } from "features/slice/subTask/subTaskSlice";
 import { taskTitle, onChange } from "./listTaskData";
 import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
@@ -38,27 +39,36 @@ const List = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [status, setStatus] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [taskNameSearch, setTaskNameSearch] = useState("");
+  const [editingSubTask, setEditingSubTask] = useState(null);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
 
   const { Search } = Input;
-  const [form] = Form.useForm();
-  const onSearch = (e) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-  };
 
+  const [form] = Form.useForm();
   const task = useSelector((state) => state.task.data);
 
   const dataTotalPages = useSelector((state) => state.task.totalPages);
 
-  const subTask = useSelector((state) => state.subTask.data);
-
   // console.log(dataSubTask);
   const dispatch = useDispatch();
 
+  const loadDataTask = () => {
+    dispatch(
+      getTasks({
+        pageIndex,
+        pageSize,
+        status,
+        date: selectedDate,
+        taskName: taskNameSearch,
+      })
+    );
+  }
+
   useEffect(() => {
-    dispatch(getTasks({ pageIndex, pageSize, status, date: selectedDate }));
+    loadDataTask();
     dispatch(getStatus());
-  }, [pageIndex, pageSize, status, selectedDate]);
+  }, [pageIndex, pageSize, status, selectedDate, taskNameSearch]);
 
   useEffect(() => {
     dispatch(getEmployeeByTask(currentTaskId)).then((data) => {
@@ -80,7 +90,11 @@ const List = () => {
   };
 
   const handleDelete = (id) => {
-    dispatch(deleteTask(id));
+    dispatch(deleteTask(id, status)).then(() => {
+      loadDataTask();
+      setPageIndex(1);
+    });
+    console.log(id);
   };
 
   const openModal = (record) => {
@@ -96,13 +110,36 @@ const List = () => {
   const openAddSubtaskModal = (record) => {
     setCurrentTaskId(record.id);
     setAddSubtaskVisible(true);
+    const taskId = currentTaskId;
+    dispatch(getEmployeeByTask(taskId)).then((data) => {
+      setAvailableEmployees(data.payload);
+      console.log(data.payload);
+    });
     form.resetFields();
   };
+
+  const openEditSubTaskModal = (subTask) => {
+    setEditingSubTask(subTask);
+    setDescription(subTask.description);
+    setShowUpdateForm(true);
+  };
+
+  const handleDeleteSubTask = (employeeId) => {
+    const taskId = currentTaskId;
+    dispatch(deleteSubTask({ taskId, employeeId })).then(() => {
+      dispatch(getSubTasksByTaskId(taskId)).then((data) => {
+        setSubTasks(data.payload);
+        console.log(data.payload);
+      });
+    });
+  };
+
   const openSubtaskModal = (record) => {
     setCurrentTaskId(record.id);
     setSubTaskModalVisible(true);
     dispatch(getSubTasksByTaskId(record.id)).then((data) => {
       setSubTasks(data.payload);
+      console.log(data.payload);
     });
   };
 
@@ -111,8 +148,8 @@ const List = () => {
   };
 
   const handleTabChange = (key) => {
-    setPageIndex(1); 
-    setStatus(Number(key)); 
+    setPageIndex(1);
+    setStatus(Number(key));
   };
 
   const handleTaskAdded = () => {
@@ -120,16 +157,20 @@ const List = () => {
   };
 
   const handleResetDate = () => {
-    setSelectedDate(null); 
+    setSelectedDate(null);
   };
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    setPageIndex(1); 
-    // dispatch(getTasks({ pageIndex: 1, pageSize, status, date: selectedDate }));
+    setPageIndex(1);
   };
 
-  const onFinish = (values) => {
+  const handleSearchChange = (taskName) => {
+    setTaskNameSearch(taskName);
+    setPageIndex(1);
+  };
+
+  const handleAddSubTask = (values) => {
     const finalValues = {
       ...values,
       taskId: currentTaskId,
@@ -137,8 +178,25 @@ const List = () => {
     dispatch(createSubTask(finalValues)).then(() => {
       dispatch(getSubTasksByTaskId(currentTaskId)).then((data) => {
         setSubTasks(data.payload);
-        dispatch(getTasks({ pageIndex, pageSize, status, date: selectedDate }));
+        loadDataTask();
         setAddSubtaskVisible(false);
+      });
+    });
+  };
+
+  const handleUpdateSubTask = (values) => {
+    const finalValues = {
+      ...values,
+      taskId: currentTaskId,
+      employeeId: editingSubTask.employeeId,
+    };
+
+    dispatch(createSubTask(finalValues)).then(() => {
+      dispatch(getSubTasksByTaskId(currentTaskId)).then((data) => {
+        setSubTasks(data.payload);
+        loadDataTask();
+        setAddSubtaskVisible(false);
+        setShowUpdateForm(false);
       });
     });
   };
@@ -162,7 +220,7 @@ const List = () => {
             <Search
               placeholder="Tìm kiếm theo tên"
               allowClear
-              onChange={onSearch}
+              onChange={(e) => handleSearchChange(e.target.value)}
               style={{
                 marginLeft: "15px",
                 width: 500,
@@ -186,57 +244,94 @@ const List = () => {
             {
               title: "Tuỳ chọn",
               key: "action",
-              render: (_, record) => (
-                <Dropdown
-                  placement="bottomRight"
-                  overlay={
-                    <Menu onClick={(e) => handleMenuClick(e, record)}>
-                      <Menu.Item key="subTask">
-                        <span onClick={() => openAddSubtaskModal(record)}>
-                          <PlusCircleOutlined
-                            style={{ color: "green", marginRight: "8px" }}
-                          />
-                          Thêm công việc con
-                        </span>
-                      </Menu.Item>
-                      <Menu.Item key="viewSubTask">
-                        <span onClick={() => openSubtaskModal(record)}>
-                          <FileTextOutlined
-                            style={{ color: "green", marginRight: "8px" }}
-                          />
-                          Xem công việc con
-                        </span>
-                      </Menu.Item>
-                      <Menu.Item key="edit">
-                        <span>
-                          <EditOutlined
-                            style={{ color: "gold", marginRight: "8px" }}
-                          />
-                          Sửa
-                        </span>
-                      </Menu.Item>
-                      <Menu.Item key="delete">
-                        <span>
-                          <DeleteOutlined
-                            style={{ color: "red", marginRight: "8px" }}
-                          />
-                          Xóa
-                        </span>
-                      </Menu.Item>
-                    </Menu>
-                  }
-                >
-                  <a
-                    className="ant-dropdown-link"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <MoreOutlined className="menu-icon" />
-                  </a>
-                </Dropdown>
-              ),
+              render: (_, record) => {
+                const isManager = record.managerName;
+                if (isManager) {
+                  return (
+                    <Dropdown
+                      placement="bottomRight"
+                      overlay={
+                        <Menu onClick={(e) => handleMenuClick(e, record)}>
+                          <Menu.Item key="subTask">
+                            <span onClick={() => openAddSubtaskModal(record)}>
+                              <PlusCircleOutlined
+                                style={{ color: "green", marginRight: "8px" }}
+                              />
+                              Thêm công việc con
+                            </span>
+                          </Menu.Item>
+                          <Menu.Item key="viewSubTask">
+                            <span onClick={() => openSubtaskModal(record)}>
+                              <FileTextOutlined
+                                style={{ color: "green", marginRight: "8px" }}
+                              />
+                              Xem công việc con
+                            </span>
+                          </Menu.Item>
+                          <Menu.Item key="edit">
+                            <span>
+                              <EditOutlined
+                                style={{ color: "gold", marginRight: "8px" }}
+                              />
+                              Sửa
+                            </span>
+                          </Menu.Item>
+                          <Menu.Item key="delete">
+                            <span>
+                              <DeleteOutlined
+                                style={{ color: "red", marginRight: "8px" }}
+                              />
+                              Xóa
+                            </span>
+                          </Menu.Item>
+                        </Menu>
+                      }
+                    >
+                      <a
+                        className="ant-dropdown-link"
+                        onClick={(e) => e.preventDefault()}
+                      >
+                        <MoreOutlined className="menu-icon" />
+                      </a>
+                    </Dropdown>
+                  );
+                }else{
+                  return(
+                    <Dropdown
+                      placement="bottomRight"
+                      overlay={
+                        <Menu onClick={(e) => handleMenuClick(e, record)}>
+                          <Menu.Item key="subTask">
+                            <span onClick={() => openAddSubtaskModal(record)}>
+                              <PlusCircleOutlined
+                                style={{ color: "green", marginRight: "8px" }}
+                              />
+                              Thêm công việc con
+                            </span>
+                          </Menu.Item>
+                          <Menu.Item key="viewSubTask">
+                            <span onClick={() => openSubtaskModal(record)}>
+                              <FileTextOutlined
+                                style={{ color: "green", marginRight: "8px" }}
+                              />
+                              Xem công việc con
+                            </span>
+                          </Menu.Item>
+                        </Menu>
+                      }
+                    >
+                      <a
+                        className="ant-dropdown-link"
+                        onClick={(e) => e.preventDefault()}
+                      >
+                        <MoreOutlined className="menu-icon" />
+                      </a>
+                    </Dropdown>
+                  )
+                }
+              },
             },
           ]}
-          
           dataSource={task}
           onChange={onChange}
           rowSelection={{
@@ -289,7 +384,7 @@ const List = () => {
           layout="vertical"
           form={form}
           id="createSubTask"
-          onFinish={onFinish}
+          onFinish={handleAddSubTask}
         >
           <Form.Item
             label="Tên công việc con"
@@ -317,10 +412,14 @@ const List = () => {
           >
             <Select
               placeholder="Chọn người thực hiện"
-              options={availableEmployees.data?.map((item) => ({
-                label: item.name,
-                value: item.id,
-              }))}
+              options={
+                availableEmployees && availableEmployees.data
+                  ? availableEmployees.data.map((item) => ({
+                      label: item.name,
+                      value: item.id,
+                    }))
+                  : null
+              }
             />
           </Form.Item>
           <Form.Item label="Mô tả" name="description">
@@ -342,22 +441,62 @@ const List = () => {
             Đóng
           </Button>,
         ]}
-        
       >
         <div className="subTask">
           {subTasks && subTasks.data ? (
             subTasks.data.map((subTaskItem) => (
-              <div key={subTaskItem.taskId}>
-              {console.log(subTaskItem.taskId)}
+              <div key={subTaskItem.employeeId}>
+                {console.log(subTaskItem.employeeId)}
                 <p>{subTaskItem.name}</p>
                 <p>{subTaskItem.employeeName}</p>
                 <p>{subTaskItem.description}</p>
+                <Button onClick={() => openEditSubTaskModal(subTaskItem)}>
+                  Sửa công việc con
+                </Button>
+                <Button
+                  onClick={() => handleDeleteSubTask(subTaskItem.employeeId)}
+                >
+                  Xóa công việc con
+                </Button>
               </div>
             ))
           ) : (
             <p>Chưa có công việc con</p>
           )}
         </div>
+        {showUpdateForm && editingSubTask && (
+          <Form
+            layout="vertical"
+            onFinish={handleUpdateSubTask}
+            id="updateSubTask"
+          >
+            <Form.Item
+              label="Tên công việc con"
+              name="name"
+              required
+              initialValue={editingSubTask.name}
+            >
+              <Input placeholder="Nhập tên công việc con" />
+            </Form.Item>
+            <Form.Item
+              label="Mô tả"
+              name="description"
+              initialValue={description}
+            >
+              <TextArea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={5}
+                placeholder="Thêm mô tả chi tiết cho công việc"
+              />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" form="updateSubTask">
+                Lưu thay đổi
+              </Button>
+            </Form.Item>
+          </Form>
+        )}
       </Modal>
     </div>
   );

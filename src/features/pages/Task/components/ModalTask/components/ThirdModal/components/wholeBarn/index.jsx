@@ -95,7 +95,7 @@ function WholeBarn({onTaskAdded, onDateChange}) {
         })
       );
       form.setFieldsValue({
-        employeeIds: null
+        employeeIds: undefined
       });
     }
   }, [selectedTaskTypeId]);

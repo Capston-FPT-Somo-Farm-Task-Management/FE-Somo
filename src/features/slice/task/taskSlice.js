@@ -4,10 +4,10 @@ import { baseUrl } from "features/api/baseUrl";
 import { toast } from "react-toastify";
 import { authServices } from "services/authServices";
 
-export const getTasks = createAsyncThunk("tasks/getTasks", async ({ pageIndex, pageSize, status, date  }, {rejectWithValue}) => {
+export const getTasks = createAsyncThunk("tasks/getTasks", async ({ pageIndex, pageSize, status, date, taskName  }, {rejectWithValue}) => {
   try {
     const formattedDate = date ? date.toISOString().split('T')[0] : '';
-    const { data } = await axios.get(baseUrl + `/FarmTask/PageIndex(${pageIndex})/PageSize(${pageSize})/Manager(${authServices.getUserId()})/Status(${status})/Date?date=${formattedDate}`, {
+    const { data } = await axios.get(baseUrl + `/FarmTask/PageIndex(${pageIndex})/PageSize(${pageSize})/Manager(${authServices.getUserId()})/Status(${status})/Date?date=${formattedDate}&taskName=${taskName}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -40,7 +40,7 @@ export const createTask = createAsyncThunk("tasks/createTask", async (data, {rej
       },
     });
     if (response.status === 200) {
-      toast.success(response.data.message)
+      toast.success("Thêm công việc thành công")
       return response.data.data
     }
   } catch (error) {
@@ -52,16 +52,12 @@ export const createTask = createAsyncThunk("tasks/createTask", async (data, {rej
 export const deleteTask = createAsyncThunk(
   "tasks/deleteTask",
   async (id, { rejectWithValue }) => {
-    console.log(id);
-    const status = 4; // Lấy giá trị status từ redux store
-    console.log("status:", status);
     try {
       const response = await axios.put(
-        baseUrl + `/FarmTask/ChangeStatus/${id}`,
-        { status }
+        baseUrl + `/FarmTask/ChangeStatus/${id}?status=4`
       );
       if (response.status === 200) {
-        toast.success(response.data.message);
+        toast.success("Xóa thành công");
       }
       return response.data;
     } catch (error) {
@@ -130,7 +126,11 @@ const taskSlice = createSlice({
       })
       .addCase(deleteTask.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload;
+        if (Array.isArray(state.data)) {
+          state.data.push(action.payload.task);
+        } else {
+          state.data = [action.payload.task];
+        }
       })
       .addCase(deleteTask.rejected, (state, action) => {
         state.loading = false;

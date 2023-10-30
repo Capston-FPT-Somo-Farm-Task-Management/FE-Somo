@@ -99,7 +99,7 @@ function SpecificPlant({onTaskAdded, onDateChange}) {
         })
       );
       form.setFieldsValue({
-        employeeIds: null
+        employeeIds: undefined
       });
     }
   }, [selectedTaskTypeId]);

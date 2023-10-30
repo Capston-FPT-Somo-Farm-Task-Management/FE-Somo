@@ -34,7 +34,7 @@ export const taskTitle = [
           color = '#f3722c';
           break;
         case 'Trung bình':
-          color = '#f9c74f';
+          color = '#fca311';
           break;
         case 'Thấp':
           color = '#90be6d';
@@ -54,15 +54,25 @@ export const taskTitle = [
     key: 'employeeName',
   },
   {
-    title: 'Vị trí',
-    dataIndex: 'fieldName',
-    key: 'fieldName',
+    title: 'Được tạo bởi',
+    dataIndex: 'managerName',
+    key: 'managerName',
+    render: (text) => (
+      <span>
+        {text ? 'Người quản lý' : 'Người giám sát'}
+      </span>
+    ),
   },
-  {
-    title: 'Trạng thái',
-    dataIndex: 'status',
-    key: 'status',
-  },
+  // {
+  //   title: 'Vị trí',
+  //   dataIndex: 'fieldName',
+  //   key: 'fieldName',
+  // },
+  // {
+  //   title: 'Trạng thái',
+  //   dataIndex: 'status',
+  //   key: 'status',
+  // },
 
 ]
 
