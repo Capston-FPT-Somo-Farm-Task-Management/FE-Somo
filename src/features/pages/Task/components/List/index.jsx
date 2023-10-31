@@ -30,9 +30,7 @@ const List = () => {
   const [addSubtaskVisible, setAddSubtaskVisible] = useState(false);
   // const [employeesValue, setEmployeesValue] = useState(0);
   const [description, setDescription] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
   const [pageIndex, setPageIndex] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
   const [currentTaskId, setCurrentTaskId] = useState(0);
   const [availableEmployees, setAvailableEmployees] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
@@ -57,18 +55,22 @@ const List = () => {
     dispatch(
       getTasks({
         pageIndex,
-        pageSize,
         status,
         date: selectedDate,
         taskName: taskNameSearch,
       })
     );
-  }
+  };
 
   useEffect(() => {
     loadDataTask();
     dispatch(getStatus());
-  }, [pageIndex, pageSize, status, selectedDate, taskNameSearch]);
+  }, [
+    pageIndex,
+    status,
+    selectedDate,
+    taskNameSearch,
+  ]);
 
   useEffect(() => {
     dispatch(getEmployeeByTask(currentTaskId)).then((data) => {
@@ -78,7 +80,6 @@ const List = () => {
 
   const onChange = (pagination) => {
     setPageIndex(pagination.current);
-    setPageSize(pagination.pageSize);
   };
 
   const handleMenuClick = (e, record) => {
@@ -210,13 +211,6 @@ const List = () => {
         />
         <div>
           <Space direction="vertical">
-            <DatePicker
-              style={{ marginLeft: "15px" }}
-              value={selectedDate}
-              onChange={handleDateChange}
-            />
-            <Button onClick={handleResetDate}>Đặt lại</Button>
-            <StatusTabs onTabChange={handleTabChange} />
             <Search
               placeholder="Tìm kiếm theo tên"
               allowClear
@@ -226,6 +220,13 @@ const List = () => {
                 width: 500,
               }}
             />
+            <DatePicker
+              style={{ marginLeft: "15px" }}
+              value={selectedDate}
+              onChange={handleDateChange}
+            />
+            <Button onClick={handleResetDate}>Đặt lại</Button>
+            <StatusTabs onTabChange={handleTabChange} />
           </Space>
         </div>
       </div>
@@ -234,10 +235,9 @@ const List = () => {
           rowKey="id"
           pagination={{
             current: pageIndex,
-            pageSize: pageSize,
-            total: dataTotalPages * pageSize,
-            showSizeChanger: true,
-            pageSizeOptions: ["10", "20", "30"],
+            pageSize: 10,
+            total: dataTotalPages * 10,
+            showSizeChanger: false,
           }}
           columns={[
             ...taskTitle,
@@ -295,8 +295,8 @@ const List = () => {
                       </a>
                     </Dropdown>
                   );
-                }else{
-                  return(
+                } else {
+                  return (
                     <Dropdown
                       placement="bottomRight"
                       overlay={
@@ -327,7 +327,7 @@ const List = () => {
                         <MoreOutlined className="menu-icon" />
                       </a>
                     </Dropdown>
-                  )
+                  );
                 }
               },
             },

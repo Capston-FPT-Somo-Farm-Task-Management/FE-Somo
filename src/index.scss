@@ -2,6 +2,7 @@
 @import './styles/Helper/mixin';
 @import './common/components/Header/header';
 @import './common/components/Sidebar/sideBar';
+@import "./features/pages/Schedule/schedule";
 @import './features/pages/Task/task';
 @import './features/pages/Task/components/ModalTask/modalTask';
 @import './features/pages/Task/components/List/list';
