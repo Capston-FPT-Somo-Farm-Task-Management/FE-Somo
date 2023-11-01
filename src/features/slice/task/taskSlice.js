@@ -47,8 +47,9 @@ export const createTask = createAsyncThunk(
           },
         }
       )
-      console.log(response)
-      console.log(response.data)
+      if (response.status === 200) {
+        toast.success("Thêm công việc thành công");
+      }
       return response.data
     } catch (error) {
       throw error

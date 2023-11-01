@@ -8,7 +8,7 @@ import { steps } from "./modalTaskData";
 
 const { Step } = Steps;
 
-function ModalTask({onTaskAdded, onDateChange}) {
+function ModalTask({onTaskAdded, onDateChange, loadDataTask}) {
   const [currentStep, setCurrentStep] = useState(-1);
   const [selectedType, setSelectedType] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -45,7 +45,7 @@ function ModalTask({onTaskAdded, onDateChange}) {
           />
         );
       case 2:
-        return <ThirdModal  option={selectedOption} onTaskAdded={onTaskAdded} onDateChange={onDateChange}/>;
+        return <ThirdModal loadDataTask={loadDataTask} option={selectedOption} onTaskAdded={onTaskAdded} onDateChange={onDateChange}/>;
       default:
         return null;
     }

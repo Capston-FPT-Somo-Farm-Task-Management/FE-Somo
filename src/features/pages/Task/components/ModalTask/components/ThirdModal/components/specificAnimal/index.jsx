@@ -1,216 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { DatePicker, Form, Input, Select } from "antd";
-import { useSelector, useDispatch } from "react-redux";
-import { getAreaActive } from "features/slice/area/areaSlice";
-import { getZoneByAreaAnimal } from "features/slice/zone/zoneAnimalSlice";
-import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
-import { getTaskTypeLivestock } from "features/slice/task/taskTypeAnimalSlice";
-import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
-import { getEmployeeByTaskTypeAndFarmId } from "features/slice/employee/employeeSlice";
-import { getMaterial } from "features/slice/material/materialSlice";
-import { getAnimalActive } from "features/slice/animal/animalSlice";
-import { getTasks, createTask } from "features/slice/task/taskSlice";
-import { getMemberById } from "features/slice/user/memberSlice";
-import { authServices } from "services/authServices";
-
 import dayjs from "dayjs";
 import MultiDatePicker from "react-multi-date-picker";
+import TimePicker from "react-multi-date-picker/plugins/time_picker";
 
-function SpecificAnimal({ onTaskAdded, onDateChange }) {
-  const [selectedAreaId, setSelectedAreaId] = useState(null);
-  const [selectedZoneId, setSelectedZoneId] = useState(null);
-  const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(null);
-  const [selectedFarmId, setSelectedFarmId] = useState(null);
-  const [employeesValue, setEmployeesValue] = useState(null);
-  const [materialsValue, setMaterialsValue] = useState(0);
-  const [priorityValue, setPriorityValue] = useState("");
-  const [remindValue, setRemindValue] = useState(0);
-  const [repeatValue, setRepeatValue] = useState(false);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [description, setDescription] = useState("");
-
-  const [form] = Form.useForm();
-
-  const dispatch = useDispatch();
-
-  const member = useSelector((state) => state.member.data);
-
-  console.log(member);
-
-  const farmId = member.farmId;
-
-  console.log(farmId);
-
-  const area = useSelector((state) => state.area.data);
-
-  const zoneAnimal = useSelector((state) => state.zoneAnimal.data);
-
-  const animal = useSelector((state) => state.animal.data);
-  const dataAnimal = animal.data;
-
-  const fieldByZone = useSelector((state) => state.fieldByZone.data);
-  console.log(fieldByZone);
-
-  const taskTypeLivestock = useSelector(
-    (state) => state.taskTypeLivestock.data
-  );
-  const dataTaskTypeLivestock = taskTypeLivestock.data;
-  console.log(dataTaskTypeLivestock);
-
-  const supervisor = useSelector((state) => state.supervisor.data);
-  const dataSupervisor = supervisor.data;
-
-  console.log(dataSupervisor);
-
-  const dataEmployee = useSelector((state) => state.employee.data);
-  console.log(dataEmployee);
-
-  const material = useSelector((state) => state.material.data);
-  const dataMaterial = material.data;
-
-  useEffect(() => {
-    dispatch(getAreaActive());
-    dispatch(getTaskTypeLivestock());
-    dispatch(getAnimalActive());
-    dispatch(getSupervisor());
-    dispatch(getMaterial());
-    dispatch(getMemberById(authServices.getUserId()));
-  }, []);
-
-  useEffect(() => {
-    if (selectedAreaId) {
-      dispatch(getZoneByAreaAnimal(selectedAreaId));
-      form.setFieldsValue({
-        zoneId: null,
-        fieldId: null,
-      });
-    }
-  }, [selectedAreaId]);
-
-  useEffect(() => {
-    if (selectedZoneId) {
-      dispatch(getFieldByZone(selectedZoneId));
-      form.setFieldsValue({
-        fieldId: null,
-      });
-    }
-  }, [selectedZoneId]);
-
-  useEffect(() => {
-    if (selectedTaskTypeId) {
-      dispatch(
-        getEmployeeByTaskTypeAndFarmId({
-          taskTypeId: selectedTaskTypeId,
-          farmId: farmId,
-        })
-      );
-      form.setFieldsValue({
-        employeeIds: undefined,
-      });
-    }
-  }, [selectedTaskTypeId]);
-
-  
-
-  const handleSelectAreaChange = (value) => {
-    setSelectedAreaId(value);
-  };
-  const handleSelectZoneChange = async (value) => {
-    setSelectedZoneId(value);
-
-    try {
-      await dispatch(
-        getEmployeeByTaskTypeAndFarmId({
-          taskTypeId: selectedTaskTypeId, // Sử dụng selectedTaskTypeId ở đây
-          farmId: selectedFarmId,
-        })
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleTaskTypeChange = (value) => {
-    setSelectedTaskTypeId(value);
-  };
-
-  const transformData = (originalData) => {
-    const transformedData = {
-      employeeIds: originalData.employeeIds,
-      materialIds: originalData.materialIds,
-      dates: originalData.dates,
-      farmTask: {
-        name: originalData.name,
-        startDate: originalData.startDate,
-        endDate: originalData.endDate,
-        description: originalData.description,
-        priority: originalData.priority,
-        isRepeat: originalData.isRepeat,
-        suppervisorId: originalData.suppervisorId,
-        fieldId: originalData.fieldId,
-        taskTypeId: originalData.taskTypeId,
-        managerId: originalData.managerId,
-        otherId: originalData.otherId,
-        plantId: originalData.plantId,
-        liveStockId: originalData.liveStockId,
-        remind: originalData.remind,
-      },
-    };
-
-    return transformedData;
-  };
-
-  const onFinish = (values) => {
-    const startDateFormatted = dayjs(startDate).format(
-      "YYYY-MM-DD[T]HH:mm:ss.SSS"
-    );
-    const endDateFormatted = dayjs(endDate).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
-
-    const startTime = dayjs(startDate).format("HH:mm:ss.SSS");
-
-    const endTime = dayjs(endDate).format("HH:mm:ss.SSS");
-
-    const selectedDates = values.dates || [];
-
-    const combinedDates = selectedDates.map((date) => `${date}T${startTime}`);
-
-    const remindValueToSend = remindValue || 0;
-
-    const repeatValueToSend = repeatValue || false;
-
-    const datesToSend = repeatValueToSend ? combinedDates : [];
-
-    const finalValues = {
-      ...values,
-      startDate: startDateFormatted,
-      endDate: endDateFormatted,
-      dates: datesToSend,
-      // employeeIds: employeesValue,
-      priority: priorityValue,
-      remind: remindValueToSend,
-      isRepeat: repeatValueToSend,
-      description: description,
-      managerId: member.id,
-      otherId: 0,
-    };
-
-    const transformedValues = transformData(finalValues);
-
-    dispatch(createTask(transformedValues)).then(() => {
-      onDateChange();
-      onTaskAdded();
-    });
-  };
-
-  const disabledDate = (current) => {
-    return current && current < dayjs().startOf("day");
-  };
-
-  const isDateDisabled = (current) => {
-    return current.isBefore(MultiDatePicker.now, "day");
-  };
-
+function SpecificAnimal({
+  onFinish,
+  handleSelectAreaChange,
+  handleSelectZoneChange,
+  handleSelectFieldChange,
+  handlePriorityChange,
+  handleSelectStartDate,
+  handleSelectEndDate,
+  handleDescriptionChange,
+  handleTaskTypeChange,
+  handleEmployeeChange,
+  handleMaterialChange,
+  handleSelectRemind,
+  handleSelectRepeat,
+  form,
+  area,
+  zoneAnimal,
+  fieldByZone,
+  dataAnimal,
+  priorityValue,
+  description,
+  dataTaskTypeLivestock,
+  employeesValue,
+  dataEmployee,
+  dataSupervisor,
+  materialsValue,
+  dataMaterial,
+  remindValue,
+  repeatValue,
+  disabledDate,
+  isDateDisabled,
+}) {
   const { TextArea } = Input;
 
   return (
@@ -283,6 +108,7 @@ function SpecificAnimal({ onTaskAdded, onDateChange }) {
           ]}
         >
           <Select
+            onChange={handleSelectFieldChange}
             placeholder="Chọn chuồng"
             options={
               fieldByZone && fieldByZone.data
@@ -308,7 +134,7 @@ function SpecificAnimal({ onTaskAdded, onDateChange }) {
           <Select
             placeholder="Chọn mã vật nuôi"
             options={dataAnimal?.map((item) => ({
-              label: item.name,
+              label: item.externalId,
               value: item.id,
             }))}
           />
@@ -326,7 +152,7 @@ function SpecificAnimal({ onTaskAdded, onDateChange }) {
         >
           <Select
             value={priorityValue}
-            onChange={(value) => setPriorityValue(value)}
+            onChange={handlePriorityChange}
             placeholder="Chọn độ ưu tiên"
           >
             <Select.Option value="Thấp nhất">Thấp nhất</Select.Option>
@@ -353,7 +179,7 @@ function SpecificAnimal({ onTaskAdded, onDateChange }) {
             showTime={{
               defaultValue: dayjs("00:00:00", "HH:mm:ss"),
             }}
-            onChange={(date, dateString) => setStartDate(dateString)}
+            onChange={handleSelectStartDate}
           />
         </Form.Item>
         <Form.Item
@@ -373,13 +199,13 @@ function SpecificAnimal({ onTaskAdded, onDateChange }) {
             showTime={{
               defaultValue: dayjs("00:00:00", "HH:mm:ss"),
             }}
-            onChange={(date, dateString) => setEndDate(dateString)}
+            onChange={handleSelectEndDate}
           />
         </Form.Item>
         <Form.Item label="Mô tả" name="description">
           <TextArea
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={handleDescriptionChange}
             rows={5}
             placeholder="Thêm mô tả chi tiết cho công việc"
           />
@@ -437,7 +263,7 @@ function SpecificAnimal({ onTaskAdded, onDateChange }) {
           <Select
             mode="multiple"
             value={employeesValue}
-            onChange={(value) => setEmployeesValue(value)}
+            onChange={handleEmployeeChange}
             placeholder="Chọn người thực hiện"
             options={
               dataEmployee && dataEmployee.data
@@ -483,7 +309,7 @@ function SpecificAnimal({ onTaskAdded, onDateChange }) {
             placeholder="Chọn dụng cụ"
             mode="multiple"
             value={materialsValue}
-            onChange={(value) => setMaterialsValue(value)}
+            onChange={handleMaterialChange}
             options={dataMaterial?.map((item) => ({
               label: item.name,
               value: item.id,
@@ -493,7 +319,7 @@ function SpecificAnimal({ onTaskAdded, onDateChange }) {
         <Form.Item label="Nhắc lại" name="remind">
           <Select
             value={remindValue.toString()}
-            onChange={(value) => setRemindValue(parseInt(value, 10))}
+            onChange={handleSelectRemind}
             placeholder="Không"
           >
             <Select.Option value="0">Không</Select.Option>
@@ -506,7 +332,7 @@ function SpecificAnimal({ onTaskAdded, onDateChange }) {
         <Form.Item label="Lặp lại" name="isRepeat">
           <Select
             value={repeatValue}
-            onChange={(value) => setRepeatValue(value === "Có")}
+            onChange={handleSelectRepeat}
             placeholder="Không"
           >
             <Select.Option value="Không">Không</Select.Option>
@@ -518,8 +344,11 @@ function SpecificAnimal({ onTaskAdded, onDateChange }) {
           <Form.Item label="Lặp những ngày" name="dates">
             <MultiDatePicker
               multiple
-              format="YYYY-MM-DD"
-              disabledDate={isDateDisabled}
+              format="YYYY-MM-DD HH:mm"
+              minDate={new Date()}
+              plugins={[
+                <TimePicker position="bottom" hStep={1} mStep={1} />,
+              ]}
             />
           </Form.Item>
         )}

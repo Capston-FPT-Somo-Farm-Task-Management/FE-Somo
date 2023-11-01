@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, Input, Modal, Select, Space, Table } from "antd";
+import { Button, Form, Input, Modal, Select, Table } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { getTasks, deleteTask } from "features/slice/task/taskSlice";
 import { getEmployeeByTask } from "features/slice/employee/employeeByTask";
@@ -8,12 +8,12 @@ import {
   createSubTask,
   deleteSubTask,
 } from "features/slice/subTask/subTaskSlice";
-import { taskTitle, onChange } from "./listTaskData";
+import { taskTitle } from "./listTaskData";
 import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
 import { getStatus } from "features/slice/status/statusSlice";
 import TaskDetail from "../TaskDetail";
 import ModalTask from "../ModalTask";
-import { Menu, Dropdown, DatePicker } from "antd";
+import { Menu, Dropdown } from "antd";
 import {
   MoreOutlined,
   EditOutlined,
@@ -218,6 +218,7 @@ const List = () => {
         <ModalTask
           onTaskAdded={handleTaskAdded}
           onDateChange={handleDateChange}
+          loadDataTask={loadDataTask}
         />
         <div className="list-header-item-right">
           <DateSelectionComp

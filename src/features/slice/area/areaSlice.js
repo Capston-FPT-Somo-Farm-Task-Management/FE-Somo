@@ -5,13 +5,13 @@ import { toast } from 'react-toastify'
 
 export const getAreaActive = createAsyncThunk(
   'areas/getAreaActive',
-  async () => {
+  async (id, {rejectWithValue}) => {
     try {
-      const { data } = await axios.get(baseUrl + '/Area/Active')
+      const { data } = await axios.get(baseUrl + `/Area/Active/Farm(${id})`)
       // console.log(data)
       return data
     } catch (error) {
-      throw error
+      rejectWithValue(error.message)
     }
   }
 )
