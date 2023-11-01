@@ -1,36 +1,39 @@
-import { onMessageListener, requestPermission } from 'features/firebase'
-import { useEffect, useState } from 'react'
+import { onMessageListener, requestForToken } from 'features/firebase'
+import React, { useState, useEffect } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 
 const Notification = () => {
   const [notification, setNotification] = useState({ title: '', body: '' })
+  const notify = () => toast(<ToastDisplay />)
+  function ToastDisplay() {
+    return (
+      <div>
+        <p>
+          <b style={{ fontSize: '16px' }}>{notification?.title}</b>
+        </p>
+        <p style={{ fontSize: '14px' }}>{notification?.body}</p>
+      </div>
+    )
+  }
+
   useEffect(() => {
-    requestPermission()
-    const unsubscribe = onMessageListener().then((payload) => {
+    if (notification?.title) {
+      notify()
+    }
+  }, [notification])
+
+  requestForToken()
+
+  onMessageListener()
+    .then((payload) => {
       setNotification({
         title: payload?.notification?.title,
         body: payload?.notification?.body,
       })
-      toast.success(
-        `${payload?.notification?.title}: ${payload?.notification?.body}`,
-        {
-          duration: 10000,
-          position: 'top-right',
-          style: {
-            fontSize: '16px',
-            width: '400px',
-          },
-        }
-      )
     })
-    return () => {
-      unsubscribe.catch((err) => console.log('failed: ', err))
-    }
-  }, [])
-  return (
-    <div>
-      <Toaster />
-    </div>
-  )
+    .catch((err) => console.log('failed: ', err))
+
+  return <Toaster position="top-right" />
 }
+
 export default Notification

@@ -31,6 +31,12 @@ import subTaskReducer from './slice/subTask/subTaskSlice'
 import habitantTypeReducer from './slice/habitant/habitantTypeSlice'
 import memberReducer from './slice/user/memberSlice'
 import statusReducer from "./slice/status/statusSlice"
+import hubReducer from './slice/hub/hubSlice'
+import notificationReducer from './slice/notification/notificationSlice'
+import notificationCountReducer from './slice/notification/notificationCountSlice'
+import notificationIsNewReducer from './slice/notification/notificationIsNewSlice'
+import notificationReadReducer from './slice/notification/notificationReadSlice'
+import employeeByFarmReducer from './slice/employee/employeeByFarmSlice'
 
 export const store = configureStore({
   reducer: {
@@ -66,5 +72,11 @@ export const store = configureStore({
     habitantType: habitantTypeReducer,
     member: memberReducer,
     status: statusReducer,
+    hub: hubReducer,
+    notification: notificationReducer,
+    notificationCount: notificationCountReducer,
+    notificationIsNew: notificationIsNewReducer,
+    notificationRead: notificationReadReducer,
+    employeeByFarm: employeeByFarmReducer,
   },
 })

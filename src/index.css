@@ -957,4 +957,25 @@ html {
     opacity: 1;
     transform: none;
   }
+}
+
+.page-not-fount-container {
+  max-width: 2100px;
+  text-align: center;
+  margin-top: 20%;
+}
+.page-not-fount-container .error-number-404 {
+  font-size: 100px;
+  font-weight: 900;
+  text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  -webkit-text-stroke: 3px #000;
+}
+.page-not-fount-container .error-content {
+  font-size: 90px;
+  text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.chart-zone {
+  width: 100%;
+  height: 350px;
 }/*# sourceMappingURL=index.css.map */

@@ -9,7 +9,7 @@
 @import './features/pages/Task/components/ModalTask/components/FirstModal/firstModal';
 @import './features/pages/Task/components/ModalTask/components/SecondModal/secondModal';
 @import './features/pages/Task/components/ModalTask/components/ThirdModal/thirdModal';
-@import "./features/pages/Task/components/TaskDetail/taskDetail";
+@import './features/pages/Task/components/TaskDetail/taskDetail';
 @import './features//pages/Animals/Animals/animals';
 @import './features//pages//Animals/AnimalGroup/animalGroup';
 @import './features/pages/Plants/MyCrops/myCrops';
@@ -24,3 +24,5 @@
 @import './features/pages/Plants/CropGroup/components/FirstStepAddCropGroup/firstStepAddCropGroup';
 @import './features/pages/Plants/MyCrops/components/FirstStepAddPlantType/firstStepAddPlantType';
 @import './features/authentication/SignIn/signin';
+@import './features/pages/PageNotFound/pageNotFound';
+@import './features//pages/Admin/Zone/chartZone';
