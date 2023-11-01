@@ -17,36 +17,41 @@ const getMonthData = (value) => {
 function Schedule() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDateData, setSelectedDateData] = useState(null);
+  const [pageIndex, setPageIndex] = useState(3);
+  const [status, setStatus] = useState(0);
 
   const dispatch = useDispatch();
 
   const taskForCalendarData = useSelector((state) => state.task.data);
+  const dataTask = taskForCalendarData.data
   console.log(taskForCalendarData);
 
   useEffect(() => {
-    dispatch(getTaskForCalendar(authServices.getUserId()));
+    dispatch(getTaskForCalendar((authServices.getUserId()), pageIndex, status));
     dispatch(getMemberById(authServices.getUserId()));
     console.log(authServices.getUserId());
-  }, []);
+  }, [pageIndex, status]);
 
   const getListData = (value) => {
     const dateString = value.format("YYYY-MM-DD");
-    const tasksForDate = taskForCalendarData.data.filter(
+    const tasksForDate = dataTask ? dataTask.filter(
       (task) => task.startDate <= dateString && task.endDate >= dateString
-    );
+    ) : null;
   
-    return tasksForDate.map((task) => {
+    return tasksForDate ? tasksForDate.map((task) => {
       return {
-        type: "success", // Bạn có thể sử dụng loại khác nếu cần
-        content: task.name,
+        type: "success",
+        name: task.name,
+        id: task.id
       };
-    });
+    }) : null;
   };
 
   const handleDateClick = (value) => {
     const listData = getListData(value);
     if (listData.length > 0) {
       setSelectedDateData(listData);
+      console.log("listdata", listData);
       setModalVisible(true);
     }
   };
@@ -54,9 +59,9 @@ function Schedule() {
   const dateRender = (current) => {
     const listData = getListData(current);
     return (
-      <div className="ant-picker-cell-inner">
+      <div className="ant-picker-cellphone-inner">
         {listData.length > 0 && <Badge count={listData.length} />}
-        {listData.length > 0 && <WalletOutlined style={{ fontSize: "16px", color: "#08c" }} />} {/* Biểu tượng túi */}
+        {listData.length > 0 && <WalletOutlined style={{ fontSize: "16px", color: "#08c" }} />} 
       </div>
     );
   };
@@ -99,22 +104,22 @@ function Schedule() {
   };
   const dateCellRender = (value) => {
     const listData = getListData(value);
-    const tasksForDate = taskForCalendarData.data.filter(
+    const tasksForDate = dataTask ? dataTask.filter(
       (task) => task.date === value.format("YYYY-MM-DD")
-    );
+    ) :null;
   
     return (
       <ul className="events">
-        {listData.map((item) => (
-          <li key={item.content}>
-            <Badge status={item.type} text={item.content} />
+        {listData ? listData.map((item) => (
+          <li key={item.id}>
+            <Badge status={item.type} text={item.name} />
           </li>
-        ))}
-        {tasksForDate.map((task) => (
+        )) : null}
+        {tasksForDate ? tasksForDate.map((task) => (
           <li key={task.id}>
-            {task.name} {/* Hiển thị tên công việc */}
+            {task.name}
           </li>
-        ))}
+        )) : null}
       </ul>
     );
   };
@@ -140,12 +145,12 @@ function Schedule() {
       >
         {selectedDateData && (
           <div className="events">
-            {selectedDateData.map((item) => (
-              <div key={item.content}>
+            {selectedDateData? selectedDateData.map((item) => (
+              <div key={item.id}>
               {console.log(item)}
-                <Badge status={item.type} text={item.content} />
+                <Badge status={item.type} text={item.name} />
               </div>
-            ))}
+            )) : null}
           </div>
         )}
       </Modal>

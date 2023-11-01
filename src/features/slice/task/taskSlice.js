@@ -12,6 +12,7 @@ export const getTasks = createAsyncThunk("tasks/getTasks", async ({ pageIndex, s
         "Content-Type": "application/json",
       },
     });
+    console.log(data);
     return data;
   } catch (error) {
     rejectWithValue(error.message)
@@ -31,9 +32,9 @@ export const getTaskById = createAsyncThunk('tasks/getTaskById', async (taskId, 
     }
   })
 
-export const getTaskForCalendar = createAsyncThunk('taskForCalendar/getTaskForCalendar', async ({rejectWithValue}) => {
+export const getTaskForCalendar = createAsyncThunk('taskForCalendar/getTaskForCalendar', async ({pageIndex, status},{rejectWithValue}) => {
     try {
-      const { data } = await axios.get(baseUrl + `/FarmTask/TaskActive/Member/${authServices.getUserId()}`, {
+      const { data } = await axios.get(baseUrl + `/FarmTask/PageIndex(${pageIndex})/PageSize(3)/Manager(${authServices.getUserId()})/Status(${status})/Date`, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -97,10 +98,24 @@ const taskSlice = createSlice({
       .addCase(getTasks.fulfilled, (state, action) => {
         state.loading = false;
         state.error = ''
-        state.data = action.payload.data.farmTasks;
+        state.data = action.payload.data.farmTasks || [];
         state.totalPages = action.payload.data.totalPages;
       })
       .addCase(getTasks.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.data = [];
+      })
+      .addCase(getTaskForCalendar.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getTaskForCalendar.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = ''
+        state.data = action.payload.data.farmTasks || [];
+        state.totalPages = action.payload.data.totalPages;
+      })
+      .addCase(getTaskForCalendar.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
         state.data = [];
@@ -114,19 +129,6 @@ const taskSlice = createSlice({
         state.data = action.payload
       })
       .addCase(getTaskById.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
-        state.data = []
-      })
-      .addCase(getTaskForCalendar.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(getTaskForCalendar.fulfilled, (state, action) => {
-        state.loading = false
-        state.error = ''
-        state.data = action.payload
-      })
-      .addCase(getTaskForCalendar.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
         state.data = []

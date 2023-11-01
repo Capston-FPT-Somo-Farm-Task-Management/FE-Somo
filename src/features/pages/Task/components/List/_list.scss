@@ -1,13 +1,15 @@
 .list {
   width: 100%;
   .list-header {
+    width: 100%;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     margin-bottom: 10px;
   }
   .menu-icon {
-    font-size: 20px; 
-    color: black; 
+    font-size: 20px;
+    color: black;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,19 +17,43 @@
   }
 }
 
-.task-name{
+.task-name {
   cursor: pointer;
 }
-.task-name:hover{
+.task-name:hover {
   text-decoration: underline;
   color: #007bff;
   opacity: 0.8;
 }
 
-.high-priority{
-  color: #f3722c;
-}
+.subTask-modal {
+  .ant-modal-content {
+    background-color: #e9ecef;
+    .ant-modal-title {
+      font-size: 28px;
+      background-color: #e9ecef;
+      margin-bottom: 30px;
+    }
 
-.medium-priority{
-  color: #f9c74f;
+    .subTask {
+      .subTask-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 20px;
+        background-color: white;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        .subTask-content {
+          width: 80%;
+        }
+      }
+      p {
+        margin-bottom: 5px;
+        font-size: 18px;
+      }
+      strong {
+        font-size: 18px;
+      }
+    }
+  }
 }
