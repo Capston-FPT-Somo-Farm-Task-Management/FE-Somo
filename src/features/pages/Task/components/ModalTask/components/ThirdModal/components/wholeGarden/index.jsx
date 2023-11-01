@@ -1,194 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { DatePicker, Form, Input, Select } from "antd";
-import { useSelector, useDispatch } from "react-redux";
-import { getAreaActive } from "features/slice/area/areaSlice";
-import { getZoneByAreaPlant } from "features/slice/zone/zonePlantSlice";
-import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
-import { getTaskTypePlant } from "features/slice/task/taskTypePlantSlice";
-import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
-import { getEmployeeByTaskTypeAndFarmId } from "features/slice/employee/employeeSlice";
-import { getMaterial } from "features/slice/material/materialSlice";
-import { getTasks, createTask } from "features/slice/task/taskSlice";
-import { getMemberById } from "features/slice/user/memberSlice";
-import { authServices } from "services/authServices";
 import dayjs from "dayjs";
 import MultiDatePicker from "react-multi-date-picker";
 
-function WholeGarden({onTaskAdded, onDateChange}) {
-  const [selectedAreaId, setSelectedAreaId] = useState(null);
-  const [selectedZoneId, setSelectedZoneId] = useState(null);
-  const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(null);
-  const [selectedFarmId, setSelectedFarmId] = useState(null);
-  const [employeesValue, setEmployeesValue] = useState(0);
-  const [materialsValue, setMaterialsValue] = useState(0);
-  const [priorityValue, setPriorityValue] = useState("");
-  const [remindValue, setRemindValue] = useState(0);
-  const [repeatValue, setRepeatValue] = useState(false);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [description, setDescription] = useState("");
-  const [pageIndex, setPageIndex] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [status, setStatus] = useState(0);
-
-  const [form] = Form.useForm();
-
-  const dispatch = useDispatch();
-
-  const member = useSelector((state) => state.member.data);
-
-  const farmId = member.farmId;
-
-  const area = useSelector((state) => state.area.data);
-
-  const zonePlant = useSelector((state) => state.zonePlant.data);
-
-  const fieldByZone = useSelector((state) => state.fieldByZone.data);
-
-  const taskTypePlant = useSelector((state) => state.taskTypePlant.data);
-  const dataTaskTypePlant = taskTypePlant.data;
-
-  const supervisor = useSelector((state) => state.supervisor.data);
-  const dataSupervisor = supervisor.data;
-
-  console.log(dataSupervisor);
-
-  const dataEmployee = useSelector((state) => state.employee.data);
-
-  const material = useSelector((state) => state.material.data);
-  const dataMaterial = material.data;
-
-  useEffect(() => {
-    dispatch(getAreaActive());
-    dispatch(getTaskTypePlant());
-    dispatch(getSupervisor());
-    dispatch(getMaterial());
-    dispatch(getMemberById(authServices.getUserId()));
-  }, [selectedTaskTypeId]);
-
-  useEffect(() => {
-    if (selectedAreaId) {
-      dispatch(getZoneByAreaPlant(selectedAreaId));
-      form.setFieldsValue({
-        zoneId: null,
-        fieldId: null,
-      });
-    }
-  }, [selectedAreaId]);
-
-  useEffect(() => {
-    if (selectedZoneId) {
-      dispatch(getFieldByZone(selectedZoneId));
-      form.setFieldsValue({
-        fieldId: null,
-      });
-    }
-  }, [selectedZoneId]);
-
-  useEffect(() => {
-    if (selectedTaskTypeId) {
-      dispatch(
-        getEmployeeByTaskTypeAndFarmId({
-          taskTypeId: selectedTaskTypeId,
-          farmId: farmId,
-        })
-      );
-      form.setFieldsValue({
-        employeeIds: undefined
-      });
-    }
-  }, [selectedTaskTypeId]);
-
-  const handleSelectAreaChange = (value) => {
-    setSelectedAreaId(value);
-  };
-  const handleSelectZoneChange = async (value) => {
-    setSelectedZoneId(value);
-
-    try {
-      await dispatch(
-        getEmployeeByTaskTypeAndFarmId({
-          taskTypeId: selectedTaskTypeId, // Sử dụng selectedTaskTypeId ở đây
-          farmId: selectedFarmId,
-        })
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleTaskTypeChange = (value) => {
-    setSelectedTaskTypeId(value);
-  };
-
-  const transformData = (originalData) => {
-    const transformedData = {
-      employeeIds: originalData.employeeIds,
-      materialIds: originalData.materialIds,
-      dates: originalData.dates,
-      farmTask: {
-        name: originalData.name,
-        startDate: originalData.startDate,
-        endDate: originalData.endDate,
-        description: originalData.description,
-        priority: originalData.priority,
-        isRepeat: originalData.isRepeat,
-        suppervisorId: originalData.suppervisorId,
-        fieldId: originalData.fieldId,
-        taskTypeId: originalData.taskTypeId,
-        managerId: originalData.managerId,
-        otherId: originalData.otherId,
-        plantId: originalData.plantId,
-        liveStockId: originalData.liveStockId,
-        remind: originalData.remind,
-      },
-    };
-
-    return transformedData;
-  };
-
-  const onFinish = (values) => {
-    const startDateFormatted = dayjs(startDate).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
-    const endDateFormatted = dayjs(endDate).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
-
-    const startTime = dayjs(startDate).format("HH:mm:ss.SSS");
-
-    const selectedDates = values.dates || [];
-
-    const combinedDates = selectedDates.map((date) => `${date}T${startTime}`);
-
-    const remindValueToSend = remindValue || 0;
-
-    const repeatValueToSend = repeatValue || false;
-
-    const datesToSend = repeatValueToSend ? combinedDates : [];
-
-    const finalValues = {
-      ...values,
-      startDate: startDateFormatted,
-      endDate: endDateFormatted,
-      dates: datesToSend,
-      // employeeIds: employeesValue,
-      priority: priorityValue,
-      remind: remindValueToSend,
-      isRepeat: repeatValueToSend,
-      description: description,
-      managerId: member.id,
-      otherId: 0,
-    };
-
-    const transformedValues = transformData(finalValues);
-
-    dispatch(createTask(transformedValues)).then(() => {
-      onDateChange();
-      onTaskAdded();
-    });
-  };
-
-  const disabledDate = (current) => {
-    return current && current < dayjs().startOf("day");
-  };
-
+function WholeGarden({
+  onFinish,
+  handleSelectAreaChange,
+  handleSelectZoneChange,
+  handleSelectFieldChange,
+  handlePriorityChange,
+  handleSelectStartDate,
+  handleSelectEndDate,
+  handleDescriptionChange,
+  handleTaskTypeChange,
+  handleEmployeeChange,
+  handleMaterialChange,
+  handleSelectRemind,
+  handleSelectRepeat,
+  form,
+  area,
+  zonePlant,
+  fieldByZone,
+  priorityValue,
+  description,
+  dataTaskTypePlant,
+  employeesValue,
+  dataEmployee,
+  dataSupervisor,
+  materialsValue,
+  dataMaterial,
+  remindValue,
+  repeatValue,
+  disabledDate,
+  isDateDisabled,
+}) {
   const { TextArea } = Input;
 
   return (
@@ -261,6 +106,7 @@ function WholeGarden({onTaskAdded, onDateChange}) {
           ]}
         >
           <Select
+            onChange={handleSelectFieldChange}
             placeholder="Chọn vườn"
             options={
               fieldByZone && fieldByZone.data
@@ -285,7 +131,7 @@ function WholeGarden({onTaskAdded, onDateChange}) {
         >
           <Select
             value={priorityValue}
-            onChange={(value) => setPriorityValue(value)}
+            onChange={handlePriorityChange}
             placeholder="Chọn độ ưu tiên"
           >
             <Select.Option value="Thấp nhất">Thấp nhất</Select.Option>
@@ -312,7 +158,7 @@ function WholeGarden({onTaskAdded, onDateChange}) {
             showTime={{
               defaultValue: dayjs("00:00:00", "HH:mm:ss"),
             }}
-            onChange={(date, dateString) => setStartDate(dateString)}
+            onChange={handleSelectStartDate}
           />
         </Form.Item>
         <Form.Item
@@ -332,13 +178,13 @@ function WholeGarden({onTaskAdded, onDateChange}) {
             showTime={{
               defaultValue: dayjs("00:00:00", "HH:mm:ss"),
             }}
-            onChange={(date, dateString) => setEndDate(dateString)}
+            onChange={handleSelectEndDate}
           />
         </Form.Item>
         <Form.Item label="Mô tả" name="description">
           <TextArea
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={handleDescriptionChange}
             rows={5}
             placeholder="Thêm mô tả chi tiết cho công việc"
           />
@@ -392,7 +238,7 @@ function WholeGarden({onTaskAdded, onDateChange}) {
           <Select
             mode="multiple"
             value={employeesValue}
-            onChange={(value) => setEmployeesValue(value)}
+            onChange={handleEmployeeChange}
             placeholder="Chọn người thực hiện"
             options={
               dataEmployee && dataEmployee.data
@@ -439,7 +285,7 @@ function WholeGarden({onTaskAdded, onDateChange}) {
             placeholder="Chọn dụng cụ"
             mode="multiple"
             value={materialsValue}
-            onChange={(value) => setMaterialsValue(value)}
+            onChange={handleMaterialChange}
             options={dataMaterial?.map((item) => ({
               label: item.name,
               value: item.id,
@@ -449,7 +295,7 @@ function WholeGarden({onTaskAdded, onDateChange}) {
         <Form.Item label="Nhắc lại" name="remind">
           <Select
             value={remindValue.toString()}
-            onChange={(value) => setRemindValue(parseInt(value, 10))}
+            onChange={handleSelectRemind}
             placeholder="Không"
           >
             <Select.Option value="0">Không</Select.Option>
@@ -462,7 +308,7 @@ function WholeGarden({onTaskAdded, onDateChange}) {
         <Form.Item label="Lặp lại" name="isRepeat">
           <Select
             value={repeatValue}
-            onChange={(value) => setRepeatValue(value === "Có")}
+            onChange={handleSelectRepeat}
             placeholder="Không"
           >
             <Select.Option value="Không">Không</Select.Option>
@@ -476,7 +322,11 @@ function WholeGarden({onTaskAdded, onDateChange}) {
             name="dates"
             rules={[{ required: true }]}
           >
-            <MultiDatePicker multiple format="YYYY-MM-DD" />
+            <MultiDatePicker
+              multiple
+              format="YYYY-MM-DD"
+              disabledDate={isDateDisabled}
+            />
           </Form.Item>
         )}
       </div>

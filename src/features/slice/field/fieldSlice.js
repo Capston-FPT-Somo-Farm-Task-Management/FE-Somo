@@ -32,7 +32,7 @@ export const getFields = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       })
-
+      console.log(data);
       return data
     } catch (error) {
       rejectWithValue(error)
