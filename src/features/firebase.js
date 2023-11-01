@@ -1,5 +1,10 @@
 import { initializeApp } from 'firebase/app'
 import { getMessaging, getToken, onMessage } from 'firebase/messaging'
+import { authServices } from 'services/authServices'
+import { getCurrentToken } from './authentication/SignIn'
+import { useDispatch } from 'react-redux'
+import { createHub } from './slice/hub/hubSlice'
+
 const firebaseConfig = {
   apiKey: 'AIzaSyDKF3MhWbAJYgVlce_y7czrvuddJqLjEeY',
   authDomain: 'somotaskmanagement.firebaseapp.com',
@@ -14,24 +19,24 @@ export const firebase = initializeApp(firebaseConfig)
 const messaging = getMessaging()
 
 export const requestForToken = () => {
-  return getToken(messaging, {
-    vapidKey:
-      'BMtIB-3Lg6nNAH9Pc4Nm8hn--Ht7G1nUAVhUGt4R8AUiQ25ftoYj8Kp9WuzKMoAIqqGewapkl_BbERweTkZvXi4',
-  })
-    .then((currentToken) => {
-      if (currentToken) {
-        console.log(currentToken)
-        // Perform any other neccessary action with the token
-      } else {
-        // Show permission request UI
-        console.log(
-          'No registration token available. Request permission to generate one.'
-        )
-      }
+  if (authServices.getRole() === 'Manager') {
+    getToken(messaging, {
+      vapidKey:
+        'BMtIB-3Lg6nNAH9Pc4Nm8hn--Ht7G1nUAVhUGt4R8AUiQ25ftoYj8Kp9WuzKMoAIqqGewapkl_BbERweTkZvXi4',
     })
-    .catch((err) => {
-      console.log('An error occurred while retrieving token. ', err)
-    })
+      .then((currentToken) => {
+        if (currentToken) {
+          localStorage.setItem('connectionId', currentToken)
+        } else {
+          console.log(
+            'No registration token available. Request permission to generate one.'
+          )
+        }
+      })
+      .catch((err) => {
+        console.log('An error occurred while retrieving token. ', err)
+      })
+  }
 }
 
 export const onMessageListener = () =>

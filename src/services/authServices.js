@@ -1,4 +1,5 @@
 import jwt_decode from 'jwt-decode'
+import { useDispatch } from 'react-redux'
 
 const getToken = () => {
   const token = localStorage.getItem('somoFarm')
@@ -50,6 +51,7 @@ const isLoggedIn = () => {
 
 const logOut = () => {
   localStorage.removeItem('somoFarm')
+  localStorage.removeItem('connectionId')
   localStorage.clear()
 }
 

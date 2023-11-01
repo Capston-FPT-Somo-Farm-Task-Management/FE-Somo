@@ -20,6 +20,7 @@ import AdminLayoutWithRoute from 'common/components/Sidebar/AdminLayoutWithRoute
 import StatisticArea from 'features/pages/Admin/Area/StatisticArea'
 import StatisticZone from 'features/pages/Admin/Zone/StatisticZone'
 import StatisticMember from 'features/pages/Admin/Member/StatisticMember'
+import Employee from 'features/pages/Employee'
 
 const AppRoute = () => {
   return (
@@ -136,6 +137,17 @@ const AppRoute = () => {
           <PrivateRoute>
             <LayoutWithRoute>
               <Material />
+            </LayoutWithRoute>
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/employee"
+        element={
+          <PrivateRoute>
+            <LayoutWithRoute>
+              <Employee />
             </LayoutWithRoute>
           </PrivateRoute>
         }

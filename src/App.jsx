@@ -1,4 +1,5 @@
 import Notification from 'common/components/Notification'
+import VirtualizeList from 'features/pages/VirtualizeList/VirtualizeList'
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'

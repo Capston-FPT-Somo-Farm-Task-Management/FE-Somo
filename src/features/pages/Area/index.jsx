@@ -59,7 +59,6 @@ const Area = () => {
       <DisplayArea
         areaByFarm={areaByFarm}
         onFinishDelete={onFinishDelete}
-        loadData={loadData}
         onFinishUpdate={onFinishUpdate}
       />
     </>

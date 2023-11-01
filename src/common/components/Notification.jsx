@@ -33,7 +33,7 @@ const Notification = () => {
     })
     .catch((err) => console.log('failed: ', err))
 
-  return <Toaster />
+  return <Toaster position="top-right" />
 }
 
 export default Notification
