@@ -244,7 +244,7 @@ const List = () => {
               title: "Tuỳ chọn",
               key: "action",
               render: (_, record) => {
-                const isManager = record.managerName;
+                const isManager = record && record.managerName;
                 if (isManager) {
                   return (
                     <Dropdown

@@ -19,34 +19,6 @@ export const getTasks = createAsyncThunk("tasks/getTasks", async ({ pageIndex, s
   }
 });
 
-export const getTaskById = createAsyncThunk('tasks/getTaskById', async (taskId, {rejectWithValue}) => {
-    try {
-      const { data } = await axios.get(baseUrl + `/FarmTask/${taskId}`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      return data
-    } catch (error) {
-      rejectWithValue(error.message)
-    }
-  })
-
-export const getTaskForCalendar = createAsyncThunk('taskForCalendar/getTaskForCalendar', async ({pageIndex, status},{rejectWithValue}) => {
-    try {
-      const { data } = await axios.get(baseUrl + `/FarmTask/PageIndex(${pageIndex})/PageSize(3)/Manager(${authServices.getUserId()})/Status(${status})/Date`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      console.log(data);
-      return data
-    } catch (error) {
-      rejectWithValue(error.message)
-    }
-  })
-
-
 export const createTask = createAsyncThunk("tasks/createTask", async (data, {rejectWithValue}) => {
   try {
     const response = await axios.post(baseUrl + `/FarmTask?memberId=${authServices.getUserId()}`, data, {
@@ -105,33 +77,6 @@ const taskSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
         state.data = [];
-      })
-      .addCase(getTaskForCalendar.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(getTaskForCalendar.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = ''
-        state.data = action.payload.data.farmTasks || [];
-        state.totalPages = action.payload.data.totalPages;
-      })
-      .addCase(getTaskForCalendar.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-        state.data = [];
-      })
-      .addCase(getTaskById.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(getTaskById.fulfilled, (state, action) => {
-        state.loading = false
-        state.error = ''
-        state.data = action.payload
-      })
-      .addCase(getTaskById.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
-        state.data = []
       })
 
       .addCase(createTask.pending, (state) => {

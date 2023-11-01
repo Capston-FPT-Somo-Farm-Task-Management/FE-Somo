@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 
 export const taskTitle = [
   {
-    title: 'Tên nhiệm vụ',
+    title: 'Tên công việc',
     dataIndex: 'name',
     key: 'name',
     render: (text) => <h4 className="task-name" data-name-clicked="true">{text}</h4>,
@@ -49,17 +49,17 @@ export const taskTitle = [
     },
   },
   {
-    title: 'Giao cho',
-    dataIndex: 'employeeName',
-    key: 'employeeName',
+    title: 'Người giám sát',
+    dataIndex: 'supervisorName',
+    key: 'supervisorName',
   },
   {
-    title: 'Được tạo bởi',
+    title: <p style={{textAlign:"center"}}>Được tạo bởi</p>,
     dataIndex: 'managerName',
     key: 'managerName',
     render: (text) => (
       <span>
-        {text ? 'Người quản lý' : 'Người giám sát'}
+        {text ? <p style={{textAlign: "center"}}>Tôi</p> : <p style={{textAlign: "center"}}>Người giám sát</p>}
       </span>
     ),
   },

@@ -2,7 +2,7 @@ import { Badge, Calendar, Modal, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { useMobileMediaQuery } from "common/hooks/responsive";
 import { useDispatch, useSelector } from "react-redux";
-import { getTaskForCalendar } from "features/slice/task/taskSlice";
+import { getTaskForCalendar } from "features/slice/task/taskForCalendarSlice";
 import { getMemberById } from "features/slice/user/memberSlice";
 import { authServices } from "services/authServices";
 import { WalletOutlined } from "@ant-design/icons";
@@ -17,44 +17,52 @@ const getMonthData = (value) => {
 function Schedule() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDateData, setSelectedDateData] = useState(null);
-  const [pageIndex, setPageIndex] = useState(3);
-  const [status, setStatus] = useState(0);
+  const [tasksForDate, setTasksForDate] = useState({});
+
 
   const dispatch = useDispatch();
 
-  const taskForCalendarData = useSelector((state) => state.task.data);
+  const taskForCalendarData = useSelector((state) => state.taskForCalendar.data);
   const dataTask = taskForCalendarData.data
   console.log(taskForCalendarData);
 
   useEffect(() => {
-    dispatch(getTaskForCalendar((authServices.getUserId()), pageIndex, status));
+    dispatch(getTaskForCalendar((authServices.getUserId())));
     dispatch(getMemberById(authServices.getUserId()));
-    console.log(authServices.getUserId());
-  }, [pageIndex, status]);
+  }, []);
 
   const getListData = (value) => {
     const dateString = value.format("YYYY-MM-DD");
-    const tasksForDate = dataTask ? dataTask.filter(
-      (task) => task.startDate <= dateString && task.endDate >= dateString
-    ) : null;
-  
-    return tasksForDate ? tasksForDate.map((task) => {
-      return {
-        type: "success",
-        name: task.name,
-        id: task.id
-      };
-    }) : null;
+    return tasksForDate[dateString] || [];
   };
 
   const handleDateClick = (value) => {
-    const listData = getListData(value);
-    if (listData.length > 0) {
-      setSelectedDateData(listData);
-      console.log("listdata", listData);
-      setModalVisible(true);
-    }
+    const dateString = value.format("YYYY-MM-DD");
+  
+    dispatch(getTaskForCalendar({
+      date: dateString,
+      pageIndex: 1, // Trang đầu tiên
+      pageSize: 3, // Giới hạn 3 công việc
+      managerId: authServices.getUserId() // ID của người quản lý
+    }))
+      .unwrap()
+      .then((data) => {
+        const tasks = data.farmTasks.map((task) => {
+          return {
+            type: "success",
+            name: task.name,
+            id: task.id,
+          };
+        });
+  
+        setSelectedDateData(tasks);
+        setModalVisible(true);
+      })
+      .catch((error) => {
+        console.error("Error fetching tasks:", error);
+      });
   };
+  
 
   const dateRender = (current) => {
     const listData = getListData(current);
@@ -88,10 +96,6 @@ function Schedule() {
       window.removeEventListener("resize", handleResize);
     };
   }, [isMobile]);
-
-  
-
-  
 
   const monthCellRender = (value) => {
     const num = getMonthData(value);
