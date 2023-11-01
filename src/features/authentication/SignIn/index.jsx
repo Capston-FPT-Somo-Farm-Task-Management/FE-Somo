@@ -1,21 +1,28 @@
 import React from 'react'
 import { Form, Button, Input } from 'antd'
-import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Link, useNavigate } from 'react-router-dom'
 import logoSomo from '../../../assets/logo_Somo.png'
 import { postLogin } from 'features/slice/user/userSlice'
 import { useDispatch } from 'react-redux'
 import { authServices } from 'services/authServices'
+import { createHub } from 'features/slice/hub/hubSlice'
+import { requestForToken } from 'features/firebase'
 
 const SignIn = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
   const onFinish = (values) => {
     dispatch(postLogin(values)).then(() => {
       if (authServices.getRole() === 'Manager') {
         navigate('/schedule')
+        requestForToken()
+        setTimeout(() => {
+          const connectionId = localStorage.getItem('connectionId')
+          dispatch(createHub(connectionId))
+        }, 100)
       } else if (authServices.getRole() === 'Admin') {
-        navigate('/admin-home')
+        navigate('/statistic-farm')
       }
     })
   }

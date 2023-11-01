@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap');
 body {
   box-sizing: border-box;
-  font-family: "Nunito Sans", sans-serif;
+  font-family: 'Nunito Sans', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #fff !important;
@@ -745,7 +745,11 @@ html {
 }
 
 .wrapper {
-  background-image: linear-gradient(to bottom right, #849b5c, #bfffc7) !important;
+  background-image: linear-gradient(
+    to bottom right,
+    #849b5c,
+    #bfffc7
+  ) !important;
   height: 100vh;
 }
 .wrapper .fadeInDown {
@@ -778,7 +782,7 @@ html {
 }
 .wrapper .fadeInDown #formContent .active {
   color: #0d0d0d;
-  border-bottom: 2px solid #8EAD48;
+  border-bottom: 2px solid #8ead48;
 }
 .wrapper .fadeInDown #formContent .fadeIn {
   opacity: 0;
@@ -826,12 +830,13 @@ html {
   transition: all 0.3s ease-in-out;
 }
 .wrapper .fadeInDown #formContent .btn-login:hover {
-  background-color: #8EAD48;
+  background-color: #8ead48;
 }
 .wrapper .fadeInDown #formContent .btn-login:active {
   transform: scale(0.95);
 }
-.wrapper .fadeInDown #formContent input[type=text], .wrapper .fadeInDown #formContent input[type=password] {
+.wrapper .fadeInDown #formContent input[type='text'],
+.wrapper .fadeInDown #formContent input[type='password'] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -846,18 +851,18 @@ html {
   transition: all 0.5s ease-in-out;
   border-radius: 5px 5px 5px 5px;
 }
-.wrapper .fadeInDown #formContent input[type=text]:focus {
+.wrapper .fadeInDown #formContent input[type='text']:focus {
   background-color: #fff;
-  border-bottom: 2px solid #8EAD48;
+  border-bottom: 2px solid #8ead48;
 }
-.wrapper .fadeInDown #formContent input[type=password]:focus {
+.wrapper .fadeInDown #formContent input[type='password']:focus {
   background-color: #fff;
-  border-bottom: 2px solid #8EAD48;
+  border-bottom: 2px solid #8ead48;
 }
-.wrapper .fadeInDown #formContent input[type=text]:placeholder {
+.wrapper .fadeInDown #formContent input[type='text']:placeholder {
   color: #cccccc;
 }
-.wrapper .fadeInDown #formContent input[type=password]:placeholder {
+.wrapper .fadeInDown #formContent input[type='password']:placeholder {
   color: #cccccc;
 }
 .wrapper .fadeInDown #formContent #formFooter {
@@ -869,7 +874,7 @@ html {
   font-size: 20px;
 }
 .wrapper .fadeInDown #formContent #formFooter a {
-  color: #8EAD48;
+  color: #8ead48;
   display: inline-block;
   text-decoration: none;
   font-weight: 400;
@@ -880,8 +885,8 @@ html {
   bottom: -10px;
   width: 0;
   height: 2px;
-  background-color: #8EAD48;
-  content: "";
+  background-color: #8ead48;
+  content: '';
   transition: width 0.2s;
 }
 .wrapper .fadeInDown #formContent #formFooter .underlineHover:hover {
@@ -904,4 +909,29 @@ html {
     opacity: 1;
     transform: none;
   }
-}/*# sourceMappingURL=index.css.map */
+}
+
+.page-not-fount-container {
+  max-width: 2100px;
+  text-align: center;
+  margin-top: 20%;
+}
+.page-not-fount-container .error-number-404 {
+  font-size: 100px;
+  font-weight: 900;
+  text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  -webkit-text-stroke: 3px #000;
+}
+.page-not-fount-container .error-content {
+  font-size: 90px;
+  text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.chart-zone {
+  width: 100%;
+  height: 350px;
+} /*# sourceMappingURL=index.css.map */
+
+iframe#webpack-dev-server-client-overlay {
+  display: none !important;
+}

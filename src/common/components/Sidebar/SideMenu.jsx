@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from 'react'
 
-import { Button, Layout, Menu, Popover } from 'antd'
+import {
+  Avatar,
+  Badge,
+  Button,
+  Card,
+  Drawer,
+  Layout,
+  Menu,
+  Popconfirm,
+  Popover,
+  Space,
+} from 'antd'
 import {
   DashboardOutlined,
   TeamOutlined,
@@ -9,6 +20,7 @@ import {
   BorderOutlined,
   BlockOutlined,
   TableOutlined,
+  BellOutlined,
   MenuOutlined,
   AppstoreOutlined,
   LogoutOutlined,
@@ -22,6 +34,13 @@ import {
   useDesktopMediaQuery,
   useTabletMediaQuery,
 } from 'common/hooks/responsive'
+import Notification from 'features/pages/Notification'
+import { useDispatch } from 'react-redux'
+import { deleteHubConnection } from 'features/slice/hub/hubSlice'
+import { changeAllNotifyNewToRead } from 'features/slice/notification/notificationIsNewSlice'
+import { useSelector } from 'react-redux'
+import { changeNotifyIsReadAll } from 'features/slice/notification/notificationReadSlice'
+import { countNewNotify } from 'features/slice/notification/notificationCountSlice'
 
 const { Sider } = Layout
 
@@ -31,9 +50,52 @@ const SideMenu = () => {
   const [collapsed, setCollapsed] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
-
+  const dispatch = useDispatch()
   const isDesktop = useDesktopMediaQuery()
   const isTablet = useTabletMediaQuery()
+
+  const countNew = useSelector((state) => state.notificationCount.data)
+
+  useEffect(() => {
+    dispatch(countNewNotify(authServices.getUserId()))
+  }, [dispatch])
+
+  const changeReadAll = () => {
+    dispatch(changeNotifyIsReadAll(authServices.getUserId()))
+    console.log('SideMenu')
+  }
+
+  // Lớn
+  const [open, setOpen] = useState(false)
+
+  const showDrawer = () => {
+    setOpen(true)
+  }
+
+  const showDrawerNotify = () => {
+    dispatch(changeAllNotifyNewToRead(authServices.getUserId()))
+    setOpen(true)
+  }
+
+  const onClose = () => {
+    setOpen(false)
+  }
+
+  // Nhỏ
+  const [openOnTablet, setOpenOnTablet] = useState(false)
+
+  const showDrawerOnTablet = () => {
+    setOpenOnTablet(true)
+  }
+
+  const showDrawerNotifyOnTablet = () => {
+    dispatch(changeAllNotifyNewToRead(authServices.getUserId()))
+    setOpenOnTablet(true)
+  }
+
+  const onCloseOnTablet = () => {
+    setOpenOnTablet(false)
+  }
 
   useEffect(() => {
     const role = authServices.getRole()
@@ -43,6 +105,8 @@ const SideMenu = () => {
   }, [])
 
   const logout = () => {
+    const data = { token: localStorage.getItem('connectionId') }
+    dispatch(deleteHubConnection(data))
     authServices.logOut()
     toast.success('Đăng xuất thành công')
     navigate('/login')
@@ -75,6 +139,64 @@ const SideMenu = () => {
               <span>Lịch trình</span>
               <Link to="/schedule"></Link>
             </Menu.Item>
+
+            {countNew?.data !== 0 ? (
+              <>
+                <Menu.Item onClick={showDrawerNotify}>
+                  <Badge.Ribbon text={countNew?.data} color="red">
+                    <BellOutlined />
+                    <span>Thông báo</span>
+                  </Badge.Ribbon>
+                </Menu.Item>
+              </>
+            ) : (
+              <>
+                <Menu.Item onClick={showDrawer}>
+                  <BellOutlined />
+                  <span>Thông báo</span>
+                </Menu.Item>
+              </>
+            )}
+
+            <Drawer
+              title="Thông báo"
+              placement="right"
+              onClose={onClose}
+              open={open}
+            >
+              {countNew?.data !== 0 ? (
+                <>
+                  <Popconfirm
+                    title="Đánh dấu tất cả đã đọc"
+                    description="Bạn có chắc đánh dấu tất cả đã đọc ?"
+                    onConfirm={() => changeReadAll()}
+                    // onCancel={cancel}
+                    okText="Có"
+                    cancelText="Không"
+                  >
+                    <BellOutlined
+                      style={{
+                        fontSize: '20px',
+                        marginLeft: '90%',
+                        color: 'red',
+                      }}
+                      // onClick={() => console.log('ss')}
+                    />
+                  </Popconfirm>
+                </>
+              ) : (
+                <>
+                  <BellOutlined
+                    style={{
+                      fontSize: '20px',
+                      marginLeft: '90%',
+                    }}
+                    disabled
+                  />
+                </>
+              )}
+              <Notification />
+            </Drawer>
 
             <Menu.Item key="/task">
               <AimOutlined />
@@ -124,6 +246,12 @@ const SideMenu = () => {
               <Link to="/material"></Link>
             </Menu.Item>
 
+            <Menu.Item key="/employee">
+              <FormatPainterOutlined />
+              <span>Nhân viên</span>
+              <Link to="/employee"></Link>
+            </Menu.Item>
+
             <Menu.Item key="/login" onClick={logout}>
               <LogoutOutlined />
               <span>Đăng xuất</span>
@@ -146,11 +274,42 @@ const SideMenu = () => {
                   mode="inline"
                   defaultSelectedKeys={[location.pathname]}
                 >
-                  <Menu.Item key="/">
+                  <Menu.Item key="/schedule">
                     <CalendarOutlined />
                     <span>Lịch trình</span>
-                    <Link to="/"></Link>
+                    <Link to="/schedule"></Link>
                   </Menu.Item>
+
+                  {countNew?.data?.length !== 0 ? (
+                    <>
+                      <Menu.Item onClick={showDrawerNotifyOnTablet}>
+                        <Badge.Ribbon text={countNew?.data} color="red">
+                          <BellOutlined />
+                          <span>Thông báo</span>
+                        </Badge.Ribbon>
+                      </Menu.Item>
+                    </>
+                  ) : (
+                    <>
+                      <Menu.Item onClick={showDrawerOnTablet}>
+                        <BellOutlined />
+                        <span>Thông báo</span>
+                      </Menu.Item>
+                    </>
+                  )}
+
+                  <Drawer
+                    title="Thông báo"
+                    placement="right"
+                    onClose={onCloseOnTablet}
+                    open={openOnTablet}
+                  >
+                    <BellOutlined
+                      style={{ fontSize: '20px', marginLeft: '90%' }}
+                      onClick={() => console.log('ss')}
+                    />
+                    <Notification />
+                  </Drawer>
 
                   <Menu.Item key="/task">
                     <AimOutlined />
@@ -198,6 +357,12 @@ const SideMenu = () => {
                     <FormatPainterOutlined />
                     <span>Công cụ</span>
                     <Link to="/material"></Link>
+                  </Menu.Item>
+
+                  <Menu.Item key="/employee">
+                    <FormatPainterOutlined />
+                    <span>Nhân viên</span>
+                    <Link to="/employee"></Link>
                   </Menu.Item>
 
                   <Menu.Item key="/login" onClick={logout}>
