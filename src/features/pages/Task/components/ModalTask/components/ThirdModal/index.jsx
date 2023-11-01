@@ -9,17 +9,17 @@ import Other from "./components/other";
 
 dayjs.extend(customParseFormat);
 
-function ThirdModal({ option }) {
+function ThirdModal({ option, onTaskAdded, onDateChange }) {
   if (option === "other") {
     return <Other />;
   } else if (option === "specificAnimal") {
-    return <SpecificAnimal />;
+    return <SpecificAnimal onTaskAdded={onTaskAdded} onDateChange={onDateChange} />;
   } else if (option === "wholeBarn") {
-    return <WholeBarn />;
+    return <WholeBarn onTaskAdded={onTaskAdded} onDateChange={onDateChange} />;
   } else if (option === "specificPlant") {
-    return <SpecificPlant />;
+    return <SpecificPlant onTaskAdded={onTaskAdded} onDateChange={onDateChange} />;
   } else if (option === "wholeGarden") {
-    return <WholeGarden />;
+    return <WholeGarden onTaskAdded={onTaskAdded} onDateChange={onDateChange} />;
   }
   return null;
 }

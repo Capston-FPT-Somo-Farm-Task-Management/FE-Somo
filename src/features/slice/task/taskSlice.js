@@ -4,33 +4,33 @@ import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
 import { authServices } from 'services/authServices'
 
-export const getTasks = createAsyncThunk('tasks/getTasks', async () => {
+export const getTasks = createAsyncThunk("tasks/getTasks", async ({ pageIndex, status, date, taskName  }, {rejectWithValue}) => {
   try {
-    const { data } = await axios.get(baseUrl + '/FarmTask/TaskActive', {
+    const formattedDate = date ? date.toISOString().split('T')[0] : '';
+    const { data } = await axios.get(baseUrl + `/FarmTask/PageIndex(${pageIndex})/PageSize(10)/Manager(${authServices.getUserId()})/Status(${status})/Date?date=${formattedDate}&taskName=${taskName}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(data);
+    return data;
+  } catch (error) {
+    rejectWithValue(error.message)
+  }
+});
+
+export const getTaskById = createAsyncThunk('tasks/getTaskById', async (taskId, {rejectWithValue}) => {
+  try {
+    const { data } = await axios.get(baseUrl + `/FarmTask/${taskId}`, {
       headers: {
         'Content-Type': 'application/json',
       },
     })
     return data
   } catch (error) {
-    console.log(error)
+    rejectWithValue(error.message)
   }
 })
-export const getTaskById = createAsyncThunk(
-  'tasks/getTaskById',
-  async (taskId, { rejectWithValue }) => {
-    try {
-      const { data } = await axios.get(baseUrl + `/FarmTask/${taskId}`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      return data
-    } catch (error) {
-      rejectWithValue(error)
-    }
-  }
-)
 
 export const createTask = createAsyncThunk(
   'tasks/createTask',
@@ -59,16 +59,12 @@ export const createTask = createAsyncThunk(
 export const deleteTask = createAsyncThunk(
   'tasks/deleteTask',
   async (id, { rejectWithValue }) => {
-    console.log(id)
-    const status = 4 // Lấy giá trị status từ redux store
-    console.log('status:', status)
     try {
       const response = await axios.put(
-        baseUrl + `/FarmTask/ChangeStatus/${id}`,
-        { status }
-      )
+        baseUrl + `/FarmTask/ChangeStatus/${id}?status=4`
+      );
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success("Xóa thành công");
       }
       return response.data
     } catch (error) {
@@ -83,7 +79,8 @@ const taskSlice = createSlice({
   initialState: {
     data: [],
     loading: false,
-    error: '',
+    error: "",
+    totalPages: 0,
   },
   extraReducers(builder) {
     builder
@@ -91,15 +88,17 @@ const taskSlice = createSlice({
         state.loading = true
       })
       .addCase(getTasks.fulfilled, (state, action) => {
-        state.loading = false
+        state.loading = false;
         state.error = ''
-        state.data = action.payload
+        state.data = action.payload.data.farmTasks || [];
+        state.totalPages = action.payload.data.totalPages;
       })
       .addCase(getTasks.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
         state.data = []
       })
+
       .addCase(getTaskById.pending, (state) => {
         state.loading = true
       })
@@ -134,8 +133,12 @@ const taskSlice = createSlice({
         state.loading = true
       })
       .addCase(deleteTask.fulfilled, (state, action) => {
-        state.loading = false
-        state.data = action.payload
+        state.loading = false;
+        if (Array.isArray(state.data)) {
+          state.data.push(action.payload.task);
+        } else {
+          state.data = [action.payload.task];
+        }
       })
       .addCase(deleteTask.rejected, (state, action) => {
         state.loading = false

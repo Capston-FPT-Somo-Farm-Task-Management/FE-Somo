@@ -11,10 +11,12 @@ import zonePlantReducer from './slice/zone/zonePlantSlice'
 import zoneAnimalReducer from './slice/zone/zoneAnimalSlice'
 import zoneTypeReducer from './slice/zone/zoneTypeSlice'
 import taskTypeReducer from './slice/task/taskTypeSlice'
+import taskForCalendarReducer from "./slice/task/taskForCalendarSlice"
 import taskTypePlantReducer from './slice/task/taskTypePlantSlice'
 import taskTypeLivestockReducer from './slice/task/taskTypeAnimalSlice'
 import supervisorReducer from './slice/supervisor/supervisorSlice'
 import employeeReducer from './slice/employee/employeeSlice'
+import employeeByTaskReducer from "./slice/employee/employeeByTask"
 import materialReducer from './slice/material/materialSlice'
 import fieldReducer from './slice/field/fieldSlice'
 import fieldPlantReducer from './slice/field/fieldPlantSlice'
@@ -28,6 +30,7 @@ import evidenceReducer from './slice/task/taskEvidenceSlice'
 import subTaskReducer from './slice/subTask/subTaskSlice'
 import habitantTypeReducer from './slice/habitant/habitantTypeSlice'
 import memberReducer from './slice/user/memberSlice'
+import statusReducer from "./slice/status/statusSlice"
 import hubReducer from './slice/hub/hubSlice'
 import notificationReducer from './slice/notification/notificationSlice'
 import notificationCountReducer from './slice/notification/notificationCountSlice'
@@ -51,6 +54,7 @@ export const store = configureStore({
     taskTypeLivestock: taskTypeLivestockReducer,
     supervisor: supervisorReducer,
     employee: employeeReducer,
+    employeeByTask: employeeByTaskReducer,
     material: materialReducer,
     field: fieldReducer,
     fieldPlant: fieldPlantReducer,
@@ -62,10 +66,12 @@ export const store = configureStore({
     animalType: animalTypeReducer,
     animalByFarm: animalByFarmReducer,
     task: taskReducer,
+    taskForCalendar: taskForCalendarReducer,
     evidence: evidenceReducer,
     subTask: subTaskReducer,
     habitantType: habitantTypeReducer,
     member: memberReducer,
+    status: statusReducer,
     hub: hubReducer,
     notification: notificationReducer,
     notificationCount: notificationCountReducer,

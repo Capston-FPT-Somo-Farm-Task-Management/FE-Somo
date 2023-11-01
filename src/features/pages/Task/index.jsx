@@ -1,26 +1,11 @@
 import React from "react";
-import { Tabs } from "antd";
 import List from "./components/List";
-import Board from "./components/Board";
-import CalendarTask from "./components/CalendarTask";
-
-const { TabPane } = Tabs;
 
 function Task() {
   return (
     <div className="content">
-      <div>
-        <h3>Nhiệm vụ</h3>
-      </div>
-
-      <Tabs defaultActiveKey="1">
-        <TabPane tab="Danh sách" key="1">
-          <List style={{ width: "100%" }} />
-        </TabPane>
-        <TabPane tab="Bảng" key="2">
-          <Board />
-        </TabPane>
-      </Tabs>
+      <h3>Công việc</h3>
+      <List style={{ width: "100%" }} />
     </div>
   );
 }

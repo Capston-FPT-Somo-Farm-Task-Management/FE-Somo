@@ -1,79 +1,139 @@
-import React, { useEffect, useState } from 'react'
-import { DatePicker, Form, Input, Select } from 'antd'
-import { useSelector, useDispatch } from 'react-redux'
-import { getAreaActive } from 'features/slice/area/areaSlice'
-import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
-import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
-import { getTaskTypeLivestock } from 'features/slice/task/taskTypeAnimalSlice'
-import { getSupervisor } from 'features/slice/supervisor/supervisorSlice'
-import { getEmployee } from 'features/slice/employee/employeeSlice'
-import { getMaterial } from 'features/slice/material/materialSlice'
-import { getAnimalActive } from 'features/slice/animal/animalSlice'
-import { createTask } from 'features/slice/task/taskSlice'
-import dayjs from 'dayjs'
-import MultiDatePicker from 'react-multi-date-picker'
+import React, { useEffect, useState } from "react";
+import { DatePicker, Form, Input, Select } from "antd";
+import { useSelector, useDispatch } from "react-redux";
+import { getAreaActive } from "features/slice/area/areaSlice";
+import { getZoneByAreaAnimal } from "features/slice/zone/zoneAnimalSlice";
+import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
+import { getTaskTypeLivestock } from "features/slice/task/taskTypeAnimalSlice";
+import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
+import { getEmployeeByTaskTypeAndFarmId } from "features/slice/employee/employeeSlice";
+import { getMaterial } from "features/slice/material/materialSlice";
+import { getAnimalActive } from "features/slice/animal/animalSlice";
+import { getTasks, createTask } from "features/slice/task/taskSlice";
+import { getMemberById } from "features/slice/user/memberSlice";
+import { authServices } from "services/authServices";
 
-function SpecificAnimal() {
-  const [selectedAreaId, setSelectedAreaId] = useState(null)
-  const [selectedZoneId, setSelectedZoneId] = useState(null)
-  const [employeesValue, setEmployeesValue] = useState(0)
-  const [materialsValue, setMaterialsValue] = useState(0)
-  const [priorityValue, setPriorityValue] = useState('')
-  const [remindValue, setRemindValue] = useState(0)
-  const [repeatValue, setRepeatValue] = useState(false)
-  const [startDate, setStartDate] = useState()
-  const [description, setDescription] = useState('')
+import dayjs from "dayjs";
+import MultiDatePicker from "react-multi-date-picker";
 
-  const dispatch = useDispatch()
+function SpecificAnimal({ onTaskAdded, onDateChange }) {
+  const [selectedAreaId, setSelectedAreaId] = useState(null);
+  const [selectedZoneId, setSelectedZoneId] = useState(null);
+  const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(null);
+  const [selectedFarmId, setSelectedFarmId] = useState(null);
+  const [employeesValue, setEmployeesValue] = useState(null);
+  const [materialsValue, setMaterialsValue] = useState(0);
+  const [priorityValue, setPriorityValue] = useState("");
+  const [remindValue, setRemindValue] = useState(0);
+  const [repeatValue, setRepeatValue] = useState(false);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [description, setDescription] = useState("");
 
-  const area = useSelector((state) => state.area.data)
+  const [form] = Form.useForm();
 
-  const zoneAnimal = useSelector((state) => state.zoneAnimal.data)
-  const dataAnimalZone = zoneAnimal.data
+  const dispatch = useDispatch();
 
-  const animal = useSelector((state) => state.animal.data)
-  const dataAnimal = animal.data
+  const member = useSelector((state) => state.member.data);
 
-  const fieldByZone = useSelector((state) => state.fieldByZone.data)
-  const dataFieldByZone = fieldByZone.data
+  console.log(member);
 
-  const taskTypeLivestock = useSelector((state) => state.taskTypeLivestock.data)
-  const dataTaskTypeLivestock = taskTypeLivestock.data
+  const farmId = member.farmId;
 
-  const supervisor = useSelector((state) => state.supervisor.data)
-  const dataSupervisor = supervisor.data
+  console.log(farmId);
 
-  console.log(dataSupervisor)
+  const area = useSelector((state) => state.area.data);
 
-  const dataEmployee = useSelector((state) => state.employee.data)
+  const zoneAnimal = useSelector((state) => state.zoneAnimal.data);
 
-  const material = useSelector((state) => state.material.data)
-  const dataMaterial = material.data
+  const animal = useSelector((state) => state.animal.data);
+  const dataAnimal = animal.data;
+
+  const fieldByZone = useSelector((state) => state.fieldByZone.data);
+  console.log(fieldByZone);
+
+  const taskTypeLivestock = useSelector(
+    (state) => state.taskTypeLivestock.data
+  );
+  const dataTaskTypeLivestock = taskTypeLivestock.data;
+  console.log(dataTaskTypeLivestock);
+
+  const supervisor = useSelector((state) => state.supervisor.data);
+  const dataSupervisor = supervisor.data;
+
+  console.log(dataSupervisor);
+
+  const dataEmployee = useSelector((state) => state.employee.data);
+  console.log(dataEmployee);
+
+  const material = useSelector((state) => state.material.data);
+  const dataMaterial = material.data;
 
   useEffect(() => {
-    dispatch(getAreaActive())
-    dispatch(getTaskTypeLivestock())
-    dispatch(getAnimalActive())
-    dispatch(getSupervisor())
-    dispatch(getEmployee())
-    dispatch(getMaterial())
-  }, [])
+    dispatch(getAreaActive());
+    dispatch(getTaskTypeLivestock());
+    dispatch(getAnimalActive());
+    dispatch(getSupervisor());
+    dispatch(getMaterial());
+    dispatch(getMemberById(authServices.getUserId()));
+  }, []);
 
   useEffect(() => {
     if (selectedAreaId) {
-      dispatch(getZoneByAreaAnimal(selectedAreaId))
+      dispatch(getZoneByAreaAnimal(selectedAreaId));
+      form.setFieldsValue({
+        zoneId: null,
+        fieldId: null,
+      });
     }
+  }, [selectedAreaId]);
+
+  useEffect(() => {
     if (selectedZoneId) {
-      dispatch(getFieldByZone(selectedZoneId))
+      dispatch(getFieldByZone(selectedZoneId));
+      form.setFieldsValue({
+        fieldId: null,
+      });
     }
-  }, [selectedAreaId, selectedZoneId])
+  }, [selectedZoneId]);
+
+  useEffect(() => {
+    if (selectedTaskTypeId) {
+      dispatch(
+        getEmployeeByTaskTypeAndFarmId({
+          taskTypeId: selectedTaskTypeId,
+          farmId: farmId,
+        })
+      );
+      form.setFieldsValue({
+        employeeIds: undefined,
+      });
+    }
+  }, [selectedTaskTypeId]);
+
+  
 
   const handleSelectAreaChange = (value) => {
-    setSelectedAreaId(value)
-  }
-  const handleSelectZoneChange = (value) => {
-    setSelectedZoneId(value)
-  }
+    setSelectedAreaId(value);
+  };
+  const handleSelectZoneChange = async (value) => {
+    setSelectedZoneId(value);
+
+    try {
+      await dispatch(
+        getEmployeeByTaskTypeAndFarmId({
+          taskTypeId: selectedTaskTypeId, // Sử dụng selectedTaskTypeId ở đây
+          farmId: selectedFarmId,
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleTaskTypeChange = (value) => {
+    setSelectedTaskTypeId(value);
+  };
 
   const transformData = (originalData) => {
     const transformedData = {
@@ -96,53 +156,62 @@ function SpecificAnimal() {
         liveStockId: originalData.liveStockId,
         remind: originalData.remind,
       },
-    }
+    };
 
-    return transformedData
-  }
+    return transformedData;
+  };
 
   const onFinish = (values) => {
     const startDateFormatted = dayjs(startDate).format(
-      'YYYY-MM-DD[T]HH:mm:ss.SSS'
-    )
+      "YYYY-MM-DD[T]HH:mm:ss.SSS"
+    );
+    const endDateFormatted = dayjs(endDate).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
 
-    const startTime = dayjs(startDate).format('HH:mm:ss.SSS')
+    const startTime = dayjs(startDate).format("HH:mm:ss.SSS");
 
-    const selectedDates = values.dates.map((date) =>
-      dayjs(date).format('YYYY-MM-DD')
-    )
+    const endTime = dayjs(endDate).format("HH:mm:ss.SSS");
 
-    const combinedDates = selectedDates.map((date) => `${date}T${startTime}`)
+    const selectedDates = values.dates || [];
+
+    const combinedDates = selectedDates.map((date) => `${date}T${startTime}`);
+
+    const remindValueToSend = remindValue || 0;
+
+    const repeatValueToSend = repeatValue || false;
+
+    const datesToSend = repeatValueToSend ? combinedDates : [];
 
     const finalValues = {
       ...values,
       startDate: startDateFormatted,
-      endDate: dayjs(values.endDate).format('YYYY-MM-DD[T]HH:mm:ss.SSS'),
-      dates: combinedDates,
+      endDate: endDateFormatted,
+      dates: datesToSend,
       // employeeIds: employeesValue,
       priority: priorityValue,
-      remind: remindValue,
-      isRepeat: repeatValue,
+      remind: remindValueToSend,
+      isRepeat: repeatValueToSend,
       description: description,
-      suppervisorId: 11,
-      managerId: 5,
+      managerId: member.id,
       otherId: 0,
-    }
+    };
 
-    const transformedValues = transformData(finalValues)
+    const transformedValues = transformData(finalValues);
 
-    dispatch(createTask(transformedValues))
-  }
+    dispatch(createTask(transformedValues)).then(() => {
+      onDateChange();
+      onTaskAdded();
+    });
+  };
 
   const disabledDate = (current) => {
-    return current && current < dayjs().startOf('day')
-  }
+    return current && current < dayjs().startOf("day");
+  };
 
   const isDateDisabled = (current) => {
-    return current.isBefore(MultiDatePicker.now, 'day')
-  }
+    return current.isBefore(MultiDatePicker.now, "day");
+  };
 
-  const { TextArea } = Input
+  const { TextArea } = Input;
 
   return (
     <Form
@@ -150,6 +219,8 @@ function SpecificAnimal() {
       className="task-specific-animal"
       onFinish={onFinish}
       id="createTask"
+      name="createTask"
+      form={form}
     >
       <div className="form-left">
         <Form.Item
@@ -158,18 +229,22 @@ function SpecificAnimal() {
           rules={[
             {
               required: true,
-              message: 'Vui lòng chọn khu vực',
+              message: "Vui lòng chọn khu vực",
             },
           ]}
-          name="area"
+          name="areaId"
         >
           <Select
             onChange={handleSelectAreaChange}
             placeholder="Chọn khu vực"
-            options={area.data?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
+            options={
+              area && area.data
+                ? area.data.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  }))
+                : null
+            }
           />
         </Form.Item>
         <Form.Item
@@ -178,18 +253,22 @@ function SpecificAnimal() {
           rules={[
             {
               required: true,
-              message: 'Vui lòng chọn vùng',
+              message: "Vui lòng chọn vùng",
             },
           ]}
-          name="zone"
+          name="zoneId"
         >
           <Select
             onChange={handleSelectZoneChange}
             placeholder="Chọn vùng"
-            options={dataAnimalZone?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
+            options={
+              zoneAnimal && zoneAnimal.data
+                ? zoneAnimal.data.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  }))
+                : null
+            }
           />
         </Form.Item>
         <Form.Item
@@ -199,16 +278,20 @@ function SpecificAnimal() {
           rules={[
             {
               required: true,
-              message: 'Vui lòng chọn chuồng',
+              message: "Vui lòng chọn chuồng",
             },
           ]}
         >
           <Select
             placeholder="Chọn chuồng"
-            options={dataFieldByZone?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
+            options={
+              fieldByZone && fieldByZone.data
+                ? fieldByZone.data.map((item) => ({
+                    label: item.nameCode,
+                    value: item.id,
+                  }))
+                : null
+            }
           />
         </Form.Item>
         <Form.Item
@@ -218,7 +301,7 @@ function SpecificAnimal() {
           rules={[
             {
               required: true,
-              message: 'Vui lòng chọn mã vật nuôi',
+              message: "Vui lòng chọn mã vật nuôi",
             },
           ]}
         >
@@ -237,7 +320,7 @@ function SpecificAnimal() {
           rules={[
             {
               required: true,
-              message: 'Vui lòng chọn độ ưu tiên',
+              message: "Vui lòng chọn độ ưu tiên",
             },
           ]}
         >
@@ -258,7 +341,7 @@ function SpecificAnimal() {
           rules={[
             {
               required: true,
-              message: 'Vui lòng chọn thời gian bắt đầu',
+              message: "Vui lòng chọn thời gian bắt đầu",
             },
           ]}
           name="startDate"
@@ -268,8 +351,9 @@ function SpecificAnimal() {
             format="YYYY-MM-DD[T]HH:mm:ss.SSS"
             disabledDate={disabledDate}
             showTime={{
-              defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
+              defaultValue: dayjs("00:00:00", "HH:mm:ss"),
             }}
+            onChange={(date, dateString) => setStartDate(dateString)}
           />
         </Form.Item>
         <Form.Item
@@ -277,7 +361,7 @@ function SpecificAnimal() {
           rules={[
             {
               required: true,
-              message: 'Vui lòng chọn khoảng thời gian kết thúc',
+              message: "Vui lòng chọn khoảng thời gian kết thúc",
             },
           ]}
           name="endDate"
@@ -287,8 +371,9 @@ function SpecificAnimal() {
             format="YYYY-MM-DD[T]HH:mm:ss.SSS"
             disabledDate={disabledDate}
             showTime={{
-              defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
+              defaultValue: dayjs("00:00:00", "HH:mm:ss"),
             }}
+            onChange={(date, dateString) => setEndDate(dateString)}
           />
         </Form.Item>
         <Form.Item label="Mô tả" name="description">
@@ -308,29 +393,34 @@ function SpecificAnimal() {
           rules={[
             {
               required: true,
-              message: 'Vui lòng nhập tên công việc',
+              message: "Vui lòng nhập tên công việc",
             },
           ]}
         >
           <Input placeholder="Nhập tên công việc" />
         </Form.Item>
         <Form.Item
-          label="Loại nhiệm vụ"
+          label="Loại công việc"
           name="taskTypeId"
           required
           rules={[
             {
               required: true,
-              message: 'Vui lòng chọn loại nhiệm vụ',
+              message: "Vui lòng chọn loại công việc",
             },
           ]}
         >
           <Select
-            placeholder="Chọn loại nhiệm vụ"
-            options={dataTaskTypeLivestock?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
+            placeholder="Chọn loại công việc"
+            options={
+              dataTaskTypeLivestock && dataTaskTypeLivestock
+                ? dataTaskTypeLivestock.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  }))
+                : null
+            }
+            onChange={handleTaskTypeChange}
           />
         </Form.Item>
         <Form.Item
@@ -340,7 +430,7 @@ function SpecificAnimal() {
           rules={[
             {
               required: true,
-              message: 'Vui lòng chọn người thực hiện',
+              message: "Vui lòng chọn người thực hiện",
             },
           ]}
         >
@@ -349,10 +439,14 @@ function SpecificAnimal() {
             value={employeesValue}
             onChange={(value) => setEmployeesValue(value)}
             placeholder="Chọn người thực hiện"
-            options={dataEmployee?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
+            options={
+              dataEmployee && dataEmployee.data
+                ? dataEmployee.data.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  }))
+                : null
+            }
           />
         </Form.Item>
         <Form.Item
@@ -362,7 +456,7 @@ function SpecificAnimal() {
           rules={[
             {
               required: true,
-              message: 'Vui lòng chọn người giám sát',
+              message: "Vui lòng chọn người giám sát",
             },
           ]}
         >
@@ -381,7 +475,7 @@ function SpecificAnimal() {
           rules={[
             {
               required: true,
-              message: 'Vui lòng chọn dụng cụ sử dụng',
+              message: "Vui lòng chọn dụng cụ sử dụng",
             },
           ]}
         >
@@ -412,7 +506,7 @@ function SpecificAnimal() {
         <Form.Item label="Lặp lại" name="isRepeat">
           <Select
             value={repeatValue}
-            onChange={(value) => setRepeatValue(value === 'Có')}
+            onChange={(value) => setRepeatValue(value === "Có")}
             placeholder="Không"
           >
             <Select.Option value="Không">Không</Select.Option>
@@ -431,7 +525,7 @@ function SpecificAnimal() {
         )}
       </div>
     </Form>
-  )
+  );
 }
 
-export default SpecificAnimal
+export default SpecificAnimal;
