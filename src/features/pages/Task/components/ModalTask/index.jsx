@@ -8,10 +8,12 @@ import { steps } from "./modalTaskData";
 
 const { Step } = Steps;
 
-function ModalTask({onTaskAdded, onDateChange, loadDataTask}) {
+function ModalTask({ onTaskAdded, onDateChange, loadDataTask }) {
   const [currentStep, setCurrentStep] = useState(-1);
   const [selectedType, setSelectedType] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
+  
+
   const handleNext = (type) => {
     setSelectedType(type);
     setCurrentStep(currentStep + 1);
@@ -21,16 +23,9 @@ function ModalTask({onTaskAdded, onDateChange, loadDataTask}) {
     setCurrentStep(currentStep - 1);
   };
 
-  const handleFinish = () => {
-    // Handle finishing steps
-    setCurrentStep(-1);
-    setSelectedType(null);
-  };
-
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setCurrentStep(currentStep + 1);
-    
   };
 
   const renderStepContent = (step) => {
@@ -45,7 +40,14 @@ function ModalTask({onTaskAdded, onDateChange, loadDataTask}) {
           />
         );
       case 2:
-        return <ThirdModal loadDataTask={loadDataTask} option={selectedOption} onTaskAdded={onTaskAdded} onDateChange={onDateChange}/>;
+        return (
+          <ThirdModal
+            loadDataTask={loadDataTask}
+            option={selectedOption}
+            onTaskAdded={onTaskAdded}
+            onDateChange={onDateChange}
+          />
+        );
       default:
         return null;
     }
@@ -82,7 +84,6 @@ function ModalTask({onTaskAdded, onDateChange, loadDataTask}) {
               type="primary"
               form="createTask"
               htmlType="submit"
-              onClick={handleFinish}
             >
               Thêm
             </Button>

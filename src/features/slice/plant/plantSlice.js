@@ -5,9 +5,9 @@ import { toast } from 'react-toastify'
 
 export const getPlantActive = createAsyncThunk(
   'plants/getPlantActive',
-  async () => {
+  async (id) => {
     try {
-      const { data } = await axios.get(baseUrl + '/Plant/Active', {
+      const { data } = await axios.get(baseUrl + `/Plant/ExternalId/Field(${id})`, {
         headers: {
           'Content-Type': 'application/json',
         },

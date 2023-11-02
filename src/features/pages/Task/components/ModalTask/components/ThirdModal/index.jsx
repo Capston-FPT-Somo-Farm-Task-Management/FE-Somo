@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import dayjs from "dayjs";
-import { Form } from "antd";
+import { Form, Tooltip } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { getAreaActive } from "features/slice/area/areaSlice";
 import { getZoneByAreaAnimal } from "features/slice/zone/zoneAnimalSlice";
@@ -17,7 +17,7 @@ import { getPlantActive } from "features/slice/plant/plantSlice";
 import { createTask } from "features/slice/task/taskSlice";
 import { getMemberById } from "features/slice/user/memberSlice";
 import { authServices } from "services/authServices";
-import MultiDatePicker from "react-multi-date-picker";
+import { format, isBefore } from "date-fns";
 import SpecificAnimal from "./components/specificAnimal";
 import WholeBarn from "./components/wholeBarn";
 import SpecificPlant from "./components/specificPlant";
@@ -40,6 +40,7 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [description, setDescription] = useState("");
+  const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
 
   const [form] = Form.useForm();
 
@@ -49,7 +50,6 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
 
   const farmId = member.farmId;
 
-  console.log(farmId);
 
   const area = useSelector((state) => state.area.data);
 
@@ -65,7 +65,6 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
   const dataFieldByZone = fieldByZone.data;
-  console.log(dataFieldByZone);
 
   const taskTypeLivestock = useSelector(
     (state) => state.taskTypeLivestock.data
@@ -88,7 +87,7 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
     dispatch(getTaskTypeLivestock());
     dispatch(getTaskTypePlant());
     dispatch(getAnimalActive(selectedFieldId));
-    dispatch(getPlantActive());
+    dispatch(getPlantActive(selectedFieldId));
     dispatch(getSupervisor());
     dispatch(getMaterial());
     dispatch(getMemberById(authServices.getUserId()));
@@ -152,12 +151,11 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
     try {
       await dispatch(
         getEmployeeByTaskTypeAndFarmId({
-          taskTypeId: selectedTaskTypeId, // Sử dụng selectedTaskTypeId ở đây
+          taskTypeId: selectedTaskTypeId,
           farmId: selectedFarmId,
         })
       );
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -173,8 +171,28 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
     setStartDate(dateString);
   };
 
-  const handleSelectEndDate = (dateString) => {
-    setEndDate(dateString);
+  const handleSelectEndDate = (date) => {
+    const selectedDate = dayjs(date).second(0);
+    setEndDate(selectedDate);
+
+    const startDate = form.getFieldValue("startDate");
+    if (selectedDate.isAfter(startDate)) {
+      form.setFieldsValue({ endDate: selectedDate });
+      form.setFields([
+        {
+          name: "endDate",
+          errors: [],
+        },
+      ]);
+    } else {
+      form.setFieldsValue({ endDate: null });
+      form.setFields([
+        {
+          name: "endDate",
+          errors: ["Không được chọn trước ngày bắt đầu"],
+        },
+      ]);
+    }
   };
 
   const handleDescriptionChange = (e) => {
@@ -196,16 +214,14 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
   const handleSelectRemind = (value) => {
     setRemindValue(parseInt(value, 10));
   };
+
   const handleSelectRepeat = (value) => {
     setRepeatValue(value === "Có");
+    setShouldCheckRepeat(value === "Có"); // Cập nhật shouldCheckRepeat
   };
 
   const disabledDate = (current) => {
     return current && current < dayjs().startOf("day");
-  };
-
-  const isDateDisabled = (current) => {
-    return current.isBefore(dayjs(), "day");
   };
 
   const transformData = (originalData) => {
@@ -235,10 +251,12 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
   };
 
   const onFinish = (values) => {
-    const startDateFormatted = dayjs(startDate).format(
-      "YYYY-MM-DD[T]HH:mm:ss.SSS"
-    );
-    const endDateFormatted = dayjs(endDate).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+    const startDateFormatted = dayjs(startDate)
+      .second(0)
+      .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+    const endDateFormatted = dayjs(endDate)
+      .second(0)
+      .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
 
     const startTime = dayjs(startDate).format("HH:mm:ss.SSS");
 
@@ -254,12 +272,23 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
 
     const datesToSend = repeatValueToSend ? combinedDates : [];
 
+    const { isRepeat, dates } = values;
+
+    if (shouldCheckRepeat && isRepeat && (!dates || dates.length === 0)) {
+      form.setFields([
+        {
+          name: "dates",
+          errors: ["Vui lòng chọn ngày lặp lại"],
+        },
+      ]);
+      return;
+    }
+
     const finalValues = {
       ...values,
       startDate: startDateFormatted,
       endDate: endDateFormatted,
       dates: datesToSend,
-      // employeeIds: employeesValue,
       priority: priorityValue,
       remind: remindValueToSend,
       isRepeat: repeatValueToSend,
@@ -312,7 +341,6 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
         remindValue={remindValue}
         repeatValue={repeatValue}
         disabledDate={disabledDate}
-        isDateDisabled={isDateDisabled}
       />
     );
   } else if (option === "wholeBarn") {
@@ -347,7 +375,6 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
         remindValue={remindValue}
         repeatValue={repeatValue}
         disabledDate={disabledDate}
-        isDateDisabled={isDateDisabled}
       />
     );
   } else if (option === "specificPlant") {
@@ -383,7 +410,6 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
         remindValue={remindValue}
         repeatValue={repeatValue}
         disabledDate={disabledDate}
-        isDateDisabled={isDateDisabled}
       />
     );
   } else if (option === "wholeGarden") {
@@ -418,7 +444,6 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
         remindValue={remindValue}
         repeatValue={repeatValue}
         disabledDate={disabledDate}
-        isDateDisabled={isDateDisabled}
       />
     );
   }

@@ -627,34 +627,6 @@ html {
   min-height: 150px;
 }
 
-.modal-detail .ant-modal-content {
-  background-color: #e9ecef;
-}
-.modal-detail .ant-modal-content .ant-modal-title {
-  font-size: 28px;
-  background-color: #e9ecef;
-  margin-bottom: 30px;
-}
-.modal-detail .ant-modal-content .task-detail-group {
-  padding: 10px 20px;
-  background: white;
-  color: black;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-.modal-detail .ant-modal-content .task-detail-group p {
-  margin-bottom: 5px;
-  font-size: 18px;
-}
-.modal-detail .ant-modal-content .task-detail-group strong {
-  font-size: 18px;
-}
-.modal-detail .ant-modal-content .task-detail-group svg {
-  font-size: 24px;
-  margin-right: 5px;
-  transform: translateY(18%);
-}
-
 .evidence .img-evidence {
   width: 80%;
 }
