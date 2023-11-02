@@ -23,7 +23,11 @@ const DisplayAnimalGroup = ({
 
   return (
     <>
-      <Table dataSource={fieldByFarm ? fieldByFarm.data : null} rowKey="id" on>
+      <Table
+        dataSource={fieldByFarm ? fieldByFarm.data : null}
+        rowKey="id"
+        locale={{ emptyText: 'Chưa có chuồng nào' }}
+      >
         <Column
           title="Tên chuồng"
           dataIndex="name"

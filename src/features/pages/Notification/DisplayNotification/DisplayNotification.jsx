@@ -18,13 +18,7 @@ const DisplayNotification = ({ countNew, changeStatusNotify }) => {
           },
           {
             key: '2',
-            label:
-              // countNew?.data !== 0 ? (
-              //   <Badge count={countNew?.data}>Chưa đọc</Badge>
-              // ) : (
-              //   'Chưa đọc'
-              // ),
-              'Chưa đọc',
+            label: 'Chưa đọc',
             children: (
               <NotificationIsNew changeStatusNotify={changeStatusNotify} />
             ),

@@ -23,7 +23,11 @@ const TableDisplayZone = ({
   }
   return (
     <>
-      <Table rowKey="id" dataSource={zoneByFarm ? zoneByFarm.data : null}>
+      <Table
+        rowKey="id"
+        dataSource={zoneByFarm ? zoneByFarm.data : null}
+        locale={{ emptyText: 'Chưa có vùng nào' }}
+      >
         <Column title="Tên vùng" dataIndex="name" key="1" />
         <Column title="Mã vùng" dataIndex="code" key="2" />
         <Column title="Diện tích" dataIndex="farmArea" key="3" />
