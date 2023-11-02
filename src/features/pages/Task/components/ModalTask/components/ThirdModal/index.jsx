@@ -50,7 +50,6 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
 
   const farmId = member.farmId;
 
-  console.log(farmId);
 
   const area = useSelector((state) => state.area.data);
 
@@ -66,7 +65,6 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
   const dataFieldByZone = fieldByZone.data;
-  console.log(dataFieldByZone);
 
   const taskTypeLivestock = useSelector(
     (state) => state.taskTypeLivestock.data
@@ -158,7 +156,6 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
         })
       );
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -266,7 +263,6 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
     const endTime = dayjs(endDate).format("HH:mm:ss.SSS");
 
     const selectedDates = values.dates || [];
-    console.log(values.dates);
 
     const combinedDates = selectedDates.map((date) => `${date}T${startTime}`);
 

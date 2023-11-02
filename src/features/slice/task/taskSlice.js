@@ -12,7 +12,6 @@ export const getTasks = createAsyncThunk("tasks/getTasks", async ({ pageIndex, s
         'Content-Type': 'application/json',
       },
     });
-    console.log(data);
     return data;
   } catch (error) {
     rejectWithValue(error.message)
