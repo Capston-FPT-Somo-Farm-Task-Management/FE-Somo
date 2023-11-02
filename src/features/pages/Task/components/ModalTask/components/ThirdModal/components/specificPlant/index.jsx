@@ -33,7 +33,6 @@ function SpecificPlant({
   remindValue,
   repeatValue,
   disabledDate,
-  isDateDisabled,
 }) {
   const { TextArea } = Input;
 
@@ -133,7 +132,7 @@ function SpecificPlant({
           <Select
             placeholder="Chọn mã cây trồng"
             options={dataPlant?.map((item) => ({
-              label: item.name,
+              label: item.externalId,
               value: item.id,
             }))}
           />
@@ -173,11 +172,13 @@ function SpecificPlant({
         >
           <DatePicker
             placeholder="Chọn thời gian bắt đầu"
-            format="YYYY-MM-DD[T]HH:mm:ss.SSS"
+            format="HH:mm DD-MM-YYYY"
             disabledDate={disabledDate}
             showTime={{
-              defaultValue: dayjs("00:00:00", "HH:mm:ss"),
+              defaultValue: dayjs("00:00", "HH:mm"),
+              format: "HH:mm",
             }}
+            showSecond="false"
             onChange={handleSelectStartDate}
           />
         </Form.Item>
@@ -193,11 +194,13 @@ function SpecificPlant({
         >
           <DatePicker
             placeholder="Chọn thời gian kết thúc"
-            format="YYYY-MM-DD[T]HH:mm:ss.SSS"
+            format="HH:mm DD-MM-YYYY"
             disabledDate={disabledDate}
             showTime={{
-              defaultValue: dayjs("00:00:00", "HH:mm:ss"),
+              defaultValue: dayjs("00:00", "HH:mm"),
+              format: "HH:mm",
             }}
+            showSecond="false"
             onChange={handleSelectEndDate}
           />
         </Form.Item>
@@ -341,7 +344,7 @@ function SpecificPlant({
             <MultiDatePicker
               multiple
               format="YYYY-MM-DD"
-              disabledDate={isDateDisabled}
+              minDate={new Date()}
             />
           </Form.Item>
         )}

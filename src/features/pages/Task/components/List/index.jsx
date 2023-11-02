@@ -44,10 +44,8 @@ const List = () => {
 
   const [form] = Form.useForm();
   const task = useSelector((state) => state.task.data);
-  console.log(task);
 
   const dataTotalPages = useSelector((state) => state.task.totalPages);
-  console.log(dataTotalPages);
 
   const dispatch = useDispatch();
 
@@ -79,7 +77,6 @@ const List = () => {
 
   const handleMenuClick = (e, record) => {
     if (e.key === "edit") {
-      console.log("Edit", record);
     } else if (e.key === "delete") {
       handleDelete(record.id);
     }
@@ -98,7 +95,6 @@ const List = () => {
       loadDataTask();
       setPageIndex(1);
     });
-    console.log(id);
   };
 
   const openModal = (record) => {
@@ -117,7 +113,6 @@ const List = () => {
     const taskId = currentTaskId;
     dispatch(getEmployeeByTask(taskId)).then((data) => {
       setAvailableEmployees(data.payload);
-      console.log(data.payload);
     });
     form.resetFields();
   };
@@ -138,7 +133,6 @@ const List = () => {
     dispatch(deleteSubTask({ taskId, employeeId })).then(() => {
       dispatch(getSubTasksByTaskId(taskId)).then((data) => {
         setSubTasks(data.payload);
-        console.log(data.payload);
       });
     });
   };
@@ -148,7 +142,6 @@ const List = () => {
     setSubTaskModalVisible(true);
     dispatch(getSubTasksByTaskId(record.id)).then((data) => {
       setSubTasks(data.payload);
-      console.log(data.payload);
     });
   };
 
@@ -242,7 +235,7 @@ const List = () => {
           columns={[
             ...taskTitle,
             {
-              title: "Tuỳ chọn",
+              title: <p style={{textAlign:"center"}}>Tùy chọn</p>,
               key: "action",
               render: (_, record) => {
                 const isManager = record && record.managerName;

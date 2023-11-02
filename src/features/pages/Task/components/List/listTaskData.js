@@ -3,27 +3,31 @@ import dayjs from 'dayjs';
 
 export const taskTitle = [
   {
-    title: 'Tên công việc',
+    title: <p style={{textAlign:"center"}}>Tên công việc</p>,
     dataIndex: 'name',
     key: 'name',
+    align: 'center',
     render: (text) => <h4 className="task-name" data-name-clicked="true">{text}</h4>,
   },
   {
-    title: 'Ngày bắt đầu',
+    title: <p style={{textAlign:"center"}}>Ngày bắt đầu</p>,
     dataIndex: 'startDate',
     key: 'startDate',
+    align: 'center',
     render: (text) => dayjs(text).format('HH:mm DD/MM/YYYY'),
   },
   {
-    title: 'Ngày kết thúc',
+    title: <p style={{textAlign:"center"}}>Ngày kết thúc</p>,
     dataIndex: 'endDate',
     key: 'endDate',
+    align: 'center',
     render: (text) => dayjs(text).format('HH:mm DD/MM/YYYY'),
   },
   {
-    title: 'Ưu tiên',
+    title: <p style={{textAlign:"center"}}>Ưu tiên</p>,
     dataIndex: 'priority',
     key: 'priority',
+    align: 'center',
     render: (text) => {
       let color = '';
       switch (text) {
@@ -49,30 +53,22 @@ export const taskTitle = [
     },
   },
   {
-    title: 'Người giám sát',
+    title: <p style={{textAlign:"center"}}>Người giám sát</p>,
     dataIndex: 'supervisorName',
     key: 'supervisorName',
+    align: 'center',
   },
   {
     title: <p style={{textAlign:"center"}}>Được tạo bởi</p>,
     dataIndex: 'managerName',
     key: 'managerName',
+    align: 'center',
     render: (text) => (
       <span>
         {text ? <p style={{textAlign: "center"}}>Tôi</p> : <p style={{textAlign: "center"}}>Người giám sát</p>}
       </span>
     ),
   },
-  // {
-  //   title: 'Vị trí',
-  //   dataIndex: 'fieldName',
-  //   key: 'fieldName',
-  // },
-  // {
-  //   title: 'Trạng thái',
-  //   dataIndex: 'status',
-  //   key: 'status',
-  // },
 
 ]
 
