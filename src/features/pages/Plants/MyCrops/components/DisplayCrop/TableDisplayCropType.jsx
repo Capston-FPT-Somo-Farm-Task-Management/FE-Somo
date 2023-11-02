@@ -26,7 +26,11 @@ const TableDisplayCropType = ({
 
   return (
     <>
-      <Table dataSource={plantType ? plantType.data : ''} rowKey="id">
+      <Table
+        dataSource={plantType ? plantType.data : ''}
+        rowKey="id"
+        locale={{ emptyText: 'Chưa có loại cây trồng nào' }}
+      >
         <Column
           title="Tên cây trồng"
           dataIndex="name"

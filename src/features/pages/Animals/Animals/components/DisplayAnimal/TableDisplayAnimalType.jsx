@@ -26,7 +26,11 @@ const TableDisplayAnimalType = ({
 
   return (
     <>
-      <Table dataSource={animalType ? animalType.data : ''} rowKey="id">
+      <Table
+        dataSource={animalType ? animalType.data : ''}
+        rowKey="id"
+        locale={{ emptyText: 'Chưa có loại vật nuôi nào' }}
+      >
         <Column
           title="Tên vật nuôi"
           dataIndex="name"

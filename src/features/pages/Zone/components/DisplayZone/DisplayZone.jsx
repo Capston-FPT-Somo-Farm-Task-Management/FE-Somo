@@ -1,6 +1,5 @@
 import { Tabs } from 'antd'
 import TableDisplayZone from './TableDisplayZone'
-import TableDisplayZoneType from './TableDisplayZoneType'
 
 const DisplayZone = ({
   areaByFarm,
@@ -28,19 +27,8 @@ const DisplayZone = ({
               />
             ),
           },
-          {
-            key: '2',
-            label: 'Loại vùng',
-            children: (
-              <TableDisplayZoneType
-              // plantType={plantType}
-              // onFinishDeletePlantType={onFinishDeletePlantType}
-              // onFinishUpdatePlantType={onFinishUpdatePlantType}
-              />
-            ),
-          },
         ]}
-      />{' '}
+      />
     </>
   )
 }
