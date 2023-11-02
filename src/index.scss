@@ -2,10 +2,10 @@
 @import './styles/Helper/mixin';
 @import './common/components/Header/header';
 @import './common/components/Sidebar/sideBar';
+@import "./features/pages/Schedule/schedule";
 @import './features/pages/Task/task';
 @import './features/pages/Task/components/ModalTask/modalTask';
 @import './features/pages/Task/components/List/list';
-@import './features/pages/Task/components/Board/components/Column/column';
 @import './features/pages/Task/components/ModalTask/components/FirstModal/firstModal';
 @import './features/pages/Task/components/ModalTask/components/SecondModal/secondModal';
 @import './features/pages/Task/components/ModalTask/components/ThirdModal/thirdModal';

@@ -6,9 +6,9 @@ import { Exception } from 'sass'
 
 export const getAnimalActive = createAsyncThunk(
   'animals/getAnimalActive',
-  async () => {
+  async (id) => {
     try {
-      const { data } = await axios.get(baseUrl + '/Livestock/Active', {
+      const { data } = await axios.get(baseUrl + `/LiveStock/ExternalId/Field(${id})`, {
         headers: {
           'Content-Type': 'application/json',
         },

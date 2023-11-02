@@ -76,7 +76,7 @@ export const deleteMaterial = createAsyncThunk(
 )
 
 const materialSlice = createSlice({
-  name: 'material',
+  name: "material",
   initialState: {
     data: [],
     loading: false,

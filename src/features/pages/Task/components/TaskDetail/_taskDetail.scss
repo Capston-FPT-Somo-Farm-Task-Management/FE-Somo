@@ -1,8 +1,38 @@
-.evidence{
-    .img-evidence{
-        width: 80%;
-        img{
-            width: 100%;
-        }
+.modal-detail {
+  .ant-modal-content {
+    background-color: #e9ecef;
+    .ant-modal-title {
+      font-size: 28px;
+      background-color: #e9ecef;
+      margin-bottom: 30px;
     }
+    .task-detail-group {
+      padding: 10px 20px;
+      background: white;
+      color: black;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      p {
+        margin-bottom: 5px;
+        font-size: 18px;
+      }
+      strong {
+        font-size: 18px;
+      }
+      svg {
+        font-size: 24px;
+        margin-right: 5px;
+        transform: translateY(18%);
+      }
+    }
+  }
+}
+
+.evidence {
+  .img-evidence {
+    width: 80%;
+    img {
+      width: 100%;
+    }
+  }
 }
