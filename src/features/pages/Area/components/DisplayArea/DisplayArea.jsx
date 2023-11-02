@@ -18,7 +18,11 @@ const DisplayArea = ({ areaByFarm, onFinishDelete, onFinishUpdate }) => {
 
   return (
     <>
-      <Table rowKey="id" dataSource={areaByFarm ? areaByFarm.data : null}>
+      <Table
+        rowKey="id"
+        dataSource={areaByFarm ? areaByFarm.data : null}
+        locale={{ emptyText: 'Chưa có khu vực' }}
+      >
         <Column title="Tên khu vực" dataIndex="name" key="1" />
         <Column title="Mã khu vực" dataIndex="code" key="2" />
         <Column title="Diện tích" dataIndex="fArea" key="3" />

@@ -27,7 +27,11 @@ const TableDisplayCrop = ({
 
   return (
     <>
-      <Table dataSource={plantByFarm ? plantByFarm.data : null} rowKey="id">
+      <Table
+        dataSource={plantByFarm ? plantByFarm.data : null}
+        rowKey="id"
+        locale={{ emptyText: 'Chưa có cây trồng nào' }}
+      >
         <Column
           title="Tên cây trồng"
           dataIndex="name"

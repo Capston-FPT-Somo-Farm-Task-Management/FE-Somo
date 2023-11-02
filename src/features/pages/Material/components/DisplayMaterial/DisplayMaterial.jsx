@@ -22,7 +22,8 @@ const DisplayMaterial = ({ material, onFinishDelete, onFinishUpdate }) => {
       <Table
         rowKey="id"
         dataSource={material ? material.data : null}
-        pagination={true}
+        // pagination={true}
+        locale={{ emptyText: 'Chưa có công cụ nào' }}
       >
         <Column title="Tên công cụ" dataIndex="name" key="1" />
         <Column

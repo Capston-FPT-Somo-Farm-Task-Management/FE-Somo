@@ -23,7 +23,11 @@ const DisplayCropGroup = ({
 
   return (
     <>
-      <Table dataSource={fieldByFarm ? fieldByFarm.data : null} rowKey="id" on>
+      <Table
+        dataSource={fieldByFarm ? fieldByFarm.data : null}
+        rowKey="id"
+        locale={{ emptyText: 'Chưa có vườn nào' }}
+      >
         <Column
           title="Tên vườn"
           dataIndex="name"
