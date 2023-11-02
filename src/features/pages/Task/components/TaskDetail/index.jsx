@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Modal } from "antd";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
-import { DashboardOutlined } from "@ant-design/icons";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import AlarmOnIcon from "@mui/icons-material/AlarmOn";
 import ListAltIcon from "@mui/icons-material/ListAlt";
@@ -17,7 +16,7 @@ import SpaceDashboardOutlinedIcon from "@mui/icons-material/SpaceDashboardOutlin
 import CropDinOutlinedIcon from "@mui/icons-material/CropDinOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import ParkOutlinedIcon from "@mui/icons-material/ParkOutlined";
-import SavingsOutlinedIcon from "@mui/icons-material/SavingsOutlined";
+import { Descriptions } from "antd";
 
 const TaskDetail = ({ visible, onCancel, taskData }) => {
   const evidenceData = useSelector((state) => state.evidence.data);
@@ -93,6 +92,15 @@ const TaskDetail = ({ visible, onCancel, taskData }) => {
       width={700}
       className="modal-detail"
     >
+      <Descriptions column={1} bordered>
+        <Descriptions.Item label={<ListAltIcon />}>
+          Tên công việc
+        </Descriptions.Item>
+        <Descriptions.Item label={<CleaningServicesOutlinedIcon />}>
+          Loại công việc
+        </Descriptions.Item>
+        {/* ... Thêm các item khác tương tự */}
+      </Descriptions>
       <div className="task-detail-group">
         <p>
           <ListAltIcon />

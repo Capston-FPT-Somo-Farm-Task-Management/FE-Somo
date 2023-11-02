@@ -34,7 +34,6 @@ function SpecificAnimal({
   remindValue,
   repeatValue,
   disabledDate,
-  isDateDisabled,
 }) {
   const { TextArea } = Input;
 
@@ -174,11 +173,13 @@ function SpecificAnimal({
         >
           <DatePicker
             placeholder="Chọn thời gian bắt đầu"
-            format="YYYY-MM-DD[T]HH:mm:ss.SSS"
+            format="HH:mm DD-MM-YYYY"
             disabledDate={disabledDate}
             showTime={{
-              defaultValue: dayjs("00:00:00", "HH:mm:ss"),
+              defaultValue: dayjs("00:00", "HH:mm"),
+              format: "HH:mm",
             }}
+            showSecond="false"
             onChange={handleSelectStartDate}
           />
         </Form.Item>
@@ -194,11 +195,13 @@ function SpecificAnimal({
         >
           <DatePicker
             placeholder="Chọn thời gian kết thúc"
-            format="YYYY-MM-DD[T]HH:mm:ss.SSS"
+            format="HH:mm DD-MM-YYYY"
             disabledDate={disabledDate}
             showTime={{
-              defaultValue: dayjs("00:00:00", "HH:mm:ss"),
+              defaultValue: dayjs("00:00", "HH:mm"),
+              format: "HH:mm",
             }}
+            showSecond="false"
             onChange={handleSelectEndDate}
           />
         </Form.Item>
@@ -344,11 +347,8 @@ function SpecificAnimal({
           <Form.Item label="Lặp những ngày" name="dates">
             <MultiDatePicker
               multiple
-              format="YYYY-MM-DD HH:mm"
+              format="YYYY-MM-DD"
               minDate={new Date()}
-              plugins={[
-                <TimePicker position="bottom" hStep={1} mStep={1} />,
-              ]}
             />
           </Form.Item>
         )}
