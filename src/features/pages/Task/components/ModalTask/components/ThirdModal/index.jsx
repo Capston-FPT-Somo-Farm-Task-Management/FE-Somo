@@ -41,6 +41,7 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
   const [endDate, setEndDate] = useState(null);
   const [description, setDescription] = useState("");
   const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
+  
 
   const [form] = Form.useForm();
 
@@ -49,7 +50,6 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
   const member = useSelector((state) => state.member.data);
 
   const farmId = member.farmId;
-
 
   const area = useSelector((state) => state.area.data);
 
@@ -134,6 +134,15 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
     }
   }, [selectedTaskTypeId]);
 
+  useEffect(() => {
+    if (endDate && startDate && startDate.isAfter(endDate)) {
+      form.setFieldsValue({
+        endDate: null,
+        dates: null,
+      });
+    }
+  }, [startDate, endDate]);
+
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value);
     form.setFieldsValue({
@@ -155,8 +164,7 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
           farmId: selectedFarmId,
         })
       );
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const handleSelectFieldChange = (value) => {
@@ -167,20 +175,34 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
     setPriorityValue(value);
   };
 
-  const handleSelectStartDate = (dateString) => {
-    setStartDate(dateString);
+  const handleSelectStartDate = (date) => {
+    setStartDate(date);
   };
 
   const handleSelectEndDate = (date) => {
     const selectedDate = dayjs(date).second(0);
     setEndDate(selectedDate);
-
+  
     const startDate = form.getFieldValue("startDate");
     if (selectedDate.isAfter(startDate)) {
       form.setFieldsValue({ endDate: selectedDate });
       form.setFields([
         {
           name: "endDate",
+          errors: [],
+        },
+      ]);
+      const repeatDates = form.getFieldValue("dates");
+      if (
+        repeatDates &&
+        repeatDates.some((date) => selectedDate.isAfter(dayjs(date)))
+      ) {
+        form.setFieldsValue({ dates: null }); 
+      }
+      form.setFields([
+        {
+          name: "dates",
+          value: form.getFieldValue("dates"),
           errors: [],
         },
       ]);
@@ -192,8 +214,19 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
           errors: ["Không được chọn trước ngày bắt đầu"],
         },
       ]);
+      form.setFieldsValue({ dates: null });
+      form.setFields([
+        {
+          name: "dates",
+          value: form.getFieldValue("dates"),
+          errors: ["Không thể chọn ngày lặp"],
+        },
+      ]);
     }
   };
+
+  console.log("startDate:", startDate);
+  console.log("endDate:", endDate);
 
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
@@ -217,7 +250,7 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
 
   const handleSelectRepeat = (value) => {
     setRepeatValue(value === "Có");
-    setShouldCheckRepeat(value === "Có"); // Cập nhật shouldCheckRepeat
+    setShouldCheckRepeat(value === "Có");
   };
 
   const disabledDate = (current) => {
@@ -341,6 +374,8 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
         remindValue={remindValue}
         repeatValue={repeatValue}
         disabledDate={disabledDate}
+        startDate={startDate}
+        endDate={endDate}
       />
     );
   } else if (option === "wholeBarn") {
@@ -375,6 +410,8 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
         remindValue={remindValue}
         repeatValue={repeatValue}
         disabledDate={disabledDate}
+        startDate={startDate}
+        endDate={endDate}
       />
     );
   } else if (option === "specificPlant") {
@@ -410,6 +447,8 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
         remindValue={remindValue}
         repeatValue={repeatValue}
         disabledDate={disabledDate}
+        startDate={startDate}
+        endDate={endDate}
       />
     );
   } else if (option === "wholeGarden") {
@@ -444,6 +483,8 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
         remindValue={remindValue}
         repeatValue={repeatValue}
         disabledDate={disabledDate}
+        startDate={startDate}
+        endDate={endDate}
       />
     );
   }

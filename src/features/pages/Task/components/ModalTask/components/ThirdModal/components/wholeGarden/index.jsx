@@ -32,6 +32,7 @@ function WholeGarden({
   remindValue,
   repeatValue,
   disabledDate,
+  endDate
 }) {
   const { TextArea } = Input;
 
@@ -321,7 +322,7 @@ function WholeGarden({
             <MultiDatePicker
               multiple
               format="YYYY-MM-DD"
-              minDate={new Date()}
+              minDate={new Date(new Date(endDate).getTime() + 24 * 60 * 60 * 1000)}
             />
           </Form.Item>
         )}

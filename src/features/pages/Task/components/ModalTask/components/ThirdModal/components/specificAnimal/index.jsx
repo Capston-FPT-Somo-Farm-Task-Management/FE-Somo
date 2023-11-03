@@ -2,7 +2,6 @@ import React from "react";
 import { DatePicker, Form, Input, Select } from "antd";
 import dayjs from "dayjs";
 import MultiDatePicker from "react-multi-date-picker";
-import TimePicker from "react-multi-date-picker/plugins/time_picker";
 
 function SpecificAnimal({
   onFinish,
@@ -34,6 +33,8 @@ function SpecificAnimal({
   remindValue,
   repeatValue,
   disabledDate,
+  startDate,
+  endDate,
 }) {
   const { TextArea } = Input;
 
@@ -203,6 +204,7 @@ function SpecificAnimal({
             }}
             showSecond="false"
             onChange={handleSelectEndDate}
+            disabled={!startDate}
           />
         </Form.Item>
         <Form.Item label="Mô tả" name="description">
@@ -297,10 +299,7 @@ function SpecificAnimal({
             }))}
           />
         </Form.Item>
-        <Form.Item
-          label="Dụng cụ"
-          name="materialIds"
-        >
+        <Form.Item label="Dụng cụ" name="materialIds">
           <Select
             placeholder="Chọn dụng cụ"
             mode="multiple"
@@ -336,12 +335,15 @@ function SpecificAnimal({
           </Select>
         </Form.Item>
 
-        {repeatValue && (
+        {repeatValue  && (
           <Form.Item label="Lặp những ngày" name="dates">
             <MultiDatePicker
               multiple
               format="YYYY-MM-DD"
-              minDate={new Date()}
+              disabled={!endDate || !endDate.isValid()}
+              minDate={
+                new Date(new Date(endDate).getTime() + 24 * 60 * 60 * 1000)
+              }
             />
           </Form.Item>
         )}

@@ -28,32 +28,54 @@
 
 .subTask-modal {
   .ant-modal-content {
-    background-color: #e9ecef;
     .ant-modal-title {
       font-size: 28px;
-      background-color: #e9ecef;
       margin-bottom: 30px;
     }
 
     .subTask {
-      .subTask-container {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 20px;
-        background-color: white;
-        margin-bottom: 10px;
+      .subTask-content {
+        background-color: rgba(0, 0, 0, 0.02);
+        padding: 10px 0px;
+        margin-bottom: 20px;
         border-radius: 10px;
-        .subTask-content {
-          width: 80%;
+        .subTask-header{
+          display: flex;
+          justify-content: space-around;
+          .subTask-count {
+            width: 45%;
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            span{
+              text-decoration: underline;
+            }
+          }
+          .subTask-dropdown{
+            width: 45%;
+            display: flex;
+            justify-content: flex-end;
+          }
+        }
+        
+        .subTask-container {
+          display: flex;
+          justify-content: space-between;
+          padding: 10px 25px;
+          border-radius: 10px;
+          .subTask-item {
+            width: 80%;
+          }
+        }
+        p {
+          margin-bottom: 5px;
+          font-size: 16px;
+        }
+        strong {
+          font-size: 18px;
         }
       }
-      p {
-        margin-bottom: 5px;
-        font-size: 18px;
-      }
-      strong {
-        font-size: 18px;
-      }
     }
+    
   }
 }

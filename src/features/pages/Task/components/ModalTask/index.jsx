@@ -70,7 +70,9 @@ function ModalTask({ onTaskAdded, onDateChange, loadDataTask }) {
             <Step key={item.title} title={item.title} />
           ))}
         </Steps>
-        <div style={{ marginTop: 24 }}>{renderStepContent(currentStep)}</div>
+        <div style={{ marginTop: 24 }}>{renderStepContent(currentStep)}
+        
+        </div>
         <div
           style={{ marginTop: 24, display: "flex", justifyContent: "flex-end" }}
         >

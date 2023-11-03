@@ -13,7 +13,7 @@ import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
 import { getStatus } from "features/slice/status/statusSlice";
 import TaskDetail from "../TaskDetail";
 import ModalTask from "../ModalTask";
-import { Menu, Dropdown } from "antd";
+import { Menu, Dropdown, Descriptions } from "antd";
 import {
   MoreOutlined,
   EditOutlined,
@@ -48,6 +48,8 @@ const List = () => {
   const dataTotalPages = useSelector((state) => state.task.totalPages);
 
   const dispatch = useDispatch();
+
+  let totalSubTaskCount = 0;
 
   const loadDataTask = () => {
     dispatch(
@@ -153,8 +155,6 @@ const List = () => {
     setEditingSubTask(false);
   };
 
-
-
   const handleTabChange = (key) => {
     setPageIndex(1);
     setStatus(Number(key));
@@ -200,7 +200,7 @@ const List = () => {
         setSubTasks(data.payload);
         loadDataTask();
         setAddSubtaskVisible(false);
-        setEditSubTaskModalVisible(false)
+        setEditSubTaskModalVisible(false);
       });
     });
   };
@@ -235,7 +235,7 @@ const List = () => {
           columns={[
             ...taskTitle,
             {
-              title: <p style={{textAlign:"center"}}>Tùy chọn</p>,
+              title: <p style={{ textAlign: "center" }}>Tùy chọn</p>,
               key: "action",
               render: (_, record) => {
                 const isManager = record && record.managerName;
@@ -433,44 +433,60 @@ const List = () => {
       >
         <div className="subTask">
           {subTasks && subTasks.data ? (
-            subTasks.data.map((subTaskItem) => (
-              <div className="subTask-container" key={subTaskItem.employeeId}>
+            subTasks.data.map((subTaskItem) => {
+              totalSubTaskCount++;
+              const SubTaskCount = totalSubTaskCount;
+              return (
                 <div className="subTask-content">
-                  <p>
-                    <strong>Tên:</strong> {subTaskItem.name}
-                  </p>
-                  <p>
-                    <strong>Người thực hiện:</strong> {subTaskItem.employeeName}
-                  </p>
-                  <p>
-                    <strong>Mô tả:</strong> {subTaskItem.description}
-                  </p>
+                  <div className="subTask-header">
+                    <div className="subTask-count">
+                      <span style={{ textDecoration: "none", color: "red" }}>
+                        *{" "}
+                      </span>
+                      <span>Báo cáo số {SubTaskCount}</span>{" "}
+                    </div>
+                    <div className="subTask-dropdown">
+                      <Dropdown
+                        placement="bottomRight"
+                        overlay={
+                          <Menu
+                            onClick={(e) =>
+                              handleMenuSubTaskClick(e, subTaskItem)
+                            }
+                          >
+                            <Menu.Item key="edit">
+                              <EditOutlined
+                                style={{ color: "gold", marginRight: "8px" }}
+                              />
+                              Sửa công việc con
+                            </Menu.Item>
+                            <Menu.Item key="delete">
+                              <DeleteOutlined
+                                style={{ color: "red", marginRight: "8px" }}
+                              />
+                              Xóa công việc con
+                            </Menu.Item>
+                          </Menu>
+                        }
+                      >
+                        <Button icon={<MoreOutlined />} />
+                      </Dropdown>
+                    </div>
+                  </div>
+
+                  <div
+                    className="subTask-container"
+                    key={subTaskItem.employeeId}
+                  >
+                    <div className="subTask-item">
+                      <p>Tên: {subTaskItem.name}</p>
+                      <p>Người thực hiện: {subTaskItem.employeeName}</p>
+                      <p>Mô tả: {subTaskItem.description}</p>
+                    </div>
+                  </div>
                 </div>
-                <Dropdown
-                  placement="bottomRight"
-                  overlay={
-                    <Menu
-                      onClick={(e) => handleMenuSubTaskClick(e, subTaskItem)}
-                    >
-                      <Menu.Item key="edit">
-                        <EditOutlined
-                          style={{ color: "gold", marginRight: "8px" }}
-                        />
-                        Sửa công việc con
-                      </Menu.Item>
-                      <Menu.Item key="delete">
-                        <DeleteOutlined
-                          style={{ color: "red", marginRight: "8px" }}
-                        />
-                        Xóa công việc con
-                      </Menu.Item>
-                    </Menu>
-                  }
-                >
-                  <Button icon={<MoreOutlined />} />
-                </Dropdown>
-              </div>
-            ))
+              );
+            })
           ) : (
             <p>Chưa có công việc con</p>
           )}

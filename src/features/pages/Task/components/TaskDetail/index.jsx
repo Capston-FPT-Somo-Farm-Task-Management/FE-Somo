@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import { Descriptions } from "antd";
 import { Image } from "antd";
+import NoImage from "../../../../../assets/no-image.png";
 
 const TaskDetail = ({ visible, onCancel, taskData }) => {
   const evidenceData = useSelector((state) => state.evidence.data);
@@ -24,6 +25,8 @@ const TaskDetail = ({ visible, onCancel, taskData }) => {
         return <span>Mã cây trồng: {plantName}</span>;
       } else if (fieldStatus === "Động vật") {
         return <span>Mã vật nuôi: {liveStockName}</span>;
+      } else{
+        <span>Không có mã vật nuôi hoặc cây trồng</span>;
       }
     }
     return null;
@@ -118,23 +121,27 @@ const TaskDetail = ({ visible, onCancel, taskData }) => {
   ];
 
   const renderImages = () => {
+    let totalEvidenceCount = 0;
     if (evidenceData && evidenceData.data && evidenceData.data.length > 0) {
-      return evidenceData.data.map((evidence, index) => (
-        <div key={evidence.id} className="evidence">
-          <p className="evidence-time">{evidence.time}</p>
-          <p className="evidence-desc">{evidence.description}</p>
-
-          <div className="img-contain">
-            <Image.PreviewGroup>
-              {evidence.urlImage && evidence.urlImage
-                ? evidence.urlImage.map((url, imageIndex) => (
+      return evidenceData.data.map((evidence, index) => {
+        totalEvidenceCount++;
+        const evidenceCount = totalEvidenceCount;
+        return (
+          <div key={evidence.id} className="evidence-content">
+            <div className="evidence-count">
+              <span style={{textDecoration: "none", color: "red"}}>* </span>
+              <span>Báo cáo số {evidenceCount}</span>{" "}
+            </div>
+            <p className="evidence-desc">Mô tả: {evidence.description}</p>
+            <p className="evidence-time">Được gửi {evidence.time}</p>
+            <div className="img-contain">
+              <Image.PreviewGroup>
+                {evidence.urlImage && evidence.urlImage ? (
+                  evidence.urlImage.map((url, imageIndex) => (
                     <>
                       {evidence.urlImage.length === 1 ? (
                         <div className="img-evidence" key={imageIndex}>
-                          <Image
-                            src={url}
-                            alt={`evidence-${imageIndex}`}
-                          />
+                          <Image src={url} alt={`evidence-${imageIndex}`} />
                         </div>
                       ) : evidence.urlImage.length === 2 ? (
                         <div
@@ -154,7 +161,7 @@ const TaskDetail = ({ visible, onCancel, taskData }) => {
                         </div>
                       ) : evidence.urlImage.length === 4 ? (
                         <div
-                          style={{ width: "45%", marginBottom: "30px" }}
+                          style={{ width: "45%", margin: "10px"}}
                           className="img-evidence"
                           key={imageIndex}
                         >
@@ -164,7 +171,7 @@ const TaskDetail = ({ visible, onCancel, taskData }) => {
                         <div
                           style={{
                             width: "45%",
-                            marginBottom: "30px",
+                            margin: "10px",
                             display:
                               imageIndex >= 4 && evidence.urlImage.length > 4
                                 ? "none"
@@ -187,13 +194,16 @@ const TaskDetail = ({ visible, onCancel, taskData }) => {
                       ) : null}
                     </>
                   ))
-                : null}
-            </Image.PreviewGroup>
+                ) : (
+                  <img src={NoImage} alt="Không có ảnh" />
+                )}
+              </Image.PreviewGroup>
+            </div>
           </div>
-        </div>
-      ));
+        );
+      });
     } else {
-      return <p>Chưa có bằng chứng báo cáo</p>;
+      return <p>Chưa có báo cáo nào</p>;
     }
   };
 
@@ -205,10 +215,16 @@ const TaskDetail = ({ visible, onCancel, taskData }) => {
       footer={null}
       width={1000}
       className="modal-detail"
+      style={{ maxWidth: "90%", margin: "0 auto" }}
     >
       <Descriptions bordered items={dataTask} />
 
-      <div className="evidence">{renderImages()}</div>
+      <div className="evidence">
+        <h6 style={{ fontSize: "24px", fontWeight: "500" }}>
+          Báo cáo công việc:
+        </h6>
+        {renderImages()}
+      </div>
     </Modal>
   );
 };

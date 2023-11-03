@@ -202,30 +202,48 @@ html {
   opacity: 0.8;
 }
 
-.subTask-modal .ant-modal-content {
-  background-color: #e9ecef;
-}
 .subTask-modal .ant-modal-content .ant-modal-title {
   font-size: 28px;
-  background-color: #e9ecef;
   margin-bottom: 30px;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-container {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 20px;
-  background-color: white;
-  margin-bottom: 10px;
+.subTask-modal .ant-modal-content .subTask .subTask-content {
+  background-color: rgba(0, 0, 0, 0.02);
+  padding: 10px 0px;
+  margin-bottom: 20px;
   border-radius: 10px;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-container .subTask-content {
+.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-header {
+  display: flex;
+  justify-content: space-around;
+}
+.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-header .subTask-count {
+  width: 45%;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-header .subTask-count span {
+  text-decoration: underline;
+}
+.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-header .subTask-dropdown {
+  width: 45%;
+  display: flex;
+  justify-content: flex-end;
+}
+.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 25px;
+  border-radius: 10px;
+}
+.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-container .subTask-item {
   width: 80%;
 }
-.subTask-modal .ant-modal-content .subTask p {
+.subTask-modal .ant-modal-content .subTask .subTask-content p {
   margin-bottom: 5px;
-  font-size: 18px;
+  font-size: 16px;
 }
-.subTask-modal .ant-modal-content .subTask strong {
+.subTask-modal .ant-modal-content .subTask .subTask-content strong {
   font-size: 18px;
 }
 
@@ -628,44 +646,81 @@ html {
 }
 
 .evidence {
+  margin-top: 30px;
+}
+.evidence .evidence-content {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
+  background-color: rgba(0, 0, 0, 0.02);
+  margin: 20px 0px;
+  padding: 20px 0px;
+  border-radius: 5px;
 }
-.evidence p {
-  width: 50%;
+.evidence .evidence-content .evidence-count {
+  width: 100%;
+  font-size: 20px;
+  font-weight: 500;
+  margin-left: 20px;
+  margin-bottom: 20px;
 }
-.evidence .evidence-desc {
+.evidence .evidence-content .evidence-count span {
+  text-decoration: underline;
+}
+.evidence .evidence-content p {
+  width: 40%;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+.evidence .evidence-content .evidence-desc {
+  font-weight: 500;
+}
+.evidence .evidence-content .evidence-time {
   display: flex;
   justify-content: flex-end;
+  color: #38b000;
 }
-.evidence .img-contain {
+.evidence .evidence-content .img-contain {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  height: 300px;
-  width: 700px;
+  width: 800px;
+  margin-top: 10px;
+  background-color: white;
+  padding: 15px 10px;
+  border-radius: 10px;
 }
-.evidence .img-contain .img-evidence {
+.evidence .evidence-content .img-contain .img-evidence {
   width: 100%;
-  height: 100%;
+  height: 300px;
 }
-.evidence .img-contain .img-evidence .ant-image {
+.evidence .evidence-content .img-contain .img-evidence .ant-image {
   display: flex;
   justify-content: center;
   width: 100%;
   height: 100%;
 }
-.evidence .img-contain .img-evidence .ant-image img {
+.evidence .evidence-content .img-contain .img-evidence .ant-image .ant-image-mask {
+  border-radius: 10px;
+}
+.evidence .evidence-content .img-contain .img-evidence .ant-image img {
   -o-object-fit: cover;
      object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
 }
-.evidence .img-contain .overlay {
+.evidence .evidence-content .img-contain .overlay {
   position: relative;
-  background: rgba(0, 0, 0, 0.5);
 }
-.evidence .img-contain .overlay .overlay-text {
+.evidence .evidence-content .img-contain .overlay .ant-image .ant-image-mask {
+  border-radius: 10px;
+}
+.evidence .evidence-content .img-contain .overlay .ant-image img {
+  border-radius: 10px;
+}
+.evidence .evidence-content .img-contain .overlay .overlay-text {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -673,18 +728,6 @@ html {
   color: white;
   font-size: 24px;
   font-weight: bold;
-}
-.evidence .img-contain .overlay:before {
-  content: "+1";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
-  font-size: 24px;
-  padding: 5px 10px;
-  border-radius: 5px;
 }
 
 .plant-content h3 {
