@@ -1,40 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { Badge, Modal } from "antd";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import { Descriptions } from "antd";
-import Gallery from "react-images";
+import { Image } from "antd";
 
 const TaskDetail = ({ visible, onCancel, taskData }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
   const evidenceData = useSelector((state) => state.evidence.data);
-  const dataEvidence = evidenceData && evidenceData.data;
+  console.log(evidenceData);
 
   if (!taskData) {
     return null;
   }
-
-  const openLightbox = (index) => {
-    setCurrentIndex(index);
-    setLightboxIsOpen(true);
-  };
-
-  const closeLightbox = () => {
-    setCurrentIndex(0);
-    setLightboxIsOpen(false);
-  };
-
-  const images = dataEvidence.flatMap((evidence) => evidence.urlImage);
-const formattedImages = images.map((url) => ({ src: url }));
-
-  const onNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
-
-  const onPrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + images.length - 1) % images.length);
-  };
 
   const formattedStartDate = dayjs(taskData.startDate).format(
     "HH:mm DD-MM-YYYY"
@@ -141,22 +118,78 @@ const formattedImages = images.map((url) => ({ src: url }));
   ];
 
   const renderImages = () => {
-    if (dataEvidence && dataEvidence.length > 0) {
-      return dataEvidence.map((evidence, index) => (
-        <div key={evidence.id}>
-          <p>{evidence.time}</p>
-          <p>{evidence.description}</p>
-          {console.log(evidence.id)}
-          {evidence.urlImage.map(
-            (
-              url,
-              imageIndex 
-            ) => (
-              <div className="img-evidence" key={imageIndex}>
-                <img src={url} alt={`evidence-${imageIndex}`} />
-              </div>
-            )
-          )}
+    if (evidenceData && evidenceData.data && evidenceData.data.length > 0) {
+      return evidenceData.data.map((evidence, index) => (
+        <div key={evidence.id} className="evidence">
+          <p className="evidence-time">{evidence.time}</p>
+          <p className="evidence-desc">{evidence.description}</p>
+
+          <div className="img-contain">
+            <Image.PreviewGroup>
+              {evidence.urlImage && evidence.urlImage
+                ? evidence.urlImage.map((url, imageIndex) => (
+                    <>
+                      {evidence.urlImage.length === 1 ? (
+                        <div className="img-evidence" key={imageIndex}>
+                          <Image
+                            src={url}
+                            alt={`evidence-${imageIndex}`}
+                          />
+                        </div>
+                      ) : evidence.urlImage.length === 2 ? (
+                        <div
+                          style={{ width: "45%" }}
+                          className="img-evidence"
+                          key={imageIndex}
+                        >
+                          <Image src={url} alt={`evidence-${imageIndex}`} />
+                        </div>
+                      ) : evidence.urlImage.length === 3 ? (
+                        <div
+                          style={{ width: "30%" }}
+                          className="img-evidence"
+                          key={imageIndex}
+                        >
+                          <Image src={url} alt={`evidence-${imageIndex}`} />
+                        </div>
+                      ) : evidence.urlImage.length === 4 ? (
+                        <div
+                          style={{ width: "45%", marginBottom: "30px" }}
+                          className="img-evidence"
+                          key={imageIndex}
+                        >
+                          <Image src={url} alt={`evidence-${imageIndex}`} />
+                        </div>
+                      ) : evidence.urlImage.length > 4 ? (
+                        <div
+                          style={{
+                            width: "45%",
+                            marginBottom: "30px",
+                            display:
+                              imageIndex >= 4 && evidence.urlImage.length > 4
+                                ? "none"
+                                : "block",
+                          }}
+                          className={`img-evidence ${
+                            imageIndex === 3 && evidence.urlImage.length > 4
+                              ? "overlay"
+                              : ""
+                          }`}
+                          key={imageIndex}
+                        >
+                          <Image src={url} alt={`evidence-${imageIndex}`} />
+                          {imageIndex === 3 && evidence.urlImage.length > 4 && (
+                            <div className="overlay-text">
+                              +{evidence.urlImage.length - 4}
+                            </div>
+                          )}
+                        </div>
+                      ) : null}
+                    </>
+                  ))
+                : null}
+            </Image.PreviewGroup>
+          </div>
         </div>
       ));
     } else {
@@ -176,15 +209,6 @@ const formattedImages = images.map((url) => ({ src: url }));
       <Descriptions bordered items={dataTask} />
 
       <div className="evidence">{renderImages()}</div>
-
-      <Gallery
-        images={formattedImages}
-        currentIndex={currentIndex}
-        isOpen={lightboxIsOpen}
-        onClose={closeLightbox}
-        onClickPrev={onPrev}
-        onClickNext={onNext}
-      />
     </Modal>
   );
 };

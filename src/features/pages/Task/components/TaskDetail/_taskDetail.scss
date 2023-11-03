@@ -1,9 +1,61 @@
-
-.evidence {
-  .img-evidence {
-    width: 80%;
-    img {
+.evidence{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  p{
+    width: 50%
+  }
+  .evidence-desc{
+    display: flex;
+    justify-content: flex-end;
+  }
+  .img-contain {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    height: 300px;
+    width: 700px;
+    .img-evidence {
       width: 100%;
+      height: 100%;
+      .ant-image {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        img{
+          object-fit: cover;
+        }
+      }
+    }
+  
+    .overlay {
+      position: relative;
+      background: rgba(0, 0, 0, 0.5);
+      .overlay-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+      }
+    }
+  
+    .overlay:before {
+      content: "+1";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      font-size: 24px;
+      padding: 5px 10px;
+      border-radius: 5px;
     }
   }
 }
+

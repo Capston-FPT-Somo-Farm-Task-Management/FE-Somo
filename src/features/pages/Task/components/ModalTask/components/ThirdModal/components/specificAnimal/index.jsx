@@ -300,13 +300,6 @@ function SpecificAnimal({
         <Form.Item
           label="Dụng cụ"
           name="materialIds"
-          required
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn dụng cụ sử dụng",
-            },
-          ]}
         >
           <Select
             placeholder="Chọn dụng cụ"
