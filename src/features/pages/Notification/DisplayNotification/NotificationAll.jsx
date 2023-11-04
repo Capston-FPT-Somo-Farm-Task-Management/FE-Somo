@@ -19,7 +19,7 @@ const NotificationAll = ({ changeStatusNotify }) => {
     dispatch(
       getAllNotify({
         pageNumber: 1,
-        pageSize: 10,
+        pageSize: 200,
         id: authServices.getUserId(),
       })
     )
@@ -31,6 +31,7 @@ const NotificationAll = ({ changeStatusNotify }) => {
   }, [dispatch, selectedTaskId])
 
   const getDetailNotify = (item) => {
+    console.log(item)
     setSelectedTaskId(item.taskId)
     changeStatusNotify(item.id)
   }

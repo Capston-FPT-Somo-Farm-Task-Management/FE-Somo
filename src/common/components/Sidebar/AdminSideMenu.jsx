@@ -76,6 +76,12 @@ const AdminSideMenu = () => {
               <Link to="/statistic-task"></Link>
             </Menu.Item> */}
 
+            <Menu.Item key="/dashboard">
+              <BorderOutlined />
+              <span>Trang trại</span>
+              <Link to="/dashboard"></Link>
+            </Menu.Item>
+
             <Menu.Item key="/statistic-farm">
               <BorderOutlined />
               <span>Trang trại</span>
