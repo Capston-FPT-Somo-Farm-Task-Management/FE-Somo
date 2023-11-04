@@ -1,9 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { getMessaging, getToken, onMessage } from 'firebase/messaging'
 import { authServices } from 'services/authServices'
-import { getCurrentToken } from './authentication/SignIn'
-import { useDispatch } from 'react-redux'
-import { createHub } from './slice/hub/hubSlice'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDKF3MhWbAJYgVlce_y7czrvuddJqLjEeY',

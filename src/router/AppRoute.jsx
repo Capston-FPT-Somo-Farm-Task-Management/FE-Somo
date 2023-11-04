@@ -21,6 +21,7 @@ import StatisticArea from 'features/pages/Admin/Area/StatisticArea'
 import StatisticZone from 'features/pages/Admin/Zone/StatisticZone'
 import StatisticMember from 'features/pages/Admin/Member/StatisticMember'
 import Employee from 'features/pages/Employee'
+import Dashboard from 'features/pages/Admin/Dashboard/Dashboard'
 
 const AppRoute = () => {
   return (
@@ -157,14 +158,22 @@ const AppRoute = () => {
       {authServices.getToken() !== null &&
         authServices.getRole() === 'Admin' && (
           <>
-            <Route
-              path="/"
-              element={<Navigate to="/statistic-farm" replace />}
-            />
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
           </>
         )}
 
       {/* Default admin */}
+
+      <Route
+        path="/dashboard"
+        element={
+          <AdminPrivateRoute>
+            <AdminLayoutWithRoute>
+              <Dashboard />
+            </AdminLayoutWithRoute>
+          </AdminPrivateRoute>
+        }
+      />
 
       <Route
         path="/statistic-farm"
