@@ -28,6 +28,7 @@ import plantByFarmReducer from './slice/plant/plantByFarmSlice'
 import taskReducer from './slice/task/taskSlice'
 import evidenceReducer from './slice/task/taskEvidenceSlice'
 import subTaskReducer from './slice/subTask/subTaskSlice'
+import effortReducer from "./slice/subTask/effortSlice"
 import habitantTypeReducer from './slice/habitant/habitantTypeSlice'
 import memberReducer from './slice/user/memberSlice'
 import statusReducer from "./slice/status/statusSlice"
@@ -69,6 +70,7 @@ export const store = configureStore({
     taskForCalendar: taskForCalendarReducer,
     evidence: evidenceReducer,
     subTask: subTaskReducer,
+    effort: effortReducer,
     habitantType: habitantTypeReducer,
     member: memberReducer,
     status: statusReducer,

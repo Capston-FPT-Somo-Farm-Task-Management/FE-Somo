@@ -2,6 +2,7 @@ import React from "react";
 import { DatePicker, Form, Input, Select } from "antd";
 import dayjs from "dayjs";
 import MultiDatePicker from "react-multi-date-picker";
+import DatePanel from "react-multi-date-picker/plugins/date_panel";
 
 function SpecificPlant({
   onFinish,
@@ -27,12 +28,14 @@ function SpecificPlant({
   dataTaskTypePlant,
   employeesValue,
   dataEmployee,
-  dataSupervisor,
+  supervisor,
   materialsValue,
   dataMaterial,
   remindValue,
   repeatValue,
   disabledDate,
+  startDate,
+  endDate,
 }) {
   const { TextArea } = Input;
 
@@ -202,6 +205,7 @@ function SpecificPlant({
             }}
             showSecond="false"
             onChange={handleSelectEndDate}
+            disabled={!startDate}
           />
         </Form.Item>
         <Form.Item label="Mô tả" name="description">
@@ -248,6 +252,29 @@ function SpecificPlant({
           />
         </Form.Item>
         <Form.Item
+          label="Người giám sát"
+          name="suppervisorId"
+          required
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng chọn người giám sát",
+            },
+          ]}
+        >
+          <Select
+            placeholder="Chọn người giám sát"
+            options={
+              supervisor && supervisor.data
+                ? supervisor.data.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  }))
+                : null
+            }
+          />
+        </Form.Item>
+        <Form.Item
           label="Người thực hiện"
           name="employeeIds"
           required
@@ -273,37 +300,8 @@ function SpecificPlant({
             }
           />
         </Form.Item>
-        <Form.Item
-          label="Người giám sát"
-          name="suppervisorId"
-          required
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn người giám sát",
-            },
-          ]}
-        >
-          <Select
-            placeholder="Chọn người giám sát"
-            options={dataSupervisor?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
-          />
-        </Form.Item>
 
-        <Form.Item
-          label="Dụng cụ"
-          name="materialIds"
-          required
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn dụng cụ sử dụng",
-            },
-          ]}
-        >
+        <Form.Item label="Dụng cụ" name="materialIds">
           <Select
             placeholder="Chọn dụng cụ"
             mode="multiple"
@@ -342,9 +340,17 @@ function SpecificPlant({
         {repeatValue && (
           <Form.Item label="Lặp những ngày" name="dates">
             <MultiDatePicker
+              style={{
+                height: "32px",
+              }}
+              placeholder="Chọn ngày lặp lại"
               multiple
               format="YYYY-MM-DD"
-              minDate={new Date()}
+              disabled={!endDate || !endDate.isValid()}
+              minDate={
+                new Date(new Date(endDate).getTime() + 24 * 60 * 60 * 1000)
+              }
+              plugins={[<DatePanel />]}
             />
           </Form.Item>
         )}
