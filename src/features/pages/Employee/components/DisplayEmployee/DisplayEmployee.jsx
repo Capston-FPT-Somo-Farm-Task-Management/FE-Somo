@@ -11,7 +11,6 @@ const DisplayEmployee = ({
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
 
-  console.log(employeeByFarm)
   const openModal = (record) => {
     setSelectedData(record)
     setIsModalOpen(true)
@@ -23,10 +22,7 @@ const DisplayEmployee = ({
 
   return (
     <>
-      <Table
-        rowKey="id"
-        dataSource={employeeByFarm ? employeeByFarm.employee : null}
-      >
+      <Table rowKey="id" dataSource={employeeByFarm ? employeeByFarm : null}>
         <Column title="Tên nhân viên" dataIndex="name" key="1" />
         <Column title="Mã nhân viên" dataIndex="code" key="2" />
         <Column title="Loại nhiệm vụ" dataIndex="taskTypeName" key="3" />
