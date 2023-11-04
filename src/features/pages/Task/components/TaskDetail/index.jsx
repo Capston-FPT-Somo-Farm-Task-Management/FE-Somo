@@ -1,41 +1,17 @@
-import React, { useState } from 'react'
-import { Badge, Modal } from 'antd'
-import dayjs from 'dayjs'
-import { useSelector } from 'react-redux'
-import { Descriptions } from 'antd'
-// import Gallery from "react-images";
+import React from "react";
+import { Badge, Modal } from "antd";
+import dayjs from "dayjs";
+import { useSelector } from "react-redux";
+import { Descriptions } from "antd";
+import { Image } from "antd";
+import NoImage from "../../../../../assets/no-image.png";
 
 const TaskDetail = ({ visible, onCancel, taskData }) => {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [lightboxIsOpen, setLightboxIsOpen] = useState(false)
-  const evidenceData = useSelector((state) => state.evidence.data)
-  const dataEvidence = evidenceData && evidenceData.data
+  const evidenceData = useSelector((state) => state.evidence.data);
+  console.log(evidenceData);
 
   if (!taskData) {
     return null
-  }
-
-  const openLightbox = (index) => {
-    setCurrentIndex(index)
-    setLightboxIsOpen(true)
-  }
-
-  const closeLightbox = () => {
-    setCurrentIndex(0)
-    setLightboxIsOpen(false)
-  }
-
-  const images = dataEvidence.flatMap((evidence) => evidence.urlImage)
-  const formattedImages = images.map((url) => ({ src: url }))
-
-  const onNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
-  }
-
-  const onPrev = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex + images.length - 1) % images.length
-    )
   }
 
   const formattedStartDate = dayjs(taskData.startDate).format(
@@ -45,10 +21,12 @@ const TaskDetail = ({ visible, onCancel, taskData }) => {
 
   const renderSubFields = () => {
     if (externalId) {
-      if (fieldStatus === 'Thực vật') {
-        return <span>Mã cây trồng: {plantName}</span>
-      } else if (fieldStatus === 'Động vật') {
-        return <span>Mã vật nuôi: {liveStockName}</span>
+      if (fieldStatus === "Thực vật") {
+        return <span>Mã cây trồng: {plantName}</span>;
+      } else if (fieldStatus === "Động vật") {
+        return <span>Mã vật nuôi: {liveStockName}</span>;
+      } else{
+        <span>Không có mã vật nuôi hoặc cây trồng</span>;
       }
     }
     return null
@@ -143,21 +121,89 @@ const TaskDetail = ({ visible, onCancel, taskData }) => {
   ]
 
   const renderImages = () => {
-    if (dataEvidence && dataEvidence.length > 0) {
-      return dataEvidence.map((evidence, index) => (
-        <div key={evidence.id}>
-          <p>{evidence.time}</p>
-          <p>{evidence.description}</p>
-          {console.log(evidence.id)}
-          {evidence.urlImage.map((url, imageIndex) => (
-            <div className="img-evidence" key={imageIndex}>
-              <img src={url} alt={`evidence-${imageIndex}`} />
+    let totalEvidenceCount = 0;
+    if (evidenceData && evidenceData.data && evidenceData.data.length > 0) {
+      return evidenceData.data.map((evidence, index) => {
+        totalEvidenceCount++;
+        const evidenceCount = totalEvidenceCount;
+        return (
+          <div key={evidence.id} className="evidence-content">
+            <div className="evidence-count">
+              <span style={{textDecoration: "none", color: "red"}}>* </span>
+              <span>Báo cáo số {evidenceCount}</span>{" "}
             </div>
-          ))}
-        </div>
-      ))
+            <p className="evidence-desc">Mô tả: {evidence.description}</p>
+            <p className="evidence-time">Được gửi {evidence.time}</p>
+            <div className="img-contain">
+              <Image.PreviewGroup>
+                {evidence.urlImage && evidence.urlImage ? (
+                  evidence.urlImage.map((url, imageIndex) => (
+                    <>
+                      {evidence.urlImage.length === 1 ? (
+                        <div className="img-evidence" key={imageIndex}>
+                          <Image src={url} alt={`evidence-${imageIndex}`} />
+                        </div>
+                      ) : evidence.urlImage.length === 2 ? (
+                        <div
+                          style={{ width: "45%" }}
+                          className="img-evidence"
+                          key={imageIndex}
+                        >
+                          <Image src={url} alt={`evidence-${imageIndex}`} />
+                        </div>
+                      ) : evidence.urlImage.length === 3 ? (
+                        <div
+                          style={{ width: "30%" }}
+                          className="img-evidence"
+                          key={imageIndex}
+                        >
+                          <Image src={url} alt={`evidence-${imageIndex}`} />
+                        </div>
+                      ) : evidence.urlImage.length === 4 ? (
+                        <div
+                          style={{ width: "45%", margin: "10px"}}
+                          className="img-evidence"
+                          key={imageIndex}
+                        >
+                          <Image src={url} alt={`evidence-${imageIndex}`} />
+                        </div>
+                      ) : evidence.urlImage.length > 4 ? (
+                        <div
+                          style={{
+                            width: "45%",
+                            margin: "10px",
+                            display:
+                              imageIndex >= 4 && evidence.urlImage.length > 4
+                                ? "none"
+                                : "block",
+                          }}
+                          className={`img-evidence ${
+                            imageIndex === 3 && evidence.urlImage.length > 4
+                              ? "overlay"
+                              : ""
+                          }`}
+                          key={imageIndex}
+                        >
+                          <Image src={url} alt={`evidence-${imageIndex}`} />
+                          {imageIndex === 3 && evidence.urlImage.length > 4 && (
+                            <div className="overlay-text">
+                              +{evidence.urlImage.length - 4}
+                            </div>
+                          )}
+                        </div>
+                      ) : null}
+                    </>
+                  ))
+                ) : (
+                  <img src={NoImage} alt="Không có ảnh" />
+                )}
+              </Image.PreviewGroup>
+            </div>
+          </div>
+        );
+      });
     } else {
-      return <p>Chưa có bằng chứng báo cáo</p>
+      return <p>Chưa có báo cáo nào</p>;
     }
   }
 
@@ -169,10 +215,16 @@ const TaskDetail = ({ visible, onCancel, taskData }) => {
       footer={null}
       width={1000}
       className="modal-detail"
+      style={{ maxWidth: "90%", margin: "0 auto" }}
     >
       <Descriptions bordered items={dataTask} />
 
-      <div className="evidence">{renderImages()}</div>
+      <div className="evidence">
+        <h6 style={{ fontSize: "24px", fontWeight: "500" }}>
+          Báo cáo công việc:
+        </h6>
+        {renderImages()}
+      </div>
     </Modal>
   )
 }

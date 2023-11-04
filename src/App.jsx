@@ -1,17 +1,22 @@
-import Notification from 'common/components/Notification'
-import VirtualizeList from 'features/pages/VirtualizeList/VirtualizeList'
-import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import AppRoute from 'router/AppRoute'
+import Notification from "common/components/Notification";
+import VirtualizeList from "features/pages/VirtualizeList/VirtualizeList";
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import AppRoute from "router/AppRoute";
+import { ConfigProvider } from "antd";
+import vietnamese from 'antd/locale/vi_VN';
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <AppRoute />
-      </BrowserRouter>
+      <ConfigProvider locale={vietnamese}>
+        <BrowserRouter>
+          <AppRoute />
+        </BrowserRouter>
+      </ConfigProvider>
+
       <Notification />
       <ToastContainer
         position="top-right"
@@ -24,10 +29,10 @@ function App() {
         draggable
         pauseOnHover
         theme="light"
-        toastStyle={{ width: '300px', minHeight: '80px', fontSize: '16px' }}
+        toastStyle={{ width: "300px", minHeight: "80px", fontSize: "16px" }}
       />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

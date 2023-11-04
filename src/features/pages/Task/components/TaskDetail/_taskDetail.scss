@@ -1,9 +1,86 @@
-
 .evidence {
-  .img-evidence {
-    width: 80%;
-    img {
+  margin-top: 30px;
+  .evidence-content {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.02);
+    margin: 20px 0px;
+    padding: 20px 0px;
+    border-radius: 5px;
+    .evidence-count {
       width: 100%;
+      font-size: 20px;
+      font-weight: 500;
+      margin-left: 20px;
+      margin-bottom: 20px;
+      span {
+        text-decoration: underline;
+      }
+    }
+    p {
+      width: 40%;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    .evidence-desc {
+      font-weight: 500;
+    }
+    .evidence-time {
+      display: flex;
+      justify-content: flex-end;
+      color: #38b000;
+    }
+    .img-contain {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      width: 800px;
+      margin-top: 10px;
+      background-color: white;
+      padding: 15px 10px;
+      border-radius: 10px;
+      .img-evidence {
+        width: 100%;
+        height: 300px;
+        .ant-image {
+          display: flex;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          .ant-image-mask {
+            border-radius: 10px;
+          }
+          img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+          }
+        }
+      }
+
+      .overlay {
+        position: relative;
+        .ant-image {
+          .ant-image-mask {
+            border-radius: 10px;
+          }
+          img {
+            border-radius: 10px;
+          }
+        }
+        .overlay-text {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: white;
+          font-size: 24px;
+          font-weight: bold;
+        }
+      }
     }
   }
 }

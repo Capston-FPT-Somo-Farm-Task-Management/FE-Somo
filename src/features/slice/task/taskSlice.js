@@ -61,7 +61,7 @@ export const deleteTask = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        baseUrl + `/FarmTask/ChangeStatus/${id}?status=4`
+        baseUrl + `/FarmTask/DeleteTask/${id}`
       );
       if (response.status === 200) {
         toast.success("Xóa thành công");
