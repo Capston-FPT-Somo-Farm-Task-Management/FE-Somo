@@ -26,7 +26,13 @@ import Other from "./components/other";
 
 dayjs.extend(customParseFormat);
 
-function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
+function ThirdModal({
+  loadDataTask,
+  option,
+  onTaskAdded,
+  onDateChange,
+  handleCloseModal,
+}) {
   const [selectedAreaId, setSelectedAreaId] = useState(null);
   const [selectedZoneId, setSelectedZoneId] = useState(null);
   const [selectedFieldId, setSelectedFieldId] = useState(null);
@@ -41,7 +47,6 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
   const [endDate, setEndDate] = useState(null);
   const [description, setDescription] = useState("");
   const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
-  
 
   const [form] = Form.useForm();
 
@@ -75,7 +80,6 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
   const dataTaskTypePlant = taskTypePlant.data;
 
   const supervisor = useSelector((state) => state.supervisor.data);
-  const dataSupervisor = supervisor.data;
 
   const dataEmployee = useSelector((state) => state.employee.data);
 
@@ -88,7 +92,7 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
     dispatch(getTaskTypePlant());
     dispatch(getAnimalActive(selectedFieldId));
     dispatch(getPlantActive(selectedFieldId));
-    dispatch(getSupervisor());
+    dispatch(getSupervisor(farmId));
     dispatch(getMaterial());
     dispatch(getMemberById(authServices.getUserId()));
   }, [farmId, selectedFieldId]);
@@ -182,7 +186,7 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
   const handleSelectEndDate = (date) => {
     const selectedDate = dayjs(date).second(0);
     setEndDate(selectedDate);
-  
+
     const startDate = form.getFieldValue("startDate");
     if (selectedDate.isAfter(startDate)) {
       form.setFieldsValue({ endDate: selectedDate });
@@ -197,7 +201,7 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
         repeatDates &&
         repeatDates.some((date) => selectedDate.isAfter(dayjs(date)))
       ) {
-        form.setFieldsValue({ dates: null }); 
+        form.setFieldsValue({ dates: null });
       }
       form.setFields([
         {
@@ -284,59 +288,70 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
   };
 
   const onFinish = (values) => {
-    const startDateFormatted = dayjs(startDate)
-      .second(0)
-      .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
-    const endDateFormatted = dayjs(endDate)
-      .second(0)
-      .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+    form
+      .validateFields()
+      .then(() => {
+        const startDateFormatted = dayjs(startDate)
+          .second(0)
+          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+        const endDateFormatted = dayjs(endDate)
+          .second(0)
+          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
 
-    const startTime = dayjs(startDate).format("HH:mm:ss.SSS");
+        const startTime = dayjs(startDate).format("HH:mm:ss.SSS");
 
-    const endTime = dayjs(endDate).format("HH:mm:ss.SSS");
+        const selectedDates = values.dates || [];
 
-    const selectedDates = values.dates || [];
+        const combinedDates = selectedDates.map(
+          (date) => `${date}T${startTime}`
+        );
 
-    const combinedDates = selectedDates.map((date) => `${date}T${startTime}`);
+        const remindValueToSend = remindValue || 0;
 
-    const remindValueToSend = remindValue || 0;
+        const repeatValueToSend = repeatValue || false;
 
-    const repeatValueToSend = repeatValue || false;
+        const datesToSend = repeatValueToSend ? combinedDates : [];
 
-    const datesToSend = repeatValueToSend ? combinedDates : [];
+        const materialToSend = materialsValue || [];
 
-    const { isRepeat, dates } = values;
+        const { isRepeat, dates } = values;
 
-    if (shouldCheckRepeat && isRepeat && (!dates || dates.length === 0)) {
-      form.setFields([
-        {
-          name: "dates",
-          errors: ["Vui lòng chọn ngày lặp lại"],
-        },
-      ]);
-      return;
-    }
+        if (shouldCheckRepeat && isRepeat && (!dates || dates.length === 0)) {
+          form.setFields([
+            {
+              name: "dates",
+              errors: ["Vui lòng chọn ngày lặp lại"],
+            },
+          ]);
+          return;
+        }
 
-    const finalValues = {
-      ...values,
-      startDate: startDateFormatted,
-      endDate: endDateFormatted,
-      dates: datesToSend,
-      priority: priorityValue,
-      remind: remindValueToSend,
-      isRepeat: repeatValueToSend,
-      description: description,
-      managerId: member.id,
-      otherId: 0,
-    };
+        const finalValues = {
+          ...values,
+          startDate: startDateFormatted,
+          endDate: endDateFormatted,
+          dates: datesToSend,
+          materialIds: materialToSend,
+          priority: priorityValue,
+          remind: remindValueToSend,
+          isRepeat: repeatValueToSend,
+          description: description,
+          managerId: member.id,
+          otherId: 0,
+        };
 
-    const transformedValues = transformData(finalValues);
+        const transformedValues = transformData(finalValues);
 
-    dispatch(createTask(transformedValues)).then(() => {
-      loadDataTask();
-      onDateChange();
-      onTaskAdded();
-    });
+        dispatch(createTask(transformedValues)).then(() => {
+          loadDataTask();
+          onDateChange();
+          onTaskAdded();
+          handleCloseModal();
+        });
+      })
+      .catch((errorInfo) => {
+        console.log("Validation failed:", errorInfo);
+      });
   };
 
   if (option === "other") {
@@ -368,7 +383,7 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
         dataTaskTypeLivestock={dataTaskTypeLivestock}
         employeesValue={employeesValue}
         dataEmployee={dataEmployee}
-        dataSupervisor={dataSupervisor}
+        supervisor={supervisor}
         materialsValue={materialsValue}
         dataMaterial={dataMaterial}
         remindValue={remindValue}
@@ -404,7 +419,7 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
         dataTaskTypeLivestock={dataTaskTypeLivestock}
         employeesValue={employeesValue}
         dataEmployee={dataEmployee}
-        dataSupervisor={dataSupervisor}
+        supervisor={supervisor}
         materialsValue={materialsValue}
         dataMaterial={dataMaterial}
         remindValue={remindValue}
@@ -441,7 +456,7 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
         dataTaskTypePlant={dataTaskTypePlant}
         employeesValue={employeesValue}
         dataEmployee={dataEmployee}
-        dataSupervisor={dataSupervisor}
+        supervisor={supervisor}
         materialsValue={materialsValue}
         dataMaterial={dataMaterial}
         remindValue={remindValue}
@@ -477,7 +492,7 @@ function ThirdModal({ loadDataTask, option, onTaskAdded, onDateChange }) {
         dataTaskTypePlant={dataTaskTypePlant}
         employeesValue={employeesValue}
         dataEmployee={dataEmployee}
-        dataSupervisor={dataSupervisor}
+        supervisor={supervisor}
         materialsValue={materialsValue}
         dataMaterial={dataMaterial}
         remindValue={remindValue}

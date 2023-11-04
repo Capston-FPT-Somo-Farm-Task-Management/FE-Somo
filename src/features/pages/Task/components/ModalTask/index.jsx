@@ -13,6 +13,9 @@ function ModalTask({ onTaskAdded, onDateChange, loadDataTask }) {
   const [selectedType, setSelectedType] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   
+  const handleCloseModal = () => {
+    setCurrentStep(-1)
+  }
 
   const handleNext = (type) => {
     setSelectedType(type);
@@ -46,6 +49,7 @@ function ModalTask({ onTaskAdded, onDateChange, loadDataTask }) {
             option={selectedOption}
             onTaskAdded={onTaskAdded}
             onDateChange={onDateChange}
+            handleCloseModal={handleCloseModal}
           />
         );
       default:
