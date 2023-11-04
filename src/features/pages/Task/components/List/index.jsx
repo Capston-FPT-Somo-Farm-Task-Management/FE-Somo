@@ -102,8 +102,6 @@ const List = () => {
   const handleMenuEffortClick = (e, effortItem) => {
     if (e.key === "edit") {
       openEditEffort(effortItem);
-    } else if (e.key === "delete") {
-      handleDeleteSubTask(effortItem.employeeId);
     }
   };
 
@@ -195,6 +193,7 @@ const List = () => {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    console.log(selectedDate);
     setPageIndex(1);
   };
 
@@ -233,17 +232,17 @@ const List = () => {
     });
   };
 
-  const handleUpdateEffort = (values) => {
-    const finalValues = {
-      ...values,
-      taskId: currentTaskId,
-      employeeId: editingEffort.employeeId,
-    };
+  const handleUpdateEffort = (taskId, employeeId, effortTime) => {
+    const updatedEffort = [
+      {
+        employeeId: employeeId,
+        effortTime: parseFloat(effortTime),
+      },
+    ];
 
-    dispatch(updateEffort(currentTaskId)).then(() => {
+    dispatch(updateEffort({id: taskId, body: updatedEffort})).then(() => {
       dispatch(getEffort(currentTaskId)).then((data) => {
         setEffort(data.payload);
-        loadDataTask();
         setEditEffortVisible(false);
       });
     });
@@ -637,13 +636,7 @@ const List = () => {
                               <EditOutlined
                                 style={{ color: "gold", marginRight: "8px" }}
                               />
-                              Sửa công việc con
-                            </Menu.Item>
-                            <Menu.Item key="delete">
-                              <DeleteOutlined
-                                style={{ color: "red", marginRight: "8px" }}
-                              />
-                              Xóa công việc con
+                              Sửa chấm công
                             </Menu.Item>
                           </Menu>
                         }
@@ -686,7 +679,13 @@ const List = () => {
           >
             <Form
               layout="vertical"
-              onFinish={handleUpdateEffort}
+              onFinish={(values) => {
+                handleUpdateEffort(
+                  currentTaskId,
+                  editingEffort.employeeId,
+                  values.effortTime
+                );
+              }}
               id="updateEffort"
               key={editingEffort ? editingEffort.employeeId : "new"}
             >
