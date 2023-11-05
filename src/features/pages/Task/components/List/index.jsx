@@ -647,10 +647,10 @@ const List = () => {
                   </div>
 
                   <div
-                    className="subTask-container"
+                    className="effort-container"
                     key={effortItem.employeeId}
                   >
-                    <div className="subTask-item">
+                    <div className="effort-item">
                       <p>Mã nhân viên: {effortItem.employeeCode}</p>
                       <p>Người thực hiện: {effortItem.employeeName}</p>
                       <p>Thời gian: {effortItem.effortTime} giờ</p>

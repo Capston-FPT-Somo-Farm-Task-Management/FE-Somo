@@ -86,7 +86,7 @@ const TaskDetail = ({ visible, onCancel, taskData }) => {
     {
       key: '7',
       label: 'Dụng cụ',
-      children: taskData.materialName,
+      children: taskData.materialName ? taskData.materialName : "Không có dụng cụ",
       span: 3,
     },
     {
@@ -111,9 +111,9 @@ const TaskDetail = ({ visible, onCancel, taskData }) => {
           <br />
           Vị trí cụ thể: {taskData.fieldName}
           <br />
-          {renderSubFields()}
+          {taskData.externalId ? renderSubFields() : "Không có mã vật nuôi hoặc cây trồng"}
           <br />
-          Mô tả: {taskData.description}
+          Mô tả: {taskData.description ? taskData.description : "Không có mô tả"}
           <br />
         </>
       ),

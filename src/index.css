@@ -145,14 +145,16 @@ html {
   justify-content: flex-end;
 }
 
-.dot {
+.content.loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.clock-loading {
   position: absolute;
-  top: 0;
-  right: 0;
-  height: 8px;
-  width: 8px;
-  background-color: red;
-  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .ant-picker-cellphone-inner {
