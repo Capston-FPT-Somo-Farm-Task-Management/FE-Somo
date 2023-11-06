@@ -78,7 +78,7 @@ const AdminSideMenu = () => {
 
             <Menu.Item key="/dashboard">
               <BorderOutlined />
-              <span>Trang trại</span>
+              <span>Tổng quan</span>
               <Link to="/dashboard"></Link>
             </Menu.Item>
 
@@ -158,11 +158,18 @@ const AdminSideMenu = () => {
                   mode="inline"
                   defaultSelectedKeys={[location.pathname]}
                 >
+                  <Menu.Item key="/dashboard">
+                    <BorderOutlined />
+                    <span>Tổng quan</span>
+                    <Link to="/dashboard"></Link>
+                  </Menu.Item>
+
                   <Menu.Item key="/statistic-farm">
                     <BorderOutlined />
                     <span>Trang trại</span>
                     <Link to="/statistic-farm"></Link>
                   </Menu.Item>
+
                   <Menu.Item key="/statistic-task">
                     <AimOutlined />
                     <span>Công việc</span>
