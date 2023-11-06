@@ -66,6 +66,31 @@ export const createTask = createAsyncThunk(
   }
 );
 
+export const updateTask = createAsyncThunk(
+  "task/updateTask",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        baseUrl + `/FarmTask/${data.id}`,
+        data.body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.status === 200) {
+        toast.success("Cập nhật thành công");
+      }
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const deleteTask = createAsyncThunk(
   "tasks/deleteTask",
   async (id, { rejectWithValue }) => {
@@ -133,6 +158,22 @@ const taskSlice = createSlice({
         state.loading = false;
       })
       .addCase(createTask.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateTask.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateTask.fulfilled, (state, action) => {
+        if (Array.isArray(state.data)) {
+          state.data.push(action.payload.task);
+        } else {
+          state.data = [action.payload.task];
+        }
+
+        state.loading = false;
+      })
+      .addCase(updateTask.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

@@ -87,7 +87,7 @@ function TableTask({
                                 <EditOutlined
                                   style={{ color: "gold", marginRight: "8px" }}
                                 />
-                                Sửa
+                                Sửa công việc
                               </span>
                             </Menu.Item>
                           ) : null}
@@ -97,7 +97,7 @@ function TableTask({
                               <DeleteOutlined
                                 style={{ color: "red", marginRight: "8px" }}
                               />
-                              Xóa
+                              Xóa công việc
                             </span>
                           </Menu.Item>
                         </Menu>

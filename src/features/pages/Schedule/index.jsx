@@ -204,7 +204,7 @@ function Schedule() {
           )}
 
           <Modal
-            title={`Chi tiết công việc trong ngày ${selectedDate ? dayjs(selectedDate).format('DD') : ''}`}
+            title={`Các công việc trong ngày ${selectedDate ? dayjs(selectedDate).format('DD') : ''}`}
             visible={modalVisible}
             onCancel={() => setModalVisible(false)}
             footer={null}

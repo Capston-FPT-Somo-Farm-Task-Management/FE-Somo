@@ -692,6 +692,10 @@ html {
   min-height: 150px;
 }
 
+.ant-modal .ant-modal-header {
+  margin-bottom: 20px;
+}
+
 .evidence {
   margin-top: 30px;
 }
