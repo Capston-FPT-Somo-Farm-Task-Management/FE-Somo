@@ -26,6 +26,8 @@ import {
   LogoutOutlined,
   FormatPainterOutlined,
 } from '@ant-design/icons'
+import { GiCow, GiPlantRoots } from "react-icons/gi";
+import { GrUserWorker } from "react-icons/gr";
 import logoSomo from '../../../assets/logo_Somo.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { authServices } from 'services/authServices'
@@ -217,8 +219,8 @@ const SideMenu = () => {
             </Menu.Item>
 
             <Menu.Item key="/animals">
-              <TeamOutlined />
-              <span>Vật nuôi</span>
+              <GiCow />
+              <span style={{marginLeft: "10px"}}>Vật nuôi</span>
               <Link to="/animals"></Link>
             </Menu.Item>
 
@@ -229,8 +231,8 @@ const SideMenu = () => {
             </Menu.Item>
 
             <Menu.Item key="/plants">
-              <DashboardOutlined />
-              <span>Cây trồng</span>
+              <GiPlantRoots />
+              <span style={{marginLeft: "10px"}}>Cây trồng</span>
               <Link to="/plants"></Link>
             </Menu.Item>
 
@@ -247,8 +249,8 @@ const SideMenu = () => {
             </Menu.Item>
 
             <Menu.Item key="/employee">
-              <FormatPainterOutlined />
-              <span>Nhân viên</span>
+              <GrUserWorker />
+              <span style={{marginLeft: "10px"}}>Nhân viên</span>
               <Link to="/employee"></Link>
             </Menu.Item>
 
@@ -330,8 +332,8 @@ const SideMenu = () => {
                   </Menu.Item>
 
                   <Menu.Item key="/animals">
-                    <TeamOutlined />
-                    <span>Vật nuôi</span>
+                    <GiCow />
+                    <span style={{marginLeft: "10px"}}>Vật nuôi</span>
                     <Link to="/animals"></Link>
                   </Menu.Item>
 
@@ -342,8 +344,8 @@ const SideMenu = () => {
                   </Menu.Item>
 
                   <Menu.Item key="/plants">
-                    <DashboardOutlined />
-                    <span>Cây trồng</span>
+                    <GiPlantRoots />
+                    <span style={{marginLeft: "10px"}}>Cây trồng</span>
                     <Link to="/plants"></Link>
                   </Menu.Item>
 
@@ -360,8 +362,8 @@ const SideMenu = () => {
                   </Menu.Item>
 
                   <Menu.Item key="/employee">
-                    <FormatPainterOutlined />
-                    <span>Nhân viên</span>
+                    <GrUserWorker />
+                    <span style={{marginLeft: "10px"}}>Nhân viên</span>
                     <Link to="/employee"></Link>
                   </Menu.Item>
 

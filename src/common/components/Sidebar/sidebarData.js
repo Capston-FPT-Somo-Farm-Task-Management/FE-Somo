@@ -13,6 +13,7 @@ import {
   BlockOutlined,
   LogoutOutlined,
 } from '@ant-design/icons'
+import { FaBeer } from 'react-icons/fa';
 import { Link } from 'react-router-dom'
 
 export function getItem(label, key, icon, children, type) {

@@ -145,14 +145,16 @@ html {
   justify-content: flex-end;
 }
 
-.dot {
+.content.loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.clock-loading {
   position: absolute;
-  top: 0;
-  right: 0;
-  height: 8px;
-  width: 8px;
-  background-color: red;
-  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .ant-picker-cellphone-inner {
@@ -164,42 +166,6 @@ html {
 
 .ant-picker-cell-inner {
   background-color: transparent;
-}
-
-.ant-modal {
-  top: 20px;
-}
-.ant-modal .ant-modal-title {
-  font-size: 24px;
-}
-
-.list {
-  width: 100%;
-}
-.list .list-header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-}
-.list .menu-icon {
-  font-size: 20px;
-  color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-.task-name {
-  cursor: pointer;
-}
-
-.task-name:hover {
-  text-decoration: underline;
-  color: #007bff;
-  opacity: 0.8;
 }
 
 .subTask-modal .ant-modal-content .ant-modal-title {
@@ -290,6 +256,42 @@ html {
 }
 .effort-modal .ant-modal-content .effort .effort-content strong {
   font-size: 18px;
+}
+
+.ant-modal {
+  top: 20px;
+}
+.ant-modal .ant-modal-title {
+  font-size: 24px;
+}
+
+.list {
+  width: 100%;
+}
+.list .list-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.list .menu-icon {
+  font-size: 20px;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.task-name {
+  cursor: pointer;
+}
+
+.task-name:hover {
+  text-decoration: underline;
+  color: #007bff;
+  opacity: 0.8;
 }
 
 .first-modal {

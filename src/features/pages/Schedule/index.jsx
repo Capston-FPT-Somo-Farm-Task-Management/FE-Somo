@@ -1,4 +1,4 @@
-import { Badge, Calendar, Modal, Table } from "antd";
+import { Badge, Calendar, Modal, Collapse, Descriptions } from "antd";
 import React, { useEffect, useState } from "react";
 import { useMobileMediaQuery } from "common/hooks/responsive";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,7 +6,8 @@ import { getTaskForCalendar } from "features/slice/task/taskForCalendarSlice";
 import { getMemberById } from "features/slice/user/memberSlice";
 import { authServices } from "services/authServices";
 import { WalletOutlined } from "@ant-design/icons";
-
+import ClockLoader from "react-spinners/ClockLoader";
+import dayjs from "dayjs";
 
 const getMonthData = (value) => {
   if (value.month() === 8) {
@@ -15,61 +16,86 @@ const getMonthData = (value) => {
 };
 
 function Schedule() {
+  const { Panel } = Collapse;
+
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDateData, setSelectedDateData] = useState(null);
-  const [tasksForDate, setTasksForDate] = useState({});
-
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const dispatch = useDispatch();
 
-  const taskForCalendarData = useSelector((state) => state.taskForCalendar.data);
-  const dataTask = taskForCalendarData.data
-  console.log(taskForCalendarData);
+  const taskForCalendarData = useSelector(
+    (state) => state.taskForCalendar.data
+  );
+
+  const loading = useSelector((state) => state.taskForCalendar.loading);
+  console.log(loading);
 
   useEffect(() => {
-    dispatch(getTaskForCalendar((authServices.getUserId())));
+    dispatch(getTaskForCalendar(authServices.getUserId()));
     dispatch(getMemberById(authServices.getUserId()));
-  }, []);
+  }, [dispatch]);
 
   const getListData = (value) => {
     const dateString = value.format("YYYY-MM-DD");
-    return tasksForDate[dateString] || [];
+    const tasksForDate = taskForCalendarData.data
+      ? taskForCalendarData.data.filter(
+          (task) => task.startDate <= dateString && task.endDate >= dateString
+        )
+      : null;
+
+    return tasksForDate
+      ? tasksForDate.map((task) => {
+          let type = "success";
+          if (task.status === "Chuẩn bị") {
+            type = "default";
+          } else if (task.status === "Đang thực hiện") {
+            type = "processing";
+          }
+          const formattedStartDate = dayjs(task.startDate).format(
+            "HH:mm DD-MM-YYYY"
+          );
+          const formattedEndDate = dayjs(task.endDate).format(
+            "HH:mm DD-MM-YYYY"
+          );
+          return {
+            type: type,
+            content: task.name,
+            id: task.id,
+            taskType: task.taskTypeName,
+            status: task.status,
+            priority: task.priority,
+            startDate: formattedStartDate,
+            endDate: formattedEndDate,
+            material: task.materialName,
+            supervisor: task.supervisorName,
+            employee: task.employeeName,
+            area: task.areaName,
+            zone: task.zoneName,
+            field: task.fieldName,
+            description: task.description,
+          };
+        })
+      : null;
   };
 
   const handleDateClick = (value) => {
-    const dateString = value.format("YYYY-MM-DD");
-  
-    dispatch(getTaskForCalendar({
-      date: dateString,
-      pageIndex: 1, // Trang đầu tiên
-      pageSize: 3, // Giới hạn 3 công việc
-      managerId: authServices.getUserId() // ID của người quản lý
-    }))
-      .unwrap()
-      .then((data) => {
-        const tasks = data.farmTasks.map((task) => {
-          return {
-            type: "success",
-            name: task.name,
-            id: task.id,
-          };
-        });
-  
-        setSelectedDateData(tasks);
-        setModalVisible(true);
-      })
-      .catch((error) => {
-        console.error("Error fetching tasks:", error);
-      });
+    const listData = getListData(value);
+    if (listData.length > 0) {
+      setSelectedDate(value);
+      setSelectedDateData(listData);
+      setModalVisible(true);
+    }
   };
-  
 
   const dateRender = (current) => {
     const listData = getListData(current);
     return (
-      <div className="ant-picker-cellphone-inner">
+      <div className="ant-picker-cell-inner">
         {listData.length > 0 && <Badge count={listData.length} />}
-        {listData.length > 0 && <WalletOutlined style={{ fontSize: "16px", color: "#08c" }} />} 
+        {listData.length > 0 && (
+          <WalletOutlined style={{ fontSize: "16px", color: "#08c" }} />
+        )}{" "}
       </div>
     );
   };
@@ -108,22 +134,24 @@ function Schedule() {
   };
   const dateCellRender = (value) => {
     const listData = getListData(value);
-    const tasksForDate = dataTask ? dataTask.filter(
-      (task) => task.date === value.format("YYYY-MM-DD")
-    ) :null;
-  
+    const tasksForDate = taskForCalendarData.data
+      ? taskForCalendarData.data.filter(
+          (task) => task.date === value.format("YYYY-MM-DD")
+        )
+      : null;
+
     return (
       <ul className="events">
-        {listData ? listData.map((item) => (
-          <li key={item.id}>
-            <Badge status={item.type} text={item.name} />
-          </li>
-        )) : null}
-        {tasksForDate ? tasksForDate.map((task) => (
-          <li key={task.id}>
-            {task.name}
-          </li>
-        )) : null}
+        {listData
+          ? listData.map((item) => (
+              <li key={item.id}>
+                <Badge status={item.type} text={item.content} />
+              </li>
+            ))
+          : null}
+        {tasksForDate
+          ? tasksForDate.map((task) => <li key={task.id}>{task.name}</li>)
+          : null}
       </ul>
     );
   };
@@ -133,31 +161,115 @@ function Schedule() {
     return info.originNode;
   };
   return (
-    <div className="content">
-      <h3>Lịch trình</h3>
-      {isMobile ? (
-        <Calendar cellRender={dateRender} onSelect={handleDateClick} />
-      ) : (
-        <Calendar cellRender={cellRender} onSelect={handleDateClick} />
-      )}
-
-      <Modal
-        title="Chi tiết công việc trong ngày"
-        visible={modalVisible}
-        onCancel={() => setModalVisible(false)}
-        footer={null}
-      >
-        {selectedDateData && (
-          <div className="events">
-            {selectedDateData? selectedDateData.map((item) => (
-              <div key={item.id}>
-              {console.log(item)}
-                <Badge status={item.type} text={item.name} />
-              </div>
-            )) : null}
+    <div className={`content ${loading ? "loading" : ""}`}>
+      {loading === true ? (
+        <>
+          <div className="clock-loading">
+            <ClockLoader color="#36d7b7" size={150} />
           </div>
-        )}
-      </Modal>
+          <div style={{ opacity: "0.3" }}>
+            <h3>Lịch trình</h3>
+            {isMobile ? (
+              <Calendar cellRender={dateRender} onSelect={handleDateClick} />
+            ) : (
+              <Calendar cellRender={cellRender} onSelect={handleDateClick} />
+            )}
+
+            <Modal
+              title="Chi tiết công việc trong ngày"
+              visible={modalVisible}
+              onCancel={() => setModalVisible(false)}
+              footer={null}
+              width={800}
+            >
+              {selectedDateData && (
+                <div className="events">
+                  {selectedDateData.map((item) => (
+                    <div key={item.id}>
+                      <Badge status={item.type} text={item.content} />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </Modal>
+          </div>
+        </>
+      ) : (
+        <>
+          <h3>Lịch trình</h3>
+          {isMobile ? (
+            <Calendar cellRender={dateRender} onSelect={handleDateClick} />
+          ) : (
+            <Calendar cellRender={cellRender} onSelect={handleDateClick} />
+          )}
+
+          <Modal
+            title={`Chi tiết công việc trong ngày ${selectedDate ? dayjs(selectedDate).format('DD') : ''}`}
+            visible={modalVisible}
+            onCancel={() => setModalVisible(false)}
+            footer={null}
+          >
+            {selectedDateData && (
+              <Collapse accordion>
+                {selectedDateData.map((item) => (
+                  <Panel header={item.content} key={item.id}>
+                    <Descriptions bordered column={1}>
+                      <Descriptions.Item label="Loại công việc" key={item.id}>
+                        {item.taskType}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Trạng thái" key={item.id}>
+                        {item.status}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Độ ưu tiên" key={item.id}>
+                        {item.priority}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Ngày bắt đầu" key={item.id}>
+                        {item.startDate}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Ngày kết thúc" key={item.id}>
+                        {item.endDate}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Người giám sát" key={item.id}>
+                        {item.supervisor}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Người thực hiện" key={item.id}>
+                        {item.employee}
+                      </Descriptions.Item>
+                      {item.material ? (
+                        <Descriptions.Item label="Dụng cụ" key={item.id}>
+                          {item.material}
+                        </Descriptions.Item>
+                      ) : (
+                        <Descriptions.Item label="Dụng cụ" key={item.id}>
+                        <p>Chưa có dụng cụ</p>
+                        </Descriptions.Item>
+                      )}
+                      <Descriptions.Item label="Khu vực" key={item.id}>
+                        {item.area}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Vùng" key={item.id}>
+                        {item.zone}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Vị trí" key={item.id}>
+                        {item.field}
+                      </Descriptions.Item>
+                      {item.description ? (
+                        <Descriptions.Item label="Mô tả" key={item.id}>
+                          {item.description}
+                        </Descriptions.Item>
+                      ) : (
+                        <Descriptions.Item label="Mô tả" key={item.id}>
+                          <p>Chưa có mô tả</p>
+                        </Descriptions.Item>
+                      )}
+                    </Descriptions>
+                  </Panel>
+                ))}
+              </Collapse>
+            )}
+          </Modal>
+        </>
+      )}
     </div>
   );
 }
