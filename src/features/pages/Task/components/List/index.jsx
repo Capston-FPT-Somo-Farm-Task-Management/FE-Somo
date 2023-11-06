@@ -25,9 +25,11 @@ const List = () => {
   const [effort, setEffort] = useState([]);
   const [editingSubTask, setEditingSubTask] = useState(null);
   const [editSubTaskModalVisible, setEditSubTaskModalVisible] = useState(false);
+  const [editingEffort, setEditingEffort] = useState(null);
+  const [editEffortVisible, setEditEffortVisible] = useState(false);
   const [subTaskModalVisible, setSubTaskModalVisible] = useState(false);
-  const [effortVisible, setEffortVisible] = useState(false);
   const [addSubtaskVisible, setAddSubtaskVisible] = useState(false);
+  const [effortVisible, setEffortVisible] = useState(false);
   const [description, setDescription] = useState("");
   const [pageIndex, setPageIndex] = useState(1);
   const [currentTaskId, setCurrentTaskId] = useState(0);
@@ -37,8 +39,7 @@ const List = () => {
   const [status, setStatus] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
   const [taskNameSearch, setTaskNameSearch] = useState("");
-  const [editingEffort, setEditingEffort] = useState(null);
-  const [editEffortVisible, setEditEffortVisible] = useState(false);
+  
 
   const [form] = Form.useForm();
   const task = useSelector((state) => state.task.data);
@@ -84,20 +85,6 @@ const List = () => {
     }
   };
 
-  const handleMenuSubTaskClick = (e, subTaskItem) => {
-    if (e.key === "edit") {
-      openEditSubTaskModal(subTaskItem);
-    } else if (e.key === "delete") {
-      handleDeleteSubTask(subTaskItem.employeeId);
-    }
-  };
-
-  const handleMenuEffortClick = (e, effortItem) => {
-    if (e.key === "edit") {
-      openEditEffort(effortItem);
-    }
-  };
-
   const handleDelete = (id) => {
     dispatch(deleteTask(id)).then(() => {
       loadDataTask();
@@ -115,35 +102,16 @@ const List = () => {
     setModalVisible(false);
   };
 
-  const openAddSubtaskModal = (record) => {
-    setCurrentTaskId(record.id);
-    setAddSubtaskVisible(true);
-    const taskId = currentTaskId;
-    dispatch(getEmployeeByTask(taskId)).then((data) => {
-      setAvailableEmployees(data.payload);
-    });
-    form.resetFields();
+  const handleMenuSubTaskClick = (e, subTaskItem) => {
+    if (e.key === "edit") {
+      openEditSubTaskModal(subTaskItem);
+    } else if (e.key === "delete") {
+      handleDeleteSubTask(subTaskItem.employeeId);
+    }
   };
 
-  const openEditSubTaskModal = (subTask) => {
-    setEditingSubTask(subTask);
-    setEditSubTaskModalVisible(true);
-    setDescription(subTask.description);
-  };
-
-  const openEditEffort = (effort) => {
-    setEditingEffort(effort);
-    setEditEffortVisible(true);
-    setDescription(effort.description);
-  };
-
-  const closeEditEffortModal = () => {
-    setEditingEffort(null);
-    setEditEffortVisible(false);
-  };
-
-  const handleEffortVisible = () => {
-    setEffortVisible(false);
+  const handleSubTaskModalVisible = () => {
+    setSubTaskModalVisible(false);
   };
 
   const openSubtaskModal = (record) => {
@@ -154,39 +122,29 @@ const List = () => {
     });
   };
 
-  const openEffortModal = (record) => {
+  const openAddSubtaskModal = (record) => {
     setCurrentTaskId(record.id);
-    setEffortVisible(true);
-    dispatch(getEffort(record.id)).then((data) => {
-      setEffort(data.payload);
+    setAddSubtaskVisible(true);
+    const taskId = currentTaskId;
+    dispatch(getEmployeeByTask(taskId)).then((data) => {
+      setAvailableEmployees(data.payload);
     });
+    form.resetFields();
   };
+
   const closeAddSubtaskModal = () => {
     setAddSubtaskVisible(false);
   };
 
-  const handleSubTaskModalVisible = () => {
-    setSubTaskModalVisible(false);
+  const openEditSubTaskModal = (subTask) => {
+    setEditingSubTask(subTask);
+    setEditSubTaskModalVisible(true);
+    setDescription(subTask.description);
   };
 
-  const handleTabChange = (key) => {
-    setPageIndex(1);
-    setStatus(Number(key));
-  };
-
-  const handleTaskAdded = () => {
-    setPageIndex(1);
-  };
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    console.log(selectedDate);
-    setPageIndex(1);
-  };
-
-  const handleSearchChange = (taskName) => {
-    setTaskNameSearch(taskName);
-    setPageIndex(1);
+  const closeEditSubTaskModal = () => {
+    setEditingSubTask(null);
+    setEditSubTaskModalVisible(false);
   };
 
   const handleDeleteSubTask = (employeeId) => {
@@ -196,11 +154,6 @@ const List = () => {
         setSubTasks(data.payload);
       });
     });
-  };
-
-  const closeEditSubTaskModal = () => {
-    setEditingSubTask(null);
-    setEditSubTaskModalVisible(false);
   };
 
   const handleAddSubTask = (values) => {
@@ -233,6 +186,35 @@ const List = () => {
     });
   };
 
+  const handleMenuEffortClick = (e, effortItem) => {
+    if (e.key === "edit") {
+      openEditEffort(effortItem);
+    }
+  };
+
+  const handleEffortVisible = () => {
+    setEffortVisible(false);
+  };
+
+  const openEffortModal = (record) => {
+    setCurrentTaskId(record.id);
+    setEffortVisible(true);
+    dispatch(getEffort(record.id)).then((data) => {
+      setEffort(data.payload);
+    });
+  };
+
+  const openEditEffort = (effort) => {
+    setEditingEffort(effort);
+    setEditEffortVisible(true);
+    setDescription(effort.description);
+  };
+
+  const closeEditEffortModal = () => {
+    setEditingEffort(null);
+    setEditEffortVisible(false);
+  };
+
   const handleUpdateEffort = (taskId, employeeId, effortTime) => {
     const updatedEffort = [
       {
@@ -247,6 +229,26 @@ const List = () => {
         setEditEffortVisible(false);
       });
     });
+  };
+  
+  const handleTabChange = (key) => {
+    setPageIndex(1);
+    setStatus(Number(key));
+  };
+
+  const handleTaskAdded = () => {
+    setPageIndex(1);
+  };
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    console.log(selectedDate);
+    setPageIndex(1);
+  };
+
+  const handleSearchChange = (taskName) => {
+    setTaskNameSearch(taskName);
+    setPageIndex(1);
   };
 
   return (
