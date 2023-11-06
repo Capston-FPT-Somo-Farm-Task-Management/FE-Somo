@@ -168,42 +168,6 @@ html {
   background-color: transparent;
 }
 
-.ant-modal {
-  top: 20px;
-}
-.ant-modal .ant-modal-title {
-  font-size: 24px;
-}
-
-.list {
-  width: 100%;
-}
-.list .list-header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-}
-.list .menu-icon {
-  font-size: 20px;
-  color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-.task-name {
-  cursor: pointer;
-}
-
-.task-name:hover {
-  text-decoration: underline;
-  color: #007bff;
-  opacity: 0.8;
-}
-
 .subTask-modal .ant-modal-content .ant-modal-title {
   font-size: 28px;
   margin-bottom: 30px;
@@ -292,6 +256,42 @@ html {
 }
 .effort-modal .ant-modal-content .effort .effort-content strong {
   font-size: 18px;
+}
+
+.ant-modal {
+  top: 20px;
+}
+.ant-modal .ant-modal-title {
+  font-size: 24px;
+}
+
+.list {
+  width: 100%;
+}
+.list .list-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.list .menu-icon {
+  font-size: 20px;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.task-name {
+  cursor: pointer;
+}
+
+.task-name:hover {
+  text-decoration: underline;
+  color: #007bff;
+  opacity: 0.8;
 }
 
 .first-modal {

@@ -4,7 +4,7 @@ import { baseUrl } from 'features/api/baseUrl'
 
 export const getEvidenceByTaskId  = createAsyncThunk('evidenceByTaskId/getEvidenceByTaskId', async (taskId) => {
     try {
-      const { data } = await axios.get(baseUrl + `/TaskEvidence/Task(${taskId})     `, {
+      const { data } = await axios.get(baseUrl + `/TaskEvidence/Task(${taskId})`, {
         headers: {
           'Content-Type': 'application/json',
         },
