@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import dayjs from "dayjs";
-import { Form, Tooltip } from "antd";
+import { Form } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { getAreaActive } from "features/slice/area/areaSlice";
 import { getZoneByAreaAnimal } from "features/slice/zone/zoneAnimalSlice";
@@ -17,12 +17,12 @@ import { getPlantActive } from "features/slice/plant/plantSlice";
 import { createTask } from "features/slice/task/taskSlice";
 import { getMemberById } from "features/slice/user/memberSlice";
 import { authServices } from "services/authServices";
-import { format, isBefore } from "date-fns";
 import SpecificAnimal from "./components/specificAnimal";
 import WholeBarn from "./components/wholeBarn";
 import SpecificPlant from "./components/specificPlant";
 import WholeGarden from "./components/wholeGarden";
 import Other from "./components/other";
+import UpdateTask from "../../../List/components/UpdateTask";
 
 dayjs.extend(customParseFormat);
 
@@ -55,6 +55,7 @@ function ThirdModal({
   const member = useSelector((state) => state.member.data);
 
   const farmId = member.farmId;
+  console.log(farmId);
 
   const area = useSelector((state) => state.area.data);
 
@@ -69,7 +70,6 @@ function ThirdModal({
   const dataPlant = plant.data;
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
-  const dataFieldByZone = fieldByZone.data;
 
   const taskTypeLivestock = useSelector(
     (state) => state.taskTypeLivestock.data
@@ -228,9 +228,6 @@ function ThirdModal({
       ]);
     }
   };
-
-  console.log("startDate:", startDate);
-  console.log("endDate:", endDate);
 
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
@@ -503,6 +500,40 @@ function ThirdModal({
       />
     );
   }
+  // <UpdateTask
+  //   onFinish={onFinish}
+  //   selectedAreaId={selectedAreaId}
+  //   handleSelectAreaChange={handleSelectAreaChange}
+  //   handleSelectZoneChange={handleSelectZoneChange}
+  //   handleSelectFieldChange={handleSelectFieldChange}
+  //   handlePriorityChange={handlePriorityChange}
+  //   handleSelectStartDate={handleSelectStartDate}
+  //   handleSelectEndDate={handleSelectEndDate}
+  //   handleDescriptionChange={handleDescriptionChange}
+  //   handleTaskTypeChange={handleTaskTypeChange}
+  //   handleEmployeeChange={handleEmployeeChange}
+  //   handleMaterialChange={handleMaterialChange}
+  //   handleSelectRemind={handleSelectRemind}
+  //   handleSelectRepeat={handleSelectRepeat}
+  //   form={form}
+  //   area={area}
+  //   zoneAnimal={zoneAnimal}
+  //   fieldByZone={fieldByZone}
+  //   dataAnimal={dataAnimal}
+  //   priorityValue={priorityValue}
+  //   description={description}
+  //   dataTaskTypeLivestock={dataTaskTypeLivestock}
+  //   employeesValue={employeesValue}
+  //   dataEmployee={dataEmployee}
+  //   supervisor={supervisor}
+  //   materialsValue={materialsValue}
+  //   dataMaterial={dataMaterial}
+  //   remindValue={remindValue}
+  //   repeatValue={repeatValue}
+  //   disabledDate={disabledDate}
+  //   startDate={startDate}
+  //   endDate={endDate}
+  // />;
   return null;
 }
 

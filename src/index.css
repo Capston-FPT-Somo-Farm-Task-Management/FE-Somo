@@ -63,6 +63,20 @@ html {
   }
 }
 
+.task-form {
+  display: flex;
+  justify-content: space-around;
+}
+.task-form .form-left {
+  width: 45%;
+}
+.task-form .form-right {
+  width: 45%;
+}
+.task-form .form-right .ql-editor {
+  min-height: 150px;
+}
+
 .navBar {
   display: flex;
   justify-content: space-around;
@@ -636,59 +650,17 @@ html {
   opacity: 0.75;
 }
 
-.task-specific-animal {
+.task-form {
   display: flex;
   justify-content: space-around;
 }
-.task-specific-animal .form-left {
+.task-form .form-left {
   width: 45%;
 }
-.task-specific-animal .form-right {
+.task-form .form-right {
   width: 45%;
 }
-.task-specific-animal .form-right .ql-editor {
-  min-height: 150px;
-}
-
-.task-whole-barn {
-  display: flex;
-  justify-content: space-around;
-}
-.task-whole-barn .form-left {
-  width: 45%;
-}
-.task-whole-barn .form-right {
-  width: 45%;
-}
-.task-whole-barn .form-right .description .ql-editor {
-  min-height: 150px;
-}
-
-.task-specific-plant {
-  display: flex;
-  justify-content: space-around;
-}
-.task-specific-plant .form-left {
-  width: 45%;
-}
-.task-specific-plant .form-right {
-  width: 45%;
-}
-.task-specific-plant .form-right .ql-editor {
-  min-height: 150px;
-}
-
-.task-whole-garden {
-  display: flex;
-  justify-content: space-around;
-}
-.task-whole-garden .form-left {
-  width: 45%;
-}
-.task-whole-garden .form-right {
-  width: 45%;
-}
-.task-whole-garden .form-right .ql-editor {
+.task-form .form-right .ql-editor {
   min-height: 150px;
 }
 

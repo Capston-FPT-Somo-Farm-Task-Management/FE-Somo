@@ -1,11 +1,11 @@
 import React from "react";
-import { DatePicker, Form, Input, Select } from "antd";
+import { Button, DatePicker, Form, Input, Modal, Select } from "antd";
+import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import dayjs from "dayjs";
 import MultiDatePicker from "react-multi-date-picker";
-import DatePanel from "react-multi-date-picker/plugins/date_panel";
 
-function WholeBarn({
-  onFinish,
+function UpdateSpecificAnimal({
+  editingTask,
   handleSelectAreaChange,
   handleSelectZoneChange,
   handleSelectFieldChange,
@@ -22,6 +22,7 @@ function WholeBarn({
   area,
   zoneAnimal,
   fieldByZone,
+  dataAnimal,
   priorityValue,
   description,
   dataTaskTypeLivestock,
@@ -34,18 +35,12 @@ function WholeBarn({
   repeatValue,
   disabledDate,
   startDate,
-  endDate
+  endDate,
 }) {
   const { TextArea } = Input;
 
   return (
-    <Form
-      layout="vertical"
-      className="task-form"
-      onFinish={onFinish}
-      id="createTask"
-      form={form}
-    >
+    <>
       <div className="form-left">
         <Form.Item
           label="Khu vực"
@@ -57,6 +52,7 @@ function WholeBarn({
             },
           ]}
           name="areaId"
+          initialValue={editingTask ? editingTask.areaId : ""}
         >
           <Select
             onChange={handleSelectAreaChange}
@@ -81,6 +77,14 @@ function WholeBarn({
             },
           ]}
           name="zoneId"
+          initialValue={
+            editingTask
+              ? {
+                  label: editingTask.zoneName,
+                  value: editingTask.zoneId,
+                }
+              : ""
+          }
         >
           <Select
             onChange={handleSelectZoneChange}
@@ -97,7 +101,6 @@ function WholeBarn({
         </Form.Item>
         <Form.Item
           label="Chuồng"
-          name="fieldId"
           required
           rules={[
             {
@@ -105,6 +108,15 @@ function WholeBarn({
               message: "Vui lòng chọn chuồng",
             },
           ]}
+          name="fieldId"
+          initialValue={
+            editingTask
+              ? {
+                  label: editingTask.fieldName,
+                  value: editingTask.fieldId,
+                }
+              : ""
+          }
         >
           <Select
             onChange={handleSelectFieldChange}
@@ -120,8 +132,34 @@ function WholeBarn({
           />
         </Form.Item>
         <Form.Item
+          label="Mã vật nuôi"
+          required
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng chọn mã vật nuôi",
+            },
+          ]}
+          name="liveStockId"
+          initialValue={
+            editingTask
+              ? {
+                  label: editingTask.externalId,
+                  value: editingTask.id,
+                }
+              : ""
+          }
+        >
+          <Select
+            placeholder="Chọn mã vật nuôi"
+            options={dataAnimal?.map((item) => ({
+              label: item.externalId,
+              value: item.id,
+            }))}
+          />
+        </Form.Item>
+        <Form.Item
           label="Độ ưu tiên"
-          name="priority"
           required
           rules={[
             {
@@ -129,6 +167,8 @@ function WholeBarn({
               message: "Vui lòng chọn độ ưu tiên",
             },
           ]}
+          name="priority"
+          initialValue={editingTask ? editingTask.priority : ""}
         >
           <Select
             value={priorityValue}
@@ -151,6 +191,7 @@ function WholeBarn({
             },
           ]}
           name="startDate"
+          initialValue={editingTask ? dayjs(editingTask.startDate) : undefined}
         >
           <DatePicker
             placeholder="Chọn thời gian bắt đầu"
@@ -173,6 +214,7 @@ function WholeBarn({
             },
           ]}
           name="endDate"
+          initialValue={editingTask ? dayjs(editingTask.endDate) : undefined}
         >
           <DatePicker
             placeholder="Chọn thời gian kết thúc"
@@ -187,7 +229,11 @@ function WholeBarn({
             disabled={!startDate}
           />
         </Form.Item>
-        <Form.Item label="Mô tả" name="description">
+        <Form.Item
+          label="Mô tả"
+          name="description"
+          initialValue={editingTask ? editingTask.description : ""}
+        >
           <TextArea
             value={description}
             onChange={handleDescriptionChange}
@@ -199,7 +245,6 @@ function WholeBarn({
       <div className="form-right">
         <Form.Item
           label="Tên công việc"
-          name="name"
           required
           rules={[
             {
@@ -207,12 +252,13 @@ function WholeBarn({
               message: "Vui lòng nhập tên công việc",
             },
           ]}
+          name="name"
+          initialValue={editingTask ? editingTask.name : ""}
         >
           <Input placeholder="Nhập tên công việc" />
         </Form.Item>
         <Form.Item
           label="Loại công việc"
-          name="taskTypeId"
           required
           rules={[
             {
@@ -220,19 +266,31 @@ function WholeBarn({
               message: "Vui lòng chọn loại công việc",
             },
           ]}
+          name="taskTypeId"
+          initialValue={
+            editingTask
+              ? {
+                  label: editingTask.taskTypeName,
+                  value: editingTask.taskTypeId,
+                }
+              : ""
+          }
         >
           <Select
             placeholder="Chọn loại công việc"
-            options={dataTaskTypeLivestock?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
+            options={
+              dataTaskTypeLivestock && dataTaskTypeLivestock
+                ? dataTaskTypeLivestock.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  }))
+                : null
+            }
             onChange={handleTaskTypeChange}
           />
         </Form.Item>
         <Form.Item
           label="Người giám sát"
-          name="suppervisorId"
           required
           rules={[
             {
@@ -240,6 +298,8 @@ function WholeBarn({
               message: "Vui lòng chọn người giám sát",
             },
           ]}
+          name="suppervisorId"
+          initialValue={editingTask ? editingTask.suppervisorId : ""}
         >
           <Select
             placeholder="Chọn người giám sát"
@@ -255,7 +315,6 @@ function WholeBarn({
         </Form.Item>
         <Form.Item
           label="Người thực hiện"
-          name="employeeIds"
           required
           rules={[
             {
@@ -263,6 +322,15 @@ function WholeBarn({
               message: "Vui lòng chọn người thực hiện",
             },
           ]}
+          name="employeeIds"
+          initialValue={
+            editingTask
+              ? {
+                  label: editingTask.employeeName,
+                  value: editingTask.employeeIds,
+                }
+              : ""
+          }
         >
           <Select
             mode="multiple"
@@ -282,6 +350,14 @@ function WholeBarn({
         <Form.Item
           label="Dụng cụ"
           name="materialIds"
+          initialValue={
+            editingTask
+              ? {
+                  label: editingTask.materialName,
+                  value: editingTask.materialIds,
+                }
+              : ""
+          }
         >
           <Select
             placeholder="Chọn dụng cụ"
@@ -294,7 +370,11 @@ function WholeBarn({
             }))}
           />
         </Form.Item>
-        <Form.Item label="Nhắc lại" name="remind">
+        <Form.Item
+          label="Nhắc lại"
+          name="remind"
+          initialValue={editingTask ? editingTask.remind : ""}
+        >
           <Select
             value={remindValue.toString()}
             onChange={handleSelectRemind}
@@ -307,7 +387,11 @@ function WholeBarn({
             <Select.Option value="20">Sau 20 phút</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item label="Lặp lại" name="isRepeat">
+        <Form.Item
+          label="Lặp lại"
+          name="isRepeat"
+          initialValue={editingTask ? editingTask.isRepeat : ""}
+        >
           <Select
             value={repeatValue}
             onChange={handleSelectRepeat}
@@ -322,7 +406,7 @@ function WholeBarn({
           <Form.Item
             label="Lặp những ngày"
             name="dates"
-            rules={[{ required: true }]}
+            initialValue={editingTask ? editingTask.dates : ""}
           >
             <MultiDatePicker
               style={{
@@ -340,8 +424,8 @@ function WholeBarn({
           </Form.Item>
         )}
       </div>
-    </Form>
+    </>
   );
 }
 
-export default WholeBarn;
+export default UpdateSpecificAnimal;

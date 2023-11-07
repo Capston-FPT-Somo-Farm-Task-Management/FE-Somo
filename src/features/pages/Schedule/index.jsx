@@ -29,7 +29,6 @@ function Schedule() {
   );
 
   const loading = useSelector((state) => state.taskForCalendar.loading);
-  console.log(loading);
 
   useEffect(() => {
     dispatch(getTaskForCalendar(authServices.getUserId()));
