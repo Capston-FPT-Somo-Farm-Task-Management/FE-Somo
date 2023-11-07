@@ -18,8 +18,8 @@ const Zone = () => {
   const dispatch = useDispatch()
   const member = useSelector((state) => state.member.data)
   const farmId = member.farmId
-  const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const zoneByFarm = useSelector((state) => state.zoneByFarm.data)
+  const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const zoneType = useSelector((state) => state.zoneType.data)
 
   useEffect(() => {

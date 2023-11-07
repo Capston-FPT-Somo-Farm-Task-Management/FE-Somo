@@ -22,6 +22,9 @@ import StatisticZone from 'features/pages/Admin/Zone/StatisticZone'
 import StatisticMember from 'features/pages/Admin/Member/StatisticMember'
 import Employee from 'features/pages/Employee'
 import Dashboard from 'features/pages/Admin/Dashboard/Dashboard'
+import StatisticAnimalGroup from 'features/pages/Admin/AnimalGroup/StatisticAnimalGroup'
+import StatisticCropGroup from 'features/pages/Admin/CropGroup/StatisticCropGroup'
+import StatisticTask from 'features/pages/Admin/Task/StatisticTask'
 
 const AppRoute = () => {
   return (
@@ -176,6 +179,17 @@ const AppRoute = () => {
       />
 
       <Route
+        path="/statistic-task"
+        element={
+          <AdminPrivateRoute>
+            <AdminLayoutWithRoute>
+              <StatisticTask />
+            </AdminLayoutWithRoute>
+          </AdminPrivateRoute>
+        }
+      />
+
+      <Route
         path="/statistic-farm"
         element={
           <AdminPrivateRoute>
@@ -203,6 +217,28 @@ const AppRoute = () => {
           <AdminPrivateRoute>
             <AdminLayoutWithRoute>
               <StatisticZone />
+            </AdminLayoutWithRoute>
+          </AdminPrivateRoute>
+        }
+      />
+
+      <Route
+        path="/statistic-animal-group"
+        element={
+          <AdminPrivateRoute>
+            <AdminLayoutWithRoute>
+              <StatisticAnimalGroup />
+            </AdminLayoutWithRoute>
+          </AdminPrivateRoute>
+        }
+      />
+
+      <Route
+        path="/statistic-crop-group"
+        element={
+          <AdminPrivateRoute>
+            <AdminLayoutWithRoute>
+              <StatisticCropGroup />
             </AdminLayoutWithRoute>
           </AdminPrivateRoute>
         }

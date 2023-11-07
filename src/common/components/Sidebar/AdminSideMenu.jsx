@@ -52,7 +52,7 @@ const AdminSideMenu = () => {
     <div className="sider">
       {isDesktop && (
         <Sider
-          theme="light"
+          theme="dark"
           style={{
             overflow: 'auto',
             height: '100vh',
@@ -66,20 +66,20 @@ const AdminSideMenu = () => {
             <img src={logoSomo} alt="logo" />
           </div>
           <Menu
-            theme="light"
+            theme="dark"
             mode="inline"
             defaultSelectedKeys={[location.pathname]}
           >
-            {/* <Menu.Item key="/statistic-task">
-              <AimOutlined />
-              <span>Công việc</span>
-              <Link to="/statistic-task"></Link>
-            </Menu.Item> */}
-
             <Menu.Item key="/dashboard">
               <BorderOutlined />
               <span>Tổng quan</span>
               <Link to="/dashboard"></Link>
+            </Menu.Item>
+
+            <Menu.Item key="/statistic-task">
+              <AimOutlined />
+              <span>Công việc</span>
+              <Link to="/statistic-task"></Link>
             </Menu.Item>
 
             <Menu.Item key="/statistic-farm">
@@ -99,12 +99,12 @@ const AdminSideMenu = () => {
               <span>Vùng</span>
               <Link to="/statistic-zone"></Link>
             </Menu.Item>
-            {/* 
-            <Menu.Item key="/statistic-animal">
+
+            {/* <Menu.Item key="/statistic-animal">
               <TeamOutlined />
               <span>Vật nuôi</span>
               <Link to="/statistic-animal"></Link>
-            </Menu.Item>
+            </Menu.Item> */}
 
             <Menu.Item key="/statistic-animal-group">
               <AppstoreOutlined />
@@ -112,11 +112,11 @@ const AdminSideMenu = () => {
               <Link to="/statistic-animal-group"></Link>
             </Menu.Item>
 
-            <Menu.Item key="/statistic-plant">
+            {/* <Menu.Item key="/statistic-plant">
               <DashboardOutlined />
               <span>Cây trồng</span>
               <Link to="/statistic-plant"></Link>
-            </Menu.Item>
+            </Menu.Item> */}
 
             <Menu.Item key="/statistic-crop-group">
               <AppstoreOutlined />
@@ -124,17 +124,17 @@ const AdminSideMenu = () => {
               <Link to="/statistic-crop-group"></Link>
             </Menu.Item>
 
-            <Menu.Item key="/statistic-material">
+            {/* <Menu.Item key="/statistic-material">
               <FormatPainterOutlined />
               <span>Công cụ</span>
               <Link to="/statistic-material"></Link>
-            </Menu.Item> */}
+            </Menu.Item>
 
             <Menu.Item key="/statistic-member">
               <BorderOutlined />
               <span>Thành viên</span>
               <Link to="/statistic-member"></Link>
-            </Menu.Item>
+            </Menu.Item> */}
 
             <Menu.Item key="/login" onClick={logout}>
               <LogoutOutlined />
@@ -154,7 +154,7 @@ const AdminSideMenu = () => {
               placement="bottomRight"
               content={
                 <Menu
-                  theme="light"
+                  theme="dark"
                   mode="inline"
                   defaultSelectedKeys={[location.pathname]}
                 >

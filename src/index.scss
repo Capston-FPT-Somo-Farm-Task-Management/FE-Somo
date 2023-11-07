@@ -2,10 +2,10 @@
 @import './styles/Helper/mixin';
 @import './common/components/Header/header';
 @import './common/components/Sidebar/sideBar';
-@import "./features/pages/Schedule/schedule";
+@import './features/pages/Schedule/schedule';
 @import './features/pages/Task/task';
-@import "./features/pages/Task/components/List/components/SubTask/subtask";
-@import "./features/pages/Task/components/List/components/Effort/effort";
+@import './features/pages/Task/components/List/components/SubTask/subtask';
+@import './features/pages/Task/components/List/components/Effort/effort';
 @import './features/pages/Task/components/ModalTask/modalTask';
 @import './features/pages/Task/components/List/list';
 @import './features/pages/Task/components/ModalTask/components/FirstModal/firstModal';
@@ -27,4 +27,3 @@
 @import './features/pages/Plants/MyCrops/components/FirstStepAddPlantType/firstStepAddPlantType';
 @import './features/authentication/SignIn/signin';
 @import './features/pages/PageNotFound/pageNotFound';
-@import './features//pages/Admin/Zone/chartZone';
