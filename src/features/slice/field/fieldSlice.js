@@ -32,7 +32,7 @@ export const getFields = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       })
-      console.log(data);
+      console.log(data)
       return data
     } catch (error) {
       rejectWithValue(error)
@@ -65,6 +65,22 @@ export const deleteField = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.put(baseUrl + `/Field/Delete/${id}`)
+      if (response.status === 200) {
+        toast.success(response.data.message)
+      }
+      return response.data
+    } catch (error) {
+      toast.error(error.response.data.message)
+      return rejectWithValue(error)
+    }
+  }
+)
+
+export const adminDeleteField = createAsyncThunk(
+  'fields/adminDeleteField',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(baseUrl + `/Field/${id}`)
       if (response.status === 200) {
         toast.success(response.data.message)
       }

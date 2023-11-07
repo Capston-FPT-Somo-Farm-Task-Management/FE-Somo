@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 
 export const getAreaActive = createAsyncThunk(
   'areas/getAreaActive',
-  async (id, {rejectWithValue}) => {
+  async (id, { rejectWithValue }) => {
     try {
       const { data } = await axios.get(baseUrl + `/Area/Active/Farm(${id})`)
       // console.log(data)
@@ -63,6 +63,22 @@ export const deleteArea = createAsyncThunk(
       const response = await axios.put(baseUrl + `/Area/Delete/${id}`)
       if (response.status === 200) {
         toast.success('Đổi trạng thái thành công')
+        return response.data
+      }
+    } catch (error) {
+      toast.error(error.response.data.message)
+      return rejectWithValue(error)
+    }
+  }
+)
+
+export const adminDeleteArea = createAsyncThunk(
+  'areas/adminDeleteArea',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(baseUrl + `/Area/${id}`)
+      if (response.status === 200) {
+        toast.success(response.data.message)
         return response.data
       }
     } catch (error) {
@@ -132,6 +148,18 @@ const areaSlice = createSlice({
         state.data = action.payload
       })
       .addCase(deleteArea.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+
+      .addCase(adminDeleteArea.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(adminDeleteArea.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = action.payload
+      })
+      .addCase(adminDeleteArea.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
       })

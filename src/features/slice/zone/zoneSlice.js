@@ -73,6 +73,22 @@ export const deleteZone = createAsyncThunk(
   }
 )
 
+export const adminDeleteZone = createAsyncThunk(
+  'zones/adminDeleteZone',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(baseUrl + `/Zone/${id}`)
+      if (response.status === 200) {
+        toast.success(response.data.message)
+        return response.data
+      }
+    } catch (error) {
+      toast.error(error.response.data.message)
+      return rejectWithValue(error)
+    }
+  }
+)
+
 const zoneSlice = createSlice({
   name: 'zone',
   initialState: {
