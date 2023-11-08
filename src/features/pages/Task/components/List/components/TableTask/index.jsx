@@ -51,11 +51,13 @@ function TableTask({
               render: (_, record) => {
                 const isManager = record && record.managerName;
                 const isStatus =
-                  record.status === "Chuẩn bị" ||
-                  record.status === "Đang thực hiện";
+                  record &&
+                  (record.status === "Chuẩn bị" ||
+                    record.status === "Đang thực hiện");
                 const isStatusEffort =
-                  record.status === "Hoàn thành" ||
-                  record.status === "Không hoàn thành";
+                  record &&
+                  (record.status === "Hoàn thành" ||
+                    record.status === "Không hoàn thành");
                 if (isManager) {
                   return (
                     <Dropdown

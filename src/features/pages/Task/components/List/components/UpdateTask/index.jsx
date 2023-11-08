@@ -43,9 +43,7 @@ function UpdateTask({
     editingTask ? editingTask.taskTypeId : null
   );
   const [selectedFarmId, setSelectedFarmId] = useState(null);
-  const [employeesValue, setEmployeesValue] = useState(
-    editingTask ? editingTask.employeeId : null
-  );
+  const [employeesValue, setEmployeesValue] = useState(null);
   const [materialsValue, setMaterialsValue] = useState(0);
   const [priorityValue, setPriorityValue] = useState("");
   const [remindValue, setRemindValue] = useState(0);

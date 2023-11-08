@@ -332,7 +332,7 @@ function SpecificPlant({
               >
                 {Array.from({ length: 24 }, (_, i) => i).map((hour) => (
                   <Select.Option key={hour} value={hour.toString()}>
-                    {hour < 10 ? `0${hour}` : hour}
+                    {hour < 10 ? `0${hour}` : hour} giờ
                   </Select.Option>
                 ))}
               </Select>
@@ -355,7 +355,7 @@ function SpecificPlant({
               >
                 {Array.from({ length: 60 }, (_, i) => i).map((minute) => (
                   <Select.Option key={minute} value={minute.toString()}>
-                    {minute < 10 ? `0${minute}` : minute}
+                    {minute < 10 ? `0${minute}` : minute} phút
                   </Select.Option>
                 ))}
               </Select>

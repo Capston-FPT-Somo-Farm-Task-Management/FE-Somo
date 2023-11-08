@@ -359,7 +359,7 @@ function UpdateWholeGarden({
               >
                 {Array.from({ length: 24 }, (_, i) => i).map((hour) => (
                   <Select.Option key={hour} value={hour.toString()}>
-                    {hour < 10 ? `0${hour}` : hour}
+                    {hour < 10 ? `0${hour}` : hour} giờ
                   </Select.Option>
                 ))}
               </Select>
@@ -382,7 +382,7 @@ function UpdateWholeGarden({
               >
                 {Array.from({ length: 60 }, (_, i) => i).map((minute) => (
                   <Select.Option key={minute} value={minute.toString()}>
-                    {minute < 10 ? `0${minute}` : minute}
+                    {minute < 10 ? `0${minute}` : minute} phút
                   </Select.Option>
                 ))}
               </Select>
@@ -406,10 +406,14 @@ function UpdateWholeGarden({
             mode="multiple"
             value={materialsValue}
             onChange={handleMaterialChange}
-            options={dataMaterial?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
+            options={
+              dataMaterial && dataMaterial
+                ? dataMaterial.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  }))
+                : null
+            }
           />
         </Form.Item>
         <Form.Item

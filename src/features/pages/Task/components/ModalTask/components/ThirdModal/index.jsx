@@ -86,7 +86,6 @@ function ThirdModal({
 
   const material = useSelector((state) => state.materialActive.data);
   const dataMaterial = material.data;
-  console.log(dataMaterial);
 
   useEffect(() => {
     dispatch(getAreaActive(farmId));
@@ -269,6 +268,7 @@ function ThirdModal({
   const handleOverallEffortHour = (value) => {
     setOverallEffortHour(parseInt(value, 10));
   };
+
 
   const transformData = (originalData) => {
     const transformedData = {

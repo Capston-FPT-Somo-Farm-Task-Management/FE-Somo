@@ -333,14 +333,7 @@ function UpdateSpecificAnimal({
             },
           ]}
           name="employeeIds"
-          initialValue={
-            editingTask
-              ? {
-                  label: editingTask.employeeName,
-                  value: editingTask.employeeIds,
-                }
-              : undefined
-          }
+          initialValue={editingTask ? editingTask.employeeIds : []}
         >
           <Select
             mode="multiple"
@@ -370,7 +363,6 @@ function UpdateSpecificAnimal({
         >
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <Form.Item
-              name="overallEffortHour"
               required
               rules={[
                 {
@@ -378,6 +370,8 @@ function UpdateSpecificAnimal({
                   message: "Vui lòng chọn giờ làm việc",
                 },
               ]}
+              name="overallEffortHour"
+              initialValue={editingTask ? editingTask.overallEffortHour.toString() : "0"}
               style={{ width: "48%" }}
             >
               <Select
@@ -387,13 +381,12 @@ function UpdateSpecificAnimal({
               >
                 {Array.from({ length: 24 }, (_, i) => i).map((hour) => (
                   <Select.Option key={hour} value={hour.toString()}>
-                    {hour < 10 ? `0${hour}` : hour}
+                    {hour < 10 ? `0${hour}` : hour} giờ
                   </Select.Option>
                 ))}
               </Select>
             </Form.Item>
             <Form.Item
-              name="overallEfforMinutes"
               required
               rules={[
                 {
@@ -401,6 +394,8 @@ function UpdateSpecificAnimal({
                   message: "Vui lòng chọn phút làm việc",
                 },
               ]}
+              name="overallEfforMinutes"
+              initialValue={editingTask ? editingTask.overallEfforMinutes.toString() : "0"}
               style={{ width: "48%" }}
             >
               <Select
@@ -410,7 +405,7 @@ function UpdateSpecificAnimal({
               >
                 {Array.from({ length: 60 }, (_, i) => i).map((minute) => (
                   <Select.Option key={minute} value={minute.toString()}>
-                    {minute < 10 ? `0${minute}` : minute}
+                    {minute < 10 ? `0${minute}` : minute} phút
                   </Select.Option>
                 ))}
               </Select>
@@ -426,7 +421,7 @@ function UpdateSpecificAnimal({
                   label: editingTask.materialName,
                   value: editingTask.materialIds,
                 }
-              : undefined
+              : ""
           }
         >
           <Select
@@ -435,12 +430,12 @@ function UpdateSpecificAnimal({
             value={materialsValue}
             onChange={handleMaterialChange}
             options={
-              dataMaterial && dataMaterial.data
-                ? dataMaterial.data.map((item) => ({
+              dataMaterial && dataMaterial
+                ? dataMaterial.map((item) => ({
                     label: item.name,
                     value: item.id,
                   }))
-                : undefined
+                : null
             }
           />
         </Form.Item>
