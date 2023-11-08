@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, DatePicker, Form, Input, Modal, Select } from "antd";
+import { DatePicker, Form, Input, Select } from "antd";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import dayjs from "dayjs";
 import MultiDatePicker from "react-multi-date-picker";
@@ -372,10 +372,14 @@ function UpdateSpecificAnimal({
             mode="multiple"
             value={materialsValue}
             onChange={handleMaterialChange}
-            options={dataMaterial?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
+            options={
+              dataMaterial && dataMaterial.data
+                ? dataMaterial.data.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  }))
+                : undefined
+            }
           />
         </Form.Item>
         <Form.Item

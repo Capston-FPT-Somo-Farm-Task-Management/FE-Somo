@@ -45,7 +45,6 @@ const List = () => {
 
   const [form] = Form.useForm();
   const task = useSelector((state) => state.task.data);
-  console.log(task);
 
   const dataTotalPages = useSelector((state) => state.task.totalPages);
 
@@ -274,7 +273,6 @@ const List = () => {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    console.log(selectedDate);
     setPageIndex(1);
   };
 

@@ -44,8 +44,6 @@ export const getTaskById = createAsyncThunk(
 export const createTask = createAsyncThunk(
   "tasks/createTask",
   async (data, id) => {
-    console.log(data);
-    console.log(data.farmTask.memberId);
     try {
       const response = await axios.post(
         baseUrl + `/FarmTask?memberId=${authServices.getUserId()}`,
@@ -59,7 +57,6 @@ export const createTask = createAsyncThunk(
       if (response.status === 200) {
         toast.success("Thêm công việc thành công");
       }
-      console.log(response.data);
       return response.data;
     } catch (error) {
       throw error;
@@ -83,7 +80,6 @@ export const updateTask = createAsyncThunk(
       if (response.status === 200) {
         toast.success("Cập nhật thành công");
       }
-      console.log(response.data);
       return response.data;
     } catch (error) {
       toast.error(error.response.data.message);

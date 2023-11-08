@@ -55,25 +55,20 @@ function ThirdModal({
   const member = useSelector((state) => state.member.data);
 
   const farmId = member.farmId;
-  console.log(farmId);
 
   const area = useSelector((state) => state.area.data);
-  console.log("khu vực: ", area);
 
   const zoneAnimal = useSelector((state) => state.zoneAnimal.data);
-  console.log("vùng: ", zoneAnimal);
 
   const zonePlant = useSelector((state) => state.zonePlant.data);
 
   const animal = useSelector((state) => state.animal.data);
   const dataAnimal = animal.data;
-  console.log("mã vật nuôi: ", dataAnimal);
 
   const plant = useSelector((state) => state.plant.data);
   const dataPlant = plant.data;
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
-  console.log("chuồng: ", fieldByZone);
 
   const taskTypeLivestock = useSelector(
     (state) => state.taskTypeLivestock.data
@@ -110,7 +105,6 @@ function ThirdModal({
     if (selectedZoneId) {
       dispatch(getFieldByZone(selectedZoneId));
     }
-    console.log(selectedZoneId);
   }, [selectedZoneId]);
 
   useEffect(() => {
@@ -118,7 +112,6 @@ function ThirdModal({
       dispatch(getAnimalActive(selectedFieldId));
       dispatch(getPlantActive(selectedFieldId));
     }
-    console.log(selectedFieldId);
   }, [selectedFieldId]);
 
   useEffect(() => {
@@ -146,6 +139,8 @@ function ThirdModal({
 
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value);
+    setSelectedZoneId(value);
+    setSelectedFieldId(value);
     form.setFieldsValue({
       zoneId: null,
       fieldId: null,
@@ -156,6 +151,7 @@ function ThirdModal({
 
   const handleSelectZoneChange = async (value) => {
     setSelectedZoneId(value);
+    setSelectedFieldId(value);
     form.setFieldsValue({
       fieldId: null,
       liveStockId: null,
