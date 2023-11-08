@@ -1,5 +1,4 @@
 import jwt_decode from 'jwt-decode'
-import { useDispatch } from 'react-redux'
 
 const getToken = () => {
   const token = localStorage.getItem('somoFarm')

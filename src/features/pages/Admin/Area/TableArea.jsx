@@ -1,23 +1,22 @@
 import { Badge, Button, Popconfirm, Table } from 'antd'
 import Column from 'antd/es/table/Column'
 
-const TableZone = ({ zoneByFarm, onFinishDelete }) => {
+const TableArea = ({ areaByFarm, onFinishDelete }) => {
   return (
     <>
       <Table
         rowKey="id"
-        dataSource={zoneByFarm ? zoneByFarm.data : null}
-        locale={{ emptyText: 'Chưa có vùng nào' }}
+        dataSource={areaByFarm ? areaByFarm.data : null}
+        locale={{ emptyText: 'Chưa có khu vực' }}
       >
-        <Column title="Tên vùng" dataIndex="name" key="1" />
-        <Column title="Mã vùng" dataIndex="code" key="2" />
-        <Column title="Diện tích" dataIndex="farmArea" key="3" />
-        <Column title="Loại vùng" dataIndex="zoneTypeName" key="4" />
-        <Column title="Tên khu vực" dataIndex="areaName" key="5" />
+        <Column title="Tên khu vực" dataIndex="name" key="1" />
+        <Column title="Mã khu vực" dataIndex="code" key="2" />
+        <Column title="Diện tích" dataIndex="fArea" key="3" />
+        <Column title="Tên trang trại" dataIndex="farmName" key="4" />
         <Column
           title="Trạng thái"
           dataIndex="status"
-          key="6"
+          key="5"
           render={(status) =>
             status === 'Active' ? (
               <Badge status="success" text="Active" />
@@ -28,12 +27,12 @@ const TableZone = ({ zoneByFarm, onFinishDelete }) => {
         />
         <Column
           title="Xoá"
-          key="7"
+          key="6"
           dataIndex="id"
           render={(_, record) => (
             <Popconfirm
-              title="Xoá vùn"
-              description="Bạn có chắc muốn xoá vùng này?"
+              title="Xoá khu vực"
+              description="Bạn có chắc muốn xoá khu vực này?"
               onConfirm={() => onFinishDelete(record.id)}
               okText="Xoá"
               cancelText="Huỷ"
@@ -48,4 +47,4 @@ const TableZone = ({ zoneByFarm, onFinishDelete }) => {
     </>
   )
 }
-export default TableZone
+export default TableArea
