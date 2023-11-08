@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Form, Input, InputNumber, Modal, Radio, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAnimalTypeActive } from 'features/slice/animal/animalTypeSlice'
 import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
 import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
+import { getAnimalTypeActive } from 'features/slice/animal/animalTypeActiveSlice'
 
 const FirstStepAddAnimal = ({
+  farmId,
   areaByFarm,
   isModalOpen,
   closeModal,
@@ -19,10 +20,10 @@ const FirstStepAddAnimal = ({
   const zoneAnimal = useSelector((state) => state.zoneAnimal.data)
   const fieldByZone = useSelector((state) => state.fieldByZone.data)
 
-  const animalTypeActive = useSelector((state) => state.animalType.data)
+  const animalTypeActive = useSelector((state) => state.animalTypeActive.data)
 
   useEffect(() => {
-    dispatch(getAnimalTypeActive())
+    dispatch(getAnimalTypeActive(farmId))
   }, [dispatch])
 
   useEffect(() => {

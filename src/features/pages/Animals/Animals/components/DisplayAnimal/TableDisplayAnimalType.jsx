@@ -1,13 +1,19 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Badge, Button, Table } from 'antd'
 import Column from 'antd/es/table/Column'
 import UpdateAnimalType from './UpdateAnimalType'
 
 const TableDisplayAnimalType = ({
+  farmId,
   animalType,
   onFinishDeleteAnimalType,
   onFinishUpdateAnimalType,
+  loadDataAnimalType,
 }) => {
+  useEffect(() => {
+    loadDataAnimalType()
+  }, [])
+
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
 
@@ -85,6 +91,7 @@ const TableDisplayAnimalType = ({
       </Table>
       <UpdateAnimalType
         key={selectedData ? selectedData.id : null}
+        farmId={farmId}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}

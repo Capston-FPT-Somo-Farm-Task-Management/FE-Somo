@@ -7,11 +7,14 @@ export const getPlantActive = createAsyncThunk(
   'plants/getPlantActive',
   async (id) => {
     try {
-      const { data } = await axios.get(baseUrl + `/Plant/ExternalId/Field(${id})`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const { data } = await axios.get(
+        baseUrl + `/Plant/ExternalId/Field(${id})`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       return data
     } catch (error) {
       throw error

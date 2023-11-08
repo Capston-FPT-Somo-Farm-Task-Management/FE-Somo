@@ -1,5 +1,4 @@
 import { Button, Form, Input, Modal } from 'antd'
-import { getPlantType } from 'features/slice/plant/plantTypeSlice'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 const { TextArea } = Input
@@ -9,11 +8,10 @@ const UpdateCropType = ({
   closeModal,
   selectedData,
   onFinishUpdatePlantType,
+  loadDataPlantType,
 }) => {
-  const dispatch = useDispatch()
-
   useEffect(() => {
-    dispatch(getPlantType())
+    loadDataPlantType()
   }, [])
 
   const onFinish = (values) => {

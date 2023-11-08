@@ -8,6 +8,7 @@ const TableDisplayCrop = ({
   plantByFarm,
   onFinishDeletePlant,
   onFinishUpdatePlant,
+  farmId,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
@@ -88,6 +89,7 @@ const TableDisplayCrop = ({
       </Table>
       <UpdateCrop
         key={selectedData ? selectedData.id : null}
+        farmId={farmId}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}

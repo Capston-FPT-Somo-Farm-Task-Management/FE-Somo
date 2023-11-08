@@ -1,5 +1,5 @@
 import { Button, Form, Input, InputNumber, Modal, Radio, Select } from 'antd'
-import { getAnimalTypeActive } from 'features/slice/animal/animalTypeSlice'
+import { getAnimalTypeActive } from 'features/slice/animal/animalTypeActiveSlice'
 import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
 import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
 import { useEffect, useState } from 'react'
@@ -11,6 +11,7 @@ const UpdateAnimal = ({
   closeModal,
   selectedData,
   onFinishUpdateAnimal,
+  farmId,
 }) => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
@@ -24,10 +25,10 @@ const UpdateAnimal = ({
   const fieldByZone = useSelector((state) => state.fieldByZone.data)
   console.log(fieldByZone);
 
-  const animalTypeActive = useSelector((state) => state.animalType.data)
+  const animalTypeActive = useSelector((state) => state.animalTypeActive.data)
 
   useEffect(() => {
-    dispatch(getAnimalTypeActive())
+    dispatch(getAnimalTypeActive(farmId))
   }, [dispatch])
 
   useEffect(() => {

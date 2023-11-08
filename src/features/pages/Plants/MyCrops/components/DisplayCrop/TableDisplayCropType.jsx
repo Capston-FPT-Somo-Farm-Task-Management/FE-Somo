@@ -1,13 +1,18 @@
 import { Badge, Button, Table } from 'antd'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Column from 'antd/es/table/Column'
 import UpdateCropType from './UpdateCropType'
 
 const TableDisplayCropType = ({
   plantType,
+  loadDataPlantType,
   onFinishDeletePlantType,
   onFinishUpdatePlantType,
 }) => {
+  useEffect(() => {
+    loadDataPlantType()
+  }, [])
+
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
 
@@ -27,7 +32,7 @@ const TableDisplayCropType = ({
   return (
     <>
       <Table
-        dataSource={plantType ? plantType.data : ''}
+        dataSource={plantType ? plantType.data : null}
         rowKey="id"
         locale={{ emptyText: 'Chưa có loại cây trồng nào' }}
       >
@@ -87,6 +92,7 @@ const TableDisplayCropType = ({
         key={selectedData ? selectedData.id : null}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        loadDataPlantType={loadDataPlantType}
         selectedData={selectedData}
         onFinishUpdatePlantType={onFinishUpdatePlantType}
       />
