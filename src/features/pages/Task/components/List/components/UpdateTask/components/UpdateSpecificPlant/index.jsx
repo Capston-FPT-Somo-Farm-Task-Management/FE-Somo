@@ -5,6 +5,8 @@ import dayjs from "dayjs";
 import MultiDatePicker from "react-multi-date-picker";
 
 function UpdateSpecificPlant({
+  handleUpdateTask,
+  form,
   editingTask,
   handleSelectAreaChange,
   handleSelectZoneChange,
@@ -18,7 +20,6 @@ function UpdateSpecificPlant({
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
-  form,
   area,
   zonePlant,
   fieldByZone,
@@ -40,7 +41,14 @@ function UpdateSpecificPlant({
   const { TextArea } = Input;
 
   return (
-    <>
+    <Form
+      layout="vertical"
+      className="task-form"
+      onFinish={handleUpdateTask}
+      id="updateTask"
+      key={editingTask ? editingTask.externalId : "new"}
+      form={form}
+    >
       <div className="form-left">
         <Form.Item
           label="Khu vực"
@@ -424,7 +432,7 @@ function UpdateSpecificPlant({
           </Form.Item>
         )}
       </div>
-    </>
+      </Form>
   );
 }
 
