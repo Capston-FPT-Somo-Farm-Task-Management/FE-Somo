@@ -42,7 +42,7 @@ function SpecificPlant({
   return (
     <Form
       layout="vertical"
-      className="task-specific-plant"
+      className="task-form"
       onFinish={onFinish}
       id="createTask"
       form={form}

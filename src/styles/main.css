@@ -61,4 +61,18 @@ html {
   .site-layout {
     margin: 0;
   }
+}
+
+.task-form {
+  display: flex;
+  justify-content: space-around;
+}
+.task-form .form-left {
+  width: 45%;
+}
+.task-form .form-right {
+  width: 45%;
+}
+.task-form .form-right .ql-editor {
+  min-height: 150px;
 }/*# sourceMappingURL=main.css.map */

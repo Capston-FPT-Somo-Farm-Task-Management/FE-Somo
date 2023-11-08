@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form } from "antd";
+import { Form, Skeleton } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { getTasks, deleteTask } from "features/slice/task/taskSlice";
 import { getEmployeeByTask } from "features/slice/employee/employeeByTask";
@@ -19,10 +19,13 @@ import DateSelectionComp from "./components/DateSelection";
 import SubTask from "./components/SubTask/subTask";
 import Effort from "./components/Effort";
 import TableTask from "./components/TableTask";
+import UpdateTask from "./components/UpdateTask";
 
 const List = () => {
   const [subTasks, setSubTasks] = useState([]);
   const [effort, setEffort] = useState([]);
+  const [editingTask, setEditingTask] = useState(null);
+  const [editTaskModalVisible, setEditTaskModalVisible] = useState(false);
   const [editingSubTask, setEditingSubTask] = useState(null);
   const [editSubTaskModalVisible, setEditSubTaskModalVisible] = useState(false);
   const [editingEffort, setEditingEffort] = useState(null);
@@ -39,12 +42,14 @@ const List = () => {
   const [status, setStatus] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
   const [taskNameSearch, setTaskNameSearch] = useState("");
-  
 
   const [form] = Form.useForm();
   const task = useSelector((state) => state.task.data);
+  console.log(task);
 
   const dataTotalPages = useSelector((state) => state.task.totalPages);
+
+  const loading = useSelector((state) => state.task.loading);
 
   const dispatch = useDispatch();
 
@@ -80,6 +85,7 @@ const List = () => {
 
   const handleMenuClick = (e, record) => {
     if (e.key === "edit") {
+      openEditTaskModal(record);
     } else if (e.key === "delete") {
       handleDelete(record.id);
     }
@@ -100,6 +106,16 @@ const List = () => {
   const closeModal = () => {
     setSelectedTask(null);
     setModalVisible(false);
+  };
+
+  const openEditTaskModal = (record) => {
+    setEditingTask(record);
+    setEditTaskModalVisible(true);
+  };
+
+  const closeEditTaskModal = () => {
+    setEditingTask(null);
+    setEditTaskModalVisible(false);
   };
 
   const handleMenuSubTaskClick = (e, subTaskItem) => {
@@ -215,6 +231,22 @@ const List = () => {
     setEditEffortVisible(false);
   };
 
+  const handleUpdateTask = (values) => {
+    const finalValues = {
+      ...values,
+      taskId: currentTaskId,
+      employeeId: editingSubTask.employeeId,
+    };
+
+    dispatch(createSubTask(finalValues)).then(() => {
+      dispatch(getSubTasksByTaskId(currentTaskId)).then((data) => {
+        setSubTasks(data.payload);
+        loadDataTask();
+        setEditSubTaskModalVisible(false);
+      });
+    });
+  };
+
   const handleUpdateEffort = (taskId, employeeId, effortTime) => {
     const updatedEffort = [
       {
@@ -230,7 +262,7 @@ const List = () => {
       });
     });
   };
-  
+
   const handleTabChange = (key) => {
     setPageIndex(1);
     setStatus(Number(key));
@@ -268,18 +300,29 @@ const List = () => {
         </div>
       </div>
       <StatusTabs onTabChange={handleTabChange} />
-      <TableTask
-        taskTitle={taskTitle}
-        task={task}
-        openModal={openModal}
-        onChange={onChange}
-        pageIndex={pageIndex}
-        dataTotalPages={dataTotalPages}
-        handleMenuClick={handleMenuClick}
-        openSubtaskModal={openSubtaskModal}
-        openAddSubtaskModal={openAddSubtaskModal}
-        openEffortModal={openEffortModal}
-      />
+      {loading === true ? (
+        <Skeleton active />
+      ) : (
+        <TableTask
+          taskTitle={taskTitle}
+          task={task}
+          openModal={openModal}
+          onChange={onChange}
+          pageIndex={pageIndex}
+          dataTotalPages={dataTotalPages}
+          handleMenuClick={handleMenuClick}
+          editingTask={editingTask}
+          editTaskModalVisible={editTaskModalVisible}
+          openEditTaskModal={openEditTaskModal}
+          closeEditTaskModal={closeEditTaskModal}
+          openSubtaskModal={openSubtaskModal}
+          openAddSubtaskModal={openAddSubtaskModal}
+          openEffortModal={openEffortModal}
+          handleTaskAdded={handleTaskAdded}
+          handleDateChange={handleDateChange}
+          loadDataTask={loadDataTask}
+        />
+      )}
       <TaskDetail
         visible={modalVisible}
         onCancel={closeModal}

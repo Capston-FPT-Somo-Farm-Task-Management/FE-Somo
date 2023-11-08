@@ -41,7 +41,7 @@ function WholeGarden({
   return (
     <Form
       layout="vertical"
-      className="task-whole-garden"
+      className="task-form"
       onFinish={onFinish}
       id="createTask"
       form={form}

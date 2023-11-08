@@ -1,37 +1,34 @@
-import React, { useEffect, useState } from "react";
-import customParseFormat from "dayjs/plugin/customParseFormat";
+import { Button, Form, Input, Modal, Select } from "antd";
 import dayjs from "dayjs";
-import { Form } from "antd";
-import { useSelector, useDispatch } from "react-redux";
+import { getAnimalActive } from "features/slice/animal/animalSlice";
 import { getAreaActive } from "features/slice/area/areaSlice";
-import { getZoneByAreaAnimal } from "features/slice/zone/zoneAnimalSlice";
-import { getZoneByAreaPlant } from "features/slice/zone/zonePlantSlice";
+import { getEmployeeByTaskTypeAndFarmId } from "features/slice/employee/employeeSlice";
 import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
+import { getMaterial } from "features/slice/material/materialSlice";
+import { getPlantActive } from "features/slice/plant/plantSlice";
+import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
+import { createTask } from "features/slice/task/taskSlice";
 import { getTaskTypeLivestock } from "features/slice/task/taskTypeAnimalSlice";
 import { getTaskTypePlant } from "features/slice/task/taskTypePlantSlice";
-import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
-import { getEmployeeByTaskTypeAndFarmId } from "features/slice/employee/employeeSlice";
-import { getMaterial } from "features/slice/material/materialSlice";
-import { getAnimalActive } from "features/slice/animal/animalSlice";
-import { getPlantActive } from "features/slice/plant/plantSlice";
-import { createTask } from "features/slice/task/taskSlice";
 import { getMemberById } from "features/slice/user/memberSlice";
+import { getZoneByAreaAnimal } from "features/slice/zone/zoneAnimalSlice";
+import { getZoneByAreaPlant } from "features/slice/zone/zonePlantSlice";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { authServices } from "services/authServices";
-import SpecificAnimal from "./components/specificAnimal";
-import WholeBarn from "./components/wholeBarn";
-import SpecificPlant from "./components/specificPlant";
-import WholeGarden from "./components/wholeGarden";
-import Other from "./components/other";
-import UpdateTask from "../../../List/components/UpdateTask";
+import UpdateSpecificAnimal from "./components/UpdateSpecificAnimal";
+import UpdateSpecificPlant from "./components/UpdateSpecificPlant";
+import UpdateWholeBarn from "./components/UpdateWholeBarn";
+import UpdateWholeGarden from "./components/UpdateWholeGarden";
 
-dayjs.extend(customParseFormat);
-
-function ThirdModal({
+function UpdateTask({
+  editTaskModalVisible,
+  closeEditTaskModal,
+  editingTask,
+  handleTaskAdded,
+  handleDateChange,
   loadDataTask,
-  option,
-  onTaskAdded,
-  onDateChange,
-  handleCloseModal,
 }) {
   const [selectedAreaId, setSelectedAreaId] = useState(null);
   const [selectedZoneId, setSelectedZoneId] = useState(null);
@@ -65,6 +62,7 @@ function ThirdModal({
 
   const animal = useSelector((state) => state.animal.data);
   const dataAnimal = animal.data;
+  console.log(dataAnimal);
 
   const plant = useSelector((state) => state.plant.data);
   const dataPlant = plant.data;
@@ -284,7 +282,7 @@ function ThirdModal({
     return transformedData;
   };
 
-  const onFinish = (values) => {
+  const handleUpdateTask = (values) => {
     form
       .validateFields()
       .then(() => {
@@ -341,9 +339,8 @@ function ThirdModal({
 
         dispatch(createTask(transformedValues)).then(() => {
           loadDataTask();
-          onDateChange();
-          onTaskAdded();
-          handleCloseModal();
+          handleDateChange();
+          handleTaskAdded();
         });
       })
       .catch((errorInfo) => {
@@ -351,190 +348,168 @@ function ThirdModal({
       });
   };
 
-  if (option === "other") {
-    return <Other />;
-  } else if (option === "specificAnimal") {
-    return (
-      <SpecificAnimal
-        onFinish={onFinish}
-        selectedAreaId={selectedAreaId}
-        handleSelectAreaChange={handleSelectAreaChange}
-        handleSelectZoneChange={handleSelectZoneChange}
-        handleSelectFieldChange={handleSelectFieldChange}
-        handlePriorityChange={handlePriorityChange}
-        handleSelectStartDate={handleSelectStartDate}
-        handleSelectEndDate={handleSelectEndDate}
-        handleDescriptionChange={handleDescriptionChange}
-        handleTaskTypeChange={handleTaskTypeChange}
-        handleEmployeeChange={handleEmployeeChange}
-        handleMaterialChange={handleMaterialChange}
-        handleSelectRemind={handleSelectRemind}
-        handleSelectRepeat={handleSelectRepeat}
-        form={form}
-        area={area}
-        zoneAnimal={zoneAnimal}
-        fieldByZone={fieldByZone}
-        dataAnimal={dataAnimal}
-        priorityValue={priorityValue}
-        description={description}
-        dataTaskTypeLivestock={dataTaskTypeLivestock}
-        employeesValue={employeesValue}
-        dataEmployee={dataEmployee}
-        supervisor={supervisor}
-        materialsValue={materialsValue}
-        dataMaterial={dataMaterial}
-        remindValue={remindValue}
-        repeatValue={repeatValue}
-        disabledDate={disabledDate}
-        startDate={startDate}
-        endDate={endDate}
-      />
-    );
-  } else if (option === "wholeBarn") {
-    return (
-      <WholeBarn
-        onFinish={onFinish}
-        selectedAreaId={selectedAreaId}
-        handleSelectAreaChange={handleSelectAreaChange}
-        handleSelectZoneChange={handleSelectZoneChange}
-        handleSelectFieldChange={handleSelectFieldChange}
-        handlePriorityChange={handlePriorityChange}
-        handleSelectStartDate={handleSelectStartDate}
-        handleSelectEndDate={handleSelectEndDate}
-        handleDescriptionChange={handleDescriptionChange}
-        handleTaskTypeChange={handleTaskTypeChange}
-        handleEmployeeChange={handleEmployeeChange}
-        handleMaterialChange={handleMaterialChange}
-        handleSelectRemind={handleSelectRemind}
-        handleSelectRepeat={handleSelectRepeat}
-        form={form}
-        area={area}
-        zoneAnimal={zoneAnimal}
-        fieldByZone={fieldByZone}
-        priorityValue={priorityValue}
-        description={description}
-        dataTaskTypeLivestock={dataTaskTypeLivestock}
-        employeesValue={employeesValue}
-        dataEmployee={dataEmployee}
-        supervisor={supervisor}
-        materialsValue={materialsValue}
-        dataMaterial={dataMaterial}
-        remindValue={remindValue}
-        repeatValue={repeatValue}
-        disabledDate={disabledDate}
-        startDate={startDate}
-        endDate={endDate}
-      />
-    );
-  } else if (option === "specificPlant") {
-    return (
-      <SpecificPlant
-        onFinish={onFinish}
-        selectedAreaId={selectedAreaId}
-        handleSelectAreaChange={handleSelectAreaChange}
-        handleSelectZoneChange={handleSelectZoneChange}
-        handleSelectFieldChange={handleSelectFieldChange}
-        handlePriorityChange={handlePriorityChange}
-        handleSelectStartDate={handleSelectStartDate}
-        handleSelectEndDate={handleSelectEndDate}
-        handleDescriptionChange={handleDescriptionChange}
-        handleTaskTypeChange={handleTaskTypeChange}
-        handleEmployeeChange={handleEmployeeChange}
-        handleMaterialChange={handleMaterialChange}
-        handleSelectRemind={handleSelectRemind}
-        handleSelectRepeat={handleSelectRepeat}
-        form={form}
-        area={area}
-        zonePlant={zonePlant}
-        fieldByZone={fieldByZone}
-        dataPlant={dataPlant}
-        priorityValue={priorityValue}
-        description={description}
-        dataTaskTypePlant={dataTaskTypePlant}
-        employeesValue={employeesValue}
-        dataEmployee={dataEmployee}
-        supervisor={supervisor}
-        materialsValue={materialsValue}
-        dataMaterial={dataMaterial}
-        remindValue={remindValue}
-        repeatValue={repeatValue}
-        disabledDate={disabledDate}
-        startDate={startDate}
-        endDate={endDate}
-      />
-    );
-  } else if (option === "wholeGarden") {
-    return (
-      <WholeGarden
-        onFinish={onFinish}
-        selectedAreaId={selectedAreaId}
-        handleSelectAreaChange={handleSelectAreaChange}
-        handleSelectZoneChange={handleSelectZoneChange}
-        handleSelectFieldChange={handleSelectFieldChange}
-        handlePriorityChange={handlePriorityChange}
-        handleSelectStartDate={handleSelectStartDate}
-        handleSelectEndDate={handleSelectEndDate}
-        handleDescriptionChange={handleDescriptionChange}
-        handleTaskTypeChange={handleTaskTypeChange}
-        handleEmployeeChange={handleEmployeeChange}
-        handleMaterialChange={handleMaterialChange}
-        handleSelectRemind={handleSelectRemind}
-        handleSelectRepeat={handleSelectRepeat}
-        form={form}
-        area={area}
-        zonePlant={zonePlant}
-        fieldByZone={fieldByZone}
-        priorityValue={priorityValue}
-        description={description}
-        dataTaskTypePlant={dataTaskTypePlant}
-        employeesValue={employeesValue}
-        dataEmployee={dataEmployee}
-        supervisor={supervisor}
-        materialsValue={materialsValue}
-        dataMaterial={dataMaterial}
-        remindValue={remindValue}
-        repeatValue={repeatValue}
-        disabledDate={disabledDate}
-        startDate={startDate}
-        endDate={endDate}
-      />
-    );
-  }
-  // <UpdateTask
-  //   onFinish={onFinish}
-  //   selectedAreaId={selectedAreaId}
-  //   handleSelectAreaChange={handleSelectAreaChange}
-  //   handleSelectZoneChange={handleSelectZoneChange}
-  //   handleSelectFieldChange={handleSelectFieldChange}
-  //   handlePriorityChange={handlePriorityChange}
-  //   handleSelectStartDate={handleSelectStartDate}
-  //   handleSelectEndDate={handleSelectEndDate}
-  //   handleDescriptionChange={handleDescriptionChange}
-  //   handleTaskTypeChange={handleTaskTypeChange}
-  //   handleEmployeeChange={handleEmployeeChange}
-  //   handleMaterialChange={handleMaterialChange}
-  //   handleSelectRemind={handleSelectRemind}
-  //   handleSelectRepeat={handleSelectRepeat}
-  //   form={form}
-  //   area={area}
-  //   zoneAnimal={zoneAnimal}
-  //   fieldByZone={fieldByZone}
-  //   dataAnimal={dataAnimal}
-  //   priorityValue={priorityValue}
-  //   description={description}
-  //   dataTaskTypeLivestock={dataTaskTypeLivestock}
-  //   employeesValue={employeesValue}
-  //   dataEmployee={dataEmployee}
-  //   supervisor={supervisor}
-  //   materialsValue={materialsValue}
-  //   dataMaterial={dataMaterial}
-  //   remindValue={remindValue}
-  //   repeatValue={repeatValue}
-  //   disabledDate={disabledDate}
-  //   startDate={startDate}
-  //   endDate={endDate}
-  // />;
-  return null;
+  return (
+    <>
+      {editTaskModalVisible && (
+        <Modal
+          title="Cập nhật công việc"
+          visible={editTaskModalVisible}
+          onCancel={closeEditTaskModal}
+          width={900}
+          footer={[
+            <Button type="primary" onClick={closeEditTaskModal}>
+              Đóng
+            </Button>,
+            <Button form="updateTask" type="primary" htmlType="submit">
+              Lưu thay đổi
+            </Button>,
+          ]}
+        >
+          <Form
+            layout="vertical"
+            className="task-form"
+            onFinish={handleUpdateTask}
+            id="updateTask"
+            key={editingTask ? editingTask.externalId : "new"}
+          >
+            {taskTypeLivestock && dataAnimal ? (
+              <UpdateSpecificAnimal
+                editingTask={editingTask}
+                handleSelectAreaChange={handleSelectAreaChange}
+                handleSelectZoneChange={handleSelectZoneChange}
+                handleSelectFieldChange={handleSelectFieldChange}
+                handlePriorityChange={handlePriorityChange}
+                handleSelectStartDate={handleSelectStartDate}
+                handleSelectEndDate={handleSelectEndDate}
+                handleDescriptionChange={handleDescriptionChange}
+                handleTaskTypeChange={handleTaskTypeChange}
+                handleEmployeeChange={handleEmployeeChange}
+                handleMaterialChange={handleMaterialChange}
+                handleSelectRemind={handleSelectRemind}
+                handleSelectRepeat={handleSelectRepeat}
+                area={area}
+                zoneAnimal={zoneAnimal}
+                fieldByZone={fieldByZone}
+                dataAnimal={dataAnimal}
+                priorityValue={priorityValue}
+                disabledDate={disabledDate}
+                description={description}
+                dataTaskTypeLivestock={dataTaskTypeLivestock}
+                supervisor={supervisor}
+                employeesValue={employeesValue}
+                dataEmployee={dataEmployee}
+                materialsValue={materialsValue}
+                dataMaterial={dataMaterial}
+                remindValue={remindValue}
+                repeatValue={repeatValue}
+                startDate={startDate}
+                endDate={endDate}
+              />
+            ) : (
+              <UpdateWholeBarn
+                editingTask={editingTask}
+                handleSelectAreaChange={handleSelectAreaChange}
+                handleSelectZoneChange={handleSelectZoneChange}
+                handleSelectFieldChange={handleSelectFieldChange}
+                handlePriorityChange={handlePriorityChange}
+                handleSelectStartDate={handleSelectStartDate}
+                handleSelectEndDate={handleSelectEndDate}
+                handleDescriptionChange={handleDescriptionChange}
+                handleTaskTypeChange={handleTaskTypeChange}
+                handleEmployeeChange={handleEmployeeChange}
+                handleMaterialChange={handleMaterialChange}
+                handleSelectRemind={handleSelectRemind}
+                handleSelectRepeat={handleSelectRepeat}
+                area={area}
+                zoneAnimal={zoneAnimal}
+                fieldByZone={fieldByZone}
+                priorityValue={priorityValue}
+                disabledDate={disabledDate}
+                description={description}
+                dataTaskTypeLivestock={dataTaskTypeLivestock}
+                supervisor={supervisor}
+                employeesValue={employeesValue}
+                dataEmployee={dataEmployee}
+                materialsValue={materialsValue}
+                dataMaterial={dataMaterial}
+                remindValue={remindValue}
+                repeatValue={repeatValue}
+                startDate={startDate}
+                endDate={endDate}
+              />
+            )}
+
+            {taskTypePlant && dataPlant ? (
+              <UpdateSpecificPlant
+                editingTask={editingTask}
+                handleSelectAreaChange={handleSelectAreaChange}
+                handleSelectZoneChange={handleSelectZoneChange}
+                handleSelectFieldChange={handleSelectFieldChange}
+                handlePriorityChange={handlePriorityChange}
+                handleSelectStartDate={handleSelectStartDate}
+                handleSelectEndDate={handleSelectEndDate}
+                handleDescriptionChange={handleDescriptionChange}
+                handleTaskTypeChange={handleTaskTypeChange}
+                handleEmployeeChange={handleEmployeeChange}
+                handleMaterialChange={handleMaterialChange}
+                handleSelectRemind={handleSelectRemind}
+                handleSelectRepeat={handleSelectRepeat}
+                area={area}
+                zonePlant={zonePlant}
+                fieldByZone={fieldByZone}
+                dataPlant={dataPlant}
+                priorityValue={priorityValue}
+                disabledDate={disabledDate}
+                description={description}
+                dataTaskTypePlant={dataTaskTypePlant}
+                supervisor={supervisor}
+                employeesValue={employeesValue}
+                dataEmployee={dataEmployee}
+                materialsValue={materialsValue}
+                dataMaterial={dataMaterial}
+                remindValue={remindValue}
+                repeatValue={repeatValue}
+                startDate={startDate}
+                endDate={endDate}
+              />
+            ) : (
+              <UpdateWholeGarden
+                editingTask={editingTask}
+                handleSelectAreaChange={handleSelectAreaChange}
+                handleSelectZoneChange={handleSelectZoneChange}
+                handleSelectFieldChange={handleSelectFieldChange}
+                handlePriorityChange={handlePriorityChange}
+                handleSelectStartDate={handleSelectStartDate}
+                handleSelectEndDate={handleSelectEndDate}
+                handleDescriptionChange={handleDescriptionChange}
+                handleTaskTypeChange={handleTaskTypeChange}
+                handleEmployeeChange={handleEmployeeChange}
+                handleMaterialChange={handleMaterialChange}
+                handleSelectRemind={handleSelectRemind}
+                handleSelectRepeat={handleSelectRepeat}
+                area={area}
+                zonePlant={zonePlant}
+                fieldByZone={fieldByZone}
+                priorityValue={priorityValue}
+                disabledDate={disabledDate}
+                description={description}
+                dataTaskTypePlant={dataTaskTypePlant}
+                supervisor={supervisor}
+                employeesValue={employeesValue}
+                dataEmployee={dataEmployee}
+                materialsValue={materialsValue}
+                dataMaterial={dataMaterial}
+                remindValue={remindValue}
+                repeatValue={repeatValue}
+                startDate={startDate}
+                endDate={endDate}
+              />
+            )}
+          </Form>
+        </Modal>
+      )}
+    </>
+  );
 }
 
-export default ThirdModal;
+export default UpdateTask;

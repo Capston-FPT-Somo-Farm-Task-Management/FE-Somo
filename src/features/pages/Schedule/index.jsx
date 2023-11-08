@@ -29,7 +29,6 @@ function Schedule() {
   );
 
   const loading = useSelector((state) => state.taskForCalendar.loading);
-  console.log(loading);
 
   useEffect(() => {
     dispatch(getTaskForCalendar(authServices.getUserId()));
@@ -43,7 +42,17 @@ function Schedule() {
           (task) => task.startDate <= dateString && task.endDate >= dateString
         )
       : null;
-
+    // const tasksForDate = taskForCalendarData.data
+    //   ? taskForCalendarData.data.filter((task) => {
+    //       const startDateMinusOneDay = dayjs(task.startDate)
+    //         .subtract(1, "day")
+    //         .format("YYYY-MM-DD");
+    //       return (
+    //         startDateMinusOneDay <= dateString && task.endDate >= dateString
+    //       );
+    //     })
+    //   : null;
+    console.log(tasksForDate);
     return tasksForDate
       ? tasksForDate.map((task) => {
           let type = "success";
@@ -204,7 +213,9 @@ function Schedule() {
           )}
 
           <Modal
-            title={`Chi tiết công việc trong ngày ${selectedDate ? dayjs(selectedDate).format('DD') : ''}`}
+            title={`Các công việc trong ngày ${
+              selectedDate ? dayjs(selectedDate).format("DD") : ""
+            }`}
             visible={modalVisible}
             onCancel={() => setModalVisible(false)}
             footer={null}
@@ -241,7 +252,7 @@ function Schedule() {
                         </Descriptions.Item>
                       ) : (
                         <Descriptions.Item label="Dụng cụ" key={item.id}>
-                        <p>Chưa có dụng cụ</p>
+                          <p>Chưa có dụng cụ</p>
                         </Descriptions.Item>
                       )}
                       <Descriptions.Item label="Khu vực" key={item.id}>
