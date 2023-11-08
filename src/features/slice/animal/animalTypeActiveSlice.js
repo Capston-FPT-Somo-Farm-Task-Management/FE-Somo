@@ -2,12 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { baseUrl } from 'features/api/baseUrl'
 
-export const getAnimalType = createAsyncThunk(
-  'animalTypes/getAnimalTypes',
+export const getAnimalTypeActive = createAsyncThunk(
+  'animalTypeActive/getAnimalTypeActive',
   async (farmId, { rejectWithValue }) => {
     try {
       const { data } = await axios.get(
-        baseUrl + `/HabitantType/LivestockType/Farm(${farmId})`
+        baseUrl + `/HabitantType/LivestockType/Active/Farm(${farmId})`
       )
       return data
     } catch (error) {
@@ -16,24 +16,24 @@ export const getAnimalType = createAsyncThunk(
   }
 )
 
-const animalTypeSlice = createSlice({
-  name: 'animalType',
+const animalTypeActiveSlice = createSlice({
+  name: 'animalTypeActive',
   initialState: {
-    data: {},
+    data: [],
     loading: false,
     error: '',
   },
   extraReducers(builder) {
     builder
-      .addCase(getAnimalType.pending, (state) => {
+      .addCase(getAnimalTypeActive.pending, (state) => {
         state.loading = true
       })
-      .addCase(getAnimalType.fulfilled, (state, action) => {
+      .addCase(getAnimalTypeActive.fulfilled, (state, action) => {
         state.loading = false
         state.error = ''
         state.data = action.payload
       })
-      .addCase(getAnimalType.rejected, (state, action) => {
+      .addCase(getAnimalTypeActive.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
         state.data = []
@@ -41,4 +41,4 @@ const animalTypeSlice = createSlice({
   },
 })
 
-export default animalTypeSlice.reducer
+export default animalTypeActiveSlice.reducer

@@ -5,10 +5,13 @@ const FirstStepAddAnimalType = ({
   isModalOpenType,
   closeModalType,
   onFinishCreateAnimalType,
+  farmId,
 }) => {
   const onFinish = (values) => {
     const finalValues = {
       ...values,
+      farmId: farmId,
+
       status: 1,
     }
     onFinishCreateAnimalType(finalValues)

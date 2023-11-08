@@ -5,17 +5,22 @@ import { useSelector } from 'react-redux'
 import {
   createMaterial,
   deleteMaterial,
-  getMaterial,
+  getMaterialByFarmId,
   updateMaterial,
 } from 'features/slice/material/materialSlice'
 import { useEffect } from 'react'
+import { authServices } from 'services/authServices'
+import { getMemberById } from 'features/slice/user/memberSlice'
 
 const Material = () => {
   const dispatch = useDispatch()
   const material = useSelector((state) => state.material.data)
+  const member = useSelector((state) => state.member.data)
+  const farmId = member.farmId
 
   useEffect(() => {
-    dispatch(getMaterial())
+    dispatch(getMemberById(authServices.getUserId()))
+    dispatch(getMaterialByFarmId(farmId))
   }, [dispatch])
 
   const onFinishCreate = (values) => {
@@ -37,7 +42,7 @@ const Material = () => {
   }
 
   const loadData = () => {
-    dispatch(getMaterial())
+    dispatch(getMaterialByFarmId(farmId))
   }
 
   return (

@@ -3,33 +3,21 @@ import axios from 'axios'
 import { baseUrl } from 'features/api/baseUrl'
 
 export const getPlantType = createAsyncThunk(
-  'plantTypes/getPlantTypes',
-  async () => {
-    try {
-      const { data } = await axios.get(baseUrl + '/HabitantType/PlantType')
-      return data
-    } catch (error) {
-      throw error
-    }
-  }
-)
-
-export const getPlantTypeActive = createAsyncThunk(
-  'plantTypes/getPlantTypeActive',
-  async () => {
+  'plantType/getPlantTypes',
+  async (id, { rejectWithValue }) => {
     try {
       const { data } = await axios.get(
-        baseUrl + '/HabitantType/PlantType/Active'
+        baseUrl + `/HabitantType/PlantType/Farm(${id})`
       )
       return data
     } catch (error) {
-      throw error
+      rejectWithValue(error.response.data.message)
     }
   }
 )
 
 export const createPlantType = createAsyncThunk(
-  'plantTypes/createPlantTypes',
+  'plantType/createPlantTypes',
   async (data, { rejectWithValue }) => {
     try {
       const response = await axios.post(baseUrl + '/HabitantType', data, {
@@ -58,24 +46,9 @@ const plantTypeSlice = createSlice({
       })
       .addCase(getPlantType.fulfilled, (state, action) => {
         state.loading = false
-        state.error = ''
         state.data = action.payload
       })
       .addCase(getPlantType.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
-        state.data = []
-      })
-
-      .addCase(getPlantTypeActive.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(getPlantTypeActive.fulfilled, (state, action) => {
-        state.loading = false
-        state.error = ''
-        state.data = action.payload
-      })
-      .addCase(getPlantTypeActive.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
         state.data = []

@@ -20,19 +20,18 @@ import {
 import { getPlantType } from 'features/slice/plant/plantTypeSlice'
 
 const MyCrops = () => {
-  const member = useSelector((state) => state.member.data)
+  const dispatch = useDispatch()
   const plantByFarm = useSelector((state) => state.plantByFarm.data)
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
-  const farmId = member.farmId
-
   const plantType = useSelector((state) => state.plantType.data)
-
-  const dispatch = useDispatch()
+  const member = useSelector((state) => state.member.data)
+  const farmId = member.farmId
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
     dispatch(getPlantByFarmId(farmId))
     dispatch(getAreaActiveByFarmId(farmId))
+    dispatch(getPlantType(farmId))
   }, [dispatch])
 
   const onFinishCreatePlant = (values) => {
@@ -60,7 +59,7 @@ const MyCrops = () => {
   // Type
 
   useEffect(() => {
-    dispatch(getPlantType())
+    dispatch(getPlantType(farmId))
   }, [dispatch])
 
   const onFinishCreatePlantType = (values) => {
@@ -82,19 +81,23 @@ const MyCrops = () => {
   }
 
   const loadDataPlantType = () => {
-    dispatch(getPlantType())
+    dispatch(getPlantType(farmId))
   }
+
   return (
     <>
       <AddCropTypeAndPlant
         areaByFarm={areaByFarm}
         onFinishCreatePlant={onFinishCreatePlant}
         onFinishCreatePlantType={onFinishCreatePlantType}
+        farmId={farmId}
       />
       <DisplayCrop
         areaByFarm={areaByFarm}
         plantByFarm={plantByFarm}
         plantType={plantType}
+        farmId={farmId}
+        loadDataPlantType={loadDataPlantType}
         onFinishDeletePlant={onFinishDeletePlant}
         onFinishUpdatePlant={onFinishUpdatePlant}
         onFinishUpdatePlantType={onFinishUpdatePlantType}

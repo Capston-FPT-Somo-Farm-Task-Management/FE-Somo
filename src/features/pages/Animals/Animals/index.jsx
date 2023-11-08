@@ -20,19 +20,18 @@ import {
 import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarmSlice'
 
 const Animals = () => {
-  const member = useSelector((state) => state.member.data)
+  const dispatch = useDispatch()
   const animalByFarm = useSelector((state) => state.animalByFarm.data)
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
-  const farmId = member.farmId
-
   const animalType = useSelector((state) => state.animalType.data)
-
-  const dispatch = useDispatch()
+  const member = useSelector((state) => state.member.data)
+  const farmId = member.farmId
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
     dispatch(getAnimalByFarmId(farmId))
     dispatch(getAreaActiveByFarmId(farmId))
+    dispatch(getAnimalType(farmId))
   }, [dispatch])
 
   const onFinishCreateAnimal = (values) => {
@@ -60,7 +59,7 @@ const Animals = () => {
   // Type
 
   useEffect(() => {
-    dispatch(getAnimalType())
+    dispatch(getAnimalType(farmId))
   }, [dispatch])
 
   const onFinishCreateAnimalType = (values) => {
@@ -82,20 +81,23 @@ const Animals = () => {
   }
 
   const loadDataAnimalType = () => {
-    dispatch(getAnimalType())
+    dispatch(getAnimalType(farmId))
   }
 
   return (
     <>
       <AddAnimalAndAnimalType
+        farmId={farmId}
         areaByFarm={areaByFarm}
         onFinishCreateAnimal={onFinishCreateAnimal}
         onFinishCreateAnimalType={onFinishCreateAnimalType}
       />
       <DisplayAnimal
+        farmId={farmId}
         areaByFarm={areaByFarm}
         animalByFarm={animalByFarm}
         animalType={animalType}
+        loadDataAnimalType={loadDataAnimalType}
         onFinishDeleteAnimal={onFinishDeleteAnimal}
         onFinishUpdateAnimal={onFinishUpdateAnimal}
         onFinishDeleteAnimalType={onFinishDeleteAnimalType}

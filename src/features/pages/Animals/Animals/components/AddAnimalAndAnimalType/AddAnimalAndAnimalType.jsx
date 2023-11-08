@@ -7,6 +7,7 @@ import FirstStepAddAnimal from '../FirstStepAddAnimal/FirstStepAddAnimal'
 import FirstStepAddAnimalType from '../FirstStepAddAnimalType/FirstStepAddAnimalType'
 
 const AddAnimalAndAnimalType = ({
+  farmId,
   areaByFarm,
   onFinishCreateAnimal,
   onFinishCreateAnimalType,
@@ -44,6 +45,7 @@ const AddAnimalAndAnimalType = ({
               Thêm vật nuôi
             </Button>
             <FirstStepAddAnimal
+              farmId={farmId}
               isModalOpen={isModalOpen}
               closeModal={closeModal}
               areaByFarm={areaByFarm}
@@ -55,6 +57,7 @@ const AddAnimalAndAnimalType = ({
               Tạo mới loại vật nuôi
             </Button>
             <FirstStepAddAnimalType
+              farmId={farmId}
               isModalOpenType={isModalOpenType}
               closeModalType={closeModalType}
               onFinishCreateAnimalType={onFinishCreateAnimalType}

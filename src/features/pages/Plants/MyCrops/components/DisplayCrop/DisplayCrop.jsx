@@ -8,8 +8,10 @@ const DisplayCrop = ({
   onFinishUpdatePlant,
   onFinishDeletePlant,
   plantType,
+  loadDataPlantType,
   onFinishUpdatePlantType,
   onFinishDeletePlantType,
+  farmId,
 }) => {
   return (
     <>
@@ -22,6 +24,7 @@ const DisplayCrop = ({
             label: 'Cây trồng',
             children: (
               <TableDisplayCrop
+                farmId={farmId}
                 areaByFarm={areaByFarm}
                 plantByFarm={plantByFarm}
                 onFinishUpdatePlant={onFinishUpdatePlant}
@@ -34,6 +37,8 @@ const DisplayCrop = ({
             label: 'Loại cây trồng',
             children: (
               <TableDisplayCropType
+                farmId={farmId}
+                loadDataPlantType={loadDataPlantType}
                 plantType={plantType}
                 onFinishDeletePlantType={onFinishDeletePlantType}
                 onFinishUpdatePlantType={onFinishUpdatePlantType}
