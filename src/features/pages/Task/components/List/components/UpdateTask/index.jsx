@@ -4,7 +4,7 @@ import { getAnimalActive } from "features/slice/animal/animalSlice";
 import { getAreaActive } from "features/slice/area/areaSlice";
 import { getEmployeeByTaskTypeAndFarmId } from "features/slice/employee/employeeSlice";
 import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
-import { getMaterial } from "features/slice/material/materialSlice";
+import { getMaterialActiveByFarmId } from "features/slice/material/materialActiveByFarmSlice";
 import { getPlantActive } from "features/slice/plant/plantSlice";
 import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
 import { createTask } from "features/slice/task/taskSlice";
@@ -55,8 +55,10 @@ function UpdateTask({
   console.log(farmId);
 
   const area = useSelector((state) => state.area.data);
+  console.log(area);
 
   const zoneAnimal = useSelector((state) => state.zoneAnimal.data);
+  console.log(zoneAnimal);
 
   const zonePlant = useSelector((state) => state.zonePlant.data);
 
@@ -68,6 +70,7 @@ function UpdateTask({
   const dataPlant = plant.data;
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
+  console.log(fieldByZone);
 
   const taskTypeLivestock = useSelector(
     (state) => state.taskTypeLivestock.data
@@ -91,7 +94,7 @@ function UpdateTask({
     dispatch(getAnimalActive(selectedFieldId));
     dispatch(getPlantActive(selectedFieldId));
     dispatch(getSupervisor(farmId));
-    dispatch(getMaterial());
+    dispatch(getMaterialActiveByFarmId(farmId));
     dispatch(getMemberById(authServices.getUserId()));
   }, [farmId, selectedFieldId]);
 
@@ -100,13 +103,13 @@ function UpdateTask({
       dispatch(getZoneByAreaAnimal(selectedAreaId));
       dispatch(getZoneByAreaPlant(selectedAreaId));
     }
-  }, [selectedAreaId]);
+  }, [selectedAreaId, editTaskModalVisible]);
 
   useEffect(() => {
     if (selectedZoneId) {
       dispatch(getFieldByZone(selectedZoneId));
     }
-  }, [selectedZoneId]);
+  }, [selectedZoneId, editTaskModalVisible]);
 
   useEffect(() => {
     if (selectedTaskTypeId) {
@@ -120,21 +123,7 @@ function UpdateTask({
         employeeIds: undefined,
       });
     }
-  }, [selectedTaskTypeId]);
-
-  useEffect(() => {
-    if (selectedTaskTypeId) {
-      dispatch(
-        getEmployeeByTaskTypeAndFarmId({
-          taskTypeId: selectedTaskTypeId,
-          farmId: farmId,
-        })
-      );
-      form.setFieldsValue({
-        employeeIds: undefined,
-      });
-    }
-  }, [selectedTaskTypeId]);
+  }, [selectedTaskTypeId, editTaskModalVisible]);
 
   useEffect(() => {
     if (endDate && startDate && startDate.isAfter(endDate)) {
@@ -365,15 +354,45 @@ function UpdateTask({
             </Button>,
           ]}
         >
-          <Form
-            layout="vertical"
-            className="task-form"
-            onFinish={handleUpdateTask}
-            id="updateTask"
-            key={editingTask ? editingTask.externalId : "new"}
-          >
-            {taskTypeLivestock && dataAnimal ? (
-              <UpdateSpecificAnimal
+          {/* {taskTypeLivestock && dataAnimal ? ( */}
+          <UpdateSpecificAnimal
+            handleUpdateTask={handleUpdateTask}
+            form={form}
+            editingTask={editingTask}
+            handleSelectAreaChange={handleSelectAreaChange}
+            handleSelectZoneChange={handleSelectZoneChange}
+            handleSelectFieldChange={handleSelectFieldChange}
+            handlePriorityChange={handlePriorityChange}
+            handleSelectStartDate={handleSelectStartDate}
+            handleSelectEndDate={handleSelectEndDate}
+            handleDescriptionChange={handleDescriptionChange}
+            handleTaskTypeChange={handleTaskTypeChange}
+            handleEmployeeChange={handleEmployeeChange}
+            handleMaterialChange={handleMaterialChange}
+            handleSelectRemind={handleSelectRemind}
+            handleSelectRepeat={handleSelectRepeat}
+            area={area}
+            zoneAnimal={zoneAnimal}
+            fieldByZone={fieldByZone}
+            dataAnimal={dataAnimal}
+            priorityValue={priorityValue}
+            disabledDate={disabledDate}
+            description={description}
+            dataTaskTypeLivestock={dataTaskTypeLivestock}
+            supervisor={supervisor}
+            employeesValue={employeesValue}
+            dataEmployee={dataEmployee}
+            materialsValue={materialsValue}
+            dataMaterial={dataMaterial}
+            remindValue={remindValue}
+            repeatValue={repeatValue}
+            startDate={startDate}
+            endDate={endDate}
+          />
+          {/* ) : ( */}
+          {/* <UpdateWholeBarn
+          handleUpdateTask={handleUpdateTask}
+            form={form}
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
                 handleSelectZoneChange={handleSelectZoneChange}
@@ -390,7 +409,6 @@ function UpdateTask({
                 area={area}
                 zoneAnimal={zoneAnimal}
                 fieldByZone={fieldByZone}
-                dataAnimal={dataAnimal}
                 priorityValue={priorityValue}
                 disabledDate={disabledDate}
                 description={description}
@@ -404,43 +422,13 @@ function UpdateTask({
                 repeatValue={repeatValue}
                 startDate={startDate}
                 endDate={endDate}
-              />
-            ) : (
-              <UpdateWholeBarn
-                editingTask={editingTask}
-                handleSelectAreaChange={handleSelectAreaChange}
-                handleSelectZoneChange={handleSelectZoneChange}
-                handleSelectFieldChange={handleSelectFieldChange}
-                handlePriorityChange={handlePriorityChange}
-                handleSelectStartDate={handleSelectStartDate}
-                handleSelectEndDate={handleSelectEndDate}
-                handleDescriptionChange={handleDescriptionChange}
-                handleTaskTypeChange={handleTaskTypeChange}
-                handleEmployeeChange={handleEmployeeChange}
-                handleMaterialChange={handleMaterialChange}
-                handleSelectRemind={handleSelectRemind}
-                handleSelectRepeat={handleSelectRepeat}
-                area={area}
-                zoneAnimal={zoneAnimal}
-                fieldByZone={fieldByZone}
-                priorityValue={priorityValue}
-                disabledDate={disabledDate}
-                description={description}
-                dataTaskTypeLivestock={dataTaskTypeLivestock}
-                supervisor={supervisor}
-                employeesValue={employeesValue}
-                dataEmployee={dataEmployee}
-                materialsValue={materialsValue}
-                dataMaterial={dataMaterial}
-                remindValue={remindValue}
-                repeatValue={repeatValue}
-                startDate={startDate}
-                endDate={endDate}
-              />
-            )}
+              /> */}
+          {/* )} */}
 
-            {taskTypePlant && dataPlant ? (
+          {/* {taskTypePlant && dataPlant ? (
               <UpdateSpecificPlant
+              handleUpdateTask={handleUpdateTask}
+            form={form}
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
                 handleSelectZoneChange={handleSelectZoneChange}
@@ -474,6 +462,8 @@ function UpdateTask({
               />
             ) : (
               <UpdateWholeGarden
+              handleUpdateTask={handleUpdateTask}
+            form={form}
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
                 handleSelectZoneChange={handleSelectZoneChange}
@@ -504,8 +494,7 @@ function UpdateTask({
                 startDate={startDate}
                 endDate={endDate}
               />
-            )}
-          </Form>
+            )} */}
         </Modal>
       )}
     </>

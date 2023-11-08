@@ -5,6 +5,8 @@ import dayjs from "dayjs";
 import MultiDatePicker from "react-multi-date-picker";
 
 function UpdateSpecificAnimal({
+  handleUpdateTask,
+  form,
   editingTask,
   handleSelectAreaChange,
   handleSelectZoneChange,
@@ -18,7 +20,6 @@ function UpdateSpecificAnimal({
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
-  form,
   area,
   zoneAnimal,
   fieldByZone,
@@ -40,7 +41,14 @@ function UpdateSpecificAnimal({
   const { TextArea } = Input;
 
   return (
-    <>
+    <Form
+      layout="vertical"
+      className="task-form"
+      onFinish={handleUpdateTask}
+      id="updateTask"
+      key={editingTask ? editingTask.externalId : "new"}
+      form={form}
+    >
       <div className="form-left">
         <Form.Item
           label="Khu vực"
@@ -329,7 +337,7 @@ function UpdateSpecificAnimal({
                   label: editingTask.employeeName,
                   value: editingTask.employeeIds,
                 }
-              : ""
+              : undefined
           }
         >
           <Select
@@ -356,7 +364,7 @@ function UpdateSpecificAnimal({
                   label: editingTask.materialName,
                   value: editingTask.materialIds,
                 }
-              : ""
+              : undefined
           }
         >
           <Select
@@ -424,7 +432,7 @@ function UpdateSpecificAnimal({
           </Form.Item>
         )}
       </div>
-    </>
+    </Form>
   );
 }
 

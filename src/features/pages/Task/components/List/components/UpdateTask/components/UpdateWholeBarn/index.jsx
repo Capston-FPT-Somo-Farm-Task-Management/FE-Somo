@@ -5,6 +5,8 @@ import dayjs from "dayjs";
 import MultiDatePicker from "react-multi-date-picker";
 
 function UpdateWholeBarn({
+  handleUpdateTask,
+  form,
   editingTask,
   handleSelectAreaChange,
   handleSelectZoneChange,
@@ -18,7 +20,6 @@ function UpdateWholeBarn({
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
-  form,
   area,
   zoneAnimal,
   fieldByZone,
@@ -39,7 +40,14 @@ function UpdateWholeBarn({
   const { TextArea } = Input;
 
   return (
-    <>
+    <Form
+      layout="vertical"
+      className="task-form"
+      onFinish={handleUpdateTask}
+      id="updateTask"
+      key={editingTask ? editingTask.externalId : "new"}
+      form={form}
+    >
       <div className="form-left">
         <Form.Item
           label="Khu vực"
@@ -396,7 +404,7 @@ function UpdateWholeBarn({
           </Form.Item>
         )}
       </div>
-    </>
+      </Form>
   );
 }
 
