@@ -8,11 +8,14 @@ export const getAnimalActive = createAsyncThunk(
   'animals/getAnimalActive',
   async (id) => {
     try {
-      const { data } = await axios.get(baseUrl + `/LiveStock/ExternalId/Field(${id})`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const { data } = await axios.get(
+        baseUrl + `/LiveStock/ExternalId/Field(${id})`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       return data
     } catch (error) {
       throw Exception(error)

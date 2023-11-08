@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import plantReducer from './slice/plant/plantSlice'
 import animalReducer from './slice/animal/animalSlice'
 import animalTypeReducer from './slice/animal/animalTypeSlice'
+import animalTypeActiveReducer from './slice/animal/animalTypeActiveSlice'
 import animalByFarmReducer from './slice/animal/animalByFarmSlice'
 import areaReducer from './slice/area/areaSlice'
 import areaByFarmReducer from './slice/area/areaByFarmSlice'
@@ -67,6 +68,7 @@ export const store = configureStore({
     plantTypeActive: plantTypeActiveReducer,
     plantByFarm: plantByFarmReducer,
     animalType: animalTypeReducer,
+    animalTypeActive: animalTypeActiveReducer,
     animalByFarm: animalByFarmReducer,
     task: taskReducer,
     taskForCalendar: taskForCalendarReducer,

@@ -3,6 +3,7 @@ import TableDisplayAnimal from './TableDisplayAnimal'
 import TableDisplayAnimalType from './TableDisplayAnimalType'
 
 const DisplayAnimal = ({
+  farmId,
   areaByFarm,
   animalByFarm,
   onFinishUpdateAnimal,
@@ -10,6 +11,7 @@ const DisplayAnimal = ({
   animalType,
   onFinishDeleteAnimalType,
   onFinishUpdateAnimalType,
+  loadDataAnimalType,
 }) => {
   return (
     <Tabs
@@ -33,6 +35,8 @@ const DisplayAnimal = ({
           label: 'Loại vật nuôi',
           children: (
             <TableDisplayAnimalType
+              farmId={farmId}
+              loadDataAnimalType={loadDataAnimalType}
               animalType={animalType}
               onFinishUpdateAnimalType={onFinishUpdateAnimalType}
               onFinishDeleteAnimalType={onFinishDeleteAnimalType}
