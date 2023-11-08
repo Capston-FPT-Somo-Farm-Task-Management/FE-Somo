@@ -20,7 +20,9 @@ const UpdateAnimal = ({
   const [gender, setGender] = useState(true)
 
   const zoneAnimal = useSelector((state) => state.zoneAnimal.data)
+  console.log(zoneAnimal);
   const fieldByZone = useSelector((state) => state.fieldByZone.data)
+  console.log(fieldByZone);
 
   const animalTypeActive = useSelector((state) => state.animalType.data)
 

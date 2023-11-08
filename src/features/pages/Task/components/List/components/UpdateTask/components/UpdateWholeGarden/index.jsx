@@ -5,6 +5,8 @@ import dayjs from "dayjs";
 import MultiDatePicker from "react-multi-date-picker";
 
 function UpdateWholeGarden({
+  handleUpdateTask,
+  form,
   editingTask,
   handleSelectAreaChange,
   handleSelectZoneChange,
@@ -18,7 +20,6 @@ function UpdateWholeGarden({
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
-  form,
   area,
   zonePlant,
   fieldByZone,
@@ -39,7 +40,14 @@ function UpdateWholeGarden({
   const { TextArea } = Input;
 
   return (
-    <>
+    <Form
+      layout="vertical"
+      className="task-form"
+      onFinish={handleUpdateTask}
+      id="updateTask"
+      key={editingTask ? editingTask.externalId : "new"}
+      form={form}
+    >
       <div className="form-left">
         <Form.Item
           label="Khu vực"
@@ -396,7 +404,7 @@ function UpdateWholeGarden({
           </Form.Item>
         )}
       </div>
-    </>
+    </Form>
   );
 }
 

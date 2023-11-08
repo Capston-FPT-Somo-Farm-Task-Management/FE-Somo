@@ -58,18 +58,22 @@ function ThirdModal({
   console.log(farmId);
 
   const area = useSelector((state) => state.area.data);
+  console.log("khu vực: ", area);
 
   const zoneAnimal = useSelector((state) => state.zoneAnimal.data);
+  console.log("vùng: ", zoneAnimal);
 
   const zonePlant = useSelector((state) => state.zonePlant.data);
 
   const animal = useSelector((state) => state.animal.data);
   const dataAnimal = animal.data;
+  console.log("mã vật nuôi: ", dataAnimal);
 
   const plant = useSelector((state) => state.plant.data);
   const dataPlant = plant.data;
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
+  console.log("chuồng: ", fieldByZone);
 
   const taskTypeLivestock = useSelector(
     (state) => state.taskTypeLivestock.data
@@ -90,12 +94,10 @@ function ThirdModal({
     dispatch(getAreaActive(farmId));
     dispatch(getTaskTypeLivestock());
     dispatch(getTaskTypePlant());
-    dispatch(getAnimalActive(selectedFieldId));
-    dispatch(getPlantActive(selectedFieldId));
     dispatch(getSupervisor(farmId));
     dispatch(getMaterial());
     dispatch(getMemberById(authServices.getUserId()));
-  }, [farmId, selectedFieldId]);
+  }, [farmId]);
 
   useEffect(() => {
     if (selectedAreaId) {
@@ -108,21 +110,16 @@ function ThirdModal({
     if (selectedZoneId) {
       dispatch(getFieldByZone(selectedZoneId));
     }
+    console.log(selectedZoneId);
   }, [selectedZoneId]);
 
   useEffect(() => {
-    if (selectedTaskTypeId) {
-      dispatch(
-        getEmployeeByTaskTypeAndFarmId({
-          taskTypeId: selectedTaskTypeId,
-          farmId: farmId,
-        })
-      );
-      form.setFieldsValue({
-        employeeIds: undefined,
-      });
+    if (selectedFieldId) {
+      dispatch(getAnimalActive(selectedFieldId));
+      dispatch(getPlantActive(selectedFieldId));
     }
-  }, [selectedTaskTypeId]);
+    console.log(selectedFieldId);
+  }, [selectedFieldId]);
 
   useEffect(() => {
     if (selectedTaskTypeId) {
@@ -152,6 +149,8 @@ function ThirdModal({
     form.setFieldsValue({
       zoneId: null,
       fieldId: null,
+      liveStockId: null,
+      plantId: null,
     });
   };
 
@@ -159,6 +158,8 @@ function ThirdModal({
     setSelectedZoneId(value);
     form.setFieldsValue({
       fieldId: null,
+      liveStockId: null,
+      plantId: null,
     });
 
     try {
@@ -173,6 +174,10 @@ function ThirdModal({
 
   const handleSelectFieldChange = (value) => {
     setSelectedFieldId(value);
+    form.setFieldsValue({
+      liveStockId: null,
+      plantId: null,
+    });
   };
 
   const handlePriorityChange = (value) => {
@@ -500,40 +505,6 @@ function ThirdModal({
       />
     );
   }
-  // <UpdateTask
-  //   onFinish={onFinish}
-  //   selectedAreaId={selectedAreaId}
-  //   handleSelectAreaChange={handleSelectAreaChange}
-  //   handleSelectZoneChange={handleSelectZoneChange}
-  //   handleSelectFieldChange={handleSelectFieldChange}
-  //   handlePriorityChange={handlePriorityChange}
-  //   handleSelectStartDate={handleSelectStartDate}
-  //   handleSelectEndDate={handleSelectEndDate}
-  //   handleDescriptionChange={handleDescriptionChange}
-  //   handleTaskTypeChange={handleTaskTypeChange}
-  //   handleEmployeeChange={handleEmployeeChange}
-  //   handleMaterialChange={handleMaterialChange}
-  //   handleSelectRemind={handleSelectRemind}
-  //   handleSelectRepeat={handleSelectRepeat}
-  //   form={form}
-  //   area={area}
-  //   zoneAnimal={zoneAnimal}
-  //   fieldByZone={fieldByZone}
-  //   dataAnimal={dataAnimal}
-  //   priorityValue={priorityValue}
-  //   description={description}
-  //   dataTaskTypeLivestock={dataTaskTypeLivestock}
-  //   employeesValue={employeesValue}
-  //   dataEmployee={dataEmployee}
-  //   supervisor={supervisor}
-  //   materialsValue={materialsValue}
-  //   dataMaterial={dataMaterial}
-  //   remindValue={remindValue}
-  //   repeatValue={repeatValue}
-  //   disabledDate={disabledDate}
-  //   startDate={startDate}
-  //   endDate={endDate}
-  // />;
   return null;
 }
 
