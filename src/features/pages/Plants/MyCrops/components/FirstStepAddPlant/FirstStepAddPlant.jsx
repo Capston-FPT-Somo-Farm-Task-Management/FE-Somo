@@ -2,7 +2,7 @@ import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import { getPlantTypeActive } from 'features/slice/plant/plantTypeSlice'
+import { getPlantTypeActive } from 'features/slice/plant/plantTypeActiveSlice'
 import { getZoneByAreaPlant } from 'features/slice/zone/zonePlantSlice'
 import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
 
@@ -11,6 +11,7 @@ const FirstStepAddPlant = ({
   closeModal,
   areaByFarm,
   onFinishCreatePlant,
+  farmId,
 }) => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
@@ -20,11 +21,12 @@ const FirstStepAddPlant = ({
   const zonePlant = useSelector((state) => state.zonePlant.data)
   const fieldByZone = useSelector((state) => state.fieldByZone.data)
 
-  const plantTypeActive = useSelector((state) => state.plantType.data)
+  const plantTypeActive = useSelector((state) => state.plantTypeActive.data)
 
   useEffect(() => {
-    dispatch(getPlantTypeActive())
+    dispatch(getPlantTypeActive(farmId))
   }, [dispatch])
+  console.log(farmId)
 
   useEffect(() => {
     if (selectedAreaId) {

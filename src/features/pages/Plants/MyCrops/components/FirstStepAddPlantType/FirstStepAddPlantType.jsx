@@ -5,10 +5,12 @@ const FirstStepAddPlantType = ({
   isModalOpenType,
   closeModalType,
   onFinishCreatePlantType,
+  farmId,
 }) => {
   const onFinish = (values) => {
     const finalValues = {
       ...values,
+      farmId: farmId,
       status: 0,
     }
     onFinishCreatePlantType(finalValues)

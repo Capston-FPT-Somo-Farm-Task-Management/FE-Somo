@@ -1,6 +1,6 @@
 import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
 import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
-import { getPlantTypeActive } from 'features/slice/plant/plantTypeSlice'
+import { getPlantTypeActive } from 'features/slice/plant/plantTypeActiveSlice'
 import { getZoneByAreaPlant } from 'features/slice/zone/zonePlantSlice'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,6 +11,7 @@ const UpdateCrop = ({
   closeModal,
   selectedData,
   onFinishUpdatePlant,
+  farmId,
 }) => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
@@ -22,10 +23,10 @@ const UpdateCrop = ({
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data)
 
-  const plantTypeActive = useSelector((state) => state.plantType.data)
+  const plantTypeActive = useSelector((state) => state.plantTypeActive.data)
 
   useEffect(() => {
-    dispatch(getPlantTypeActive())
+    dispatch(getPlantTypeActive(farmId))
   }, [dispatch])
 
   useEffect(() => {

@@ -10,6 +10,7 @@ const AddPlantAndPlantType = ({
   areaByFarm,
   onFinishCreatePlant,
   onFinishCreatePlantType,
+  farmId,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -43,6 +44,7 @@ const AddPlantAndPlantType = ({
               Tạo mới cây
             </Button>
             <FirstStepAddPlant
+              farmId={farmId}
               isModalOpen={isModalOpen}
               closeModal={closeModal}
               areaByFarm={areaByFarm}
@@ -57,6 +59,7 @@ const AddPlantAndPlantType = ({
               isModalOpenType={isModalOpenType}
               closeModalType={closeModalType}
               onFinishCreatePlantType={onFinishCreatePlantType}
+              farmId={farmId}
             />
 
             <Button type="dashed">
