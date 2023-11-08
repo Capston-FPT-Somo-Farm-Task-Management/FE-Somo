@@ -42,7 +42,7 @@ function SpecificAnimal({
   return (
     <Form
       layout="vertical"
-      className="task-specific-animal"
+      className="task-form"
       onFinish={onFinish}
       id="createTask"
       name="createTask"

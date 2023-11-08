@@ -9,6 +9,7 @@ import {
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
+import UpdateTask from "../UpdateTask";
 
 function TableTask({
   task,
@@ -16,11 +17,18 @@ function TableTask({
   dataTotalPages,
   taskTitle,
   handleMenuClick,
+  editingTask,
+  editTaskModalVisible,
+  openEditTaskModal,
+  closeEditTaskModal,
   openAddSubtaskModal,
   openSubtaskModal,
   openEffortModal,
   onChange,
-  openModal
+  openModal,
+  handleTaskAdded,
+  handleDateChange,
+  loadDataTask,
 }) {
   const dispatch = useDispatch();
 
@@ -83,11 +91,11 @@ function TableTask({
 
                           {isStatus && isStatus ? (
                             <Menu.Item key="edit">
-                              <span>
+                              <span onClick={() => openEditTaskModal(record)}>
                                 <EditOutlined
                                   style={{ color: "gold", marginRight: "8px" }}
                                 />
-                                Sửa
+                                Sửa công việc
                               </span>
                             </Menu.Item>
                           ) : null}
@@ -97,7 +105,7 @@ function TableTask({
                               <DeleteOutlined
                                 style={{ color: "red", marginRight: "8px" }}
                               />
-                              Xóa
+                              Xóa công việc
                             </span>
                           </Menu.Item>
                         </Menu>
@@ -165,6 +173,15 @@ function TableTask({
           }}
         />
       )}
+      <UpdateTask
+        editTaskModalVisible={editTaskModalVisible}
+        closeEditTaskModal={closeEditTaskModal}
+        key={editingTask ? editingTask.id : null}
+        editingTask={editingTask}
+        handleTaskAdded={handleTaskAdded}
+        handleDateChange={handleDateChange}
+        loadDataTask={loadDataTask}
+      />
     </>
   );
 }
