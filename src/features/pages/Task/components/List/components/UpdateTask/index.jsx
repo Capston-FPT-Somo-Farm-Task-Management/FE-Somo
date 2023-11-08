@@ -43,7 +43,9 @@ function UpdateTask({
     editingTask ? editingTask.taskTypeId : null
   );
   const [selectedFarmId, setSelectedFarmId] = useState(null);
-  const [employeesValue, setEmployeesValue] = useState(null);
+  const [employeesValue, setEmployeesValue] = useState(
+    editingTask ? editingTask.employeeId : null
+  );
   const [materialsValue, setMaterialsValue] = useState(0);
   const [priorityValue, setPriorityValue] = useState("");
   const [remindValue, setRemindValue] = useState(0);
@@ -51,6 +53,8 @@ function UpdateTask({
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [description, setDescription] = useState("");
+  const [overallEfforMinutes, setOverallEfforMinutes] = useState(0);
+  const [overallEffortHour, setOverallEffortHour] = useState(0);
   const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
 
   const [form] = Form.useForm();
@@ -87,8 +91,10 @@ function UpdateTask({
 
   const dataEmployee = useSelector((state) => state.employee.data);
 
-  const material = useSelector((state) => state.material.data);
+  const material = useSelector((state) => state.materialActive.data);
   const dataMaterial = material.data;
+
+  console.log(editingTask);
 
   useEffect(() => {
     dispatch(getAreaActive(farmId));
@@ -259,6 +265,14 @@ function UpdateTask({
     return current && current < dayjs().startOf("day");
   };
 
+  const handleOverallEfforMinutes = (value) => {
+    setOverallEfforMinutes(parseInt(value, 10));
+  };
+
+  const handleOverallEffortHour = (value) => {
+    setOverallEffortHour(parseInt(value, 10));
+  };
+
   const transformData = (originalData) => {
     const transformedData = {
       employeeIds: originalData.employeeIds,
@@ -368,7 +382,7 @@ function UpdateTask({
             </Button>,
           ]}
         >
-          {dataAnimal && dataTaskTypeLivestock ? (
+          {editingTask.externalId && dataTaskTypeLivestock ? (
             <UpdateSpecificAnimal
               handleUpdateTask={handleUpdateTask}
               form={form}
@@ -385,6 +399,8 @@ function UpdateTask({
               handleMaterialChange={handleMaterialChange}
               handleSelectRemind={handleSelectRemind}
               handleSelectRepeat={handleSelectRepeat}
+              handleOverallEffortHour={handleOverallEffortHour}
+              handleOverallEfforMinutes={handleOverallEfforMinutes}
               area={area}
               zoneAnimal={zoneAnimal}
               fieldByZone={fieldByZone}
@@ -392,6 +408,8 @@ function UpdateTask({
               priorityValue={priorityValue}
               disabledDate={disabledDate}
               description={description}
+              overallEfforMinutes={overallEfforMinutes}
+              overallEffortHour={overallEffortHour}
               dataTaskTypeLivestock={dataTaskTypeLivestock}
               supervisor={supervisor}
               employeesValue={employeesValue}
@@ -403,7 +421,7 @@ function UpdateTask({
               startDate={startDate}
               endDate={endDate}
             />
-          ) : dataTaskTypeLivestock ? (
+          ) : dataTaskTypeLivestock && !editingTask.externalId ? (
             <UpdateWholeBarn
               handleUpdateTask={handleUpdateTask}
               form={form}
@@ -420,12 +438,16 @@ function UpdateTask({
               handleMaterialChange={handleMaterialChange}
               handleSelectRemind={handleSelectRemind}
               handleSelectRepeat={handleSelectRepeat}
+              handleOverallEffortHour={handleOverallEffortHour}
+              handleOverallEfforMinutes={handleOverallEfforMinutes}
               area={area}
               zoneAnimal={zoneAnimal}
               fieldByZone={fieldByZone}
               priorityValue={priorityValue}
               disabledDate={disabledDate}
               description={description}
+              overallEfforMinutes={overallEfforMinutes}
+              overallEffortHour={overallEffortHour}
               dataTaskTypeLivestock={dataTaskTypeLivestock}
               supervisor={supervisor}
               employeesValue={employeesValue}
@@ -437,7 +459,7 @@ function UpdateTask({
               startDate={startDate}
               endDate={endDate}
             />
-          ) : dataPlant && dataTaskTypePlant ? (
+          ) : dataTaskTypePlant && editingTask.externalId ? (
             <UpdateSpecificPlant
               handleUpdateTask={handleUpdateTask}
               form={form}
@@ -454,6 +476,8 @@ function UpdateTask({
               handleMaterialChange={handleMaterialChange}
               handleSelectRemind={handleSelectRemind}
               handleSelectRepeat={handleSelectRepeat}
+              handleOverallEffortHour={handleOverallEffortHour}
+              handleOverallEfforMinutes={handleOverallEfforMinutes}
               area={area}
               zonePlant={zonePlant}
               fieldByZone={fieldByZone}
@@ -461,6 +485,8 @@ function UpdateTask({
               priorityValue={priorityValue}
               disabledDate={disabledDate}
               description={description}
+              overallEfforMinutes={overallEfforMinutes}
+              overallEffortHour={overallEffortHour}
               dataTaskTypePlant={dataTaskTypePlant}
               supervisor={supervisor}
               employeesValue={employeesValue}
@@ -472,7 +498,7 @@ function UpdateTask({
               startDate={startDate}
               endDate={endDate}
             />
-          ) : dataTaskTypePlant ? (
+          ) : dataTaskTypePlant && !editingTask.externalId ? (
             <UpdateWholeGarden
               handleUpdateTask={handleUpdateTask}
               form={form}
@@ -489,12 +515,16 @@ function UpdateTask({
               handleMaterialChange={handleMaterialChange}
               handleSelectRemind={handleSelectRemind}
               handleSelectRepeat={handleSelectRepeat}
+              handleOverallEffortHour={handleOverallEffortHour}
+              handleOverallEfforMinutes={handleOverallEfforMinutes}
               area={area}
               zonePlant={zonePlant}
               fieldByZone={fieldByZone}
               priorityValue={priorityValue}
               disabledDate={disabledDate}
               description={description}
+              overallEfforMinutes={overallEfforMinutes}
+              overallEffortHour={overallEffortHour}
               dataTaskTypePlant={dataTaskTypePlant}
               supervisor={supervisor}
               employeesValue={employeesValue}

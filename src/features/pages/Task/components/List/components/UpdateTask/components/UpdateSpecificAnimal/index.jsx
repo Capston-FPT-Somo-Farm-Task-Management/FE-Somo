@@ -20,12 +20,16 @@ function UpdateSpecificAnimal({
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
+  handleOverallEffortHour,
+  handleOverallEfforMinutes,
   area,
   zoneAnimal,
   fieldByZone,
   dataAnimal,
   priorityValue,
   description,
+  overallEfforMinutes,
+  overallEffortHour,
   dataTaskTypeLivestock,
   employeesValue,
   dataEmployee,
@@ -183,11 +187,9 @@ function UpdateSpecificAnimal({
             onChange={handlePriorityChange}
             placeholder="Chọn độ ưu tiên"
           >
-            <Select.Option value="Thấp nhất">Thấp nhất</Select.Option>
             <Select.Option value="Thấp">Thấp</Select.Option>
             <Select.Option value="Trung bình">Trung bình</Select.Option>
             <Select.Option value="Cao">Cao</Select.Option>
-            <Select.Option value="Cao nhất">Cao nhất</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item
@@ -354,6 +356,66 @@ function UpdateSpecificAnimal({
                 : null
             }
           />
+        </Form.Item>
+        <Form.Item
+          label="Thời gian làm việc phải bỏ ra"
+          style={{ marginBottom: 0 }}
+          required
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng chọn thời gian làm việc phải bỏ ra",
+            },
+          ]}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <Form.Item
+              name="overallEffortHour"
+              required
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn giờ làm việc",
+                },
+              ]}
+              style={{ width: "48%" }}
+            >
+              <Select
+                placeholder="Chọn giờ"
+                value={overallEffortHour}
+                onChange={handleOverallEffortHour}
+              >
+                {Array.from({ length: 24 }, (_, i) => i).map((hour) => (
+                  <Select.Option key={hour} value={hour.toString()}>
+                    {hour < 10 ? `0${hour}` : hour}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Form.Item
+              name="overallEfforMinutes"
+              required
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn phút làm việc",
+                },
+              ]}
+              style={{ width: "48%" }}
+            >
+              <Select
+                placeholder="Chọn phút"
+                value={overallEfforMinutes}
+                onChange={handleOverallEfforMinutes}
+              >
+                {Array.from({ length: 60 }, (_, i) => i).map((minute) => (
+                  <Select.Option key={minute} value={minute.toString()}>
+                    {minute < 10 ? `0${minute}` : minute}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </div>
         </Form.Item>
         <Form.Item
           label="Dụng cụ"

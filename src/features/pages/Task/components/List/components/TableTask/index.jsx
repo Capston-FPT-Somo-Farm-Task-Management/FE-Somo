@@ -159,17 +159,19 @@ function TableTask({
           dataSource={task}
           onChange={onChange}
           onRow={(record) => {
-            return {
-              onClick: async (event) => {
-                const isNameClicked =
-                  event.target.dataset.nameClicked === "true";
+            if (record && record.status) {
+              return {
+                onClick: async (event) => {
+                  const isNameClicked =
+                    event.target.dataset.nameClicked === "true";
 
-                if (isNameClicked) {
-                  openModal(record);
-                  await dispatch(getEvidenceByTaskId(record.id));
-                }
-              },
-            };
+                  if (isNameClicked) {
+                    openModal(record);
+                    await dispatch(getEvidenceByTaskId(record.id));
+                  }
+                },
+              };
+            }
           }}
         />
       )}
