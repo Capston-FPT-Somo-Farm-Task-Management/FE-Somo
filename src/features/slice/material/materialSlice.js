@@ -3,18 +3,18 @@ import axios from 'axios'
 import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
 
-export const getMaterial = createAsyncThunk(
+export const getMaterialByFarmId = createAsyncThunk(
   'materials/getMaterials',
-  async () => {
+  async (farmId, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(baseUrl + '/Material', {
+      const { data } = await axios.get(baseUrl + `/Material/Farm(${farmId})`, {
         headers: {
           'Content-Type': 'application/json',
         },
       })
       return data
     } catch (error) {
-      console.log(error)
+      rejectWithValue(error)
     }
   }
 )
@@ -76,7 +76,7 @@ export const deleteMaterial = createAsyncThunk(
 )
 
 const materialSlice = createSlice({
-  name: "material",
+  name: 'material',
   initialState: {
     data: [],
     loading: false,
@@ -85,15 +85,15 @@ const materialSlice = createSlice({
   extraReducers(builder) {
     builder
 
-      .addCase(getMaterial.pending, (state) => {
+      .addCase(getMaterialByFarmId.pending, (state) => {
         state.loading = true
       })
-      .addCase(getMaterial.fulfilled, (state, action) => {
+      .addCase(getMaterialByFarmId.fulfilled, (state, action) => {
         state.loading = false
         state.error = ''
         state.data = action.payload
       })
-      .addCase(getMaterial.rejected, (state, action) => {
+      .addCase(getMaterialByFarmId.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
         state.data = []
