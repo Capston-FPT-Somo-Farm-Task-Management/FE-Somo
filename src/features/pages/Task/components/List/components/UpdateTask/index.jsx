@@ -4,7 +4,7 @@ import { getAnimalActive } from "features/slice/animal/animalSlice";
 import { getAreaActive } from "features/slice/area/areaSlice";
 import { getEmployeeByTaskTypeAndFarmId } from "features/slice/employee/employeeSlice";
 import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
-import { getMaterial } from "features/slice/material/materialSlice";
+import { getMaterialActiveByFarmId } from "features/slice/material/materialActiveByFarmSlice";
 import { getPlantActive } from "features/slice/plant/plantSlice";
 import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
 import { createTask } from "features/slice/task/taskSlice";
@@ -94,7 +94,7 @@ function UpdateTask({
     dispatch(getAnimalActive(selectedFieldId));
     dispatch(getPlantActive(selectedFieldId));
     dispatch(getSupervisor(farmId));
-    dispatch(getMaterial());
+    dispatch(getMaterialActiveByFarmId(farmId));
     dispatch(getMemberById(authServices.getUserId()));
   }, [farmId, selectedFieldId]);
 

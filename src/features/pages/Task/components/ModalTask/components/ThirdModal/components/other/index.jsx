@@ -7,10 +7,11 @@ import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
 import { getEmployee } from "features/slice/employee/employeeSlice";
 import { getTaskType } from "features/slice/task/taskTypeSlice";
 import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
-import { getMaterial } from "features/slice/material/materialSlice";
 import dayjs from "dayjs";
 import MultiDatePicker from "react-multi-date-picker";
 import TextArea from "antd/es/input/TextArea";
+import { getMaterialActiveByFarmId } from "features/slice/material/materialActiveByFarmSlice";
+import { getMemberById } from "features/slice/user/memberSlice";
 
 function Other() {
   const [selectedAreaId, setSelectedAreaId] = useState(null);
@@ -25,6 +26,10 @@ function Other() {
   const [form] = Form.useForm();
 
   const dispatch = useDispatch();
+
+  const member = useSelector((state) => state.member.data);
+
+  const farmId = member.farmId;
 
   const area = useSelector((state) => state.area.data);
 
@@ -48,7 +53,7 @@ function Other() {
     dispatch(getTaskType());
     dispatch(getEmployee());
     dispatch(getSupervisor());
-    dispatch(getMaterial());
+    dispatch(getMaterialActiveByFarmId(farmId));
   }, []);
 
 

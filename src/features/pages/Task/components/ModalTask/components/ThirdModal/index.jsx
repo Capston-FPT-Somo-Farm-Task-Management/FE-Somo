@@ -11,7 +11,6 @@ import { getTaskTypeLivestock } from "features/slice/task/taskTypeAnimalSlice";
 import { getTaskTypePlant } from "features/slice/task/taskTypePlantSlice";
 import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
 import { getEmployeeByTaskTypeAndFarmId } from "features/slice/employee/employeeSlice";
-import { getMaterial } from "features/slice/material/materialSlice";
 import { getAnimalActive } from "features/slice/animal/animalSlice";
 import { getPlantActive } from "features/slice/plant/plantSlice";
 import { createTask } from "features/slice/task/taskSlice";
@@ -23,6 +22,7 @@ import SpecificPlant from "./components/specificPlant";
 import WholeGarden from "./components/wholeGarden";
 import Other from "./components/other";
 import UpdateTask from "../../../List/components/UpdateTask";
+import { getMaterialActiveByFarmId } from "features/slice/material/materialActiveByFarmSlice";
 
 dayjs.extend(customParseFormat);
 
@@ -95,7 +95,7 @@ function ThirdModal({
     dispatch(getTaskTypeLivestock());
     dispatch(getTaskTypePlant());
     dispatch(getSupervisor(farmId));
-    dispatch(getMaterial());
+    dispatch(getMaterialActiveByFarmId(farmId));
     dispatch(getMemberById(authServices.getUserId()));
   }, [farmId]);
 
