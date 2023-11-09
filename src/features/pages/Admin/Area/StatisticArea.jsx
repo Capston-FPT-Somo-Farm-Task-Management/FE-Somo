@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import TableArea from './TableArea'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { getMemberById } from 'features/slice/user/memberSlice'
 import { getAreaByFarmId } from 'features/slice/area/areaByFarmSlice'
 import { authServices } from 'services/authServices'
@@ -32,7 +32,7 @@ const StatisticArea = () => {
 
   return (
     <>
-      <DisplayCard />
+      <DisplayCard areaByFarm={areaByFarm} />
       <Divider dashed />
       <TableArea areaByFarm={areaByFarm} onFinishDelete={onFinishDelete} />
     </>
