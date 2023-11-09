@@ -25,7 +25,7 @@ export const createMaterial = createAsyncThunk(
     try {
       const response = await axios.post(baseUrl + '/Material', data, {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
         },
       })
       if (response.status === 200) {
