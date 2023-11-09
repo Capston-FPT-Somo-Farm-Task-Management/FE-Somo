@@ -19,12 +19,11 @@ import supervisorReducer from './slice/supervisor/supervisorSlice'
 import employeeReducer from './slice/employee/employeeSlice'
 import employeeByTaskReducer from './slice/employee/employeeByTask'
 import materialReducer from './slice/material/materialSlice'
-import materialActiveReducer from "./slice/material/materialActiveByFarmSlice"
+import materialActiveReducer from './slice/material/materialActiveByFarmSlice'
 import fieldReducer from './slice/field/fieldSlice'
 import fieldPlantReducer from './slice/field/fieldPlantSlice'
 import fieldAnimalReducer from './slice/field/fieldAnimalSlice'
 import fieldByZoneReducer from './slice/field/fieldByZoneSlice'
-import fieldByFarmReducer from './slice/field/fieldByFarmSlice'
 import plantTypeReducer from './slice/plant/plantTypeSlice'
 import plantTypeActiveReducer from './slice/plant/plantTypeActiveSlice'
 import plantByFarmReducer from './slice/plant/plantByFarmSlice'
@@ -65,7 +64,6 @@ export const store = configureStore({
     fieldPlant: fieldPlantReducer,
     fieldAnimal: fieldAnimalReducer,
     fieldByZone: fieldByZoneReducer,
-    fieldByFarm: fieldByFarmReducer,
     plantType: plantTypeReducer,
     plantTypeActive: plantTypeActiveReducer,
     plantByFarm: plantByFarmReducer,
