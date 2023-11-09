@@ -7,7 +7,7 @@ import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
 import { getMaterialActiveByFarmId } from "features/slice/material/materialActiveByFarmSlice";
 import { getPlantActive } from "features/slice/plant/plantSlice";
 import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
-import { createTask } from "features/slice/task/taskSlice";
+import { createTask, getTaskById } from "features/slice/task/taskSlice";
 import { getTaskTypeLivestock } from "features/slice/task/taskTypeAnimalSlice";
 import { getTaskTypePlant } from "features/slice/task/taskTypePlantSlice";
 import { getMemberById } from "features/slice/user/memberSlice";
@@ -55,6 +55,7 @@ function UpdateTask({
   const [overallEffortHour, setOverallEffortHour] = useState(0);
   const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
 
+
   const [form] = Form.useForm();
 
   const dispatch = useDispatch();
@@ -93,6 +94,8 @@ function UpdateTask({
   const dataMaterial = material.data;
 
   console.log(editingTask);
+
+  
 
   useEffect(() => {
     dispatch(getAreaActive(farmId));
@@ -380,7 +383,7 @@ function UpdateTask({
             </Button>,
           ]}
         >
-          {editingTask.externalId && dataTaskTypeLivestock ? (
+          {editingTask.externalId && editingTask.liveStockName ? (
             <UpdateSpecificAnimal
               handleUpdateTask={handleUpdateTask}
               form={form}
@@ -419,7 +422,7 @@ function UpdateTask({
               startDate={startDate}
               endDate={endDate}
             />
-          ) : dataTaskTypeLivestock && !editingTask.externalId ? (
+          ) : editingTask.liveStockName || !editingTask.externalId ? (
             <UpdateWholeBarn
               handleUpdateTask={handleUpdateTask}
               form={form}
@@ -457,7 +460,7 @@ function UpdateTask({
               startDate={startDate}
               endDate={endDate}
             />
-          ) : dataTaskTypePlant && editingTask.externalId ? (
+          ) : editingTask.plantName && editingTask.externalId ? (
             <UpdateSpecificPlant
               handleUpdateTask={handleUpdateTask}
               form={form}
@@ -496,7 +499,7 @@ function UpdateTask({
               startDate={startDate}
               endDate={endDate}
             />
-          ) : dataTaskTypePlant && !editingTask.externalId ? (
+          ) : editingTask.plantName || !editingTask.externalId ? (
             <UpdateWholeGarden
               handleUpdateTask={handleUpdateTask}
               form={form}
