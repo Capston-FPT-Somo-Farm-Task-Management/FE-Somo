@@ -1,5 +1,5 @@
 import React from "react";
-import { Form  } from "antd";
+import { Form } from "antd";
 import AreaSelect from "../FormItemCreate/areaSelect";
 import FieldAnimalSelect from "../FormItemCreate/fieldAnimalSelect";
 import AnimalSelect from "../FormItemCreate/animalSelect";
@@ -48,14 +48,13 @@ function SpecificAnimal({
   dataEmployee,
   supervisor,
   materialsValue,
-  dataMaterial,
+  material,
   remindValue,
   repeatValue,
   disabledDate,
   startDate,
   endDate,
 }) {
-
   return (
     <Form
       layout="vertical"
@@ -115,13 +114,21 @@ function SpecificAnimal({
           overallEfforMinutes={overallEfforMinutes}
           handleOverallEfforMinutes={handleOverallEfforMinutes}
         />
-        <MaterialSelect materialsValue={materialsValue} handleMaterialChange={handleMaterialChange} dataMaterial={dataMaterial}/>
-        <RemindSelect remindValue={remindValue} handleSelectRemind={handleSelectRemind}/>
-        <RepeatSelect repeatValue={repeatValue} handleSelectRepeat={handleSelectRepeat}/>
+        <MaterialSelect
+          materialsValue={materialsValue}
+          handleMaterialChange={handleMaterialChange}
+          material={material}
+        />
+        <RemindSelect
+          remindValue={remindValue}
+          handleSelectRemind={handleSelectRemind}
+        />
+        <RepeatSelect
+          repeatValue={repeatValue}
+          handleSelectRepeat={handleSelectRepeat}
+        />
 
-        {repeatValue && (
-          <DateRepeatSelect endDate={endDate}/>
-        )}
+        {repeatValue && <DateRepeatSelect endDate={endDate} />}
       </div>
     </Form>
   );

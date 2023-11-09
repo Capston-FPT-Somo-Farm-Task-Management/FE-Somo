@@ -13,14 +13,7 @@ function FieldAnimalUpdate({handleSelectFieldChange, fieldByZone, editingTask}) 
               message: "Vui lòng chọn chuồng",
             },
           ]}
-          initialValue={
-            editingTask
-              ? {
-                  label: editingTask.fieldName,
-                  value: editingTask.fieldId,
-                }
-              : ""
-          }
+          initialValue={editingTask ? editingTask.fieldId : 0}
         >
           <Select
             onChange={handleSelectFieldChange}

@@ -1,8 +1,4 @@
 import React from "react";
-import { DatePicker, Form, Input, Select } from "antd";
-import DatePanel from "react-multi-date-picker/plugins/date_panel";
-import dayjs from "dayjs";
-import MultiDatePicker from "react-multi-date-picker";
 import AreaUpdate from "../FormItemUpdate/areaUpdate";
 import ZoneAnimalUpdate from "../FormItemUpdate/zoneAnimalUpdate";
 import FieldAnimalUpdate from "../FormItemUpdate/fieldAnimalUpdate";
@@ -22,8 +18,6 @@ import RepeatUpdate from "../FormItemUpdate/repeatUpdate";
 import DateRepeatUpdate from "../FormItemUpdate/dateRepeatUpdate";
 
 function UpdateSpecificAnimal({
-  handleUpdateTask,
-  form,
   editingTask,
   handleSelectAreaChange,
   handleSelectZoneChange,
@@ -52,25 +46,18 @@ function UpdateSpecificAnimal({
   dataEmployee,
   supervisor,
   materialsValue,
-  dataMaterial,
+  material,
   remindValue,
   repeatValue,
   disabledDate,
   startDate,
   endDate,
-  currentEmployee
+  currentEmployee,
+  currentTaskId,
 }) {
-  const { TextArea } = Input;
 
   return (
-    <Form
-      layout="vertical"
-      className="task-form"
-      onFinish={handleUpdateTask}
-      id="updateTask"
-      key={editingTask ? editingTask.externalId : "new"}
-      form={form}
-    >
+    <>
       <div className="form-left">
         <AreaUpdate
           handleSelectAreaChange={handleSelectAreaChange}
@@ -122,7 +109,7 @@ function UpdateSpecificAnimal({
           employeesValue={employeesValue}
           handleEmployeeChange={handleEmployeeChange}
           dataEmployee={dataEmployee}
-          currentEmployee={currentEmployee}
+          editingTask={editingTask}
         />
         <OverallEffortUpdate
           overallEffortHour={overallEffortHour}
@@ -134,17 +121,25 @@ function UpdateSpecificAnimal({
         <MaterialUpdate
           materialsValue={materialsValue}
           handleMaterialChange={handleMaterialChange}
-          dataMaterial={dataMaterial}
+          material={material}
           editingTask={editingTask}
         />
-        <RemindUpdate remindValue={remindValue} handleSelectRemind={handleSelectRemind} editingTask={editingTask}/>
-        <RepeatUpdate repeatValue={repeatValue} handleSelectRepeat={handleSelectRepeat} editingTask={editingTask}/>
+        <RemindUpdate
+          remindValue={remindValue}
+          handleSelectRemind={handleSelectRemind}
+          editingTask={editingTask}
+        />
+        <RepeatUpdate
+          repeatValue={repeatValue}
+          handleSelectRepeat={handleSelectRepeat}
+          editingTask={editingTask}
+        />
 
         {repeatValue && (
-          <DateRepeatUpdate endDate={endDate} editingTask={editingTask}/>
+          <DateRepeatUpdate endDate={endDate} editingTask={editingTask} />
         )}
       </div>
-    </Form>
+      </>
   );
 }
 

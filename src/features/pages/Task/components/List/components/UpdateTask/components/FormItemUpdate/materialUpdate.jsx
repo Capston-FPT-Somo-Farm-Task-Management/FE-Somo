@@ -4,21 +4,14 @@ import React from "react";
 function MaterialUpdate({
   materialsValue,
   handleMaterialChange,
-  dataMaterial,
+  material,
   editingTask,
 }) {
   return (
     <Form.Item
       label="Dụng cụ"
       name="materialIds"
-      initialValue={
-        editingTask
-          ? {
-              label: editingTask.materialName,
-              value: editingTask.materialIds,
-            }
-          : ""
-      }
+      initialValue={editingTask ? editingTask.materialIds : []}
     >
       <Select
         placeholder="Chọn dụng cụ"
@@ -26,8 +19,8 @@ function MaterialUpdate({
         value={materialsValue}
         onChange={handleMaterialChange}
         options={
-          dataMaterial && dataMaterial
-            ? dataMaterial.map((item) => ({
+          material && material.data
+            ? material.data.map((item) => ({
                 label: item.name,
                 value: item.id,
               }))

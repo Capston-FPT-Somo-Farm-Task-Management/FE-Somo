@@ -13,14 +13,7 @@ function AnimalUpdate({dataAnimal, editingTask}) {
               message: "Vui lòng chọn mã vật nuôi",
             },
           ]}
-          initialValue={
-            editingTask
-              ? {
-                  label: editingTask.externalId,
-                  value: editingTask.id,
-                }
-              : ""
-          }
+          initialValue={editingTask ? editingTask.externalId : 0}
         >
           <Select
             placeholder="Chọn mã vật nuôi"

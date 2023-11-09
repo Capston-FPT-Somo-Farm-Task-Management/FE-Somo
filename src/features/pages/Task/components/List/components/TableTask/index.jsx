@@ -29,6 +29,7 @@ function TableTask({
   handleTaskAdded,
   handleDateChange,
   loadDataTask,
+  currentTaskId
 }) {
   const dispatch = useDispatch();
 
@@ -185,6 +186,7 @@ function TableTask({
         handleTaskAdded={handleTaskAdded}
         handleDateChange={handleDateChange}
         loadDataTask={loadDataTask}
+        currentTaskId={currentTaskId}
       />
     </>
   );

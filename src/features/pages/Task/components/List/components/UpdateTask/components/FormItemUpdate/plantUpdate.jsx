@@ -13,14 +13,7 @@ function PlantUpdate({dataPlant, editingTask}) {
               message: "Vui lòng nhập mã cây trồng",
             },
           ]}
-          initialValue={
-            editingTask
-              ? {
-                  label: editingTask.externalId,
-                  value: editingTask.id,
-                }
-              : ""
-          }
+          initialValue={editingTask ? editingTask.externalId : 0}
         >
           <Select
             placeholder="Chọn mã cây trồng"

@@ -85,7 +85,6 @@ function ThirdModal({
   const dataEmployee = useSelector((state) => state.employee.data);
 
   const material = useSelector((state) => state.materialActive.data);
-  const dataMaterial = material.data;
 
   useEffect(() => {
     dispatch(getAreaActive(farmId));
@@ -402,7 +401,7 @@ function ThirdModal({
         dataEmployee={dataEmployee}
         supervisor={supervisor}
         materialsValue={materialsValue}
-        dataMaterial={dataMaterial}
+        material={material}
         remindValue={remindValue}
         repeatValue={repeatValue}
         disabledDate={disabledDate}
@@ -442,7 +441,7 @@ function ThirdModal({
         dataEmployee={dataEmployee}
         supervisor={supervisor}
         materialsValue={materialsValue}
-        dataMaterial={dataMaterial}
+        material={material}
         remindValue={remindValue}
         repeatValue={repeatValue}
         disabledDate={disabledDate}
@@ -483,7 +482,7 @@ function ThirdModal({
         dataEmployee={dataEmployee}
         supervisor={supervisor}
         materialsValue={materialsValue}
-        dataMaterial={dataMaterial}
+        material={material}
         remindValue={remindValue}
         repeatValue={repeatValue}
         disabledDate={disabledDate}
@@ -523,7 +522,7 @@ function ThirdModal({
         dataEmployee={dataEmployee}
         supervisor={supervisor}
         materialsValue={materialsValue}
-        dataMaterial={dataMaterial}
+        material={material}
         remindValue={remindValue}
         repeatValue={repeatValue}
         disabledDate={disabledDate}

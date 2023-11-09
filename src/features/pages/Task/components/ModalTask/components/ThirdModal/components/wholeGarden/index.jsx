@@ -46,7 +46,7 @@ function WholeGarden({
   dataEmployee,
   supervisor,
   materialsValue,
-  dataMaterial,
+  material,
   remindValue,
   repeatValue,
   disabledDate,
@@ -112,7 +112,7 @@ function WholeGarden({
           overallEfforMinutes={overallEfforMinutes}
           handleOverallEfforMinutes={handleOverallEfforMinutes}
         />
-        <MaterialSelect materialsValue={materialsValue} handleMaterialChange={handleMaterialChange} dataMaterial={dataMaterial}/>
+        <MaterialSelect materialsValue={materialsValue} handleMaterialChange={handleMaterialChange} material={material}/>
         <RemindSelect remindValue={remindValue} handleSelectRemind={handleSelectRemind}/>
         <RepeatSelect repeatValue={repeatValue} handleSelectRepeat={handleSelectRepeat}/>
         {repeatValue && (

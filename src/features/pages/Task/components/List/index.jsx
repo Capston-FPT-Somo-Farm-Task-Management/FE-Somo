@@ -110,6 +110,7 @@ const List = () => {
   const openEditTaskModal = (record) => {
     setEditingTask(record);
     setEditTaskModalVisible(true);
+    setCurrentTaskId(record.id)
   };
 
   const closeEditTaskModal = () => {
@@ -230,22 +231,6 @@ const List = () => {
     setEditEffortVisible(false);
   };
 
-  const handleUpdateTask = (values) => {
-    const finalValues = {
-      ...values,
-      taskId: currentTaskId,
-      employeeId: editingSubTask.employeeId,
-    };
-
-    dispatch(createSubTask(finalValues)).then(() => {
-      dispatch(getSubTasksByTaskId(currentTaskId)).then((data) => {
-        setSubTasks(data.payload);
-        loadDataTask();
-        setEditSubTaskModalVisible(false);
-      });
-    });
-  };
-
   const handleUpdateEffort = (taskId, employeeId, effortTime) => {
     const updatedEffort = [
       {
@@ -319,6 +304,7 @@ const List = () => {
           handleTaskAdded={handleTaskAdded}
           handleDateChange={handleDateChange}
           loadDataTask={loadDataTask}
+          currentTaskId={currentTaskId}
         />
       )}
       <TaskDetail

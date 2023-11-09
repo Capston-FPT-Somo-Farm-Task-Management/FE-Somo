@@ -7,7 +7,11 @@ import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
 import { getMaterialActiveByFarmId } from "features/slice/material/materialActiveByFarmSlice";
 import { getPlantActive } from "features/slice/plant/plantSlice";
 import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
-import { createTask, getTaskById } from "features/slice/task/taskSlice";
+import {
+  createTask,
+  getTaskById,
+  updateTask,
+} from "features/slice/task/taskSlice";
 import { getTaskTypeLivestock } from "features/slice/task/taskTypeAnimalSlice";
 import { getTaskTypePlant } from "features/slice/task/taskTypePlantSlice";
 import { getMemberById } from "features/slice/user/memberSlice";
@@ -29,6 +33,7 @@ function UpdateTask({
   handleTaskAdded,
   handleDateChange,
   loadDataTask,
+  currentTaskId,
 }) {
   const [selectedAreaId, setSelectedAreaId] = useState(
     editingTask ? editingTask.areaId : null
@@ -43,9 +48,15 @@ function UpdateTask({
     editingTask ? editingTask.taskTypeId : null
   );
   const [selectedFarmId, setSelectedFarmId] = useState(null);
-  const [employeesValue, setEmployeesValue] = useState(null);
-  const [materialsValue, setMaterialsValue] = useState(0);
-  const [priorityValue, setPriorityValue] = useState("");
+  const [employeesValue, setEmployeesValue] = useState(
+    editingTask ? editingTask.employeeId : []
+  );
+  const [materialsValue, setMaterialsValue] = useState(
+    editingTask ? editingTask.materialId : 0
+  );
+  const [priorityValue, setPriorityValue] = useState(
+    editingTask ? editingTask.priority : ""
+  );
   const [remindValue, setRemindValue] = useState(0);
   const [repeatValue, setRepeatValue] = useState(false);
   const [startDate, setStartDate] = useState(null);
@@ -54,7 +65,6 @@ function UpdateTask({
   const [overallEfforMinutes, setOverallEfforMinutes] = useState(0);
   const [overallEffortHour, setOverallEffortHour] = useState(0);
   const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
-
 
   const [form] = Form.useForm();
 
@@ -91,11 +101,6 @@ function UpdateTask({
   const dataEmployee = useSelector((state) => state.employee.data);
 
   const material = useSelector((state) => state.materialActive.data);
-  const dataMaterial = material.data;
-
-  console.log(editingTask);
-
-  
 
   useEffect(() => {
     dispatch(getAreaActive(farmId));
@@ -294,13 +299,34 @@ function UpdateTask({
         plantId: originalData.plantId,
         liveStockId: originalData.liveStockId,
         remind: originalData.remind,
+        addressDetail: originalData.addressDetail,
+        overallEfforMinutes: originalData.overallEfforMinutes,
+        overallEffortHour: originalData.overallEffortHour,
       },
     };
 
     return transformedData;
   };
 
-  const handleUpdateTask = (values) => {
+  const handleUpdateTask = (
+    taskId,
+    name,
+    startDate,
+    endDate,
+    description,
+    priority,
+    repeatValue,
+    suppervisorId,
+    fieldId,
+    taskTypeId,
+    externalId,
+    remind,
+    overallEffortHour,
+    overallEfforMinutes,
+    employeeIds,
+    materialIds,
+    dates
+  ) => {
     form
       .validateFields()
       .then(() => {
@@ -313,23 +339,29 @@ function UpdateTask({
 
         const startTime = dayjs(startDate).format("HH:mm:ss.SSS");
 
-        const selectedDates = values.dates || [];
+        const selectedDates = dates || [];
 
         const combinedDates = selectedDates.map(
           (date) => `${date}T${startTime}`
         );
 
-        const remindValueToSend = remindValue || 0;
+        const remindValueToSend = remind || 0;
 
         const repeatValueToSend = repeatValue || false;
 
         const datesToSend = repeatValueToSend ? combinedDates : [];
 
-        const materialToSend = materialsValue || [];
+        const materialToSend = materialIds || [];
 
-        const { isRepeat, dates } = values;
+        const employeeToSend = employeeIds || [];
 
-        if (shouldCheckRepeat && isRepeat && (!dates || dates.length === 0)) {
+        const descriptionToSend = description || "";
+
+        const plantIdToSend = externalId || 0;  
+
+        const liveStockIdToSend = externalId || 0;  
+
+        if (shouldCheckRepeat && repeatValue && (!dates || dates.length === 0)) {
           form.setFields([
             {
               name: "dates",
@@ -340,26 +372,37 @@ function UpdateTask({
         }
 
         const finalValues = {
-          ...values,
+          name: name,
           startDate: startDateFormatted,
           endDate: endDateFormatted,
-          dates: datesToSend,
-          materialIds: materialToSend,
-          priority: priorityValue,
-          remind: remindValueToSend,
+          description: descriptionToSend,
+          priority: priority,
           isRepeat: repeatValueToSend,
-          description: description,
+          suppervisorId: suppervisorId,
+          fieldId: fieldId,
+          plantId: plantIdToSend,
+          liveStockId: liveStockIdToSend,
+          taskTypeId: taskTypeId,
+          overallEffortHour: overallEffortHour,
+          overallEfforMinutes: overallEfforMinutes,
+          materialIds: materialToSend,
+          employeeIds: employeeToSend,
+          remind: remindValueToSend,
+          dates: datesToSend,
           managerId: member.id,
           otherId: 0,
+          addressDetail: "Khong co"
         };
 
         const transformedValues = transformData(finalValues);
 
-        dispatch(createTask(transformedValues)).then(() => {
-          loadDataTask();
-          handleDateChange();
-          handleTaskAdded();
-        });
+        dispatch(updateTask({ id: taskId, body: transformedValues })).then(
+          () => {
+            loadDataTask();
+            handleDateChange();
+            handleTaskAdded();
+          }
+        );
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
@@ -383,161 +426,186 @@ function UpdateTask({
             </Button>,
           ]}
         >
-          {editingTask.externalId && editingTask.liveStockName ? (
-            <UpdateSpecificAnimal
-              handleUpdateTask={handleUpdateTask}
-              form={form}
-              editingTask={editingTask}
-              handleSelectAreaChange={handleSelectAreaChange}
-              handleSelectZoneChange={handleSelectZoneChange}
-              handleSelectFieldChange={handleSelectFieldChange}
-              handlePriorityChange={handlePriorityChange}
-              handleSelectStartDate={handleSelectStartDate}
-              handleSelectEndDate={handleSelectEndDate}
-              handleDescriptionChange={handleDescriptionChange}
-              handleTaskTypeChange={handleTaskTypeChange}
-              handleEmployeeChange={handleEmployeeChange}
-              handleMaterialChange={handleMaterialChange}
-              handleSelectRemind={handleSelectRemind}
-              handleSelectRepeat={handleSelectRepeat}
-              handleOverallEffortHour={handleOverallEffortHour}
-              handleOverallEfforMinutes={handleOverallEfforMinutes}
-              area={area}
-              zoneAnimal={zoneAnimal}
-              fieldByZone={fieldByZone}
-              dataAnimal={dataAnimal}
-              priorityValue={priorityValue}
-              disabledDate={disabledDate}
-              description={description}
-              overallEfforMinutes={overallEfforMinutes}
-              overallEffortHour={overallEffortHour}
-              dataTaskTypeLivestock={dataTaskTypeLivestock}
-              supervisor={supervisor}
-              employeesValue={employeesValue}
-              dataEmployee={dataEmployee}
-              materialsValue={materialsValue}
-              dataMaterial={dataMaterial}
-              remindValue={remindValue}
-              repeatValue={repeatValue}
-              startDate={startDate}
-              endDate={endDate}
-            />
-          ) : editingTask.liveStockName || !editingTask.externalId ? (
-            <UpdateWholeBarn
-              handleUpdateTask={handleUpdateTask}
-              form={form}
-              editingTask={editingTask}
-              handleSelectAreaChange={handleSelectAreaChange}
-              handleSelectZoneChange={handleSelectZoneChange}
-              handleSelectFieldChange={handleSelectFieldChange}
-              handlePriorityChange={handlePriorityChange}
-              handleSelectStartDate={handleSelectStartDate}
-              handleSelectEndDate={handleSelectEndDate}
-              handleDescriptionChange={handleDescriptionChange}
-              handleTaskTypeChange={handleTaskTypeChange}
-              handleEmployeeChange={handleEmployeeChange}
-              handleMaterialChange={handleMaterialChange}
-              handleSelectRemind={handleSelectRemind}
-              handleSelectRepeat={handleSelectRepeat}
-              handleOverallEffortHour={handleOverallEffortHour}
-              handleOverallEfforMinutes={handleOverallEfforMinutes}
-              area={area}
-              zoneAnimal={zoneAnimal}
-              fieldByZone={fieldByZone}
-              priorityValue={priorityValue}
-              disabledDate={disabledDate}
-              description={description}
-              overallEfforMinutes={overallEfforMinutes}
-              overallEffortHour={overallEffortHour}
-              dataTaskTypeLivestock={dataTaskTypeLivestock}
-              supervisor={supervisor}
-              employeesValue={employeesValue}
-              dataEmployee={dataEmployee}
-              materialsValue={materialsValue}
-              dataMaterial={dataMaterial}
-              remindValue={remindValue}
-              repeatValue={repeatValue}
-              startDate={startDate}
-              endDate={endDate}
-            />
-          ) : editingTask.plantName && editingTask.externalId ? (
-            <UpdateSpecificPlant
-              handleUpdateTask={handleUpdateTask}
-              form={form}
-              editingTask={editingTask}
-              handleSelectAreaChange={handleSelectAreaChange}
-              handleSelectZoneChange={handleSelectZoneChange}
-              handleSelectFieldChange={handleSelectFieldChange}
-              handlePriorityChange={handlePriorityChange}
-              handleSelectStartDate={handleSelectStartDate}
-              handleSelectEndDate={handleSelectEndDate}
-              handleDescriptionChange={handleDescriptionChange}
-              handleTaskTypeChange={handleTaskTypeChange}
-              handleEmployeeChange={handleEmployeeChange}
-              handleMaterialChange={handleMaterialChange}
-              handleSelectRemind={handleSelectRemind}
-              handleSelectRepeat={handleSelectRepeat}
-              handleOverallEffortHour={handleOverallEffortHour}
-              handleOverallEfforMinutes={handleOverallEfforMinutes}
-              area={area}
-              zonePlant={zonePlant}
-              fieldByZone={fieldByZone}
-              dataPlant={dataPlant}
-              priorityValue={priorityValue}
-              disabledDate={disabledDate}
-              description={description}
-              overallEfforMinutes={overallEfforMinutes}
-              overallEffortHour={overallEffortHour}
-              dataTaskTypePlant={dataTaskTypePlant}
-              supervisor={supervisor}
-              employeesValue={employeesValue}
-              dataEmployee={dataEmployee}
-              materialsValue={materialsValue}
-              dataMaterial={dataMaterial}
-              remindValue={remindValue}
-              repeatValue={repeatValue}
-              startDate={startDate}
-              endDate={endDate}
-            />
-          ) : editingTask.plantName || !editingTask.externalId ? (
-            <UpdateWholeGarden
-              handleUpdateTask={handleUpdateTask}
-              form={form}
-              editingTask={editingTask}
-              handleSelectAreaChange={handleSelectAreaChange}
-              handleSelectZoneChange={handleSelectZoneChange}
-              handleSelectFieldChange={handleSelectFieldChange}
-              handlePriorityChange={handlePriorityChange}
-              handleSelectStartDate={handleSelectStartDate}
-              handleSelectEndDate={handleSelectEndDate}
-              handleDescriptionChange={handleDescriptionChange}
-              handleTaskTypeChange={handleTaskTypeChange}
-              handleEmployeeChange={handleEmployeeChange}
-              handleMaterialChange={handleMaterialChange}
-              handleSelectRemind={handleSelectRemind}
-              handleSelectRepeat={handleSelectRepeat}
-              handleOverallEffortHour={handleOverallEffortHour}
-              handleOverallEfforMinutes={handleOverallEfforMinutes}
-              area={area}
-              zonePlant={zonePlant}
-              fieldByZone={fieldByZone}
-              priorityValue={priorityValue}
-              disabledDate={disabledDate}
-              description={description}
-              overallEfforMinutes={overallEfforMinutes}
-              overallEffortHour={overallEffortHour}
-              dataTaskTypePlant={dataTaskTypePlant}
-              supervisor={supervisor}
-              employeesValue={employeesValue}
-              dataEmployee={dataEmployee}
-              materialsValue={materialsValue}
-              dataMaterial={dataMaterial}
-              remindValue={remindValue}
-              repeatValue={repeatValue}
-              startDate={startDate}
-              endDate={endDate}
-            />
-          ) : null}
+          <Form
+            layout="vertical"
+            className="task-form"
+            onFinish={(values) => {
+              handleUpdateTask(
+                currentTaskId,
+                values.name,
+                values.startDate,
+                values.endDate,
+                values.description,
+                values.priority,
+                values.repeatValue,
+                values.suppervisorId,
+                values.fieldId,
+                values.taskTypeId,
+                values.externalId,
+                values.remind,
+                values.overallEffortHour,
+                values.overallEfforMinutes,
+                values.employeeIds,
+                values.materialIds,
+                values.dates
+              )
+            }}
+            id="updateTask"
+            key={editingTask ? editingTask.externalId : "new"}
+            form={form}
+          >
+            {editingTask.externalId && editingTask.liveStockName ? (
+              <UpdateSpecificAnimal
+                editingTask={editingTask}
+                handleSelectAreaChange={handleSelectAreaChange}
+                handleSelectZoneChange={handleSelectZoneChange}
+                handleSelectFieldChange={handleSelectFieldChange}
+                handlePriorityChange={handlePriorityChange}
+                handleSelectStartDate={handleSelectStartDate}
+                handleSelectEndDate={handleSelectEndDate}
+                handleDescriptionChange={handleDescriptionChange}
+                handleTaskTypeChange={handleTaskTypeChange}
+                handleEmployeeChange={handleEmployeeChange}
+                handleMaterialChange={handleMaterialChange}
+                handleSelectRemind={handleSelectRemind}
+                handleSelectRepeat={handleSelectRepeat}
+                handleOverallEffortHour={handleOverallEffortHour}
+                handleOverallEfforMinutes={handleOverallEfforMinutes}
+                area={area}
+                zoneAnimal={zoneAnimal}
+                fieldByZone={fieldByZone}
+                dataAnimal={dataAnimal}
+                priorityValue={priorityValue}
+                disabledDate={disabledDate}
+                description={description}
+                overallEfforMinutes={overallEfforMinutes}
+                overallEffortHour={overallEffortHour}
+                dataTaskTypeLivestock={dataTaskTypeLivestock}
+                supervisor={supervisor}
+                employeesValue={employeesValue}
+                dataEmployee={dataEmployee}
+                materialsValue={materialsValue}
+                material={material}
+                remindValue={remindValue}
+                repeatValue={repeatValue}
+                startDate={startDate}
+                endDate={endDate}
+                currentTaskId={currentTaskId}
+              />
+            ) : editingTask.liveStockName || !editingTask.externalId ? (
+              <UpdateWholeBarn
+                editingTask={editingTask}
+                handleSelectAreaChange={handleSelectAreaChange}
+                handleSelectZoneChange={handleSelectZoneChange}
+                handleSelectFieldChange={handleSelectFieldChange}
+                handlePriorityChange={handlePriorityChange}
+                handleSelectStartDate={handleSelectStartDate}
+                handleSelectEndDate={handleSelectEndDate}
+                handleDescriptionChange={handleDescriptionChange}
+                handleTaskTypeChange={handleTaskTypeChange}
+                handleEmployeeChange={handleEmployeeChange}
+                handleMaterialChange={handleMaterialChange}
+                handleSelectRemind={handleSelectRemind}
+                handleSelectRepeat={handleSelectRepeat}
+                handleOverallEffortHour={handleOverallEffortHour}
+                handleOverallEfforMinutes={handleOverallEfforMinutes}
+                area={area}
+                zoneAnimal={zoneAnimal}
+                fieldByZone={fieldByZone}
+                priorityValue={priorityValue}
+                disabledDate={disabledDate}
+                description={description}
+                overallEfforMinutes={overallEfforMinutes}
+                overallEffortHour={overallEffortHour}
+                dataTaskTypeLivestock={dataTaskTypeLivestock}
+                supervisor={supervisor}
+                employeesValue={employeesValue}
+                dataEmployee={dataEmployee}
+                materialsValue={materialsValue}
+                material={material}
+                remindValue={remindValue}
+                repeatValue={repeatValue}
+                startDate={startDate}
+                endDate={endDate}
+                currentTaskId={currentTaskId}
+              />
+            ) : editingTask.plantName && editingTask.externalId ? (
+              <UpdateSpecificPlant
+                editingTask={editingTask}
+                handleSelectAreaChange={handleSelectAreaChange}
+                handleSelectZoneChange={handleSelectZoneChange}
+                handleSelectFieldChange={handleSelectFieldChange}
+                handlePriorityChange={handlePriorityChange}
+                handleSelectStartDate={handleSelectStartDate}
+                handleSelectEndDate={handleSelectEndDate}
+                handleDescriptionChange={handleDescriptionChange}
+                handleTaskTypeChange={handleTaskTypeChange}
+                handleEmployeeChange={handleEmployeeChange}
+                handleMaterialChange={handleMaterialChange}
+                handleSelectRemind={handleSelectRemind}
+                handleSelectRepeat={handleSelectRepeat}
+                handleOverallEffortHour={handleOverallEffortHour}
+                handleOverallEfforMinutes={handleOverallEfforMinutes}
+                area={area}
+                zonePlant={zonePlant}
+                fieldByZone={fieldByZone}
+                dataPlant={dataPlant}
+                priorityValue={priorityValue}
+                disabledDate={disabledDate}
+                description={description}
+                overallEfforMinutes={overallEfforMinutes}
+                overallEffortHour={overallEffortHour}
+                dataTaskTypePlant={dataTaskTypePlant}
+                supervisor={supervisor}
+                employeesValue={employeesValue}
+                dataEmployee={dataEmployee}
+                materialsValue={materialsValue}
+                material={material}
+                remindValue={remindValue}
+                repeatValue={repeatValue}
+                startDate={startDate}
+                endDate={endDate}
+                currentTaskId={currentTaskId}
+              />
+            ) : editingTask.plantName || !editingTask.externalId ? (
+              <UpdateWholeGarden
+                editingTask={editingTask}
+                handleSelectAreaChange={handleSelectAreaChange}
+                handleSelectZoneChange={handleSelectZoneChange}
+                handleSelectFieldChange={handleSelectFieldChange}
+                handlePriorityChange={handlePriorityChange}
+                handleSelectStartDate={handleSelectStartDate}
+                handleSelectEndDate={handleSelectEndDate}
+                handleDescriptionChange={handleDescriptionChange}
+                handleTaskTypeChange={handleTaskTypeChange}
+                handleEmployeeChange={handleEmployeeChange}
+                handleMaterialChange={handleMaterialChange}
+                handleSelectRemind={handleSelectRemind}
+                handleSelectRepeat={handleSelectRepeat}
+                handleOverallEffortHour={handleOverallEffortHour}
+                handleOverallEfforMinutes={handleOverallEfforMinutes}
+                area={area}
+                zonePlant={zonePlant}
+                fieldByZone={fieldByZone}
+                priorityValue={priorityValue}
+                disabledDate={disabledDate}
+                description={description}
+                overallEfforMinutes={overallEfforMinutes}
+                overallEffortHour={overallEffortHour}
+                dataTaskTypePlant={dataTaskTypePlant}
+                supervisor={supervisor}
+                employeesValue={employeesValue}
+                dataEmployee={dataEmployee}
+                materialsValue={materialsValue}
+                material={material}
+                remindValue={remindValue}
+                repeatValue={repeatValue}
+                startDate={startDate}
+                endDate={endDate}
+                currentTaskId={currentTaskId}
+              />
+            ) : null}
+          </Form>
         </Modal>
       )}
     </>

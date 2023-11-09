@@ -13,14 +13,7 @@ function ZoneAnimalUpdate({handleSelectZoneChange, zoneAnimal, editingTask}) {
             },
           ]}
           name="zoneId"
-          initialValue={
-            editingTask
-              ? {
-                  label: editingTask.zoneName,
-                  value: editingTask.zoneId,
-                }
-              : ""
-          }
+          initialValue={editingTask ? editingTask.zoneId : ""}
         >
           <Select
             onChange={handleSelectZoneChange}

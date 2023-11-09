@@ -13,14 +13,7 @@ function FieldPlantUpdate({handleSelectFieldChange, fieldByZone, editingTask}) {
               message: "Vui lòng chọn vườn",
             },
           ]}
-          initialValue={
-            editingTask
-              ? {
-                  label: editingTask.fieldName,
-                  value: editingTask.fieldId,
-                }
-              : ""
-          }
+          initialValue={editingTask ? editingTask.fieldId : 0}
         >
           <Select
             onChange={handleSelectFieldChange}
