@@ -30,7 +30,7 @@ const StatisticZone = () => {
   }
   return (
     <>
-      <DisplayCard />
+      <DisplayCard zoneByFarm={zoneByFarm} />
       <Divider dashed />
       <TableZone zoneByFarm={zoneByFarm} onFinishDelete={onFinishDelete} />
     </>
