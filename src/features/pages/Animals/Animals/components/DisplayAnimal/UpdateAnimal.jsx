@@ -84,6 +84,7 @@ const UpdateAnimal = ({
     closeModal()
   }
 
+
   return (
     <>
       <Modal

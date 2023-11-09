@@ -13,14 +13,7 @@ function TaskTypePlantUpdate({dataTaskTypePlant, handleTaskTypeChange, editingTa
               message: "Vui lòng chọn loại công việc",
             },
           ]}
-          initialValue={
-            editingTask
-              ? {
-                  label: editingTask.taskTypeName,
-                  value: editingTask.taskTypeId,
-                }
-              : ""
-          }
+          initialValue={editingTask ? editingTask.taskTypeId : 0}
         >
           <Select
             placeholder="Chọn loại công việc"

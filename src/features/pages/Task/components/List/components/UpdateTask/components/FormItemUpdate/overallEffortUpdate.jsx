@@ -41,7 +41,7 @@ function OverallEffortUpdate({
             onChange={handleOverallEffortHour}
           >
             {Array.from({ length: 24 }, (_, i) => i).map((hour) => (
-              <Select.Option key={hour} value={hour.toString()}>
+              <Select.Option key={hour} value={hour.toString()} >
                 {hour < 10 ? `0${hour}` : hour} giờ
               </Select.Option>
             ))}

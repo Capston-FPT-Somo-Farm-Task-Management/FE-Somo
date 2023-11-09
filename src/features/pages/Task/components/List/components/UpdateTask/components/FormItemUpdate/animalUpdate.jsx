@@ -2,6 +2,7 @@ import { Form, Select } from 'antd'
 import React from 'react'
 
 function AnimalUpdate({dataAnimal, editingTask}) {
+  
   return (
     <Form.Item
           label="Mã vật nuôi"

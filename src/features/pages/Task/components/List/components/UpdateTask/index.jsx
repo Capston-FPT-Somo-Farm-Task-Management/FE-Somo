@@ -319,7 +319,7 @@ function UpdateTask({
     suppervisorId,
     fieldId,
     taskTypeId,
-    externalId,
+    plantId,
     remind,
     overallEffortHour,
     overallEfforMinutes,
@@ -357,9 +357,10 @@ function UpdateTask({
 
         const descriptionToSend = description || "";
 
-        const plantIdToSend = externalId || 0;  
+        const plantIdToSend = plantId || 0;  
+        console.log(plantId);
 
-        const liveStockIdToSend = externalId || 0;  
+        // const liveStockIdToSend = externalId || 0;  
 
         if (shouldCheckRepeat && repeatValue && (!dates || dates.length === 0)) {
           form.setFields([
@@ -371,6 +372,8 @@ function UpdateTask({
           return;
         }
 
+        console.log(plantId.value);
+
         const finalValues = {
           name: name,
           startDate: startDateFormatted,
@@ -380,8 +383,10 @@ function UpdateTask({
           isRepeat: repeatValueToSend,
           suppervisorId: suppervisorId,
           fieldId: fieldId,
-          plantId: plantIdToSend,
-          liveStockId: liveStockIdToSend,
+          plantId: typeof plantId === 'object'
+          ? plantId.value
+          : plantId,
+          // liveStockId: liveStockIdToSend,
           taskTypeId: taskTypeId,
           overallEffortHour: overallEffortHour,
           overallEfforMinutes: overallEfforMinutes,
@@ -401,6 +406,7 @@ function UpdateTask({
             loadDataTask();
             handleDateChange();
             handleTaskAdded();
+            closeEditTaskModal()
           }
         );
       })
@@ -441,7 +447,7 @@ function UpdateTask({
                 values.suppervisorId,
                 values.fieldId,
                 values.taskTypeId,
-                values.externalId,
+                values.plantId,
                 values.remind,
                 values.overallEffortHour,
                 values.overallEfforMinutes,
@@ -454,7 +460,7 @@ function UpdateTask({
             key={editingTask ? editingTask.externalId : "new"}
             form={form}
           >
-            {editingTask.externalId && editingTask.liveStockName ? (
+            {editingTask.fieldStatus === "Động vật" && editingTask.externalId ? (
               <UpdateSpecificAnimal
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
@@ -492,7 +498,7 @@ function UpdateTask({
                 endDate={endDate}
                 currentTaskId={currentTaskId}
               />
-            ) : editingTask.liveStockName || !editingTask.externalId ? (
+            ) : editingTask.fieldStatus === "Động vật" && !editingTask.externalId ? (
               <UpdateWholeBarn
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
@@ -529,7 +535,7 @@ function UpdateTask({
                 endDate={endDate}
                 currentTaskId={currentTaskId}
               />
-            ) : editingTask.plantName && editingTask.externalId ? (
+            ) : editingTask.fieldStatus === "Thực vật" && editingTask.externalId ? (
               <UpdateSpecificPlant
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
@@ -567,7 +573,7 @@ function UpdateTask({
                 endDate={endDate}
                 currentTaskId={currentTaskId}
               />
-            ) : editingTask.plantName || !editingTask.externalId ? (
+            ) : editingTask.fieldStatus === "Thực vật" && !editingTask.externalId ? (
               <UpdateWholeGarden
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
