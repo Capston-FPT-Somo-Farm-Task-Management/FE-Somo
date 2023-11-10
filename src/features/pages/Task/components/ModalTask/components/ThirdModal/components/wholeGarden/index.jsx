@@ -1,8 +1,20 @@
 import React from "react";
-import { DatePicker, Form, Input, Select } from "antd";
-import dayjs from "dayjs";
-import MultiDatePicker from "react-multi-date-picker";
-import DatePanel from "react-multi-date-picker/plugins/date_panel";
+import { Form } from "antd";
+import AreaSelect from "../FormItemCreate/areaSelect";
+import ZonePlantSelect from "../FormItemCreate/zonePlantSelect";
+import PrioritySelect from "../FormItemCreate/prioritySelect";
+import DescriptionInput from "../FormItemCreate/descriptionInput";
+import NameTaskInput from "../FormItemCreate/nameTaskInput";
+import TaskTypePlantSelect from "../FormItemCreate/taskTypePlantSelect";
+import SupervisorSelect from "../FormItemCreate/supervisorSelect";
+import EmployeeSelect from "../FormItemCreate/employeeSelect";
+import OverallEffortSelect from "../FormItemCreate/overallEffortSelect";
+import MaterialSelect from "../FormItemCreate/materialSelect";
+import RemindSelect from "../FormItemCreate/remindSelect";
+import RepeatSelect from "../FormItemCreate/repeatSelect";
+import DateRepeatSelect from "../FormItemCreate/dateRepeatSelect";
+import FieldPlantSelect from "../FormItemCreate/fieldPlantSelect";
+import DateSelect from "../FormItemCreate/dateSelect";
 
 function WholeGarden({
   onFinish,
@@ -18,25 +30,28 @@ function WholeGarden({
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
+  handleOverallEfforMinutes,
+  handleOverallEffortHour,
   form,
   area,
   zonePlant,
   fieldByZone,
   priorityValue,
   description,
+  overallEfforMinutes,
+  overallEffortHour,
   dataTaskTypePlant,
   employeesValue,
   dataEmployee,
   supervisor,
   materialsValue,
-  dataMaterial,
+  material,
   remindValue,
   repeatValue,
   disabledDate,
   startDate,
   endDate,
 }) {
-  const { TextArea } = Input;
 
   return (
     <Form
@@ -47,296 +62,56 @@ function WholeGarden({
       form={form}
     >
       <div className="form-left">
-        <Form.Item
-          label="Khu vực"
-          required
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn khu vực",
-            },
-          ]}
-          name="areaId"
-        >
-          <Select
-            onChange={handleSelectAreaChange}
-            placeholder="Chọn khu vực"
-            options={
-              area && area.data
-                ? area.data.map((item) => ({
-                    label: item.name,
-                    value: item.id,
-                  }))
-                : null
-            }
-          />
-        </Form.Item>
-        <Form.Item
-          label="Vùng"
-          required
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn vùng",
-            },
-          ]}
-          name="zoneId"
-        >
-          <Select
-            onChange={handleSelectZoneChange}
-            placeholder="Chọn vùng"
-            options={
-              zonePlant && zonePlant.data
-                ? zonePlant.data.map((item) => ({
-                    label: item.name,
-                    value: item.id,
-                  }))
-                : null
-            }
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Vườn"
-          name="fieldId"
-          required
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn vườn",
-            },
-          ]}
-        >
-          <Select
-            onChange={handleSelectFieldChange}
-            placeholder="Chọn vườn"
-            options={
-              fieldByZone && fieldByZone.data
-                ? fieldByZone.data.map((item) => ({
-                    label: item.nameCode,
-                    value: item.id,
-                  }))
-                : null
-            }
-          />
-        </Form.Item>
-        <Form.Item
-          label="Độ ưu tiên"
-          name="priority"
-          required
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn độ ưu tiên",
-            },
-          ]}
-        >
-          <Select
-            value={priorityValue}
-            onChange={handlePriorityChange}
-            placeholder="Chọn độ ưu tiên"
-          >
-            <Select.Option value="Thấp nhất">Thấp nhất</Select.Option>
-            <Select.Option value="Thấp">Thấp</Select.Option>
-            <Select.Option value="Trung bình">Trung bình</Select.Option>
-            <Select.Option value="Cao">Cao</Select.Option>
-            <Select.Option value="Cao nhất">Cao nhất</Select.Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-          label="Chọn thời gian bắt đầu"
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn thời gian bắt đầu",
-            },
-          ]}
-          name="startDate"
-        >
-          <DatePicker
-            placeholder="Chọn thời gian bắt đầu"
-            format="HH:mm DD-MM-YYYY"
-            disabledDate={disabledDate}
-            showTime={{
-              defaultValue: dayjs("00:00", "HH:mm"),
-              format: "HH:mm",
-            }}
-            showSecond="false"
-            onChange={handleSelectStartDate}
-          />
-        </Form.Item>
-        <Form.Item
-          label="Chọn thời gian kết thúc"
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn khoảng thời gian kết thúc",
-            },
-          ]}
-          name="endDate"
-        >
-          <DatePicker
-            placeholder="Chọn thời gian kết thúc"
-            format="HH:mm DD-MM-YYYY"
-            disabledDate={disabledDate}
-            showTime={{
-              defaultValue: dayjs("00:00", "HH:mm"),
-              format: "HH:mm",
-            }}
-            showSecond="false"
-            onChange={handleSelectEndDate}
-            disabled={!startDate}
-          />
-        </Form.Item>
-        <Form.Item label="Mô tả" name="description">
-          <TextArea
-            value={description}
-            onChange={handleDescriptionChange}
-            rows={5}
-            placeholder="Thêm mô tả chi tiết cho công việc"
-          />
-        </Form.Item>
+        <AreaSelect
+          handleSelectAreaChange={handleSelectAreaChange}
+          area={area}
+        />
+        <ZonePlantSelect
+          handleSelectZoneChange={handleSelectZoneChange}
+          zonePlant={zonePlant}
+        />
+        <FieldPlantSelect
+          handleSelectFieldChange={handleSelectFieldChange}
+          fieldByZone={fieldByZone}
+        />
+        <PrioritySelect
+          priorityValue={priorityValue}
+          handlePriorityChange={handlePriorityChange}
+        />
+        <DateSelect
+          disabledDate={disabledDate}
+          handleSelectStartDate={handleSelectStartDate}
+          handleSelectEndDate={handleSelectEndDate}
+          startDate={startDate}
+        />
+        <OverallEffortSelect
+          overallEffortHour={overallEffortHour}
+          handleOverallEffortHour={handleOverallEffortHour}
+          overallEfforMinutes={overallEfforMinutes}
+          handleOverallEfforMinutes={handleOverallEfforMinutes}
+        />
+        <DescriptionInput
+          description={description}
+          handleDescriptionChange={handleDescriptionChange}
+        />
       </div>
       <div className="form-right">
-        <Form.Item
-          label="Tên công việc"
-          name="name"
-          required
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng nhập tên công việc",
-            },
-          ]}
-        >
-          <Input placeholder="Nhập tên công việc" />
-        </Form.Item>
-        <Form.Item
-          label="Loại công việc"
-          name="taskTypeId"
-          required
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn loại công việc",
-            },
-          ]}
-        >
-          <Select
-            placeholder="Chọn loại công việc"
-            options={dataTaskTypePlant?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
-            onChange={handleTaskTypeChange}
-          />
-        </Form.Item>
-        <Form.Item
-          label="Người giám sát"
-          name="suppervisorId"
-          required
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn người giám sát",
-            },
-          ]}
-        >
-          <Select
-            placeholder="Chọn người giám sát"
-            options={
-              supervisor && supervisor.data
-                ? supervisor.data.map((item) => ({
-                    label: item.name,
-                    value: item.id,
-                  }))
-                : null
-            }
-          />
-        </Form.Item>
-        <Form.Item
-          label="Người thực hiện"
-          name="employeeIds"
-          required
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn người thực hiện",
-            },
-          ]}
-        >
-          <Select
-            mode="multiple"
-            value={employeesValue}
-            onChange={handleEmployeeChange}
-            placeholder="Chọn người thực hiện"
-            options={
-              dataEmployee && dataEmployee.data
-                ? dataEmployee.data.map((item) => ({
-                    label: item.name,
-                    value: item.id,
-                  }))
-                : null
-            }
-          />
-        </Form.Item>
-
-        <Form.Item label="Dụng cụ" name="materialIds">
-          <Select
-            placeholder="Chọn dụng cụ"
-            mode="multiple"
-            value={materialsValue}
-            onChange={handleMaterialChange}
-            options={dataMaterial?.map((item) => ({
-              label: item.name,
-              value: item.id,
-            }))}
-          />
-        </Form.Item>
-        <Form.Item label="Nhắc lại" name="remind">
-          <Select
-            value={remindValue.toString()}
-            onChange={handleSelectRemind}
-            placeholder="Không"
-          >
-            <Select.Option value="0">Không</Select.Option>
-            <Select.Option value="5">Sau 5 phút</Select.Option>
-            <Select.Option value="10">Sau 10 phút</Select.Option>
-            <Select.Option value="15">Sau 15 phút</Select.Option>
-            <Select.Option value="20">Sau 20 phút</Select.Option>
-          </Select>
-        </Form.Item>
-        <Form.Item label="Lặp lại" name="isRepeat">
-          <Select
-            value={repeatValue}
-            onChange={handleSelectRepeat}
-            placeholder="Không"
-          >
-            <Select.Option value="Không">Không</Select.Option>
-            <Select.Option value="Có">Có</Select.Option>
-          </Select>
-        </Form.Item>
-
+        <NameTaskInput />
+        <TaskTypePlantSelect
+          dataTaskTypePlant={dataTaskTypePlant}
+          handleTaskTypeChange={handleTaskTypeChange}
+        />
+        <SupervisorSelect supervisor={supervisor} />
+        <EmployeeSelect
+          employeesValue={employeesValue}
+          handleEmployeeChange={handleEmployeeChange}
+          dataEmployee={dataEmployee}
+        />
+        <MaterialSelect materialsValue={materialsValue} handleMaterialChange={handleMaterialChange} material={material}/>
+        <RemindSelect remindValue={remindValue} handleSelectRemind={handleSelectRemind}/>
+        <RepeatSelect repeatValue={repeatValue} handleSelectRepeat={handleSelectRepeat}/>
         {repeatValue && (
-          <Form.Item
-            label="Lặp những ngày"
-            name="dates"
-            rules={[{ required: true }]}
-          >
-            <MultiDatePicker
-              style={{
-                height: "32px",
-              }}
-              placeholder="Chọn ngày lặp lại"
-              multiple
-              format="YYYY-MM-DD"
-              disabled={!endDate || !endDate.isValid()}
-              minDate={
-                new Date(new Date(endDate).getTime() + 24 * 60 * 60 * 1000)
-              }
-              plugins={[<DatePanel />]}
-            />
-          </Form.Item>
+          <DateRepeatSelect endDate={endDate}/>
         )}
       </div>
     </Form>

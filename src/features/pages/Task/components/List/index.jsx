@@ -20,6 +20,7 @@ import SubTask from "./components/SubTask/subTask";
 import Effort from "./components/Effort";
 import TableTask from "./components/TableTask";
 import UpdateTask from "./components/UpdateTask";
+import { getTaskById } from "features/slice/task/taskByIdSlice";
 
 const List = () => {
   const [subTasks, setSubTasks] = useState([]);
@@ -45,7 +46,9 @@ const List = () => {
 
   const [form] = Form.useForm();
   const task = useSelector((state) => state.task.data);
-  console.log(task);
+
+  const taskById = useSelector((state) => state.taskById.data)
+  console.log(editingTask);
 
   const dataTotalPages = useSelector((state) => state.task.totalPages);
 
@@ -67,12 +70,13 @@ const List = () => {
   useEffect(() => {
     loadDataTask();
     dispatch(getStatus());
-  }, [pageIndex, status, selectedDate, taskNameSearch]);
+  }, [dispatch, pageIndex, status, selectedDate, taskNameSearch]);
 
   useEffect(() => {
     dispatch(getEmployeeByTask(currentTaskId)).then((data) => {
       setAvailableEmployees(data.payload);
     });
+    dispatch(getTaskById(currentTaskId));
   }, [currentTaskId]);
 
   const onChange = (pagination) => {
@@ -109,8 +113,11 @@ const List = () => {
   };
 
   const openEditTaskModal = (record) => {
-    setEditingTask(record);
+    const taskDetail = taskById;
+    setEditingTask(taskDetail);
     setEditTaskModalVisible(true);
+    setCurrentTaskId(record.id)
+    console.log(currentTaskId);
   };
 
   const closeEditTaskModal = () => {
@@ -231,22 +238,6 @@ const List = () => {
     setEditEffortVisible(false);
   };
 
-  const handleUpdateTask = (values) => {
-    const finalValues = {
-      ...values,
-      taskId: currentTaskId,
-      employeeId: editingSubTask.employeeId,
-    };
-
-    dispatch(createSubTask(finalValues)).then(() => {
-      dispatch(getSubTasksByTaskId(currentTaskId)).then((data) => {
-        setSubTasks(data.payload);
-        loadDataTask();
-        setEditSubTaskModalVisible(false);
-      });
-    });
-  };
-
   const handleUpdateEffort = (taskId, employeeId, effortTime) => {
     const updatedEffort = [
       {
@@ -274,7 +265,6 @@ const List = () => {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    console.log(selectedDate);
     setPageIndex(1);
   };
 
@@ -321,6 +311,7 @@ const List = () => {
           handleTaskAdded={handleTaskAdded}
           handleDateChange={handleDateChange}
           loadDataTask={loadDataTask}
+          currentTaskId={currentTaskId}
         />
       )}
       <TaskDetail

@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { List, Popover } from 'antd'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
-import { getTaskById } from 'features/slice/task/taskSlice'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { authServices } from 'services/authServices'
 import { getNotifyIsNewById } from 'features/slice/notification/notificationIsNewSlice'
+import { getTaskById } from 'features/slice/task/taskByIdSlice'
 
 const NotificationIsNew = ({ changeStatusNotify }) => {
   const dispatch = useDispatch()
   const [selectedTaskId, setSelectedTaskId] = useState(null)
-  const taskById = useSelector((state) => state.task.data)
+  const taskById = useSelector((state) => state.taskById.data)
 
   // Load notify
   const notifyNew = useSelector((state) => state.notificationIsNew.data)

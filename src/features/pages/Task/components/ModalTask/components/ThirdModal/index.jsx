@@ -46,6 +46,8 @@ function ThirdModal({
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [description, setDescription] = useState("");
+  const [overallEfforMinutes, setOverallEfforMinutes] = useState(0);
+  const [overallEffortHour, setOverallEffortHour] = useState(0);
   const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
 
   const [form] = Form.useForm();
@@ -55,25 +57,20 @@ function ThirdModal({
   const member = useSelector((state) => state.member.data);
 
   const farmId = member.farmId;
-  console.log(farmId);
 
   const area = useSelector((state) => state.area.data);
-  console.log("khu vực: ", area);
 
   const zoneAnimal = useSelector((state) => state.zoneAnimal.data);
-  console.log("vùng: ", zoneAnimal);
 
   const zonePlant = useSelector((state) => state.zonePlant.data);
 
   const animal = useSelector((state) => state.animal.data);
   const dataAnimal = animal.data;
-  console.log("mã vật nuôi: ", dataAnimal);
 
   const plant = useSelector((state) => state.plant.data);
   const dataPlant = plant.data;
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
-  console.log("chuồng: ", fieldByZone);
 
   const taskTypeLivestock = useSelector(
     (state) => state.taskTypeLivestock.data
@@ -87,8 +84,7 @@ function ThirdModal({
 
   const dataEmployee = useSelector((state) => state.employee.data);
 
-  const material = useSelector((state) => state.material.data);
-  const dataMaterial = material.data;
+  const material = useSelector((state) => state.materialActive.data);
 
   useEffect(() => {
     dispatch(getAreaActive(farmId));
@@ -110,7 +106,6 @@ function ThirdModal({
     if (selectedZoneId) {
       dispatch(getFieldByZone(selectedZoneId));
     }
-    console.log(selectedZoneId);
   }, [selectedZoneId]);
 
   useEffect(() => {
@@ -118,7 +113,6 @@ function ThirdModal({
       dispatch(getAnimalActive(selectedFieldId));
       dispatch(getPlantActive(selectedFieldId));
     }
-    console.log(selectedFieldId);
   }, [selectedFieldId]);
 
   useEffect(() => {
@@ -146,6 +140,8 @@ function ThirdModal({
 
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value);
+    setSelectedZoneId(value);
+    setSelectedFieldId(value);
     form.setFieldsValue({
       zoneId: null,
       fieldId: null,
@@ -156,6 +152,7 @@ function ThirdModal({
 
   const handleSelectZoneChange = async (value) => {
     setSelectedZoneId(value);
+    setSelectedFieldId(value);
     form.setFieldsValue({
       fieldId: null,
       liveStockId: null,
@@ -220,7 +217,7 @@ function ThirdModal({
       form.setFields([
         {
           name: "endDate",
-          errors: ["Không được chọn trước ngày bắt đầu"],
+          errors: ["Vui lòng chọn lại"],
         },
       ]);
       form.setFieldsValue({ dates: null });
@@ -263,6 +260,15 @@ function ThirdModal({
     return current && current < dayjs().startOf("day");
   };
 
+  const handleOverallEfforMinutes = (value) => {
+    setOverallEfforMinutes(parseInt(value, 10));
+  };
+
+  const handleOverallEffortHour = (value) => {
+    setOverallEffortHour(parseInt(value, 10));
+  };
+
+
   const transformData = (originalData) => {
     const transformedData = {
       employeeIds: originalData.employeeIds,
@@ -283,6 +289,8 @@ function ThirdModal({
         plantId: originalData.plantId,
         liveStockId: originalData.liveStockId,
         remind: originalData.remind,
+        overallEfforMinutes: originalData.overallEfforMinutes,
+        overallEffortHour: originalData.overallEffortHour
       },
     };
 
@@ -340,6 +348,8 @@ function ThirdModal({
           description: description,
           managerId: member.id,
           otherId: 0,
+          overallEffortHour: overallEffortHour,
+          overallEfforMinutes: overallEfforMinutes
         };
 
         const transformedValues = transformData(finalValues);
@@ -375,6 +385,8 @@ function ThirdModal({
         handleMaterialChange={handleMaterialChange}
         handleSelectRemind={handleSelectRemind}
         handleSelectRepeat={handleSelectRepeat}
+        handleOverallEfforMinutes={handleOverallEfforMinutes}
+        handleOverallEffortHour={handleOverallEffortHour}
         form={form}
         area={area}
         zoneAnimal={zoneAnimal}
@@ -382,12 +394,14 @@ function ThirdModal({
         dataAnimal={dataAnimal}
         priorityValue={priorityValue}
         description={description}
+        overallEfforMinutes={overallEfforMinutes}
+        overallEffortHour={overallEffortHour}
         dataTaskTypeLivestock={dataTaskTypeLivestock}
         employeesValue={employeesValue}
         dataEmployee={dataEmployee}
         supervisor={supervisor}
         materialsValue={materialsValue}
-        dataMaterial={dataMaterial}
+        material={material}
         remindValue={remindValue}
         repeatValue={repeatValue}
         disabledDate={disabledDate}
@@ -412,18 +426,22 @@ function ThirdModal({
         handleMaterialChange={handleMaterialChange}
         handleSelectRemind={handleSelectRemind}
         handleSelectRepeat={handleSelectRepeat}
+        handleOverallEfforMinutes={handleOverallEfforMinutes}
+        handleOverallEffortHour={handleOverallEffortHour}
         form={form}
         area={area}
         zoneAnimal={zoneAnimal}
         fieldByZone={fieldByZone}
         priorityValue={priorityValue}
         description={description}
+        overallEfforMinutes={overallEfforMinutes}
+        overallEffortHour={overallEffortHour}
         dataTaskTypeLivestock={dataTaskTypeLivestock}
         employeesValue={employeesValue}
         dataEmployee={dataEmployee}
         supervisor={supervisor}
         materialsValue={materialsValue}
-        dataMaterial={dataMaterial}
+        material={material}
         remindValue={remindValue}
         repeatValue={repeatValue}
         disabledDate={disabledDate}
@@ -448,6 +466,8 @@ function ThirdModal({
         handleMaterialChange={handleMaterialChange}
         handleSelectRemind={handleSelectRemind}
         handleSelectRepeat={handleSelectRepeat}
+        handleOverallEfforMinutes={handleOverallEfforMinutes}
+        handleOverallEffortHour={handleOverallEffortHour}
         form={form}
         area={area}
         zonePlant={zonePlant}
@@ -455,12 +475,14 @@ function ThirdModal({
         dataPlant={dataPlant}
         priorityValue={priorityValue}
         description={description}
+        overallEfforMinutes={overallEfforMinutes}
+        overallEffortHour={overallEffortHour}
         dataTaskTypePlant={dataTaskTypePlant}
         employeesValue={employeesValue}
         dataEmployee={dataEmployee}
         supervisor={supervisor}
         materialsValue={materialsValue}
-        dataMaterial={dataMaterial}
+        material={material}
         remindValue={remindValue}
         repeatValue={repeatValue}
         disabledDate={disabledDate}
@@ -485,18 +507,22 @@ function ThirdModal({
         handleMaterialChange={handleMaterialChange}
         handleSelectRemind={handleSelectRemind}
         handleSelectRepeat={handleSelectRepeat}
+        handleOverallEfforMinutes={handleOverallEfforMinutes}
+        handleOverallEffortHour={handleOverallEffortHour}
         form={form}
         area={area}
         zonePlant={zonePlant}
         fieldByZone={fieldByZone}
         priorityValue={priorityValue}
         description={description}
+        overallEfforMinutes={overallEfforMinutes}
+        overallEffortHour={overallEffortHour}
         dataTaskTypePlant={dataTaskTypePlant}
         employeesValue={employeesValue}
         dataEmployee={dataEmployee}
         supervisor={supervisor}
         materialsValue={materialsValue}
-        dataMaterial={dataMaterial}
+        material={material}
         remindValue={remindValue}
         repeatValue={repeatValue}
         disabledDate={disabledDate}

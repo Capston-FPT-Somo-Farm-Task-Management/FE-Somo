@@ -4,7 +4,7 @@ import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
 
 export const getMaterialActiveByFarmId = createAsyncThunk(
-    'materials/getMaterials',
+    'materialsActiveByFarmId/getMaterialActiveByFarmId',
     async (farmId, { rejectWithValue }) => {
       try {
         const { data } = await axios.get(baseUrl + `/Material/Active/Farm(${farmId})`, {

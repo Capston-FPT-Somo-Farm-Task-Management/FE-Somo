@@ -1,4 +1,5 @@
-import { Button, Form, Input, Modal, Select } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Form, Modal } from "antd";
 import dayjs from "dayjs";
 import { getAnimalActive } from "features/slice/animal/animalSlice";
 import { getAreaActive } from "features/slice/area/areaSlice";
@@ -7,15 +8,13 @@ import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
 import { getMaterialActiveByFarmId } from "features/slice/material/materialActiveByFarmSlice";
 import { getPlantActive } from "features/slice/plant/plantSlice";
 import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
-import { createTask } from "features/slice/task/taskSlice";
+import { updateTask } from "features/slice/task/taskSlice";
 import { getTaskTypeLivestock } from "features/slice/task/taskTypeAnimalSlice";
 import { getTaskTypePlant } from "features/slice/task/taskTypePlantSlice";
 import { getMemberById } from "features/slice/user/memberSlice";
 import { getZoneByAreaAnimal } from "features/slice/zone/zoneAnimalSlice";
 import { getZoneByAreaPlant } from "features/slice/zone/zonePlantSlice";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { authServices } from "services/authServices";
 import UpdateSpecificAnimal from "./components/UpdateSpecificAnimal";
 import UpdateSpecificPlant from "./components/UpdateSpecificPlant";
@@ -29,20 +28,37 @@ function UpdateTask({
   handleTaskAdded,
   handleDateChange,
   loadDataTask,
+  currentTaskId,
 }) {
-  const [selectedAreaId, setSelectedAreaId] = useState(null);
-  const [selectedZoneId, setSelectedZoneId] = useState(null);
-  const [selectedFieldId, setSelectedFieldId] = useState(null);
-  const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(null);
+  const [selectedAreaId, setSelectedAreaId] = useState(
+    editingTask ? editingTask.areaId : null
+  );
+  const [selectedZoneId, setSelectedZoneId] = useState(
+    editingTask ? editingTask.zoneId : null
+  );
+  const [selectedFieldId, setSelectedFieldId] = useState(
+    editingTask ? editingTask.fieldId : null
+  );
+  const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(
+    editingTask ? editingTask.taskTypeId : null
+  );
   const [selectedFarmId, setSelectedFarmId] = useState(null);
-  const [employeesValue, setEmployeesValue] = useState(null);
-  const [materialsValue, setMaterialsValue] = useState(0);
-  const [priorityValue, setPriorityValue] = useState("");
+  const [employeesValue, setEmployeesValue] = useState(
+    editingTask ? editingTask.employeeId : []
+  );
+  const [materialsValue, setMaterialsValue] = useState(
+    editingTask ? editingTask.materialId : []
+  );
+  const [priorityValue, setPriorityValue] = useState(
+    editingTask ? editingTask.priority : ""
+  );
   const [remindValue, setRemindValue] = useState(0);
   const [repeatValue, setRepeatValue] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [description, setDescription] = useState("");
+  const [overallEfforMinutes, setOverallEfforMinutes] = useState(0);
+  const [overallEffortHour, setOverallEffortHour] = useState(0);
   const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
 
   const [form] = Form.useForm();
@@ -52,25 +68,20 @@ function UpdateTask({
   const member = useSelector((state) => state.member.data);
 
   const farmId = member.farmId;
-  console.log(farmId);
 
   const area = useSelector((state) => state.area.data);
-  console.log(area);
 
   const zoneAnimal = useSelector((state) => state.zoneAnimal.data);
-  console.log(zoneAnimal);
 
   const zonePlant = useSelector((state) => state.zonePlant.data);
 
   const animal = useSelector((state) => state.animal.data);
   const dataAnimal = animal.data;
-  console.log(dataAnimal);
 
   const plant = useSelector((state) => state.plant.data);
   const dataPlant = plant.data;
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
-  console.log(fieldByZone);
 
   const taskTypeLivestock = useSelector(
     (state) => state.taskTypeLivestock.data
@@ -84,8 +95,7 @@ function UpdateTask({
 
   const dataEmployee = useSelector((state) => state.employee.data);
 
-  const material = useSelector((state) => state.material.data);
-  const dataMaterial = material.data;
+  const material = useSelector((state) => state.materialActive.data);
 
   useEffect(() => {
     dispatch(getAreaActive(farmId));
@@ -136,16 +146,23 @@ function UpdateTask({
 
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value);
+    setSelectedZoneId(value);
+    setSelectedFieldId(value);
     form.setFieldsValue({
       zoneId: null,
       fieldId: null,
+      liveStockId: null,
+      plantId: null,
     });
   };
 
   const handleSelectZoneChange = async (value) => {
     setSelectedZoneId(value);
+    setSelectedFieldId(value);
     form.setFieldsValue({
       fieldId: null,
+      liveStockId: null,
+      plantId: null,
     });
 
     try {
@@ -160,6 +177,10 @@ function UpdateTask({
 
   const handleSelectFieldChange = (value) => {
     setSelectedFieldId(value);
+    form.setFieldsValue({
+      liveStockId: null,
+      plantId: null,
+    });
   };
 
   const handlePriorityChange = (value) => {
@@ -168,6 +189,26 @@ function UpdateTask({
 
   const handleSelectStartDate = (date) => {
     setStartDate(date);
+  
+    const currentEndDate = form.getFieldValue("endDate");
+  
+    if (currentEndDate && date.isAfter(dayjs(currentEndDate))) {
+      form.setFieldsValue({
+        endDate: null,
+        dates: null,
+      });
+  
+      form.setFields([
+        {
+          name: "endDate",
+          errors: [],
+        },
+        {
+          name: "dates",
+          errors: [],
+        },
+      ]);
+    }
   };
 
   const handleSelectEndDate = (date) => {
@@ -202,7 +243,7 @@ function UpdateTask({
       form.setFields([
         {
           name: "endDate",
-          errors: ["Không được chọn trước ngày bắt đầu"],
+          errors: ["Vui lòng chọn lại"],
         },
       ]);
       form.setFieldsValue({ dates: null });
@@ -245,6 +286,14 @@ function UpdateTask({
     return current && current < dayjs().startOf("day");
   };
 
+  const handleOverallEfforMinutes = (value) => {
+    setOverallEfforMinutes(parseInt(value, 10));
+  };
+
+  const handleOverallEffortHour = (value) => {
+    setOverallEffortHour(parseInt(value, 10));
+  };
+
   const transformData = (originalData) => {
     const transformedData = {
       employeeIds: originalData.employeeIds,
@@ -265,13 +314,35 @@ function UpdateTask({
         plantId: originalData.plantId,
         liveStockId: originalData.liveStockId,
         remind: originalData.remind,
+        addressDetail: originalData.addressDetail,
+        overallEfforMinutes: originalData.overallEfforMinutes,
+        overallEffortHour: originalData.overallEffortHour,
       },
     };
 
     return transformedData;
   };
 
-  const handleUpdateTask = (values) => {
+  const handleUpdateTask = (
+    taskId,
+    name,
+    startDate,
+    endDate,
+    description,
+    priority,
+    repeatValue,
+    suppervisorId,
+    fieldId,
+    taskTypeId,
+    plantId,
+    liveStockId,
+    remind,
+    overallEffortHour,
+    overallEfforMinutes,
+    employeeId,
+    materialId,
+    dates
+  ) => {
     form
       .validateFields()
       .then(() => {
@@ -284,23 +355,25 @@ function UpdateTask({
 
         const startTime = dayjs(startDate).format("HH:mm:ss.SSS");
 
-        const selectedDates = values.dates || [];
+        const selectedDates = dates || [];
 
         const combinedDates = selectedDates.map(
           (date) => `${date}T${startTime}`
         );
 
-        const remindValueToSend = remindValue || 0;
+        const remindValueToSend = remind || 0;
 
         const repeatValueToSend = repeatValue || false;
 
         const datesToSend = repeatValueToSend ? combinedDates : [];
 
-        const materialToSend = materialsValue || [];
+        const descriptionToSend = description || "";
 
-        const { isRepeat, dates } = values;
-
-        if (shouldCheckRepeat && isRepeat && (!dates || dates.length === 0)) {
+        if (
+          shouldCheckRepeat &&
+          repeatValue &&
+          (!dates || dates.length === 0)
+        ) {
           form.setFields([
             {
               name: "dates",
@@ -311,26 +384,38 @@ function UpdateTask({
         }
 
         const finalValues = {
-          ...values,
+          name: name,
           startDate: startDateFormatted,
           endDate: endDateFormatted,
-          dates: datesToSend,
-          materialIds: materialToSend,
-          priority: priorityValue,
-          remind: remindValueToSend,
+          description: descriptionToSend,
+          priority: priority,
           isRepeat: repeatValueToSend,
-          description: description,
+          suppervisorId: suppervisorId,
+          fieldId: fieldId,
+          plantId: typeof plantId === "object" ? plantId.value : 0,
+          liveStockId: typeof liveStockId === "object" ? liveStockId.value : 0,
+          taskTypeId: taskTypeId,
+          overallEffortHour: overallEffortHour,
+          overallEfforMinutes: overallEfforMinutes,
+          materialIds: materialId,
+          employeeIds: employeeId,
+          remind: remindValueToSend,
+          dates: datesToSend,
           managerId: member.id,
           otherId: 0,
+          addressDetail: "Khong co",
         };
 
         const transformedValues = transformData(finalValues);
 
-        dispatch(createTask(transformedValues)).then(() => {
-          loadDataTask();
-          handleDateChange();
-          handleTaskAdded();
-        });
+        dispatch(updateTask({ id: taskId, body: transformedValues })).then(
+          () => {
+            loadDataTask();
+            handleDateChange();
+            handleTaskAdded();
+            closeEditTaskModal();
+          }
+        );
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
@@ -346,7 +431,7 @@ function UpdateTask({
           onCancel={closeEditTaskModal}
           width={900}
           footer={[
-            <Button type="primary" onClick={closeEditTaskModal}>
+            <Button onClick={closeEditTaskModal}>
               Đóng
             </Button>,
             <Button form="updateTask" type="primary" htmlType="submit">
@@ -354,45 +439,38 @@ function UpdateTask({
             </Button>,
           ]}
         >
-          {/* {taskTypeLivestock && dataAnimal ? ( */}
-          <UpdateSpecificAnimal
-            handleUpdateTask={handleUpdateTask}
+          <Form
+            layout="vertical"
+            className="task-form"
+            onFinish={(values) => {
+              handleUpdateTask(
+                currentTaskId,
+                values.name,
+                values.startDate,
+                values.endDate,
+                values.description,
+                values.priority,
+                values.repeatValue,
+                values.suppervisorId,
+                values.fieldId,
+                values.taskTypeId,
+                values.plantId,
+                values.liveStockId,
+                values.remind,
+                values.overallEffortHour,
+                values.overallEfforMinutes,
+                values.employeeId,
+                values.materialId,
+                values.dates
+              );
+            }}
+            id="updateTask"
+            key={editingTask ? editingTask.externalId : "new"}
             form={form}
-            editingTask={editingTask}
-            handleSelectAreaChange={handleSelectAreaChange}
-            handleSelectZoneChange={handleSelectZoneChange}
-            handleSelectFieldChange={handleSelectFieldChange}
-            handlePriorityChange={handlePriorityChange}
-            handleSelectStartDate={handleSelectStartDate}
-            handleSelectEndDate={handleSelectEndDate}
-            handleDescriptionChange={handleDescriptionChange}
-            handleTaskTypeChange={handleTaskTypeChange}
-            handleEmployeeChange={handleEmployeeChange}
-            handleMaterialChange={handleMaterialChange}
-            handleSelectRemind={handleSelectRemind}
-            handleSelectRepeat={handleSelectRepeat}
-            area={area}
-            zoneAnimal={zoneAnimal}
-            fieldByZone={fieldByZone}
-            dataAnimal={dataAnimal}
-            priorityValue={priorityValue}
-            disabledDate={disabledDate}
-            description={description}
-            dataTaskTypeLivestock={dataTaskTypeLivestock}
-            supervisor={supervisor}
-            employeesValue={employeesValue}
-            dataEmployee={dataEmployee}
-            materialsValue={materialsValue}
-            dataMaterial={dataMaterial}
-            remindValue={remindValue}
-            repeatValue={repeatValue}
-            startDate={startDate}
-            endDate={endDate}
-          />
-          {/* ) : ( */}
-          {/* <UpdateWholeBarn
-          handleUpdateTask={handleUpdateTask}
-            form={form}
+          >
+            {editingTask.fieldStatus === "Động vật" &&
+            editingTask.externalId ? (
+              <UpdateSpecificAnimal
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
                 handleSelectZoneChange={handleSelectZoneChange}
@@ -406,29 +484,70 @@ function UpdateTask({
                 handleMaterialChange={handleMaterialChange}
                 handleSelectRemind={handleSelectRemind}
                 handleSelectRepeat={handleSelectRepeat}
+                handleOverallEffortHour={handleOverallEffortHour}
+                handleOverallEfforMinutes={handleOverallEfforMinutes}
+                area={area}
+                zoneAnimal={zoneAnimal}
+                fieldByZone={fieldByZone}
+                dataAnimal={dataAnimal}
+                priorityValue={priorityValue}
+                disabledDate={disabledDate}
+                description={description}
+                overallEfforMinutes={overallEfforMinutes}
+                overallEffortHour={overallEffortHour}
+                dataTaskTypeLivestock={dataTaskTypeLivestock}
+                supervisor={supervisor}
+                employeesValue={employeesValue}
+                dataEmployee={dataEmployee}
+                materialsValue={materialsValue}
+                material={material}
+                remindValue={remindValue}
+                repeatValue={repeatValue}
+                startDate={startDate}
+                endDate={endDate}
+                currentTaskId={currentTaskId}
+              />
+            ) : editingTask.fieldStatus === "Động vật" &&
+              !editingTask.externalId ? (
+              <UpdateWholeBarn
+                editingTask={editingTask}
+                handleSelectAreaChange={handleSelectAreaChange}
+                handleSelectZoneChange={handleSelectZoneChange}
+                handleSelectFieldChange={handleSelectFieldChange}
+                handlePriorityChange={handlePriorityChange}
+                handleSelectStartDate={handleSelectStartDate}
+                handleSelectEndDate={handleSelectEndDate}
+                handleDescriptionChange={handleDescriptionChange}
+                handleTaskTypeChange={handleTaskTypeChange}
+                handleEmployeeChange={handleEmployeeChange}
+                handleMaterialChange={handleMaterialChange}
+                handleSelectRemind={handleSelectRemind}
+                handleSelectRepeat={handleSelectRepeat}
+                handleOverallEffortHour={handleOverallEffortHour}
+                handleOverallEfforMinutes={handleOverallEfforMinutes}
                 area={area}
                 zoneAnimal={zoneAnimal}
                 fieldByZone={fieldByZone}
                 priorityValue={priorityValue}
                 disabledDate={disabledDate}
                 description={description}
+                overallEfforMinutes={overallEfforMinutes}
+                overallEffortHour={overallEffortHour}
                 dataTaskTypeLivestock={dataTaskTypeLivestock}
                 supervisor={supervisor}
                 employeesValue={employeesValue}
                 dataEmployee={dataEmployee}
                 materialsValue={materialsValue}
-                dataMaterial={dataMaterial}
+                material={material}
                 remindValue={remindValue}
                 repeatValue={repeatValue}
                 startDate={startDate}
                 endDate={endDate}
-              /> */}
-          {/* )} */}
-
-          {/* {taskTypePlant && dataPlant ? (
+                currentTaskId={currentTaskId}
+              />
+            ) : editingTask.fieldStatus === "Thực vật" &&
+              editingTask.externalId ? (
               <UpdateSpecificPlant
-              handleUpdateTask={handleUpdateTask}
-            form={form}
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
                 handleSelectZoneChange={handleSelectZoneChange}
@@ -442,6 +561,8 @@ function UpdateTask({
                 handleMaterialChange={handleMaterialChange}
                 handleSelectRemind={handleSelectRemind}
                 handleSelectRepeat={handleSelectRepeat}
+                handleOverallEffortHour={handleOverallEffortHour}
+                handleOverallEfforMinutes={handleOverallEfforMinutes}
                 area={area}
                 zonePlant={zonePlant}
                 fieldByZone={fieldByZone}
@@ -449,21 +570,23 @@ function UpdateTask({
                 priorityValue={priorityValue}
                 disabledDate={disabledDate}
                 description={description}
+                overallEfforMinutes={overallEfforMinutes}
+                overallEffortHour={overallEffortHour}
                 dataTaskTypePlant={dataTaskTypePlant}
                 supervisor={supervisor}
                 employeesValue={employeesValue}
                 dataEmployee={dataEmployee}
                 materialsValue={materialsValue}
-                dataMaterial={dataMaterial}
+                material={material}
                 remindValue={remindValue}
                 repeatValue={repeatValue}
                 startDate={startDate}
                 endDate={endDate}
+                currentTaskId={currentTaskId}
               />
-            ) : (
+            ) : editingTask.fieldStatus === "Thực vật" &&
+              !editingTask.externalId ? (
               <UpdateWholeGarden
-              handleUpdateTask={handleUpdateTask}
-            form={form}
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
                 handleSelectZoneChange={handleSelectZoneChange}
@@ -477,24 +600,30 @@ function UpdateTask({
                 handleMaterialChange={handleMaterialChange}
                 handleSelectRemind={handleSelectRemind}
                 handleSelectRepeat={handleSelectRepeat}
+                handleOverallEffortHour={handleOverallEffortHour}
+                handleOverallEfforMinutes={handleOverallEfforMinutes}
                 area={area}
                 zonePlant={zonePlant}
                 fieldByZone={fieldByZone}
                 priorityValue={priorityValue}
                 disabledDate={disabledDate}
                 description={description}
+                overallEfforMinutes={overallEfforMinutes}
+                overallEffortHour={overallEffortHour}
                 dataTaskTypePlant={dataTaskTypePlant}
                 supervisor={supervisor}
                 employeesValue={employeesValue}
                 dataEmployee={dataEmployee}
                 materialsValue={materialsValue}
-                dataMaterial={dataMaterial}
+                material={material}
                 remindValue={remindValue}
                 repeatValue={repeatValue}
                 startDate={startDate}
                 endDate={endDate}
+                currentTaskId={currentTaskId}
               />
-            )} */}
+            ) : null}
+          </Form>
         </Modal>
       )}
     </>

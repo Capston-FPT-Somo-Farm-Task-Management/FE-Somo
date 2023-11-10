@@ -1,6 +1,6 @@
 import { Badge, List, Popover } from 'antd'
 import { getAllNotify } from 'features/slice/notification/notificationSlice'
-import { getTaskById } from 'features/slice/task/taskSlice'
+import { getTaskById } from 'features/slice/task/taskByIdSlice'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
@@ -9,7 +9,7 @@ import { authServices } from 'services/authServices'
 const NotificationAll = ({ changeStatusNotify }) => {
   const dispatch = useDispatch()
   const [selectedTaskId, setSelectedTaskId] = useState(null)
-  const taskById = useSelector((state) => state.task.data)
+  const taskById = useSelector((state) => state.taskById.data)
 
   // Load notify
   const notifyAll = useSelector((state) => state.notification.data)

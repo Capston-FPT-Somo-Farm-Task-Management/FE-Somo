@@ -31,20 +31,14 @@ export const taskTitle = [
     render: (text) => {
       let color = '';
       switch (text) {
-        case 'Cao nhất':
-          color = '#f94144';
-          break;
         case 'Cao':
-          color = '#f3722c';
+          color = '#f94144';
           break;
         case 'Trung bình':
           color = '#fca311';
           break;
         case 'Thấp':
           color = '#90be6d';
-          break;
-        case 'Thấp nhất':
-          color = '#277da1';
           break;
         default:
           color = '';
