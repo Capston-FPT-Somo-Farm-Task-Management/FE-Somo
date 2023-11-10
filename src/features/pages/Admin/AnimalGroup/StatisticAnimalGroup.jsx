@@ -8,16 +8,19 @@ import { getMemberById } from 'features/slice/user/memberSlice'
 import { getFieldAnimalByFarmId } from 'features/slice/field/fieldAnimalSlice'
 import { authServices } from 'services/authServices'
 import { adminDeleteField } from 'features/slice/field/fieldSlice'
+import { getAnimalByFarmId } from 'features/slice/animal/animalByFarmSlice'
 
 const StatisticAnimalGroup = () => {
   const dispatch = useDispatch()
+  const fieldAnimal = useSelector((state) => state.fieldAnimal.data)
+  const animalByFarm = useSelector((state) => state.animalByFarm.data)
   const member = useSelector((state) => state.member.data)
   const farmId = member.farmId
-  const fieldAnimal = useSelector((state) => state.fieldAnimal.data)
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
     dispatch(getFieldAnimalByFarmId(farmId))
+    dispatch(getAnimalByFarmId(farmId))
   }, [dispatch])
 
   const onFinishDelete = (id) => {
@@ -32,7 +35,7 @@ const StatisticAnimalGroup = () => {
 
   return (
     <>
-      <DisplayCard fieldAnimal={fieldAnimal} />
+      <DisplayCard fieldAnimal={fieldAnimal} animalByFarm={animalByFarm} />
       <Divider dashed />
       <TableAnimalGroup
         fieldAnimal={fieldAnimal}
