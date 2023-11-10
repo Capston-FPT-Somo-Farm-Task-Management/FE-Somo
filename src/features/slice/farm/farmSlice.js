@@ -2,31 +2,33 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { baseUrl } from 'features/api/baseUrl'
 
-export const getFarm = createAsyncThunk('farm/getFarm', async () => {
-  try {
-    const { data } = await axios.get(baseUrl + '/Farm')
-
-    return data
-  } catch (error) {
-    throw error
+export const getFarm = createAsyncThunk(
+  'farm/getFarm',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(baseUrl + '/Farm')
+      return response.data
+    } catch (error) {
+      rejectWithValue(error)
+    }
   }
-})
+)
 
 const initialState = {
   data: [],
-  loading: false, 
+  loading: false,
   error: '',
-  farmId: null
+  farmId: null,
 }
 
 const farmSlice = createSlice({
   name: 'farm',
   initialState,
-  
+
   reducers: {
     setFarmId: (state, action) => {
-      state.farmId = action.payload;
-    }
+      state.farmId = action.payload
+    },
   },
   extraReducers(builder) {
     builder
@@ -35,7 +37,6 @@ const farmSlice = createSlice({
       })
       .addCase(getFarm.fulfilled, (state, action) => {
         state.loading = false
-        state.error = ''
         state.data = action.payload
       })
       .addCase(getFarm.rejected, (state, action) => {

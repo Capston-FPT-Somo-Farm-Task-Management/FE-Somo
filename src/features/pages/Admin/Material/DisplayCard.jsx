@@ -1,20 +1,8 @@
 import { Card, Col, Row, Statistic } from 'antd'
 import CountUp from 'react-countup'
 
-const DisplayCard = ({ areaByFarm }) => {
+const DisplayCard = ({ activeMaterialCount, inActiveMaterialCount }) => {
   const formatter = (value) => <CountUp end={value} separator="," />
-
-  const filterActiveAreas = (areaByFarm) => {
-    if (areaByFarm && areaByFarm.data) {
-      const activeAreas = areaByFarm.data.filter(
-        (area) => area.status === 'Active'
-      )
-      return activeAreas.length
-    }
-    return 0
-  }
-  const activeAreaCount = filterActiveAreas(areaByFarm)
-  const inActiveAreaCount = areaByFarm?.data?.length - activeAreaCount
 
   return (
     <>
@@ -23,8 +11,8 @@ const DisplayCard = ({ areaByFarm }) => {
         <Col span={12}>
           <Card>
             <Statistic
-              title="Số lượng khu vực đang mở"
-              value={activeAreaCount}
+              title="Số lượng công cụ có thể sử dụng"
+              value={activeMaterialCount}
               precision={2}
               formatter={formatter}
             />
@@ -35,8 +23,8 @@ const DisplayCard = ({ areaByFarm }) => {
         <Col span={12}>
           <Card>
             <Statistic
-              title="Số lượng khu vực đang đóng"
-              value={inActiveAreaCount}
+              title="Số lượng công cụ chưa được sử dụng"
+              value={inActiveMaterialCount}
               precision={2}
               formatter={formatter}
             />

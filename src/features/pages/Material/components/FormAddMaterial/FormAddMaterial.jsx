@@ -1,10 +1,42 @@
-import { Button, Form, Input, Modal } from 'antd'
+import { Button, Form, Image, Input, Modal, Upload, message } from 'antd'
+import ImgCrop from 'antd-img-crop'
+import React, { useState } from 'react'
+import { UploadOutlined } from '@ant-design/icons'
 
-const FormAddMaterial = ({ isModalOpen, closeModal, onFinishCreate }) => {
+import { useDispatch } from 'react-redux'
+import { render } from '@testing-library/react'
+const FormAddMaterial = ({
+  isModalOpen,
+  closeModal,
+  onFinishCreate,
+  farmId,
+}) => {
+  const dispatch = useDispatch()
   const onFinish = (values) => {
-    onFinishCreate(values)
+    const finalValues = {
+      ...values,
+      // imageFile: image,
+      farmId: farmId,
+    }
+    console.log(finalValues)
+    dispatch(onFinishCreate(finalValues))
     closeModal()
   }
+
+  // const [image, setImage] = useState('')
+  // const convertToBase64 = (e) => {
+  //   console.log(e)
+  //   const reader = new FileReader()
+  //   reader.readAsDataURL(e.target.files[0])
+  //   reader.onload = () => {
+  //     console.log(reader.result)
+  //     setImage(reader.result)
+  //   }
+  //   reader.onerror = (error) => {
+  //     console.log('Error: ', error)
+  //   }
+  // }
+
   return (
     <>
       <Modal
@@ -46,6 +78,22 @@ const FormAddMaterial = ({ isModalOpen, closeModal, onFinishCreate }) => {
             name="name"
           >
             <Input placeholder="Nhập tên công cụ" />
+          </Form.Item>
+
+          <Form.Item
+            label="Hình ảnh công cụ"
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: 'Vui lòng tải lên hình ảnh công cụ',
+            //   },
+            // ]}
+            // name="imageFile"
+          >
+            {/* <input accept="image/*" onChange={convertToBase64} type="file" /> */}
+            {/* <Button icon={<UploadOutlined />}>Upload</Button> */}
+
+            {/* {image && <Image src={image} alt="Công cụ" width={200} />} */}
           </Form.Item>
         </Form>
       </Modal>

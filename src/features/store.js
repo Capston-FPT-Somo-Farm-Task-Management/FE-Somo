@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+import farmReducer from './slice/farm/farmSlice'
 import plantReducer from './slice/plant/plantSlice'
 import animalReducer from './slice/animal/animalSlice'
 import animalTypeReducer from './slice/animal/animalTypeSlice'
@@ -19,12 +20,11 @@ import supervisorReducer from './slice/supervisor/supervisorSlice'
 import employeeReducer from './slice/employee/employeeSlice'
 import employeeByTaskReducer from './slice/employee/employeeByTask'
 import materialReducer from './slice/material/materialSlice'
-import materialActiveReducer from "./slice/material/materialActiveByFarmSlice"
+import materialActiveReducer from './slice/material/materialActiveByFarmSlice'
 import fieldReducer from './slice/field/fieldSlice'
 import fieldPlantReducer from './slice/field/fieldPlantSlice'
 import fieldAnimalReducer from './slice/field/fieldAnimalSlice'
 import fieldByZoneReducer from './slice/field/fieldByZoneSlice'
-import fieldByFarmReducer from './slice/field/fieldByFarmSlice'
 import plantTypeReducer from './slice/plant/plantTypeSlice'
 import plantTypeActiveReducer from './slice/plant/plantTypeActiveSlice'
 import plantByFarmReducer from './slice/plant/plantByFarmSlice'
@@ -44,6 +44,7 @@ import employeeByFarmReducer from './slice/employee/employeeByFarmSlice'
 
 export const store = configureStore({
   reducer: {
+    farm: farmReducer,
     plant: plantReducer,
     animal: animalReducer,
     area: areaReducer,
@@ -65,7 +66,6 @@ export const store = configureStore({
     fieldPlant: fieldPlantReducer,
     fieldAnimal: fieldAnimalReducer,
     fieldByZone: fieldByZoneReducer,
-    fieldByFarm: fieldByFarmReducer,
     plantType: plantTypeReducer,
     plantTypeActive: plantTypeActiveReducer,
     plantByFarm: plantByFarmReducer,
