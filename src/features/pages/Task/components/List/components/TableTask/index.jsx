@@ -29,6 +29,7 @@ function TableTask({
   handleTaskAdded,
   handleDateChange,
   loadDataTask,
+  currentTaskId
 }) {
   const dispatch = useDispatch();
 
@@ -51,11 +52,13 @@ function TableTask({
               render: (_, record) => {
                 const isManager = record && record.managerName;
                 const isStatus =
-                  record.status === "Chuẩn bị" ||
-                  record.status === "Đang thực hiện";
+                  record &&
+                  (record.status === "Chuẩn bị" ||
+                    record.status === "Đang thực hiện");
                 const isStatusEffort =
-                  record.status === "Hoàn thành" ||
-                  record.status === "Không hoàn thành";
+                  record &&
+                  (record.status === "Hoàn thành" ||
+                    record.status === "Không hoàn thành");
                 if (isManager) {
                   return (
                     <Dropdown
@@ -159,17 +162,19 @@ function TableTask({
           dataSource={task}
           onChange={onChange}
           onRow={(record) => {
-            return {
-              onClick: async (event) => {
-                const isNameClicked =
-                  event.target.dataset.nameClicked === "true";
+            if (record && record.status) {
+              return {
+                onClick: async (event) => {
+                  const isNameClicked =
+                    event.target.dataset.nameClicked === "true";
 
-                if (isNameClicked) {
-                  openModal(record);
-                  await dispatch(getEvidenceByTaskId(record.id));
-                }
-              },
-            };
+                  if (isNameClicked) {
+                    openModal(record);
+                    await dispatch(getEvidenceByTaskId(record.id));
+                  }
+                },
+              };
+            }
           }}
         />
       )}
@@ -181,6 +186,7 @@ function TableTask({
         handleTaskAdded={handleTaskAdded}
         handleDateChange={handleDateChange}
         loadDataTask={loadDataTask}
+        currentTaskId={currentTaskId}
       />
     </>
   );
