@@ -16,11 +16,11 @@ function DateUpdate({
         rules={[
           {
             required: true,
-            message: "Vui lòng chọn thời gian bắt đầu",
+            message: "Vui lòng chọn mgày bắt đầu",
           },
         ]}
         name="startDate"
-        initialValue={editingTask ? dayjs(editingTask.startDate) : undefined}
+        initialValue={editingTask ? dayjs(editingTask.startDate) : null}
       >
         <DatePicker
           placeholder="Chọn thời gian bắt đầu"
@@ -39,11 +39,11 @@ function DateUpdate({
         rules={[
           {
             required: true,
-            message: "Vui lòng chọn khoảng thời gian kết thúc",
+            message: "Vui lòng chọn ngày kết thúc",
           },
         ]}
         name="endDate"
-        initialValue={editingTask ? dayjs(editingTask.endDate) : undefined}
+        initialValue={editingTask ? dayjs(editingTask.endDate) : null}
       >
         <DatePicker
           placeholder="Chọn thời gian kết thúc"
@@ -55,7 +55,6 @@ function DateUpdate({
           }}
           showSecond="false"
           onChange={handleSelectEndDate}
-          disabled={!startDate}
         />
       </Form.Item>
     </Space>

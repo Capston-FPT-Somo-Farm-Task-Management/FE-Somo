@@ -4,6 +4,8 @@ import MultiDatePicker from "react-multi-date-picker";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
 
 function DateRepeatUpdate({ endDate, editingTask }) {
+  console.log(endDate);
+  const disableRepeat = endDate ? !endDate.isValid() : null;
   return (
     <Form.Item
       label="Lặp những ngày"
@@ -17,8 +19,8 @@ function DateRepeatUpdate({ endDate, editingTask }) {
         placeholder="Chọn ngày lặp lại"
         multiple
         format="YYYY-MM-DD"
-        disabled={!endDate || !endDate.isValid()}
-        minDate={new Date(new Date(endDate).getTime() + 24 * 60 * 60 * 1000)}
+        disabled={!editingTask.endDate || disableRepeat}
+        minDate={new Date(new Date(editingTask.endDate).getTime() + 24 * 60 * 60 * 1000)}
         plugins={[<DatePanel />]}
       />
     </Form.Item>

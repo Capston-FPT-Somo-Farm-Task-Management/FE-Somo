@@ -7,7 +7,6 @@ function MaterialUpdate({
   material,
   editingTask,
 }) {
-  console.log(editingTask);
   return (
     <Form.Item
       label="Dụng cụ"

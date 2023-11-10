@@ -189,6 +189,26 @@ function UpdateTask({
 
   const handleSelectStartDate = (date) => {
     setStartDate(date);
+  
+    const currentEndDate = form.getFieldValue("endDate");
+  
+    if (currentEndDate && date.isAfter(dayjs(currentEndDate))) {
+      form.setFieldsValue({
+        endDate: null,
+        dates: null,
+      });
+  
+      form.setFields([
+        {
+          name: "endDate",
+          errors: [],
+        },
+        {
+          name: "dates",
+          errors: [],
+        },
+      ]);
+    }
   };
 
   const handleSelectEndDate = (date) => {
@@ -223,7 +243,7 @@ function UpdateTask({
       form.setFields([
         {
           name: "endDate",
-          errors: ["Không được chọn trước ngày bắt đầu"],
+          errors: ["Vui lòng chọn lại"],
         },
       ]);
       form.setFieldsValue({ dates: null });
