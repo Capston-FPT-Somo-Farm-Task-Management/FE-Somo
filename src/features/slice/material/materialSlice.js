@@ -75,6 +75,22 @@ export const deleteMaterial = createAsyncThunk(
   }
 )
 
+export const adminDeleteMaterial = createAsyncThunk(
+  'materials/adminDeleteMaterial',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(baseUrl + `/Material/${id}`)
+      if (response.status === 200) {
+        toast.success('Xoá thành công')
+        return response.data
+      }
+    } catch (error) {
+      toast.error(error.response.data.message)
+      return rejectWithValue(error)
+    }
+  }
+)
+
 const materialSlice = createSlice({
   name: 'material',
   initialState: {
@@ -131,6 +147,18 @@ const materialSlice = createSlice({
         state.data = action.payload
       })
       .addCase(deleteMaterial.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+
+      .addCase(adminDeleteMaterial.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(adminDeleteMaterial.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = action.payload
+      })
+      .addCase(adminDeleteMaterial.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
       })
