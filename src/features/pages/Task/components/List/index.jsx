@@ -20,6 +20,7 @@ import SubTask from "./components/SubTask/subTask";
 import Effort from "./components/Effort";
 import TableTask from "./components/TableTask";
 import UpdateTask from "./components/UpdateTask";
+import { getTaskById } from "features/slice/task/taskByIdSlice";
 
 const List = () => {
   const [subTasks, setSubTasks] = useState([]);
@@ -46,6 +47,9 @@ const List = () => {
   const [form] = Form.useForm();
   const task = useSelector((state) => state.task.data);
 
+  const taskById = useSelector((state) => state.taskById.data)
+  console.log(editingTask);
+
   const dataTotalPages = useSelector((state) => state.task.totalPages);
 
   const loading = useSelector((state) => state.task.loading);
@@ -66,12 +70,13 @@ const List = () => {
   useEffect(() => {
     loadDataTask();
     dispatch(getStatus());
-  }, [pageIndex, status, selectedDate, taskNameSearch]);
+  }, [dispatch, pageIndex, status, selectedDate, taskNameSearch]);
 
   useEffect(() => {
     dispatch(getEmployeeByTask(currentTaskId)).then((data) => {
       setAvailableEmployees(data.payload);
     });
+    dispatch(getTaskById(currentTaskId));
   }, [currentTaskId]);
 
   const onChange = (pagination) => {
@@ -108,9 +113,11 @@ const List = () => {
   };
 
   const openEditTaskModal = (record) => {
-    setEditingTask(record);
+    const taskDetail = taskById;
+    setEditingTask(taskDetail);
     setEditTaskModalVisible(true);
     setCurrentTaskId(record.id)
+    console.log(currentTaskId);
   };
 
   const closeEditTaskModal = () => {

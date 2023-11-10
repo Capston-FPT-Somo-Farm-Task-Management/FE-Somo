@@ -25,22 +25,6 @@ export const getTasks = createAsyncThunk(
   }
 );
 
-export const getTaskById = createAsyncThunk(
-  "tasks/getTaskById",
-  async (taskId, { rejectWithValue }) => {
-    try {
-      const { data } = await axios.get(baseUrl + `/FarmTask/${taskId}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      return data;
-    } catch (error) {
-      rejectWithValue(error.message);
-    }
-  }
-);
-
 export const createTask = createAsyncThunk(
   "tasks/createTask",
   async (data, id) => {
@@ -124,20 +108,6 @@ const taskSlice = createSlice({
         state.totalPages = action.payload.data.totalPages;
       })
       .addCase(getTasks.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-        state.data = [];
-      })
-
-      .addCase(getTaskById.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(getTaskById.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = "";
-        state.data = action.payload;
-      })
-      .addCase(getTaskById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
         state.data = [];

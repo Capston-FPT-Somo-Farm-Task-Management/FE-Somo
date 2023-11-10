@@ -47,7 +47,7 @@ function UpdateTask({
     editingTask ? editingTask.employeeId : []
   );
   const [materialsValue, setMaterialsValue] = useState(
-    editingTask ? editingTask.materialId : 0
+    editingTask ? editingTask.materialId : []
   );
   const [priorityValue, setPriorityValue] = useState(
     editingTask ? editingTask.priority : ""
@@ -397,8 +397,8 @@ function UpdateTask({
           taskTypeId: taskTypeId,
           overallEffortHour: overallEffortHour,
           overallEfforMinutes: overallEfforMinutes,
-          materialIds: typeof materialId === "object" ? materialId.value : [],
-          employeeIds: typeof employeeId === "object" ? employeeId.value : [],
+          materialIds: materialId,
+          employeeIds: employeeId,
           remind: remindValueToSend,
           dates: datesToSend,
           managerId: member.id,

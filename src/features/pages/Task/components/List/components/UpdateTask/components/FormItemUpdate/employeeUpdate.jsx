@@ -19,14 +19,7 @@ function EmployeeUpdate({
           message: "Vui lòng chọn người thực hiện",
         },
       ]}
-      initialValue={
-        editingTask
-          ? {
-              label: editingTask.employeeName,
-              value: editingTask.employeeId,
-            }
-          : null
-      }
+      initialValue={editingTask ? editingTask.employeeId: []}
     >
       <Select
         mode="multiple"
