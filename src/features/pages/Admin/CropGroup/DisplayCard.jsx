@@ -1,7 +1,7 @@
 import { Card, Col, Row, Statistic } from 'antd'
 import CountUp from 'react-countup'
 
-const DisplayCard = ({ fieldPlant }) => {
+const DisplayCard = ({ fieldPlant, plantByFarm }) => {
   const formatter = (value) => <CountUp end={value} separator="," />
   const filterActiveCropGroups = (fieldPlant) => {
     if (fieldPlant && fieldPlant.data) {
@@ -14,11 +14,12 @@ const DisplayCard = ({ fieldPlant }) => {
   }
   const activeCropGroup = filterActiveCropGroups(fieldPlant)
   const inActiveCropGroup = fieldPlant?.data?.length - activeCropGroup
+  const plantByFarmCount = plantByFarm?.data?.length
 
   return (
     <>
       <Row gutter={16}>
-        <Col span={12}>
+        <Col span={8}>
           <Card>
             <Statistic
               title="Số lượng vườn đang mở"
@@ -29,11 +30,22 @@ const DisplayCard = ({ fieldPlant }) => {
           </Card>
         </Col>
 
-        <Col span={12}>
+        <Col span={8}>
           <Card>
             <Statistic
               title="Số lượng vườn đang đóng"
               value={inActiveCropGroup}
+              precision={2}
+              formatter={formatter}
+            />
+          </Card>
+        </Col>
+
+        <Col span={8}>
+          <Card>
+            <Statistic
+              title="Số lượng cây trồng trong các vườn"
+              value={plantByFarmCount}
               precision={2}
               formatter={formatter}
             />
