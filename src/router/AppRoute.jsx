@@ -25,6 +25,7 @@ import Dashboard from 'features/pages/Admin/Dashboard/Dashboard'
 import StatisticAnimalGroup from 'features/pages/Admin/AnimalGroup/StatisticAnimalGroup'
 import StatisticCropGroup from 'features/pages/Admin/CropGroup/StatisticCropGroup'
 import StatisticTask from 'features/pages/Admin/Task/StatisticTask'
+import StatisticMaterial from 'features/pages/Admin/Material/StatisticMaterial'
 
 const AppRoute = () => {
   return (
@@ -161,7 +162,10 @@ const AppRoute = () => {
       {authServices.getToken() !== null &&
         authServices.getRole() === 'Admin' && (
           <>
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route
+              path="/"
+              element={<Navigate to="/statistic-farm" replace />}
+            />
           </>
         )}
 
@@ -239,6 +243,17 @@ const AppRoute = () => {
           <AdminPrivateRoute>
             <AdminLayoutWithRoute>
               <StatisticCropGroup />
+            </AdminLayoutWithRoute>
+          </AdminPrivateRoute>
+        }
+      />
+
+      <Route
+        path="/statistic-material"
+        element={
+          <AdminPrivateRoute>
+            <AdminLayoutWithRoute>
+              <StatisticMaterial />
             </AdminLayoutWithRoute>
           </AdminPrivateRoute>
         }

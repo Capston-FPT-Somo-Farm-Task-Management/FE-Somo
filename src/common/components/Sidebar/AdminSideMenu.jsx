@@ -124,13 +124,13 @@ const AdminSideMenu = () => {
               <Link to="/statistic-crop-group"></Link>
             </Menu.Item>
 
-            {/* <Menu.Item key="/statistic-material">
+            <Menu.Item key="/statistic-material">
               <FormatPainterOutlined />
               <span>Công cụ</span>
               <Link to="/statistic-material"></Link>
             </Menu.Item>
 
-            <Menu.Item key="/statistic-member">
+            {/* <Menu.Item key="/statistic-member">
               <BorderOutlined />
               <span>Thành viên</span>
               <Link to="/statistic-member"></Link>
