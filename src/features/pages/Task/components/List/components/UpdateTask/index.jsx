@@ -343,7 +343,7 @@ function UpdateTask({
     overallEfforMinutes,
     employeeId,
     materialId,
-    dates
+    dateRepeate
   ) => {
     form
       .validateFields()
@@ -355,26 +355,16 @@ function UpdateTask({
           .second(0)
           .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
 
-        const startTime = dayjs(startDate).format("HH:mm:ss.SSS");
-
-        const selectedDates = dates || [];
-
-        const combinedDates = selectedDates.map(
-          (date) => `${date}T${startTime}`
-        );
-
         const remindValueToSend = remind || 0;
 
         const repeatValueToSend = repeatValue || false;
-
-        const datesToSend = repeatValueToSend ? combinedDates : [];
 
         const descriptionToSend = description || "";
 
         if (
           shouldCheckRepeat &&
           repeatValue &&
-          (!dates || dates.length === 0)
+          (!dateRepeate || dateRepeate.length === 0)
         ) {
           form.setFields([
             {
@@ -402,7 +392,7 @@ function UpdateTask({
           materialIds: materialId,
           employeeIds: employeeId,
           remind: remindValueToSend,
-          dates: datesToSend,
+          dates: dateRepeate,
           managerId: member.id,
           otherId: 0,
           addressDetail: "Khong co",
@@ -463,7 +453,7 @@ function UpdateTask({
                 values.overallEfforMinutes,
                 values.employeeId,
                 values.materialId,
-                values.dates
+                values.dateRepeate
               );
             }}
             id="updateTask"

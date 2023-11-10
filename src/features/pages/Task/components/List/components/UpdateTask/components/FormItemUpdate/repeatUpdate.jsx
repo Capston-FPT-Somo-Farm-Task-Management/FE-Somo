@@ -5,12 +5,17 @@ import DatePanel from "react-multi-date-picker/plugins/date_panel";
 
 function RepeatUpdate({ repeatValue, handleSelectRepeat, editingTask, endDate }) {
   const disableRepeat = endDate ? !endDate.isValid() : null;
+  const repeatData = editingTask.isRepeat === true ? "Có" : "Không";
+  const dateRepeateArray =
+    editingTask && editingTask.dateRepeate
+      ? editingTask.dateRepeate.map((date) => new Date(date))
+      : [];
   return (
     <>
     <Form.Item
       label="Lặp lại"
       name="isRepeat"
-      initialValue={editingTask ? editingTask.isRepeat : ""}
+      initialValue={repeatData}
     >
       <Select
         value={repeatValue}
@@ -21,11 +26,11 @@ function RepeatUpdate({ repeatValue, handleSelectRepeat, editingTask, endDate })
         <Select.Option value="Có">Có</Select.Option>
       </Select>
     </Form.Item>
-    {repeatValue && (
+    {editingTask.isRepeat === true || repeatValue ? (
       <Form.Item
       label="Lặp những ngày"
-      name="dates"
-      initialValue={editingTask ? editingTask.dates : ""}
+      name="dateRepeate"
+      initialValue={dateRepeateArray}
     >
       <MultiDatePicker
         style={{
@@ -39,7 +44,7 @@ function RepeatUpdate({ repeatValue, handleSelectRepeat, editingTask, endDate })
         plugins={[<DatePanel />]}
       />
     </Form.Item>
-    )}
+    ) : null}
     </>
   );
 }
