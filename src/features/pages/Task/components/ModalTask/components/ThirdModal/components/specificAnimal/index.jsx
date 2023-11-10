@@ -13,7 +13,6 @@ import OverallEffortSelect from "../FormItemCreate/overallEffortSelect";
 import MaterialSelect from "../FormItemCreate/materialSelect";
 import RemindSelect from "../FormItemCreate/remindSelect";
 import RepeatSelect from "../FormItemCreate/repeatSelect";
-import DateRepeatSelect from "../FormItemCreate/dateRepeatSelect";
 import ZoneAnimalSelect from "../FormItemCreate/zoneAnimal";
 import DateSelect from "../FormItemCreate/dateSelect";
 
@@ -122,9 +121,8 @@ function SpecificAnimal({
         <RepeatSelect
           repeatValue={repeatValue}
           handleSelectRepeat={handleSelectRepeat}
+          endDate={endDate}
         />
-
-        {repeatValue && <DateRepeatSelect endDate={endDate} />}
       </div>
     </Form>
   );

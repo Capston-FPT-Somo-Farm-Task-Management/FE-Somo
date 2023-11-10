@@ -13,7 +13,6 @@ import OverallEffortSelect from "../FormItemCreate/overallEffortSelect";
 import MaterialSelect from "../FormItemCreate/materialSelect";
 import RemindSelect from "../FormItemCreate/remindSelect";
 import RepeatSelect from "../FormItemCreate/repeatSelect";
-import DateRepeatSelect from "../FormItemCreate/dateRepeatSelect";
 import FieldPlantSelect from "../FormItemCreate/fieldPlantSelect";
 import DateSelect from "../FormItemCreate/dateSelect";
 
@@ -54,7 +53,6 @@ function SpecificPlant({
   startDate,
   endDate,
 }) {
-
   return (
     <Form
       layout="vertical"
@@ -110,12 +108,20 @@ function SpecificPlant({
           handleEmployeeChange={handleEmployeeChange}
           dataEmployee={dataEmployee}
         />
-        <MaterialSelect materialsValue={materialsValue} handleMaterialChange={handleMaterialChange} material={material}/>
-        <RemindSelect remindValue={remindValue} handleSelectRemind={handleSelectRemind}/>
-        <RepeatSelect repeatValue={repeatValue} handleSelectRepeat={handleSelectRepeat}/>
-        {repeatValue && (
-          <DateRepeatSelect endDate={endDate}/>
-        )}
+        <MaterialSelect
+          materialsValue={materialsValue}
+          handleMaterialChange={handleMaterialChange}
+          material={material}
+        />
+        <RemindSelect
+          remindValue={remindValue}
+          handleSelectRemind={handleSelectRemind}
+        />
+        <RepeatSelect
+          repeatValue={repeatValue}
+          handleSelectRepeat={handleSelectRepeat}
+          endDate={endDate}
+        />
       </div>
     </Form>
   );

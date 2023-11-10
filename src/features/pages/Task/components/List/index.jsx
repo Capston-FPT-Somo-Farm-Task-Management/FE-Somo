@@ -47,8 +47,8 @@ const List = () => {
   const [form] = Form.useForm();
   const task = useSelector((state) => state.task.data);
 
-  const taskById = useSelector((state) => state.taskById.data)
-  console.log(editingTask);
+  const taskById = useSelector((state) => state.taskById.data);
+  console.log(taskById);
 
   const dataTotalPages = useSelector((state) => state.task.totalPages);
 
@@ -113,11 +113,10 @@ const List = () => {
   };
 
   const openEditTaskModal = (record) => {
-    const taskDetail = taskById;
-    setEditingTask(taskDetail);
+    setEditingTask(taskById.data);
     setEditTaskModalVisible(true);
-    setCurrentTaskId(record.id)
-    console.log(currentTaskId);
+    setCurrentTaskId(record.id);
+    console.log(editingSubTask);
   };
 
   const closeEditTaskModal = () => {

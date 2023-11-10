@@ -4,7 +4,6 @@ import AreaSelect from "../FormItemCreate/areaSelect";
 import ZoneAnimalSelect from "../FormItemCreate/zoneAnimal";
 import FieldAnimalSelect from "../FormItemCreate/fieldAnimalSelect";
 import PrioritySelect from "../FormItemCreate/prioritySelect";
-
 import DescriptionInput from "../FormItemCreate/descriptionInput";
 import NameTaskInput from "../FormItemCreate/nameTaskInput";
 import TaskTypeLivestockSelect from "../FormItemCreate/taskTypeLivestockSelect";
@@ -14,7 +13,6 @@ import OverallEffortSelect from "../FormItemCreate/overallEffortSelect";
 import MaterialSelect from "../FormItemCreate/materialSelect";
 import RemindSelect from "../FormItemCreate/remindSelect";
 import RepeatSelect from "../FormItemCreate/repeatSelect";
-import DateRepeatSelect from "../FormItemCreate/dateRepeatSelect";
 import DateSelect from "../FormItemCreate/dateSelect";
 
 function WholeBarn({
@@ -51,9 +49,8 @@ function WholeBarn({
   repeatValue,
   disabledDate,
   startDate,
-  endDate
+  endDate,
 }) {
-
   return (
     <Form
       layout="vertical"
@@ -108,13 +105,20 @@ function WholeBarn({
           handleEmployeeChange={handleEmployeeChange}
           dataEmployee={dataEmployee}
         />
-        <MaterialSelect materialsValue={materialsValue} handleMaterialChange={handleMaterialChange} material={material}/>
-        <RemindSelect remindValue={remindValue} handleSelectRemind={handleSelectRemind}/>
-        <RepeatSelect repeatValue={repeatValue} handleSelectRepeat={handleSelectRepeat}/>
-
-        {repeatValue && (
-          <DateRepeatSelect endDate={endDate}/>
-        )}
+        <MaterialSelect
+          materialsValue={materialsValue}
+          handleMaterialChange={handleMaterialChange}
+          material={material}
+        />
+        <RemindSelect
+          remindValue={remindValue}
+          handleSelectRemind={handleSelectRemind}
+        />
+        <RepeatSelect
+          repeatValue={repeatValue}
+          handleSelectRepeat={handleSelectRepeat}
+          endDate={endDate}
+        />
       </div>
     </Form>
   );

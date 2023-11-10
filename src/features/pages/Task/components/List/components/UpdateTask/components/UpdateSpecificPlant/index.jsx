@@ -9,7 +9,6 @@ import OverallEffortUpdate from "../FormItemUpdate/overallEffortUpdate";
 import MaterialUpdate from "../FormItemUpdate/materialUpdate";
 import RemindUpdate from "../FormItemUpdate/remindUpdate";
 import RepeatUpdate from "../FormItemUpdate/repeatUpdate";
-import DateRepeatUpdate from "../FormItemUpdate/dateRepeatUpdate";
 import ZonePlantUpdate from "../FormItemUpdate/zonePlantUpdate";
 import FieldPlantUpdate from "../FormItemUpdate/fieldPlantUpdate";
 import PlantUpdate from "../FormItemUpdate/plantUpdate";
@@ -52,7 +51,6 @@ function UpdateSpecificPlant({
   startDate,
   endDate,
 }) {
-
   return (
     <>
       <div className="form-left">
@@ -117,12 +115,17 @@ function UpdateSpecificPlant({
           material={material}
           editingTask={editingTask}
         />
-        <RemindUpdate remindValue={remindValue} handleSelectRemind={handleSelectRemind} editingTask={editingTask}/>
-        <RepeatUpdate repeatValue={repeatValue} handleSelectRepeat={handleSelectRepeat} editingTask={editingTask}/>
-
-        {repeatValue && (
-          <DateRepeatUpdate endDate={endDate} editingTask={editingTask}/>
-        )}
+        <RemindUpdate
+          remindValue={remindValue}
+          handleSelectRemind={handleSelectRemind}
+          editingTask={editingTask}
+        />
+        <RepeatUpdate
+          repeatValue={repeatValue}
+          handleSelectRepeat={handleSelectRepeat}
+          editingTask={editingTask}
+          endDate={endDate}
+        />
       </div>
     </>
   );

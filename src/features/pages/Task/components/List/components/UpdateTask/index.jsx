@@ -97,6 +97,8 @@ function UpdateTask({
 
   const material = useSelector((state) => state.materialActive.data);
 
+  console.log(editingTask);
+
   useEffect(() => {
     dispatch(getAreaActive(farmId));
     dispatch(getTaskTypeLivestock());
