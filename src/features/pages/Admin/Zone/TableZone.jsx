@@ -8,6 +8,7 @@ const TableZone = ({ zoneByFarm, onFinishDelete }) => {
         rowKey="id"
         dataSource={zoneByFarm ? zoneByFarm.data : null}
         locale={{ emptyText: 'Chưa có vùng nào' }}
+        style={{ margin: '0 20px' }}
       >
         <Column title="Tên vùng" dataIndex="name" key="1" />
         <Column title="Mã vùng" dataIndex="code" key="2" />

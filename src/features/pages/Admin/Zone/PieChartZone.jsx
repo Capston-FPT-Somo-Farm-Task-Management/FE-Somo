@@ -54,7 +54,12 @@ const PieChartZone = ({
           align="right"
           verticalAlign="middle"
           layout="vertical"
-          wrapperStyle={{ fontSize: '20px', marginLeft: '45px' }}
+          iconSize={20}
+          wrapperStyle={{
+            fontSize: '20px',
+            marginLeft: '200px',
+            fontFamily: 'monospace',
+          }}
         />
         <Tooltip content={<CustomTooltip />} />
       </PieChart>

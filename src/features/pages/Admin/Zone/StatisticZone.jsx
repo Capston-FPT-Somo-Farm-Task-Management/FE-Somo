@@ -113,16 +113,13 @@ const StatisticZone = () => {
 
   return (
     <>
-      <DisplayCard
-        zoneByFarm={zoneByFarm}
-        activeZoneCount={activeZoneCount}
-        inActiveZoneCount={inActiveZoneCount}
-        animalZoneCount={animalZoneCount}
-        plantZoneCount={plantZoneCount}
-        otherZoneCount={otherZoneCount}
-      />
-      <Divider dashed />
-      {/* <ChartZone
+      <div
+        style={{
+          backgroundColor: '#f5f6ff',
+          borderRadius: '15px',
+        }}
+      >
+        {/* <ChartZone
         activeAnimalZoneCount={activeAnimalZoneCount}
         inActiveAnimalZoneCount={inActiveAnimalZoneCount}
         activePlantZoneCount={activePlantZoneCount}
@@ -130,12 +127,22 @@ const StatisticZone = () => {
         activeOtherZoneCount={activeOtherZoneCount}
         inActiveOtherZoneCount={inActiveOtherZoneCount}
       /> */}
-      <PieChartZone
-        activeAnimalZoneCount={activeAnimalZoneCount}
-        activePlantZoneCount={activePlantZoneCount}
-        activeOtherZoneCount={activeOtherZoneCount}
-      />
-      <TableZone zoneByFarm={zoneByFarm} onFinishDelete={onFinishDelete} />
+        <PieChartZone
+          activeAnimalZoneCount={activeAnimalZoneCount}
+          activePlantZoneCount={activePlantZoneCount}
+          activeOtherZoneCount={activeOtherZoneCount}
+        />
+        <DisplayCard
+          zoneByFarm={zoneByFarm}
+          activeZoneCount={activeZoneCount}
+          inActiveZoneCount={inActiveZoneCount}
+          animalZoneCount={animalZoneCount}
+          plantZoneCount={plantZoneCount}
+          otherZoneCount={otherZoneCount}
+        />
+        <Divider dashed />
+        <TableZone zoneByFarm={zoneByFarm} onFinishDelete={onFinishDelete} />
+      </div>
     </>
   )
 }
