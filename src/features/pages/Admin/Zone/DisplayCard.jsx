@@ -1,46 +1,14 @@
 import { Card, Col, Divider, Row, Statistic } from 'antd'
 import CountUp from 'react-countup'
 
-const DisplayCard = ({ zoneByFarm }) => {
+const DisplayCard = ({
+  activeZoneCount,
+  inActiveZoneCount,
+  animalZoneCount,
+  plantZoneCount,
+  otherZoneCount,
+}) => {
   const formatter = (value) => <CountUp end={value} separator="," />
-
-  const filterActiveZones = (zoneByFarm) => {
-    if (zoneByFarm && zoneByFarm.data) {
-      const activeZones = zoneByFarm.data.filter(
-        (zone) => zone.status === 'Active'
-      )
-      return activeZones.length
-    }
-    return 0
-  }
-  const activeZoneCount = filterActiveZones(zoneByFarm)
-  const inActiveZoneCount = zoneByFarm?.data?.length - activeZoneCount
-
-  // zoneType
-  const filterAnimalZones = (zoneByFarm) => {
-    if (zoneByFarm && zoneByFarm.data) {
-      const animalZones = zoneByFarm.data.filter(
-        (area) => area.zoneTypeName === 'Chăn nuôi'
-      )
-      return animalZones.length
-    }
-    return 0
-  }
-  const animalZoneCount = filterAnimalZones(zoneByFarm)
-
-  const filterPlantZones = (zoneByFarm) => {
-    if (zoneByFarm && zoneByFarm.data) {
-      const plantZones = zoneByFarm.data.filter(
-        (area) => area.zoneTypeName === 'Trồng trọt'
-      )
-      return plantZones.length
-    }
-    return 0
-  }
-  const plantZoneCount = filterPlantZones(zoneByFarm)
-
-  const otherZoneCount =
-    zoneByFarm?.data?.length - (animalZoneCount + plantZoneCount)
 
   return (
     <>
@@ -94,7 +62,7 @@ const DisplayCard = ({ zoneByFarm }) => {
         <Col span={8}>
           <Card>
             <Statistic
-              title="Số lượng vùng khác"
+              title="Số lượng các loại vùng khác"
               value={otherZoneCount}
               precision={2}
               formatter={formatter}
