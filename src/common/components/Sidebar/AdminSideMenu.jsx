@@ -130,11 +130,11 @@ const AdminSideMenu = () => {
               <Link to="/statistic-material"></Link>
             </Menu.Item>
 
-            {/* <Menu.Item key="/statistic-member">
+            <Menu.Item key="/statistic-member">
               <BorderOutlined />
-              <span>Thành viên</span>
+              <span>Nhân sự</span>
               <Link to="/statistic-member"></Link>
-            </Menu.Item> */}
+            </Menu.Item>
 
             <Menu.Item key="/login" onClick={logout}>
               <LogoutOutlined />
@@ -216,6 +216,12 @@ const AdminSideMenu = () => {
                     <FormatPainterOutlined />
                     <span>Công cụ</span>
                     <Link to="/statistic-material"></Link>
+                  </Menu.Item>
+
+                  <Menu.Item key="/statistic-member">
+                    <BorderOutlined />
+                    <span>Nhân sự</span>
+                    <Link to="/statistic-member"></Link>
                   </Menu.Item>
 
                   <Menu.Item key="/login" onClick={logout}>
