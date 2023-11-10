@@ -1,4 +1,5 @@
-import { Button, Form, Input, Modal, Select } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Form, Modal } from "antd";
 import dayjs from "dayjs";
 import { getAnimalActive } from "features/slice/animal/animalSlice";
 import { getAreaActive } from "features/slice/area/areaSlice";
@@ -7,19 +8,13 @@ import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
 import { getMaterialActiveByFarmId } from "features/slice/material/materialActiveByFarmSlice";
 import { getPlantActive } from "features/slice/plant/plantSlice";
 import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
-import {
-  createTask,
-  getTaskById,
-  updateTask,
-} from "features/slice/task/taskSlice";
+import { updateTask } from "features/slice/task/taskSlice";
 import { getTaskTypeLivestock } from "features/slice/task/taskTypeAnimalSlice";
 import { getTaskTypePlant } from "features/slice/task/taskTypePlantSlice";
 import { getMemberById } from "features/slice/user/memberSlice";
 import { getZoneByAreaAnimal } from "features/slice/zone/zoneAnimalSlice";
 import { getZoneByAreaPlant } from "features/slice/zone/zonePlantSlice";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { authServices } from "services/authServices";
 import UpdateSpecificAnimal from "./components/UpdateSpecificAnimal";
 import UpdateSpecificPlant from "./components/UpdateSpecificPlant";
@@ -320,11 +315,12 @@ function UpdateTask({
     fieldId,
     taskTypeId,
     plantId,
+    liveStockId,
     remind,
     overallEffortHour,
     overallEfforMinutes,
-    employeeIds,
-    materialIds,
+    employeeId,
+    materialId,
     dates
   ) => {
     form
@@ -351,18 +347,13 @@ function UpdateTask({
 
         const datesToSend = repeatValueToSend ? combinedDates : [];
 
-        const materialToSend = materialIds || [];
-
-        const employeeToSend = employeeIds || [];
-
         const descriptionToSend = description || "";
 
-        const plantIdToSend = plantId || 0;  
-        console.log(plantId);
-
-        // const liveStockIdToSend = externalId || 0;  
-
-        if (shouldCheckRepeat && repeatValue && (!dates || dates.length === 0)) {
+        if (
+          shouldCheckRepeat &&
+          repeatValue &&
+          (!dates || dates.length === 0)
+        ) {
           form.setFields([
             {
               name: "dates",
@@ -371,8 +362,6 @@ function UpdateTask({
           ]);
           return;
         }
-
-        console.log(plantId.value);
 
         const finalValues = {
           name: name,
@@ -383,20 +372,18 @@ function UpdateTask({
           isRepeat: repeatValueToSend,
           suppervisorId: suppervisorId,
           fieldId: fieldId,
-          plantId: typeof plantId === 'object'
-          ? plantId.value
-          : plantId,
-          // liveStockId: liveStockIdToSend,
+          plantId: typeof plantId === "object" ? plantId.value : 0,
+          liveStockId: typeof liveStockId === "object" ? liveStockId.value : 0,
           taskTypeId: taskTypeId,
           overallEffortHour: overallEffortHour,
           overallEfforMinutes: overallEfforMinutes,
-          materialIds: materialToSend,
-          employeeIds: employeeToSend,
+          materialIds: typeof materialId === "object" ? materialId.value : [],
+          employeeIds: typeof employeeId === "object" ? employeeId.value : [],
           remind: remindValueToSend,
           dates: datesToSend,
           managerId: member.id,
           otherId: 0,
-          addressDetail: "Khong co"
+          addressDetail: "Khong co",
         };
 
         const transformedValues = transformData(finalValues);
@@ -406,7 +393,7 @@ function UpdateTask({
             loadDataTask();
             handleDateChange();
             handleTaskAdded();
-            closeEditTaskModal()
+            closeEditTaskModal();
           }
         );
       })
@@ -424,7 +411,7 @@ function UpdateTask({
           onCancel={closeEditTaskModal}
           width={900}
           footer={[
-            <Button type="primary" onClick={closeEditTaskModal}>
+            <Button onClick={closeEditTaskModal}>
               Đóng
             </Button>,
             <Button form="updateTask" type="primary" htmlType="submit">
@@ -448,19 +435,21 @@ function UpdateTask({
                 values.fieldId,
                 values.taskTypeId,
                 values.plantId,
+                values.liveStockId,
                 values.remind,
                 values.overallEffortHour,
                 values.overallEfforMinutes,
-                values.employeeIds,
-                values.materialIds,
+                values.employeeId,
+                values.materialId,
                 values.dates
-              )
+              );
             }}
             id="updateTask"
             key={editingTask ? editingTask.externalId : "new"}
             form={form}
           >
-            {editingTask.fieldStatus === "Động vật" && editingTask.externalId ? (
+            {editingTask.fieldStatus === "Động vật" &&
+            editingTask.externalId ? (
               <UpdateSpecificAnimal
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
@@ -498,7 +487,8 @@ function UpdateTask({
                 endDate={endDate}
                 currentTaskId={currentTaskId}
               />
-            ) : editingTask.fieldStatus === "Động vật" && !editingTask.externalId ? (
+            ) : editingTask.fieldStatus === "Động vật" &&
+              !editingTask.externalId ? (
               <UpdateWholeBarn
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
@@ -535,7 +525,8 @@ function UpdateTask({
                 endDate={endDate}
                 currentTaskId={currentTaskId}
               />
-            ) : editingTask.fieldStatus === "Thực vật" && editingTask.externalId ? (
+            ) : editingTask.fieldStatus === "Thực vật" &&
+              editingTask.externalId ? (
               <UpdateSpecificPlant
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
@@ -573,7 +564,8 @@ function UpdateTask({
                 endDate={endDate}
                 currentTaskId={currentTaskId}
               />
-            ) : editingTask.fieldStatus === "Thực vật" && !editingTask.externalId ? (
+            ) : editingTask.fieldStatus === "Thực vật" &&
+              !editingTask.externalId ? (
               <UpdateWholeGarden
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}

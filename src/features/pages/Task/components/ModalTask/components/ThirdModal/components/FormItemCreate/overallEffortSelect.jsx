@@ -24,7 +24,7 @@ function OverallEffortSelect({overallEffortHour, handleOverallEffortHour, overal
                   message: "Vui lòng chọn giờ làm việc",
                 },
               ]}
-              style={{ width: "48%" }}
+              style={{ width: "49%" }}
             >
               <Select
                 placeholder="Chọn giờ"
@@ -47,7 +47,7 @@ function OverallEffortSelect({overallEffortHour, handleOverallEffortHour, overal
                   message: "Vui lòng chọn phút làm việc",
                 },
               ]}
-              style={{ width: "48%" }}
+              style={{ width: "49%" }}
             >
               <Select
                 placeholder="Chọn phút"

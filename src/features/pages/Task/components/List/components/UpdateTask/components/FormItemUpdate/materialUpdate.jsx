@@ -7,11 +7,19 @@ function MaterialUpdate({
   material,
   editingTask,
 }) {
+  console.log(editingTask);
   return (
     <Form.Item
       label="Dụng cụ"
-      name="materialIds"
-      initialValue={editingTask ? editingTask.materialIds : []}
+      name="materialId"
+      initialValue={
+        editingTask
+          ? {
+              label: editingTask.materialName,
+              value: editingTask.materialId,
+            }
+          : null
+      }
     >
       <Select
         placeholder="Chọn dụng cụ"

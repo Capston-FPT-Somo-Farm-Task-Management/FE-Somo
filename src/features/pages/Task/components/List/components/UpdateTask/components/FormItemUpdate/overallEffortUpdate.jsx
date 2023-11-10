@@ -1,4 +1,4 @@
-import { Form, Select } from "antd";
+  import { Form, Select } from "antd";
 import React from "react";
 
 function OverallEffortUpdate({
@@ -33,7 +33,7 @@ function OverallEffortUpdate({
           initialValue={
             editingTask ? parseInt(editingTask.overallEffortHour, 10) : 0
           }
-          style={{ width: "48%" }}
+          style={{ width: "49%" }}
         >
           <Select
             placeholder="Chọn giờ"
@@ -59,7 +59,7 @@ function OverallEffortUpdate({
           initialValue={
             editingTask ? parseInt(editingTask.overallEfforMinutes, 10) : 0
           }
-          style={{ width: "48%" }}
+          style={{ width: "49%" }}
         >
           <Select
             placeholder="Chọn phút"

@@ -7,10 +7,11 @@ function EmployeeUpdate({
   dataEmployee,
   editingTask,
 }) {
+  console.log(editingTask);
   return (
     <Form.Item
       label="Người thực hiện"
-      name="employeeIds"
+      name="employeeId"
       required
       rules={[
         {
@@ -18,7 +19,14 @@ function EmployeeUpdate({
           message: "Vui lòng chọn người thực hiện",
         },
       ]}
-      initialValue={editingTask ? editingTask.employeeIds : []}
+      initialValue={
+        editingTask
+          ? {
+              label: editingTask.employeeName,
+              value: editingTask.employeeId,
+            }
+          : null
+      }
     >
       <Select
         mode="multiple"

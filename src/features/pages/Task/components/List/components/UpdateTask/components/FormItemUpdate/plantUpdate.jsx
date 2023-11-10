@@ -2,14 +2,6 @@ import { Form, Select } from "antd";
 import React from "react";
 
 function PlantUpdate({ dataPlant, editingTask }) {
-  console.log(editingTask);
-  console.log(dataPlant);
-  const plantItem =
-    dataPlant &&
-    dataPlant.find((item) => item.externalId === editingTask.externalId);
-
-  const plantIdValue = plantItem ? plantItem.id : 1; // đang không biết sao mà nó nhận plantItem bị false
-  console.log(plantIdValue);
   return (
     <Form.Item
       label="Mã cây trồng"
@@ -22,10 +14,10 @@ function PlantUpdate({ dataPlant, editingTask }) {
         },
       ]}
       initialValue={
-        editingTask 
+        editingTask
           ? {
               label: editingTask.externalId,
-              value: plantIdValue,
+              value: editingTask.plantId,
             }
           : ""
       }

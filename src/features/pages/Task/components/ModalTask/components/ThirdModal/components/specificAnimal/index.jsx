@@ -4,8 +4,6 @@ import AreaSelect from "../FormItemCreate/areaSelect";
 import FieldAnimalSelect from "../FormItemCreate/fieldAnimalSelect";
 import AnimalSelect from "../FormItemCreate/animalSelect";
 import PrioritySelect from "../FormItemCreate/prioritySelect";
-import StartDateSelect from "../FormItemCreate/startDateSelect";
-import EndDateSelect from "../FormItemCreate/endDateSelect";
 import DescriptionInput from "../FormItemCreate/descriptionInput";
 import NameTaskInput from "../FormItemCreate/nameTaskInput";
 import TaskTypeLivestockSelect from "../FormItemCreate/taskTypeLivestockSelect";
@@ -17,6 +15,7 @@ import RemindSelect from "../FormItemCreate/remindSelect";
 import RepeatSelect from "../FormItemCreate/repeatSelect";
 import DateRepeatSelect from "../FormItemCreate/dateRepeatSelect";
 import ZoneAnimalSelect from "../FormItemCreate/zoneAnimal";
+import DateSelect from "../FormItemCreate/dateSelect";
 
 function SpecificAnimal({
   onFinish,
@@ -82,14 +81,17 @@ function SpecificAnimal({
           priorityValue={priorityValue}
           handlePriorityChange={handlePriorityChange}
         />
-        <StartDateSelect
+        <DateSelect
           disabledDate={disabledDate}
           handleSelectStartDate={handleSelectStartDate}
-        />
-        <EndDateSelect
-          disabledDate={disabledDate}
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
+        />
+        <OverallEffortSelect
+          overallEffortHour={overallEffortHour}
+          handleOverallEffortHour={handleOverallEffortHour}
+          overallEfforMinutes={overallEfforMinutes}
+          handleOverallEfforMinutes={handleOverallEfforMinutes}
         />
         <DescriptionInput
           description={description}
@@ -107,12 +109,6 @@ function SpecificAnimal({
           employeesValue={employeesValue}
           handleEmployeeChange={handleEmployeeChange}
           dataEmployee={dataEmployee}
-        />
-        <OverallEffortSelect
-          overallEffortHour={overallEffortHour}
-          handleOverallEffortHour={handleOverallEffortHour}
-          overallEfforMinutes={overallEfforMinutes}
-          handleOverallEfforMinutes={handleOverallEfforMinutes}
         />
         <MaterialSelect
           materialsValue={materialsValue}

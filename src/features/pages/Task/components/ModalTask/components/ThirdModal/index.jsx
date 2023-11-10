@@ -217,7 +217,7 @@ function ThirdModal({
       form.setFields([
         {
           name: "endDate",
-          errors: ["Không được chọn trước ngày bắt đầu"],
+          errors: ["Vui lòng chọn lại"],
         },
       ]);
       form.setFieldsValue({ dates: null });

@@ -3,8 +3,6 @@ import AreaUpdate from "../FormItemUpdate/areaUpdate";
 import ZonePlantUpdate from "../FormItemUpdate/zonePlantUpdate";
 import FieldPlantUpdate from "../FormItemUpdate/fieldPlantUpdate";
 import PriorityUpdate from "../FormItemUpdate/priorityUpdate";
-import StartDateUpdate from "../FormItemUpdate/startDateUpdate";
-import EndDateUpdate from "../FormItemUpdate/endDateUpdate";
 import DescriptionUpdate from "../FormItemUpdate/descriptionUpdate";
 import NameTaskUpdate from "../FormItemUpdate/nameTaskUpdate";
 import TaskTypePlantUpdate from "../FormItemUpdate/taskTypePlantUpdate";
@@ -15,6 +13,7 @@ import MaterialUpdate from "../FormItemUpdate/materialUpdate";
 import RemindUpdate from "../FormItemUpdate/remindUpdate";
 import RepeatUpdate from "../FormItemUpdate/repeatUpdate";
 import DateRepeatUpdate from "../FormItemUpdate/dateRepeatUpdate";
+import DateUpdate from "../FormItemUpdate/dateUpdate";
 
 function UpdateWholeGarden({
   editingTask,
@@ -75,15 +74,18 @@ function UpdateWholeGarden({
           handlePriorityChange={handlePriorityChange}
           editingTask={editingTask}
         />
-        <StartDateUpdate
+        <DateUpdate
+          editingTask={editingTask}
           disabledDate={disabledDate}
           handleSelectStartDate={handleSelectStartDate}
-          editingTask={editingTask}
-        />
-        <EndDateUpdate
-          disabledDate={disabledDate}
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
+        />
+        <OverallEffortUpdate
+          overallEffortHour={overallEffortHour}
+          handleOverallEffortHour={handleOverallEffortHour}
+          overallEfforMinutes={overallEfforMinutes}
+          handleOverallEfforMinutes={handleOverallEfforMinutes}
           editingTask={editingTask}
         />
         <DescriptionUpdate
@@ -104,13 +106,6 @@ function UpdateWholeGarden({
           employeesValue={employeesValue}
           handleEmployeeChange={handleEmployeeChange}
           dataEmployee={dataEmployee}
-          editingTask={editingTask}
-        />
-        <OverallEffortUpdate
-          overallEffortHour={overallEffortHour}
-          handleOverallEffortHour={handleOverallEffortHour}
-          overallEfforMinutes={overallEfforMinutes}
-          handleOverallEfforMinutes={handleOverallEfforMinutes}
           editingTask={editingTask}
         />
         <MaterialUpdate

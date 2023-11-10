@@ -4,8 +4,7 @@ import AreaSelect from "../FormItemCreate/areaSelect";
 import ZoneAnimalSelect from "../FormItemCreate/zoneAnimal";
 import FieldAnimalSelect from "../FormItemCreate/fieldAnimalSelect";
 import PrioritySelect from "../FormItemCreate/prioritySelect";
-import StartDateSelect from "../FormItemCreate/startDateSelect";
-import EndDateSelect from "../FormItemCreate/endDateSelect";
+
 import DescriptionInput from "../FormItemCreate/descriptionInput";
 import NameTaskInput from "../FormItemCreate/nameTaskInput";
 import TaskTypeLivestockSelect from "../FormItemCreate/taskTypeLivestockSelect";
@@ -16,6 +15,7 @@ import MaterialSelect from "../FormItemCreate/materialSelect";
 import RemindSelect from "../FormItemCreate/remindSelect";
 import RepeatSelect from "../FormItemCreate/repeatSelect";
 import DateRepeatSelect from "../FormItemCreate/dateRepeatSelect";
+import DateSelect from "../FormItemCreate/dateSelect";
 
 function WholeBarn({
   onFinish,
@@ -79,14 +79,17 @@ function WholeBarn({
           priorityValue={priorityValue}
           handlePriorityChange={handlePriorityChange}
         />
-        <StartDateSelect
+        <DateSelect
           disabledDate={disabledDate}
           handleSelectStartDate={handleSelectStartDate}
-        />
-        <EndDateSelect
-          disabledDate={disabledDate}
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
+        />
+        <OverallEffortSelect
+          overallEffortHour={overallEffortHour}
+          handleOverallEffortHour={handleOverallEffortHour}
+          overallEfforMinutes={overallEfforMinutes}
+          handleOverallEfforMinutes={handleOverallEfforMinutes}
         />
         <DescriptionInput
           description={description}
@@ -104,12 +107,6 @@ function WholeBarn({
           employeesValue={employeesValue}
           handleEmployeeChange={handleEmployeeChange}
           dataEmployee={dataEmployee}
-        />
-        <OverallEffortSelect
-          overallEffortHour={overallEffortHour}
-          handleOverallEffortHour={handleOverallEffortHour}
-          overallEfforMinutes={overallEfforMinutes}
-          handleOverallEfforMinutes={handleOverallEfforMinutes}
         />
         <MaterialSelect materialsValue={materialsValue} handleMaterialChange={handleMaterialChange} material={material}/>
         <RemindSelect remindValue={remindValue} handleSelectRemind={handleSelectRemind}/>

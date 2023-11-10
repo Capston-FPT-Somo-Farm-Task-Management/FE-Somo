@@ -1,8 +1,6 @@
 import React from "react";
 import AreaUpdate from "../FormItemUpdate/areaUpdate";
 import PriorityUpdate from "../FormItemUpdate/priorityUpdate";
-import StartDateUpdate from "../FormItemUpdate/startDateUpdate";
-import EndDateUpdate from "../FormItemUpdate/endDateUpdate";
 import DescriptionUpdate from "../FormItemUpdate/descriptionUpdate";
 import NameTaskUpdate from "../FormItemUpdate/nameTaskUpdate";
 import SupervisorUpdate from "../FormItemUpdate/supervisorUpdate";
@@ -16,6 +14,7 @@ import ZonePlantUpdate from "../FormItemUpdate/zonePlantUpdate";
 import FieldPlantUpdate from "../FormItemUpdate/fieldPlantUpdate";
 import PlantUpdate from "../FormItemUpdate/plantUpdate";
 import TaskTypePlantUpdate from "../FormItemUpdate/taskTypePlantUpdate";
+import DateUpdate from "../FormItemUpdate/dateUpdate";
 
 function UpdateSpecificPlant({
   editingTask,
@@ -78,15 +77,18 @@ function UpdateSpecificPlant({
           handlePriorityChange={handlePriorityChange}
           editingTask={editingTask}
         />
-        <StartDateUpdate
+        <DateUpdate
+          editingTask={editingTask}
           disabledDate={disabledDate}
           handleSelectStartDate={handleSelectStartDate}
-          editingTask={editingTask}
-        />
-        <EndDateUpdate
-          disabledDate={disabledDate}
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
+        />
+        <OverallEffortUpdate
+          overallEffortHour={overallEffortHour}
+          handleOverallEffortHour={handleOverallEffortHour}
+          overallEfforMinutes={overallEfforMinutes}
+          handleOverallEfforMinutes={handleOverallEfforMinutes}
           editingTask={editingTask}
         />
         <DescriptionUpdate
@@ -107,13 +109,6 @@ function UpdateSpecificPlant({
           employeesValue={employeesValue}
           handleEmployeeChange={handleEmployeeChange}
           dataEmployee={dataEmployee}
-          editingTask={editingTask}
-        />
-        <OverallEffortUpdate
-          overallEffortHour={overallEffortHour}
-          handleOverallEffortHour={handleOverallEffortHour}
-          overallEfforMinutes={overallEfforMinutes}
-          handleOverallEfforMinutes={handleOverallEfforMinutes}
           editingTask={editingTask}
         />
         <MaterialUpdate

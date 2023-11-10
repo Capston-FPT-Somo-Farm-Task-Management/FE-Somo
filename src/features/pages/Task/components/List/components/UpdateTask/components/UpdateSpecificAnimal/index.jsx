@@ -4,8 +4,6 @@ import ZoneAnimalUpdate from "../FormItemUpdate/zoneAnimalUpdate";
 import FieldAnimalUpdate from "../FormItemUpdate/fieldAnimalUpdate";
 import AnimalUpdate from "../FormItemUpdate/animalUpdate";
 import PriorityUpdate from "../FormItemUpdate/priorityUpdate";
-import StartDateUpdate from "../FormItemUpdate/startDateUpdate";
-import EndDateUpdate from "../FormItemUpdate/endDateUpdate";
 import DescriptionUpdate from "../FormItemUpdate/descriptionUpdate";
 import NameTaskUpdate from "../FormItemUpdate/nameTaskUpdate";
 import TaskTypeLivestockUpdate from "../FormItemUpdate/taskTypeLivestockUpdate";
@@ -16,6 +14,7 @@ import MaterialUpdate from "../FormItemUpdate/materialUpdate";
 import RemindUpdate from "../FormItemUpdate/remindUpdate";
 import RepeatUpdate from "../FormItemUpdate/repeatUpdate";
 import DateRepeatUpdate from "../FormItemUpdate/dateRepeatUpdate";
+import DateUpdate from "../FormItemUpdate/dateUpdate";
 
 function UpdateSpecificAnimal({
   editingTask,
@@ -52,10 +51,7 @@ function UpdateSpecificAnimal({
   disabledDate,
   startDate,
   endDate,
-  currentEmployee,
-  currentTaskId,
 }) {
-
   return (
     <>
       <div className="form-left">
@@ -80,15 +76,18 @@ function UpdateSpecificAnimal({
           handlePriorityChange={handlePriorityChange}
           editingTask={editingTask}
         />
-        <StartDateUpdate
+        <DateUpdate
+          editingTask={editingTask}
           disabledDate={disabledDate}
           handleSelectStartDate={handleSelectStartDate}
-          editingTask={editingTask}
-        />
-        <EndDateUpdate
-          disabledDate={disabledDate}
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
+        />
+        <OverallEffortUpdate
+          overallEffortHour={overallEffortHour}
+          handleOverallEffortHour={handleOverallEffortHour}
+          overallEfforMinutes={overallEfforMinutes}
+          handleOverallEfforMinutes={handleOverallEfforMinutes}
           editingTask={editingTask}
         />
         <DescriptionUpdate
@@ -109,13 +108,6 @@ function UpdateSpecificAnimal({
           employeesValue={employeesValue}
           handleEmployeeChange={handleEmployeeChange}
           dataEmployee={dataEmployee}
-          editingTask={editingTask}
-        />
-        <OverallEffortUpdate
-          overallEffortHour={overallEffortHour}
-          handleOverallEffortHour={handleOverallEffortHour}
-          overallEfforMinutes={overallEfforMinutes}
-          handleOverallEfforMinutes={handleOverallEfforMinutes}
           editingTask={editingTask}
         />
         <MaterialUpdate
@@ -139,7 +131,7 @@ function UpdateSpecificAnimal({
           <DateRepeatUpdate endDate={endDate} editingTask={editingTask} />
         )}
       </div>
-      </>
+    </>
   );
 }
 
