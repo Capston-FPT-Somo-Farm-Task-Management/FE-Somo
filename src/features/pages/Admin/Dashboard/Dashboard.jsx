@@ -19,7 +19,8 @@ const Dashboard = () => {
   const fieldAnimal = useSelector((state) => state.fieldAnimal.data)
 
   const member = useSelector((state) => state.member.data)
-  const farmId = member.farmId
+  // const farmId = member.farmId
+  const farmId = localStorage.getItem('farmId')
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
