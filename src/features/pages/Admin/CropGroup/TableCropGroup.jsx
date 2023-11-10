@@ -1,11 +1,11 @@
 import { Badge, Button, Popconfirm, Table } from 'antd'
 import Column from 'antd/es/table/Column'
 
-const TableCropGroup = ({ fieldByFarm, onFinishDelete }) => {
+const TableCropGroup = ({ fieldPlant, onFinishDelete }) => {
   return (
     <>
       <Table
-        dataSource={fieldByFarm ? fieldByFarm.data : null}
+        dataSource={fieldPlant ? fieldPlant.data : null}
         rowKey="id"
         locale={{ emptyText: 'Chưa có vườn nào' }}
       >

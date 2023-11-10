@@ -3,7 +3,7 @@ import { useState } from 'react'
 import FormAddMaterial from '../FormAddMaterial/FormAddMaterial'
 import Search from 'antd/es/input/Search'
 
-const AddMaterial = ({ onFinishCreate }) => {
+const AddMaterial = ({ onFinishCreate, farmId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => {
@@ -27,6 +27,7 @@ const AddMaterial = ({ onFinishCreate }) => {
               </Button>
 
               <FormAddMaterial
+                farmId={farmId}
                 isModalOpen={isModalOpen}
                 closeModal={closeModal}
                 onFinishCreate={onFinishCreate}

@@ -5,19 +5,22 @@ import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { getMemberById } from 'features/slice/user/memberSlice'
-import { getFieldAnimalByFarmId } from 'features/slice/field/fieldByFarmSlice'
+import { getFieldAnimalByFarmId } from 'features/slice/field/fieldAnimalSlice'
 import { authServices } from 'services/authServices'
 import { adminDeleteField } from 'features/slice/field/fieldSlice'
+import { getAnimalByFarmId } from 'features/slice/animal/animalByFarmSlice'
 
 const StatisticAnimalGroup = () => {
   const dispatch = useDispatch()
+  const fieldAnimal = useSelector((state) => state.fieldAnimal.data)
+  const animalByFarm = useSelector((state) => state.animalByFarm.data)
   const member = useSelector((state) => state.member.data)
   const farmId = member.farmId
-  const fieldByFarm = useSelector((state) => state.fieldByFarm.data)
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
     dispatch(getFieldAnimalByFarmId(farmId))
+    dispatch(getAnimalByFarmId(farmId))
   }, [dispatch])
 
   const onFinishDelete = (id) => {
@@ -32,10 +35,10 @@ const StatisticAnimalGroup = () => {
 
   return (
     <>
-      <DisplayCard />
+      <DisplayCard fieldAnimal={fieldAnimal} animalByFarm={animalByFarm} />
       <Divider dashed />
       <TableAnimalGroup
-        fieldByFarm={fieldByFarm}
+        fieldAnimal={fieldAnimal}
         onFinishDelete={onFinishDelete}
       />
     </>

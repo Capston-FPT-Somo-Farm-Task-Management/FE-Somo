@@ -1,10 +1,10 @@
 import { Badge, Button, Popconfirm, Table } from 'antd'
 import Column from 'antd/es/table/Column'
 
-export const TableAnimalGroup = ({ fieldByFarm, onFinishDelete }) => {
+export const TableAnimalGroup = ({ fieldAnimal, onFinishDelete }) => {
   return (
     <Table
-      dataSource={fieldByFarm ? fieldByFarm.data : null}
+      dataSource={fieldAnimal ? fieldAnimal.data : null}
       rowKey="id"
       locale={{ emptyText: 'Chưa có chuồng nào' }}
     >

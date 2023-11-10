@@ -1,7 +1,7 @@
 import { Card, Col, Row, Statistic } from 'antd'
 import CountUp from 'react-countup'
 
-const DisplayCard = () => {
+const DisplayCard = ({ areaByFarm, zoneByFarm, fieldAnimal, fieldPlant }) => {
   const formatter = (value) => <CountUp end={value} separator="," />
 
   return (
@@ -11,7 +11,7 @@ const DisplayCard = () => {
           <Card>
             <Statistic
               title="Số lượng khu vực"
-              value={40}
+              value={areaByFarm ? areaByFarm?.data?.length : ''}
               precision={2}
               formatter={formatter}
             />
@@ -22,7 +22,7 @@ const DisplayCard = () => {
           <Card>
             <Statistic
               title="Số lượng vùng"
-              value={159}
+              value={zoneByFarm ? zoneByFarm?.data?.length : ''}
               precision={2}
               formatter={formatter}
             />
@@ -33,7 +33,7 @@ const DisplayCard = () => {
           <Card>
             <Statistic
               title="Số lượng chuồng"
-              value={217}
+              value={fieldAnimal ? fieldAnimal?.data?.length : ''}
               precision={2}
               formatter={formatter}
             />
@@ -44,7 +44,7 @@ const DisplayCard = () => {
           <Card>
             <Statistic
               title="Số lượng vườn"
-              value={281}
+              value={fieldPlant ? fieldPlant?.data?.length : ''}
               precision={2}
               formatter={formatter}
             />

@@ -5,7 +5,7 @@ import UpdateCropGroup from './UpdateCropGroup'
 
 const DisplayCropGroup = ({
   areaByFarm,
-  fieldByFarm,
+  fieldPlant,
   onFinishDelete,
   onFinishUpdate,
 }) => {
@@ -24,7 +24,7 @@ const DisplayCropGroup = ({
   return (
     <>
       <Table
-        dataSource={fieldByFarm ? fieldByFarm.data : null}
+        dataSource={fieldPlant ? fieldPlant.data : null}
         rowKey="id"
         locale={{ emptyText: 'Chưa có vườn nào' }}
       >

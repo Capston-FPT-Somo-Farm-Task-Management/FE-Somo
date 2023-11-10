@@ -5,7 +5,7 @@ import UpdateAnimalGroup from './UpdateAnimalGroup'
 
 const DisplayAnimalGroup = ({
   areaByFarm,
-  fieldByFarm,
+  fieldAnimal,
   onFinishDelete,
   onFinishUpdate,
 }) => {
@@ -24,7 +24,7 @@ const DisplayAnimalGroup = ({
   return (
     <>
       <Table
-        dataSource={fieldByFarm ? fieldByFarm.data : null}
+        dataSource={fieldAnimal ? fieldAnimal.data : null}
         rowKey="id"
         locale={{ emptyText: 'Chưa có chuồng nào' }}
       >

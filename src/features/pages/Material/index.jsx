@@ -47,7 +47,7 @@ const Material = () => {
 
   return (
     <>
-      <AddMaterial onFinishCreate={onFinishCreate} />
+      <AddMaterial onFinishCreate={onFinishCreate} farmId={farmId} />
       <DisplayMaterial
         material={material}
         onFinishDelete={onFinishDelete}
