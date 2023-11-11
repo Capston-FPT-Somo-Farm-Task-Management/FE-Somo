@@ -1,4 +1,4 @@
-import { Badge, Button, Image, Table } from 'antd'
+import { Badge, Button, Image, Popconfirm, Table } from 'antd'
 import Column from 'antd/es/table/Column'
 
 const TableMaterial = ({ material, onFinishDelete }) => {
@@ -33,13 +33,17 @@ const TableMaterial = ({ material, onFinishDelete }) => {
           key="4"
           dataIndex="id"
           render={(_, record) => (
-            <Button
-              size="middle"
-              danger
-              onClick={() => onFinishDelete(record.id)}
+            <Popconfirm
+              title="Xoá công cụ"
+              description="Bạn có chắc muốn xoá công cụ này?"
+              onConfirm={() => onFinishDelete(record.id)}
+              okText="Xoá"
+              cancelText="Huỷ"
             >
-              Xoá
-            </Button>
+              <Button size="middle" danger>
+                Xoá
+              </Button>
+            </Popconfirm>
           )}
         />
       </Table>

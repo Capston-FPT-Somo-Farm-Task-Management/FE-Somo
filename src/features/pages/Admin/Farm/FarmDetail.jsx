@@ -25,7 +25,7 @@ const FarmDetail = ({
         <Button key="back" onClick={closeModal}>
           Thoát
         </Button>,
-        <Button key="submit" type="primary" onClick={handleOk}>
+        <Button key="submit" type="primary" onClick={() => handleOk(farm.id)}>
           Chọn
         </Button>,
       ]}

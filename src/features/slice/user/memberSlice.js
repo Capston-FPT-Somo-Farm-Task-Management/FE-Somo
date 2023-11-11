@@ -14,12 +14,36 @@ export const getMemberById = createAsyncThunk(
   }
 )
 
+export const getMemberByFarmId = createAsyncThunk(
+  'member/getMemberByFarmId',
+  async (farmId, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(
+        baseUrl + `/Member/Supervisor/Farm(${farmId})`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      return data
+    } catch (error) {
+      rejectWithValue(error)
+    }
+  }
+)
+
 const memberSlice = createSlice({
   name: 'member',
   initialState: {
     data: [],
     loading: false,
     error: '',
+  },
+  reducers: {
+    clearMember: (state) => {
+      state.data = null
+    },
   },
 
   extraReducers(builder) {
@@ -38,7 +62,21 @@ const memberSlice = createSlice({
         state.error = action.payload
         state.data = []
       })
+
+      .addCase(getMemberByFarmId.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(getMemberByFarmId.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = action.payload
+      })
+      .addCase(getMemberByFarmId.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+        state.data = []
+      })
   },
 })
 
 export default memberSlice.reducer
+export const { clearMember } = memberSlice.actions

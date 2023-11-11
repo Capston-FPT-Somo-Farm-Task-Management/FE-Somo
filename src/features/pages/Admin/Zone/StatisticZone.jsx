@@ -13,8 +13,9 @@ import PieChartZone from './PieChartZone'
 const StatisticZone = () => {
   const dispatch = useDispatch()
   const member = useSelector((state) => state.member.data)
-  const farmId = member.farmId
+  // const farmId = member.farmId
   const zoneByFarm = useSelector((state) => state.zoneByFarm.data)
+  const farmId = localStorage.getItem('farmId')
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))

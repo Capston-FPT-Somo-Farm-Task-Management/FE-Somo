@@ -15,7 +15,7 @@ const SignIn = () => {
   const onFinish = (values) => {
     dispatch(postLogin(values)).then(() => {
       if (authServices.getRole() === 'Manager') {
-        navigate('/schedule')
+        navigate('/home')
         requestForToken()
         setTimeout(() => {
           const connectionId = localStorage.getItem('connectionId')

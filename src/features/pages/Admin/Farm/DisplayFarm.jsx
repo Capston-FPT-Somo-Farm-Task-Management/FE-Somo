@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Card, Modal } from 'antd'
+import { Card } from 'antd'
 import FarmDetail from './FarmDetail'
+import { toast } from 'react-toastify'
 
 const DisplayFarm = ({ farm }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -11,7 +12,13 @@ const DisplayFarm = ({ farm }) => {
     setIsModalOpen(true)
   }
 
-  const handleOk = () => {
+  const handleOk = (farmId) => {
+    localStorage.setItem('farmId', farmId)
+    toast.success('Đổi trang trại thành công')
+    closeModal()
+  }
+
+  const closeModal = () => {
     setIsModalOpen(false)
   }
 
@@ -79,7 +86,7 @@ const DisplayFarm = ({ farm }) => {
 
       <FarmDetail
         farm={selectedFarm}
-        closeModal={handleOk}
+        closeModal={closeModal}
         isModalOpen={isModalOpen}
         handleOk={handleOk}
         handleCancel={handleCancel}
