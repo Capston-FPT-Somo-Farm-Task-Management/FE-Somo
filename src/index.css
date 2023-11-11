@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap");
 body {
   box-sizing: border-box;
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #fff !important;
@@ -75,6 +75,19 @@ html {
 }
 .task-form .form-right .ql-editor {
   min-height: 150px;
+}
+
+.custom-input {
+  border-radius: 6px;
+  padding: 4px 12px;
+  background-color: white;
+  height: 22px;
+}
+
+.custom-input:focus {
+  outline: none;
+  border: 1px solid #0c8af8;
+  box-shadow: 0 0 10px 2px #0074d9;
 }
 
 .navBar {
@@ -196,32 +209,16 @@ html {
   display: flex;
   justify-content: space-around;
 }
-.subTask-modal
-  .ant-modal-content
-  .subTask
-  .subTask-content
-  .subTask-header
-  .subTask-count {
+.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-header .subTask-count {
   width: 45%;
   font-size: 20px;
   font-weight: 500;
   margin-bottom: 10px;
 }
-.subTask-modal
-  .ant-modal-content
-  .subTask
-  .subTask-content
-  .subTask-header
-  .subTask-count
-  span {
+.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-header .subTask-count span {
   text-decoration: underline;
 }
-.subTask-modal
-  .ant-modal-content
-  .subTask
-  .subTask-content
-  .subTask-header
-  .subTask-dropdown {
+.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-header .subTask-dropdown {
   width: 45%;
   display: flex;
   justify-content: flex-end;
@@ -232,12 +229,7 @@ html {
   padding: 10px 25px;
   border-radius: 10px;
 }
-.subTask-modal
-  .ant-modal-content
-  .subTask
-  .subTask-content
-  .subTask-container
-  .subTask-item {
+.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-container .subTask-item {
   width: 80%;
 }
 .subTask-modal .ant-modal-content .subTask .subTask-content p {
@@ -262,32 +254,16 @@ html {
   display: flex;
   justify-content: space-around;
 }
-.effort-modal
-  .ant-modal-content
-  .effort
-  .effort-content
-  .effort-header
-  .effort-count {
+.effort-modal .ant-modal-content .effort .effort-content .effort-header .effort-count {
   width: 45%;
   font-size: 20px;
   font-weight: 500;
   margin-bottom: 10px;
 }
-.effort-modal
-  .ant-modal-content
-  .effort
-  .effort-content
-  .effort-header
-  .effort-count
-  span {
+.effort-modal .ant-modal-content .effort .effort-content .effort-header .effort-count span {
   text-decoration: underline;
 }
-.effort-modal
-  .ant-modal-content
-  .effort
-  .effort-content
-  .effort-header
-  .effort-dropdown {
+.effort-modal .ant-modal-content .effort .effort-content .effort-header .effort-dropdown {
   width: 45%;
   display: flex;
   justify-content: flex-end;
@@ -298,12 +274,7 @@ html {
   padding: 10px 25px;
   border-radius: 10px;
 }
-.effort-modal
-  .ant-modal-content
-  .effort
-  .effort-content
-  .effort-container
-  .effort-item {
+.effort-modal .ant-modal-content .effort .effort-content .effort-container .effort-item {
   width: 80%;
 }
 .effort-modal .ant-modal-content .effort .effort-content p {
@@ -692,20 +663,6 @@ html {
   opacity: 0.75;
 }
 
-.task-form {
-  display: flex;
-  justify-content: space-around;
-}
-.task-form .form-left {
-  width: 45%;
-}
-.task-form .form-right {
-  width: 45%;
-}
-.task-form .form-right .ql-editor {
-  min-height: 150px;
-}
-
 .ant-modal .ant-modal-header {
   margin-bottom: 20px;
 }
@@ -766,17 +723,12 @@ html {
   width: 100%;
   height: 100%;
 }
-.evidence
-  .evidence-content
-  .img-contain
-  .img-evidence
-  .ant-image
-  .ant-image-mask {
+.evidence .evidence-content .img-contain .img-evidence .ant-image .ant-image-mask {
   border-radius: 10px;
 }
 .evidence .evidence-content .img-contain .img-evidence .ant-image img {
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
   width: 100%;
   height: 100%;
   border-radius: 10px;
@@ -936,11 +888,7 @@ html {
 }
 
 .wrapper {
-  background-image: linear-gradient(
-    to bottom right,
-    #849b5c,
-    #bfffc7
-  ) !important;
+  background-image: linear-gradient(to bottom right, #849b5c, #bfffc7) !important;
   height: 100vh;
 }
 .wrapper .fadeInDown {
@@ -973,7 +921,7 @@ html {
 }
 .wrapper .fadeInDown #formContent .active {
   color: #0d0d0d;
-  border-bottom: 2px solid #8ead48;
+  border-bottom: 2px solid #8EAD48;
 }
 .wrapper .fadeInDown #formContent .fadeIn {
   opacity: 0;
@@ -1021,13 +969,12 @@ html {
   transition: all 0.3s ease-in-out;
 }
 .wrapper .fadeInDown #formContent .btn-login:hover {
-  background-color: #8ead48;
+  background-color: #8EAD48;
 }
 .wrapper .fadeInDown #formContent .btn-login:active {
   transform: scale(0.95);
 }
-.wrapper .fadeInDown #formContent input[type='text'],
-.wrapper .fadeInDown #formContent input[type='password'] {
+.wrapper .fadeInDown #formContent input[type=text], .wrapper .fadeInDown #formContent input[type=password] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -1042,18 +989,18 @@ html {
   transition: all 0.5s ease-in-out;
   border-radius: 5px 5px 5px 5px;
 }
-.wrapper .fadeInDown #formContent input[type='text']:focus {
+.wrapper .fadeInDown #formContent input[type=text]:focus {
   background-color: #fff;
-  border-bottom: 2px solid #8ead48;
+  border-bottom: 2px solid #8EAD48;
 }
-.wrapper .fadeInDown #formContent input[type='password']:focus {
+.wrapper .fadeInDown #formContent input[type=password]:focus {
   background-color: #fff;
-  border-bottom: 2px solid #8ead48;
+  border-bottom: 2px solid #8EAD48;
 }
-.wrapper .fadeInDown #formContent input[type='text']:placeholder {
+.wrapper .fadeInDown #formContent input[type=text]:placeholder {
   color: #cccccc;
 }
-.wrapper .fadeInDown #formContent input[type='password']:placeholder {
+.wrapper .fadeInDown #formContent input[type=password]:placeholder {
   color: #cccccc;
 }
 .wrapper .fadeInDown #formContent #formFooter {
@@ -1065,7 +1012,7 @@ html {
   font-size: 20px;
 }
 .wrapper .fadeInDown #formContent #formFooter a {
-  color: #8ead48;
+  color: #8EAD48;
   display: inline-block;
   text-decoration: none;
   font-weight: 400;
@@ -1076,8 +1023,8 @@ html {
   bottom: -10px;
   width: 0;
   height: 2px;
-  background-color: #8ead48;
-  content: '';
+  background-color: #8EAD48;
+  content: "";
   transition: width 0.2s;
 }
 .wrapper .fadeInDown #formContent #formFooter .underlineHover:hover {
@@ -1116,4 +1063,4 @@ html {
 .page-not-fount-container .error-content {
   font-size: 90px;
   text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-}
+}/*# sourceMappingURL=index.css.map */

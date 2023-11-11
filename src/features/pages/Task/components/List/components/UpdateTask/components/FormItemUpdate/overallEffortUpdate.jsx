@@ -1,4 +1,4 @@
-  import { Form, Select } from "antd";
+import { Form, Select } from "antd";
 import React from "react";
 
 function OverallEffortUpdate({
@@ -31,7 +31,15 @@ function OverallEffortUpdate({
           ]}
           name="overallEffortHour"
           initialValue={
-            editingTask ? parseInt(editingTask.overallEffortHour, 10) : 0
+            editingTask
+              ? {
+                  label: `${parseInt(
+                    editingTask.overallEffortHour,
+                    10
+                  )} giờ`,
+                  value: parseInt(editingTask.overallEffortHour, 10),
+                }
+              : ""
           }
           style={{ width: "49%" }}
         >
@@ -41,7 +49,7 @@ function OverallEffortUpdate({
             onChange={handleOverallEffortHour}
           >
             {Array.from({ length: 24 }, (_, i) => i).map((hour) => (
-              <Select.Option key={hour} value={hour.toString()} >
+              <Select.Option key={hour} value={hour.toString()}>
                 {hour < 10 ? `0${hour}` : hour} giờ
               </Select.Option>
             ))}
@@ -57,7 +65,15 @@ function OverallEffortUpdate({
           ]}
           name="overallEfforMinutes"
           initialValue={
-            editingTask ? parseInt(editingTask.overallEfforMinutes, 10) : 0
+            editingTask
+              ? {
+                  label: `${parseInt(
+                    editingTask.overallEfforMinutes,
+                    10
+                  )} phút`,
+                  value: parseInt(editingTask.overallEfforMinutes, 10),
+                }
+              : ""
           }
           style={{ width: "49%" }}
         >

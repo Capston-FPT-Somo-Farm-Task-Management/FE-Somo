@@ -10,7 +10,7 @@ function DateUpdate({
   startDate,
 }) {
   return (
-    <Space wrap>
+    <Space nowrap>
       <Form.Item
         label="Chọn thời gian bắt đầu"
         rules={[

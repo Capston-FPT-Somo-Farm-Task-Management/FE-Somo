@@ -75,4 +75,17 @@ html {
 }
 .task-form .form-right .ql-editor {
   min-height: 150px;
+}
+
+.custom-input {
+  border-radius: 6px;
+  padding: 4px 12px;
+  background-color: white;
+  height: 22px;
+}
+
+.custom-input:focus {
+  outline: none;
+  border: 1px solid #0c8af8;
+  box-shadow: 0 0 10px 2px #0074d9;
 }/*# sourceMappingURL=main.css.map */
