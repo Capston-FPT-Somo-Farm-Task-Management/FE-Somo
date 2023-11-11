@@ -15,6 +15,7 @@ import RemindSelect from "../FormItemCreate/remindSelect";
 import RepeatSelect from "../FormItemCreate/repeatSelect";
 import ZoneAnimalSelect from "../FormItemCreate/zoneAnimal";
 import DateSelect from "../FormItemCreate/dateSelect";
+import dayjs from "dayjs";
 
 function SpecificAnimal({
   onFinish,
@@ -53,6 +54,11 @@ function SpecificAnimal({
   startDate,
   endDate,
 }) {
+  const calculateDaysDifference = (startDate, endDate) => {
+    const start = dayjs(startDate);
+    const end = dayjs(endDate);
+    return end.diff(start, 'days');
+  };
   return (
     <Form
       layout="vertical"
@@ -85,6 +91,7 @@ function SpecificAnimal({
           handleSelectStartDate={handleSelectStartDate}
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
+          calculateDaysDifference={calculateDaysDifference }
         />
         <OverallEffortSelect
           overallEffortHour={overallEffortHour}
@@ -121,7 +128,9 @@ function SpecificAnimal({
         <RepeatSelect
           repeatValue={repeatValue}
           handleSelectRepeat={handleSelectRepeat}
+          startDate={startDate}
           endDate={endDate}
+          calculateDaysDifference={calculateDaysDifference }
         />
       </div>
     </Form>

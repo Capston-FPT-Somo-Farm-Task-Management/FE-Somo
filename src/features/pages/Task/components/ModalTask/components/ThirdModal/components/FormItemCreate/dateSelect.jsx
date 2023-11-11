@@ -7,15 +7,16 @@ function DateSelect({
   handleSelectStartDate,
   handleSelectEndDate,
   startDate,
+  
 }) {
   return (
-    <Space wrap>
+    <Space nowrap>
       <Form.Item
         label="Chọn thời gian bắt đầu"
         rules={[
           {
             required: true,
-            message: "Vui lòng chọn thời gian bắt đầu",
+            message: "Vui lòng chọn ngày bắt đầu",
           },
         ]}
         name="startDate"
@@ -37,7 +38,7 @@ function DateSelect({
         rules={[
           {
             required: true,
-            message: "Vui lòng chọn khoảng thời gian kết thúc",
+            message: "Vui lòng chọn ngày kết thúc",
           },
         ]}
         name="endDate"
