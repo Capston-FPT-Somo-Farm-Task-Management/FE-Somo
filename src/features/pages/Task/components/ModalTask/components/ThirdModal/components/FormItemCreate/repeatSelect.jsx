@@ -8,21 +8,6 @@ import { vi } from 'date-fns/locale'
 function RepeatSelect({ repeatValue, handleSelectRepeat, startDate, endDate }) {
   const [selectedDays, setSelectedDays] = useState([])
 
-  // Tính khoảng cách ngày
-  const daysDifference = dayjs(endDate).diff(startDate, 'day')
-
-  const onSelectDay = (day) => {
-    const formattedDay = dayjs(day).format('YYYY-MM-DD')
-
-    if (selectedDays.includes(formattedDay)) {
-      // Nếu ngày đã chọn, loại bỏ ngày đó khỏi mảng
-      setSelectedDays(selectedDays.filter((d) => d !== formattedDay))
-    } else {
-      // Nếu ngày chưa chọn, thêm vào mảng
-      setSelectedDays([...selectedDays, formattedDay])
-    }
-  }
-
   const onDayClick = (day) => {
     const formattedDay = dayjs(day).format('YYYY-MM-DD')
     const index = selectedDays.indexOf(formattedDay)
@@ -39,7 +24,7 @@ function RepeatSelect({ repeatValue, handleSelectRepeat, startDate, endDate }) {
   const disabledDate = (current) => {
     const currentDayjs = dayjs(current)
 
-    // Tính khoảng cách ngày, thêm 1 để tính cả ngày kết thúc
+    // Tính khoảng cách ngày
     const daysDifference = dayjs(endDate).diff(startDate, 'day') + 1
 
     // Disable ngày từ quá khứ đến endDate
@@ -55,7 +40,6 @@ function RepeatSelect({ repeatValue, handleSelectRepeat, startDate, endDate }) {
     for (let selectedDay of selectedDays) {
       let dayAfterSelected = dayjs(selectedDay)
       for (let i = 1; i <= daysDifference; i++) {
-        // Lưu ý sử dụng < thay vì <=
         if (currentDayjs.isSame(dayAfterSelected.add(i, 'day'), 'day')) {
           return true
         }
