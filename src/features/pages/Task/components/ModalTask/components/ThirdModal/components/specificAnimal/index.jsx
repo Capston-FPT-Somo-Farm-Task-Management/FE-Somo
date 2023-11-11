@@ -1,21 +1,21 @@
-import React from "react";
-import { Form } from "antd";
-import AreaSelect from "../FormItemCreate/areaSelect";
-import FieldAnimalSelect from "../FormItemCreate/fieldAnimalSelect";
-import AnimalSelect from "../FormItemCreate/animalSelect";
-import PrioritySelect from "../FormItemCreate/prioritySelect";
-import DescriptionInput from "../FormItemCreate/descriptionInput";
-import NameTaskInput from "../FormItemCreate/nameTaskInput";
-import TaskTypeLivestockSelect from "../FormItemCreate/taskTypeLivestockSelect";
-import SupervisorSelect from "../FormItemCreate/supervisorSelect";
-import EmployeeSelect from "../FormItemCreate/employeeSelect";
-import OverallEffortSelect from "../FormItemCreate/overallEffortSelect";
-import MaterialSelect from "../FormItemCreate/materialSelect";
-import RemindSelect from "../FormItemCreate/remindSelect";
-import RepeatSelect from "../FormItemCreate/repeatSelect";
-import ZoneAnimalSelect from "../FormItemCreate/zoneAnimal";
-import DateSelect from "../FormItemCreate/dateSelect";
-import dayjs from "dayjs";
+import React from 'react'
+import { Form } from 'antd'
+import AreaSelect from '../FormItemCreate/areaSelect'
+import FieldAnimalSelect from '../FormItemCreate/fieldAnimalSelect'
+import AnimalSelect from '../FormItemCreate/animalSelect'
+import PrioritySelect from '../FormItemCreate/prioritySelect'
+import DescriptionInput from '../FormItemCreate/descriptionInput'
+import NameTaskInput from '../FormItemCreate/nameTaskInput'
+import TaskTypeLivestockSelect from '../FormItemCreate/taskTypeLivestockSelect'
+import SupervisorSelect from '../FormItemCreate/supervisorSelect'
+import EmployeeSelect from '../FormItemCreate/employeeSelect'
+import OverallEffortSelect from '../FormItemCreate/overallEffortSelect'
+import MaterialSelect from '../FormItemCreate/materialSelect'
+import RemindSelect from '../FormItemCreate/remindSelect'
+import RepeatSelect from '../FormItemCreate/repeatSelect'
+import ZoneAnimalSelect from '../FormItemCreate/zoneAnimal'
+import DateSelect from '../FormItemCreate/dateSelect'
+import dayjs from 'dayjs'
 
 function SpecificAnimal({
   onFinish,
@@ -55,10 +55,10 @@ function SpecificAnimal({
   endDate,
 }) {
   const calculateDaysDifference = (startDate, endDate) => {
-    const start = dayjs(startDate);
-    const end = dayjs(endDate);
-    return end.diff(start, 'days');
-  };
+    const start = dayjs(startDate)
+    const end = dayjs(endDate)
+    return end.diff(start, 'days')
+  }
   return (
     <Form
       layout="vertical"
@@ -91,7 +91,7 @@ function SpecificAnimal({
           handleSelectStartDate={handleSelectStartDate}
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
-          calculateDaysDifference={calculateDaysDifference }
+          calculateDaysDifference={calculateDaysDifference}
         />
         <OverallEffortSelect
           overallEffortHour={overallEffortHour}
@@ -130,11 +130,11 @@ function SpecificAnimal({
           handleSelectRepeat={handleSelectRepeat}
           startDate={startDate}
           endDate={endDate}
-          calculateDaysDifference={calculateDaysDifference }
+          calculateDaysDifference={calculateDaysDifference}
         />
       </div>
     </Form>
-  );
+  )
 }
 
-export default SpecificAnimal;
+export default SpecificAnimal
