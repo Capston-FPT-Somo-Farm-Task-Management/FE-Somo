@@ -1,8 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import { baseUrl } from "features/api/baseUrl";
-import { toast } from "react-toastify";
-import { authServices } from "services/authServices";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import axios from 'axios'
+import { baseUrl } from 'features/api/baseUrl'
+import { toast } from 'react-toastify'
+import { authServices } from 'services/authServices'
 
 export const getTaskById = createAsyncThunk(
     "taskById/getTaskById",
@@ -18,7 +18,7 @@ export const getTaskById = createAsyncThunk(
         rejectWithValue(error.message);
       }
     }
-  );
+)
 
   const taskByIdSlice = createSlice({
     name: "taskById",

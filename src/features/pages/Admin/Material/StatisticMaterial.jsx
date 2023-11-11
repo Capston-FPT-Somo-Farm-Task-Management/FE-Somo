@@ -15,7 +15,8 @@ const StatisticMaterial = () => {
   const dispatch = useDispatch()
   const material = useSelector((state) => state.material.data)
   const member = useSelector((state) => state.member.data)
-  const farmId = member.farmId
+  // const farmId = member.farmId
+  const farmId = localStorage.getItem('farmId')
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))

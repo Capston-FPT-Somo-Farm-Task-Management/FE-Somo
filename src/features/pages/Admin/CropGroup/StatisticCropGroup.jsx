@@ -15,7 +15,8 @@ const StatisticCropGroup = () => {
   const fieldPlant = useSelector((state) => state.fieldPlant.data)
   const plantByFarm = useSelector((state) => state.plantByFarm.data)
   const member = useSelector((state) => state.member.data)
-  const farmId = member.farmId
+  // const farmId = member.farmId
+  const farmId = localStorage.getItem('farmId')
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
