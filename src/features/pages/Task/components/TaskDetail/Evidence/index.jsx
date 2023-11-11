@@ -1,10 +1,10 @@
-import React from 'react'
-import { useSelector } from 'react-redux';
+import React from "react";
+import { useSelector } from "react-redux";
 import NoImage from "../../../../../../assets/no-image.png";
-import { Image } from "antd";
+import { Image, Modal } from "antd";
 
-function Evidence() {
-    const evidenceData = useSelector((state) => state.evidence.data);
+function Evidence({ visible, onCancel, taskData }) {
+  const evidenceData = useSelector((state) => state.evidence.data);
 
   const renderImages = () => {
     let totalEvidenceCount = 0;
@@ -15,7 +15,7 @@ function Evidence() {
         return (
           <div key={evidence.id} className="evidence-content">
             <div className="evidence-count">
-              <span style={{textDecoration: "none", color: "red"}}>* </span>
+              <span style={{ textDecoration: "none", color: "red" }}>* </span>
               <span>Báo cáo số {evidenceCount}</span>{" "}
             </div>
             <p className="evidence-desc">Mô tả: {evidence.description}</p>
@@ -47,7 +47,7 @@ function Evidence() {
                         </div>
                       ) : evidence.urlImage.length === 4 ? (
                         <div
-                          style={{ width: "45%", margin: "10px"}}
+                          style={{ width: "45%", margin: "10px" }}
                           className="img-evidence"
                           key={imageIndex}
                         >
@@ -91,15 +91,22 @@ function Evidence() {
     } else {
       return <p>Chưa có báo cáo nào</p>;
     }
-  }
+  };
   return (
-    <div className="evidence">
-        <h6 style={{ fontSize: "24px", fontWeight: "500" }}>
-          Báo cáo công việc:
-        </h6>
+    <Modal
+      title="Báo cáo công việc"
+      visible={visible}
+      onCancel={onCancel}
+      footer={null}
+      width={550}
+      className="modal-detail"
+      style={{ maxWidth: "90%", margin: "0 auto" }}
+    >
+      <div className="evidence">
         {renderImages()}
       </div>
-  )
+    </Modal>
+  );
 }
 
-export default Evidence
+export default Evidence;
