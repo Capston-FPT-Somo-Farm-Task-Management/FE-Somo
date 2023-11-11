@@ -13,7 +13,6 @@ import OverallEffortUpdate from "../FormItemUpdate/overallEffortUpdate";
 import MaterialUpdate from "../FormItemUpdate/materialUpdate";
 import RemindUpdate from "../FormItemUpdate/remindUpdate";
 import RepeatUpdate from "../FormItemUpdate/repeatUpdate";
-import DateRepeatUpdate from "../FormItemUpdate/dateRepeatUpdate";
 import DateUpdate from "../FormItemUpdate/dateUpdate";
 
 function UpdateSpecificAnimal({
@@ -125,11 +124,8 @@ function UpdateSpecificAnimal({
           repeatValue={repeatValue}
           handleSelectRepeat={handleSelectRepeat}
           editingTask={editingTask}
+          endDate={endDate}
         />
-
-        {repeatValue && (
-          <DateRepeatUpdate endDate={endDate} editingTask={editingTask} />
-        )}
       </div>
     </>
   );

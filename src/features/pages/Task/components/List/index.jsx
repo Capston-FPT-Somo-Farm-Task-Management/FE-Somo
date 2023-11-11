@@ -19,8 +19,6 @@ import DateSelectionComp from "./components/DateSelection";
 import SubTask from "./components/SubTask/subTask";
 import Effort from "./components/Effort";
 import TableTask from "./components/TableTask";
-import UpdateTask from "./components/UpdateTask";
-import { getTaskById } from "features/slice/task/taskByIdSlice";
 
 const List = () => {
   const [subTasks, setSubTasks] = useState([]);
@@ -46,9 +44,6 @@ const List = () => {
 
   const [form] = Form.useForm();
   const task = useSelector((state) => state.task.data);
-
-  const taskById = useSelector((state) => state.taskById.data)
-  console.log(editingTask);
 
   const dataTotalPages = useSelector((state) => state.task.totalPages);
 
@@ -76,7 +71,6 @@ const List = () => {
     dispatch(getEmployeeByTask(currentTaskId)).then((data) => {
       setAvailableEmployees(data.payload);
     });
-    dispatch(getTaskById(currentTaskId));
   }, [currentTaskId]);
 
   const onChange = (pagination) => {
@@ -113,11 +107,10 @@ const List = () => {
   };
 
   const openEditTaskModal = (record) => {
-    const taskDetail = taskById;
-    setEditingTask(taskDetail);
+    setEditingTask(record);
     setEditTaskModalVisible(true);
-    setCurrentTaskId(record.id)
-    console.log(currentTaskId);
+    setCurrentTaskId(record.id);
+    console.log(editingTask);
   };
 
   const closeEditTaskModal = () => {

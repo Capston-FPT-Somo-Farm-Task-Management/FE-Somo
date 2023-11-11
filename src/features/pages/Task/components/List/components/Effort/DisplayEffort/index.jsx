@@ -60,7 +60,7 @@ function DisplayEffort({
                   <div className="effort-item">
                     <p>Mã nhân viên: {effortItem.employeeCode}</p>
                     <p>Người thực hiện: {effortItem.employeeName}</p>
-                    <p>Thời gian: {effortItem.effortTime} giờ</p>
+                    <p>Thời gian: {effortItem.totalActualEffortHour} giờ</p>
                   </div>
                 </div>
               </div>

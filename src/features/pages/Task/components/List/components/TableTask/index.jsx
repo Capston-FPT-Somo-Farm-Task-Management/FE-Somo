@@ -47,7 +47,7 @@ function TableTask({
           columns={[
             ...taskTitle,
             {
-              title: <p style={{ textAlign: "center" }}>Tùy chọn</p>,
+              title: <p>Tùy chọn</p>,
               key: "action",
               render: (_, record) => {
                 const isManager = record && record.managerName;
