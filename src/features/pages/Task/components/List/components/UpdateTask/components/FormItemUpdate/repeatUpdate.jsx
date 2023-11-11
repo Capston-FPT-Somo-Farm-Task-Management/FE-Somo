@@ -5,7 +5,6 @@ import DatePanel from "react-multi-date-picker/plugins/date_panel";
 
 function RepeatUpdate({ repeatValue, handleSelectRepeat, editingTask, endDate }) {
   const disableRepeat = endDate ? !endDate.isValid() : null;
-  const repeatData = editingTask.isRepeat === true ? "Có" : "Không";
   const dateRepeateArray =
     editingTask && editingTask.dateRepeate
       ? editingTask.dateRepeate.map((date) => new Date(date))
@@ -15,7 +14,14 @@ function RepeatUpdate({ repeatValue, handleSelectRepeat, editingTask, endDate })
     <Form.Item
       label="Lặp lại"
       name="isRepeat"
-      initialValue={repeatData}
+      initialValue={
+        editingTask
+          ? {
+              label: editingTask.isRepeat === true ? "Có" : "Không",
+              value: editingTask.isRepeat,
+            }
+          : ""
+      }
     >
       <Select
         value={repeatValue}

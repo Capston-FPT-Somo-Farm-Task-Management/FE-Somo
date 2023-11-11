@@ -9,6 +9,7 @@ function DisplayEffort({
   handleMenuEffortClick,
 }) {
   let totalEffortCount = 0;
+  console.log(effort.data.subtasks);
   return (
     <Modal
       title="Xem chấm công"
@@ -23,7 +24,7 @@ function DisplayEffort({
     >
       <div className="effort">
         {effort && effort.data ? (
-          effort.data.map((effortItem) => {
+          effort.data.subtasks.map((effortItem) => {
             totalEffortCount++;
             const EffortCount = totalEffortCount;
             return (
@@ -60,7 +61,7 @@ function DisplayEffort({
                   <div className="effort-item">
                     <p>Mã nhân viên: {effortItem.employeeCode}</p>
                     <p>Người thực hiện: {effortItem.employeeName}</p>
-                    <p>Thời gian: {effortItem.effortTime} giờ</p>
+                    <p>Thời gian: {effortItem.totalActualEffortHour} giờ</p>
                   </div>
                 </div>
               </div>

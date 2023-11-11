@@ -319,6 +319,7 @@ function UpdateTask({
         addressDetail: originalData.addressDetail,
         overallEfforMinutes: originalData.overallEfforMinutes,
         overallEffortHour: originalData.overallEffortHour,
+        isRepeat: originalData.isRepeat,
       },
     };
 
@@ -343,6 +344,7 @@ function UpdateTask({
     overallEfforMinutes,
     employeeId,
     materialId,
+    isRepeat,
     dateRepeate
   ) => {
     form
@@ -354,10 +356,6 @@ function UpdateTask({
         const endDateFormatted = dayjs(endDate)
           .second(0)
           .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
-
-        const remindValueToSend = remind || 0;
-
-        const repeatValueToSend = repeatValue || false;
 
         const descriptionToSend = description || "";
 
@@ -381,18 +379,18 @@ function UpdateTask({
           endDate: endDateFormatted,
           description: descriptionToSend,
           priority: priority,
-          isRepeat: repeatValueToSend,
+          isRepeat: typeof isRepeat === "object" ? isRepeat.value : false,
           suppervisorId: suppervisorId,
           fieldId: fieldId,
           plantId: typeof plantId === "object" ? plantId.value : 0,
           liveStockId: typeof liveStockId === "object" ? liveStockId.value : 0,
           taskTypeId: taskTypeId,
-          overallEffortHour: overallEffortHour,
-          overallEfforMinutes: overallEfforMinutes,
-          materialIds: materialId,
-          employeeIds: employeeId,
-          remind: remindValueToSend,
-          dates: dateRepeate,
+          overallEffortHour: typeof overallEffortHour === "object" ? overallEffortHour.value : 0,
+          overallEfforMinutes: typeof overallEfforMinutes === "object" ? overallEfforMinutes.value : 0,
+          materialIds: materialId || [],
+          employeeIds: employeeId || [],
+          remind: typeof remind === "object" ? remind.value : 0,
+          dates: dateRepeate ? dateRepeate.map(date => dayjs(date).format("YYYY-MM-DDTHH:mm:ss.SSSZ")) : [],
           managerId: member.id,
           otherId: 0,
           addressDetail: "Khong co",
@@ -453,6 +451,7 @@ function UpdateTask({
                 values.overallEfforMinutes,
                 values.employeeId,
                 values.materialId,
+                values.isRepeat,
                 values.dateRepeate
               );
             }}
@@ -460,7 +459,7 @@ function UpdateTask({
             key={editingTask ? editingTask.externalId : "new"}
             form={form}
           >
-            {editingTask.fieldStatus === "Động vật" &&
+            {editingTask && editingTask.fieldStatus === "Động vật" &&
             editingTask.externalId ? (
               <UpdateSpecificAnimal
                 editingTask={editingTask}
@@ -499,7 +498,7 @@ function UpdateTask({
                 endDate={endDate}
                 currentTaskId={currentTaskId}
               />
-            ) : editingTask.fieldStatus === "Động vật" &&
+            ) : editingTask && editingTask.fieldStatus === "Động vật" &&
               !editingTask.externalId ? (
               <UpdateWholeBarn
                 editingTask={editingTask}
@@ -537,7 +536,7 @@ function UpdateTask({
                 endDate={endDate}
                 currentTaskId={currentTaskId}
               />
-            ) : editingTask.fieldStatus === "Thực vật" &&
+            ) : editingTask && editingTask.fieldStatus === "Thực vật" &&
               editingTask.externalId ? (
               <UpdateSpecificPlant
                 editingTask={editingTask}
@@ -576,7 +575,7 @@ function UpdateTask({
                 endDate={endDate}
                 currentTaskId={currentTaskId}
               />
-            ) : editingTask.fieldStatus === "Thực vật" &&
+            ) : editingTask && editingTask.fieldStatus === "Thực vật" &&
               !editingTask.externalId ? (
               <UpdateWholeGarden
                 editingTask={editingTask}

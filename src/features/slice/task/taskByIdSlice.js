@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { authServices } from "services/authServices";
 
 export const getTaskById = createAsyncThunk(
-    "tasks/getTaskById",
+    "taskById/getTaskById",
     async (taskId, { rejectWithValue }) => {
       try {
         const { data } = await axios.get(baseUrl + `/FarmTask/${taskId}`, {
@@ -30,7 +30,6 @@ export const getTaskById = createAsyncThunk(
     },
     extraReducers(builder) {
       builder
-  
         .addCase(getTaskById.pending, (state) => {
           state.loading = true;
         })
