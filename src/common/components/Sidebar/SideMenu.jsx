@@ -26,8 +26,8 @@ import {
   LogoutOutlined,
   FormatPainterOutlined,
 } from '@ant-design/icons'
-import { GiCow, GiPlantRoots } from "react-icons/gi";
-import { GrUserWorker } from "react-icons/gr";
+import { GiCow, GiPlantRoots } from 'react-icons/gi'
+import { GrUserWorker } from 'react-icons/gr'
 import logoSomo from '../../../assets/logo_Somo.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { authServices } from 'services/authServices'
@@ -136,6 +136,12 @@ const SideMenu = () => {
             mode="inline"
             defaultSelectedKeys={[location.pathname]}
           >
+            <Menu.Item key="/home">
+              <CalendarOutlined />
+              <span>Trang chủ</span>
+              <Link to="/home"></Link>
+            </Menu.Item>
+
             <Menu.Item key="/schedule">
               <CalendarOutlined />
               <span>Lịch trình</span>
@@ -220,7 +226,7 @@ const SideMenu = () => {
 
             <Menu.Item key="/animals">
               <GiCow />
-              <span style={{marginLeft: "10px"}}>Vật nuôi</span>
+              <span style={{ marginLeft: '10px' }}>Vật nuôi</span>
               <Link to="/animals"></Link>
             </Menu.Item>
 
@@ -232,7 +238,7 @@ const SideMenu = () => {
 
             <Menu.Item key="/plants">
               <GiPlantRoots />
-              <span style={{marginLeft: "10px"}}>Cây trồng</span>
+              <span style={{ marginLeft: '10px' }}>Cây trồng</span>
               <Link to="/plants"></Link>
             </Menu.Item>
 
@@ -250,7 +256,7 @@ const SideMenu = () => {
 
             <Menu.Item key="/employee">
               <GrUserWorker />
-              <span style={{marginLeft: "10px"}}>Nhân viên</span>
+              <span style={{ marginLeft: '10px' }}>Nhân viên</span>
               <Link to="/employee"></Link>
             </Menu.Item>
 
@@ -276,6 +282,12 @@ const SideMenu = () => {
                   mode="inline"
                   defaultSelectedKeys={[location.pathname]}
                 >
+                  <Menu.Item key="/home">
+                    <CalendarOutlined />
+                    <span>Trang chủ</span>
+                    <Link to="/home"></Link>
+                  </Menu.Item>
+                  
                   <Menu.Item key="/schedule">
                     <CalendarOutlined />
                     <span>Lịch trình</span>
@@ -333,7 +345,7 @@ const SideMenu = () => {
 
                   <Menu.Item key="/animals">
                     <GiCow />
-                    <span style={{marginLeft: "10px"}}>Vật nuôi</span>
+                    <span style={{ marginLeft: '10px' }}>Vật nuôi</span>
                     <Link to="/animals"></Link>
                   </Menu.Item>
 
@@ -345,7 +357,7 @@ const SideMenu = () => {
 
                   <Menu.Item key="/plants">
                     <GiPlantRoots />
-                    <span style={{marginLeft: "10px"}}>Cây trồng</span>
+                    <span style={{ marginLeft: '10px' }}>Cây trồng</span>
                     <Link to="/plants"></Link>
                   </Menu.Item>
 
@@ -363,7 +375,7 @@ const SideMenu = () => {
 
                   <Menu.Item key="/employee">
                     <GrUserWorker />
-                    <span style={{marginLeft: "10px"}}>Nhân viên</span>
+                    <span style={{ marginLeft: '10px' }}>Nhân viên</span>
                     <Link to="/employee"></Link>
                   </Menu.Item>
 

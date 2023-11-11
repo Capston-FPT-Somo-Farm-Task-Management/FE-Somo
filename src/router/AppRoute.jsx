@@ -21,6 +21,7 @@ import StatisticArea from 'features/pages/Admin/Area/StatisticArea'
 import StatisticZone from 'features/pages/Admin/Zone/StatisticZone'
 import StatisticMember from 'features/pages/Admin/Member/StatisticMember'
 import Employee from 'features/pages/Employee'
+import Home from 'features/pages/Dashboard/Dashboard'
 import Dashboard from 'features/pages/Admin/Dashboard/Dashboard'
 import StatisticAnimalGroup from 'features/pages/Admin/AnimalGroup/StatisticAnimalGroup'
 import StatisticCropGroup from 'features/pages/Admin/CropGroup/StatisticCropGroup'
@@ -45,11 +46,22 @@ const AppRoute = () => {
       {authServices.getToken() !== null &&
         authServices.getRole() === 'Manager' && (
           <>
-            <Route path="/" element={<Navigate to="/schedule" replace />} />
+            <Route path="/" element={<Navigate to="/home" replace />} />
           </>
         )}
 
       {/* Default manager */}
+
+      <Route
+        path="/home"
+        element={
+          <PrivateRoute>
+            <LayoutWithRoute>
+              <Home />
+            </LayoutWithRoute>
+          </PrivateRoute>
+        }
+      />
 
       <Route
         path="/schedule"
