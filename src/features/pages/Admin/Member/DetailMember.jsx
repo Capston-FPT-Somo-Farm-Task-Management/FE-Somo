@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Modal, Descriptions, Avatar } from 'antd'
+import { Button, Modal, Descriptions, Avatar, Image } from 'antd'
 
 const DetailMember = ({ isModalOpen, closeModal, selectedMember }) => {
   return (
@@ -15,8 +15,20 @@ const DetailMember = ({ isModalOpen, closeModal, selectedMember }) => {
     >
       {selectedMember && (
         <Descriptions bordered column={1}>
-          <Descriptions.Item label="Tên">
+          <Descriptions.Item>
+            <Avatar src={selectedMember.avatar} size="large" />
+          </Descriptions.Item>
+          <Descriptions.Item label="Họ và tên">
             {selectedMember.name}
+          </Descriptions.Item>
+          <Descriptions.Item label="Tên đăng nhập">
+            {selectedMember.userName}
+          </Descriptions.Item>
+          <Descriptions.Item label="Ngày sinh">
+            {selectedMember.birthday}
+          </Descriptions.Item>
+          <Descriptions.Item label="Địa chỉ">
+            {selectedMember.address}
           </Descriptions.Item>
           <Descriptions.Item label="Chức vụ">
             {selectedMember.roleName}
@@ -26,15 +38,6 @@ const DetailMember = ({ isModalOpen, closeModal, selectedMember }) => {
           </Descriptions.Item>
           <Descriptions.Item label="Email">
             {selectedMember.email}
-          </Descriptions.Item>
-          <Descriptions.Item label="Địa chỉ">
-            {selectedMember.address}
-          </Descriptions.Item>
-          <Descriptions.Item label="Ngày sinh">
-            {selectedMember.birthday}
-          </Descriptions.Item>
-          <Descriptions.Item label="Hình ảnh">
-            <Avatar src={selectedMember.avatar} />
           </Descriptions.Item>
         </Descriptions>
       )}
