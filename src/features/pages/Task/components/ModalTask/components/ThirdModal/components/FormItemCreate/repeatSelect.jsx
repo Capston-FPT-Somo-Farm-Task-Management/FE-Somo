@@ -1,13 +1,11 @@
 import { Form, Select } from 'antd'
 import dayjs from 'dayjs'
 import { DayPicker } from 'react-day-picker'
-import { useState } from 'react'
 import 'react-day-picker/dist/style.css'
 import { vi } from 'date-fns/locale'
 
-function RepeatSelect({ repeatValue, handleSelectRepeat, startDate, endDate }) {
-  const [selectedDays, setSelectedDays] = useState([])
-
+function RepeatSelect({ repeatValue, handleSelectRepeat, startDate, endDate, selectedDays,  setSelectedDays}) {
+  
   const onDayClick = (day) => {
     const formattedDay = dayjs(day).format('YYYY-MM-DD')
     const index = selectedDays.indexOf(formattedDay)
@@ -21,6 +19,8 @@ function RepeatSelect({ repeatValue, handleSelectRepeat, startDate, endDate }) {
     }
   }
 
+  console.log(selectedDays);
+
   const disabledDate = (current) => {
     const currentDayjs = dayjs(current)
 
@@ -29,6 +29,7 @@ function RepeatSelect({ repeatValue, handleSelectRepeat, startDate, endDate }) {
 
     // Disable ngày từ quá khứ đến endDate
     if (
+      
       currentDayjs.isBefore(dayjs(), 'day') ||
       currentDayjs.isSame(dayjs(endDate), 'day') ||
       currentDayjs.isBefore(dayjs(endDate), 'day')
@@ -124,7 +125,7 @@ function RepeatSelect({ repeatValue, handleSelectRepeat, startDate, endDate }) {
               mode="multiple"
               selected={selectedDays.map((day) => new Date(day))} // Chuyển đổi chuỗi ngày thành đối tượng Date
               // onSelect={onSelectDay}
-              disabled={disabledDate}
+              disabled={!endDate || !endDate.isValid() || disabledDate}
               onDayClick={onDayClick}
               formatters="YYYY-MM-DD"
               locale={vi}

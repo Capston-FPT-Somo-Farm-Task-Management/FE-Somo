@@ -1,7 +1,6 @@
 import React from "react";
 import { Modal } from "antd";
 import TaskContent from "./TaskContent";
-import Evidence from "./Evidence";
 
 const TaskDetail = ({ visible, onCancel, taskData }) => {
   return (
@@ -10,12 +9,11 @@ const TaskDetail = ({ visible, onCancel, taskData }) => {
       visible={visible}
       onCancel={onCancel}
       footer={null}
-      width={1000}
+      width={550}
       className="modal-detail"
       style={{ maxWidth: "90%", margin: "0 auto" }}
     >
       <TaskContent taskData={taskData} />
-      <Evidence/>
     </Modal>
   );
 };

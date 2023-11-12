@@ -1,5 +1,5 @@
 import { Dropdown, Menu, Table } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import {
   MoreOutlined,
   EditOutlined,
@@ -26,10 +26,11 @@ function TableTask({
   openEffortModal,
   onChange,
   openModal,
+  openEvidenceModal,
   handleTaskAdded,
   handleDateChange,
   loadDataTask,
-  currentTaskId
+  currentTaskId,
 }) {
   const dispatch = useDispatch();
 
@@ -65,6 +66,14 @@ function TableTask({
                       placement="bottomRight"
                       overlay={
                         <Menu onClick={(e) => handleMenuClick(e, record)}>
+                          <Menu.Item key="viewReport">
+                            <span onClick={() => openEvidenceModal(record)}>
+                              <FileTextOutlined
+                                style={{ color: "blue", marginRight: "8px" }}
+                              />
+                              Xem báo cáo
+                            </span>
+                          </Menu.Item>
                           <Menu.Item key="subTask">
                             <span onClick={() => openAddSubtaskModal(record)}>
                               <PlusCircleOutlined

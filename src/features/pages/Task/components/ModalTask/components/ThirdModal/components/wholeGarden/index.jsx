@@ -50,6 +50,8 @@ function WholeGarden({
   disabledDate,
   startDate,
   endDate,
+  selectedDays,
+  setSelectedDays
 }) {
   return (
     <Form
@@ -118,6 +120,8 @@ function WholeGarden({
           repeatValue={repeatValue}
           handleSelectRepeat={handleSelectRepeat}
           endDate={endDate}
+          selectedDays={selectedDays}
+          setSelectedDays={setSelectedDays}
         />
       </div>
     </Form>

@@ -19,6 +19,7 @@ import DateSelectionComp from "./components/DateSelection";
 import SubTask from "./components/SubTask/subTask";
 import Effort from "./components/Effort";
 import TableTask from "./components/TableTask";
+import Evidence from "../TaskDetail/Evidence";
 
 const List = () => {
   const [subTasks, setSubTasks] = useState([]);
@@ -38,6 +39,7 @@ const List = () => {
   const [availableEmployees, setAvailableEmployees] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalEvidenceVisible, setModalEvidenceVisible] = useState(false);
   const [status, setStatus] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
   const [taskNameSearch, setTaskNameSearch] = useState("");
@@ -104,6 +106,15 @@ const List = () => {
   const closeModal = () => {
     setSelectedTask(null);
     setModalVisible(false);
+  };
+  const openEvidenceModal = (record) => {
+    setSelectedTask(record);
+    setModalEvidenceVisible(true);
+  };
+
+  const closeEvidenceModal = () => {
+    setSelectedTask(null);
+    setModalEvidenceVisible(false);
   };
 
   const openEditTaskModal = (record) => {
@@ -290,6 +301,7 @@ const List = () => {
           taskTitle={taskTitle}
           task={task}
           openModal={openModal}
+          openEvidenceModal={openEvidenceModal}
           onChange={onChange}
           pageIndex={pageIndex}
           dataTotalPages={dataTotalPages}
@@ -310,6 +322,11 @@ const List = () => {
       <TaskDetail
         visible={modalVisible}
         onCancel={closeModal}
+        taskData={selectedTask}
+      />
+      <Evidence
+        visible={modalEvidenceVisible}
+        onCancel={closeEvidenceModal}
         taskData={selectedTask}
       />
       <SubTask
