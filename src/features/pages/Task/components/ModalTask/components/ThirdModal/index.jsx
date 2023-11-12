@@ -46,6 +46,7 @@ function ThirdModal({
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
   const [description, setDescription] = useState('')
+  const [selectedDays, setSelectedDays] = useState([])
   const [overallEfforMinutes, setOverallEfforMinutes] = useState(0)
   const [overallEffortHour, setOverallEffortHour] = useState(0)
   const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true)
@@ -181,11 +182,13 @@ function ThirdModal({
 
   const handleSelectStartDate = (date) => {
     setStartDate(date)
+    console.log(date);
   }
 
   const handleSelectEndDate = (date) => {
     const selectedDate = dayjs(date).second(0)
     setEndDate(selectedDate)
+    console.log(endDate);
 
     const startDate = form.getFieldValue('startDate')
     if (selectedDate.isAfter(startDate)) {
@@ -305,39 +308,29 @@ function ThirdModal({
           .second(0)
           .format('YYYY-MM-DD[T]HH:mm:ss.SSS')
 
-        const startTime = dayjs(startDate).format('HH:mm:ss.SSS')
-
-        const selectedDates = values.dates || []
-
-        const combinedDates = selectedDates.map(
-          (date) => `${date}T${startTime}`
-        )
-
         const remindValueToSend = remindValue || 0
 
         const repeatValueToSend = repeatValue || false
 
-        const datesToSend = repeatValueToSend ? combinedDates : []
-
         const materialToSend = materialsValue || []
 
-        const { isRepeat, dates } = values
+        // if (shouldCheckRepeat && isRepeat && (!dates || dates.length === 0)) {
+        //   form.setFields([
+        //     {
+        //       name: 'dates',
+        //       errors: ['Vui lòng chọn ngày lặp lại'],
+        //     },
+        //   ])
+        //   return
+        // }
 
-        if (shouldCheckRepeat && isRepeat && (!dates || dates.length === 0)) {
-          form.setFields([
-            {
-              name: 'dates',
-              errors: ['Vui lòng chọn ngày lặp lại'],
-            },
-          ])
-          return
-        }
+        console.log(startDateFormatted, endDateFormatted, selectedDays);
 
         const finalValues = {
           ...values,
           startDate: startDateFormatted,
           endDate: endDateFormatted,
-          dates: datesToSend,
+          dates: selectedDays,
           materialIds: materialToSend,
           priority: priorityValue,
           remind: remindValueToSend,
@@ -404,6 +397,8 @@ function ThirdModal({
         disabledDate={disabledDate}
         startDate={startDate}
         endDate={endDate}
+        selectedDays={selectedDays}
+        setSelectedDays={setSelectedDays}
       />
     )
   } else if (option === 'wholeBarn') {
@@ -444,6 +439,8 @@ function ThirdModal({
         disabledDate={disabledDate}
         startDate={startDate}
         endDate={endDate}
+        selectedDays={selectedDays}
+        setSelectedDays={setSelectedDays}
       />
     )
   } else if (option === 'specificPlant') {
@@ -485,6 +482,8 @@ function ThirdModal({
         disabledDate={disabledDate}
         startDate={startDate}
         endDate={endDate}
+        selectedDays={selectedDays}
+        setSelectedDays={setSelectedDays}
       />
     )
   } else if (option === 'wholeGarden') {
@@ -525,6 +524,8 @@ function ThirdModal({
         disabledDate={disabledDate}
         startDate={startDate}
         endDate={endDate}
+        selectedDays={selectedDays}
+        setSelectedDays={setSelectedDays}
       />
     )
   }

@@ -667,6 +667,28 @@ html {
   margin-bottom: 20px;
 }
 
+.task-detail-title {
+  text-align: center;
+}
+.task-detail-title h3 {
+  color: #8ead48;
+  margin-bottom: 10px;
+}
+.task-detail-title p {
+  font-size: 16px;
+  margin: 10px 0px;
+}
+
+.task-detail-content p {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+.task-detail-content p svg {
+  margin-right: 5px;
+  font-size: 14px;
+}
+
 .evidence {
   margin-top: 30px;
 }

@@ -1,120 +1,201 @@
-import { Badge, Descriptions } from "antd";
+import { Badge, Card, Collapse, Descriptions } from "antd";
 import dayjs from "dayjs";
-import React from "react";
+import React, { useState } from "react";
+import {
+  GrMap,
+  GrProjects,
+  GrObjectGroup,
+  GrDocumentTime,
+  GrAlarm,
+  GrCycle,
+  GrAnnounce,
+  GrUserManager,
+  GrUser,
+  GrUserWorker,
+  GrTools,
+  GrHostMaintenance,
+  GrSync
+} from "react-icons/gr";
+import { GiCow, GiFruitTree, GiRingingBell } from "react-icons/gi";
 
 function TaskContent({ taskData }) {
+  const [activePanels, setActivePanels] = useState(["0", "1"]);
+  const { Panel } = Collapse;
   if (!taskData) {
     return null;
   }
 
-  const formattedStartDate = dayjs(taskData.startDate).format(
-    "HH:mm DD-MM-YYYY"
+  const formattedCreateDate = dayjs(taskData.createDate).format(
+    "DD-MM-YYYY / HH:mm"
   );
-  const formattedEndDate = dayjs(taskData.endDate).format("HH:mm DD-MM-YYYY");
 
-  const renderSubFields = () => {
-    if (externalId) {
-      if (fieldStatus === "Thực vật") {
-        return <span>Mã cây trồng: {plantName}</span>;
-      } else if (fieldStatus === "Động vật") {
-        return <span>Mã vật nuôi: {liveStockName}</span>;
-      } else {
-        <span>Không có mã vật nuôi hoặc cây trồng</span>;
-      }
-    }
-    return null;
-  };
+  const formattedStartDate = dayjs(taskData.startDate).format(
+    "DD-MM-YYYY / HH:mm"
+  );
+  const formattedEndDate = dayjs(taskData.endDate).format("DD-MM-YYYY / HH:mm");
+
+  const formattedRepeatDate = taskData.dateRepeate.map((date) =>
+    dayjs(date).format("DD-MM-YYYY")
+  );
 
   const { externalId, fieldStatus, liveStockName, plantName } = taskData;
 
-  const dataTask = [
-    {
-      key: "1",
-      label: "Tên công việc",
-      children: taskData.name,
-    },
-    {
-      key: "2",
-      label: "Loại công việc",
-      children: taskData.taskTypeName,
-    },
-    {
-      key: "3",
-      label: "Trạng thái",
-      children: taskData.status,
-    },
-    {
-      key: "4",
-      label: "Ưu tiên",
-      children: (
-        <Badge
-          status="processing"
-          color={
-            taskData.priority === "Cao"
-              ? "red"
-              : taskData.priority === "Trung bình"
-              ? "yellow"
-              : taskData.priority === "Thấp"
-              ? "green"
-              : "default" 
-          }
-          text={taskData.priority}
-        />
-      ),
-    },
-    {
-      key: "5",
-      label: "Ngày bắt đầu",
-      children: formattedStartDate,
-    },
-    {
-      key: "6",
-      label: "Ngày kết thúc",
-      children: formattedEndDate,
-    },
-    {
-      key: "7",
-      label: "Dụng cụ",
-      children: taskData.materialName
-        ? taskData.materialName
-        : "Không có dụng cụ",
-      span: 3,
-    },
-    {
-      key: "8",
-      label: "Người giám sát",
-      children: taskData.supervisorName,
-    },
-    {
-      key: "9",
-      label: "Người thực hiện",
-      children: taskData.employeeName,
-      span: 2,
-    },
-    {
-      key: "10",
-      label: "Địa điểm thực hiện",
-      children: (
+  return (
+    <>
+      {taskData && (
         <>
-          Khu vực: {taskData.areaName}
-          <br />
-          Vùng: {taskData.zoneName}
-          <br />
-          Vị trí cụ thể: {taskData.fieldName}
-          <br />
-          {taskData.externalId
-            ? renderSubFields()
-            : "Không có mã vật nuôi hoặc cây trồng"}
-          <br />
-          Mô tả:{" "}
-          {taskData.description ? taskData.description : "Không có mô tả"}
-          <br />
-          Thời gian làm việc bỏ ra là {taskData.overallEffortHour} giờ {taskData.overallEfforMinutes} phút
+          <div className="task-detail-title">
+            <h3>#{taskData.code}</h3>
+            <h2 className="task-title-item">{taskData.name}</h2>
+            <p className="task-title-item" style={{ color: "#f3722c " }}>
+              {taskData.priority} - {taskData.status}
+            </p>
+          </div>
+          <Collapse
+            activeKey={activePanels}
+            onChange={setActivePanels}
+            className="task-detail-content"
+          >
+            <Panel header="Nơi thực hiện" key="0">
+              <p>
+                <GrMap />
+                Khu vực: {taskData.areaName}
+              </p>
+              <p>
+                <GrProjects /> Vùng: {taskData.zoneName}
+              </p>
+              {taskData.externalId && taskData.fieldStatus === "Thực vật" ? (
+                <p>
+                  <GrObjectGroup />
+                  Vườn: {taskData.fieldName}
+                </p>
+              ) : taskData.fieldStatus === "Động vật" ? (
+                <p>
+                  <GrObjectGroup />
+                  Chuồng: {taskData.fieldName}
+                </p>
+              ) : null}
+            </Panel>
+            <Panel header="Thời gian" key="1">
+              <p>
+                <GrDocumentTime />
+                Ngày tạo: {formattedCreateDate}
+              </p>
+              <p>
+                <GrAlarm />
+                Ngày bắt đầu: {formattedStartDate}
+              </p>
+              <p>
+                <GrAlarm />
+                Ngày kết thúc: {formattedEndDate}
+              </p>
+              {taskData.dateRepeate && taskData.dateRepeate.length > 0 ? (
+                <p>
+                  <GrCycle />
+                  Ngày lặp lại: {formattedRepeatDate.join(", ")}
+                </p>
+              ) : (
+                <p>
+                  <GrCycle />
+                  Chưa có ngày lặp lại
+                </p>
+              )}
+              <p>
+                <GrAnnounce />
+                Thời gian dự kiến phải bỏ ra: {
+                  taskData.overallEffortHour
+                } giờ {taskData.overallEfforMinutes} phút
+              </p>
+            </Panel>
+            <Panel header="Đối tượng">
+              {taskData.externalId && taskData.fieldStatus === "Thực vật" ? (
+                <p>
+                  <GiFruitTree />
+                  Cây trồng: {taskData.plantName}
+                </p>
+              ) : taskData.fieldStatus === "Động vật" ? (
+                <p>
+                  <GiCow />
+                  Con vật: {taskData.liveStockName}
+                </p>
+              ) : null}
+              {taskData.externalId && taskData.fieldStatus === "Thực vật" ? (
+                <p>
+                  <GiFruitTree />
+                  Mã cây trồng: {taskData.externalId}
+                </p>
+              ) : taskData.fieldStatus === "Động vật" ? (
+                <p>
+                  <GiCow />
+                  Mã con vật: {taskData.externalId}
+                </p>
+              ) : null}
+            </Panel>
+            <Panel header="Phụ trách">
+              <p>
+                <GrUserManager />
+                Người quản lý: {taskData.managerName}
+              </p>
+              <p>
+                <GrUser />
+                Người giám sát: {taskData.supervisorName}
+              </p>
+              <p>
+                <GrUserWorker />
+                Người thực hiện: {taskData.employeeName}
+              </p>
+            </Panel>
+            <Panel header="Loại công việc">
+              <p>
+                <GrHostMaintenance />
+                Loại công việc: {taskData.taskTypeName}
+              </p>
+              {taskData.materialName ? (
+                <p>
+                  <GrTools />
+                  Dụng cụ: {taskData.materialName}
+                </p>
+              ) : (
+                <p>
+                  <GrTools />
+                  Chưa có dụng cụ
+                </p>
+              )}
+            </Panel>
+            <Panel header="Thông báo công việc">
+              {taskData.remind === 0 ? (
+                <p>
+                  <GiRingingBell />
+                  Nhắc nhở trước khi bắt đầu: Không
+                </p>
+              ) : (
+                <p>
+                  <GiRingingBell />
+                  Nhắc nhở trước khi bắt đầu: Có
+                </p>
+              )}
+              {taskData.isRepeat === true ? (
+                <p><GrSync/>Lặp lại: Có</p>
+              ) : (
+                <p><GrSync/>Lặp lại: Không</p>
+              )}
+              {taskData.dateRepeate && taskData.dateRepeate.length > 0 ? (
+                <p>
+                  <GrCycle />
+                  Ngày lặp lại: {formattedRepeatDate.join(", ")}
+                </p>
+              ) : (
+                <p>
+                  <GrCycle />
+                  Chưa có ngày lặp lại
+                </p>
+              )}
+            </Panel>
+          </Collapse>
         </>
-      ),
-    },
-  ];
-  return <Descriptions bordered items={dataTask} />;
+      )}{" "}
+    </>
+  );
 }
 
 export default TaskContent;

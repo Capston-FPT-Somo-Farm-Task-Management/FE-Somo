@@ -57,6 +57,7 @@ function UpdateTask({
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [description, setDescription] = useState("");
+  const [selectedDays, setSelectedDays] = useState([]);
   const [overallEfforMinutes, setOverallEfforMinutes] = useState(0);
   const [overallEffortHour, setOverallEffortHour] = useState(0);
   const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
@@ -191,15 +192,15 @@ function UpdateTask({
 
   const handleSelectStartDate = (date) => {
     setStartDate(date);
-  
+
     const currentEndDate = form.getFieldValue("endDate");
-  
+
     if (currentEndDate && date.isAfter(dayjs(currentEndDate))) {
       form.setFieldsValue({
         endDate: null,
         dates: null,
       });
-  
+
       form.setFields([
         {
           name: "endDate",
@@ -385,12 +386,20 @@ function UpdateTask({
           plantId: typeof plantId === "object" ? plantId.value : 0,
           liveStockId: typeof liveStockId === "object" ? liveStockId.value : 0,
           taskTypeId: taskTypeId,
-          overallEffortHour: typeof overallEffortHour === "object" ? overallEffortHour.value : 0,
-          overallEfforMinutes: typeof overallEfforMinutes === "object" ? overallEfforMinutes.value : 0,
+          overallEffortHour:
+            typeof overallEffortHour === "object" ? overallEffortHour.value : 0,
+          overallEfforMinutes:
+            typeof overallEfforMinutes === "object"
+              ? overallEfforMinutes.value
+              : 0,
           materialIds: materialId || [],
           employeeIds: employeeId || [],
           remind: typeof remind === "object" ? remind.value : 0,
-          dates: dateRepeate ? dateRepeate.map(date => dayjs(date).format("YYYY-MM-DDTHH:mm:ss.SSSZ")) : [],
+          dates: dateRepeate
+            ? dateRepeate.map((date) =>
+                dayjs(date).format("YYYY-MM-DDTHH:mm:ss.SSSZ")
+              )
+            : [],
           managerId: member.id,
           otherId: 0,
           addressDetail: "Khong co",
@@ -421,9 +430,7 @@ function UpdateTask({
           onCancel={closeEditTaskModal}
           width={900}
           footer={[
-            <Button onClick={closeEditTaskModal}>
-              Đóng
-            </Button>,
+            <Button onClick={closeEditTaskModal}>Đóng</Button>,
             <Button form="updateTask" type="primary" htmlType="submit">
               Lưu thay đổi
             </Button>,
@@ -459,7 +466,8 @@ function UpdateTask({
             key={editingTask ? editingTask.externalId : "new"}
             form={form}
           >
-            {editingTask && editingTask.fieldStatus === "Động vật" &&
+            {editingTask &&
+            editingTask.fieldStatus === "Động vật" &&
             editingTask.externalId ? (
               <UpdateSpecificAnimal
                 editingTask={editingTask}
@@ -497,8 +505,11 @@ function UpdateTask({
                 startDate={startDate}
                 endDate={endDate}
                 currentTaskId={currentTaskId}
+                selectedDays={selectedDays}
+                setSelectedDays={setSelectedDays}
               />
-            ) : editingTask && editingTask.fieldStatus === "Động vật" &&
+            ) : editingTask &&
+              editingTask.fieldStatus === "Động vật" &&
               !editingTask.externalId ? (
               <UpdateWholeBarn
                 editingTask={editingTask}
@@ -535,8 +546,11 @@ function UpdateTask({
                 startDate={startDate}
                 endDate={endDate}
                 currentTaskId={currentTaskId}
+                selectedDays={selectedDays}
+                setSelectedDays={setSelectedDays}
               />
-            ) : editingTask && editingTask.fieldStatus === "Thực vật" &&
+            ) : editingTask &&
+              editingTask.fieldStatus === "Thực vật" &&
               editingTask.externalId ? (
               <UpdateSpecificPlant
                 editingTask={editingTask}
@@ -574,8 +588,11 @@ function UpdateTask({
                 startDate={startDate}
                 endDate={endDate}
                 currentTaskId={currentTaskId}
+                selectedDays={selectedDays}
+                setSelectedDays={setSelectedDays}
               />
-            ) : editingTask && editingTask.fieldStatus === "Thực vật" &&
+            ) : editingTask &&
+              editingTask.fieldStatus === "Thực vật" &&
               !editingTask.externalId ? (
               <UpdateWholeGarden
                 editingTask={editingTask}
@@ -612,6 +629,8 @@ function UpdateTask({
                 startDate={startDate}
                 endDate={endDate}
                 currentTaskId={currentTaskId}
+                selectedDays={selectedDays}
+                setSelectedDays={setSelectedDays}
               />
             ) : null}
           </Form>

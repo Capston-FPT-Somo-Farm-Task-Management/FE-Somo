@@ -50,6 +50,8 @@ function UpdateSpecificAnimal({
   disabledDate,
   startDate,
   endDate,
+  selectedDays,
+  setSelectedDays
 }) {
   return (
     <>
@@ -124,7 +126,10 @@ function UpdateSpecificAnimal({
           repeatValue={repeatValue}
           handleSelectRepeat={handleSelectRepeat}
           editingTask={editingTask}
+          startDate={startDate}
           endDate={endDate}
+          selectedDays={selectedDays}
+          setSelectedDays={setSelectedDays}
         />
       </div>
     </>
