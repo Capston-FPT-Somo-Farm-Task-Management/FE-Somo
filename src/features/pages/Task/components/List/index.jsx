@@ -53,6 +53,8 @@ const List = () => {
 
   const dispatch = useDispatch();
 
+  console.log(effort);
+
   const loadDataTask = () => {
     dispatch(
       getTasks({
@@ -227,7 +229,7 @@ const List = () => {
     setCurrentTaskId(record.id);
     setEffortVisible(true);
     dispatch(getEffort(record.id)).then((data) => {
-      setEffort(data.payload);
+      setEffort(data.payload.data.subtasks);
     });
   };
 
@@ -242,17 +244,18 @@ const List = () => {
     setEditEffortVisible(false);
   };
 
-  const handleUpdateEffort = (taskId, employeeId, effortTime) => {
+  const handleUpdateEffort = (taskId, employeeId, actualEffortHour, actualEfforMinutes) => {
     const updatedEffort = [
       {
         employeeId: employeeId,
-        effortTime: parseFloat(effortTime),
+        actualEffortHour: parseFloat(actualEffortHour),
+        actualEfforMinutes: parseFloat(actualEfforMinutes),
       },
     ];
 
     dispatch(updateEffort({ id: taskId, body: updatedEffort })).then(() => {
       dispatch(getEffort(currentTaskId)).then((data) => {
-        setEffort(data.payload);
+        setEffort(data.payload.data.subtasks);
         setEditEffortVisible(false);
       });
     });

@@ -1,12 +1,8 @@
 import React from "react";
 import { Form } from "antd";
-import AreaSelect from "../FormItemCreate/areaSelect";
-import ZoneAnimalSelect from "../FormItemCreate/zoneAnimal";
-import FieldAnimalSelect from "../FormItemCreate/fieldAnimalSelect";
 import PrioritySelect from "../FormItemCreate/prioritySelect";
 import DescriptionInput from "../FormItemCreate/descriptionInput";
 import NameTaskInput from "../FormItemCreate/nameTaskInput";
-import TaskTypeLivestockSelect from "../FormItemCreate/taskTypeLivestockSelect";
 import SupervisorSelect from "../FormItemCreate/supervisorSelect";
 import EmployeeSelect from "../FormItemCreate/employeeSelect";
 import OverallEffortSelect from "../FormItemCreate/overallEffortSelect";
@@ -14,13 +10,20 @@ import MaterialSelect from "../FormItemCreate/materialSelect";
 import RemindSelect from "../FormItemCreate/remindSelect";
 import RepeatSelect from "../FormItemCreate/repeatSelect";
 import DateSelect from "../FormItemCreate/dateSelect";
-import AreaLivestockSelect from "../FormItemCreate/AreaLivestockSelect";
+import dayjs from "dayjs";
+import AreaByFarmSelect from "../FormItemCreate/AreaByFarmSelect";
+import ZoneByAreaSelect from "../FormItemCreate/ZoneByAreaSelect";
+import TaskTypeActiveSelect from "../FormItemCreate/TaskTypeActiveSelect";
+import AddressDetailInput from "../FormItemCreate/AddressDetailInput";
+import FieldOtherSelect from "../FormItemCreate/FieldOtherSelect";
 
-function WholeBarn({
-  handleCreateTask,
+function OtherTaskType({
+  handleCreateTaskOther,
   handleSelectAreaChange,
   handleSelectZoneChange,
   handleSelectFieldChange,
+  addressDetail,
+  setAddressDetail,
   handlePriorityChange,
   handleSelectStartDate,
   handleSelectEndDate,
@@ -33,14 +36,14 @@ function WholeBarn({
   handleOverallEfforMinutes,
   handleOverallEffortHour,
   form,
-  areaLivestockByZone,
-  zoneAnimal,
+  areaByFarm,
+  zoneByArea,
   fieldByZone,
   priorityValue,
   description,
   overallEfforMinutes,
   overallEffortHour,
-  dataTaskTypeLivestock,
+  taskTypeActive,
   employeesValue,
   dataEmployee,
   supervisor,
@@ -54,26 +57,36 @@ function WholeBarn({
   selectedDays,
   setSelectedDays,
 }) {
+  const calculateDaysDifference = (startDate, endDate) => {
+    const start = dayjs(startDate);
+    const end = dayjs(endDate);
+    return end.diff(start, "days");
+  };
   return (
     <Form
       layout="vertical"
       className="task-form"
-      onFinish={handleCreateTask}
+      onFinish={handleCreateTaskOther}
       id="createTask"
+      name="createTask"
       form={form}
     >
       <div className="form-left">
-        <AreaLivestockSelect
+        <AreaByFarmSelect
           handleSelectAreaChange={handleSelectAreaChange}
-          areaLivestockByZone={areaLivestockByZone}
+          areaByFarm={areaByFarm}
         />
-        <ZoneAnimalSelect
+        <ZoneByAreaSelect
           handleSelectZoneChange={handleSelectZoneChange}
-          zoneAnimal={zoneAnimal}
+          zoneByArea={zoneByArea}
         />
-        <FieldAnimalSelect
+        <FieldOtherSelect
           handleSelectFieldChange={handleSelectFieldChange}
           fieldByZone={fieldByZone}
+        />
+        <AddressDetailInput
+          addressDetail={addressDetail}
+          setAddressDetail={setAddressDetail}
         />
         <PrioritySelect
           priorityValue={priorityValue}
@@ -84,6 +97,7 @@ function WholeBarn({
           handleSelectStartDate={handleSelectStartDate}
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
+          calculateDaysDifference={calculateDaysDifference}
         />
         <OverallEffortSelect
           overallEffortHour={overallEffortHour}
@@ -98,8 +112,8 @@ function WholeBarn({
       </div>
       <div className="form-right">
         <NameTaskInput />
-        <TaskTypeLivestockSelect
-          dataTaskTypeLivestock={dataTaskTypeLivestock}
+        <TaskTypeActiveSelect
+          taskTypeActive={taskTypeActive}
           handleTaskTypeChange={handleTaskTypeChange}
         />
         <SupervisorSelect supervisor={supervisor} />
@@ -120,7 +134,9 @@ function WholeBarn({
         <RepeatSelect
           repeatValue={repeatValue}
           handleSelectRepeat={handleSelectRepeat}
+          startDate={startDate}
           endDate={endDate}
+          calculateDaysDifference={calculateDaysDifference}
           selectedDays={selectedDays}
           setSelectedDays={setSelectedDays}
         />
@@ -129,4 +145,4 @@ function WholeBarn({
   );
 }
 
-export default WholeBarn;
+export default OtherTaskType;

@@ -255,7 +255,7 @@ html {
   justify-content: space-around;
 }
 .effort-modal .ant-modal-content .effort .effort-content .effort-header .effort-count {
-  width: 45%;
+  width: 80%;
   font-size: 20px;
   font-weight: 500;
   margin-bottom: 10px;
@@ -264,7 +264,7 @@ html {
   text-decoration: underline;
 }
 .effort-modal .ant-modal-content .effort .effort-content .effort-header .effort-dropdown {
-  width: 45%;
+  width: 20%;
   display: flex;
   justify-content: flex-end;
 }

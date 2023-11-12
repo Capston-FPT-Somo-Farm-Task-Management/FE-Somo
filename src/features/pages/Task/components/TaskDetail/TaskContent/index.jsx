@@ -14,7 +14,7 @@ import {
   GrUserWorker,
   GrTools,
   GrHostMaintenance,
-  GrSync
+  GrSync,
 } from "react-icons/gr";
 import { GiCow, GiFruitTree, GiRingingBell } from "react-icons/gi";
 
@@ -33,6 +33,9 @@ function TaskContent({ taskData }) {
     "DD-MM-YYYY / HH:mm"
   );
   const formattedEndDate = dayjs(taskData.endDate).format("DD-MM-YYYY / HH:mm");
+  const formattedUpdateDate = dayjs(taskData.updateDate).format(
+    "DD-MM-YYYY / HH:mm"
+  );
 
   const formattedRepeatDate = taskData.dateRepeate.map((date) =>
     dayjs(date).format("DD-MM-YYYY")
@@ -98,6 +101,17 @@ function TaskContent({ taskData }) {
                 <p>
                   <GrCycle />
                   Chưa có ngày lặp lại
+                </p>
+              )}
+              {taskData.updateDate && taskData.updateDate.length > 0 ? (
+                <p>
+                  <GrDocumentTime />
+                  Ngày cập nhật: {formattedUpdateDate}
+                </p>
+              ) : (
+                <p>
+                  <GrDocumentTime />
+                  Ngày cập nhật: Chưa có
                 </p>
               )}
               <p>
@@ -175,9 +189,15 @@ function TaskContent({ taskData }) {
                 </p>
               )}
               {taskData.isRepeat === true ? (
-                <p><GrSync/>Lặp lại: Có</p>
+                <p>
+                  <GrSync />
+                  Lặp lại: Có
+                </p>
               ) : (
-                <p><GrSync/>Lặp lại: Không</p>
+                <p>
+                  <GrSync />
+                  Lặp lại: Không
+                </p>
               )}
               {taskData.dateRepeate && taskData.dateRepeate.length > 0 ? (
                 <p>

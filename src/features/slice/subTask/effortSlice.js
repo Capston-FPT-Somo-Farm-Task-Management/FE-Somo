@@ -54,6 +54,7 @@ const effortSlice = createSlice({
     data: [],
     loading: false,
     error: null,
+    isHaveSubTask: false
   },
   extraReducers(builder) {
     builder
@@ -63,7 +64,8 @@ const effortSlice = createSlice({
       })
       .addCase(getEffort.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload;
+        state.data = action.payload.data.subtasks || [];
+        state.isHaveSubTask = action.payload.data.isHaveSubTask || false;
       })
       .addCase(getEffort.rejected, (state, action) => {
         state.loading = false;

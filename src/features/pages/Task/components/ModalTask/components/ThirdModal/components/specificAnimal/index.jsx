@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form } from 'antd'
-import AreaSelect from '../FormItemCreate/areaSelect'
+import AreaLivestockSelect from '../FormItemCreate/AreaLivestockSelect'
 import FieldAnimalSelect from '../FormItemCreate/fieldAnimalSelect'
 import AnimalSelect from '../FormItemCreate/animalSelect'
 import PrioritySelect from '../FormItemCreate/prioritySelect'
@@ -18,7 +18,7 @@ import DateSelect from '../FormItemCreate/dateSelect'
 import dayjs from 'dayjs'
 
 function SpecificAnimal({
-  onFinish,
+  handleCreateTask,
   handleSelectAreaChange,
   handleSelectZoneChange,
   handleSelectFieldChange,
@@ -34,7 +34,7 @@ function SpecificAnimal({
   handleOverallEfforMinutes,
   handleOverallEffortHour,
   form,
-  area,
+  areaLivestockByZone,
   zoneAnimal,
   fieldByZone,
   dataAnimal,
@@ -65,15 +65,15 @@ function SpecificAnimal({
     <Form
       layout="vertical"
       className="task-form"
-      onFinish={onFinish}
+      onFinish={handleCreateTask}
       id="createTask"
       name="createTask"
       form={form}
     >
       <div className="form-left">
-        <AreaSelect
+        <AreaLivestockSelect
           handleSelectAreaChange={handleSelectAreaChange}
-          area={area}
+          areaLivestockByZone={areaLivestockByZone}
         />
         <ZoneAnimalSelect
           handleSelectZoneChange={handleSelectZoneChange}

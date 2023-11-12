@@ -14,9 +14,10 @@ import RemindSelect from "../FormItemCreate/remindSelect";
 import RepeatSelect from "../FormItemCreate/repeatSelect";
 import FieldPlantSelect from "../FormItemCreate/fieldPlantSelect";
 import DateSelect from "../FormItemCreate/dateSelect";
+import AreaPlantSelect from "../FormItemCreate/AreaPlantSelect";
 
 function WholeGarden({
-  onFinish,
+  handleCreateTask,
   handleSelectAreaChange,
   handleSelectZoneChange,
   handleSelectFieldChange,
@@ -32,7 +33,7 @@ function WholeGarden({
   handleOverallEfforMinutes,
   handleOverallEffortHour,
   form,
-  area,
+  areaPlantByZone,
   zonePlant,
   fieldByZone,
   priorityValue,
@@ -57,14 +58,14 @@ function WholeGarden({
     <Form
       layout="vertical"
       className="task-form"
-      onFinish={onFinish}
+      onFinish={handleCreateTask}
       id="createTask"
       form={form}
     >
       <div className="form-left">
-        <AreaSelect
+        <AreaPlantSelect
           handleSelectAreaChange={handleSelectAreaChange}
-          area={area}
+          areaPlantByZone={areaPlantByZone}
         />
         <ZonePlantSelect
           handleSelectZoneChange={handleSelectZoneChange}

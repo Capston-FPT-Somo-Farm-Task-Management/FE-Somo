@@ -22,8 +22,8 @@ function DisplayEffort({
       className="effort-modal"
     >
       <div className="effort">
-        {effort && effort.data ? (
-          effort.data.map((effortItem) => {
+        {effort ? (
+          effort.map((effortItem) => {
             totalEffortCount++;
             const EffortCount = totalEffortCount;
             return (
@@ -33,7 +33,7 @@ function DisplayEffort({
                     <span style={{ textDecoration: "none", color: "red" }}>
                       *{" "}
                     </span>
-                    <span>Chấm công số {EffortCount}</span>{" "}
+                    <span>Chấm công theo công việc tổng</span>{" "}
                   </div>
                   <div className="effort-dropdown">
                     <Dropdown
@@ -58,9 +58,10 @@ function DisplayEffort({
 
                 <div className="effort-container" key={effortItem.employeeId}>
                   <div className="effort-item">
+                  {console.log(effortItem)}
                     <p>Mã nhân viên: {effortItem.employeeCode}</p>
                     <p>Người thực hiện: {effortItem.employeeName}</p>
-                    <p>Thời gian: {effortItem.totalActualEffortHour} giờ</p>
+                    <p>Thời gian: {effortItem.totalActualEffortHour} giờ {effortItem.totalActualEfforMinutes} phút</p>
                   </div>
                 </div>
               </div>

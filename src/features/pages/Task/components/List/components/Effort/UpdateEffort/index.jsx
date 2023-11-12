@@ -2,6 +2,7 @@ import { Button, Form, Input, Modal } from "antd";
 import React from "react";
 
 function UpdateEffort({editEffortVisible, closeEditEffortModal, handleUpdateEffort, currentTaskId, editingEffort}) {
+  console.log(editingEffort);
   return (
     <>
       {editEffortVisible && (
@@ -24,7 +25,8 @@ function UpdateEffort({editEffortVisible, closeEditEffortModal, handleUpdateEffo
               handleUpdateEffort(
                 currentTaskId,
                 editingEffort.employeeId,
-                values.effortTime
+                values.actualEffortHour,
+                values.actualEfforMinutes
               );
             }}
             id="updateEffort"
@@ -32,11 +34,19 @@ function UpdateEffort({editEffortVisible, closeEditEffortModal, handleUpdateEffo
           >
             <Form.Item
               label="Số giờ chấm công"
-              name="effortTime"
+              name="actualEffortHour"
               required
-              initialValue={editingEffort.effortTime}
+              initialValue={editingEffort.totalActualEffortHour}
             >
               <Input placeholder="Nhập số giờ chấm công" />
+            </Form.Item>
+            <Form.Item
+              label="Số phút chấm công"
+              name="actualEfforMinutes"
+              required
+              initialValue={editingEffort.totalActualEfforMinutes}
+            >
+              <Input placeholder="Nhập số phút chấm công" />
             </Form.Item>
           </Form>
         </Modal>

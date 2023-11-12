@@ -1,5 +1,4 @@
 import React from "react";
-import AreaUpdate from "../FormItemUpdate/areaUpdate";
 import ZoneAnimalUpdate from "../FormItemUpdate/zoneAnimalUpdate";
 import FieldAnimalUpdate from "../FormItemUpdate/fieldAnimalUpdate";
 import AnimalUpdate from "../FormItemUpdate/animalUpdate";
@@ -14,6 +13,7 @@ import MaterialUpdate from "../FormItemUpdate/materialUpdate";
 import RemindUpdate from "../FormItemUpdate/remindUpdate";
 import RepeatUpdate from "../FormItemUpdate/repeatUpdate";
 import DateUpdate from "../FormItemUpdate/dateUpdate";
+import AreaLivestockUpdate from "../FormItemUpdate/AreaLivestockUpdate";
 
 function UpdateSpecificAnimal({
   editingTask,
@@ -31,7 +31,7 @@ function UpdateSpecificAnimal({
   handleSelectRepeat,
   handleOverallEffortHour,
   handleOverallEfforMinutes,
-  area,
+  areaLivestockByZone,
   zoneAnimal,
   fieldByZone,
   dataAnimal,
@@ -56,9 +56,9 @@ function UpdateSpecificAnimal({
   return (
     <>
       <div className="form-left">
-        <AreaUpdate
+        <AreaLivestockUpdate
           handleSelectAreaChange={handleSelectAreaChange}
-          area={area}
+          areaLivestockByZone={areaLivestockByZone}
           editingTask={editingTask}
         />
         <ZoneAnimalUpdate
