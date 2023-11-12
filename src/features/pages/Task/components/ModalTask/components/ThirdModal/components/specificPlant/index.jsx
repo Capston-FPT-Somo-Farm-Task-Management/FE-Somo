@@ -52,6 +52,8 @@ function SpecificPlant({
   disabledDate,
   startDate,
   endDate,
+  selectedDays,
+  setSelectedDays
 }) {
   return (
     <Form
@@ -121,6 +123,8 @@ function SpecificPlant({
           repeatValue={repeatValue}
           handleSelectRepeat={handleSelectRepeat}
           endDate={endDate}
+          selectedDays={selectedDays}
+          setSelectedDays={setSelectedDays}
         />
       </div>
     </Form>

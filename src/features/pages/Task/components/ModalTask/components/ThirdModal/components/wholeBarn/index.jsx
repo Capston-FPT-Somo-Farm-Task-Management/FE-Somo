@@ -50,6 +50,8 @@ function WholeBarn({
   disabledDate,
   startDate,
   endDate,
+  selectedDays,
+  setSelectedDays,
 }) {
   return (
     <Form
@@ -118,6 +120,8 @@ function WholeBarn({
           repeatValue={repeatValue}
           handleSelectRepeat={handleSelectRepeat}
           endDate={endDate}
+          selectedDays={selectedDays}
+          setSelectedDays={setSelectedDays}
         />
       </div>
     </Form>

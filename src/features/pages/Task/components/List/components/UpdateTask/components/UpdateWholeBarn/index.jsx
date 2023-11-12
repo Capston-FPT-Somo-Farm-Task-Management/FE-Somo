@@ -48,6 +48,8 @@ function UpdateWholeBarn({
   disabledDate,
   startDate,
   endDate,
+  selectedDays,
+  setSelectedDays
 }) {
   return (
     <>
@@ -121,7 +123,10 @@ function UpdateWholeBarn({
           repeatValue={repeatValue}
           handleSelectRepeat={handleSelectRepeat}
           editingTask={editingTask}
+          startDate={startDate}
           endDate={endDate}
+          selectedDays={selectedDays}
+          setSelectedDays={setSelectedDays}
         />
       </div>
     </>

@@ -53,6 +53,8 @@ function SpecificAnimal({
   disabledDate,
   startDate,
   endDate,
+  selectedDays,
+  setSelectedDays
 }) {
   const calculateDaysDifference = (startDate, endDate) => {
     const start = dayjs(startDate)
@@ -131,6 +133,8 @@ function SpecificAnimal({
           startDate={startDate}
           endDate={endDate}
           calculateDaysDifference={calculateDaysDifference}
+          selectedDays={selectedDays}
+          setSelectedDays={setSelectedDays}
         />
       </div>
     </Form>

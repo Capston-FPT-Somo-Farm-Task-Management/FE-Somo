@@ -57,9 +57,9 @@ function Schedule() {
       ? tasksForDate.map((task) => {
           let type = "success";
           if (task.status === "Chuẩn bị") {
-            type = "default";
-          } else if (task.status === "Đang thực hiện") {
             type = "processing";
+          } else if (task.status === "Đang thực hiện") {
+            type = "success";
           }
           const formattedStartDate = dayjs(task.startDate).format(
             "HH:mm DD-MM-YYYY"
@@ -206,6 +206,15 @@ function Schedule() {
       ) : (
         <>
           <h3>Lịch trình</h3>
+          <div>
+            <span >
+              <Badge status="processing" text="Chuẩn bị" />
+            </span>
+            <span style={{marginLeft: "10px"}}>
+              {" "}
+              <Badge status="success" text="Đang thực hiện" />
+            </span>
+          </div>
           {isMobile ? (
             <Calendar cellRender={dateRender} onSelect={handleDateClick} />
           ) : (
