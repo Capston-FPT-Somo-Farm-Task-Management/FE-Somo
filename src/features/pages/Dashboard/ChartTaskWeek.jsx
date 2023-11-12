@@ -28,7 +28,6 @@ const ChartTaskWeek = ({ taskByWeek, onBarClick }) => {
     uv: task.taskCount,
   }))
 
-  // Customized bar component for rounded corners
   const renderBarShape = (props) => {
     const { fill, x, y, width, height } = props
     return <rect x={x} y={y} width={width} height={height} rx={5} fill={fill} />
@@ -40,13 +39,16 @@ const ChartTaskWeek = ({ taskByWeek, onBarClick }) => {
         display: 'flex',
         justifyContent: 'center',
         width: '100%',
-        height: 400,
+        height: '400px',
+        minWidth: '300px', // Đặt chiều rộng tối thiểu
       }}
     >
-      <ResponsiveContainer width="80%" height="100%">
+      <ResponsiveContainer width="70%" height="80%">
         <BarChart
           data={data}
-          margin={{ top: 20, right: 30, left: 30, bottom: 5 }}
+          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+          barCategoryGap="5%" // Giảm xuống từ mặc định 10% nếu bạn muốn các cột gần nhau hơn
+          barGap={2} //
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
@@ -58,6 +60,7 @@ const ChartTaskWeek = ({ taskByWeek, onBarClick }) => {
             fill="#82ca9d"
             shape={renderBarShape}
             onClick={(entry, index) => onBarClick(index)}
+            barSize={70}
           />
           <Legend />
         </BarChart>
