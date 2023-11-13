@@ -181,6 +181,7 @@ function RepeatUpdate({
           name="dateRepeate"
           initialValue={dateRepeateArray}
         >
+        <style>{css}</style>
           <DayPicker
             mode="multiple"
             selected={initialSelectedDays.map((day) => new Date(day))} // Chuyển đổi chuỗi ngày thành đối tượng Date

@@ -415,9 +415,11 @@ function ThirdModal({
           fieldByZone.data.find((field) => field.id === selectedFieldId)
             ?.nameCode || "";
 
-        const formattedAddress = `${areaName || ""}, ${zoneName || ""}, ${
-          fieldName || ""
-        }, ${addressDetail || ""}`;
+        const formattedAddress = `${areaName ? areaName + `, ` : ""}${
+          zoneName ? zoneName + `, ` : ""
+        }${fieldName ? fieldName + `, ` : ""} ${
+          addressDetail ? addressDetail : ""
+        }`;
 
         const finalValues = {
           ...values,

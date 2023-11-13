@@ -5,7 +5,7 @@ function FieldOtherUpdate({handleSelectFieldChange, fieldByZone, editingTask}) {
   return (
     <Form.Item
           label="Chuồng / Vườn"
-          name="fieldName"
+          name="fieldId"
           // initialValue={editingTask ? editingTask.fieldId : null}
         >
           <Select

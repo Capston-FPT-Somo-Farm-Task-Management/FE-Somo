@@ -12,7 +12,7 @@ function AreaByFarmSelect({handleSelectAreaChange, areaByFarm}) {
               message: "Vui lòng chọn khu vực",
             },
           ]}
-          name="areaName"
+          name="areaId"
         >
           <Select
             onChange={handleSelectAreaChange}

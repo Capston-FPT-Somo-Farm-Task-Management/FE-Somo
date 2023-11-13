@@ -22,7 +22,7 @@ export const getSubTasksByTaskId = createAsyncThunk(
 
 export const createSubTask = createAsyncThunk("subTasks/createSubTask", async (data, {rejectWithValue}) => {
     try {
-      const response = await axios.post(baseUrl + `/FarmSubTask/Task`, data, {
+      const response = await axios.post(baseUrl + `/FarmSubTask`, data, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -40,9 +40,9 @@ export const createSubTask = createAsyncThunk("subTasks/createSubTask", async (d
 
   export const deleteSubTask = createAsyncThunk(
     'subTasks/deleteSubTask',
-    async ({taskId, employeeId}, { rejectWithValue }) => {
+    async ({subTaskId}, { rejectWithValue }) => {
       try {
-        const response = await axios.put(baseUrl + `/FarmSubTask/Delete/Task(${taskId})/Employee(${employeeId})`)
+        const response = await axios.delete(baseUrl + `/FarmSubTask/Delete(${subTaskId})`)
         return response.data
       } catch (error) {
         return rejectWithValue(error)

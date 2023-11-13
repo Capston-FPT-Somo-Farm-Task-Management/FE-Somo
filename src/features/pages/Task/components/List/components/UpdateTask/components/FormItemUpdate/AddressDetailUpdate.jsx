@@ -21,6 +21,7 @@ function AddressDetailUpdate({ addressDetail, setAddressDetail, editingTask }) {
         value={addressDetail}
         onChange={(e) => setAddressDetail(e.target.value)}
         rows={3}
+        
       />
     </Form.Item>
   );

@@ -5,7 +5,7 @@ function ZoneByAreaUpdate({handleSelectZoneChange, zoneByArea, editingTask}) {
   return (
     <Form.Item
           label="Vùng"
-          name="zoneName"
+          name="zoneId"
           // initialValue={editingTask ? editingTask.zoneId : null}
         >
           <Select

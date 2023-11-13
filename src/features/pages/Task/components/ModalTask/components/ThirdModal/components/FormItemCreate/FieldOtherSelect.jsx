@@ -5,7 +5,7 @@ function FieldOtherSelect({handleSelectFieldChange, fieldByZone}) {
   return (
     <Form.Item
           label="Chuồng / Vườn"
-          name="fieldName"
+          name="fieldId"
         >
           <Select
             onChange={handleSelectFieldChange}

@@ -5,7 +5,7 @@ function ZoneByAreaSelect({handleSelectZoneChange, zoneByArea}) {
   return (
     <Form.Item
           label="Vùng"
-          name="zoneName"
+          name="zoneId"
         >
           <Select
             onChange={handleSelectZoneChange}

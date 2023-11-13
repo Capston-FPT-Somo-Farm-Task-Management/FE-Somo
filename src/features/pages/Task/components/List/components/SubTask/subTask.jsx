@@ -18,7 +18,8 @@ function SubTask({
   editSubTaskModalVisible,
   closeEditSubTaskModal,
   handleUpdateSubTask,
-  editingSubTask
+  editingSubTask,
+  editingTask
 }) {
 
   return (
@@ -31,6 +32,7 @@ function SubTask({
         availableEmployees={availableEmployees}
         description={description}
         handleDescription={handleDescription}
+        editingTask={editingTask}
       />
       <DisplaySubTask
         subTaskModalVisible={subTaskModalVisible}

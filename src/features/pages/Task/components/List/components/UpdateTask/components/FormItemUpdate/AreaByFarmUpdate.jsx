@@ -5,7 +5,7 @@ function AreaByFarmUpdate({handleSelectAreaChange, areaByFarm, editingTask}) {
   return (
     <Form.Item
           label="Khu vực"
-          name="areaName"
+          name="areaId"
           // initialValue={editingTask ? editingTask.areaId : undefined}
         >
           <Select

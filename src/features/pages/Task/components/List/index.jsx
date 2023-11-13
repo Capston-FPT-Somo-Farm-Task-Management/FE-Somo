@@ -53,7 +53,7 @@ const List = () => {
 
   const dispatch = useDispatch();
 
-  console.log(effort);
+  console.log(editingTask);
 
   const loadDataTask = () => {
     dispatch(
@@ -123,7 +123,6 @@ const List = () => {
     setEditingTask(record);
     setEditTaskModalVisible(true);
     setCurrentTaskId(record.id);
-    console.log(editingTask);
   };
 
   const closeEditTaskModal = () => {
@@ -135,7 +134,8 @@ const List = () => {
     if (e.key === "edit") {
       openEditSubTaskModal(subTaskItem);
     } else if (e.key === "delete") {
-      handleDeleteSubTask(subTaskItem.employeeId);
+      handleDeleteSubTask(subTaskItem.subtaskId);
+      console.log(subTaskItem);
     }
   };
 
@@ -154,6 +154,8 @@ const List = () => {
   const openAddSubtaskModal = (record) => {
     setCurrentTaskId(record.id);
     setAddSubtaskVisible(true);
+    setEditingTask(record);
+    console.log(editingTask);
     const taskId = currentTaskId;
     dispatch(getEmployeeByTask(taskId)).then((data) => {
       setAvailableEmployees(data.payload);
@@ -176,9 +178,9 @@ const List = () => {
     setEditSubTaskModalVisible(false);
   };
 
-  const handleDeleteSubTask = (employeeId) => {
+  const handleDeleteSubTask = (subTaskId) => {
     const taskId = currentTaskId;
-    dispatch(deleteSubTask({ taskId, employeeId })).then(() => {
+    dispatch(deleteSubTask({ subTaskId })).then(() => {
       dispatch(getSubTasksByTaskId(taskId)).then((data) => {
         setSubTasks(data.payload);
       });
@@ -348,6 +350,7 @@ const List = () => {
         closeEditSubTaskModal={closeEditSubTaskModal}
         handleUpdateSubTask={handleUpdateSubTask}
         editingSubTask={editingSubTask}
+        editingTask={editingTask}
       />
       <Effort
         effortVisible={effortVisible}
