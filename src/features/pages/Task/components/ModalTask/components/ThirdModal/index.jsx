@@ -90,6 +90,7 @@ function ThirdModal({
     (state) => state.taskTypeLivestock.data
   );
   const dataTaskTypeLivestock = taskTypeLivestock.data;
+  console.log(dataTaskTypeLivestock);
 
   const taskTypePlant = useSelector((state) => state.taskTypePlant.data);
   const dataTaskTypePlant = taskTypePlant.data;
@@ -97,6 +98,7 @@ function ThirdModal({
   const supervisor = useSelector((state) => state.supervisor.data);
 
   const dataEmployee = useSelector((state) => state.employee.data);
+  console.log(dataEmployee);
 
   const material = useSelector((state) => state.materialActive.data);
 
@@ -525,7 +527,7 @@ function ThirdModal({
         description={description}
         overallEfforMinutes={overallEfforMinutes}
         overallEffortHour={overallEffortHour}
-        taskTypeActive={taskTypeActive}
+        dataTaskTypeLivestock={dataTaskTypeLivestock}
         employeesValue={employeesValue}
         dataEmployee={dataEmployee}
         supervisor={supervisor}

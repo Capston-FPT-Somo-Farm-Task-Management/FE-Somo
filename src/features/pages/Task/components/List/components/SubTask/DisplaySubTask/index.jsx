@@ -8,13 +8,16 @@ function DisplaySubTask({
   handleSubTaskModalVisible,
   subTasks,
   handleMenuSubTaskClick,
+  statusForEdit,
+  editingTask,
 }) {
-  let totalSubTaskCount = 0;
+  console.log(editingTask);
   return (
     <Modal
-      title="Công việc con"
+      title={editingTask ? `#${editingTask.code} - ${editingTask.name}` : null}
       visible={subTaskModalVisible}
       onCancel={handleSubTaskModalVisible}
+      width={1000}
       footer={[
         <Button type="primary" onClick={handleSubTaskModalVisible}>
           Đóng
@@ -25,16 +28,14 @@ function DisplaySubTask({
       <div className="subTask">
         {subTasks && subTasks.data ? (
           subTasks.data.map((subTaskItem) => {
-            totalSubTaskCount++;
-            const SubTaskCount = totalSubTaskCount;
+            console.log(subTaskItem);
             return (
               <div className="subTask-content">
                 <div className="subTask-header">
                   <div className="subTask-count">
-                    <span style={{ textDecoration: "none", color: "red" }}>
-                      *{" "}
-                    </span>
-                    <span>Báo cáo số {SubTaskCount}</span>{" "}
+                    <span style={{ color: "#8EAD48" }}>
+                      #{subTaskItem.code}
+                    </span>{" "}
                   </div>
                   <div className="subTask-dropdown">
                     <Dropdown
@@ -45,18 +46,37 @@ function DisplaySubTask({
                             handleMenuSubTaskClick(e, subTaskItem)
                           }
                         >
-                          <Menu.Item key="edit">
-                            <EditOutlined
-                              style={{ color: "gold", marginRight: "8px" }}
-                            />
-                            Sửa công việc con
-                          </Menu.Item>
-                          <Menu.Item key="delete">
-                            <DeleteOutlined
-                              style={{ color: "red", marginRight: "8px" }}
-                            />
-                            Xóa công việc con
-                          </Menu.Item>
+                          {statusForEdit ? (
+                            <>
+                              <Menu.Item key="editEffort">
+                                <EditOutlined
+                                  style={{
+                                    color: "gold",
+                                    marginRight: "8px",
+                                  }}
+                                />
+                                Sửa chấm công
+                              </Menu.Item>
+                            </>
+                          ) : (
+                            <>
+                              <Menu.Item key="edit">
+                                <EditOutlined
+                                  style={{
+                                    color: "gold",
+                                    marginRight: "8px",
+                                  }}
+                                />
+                                Sửa công việc con
+                              </Menu.Item>
+                              <Menu.Item key="delete">
+                                <DeleteOutlined
+                                  style={{ color: "red", marginRight: "8px" }}
+                                />
+                                Xóa công việc con
+                              </Menu.Item>
+                            </>
+                          )}
                         </Menu>
                       }
                     >
@@ -64,20 +84,35 @@ function DisplaySubTask({
                     </Dropdown>
                   </div>
                 </div>
-
                 <div className="subTask-container" key={subTaskItem.employeeId}>
                   <div className="subTask-item">
-                    <p>Tên: {subTaskItem.name}</p>
-                    <p>Người thực hiện: {subTaskItem.employeeName}</p>
                     <p>
-                      Ngày bắt đầu:{" "}
+                      <span>Tên:</span> {subTaskItem.name}
+                    </p>
+                    {console.log(subTaskItem)}
+                    <p>
+                      <span>Người thực hiện:</span> {subTaskItem.employeeName}
+                    </p>
+                    <p>
+                      <span>Ngày bắt đầu:</span>{" "}
                       {dayjs(subTaskItem.startDay).format("DD-MM-YYYY / HH:mm")}
                     </p>
                     <p>
-                      Ngày kết thúc:{" "}
-                      {dayjs(subTaskItem.endDate).format("DD-MM-YYYY / HH:mm")}
+                      <span>Ngày kết thúc:</span>{" "}
+                      {dayjs(subTaskItem.endDay).format("DD-MM-YYYY / HH:mm")}
                     </p>
-                    <p>Mô tả: {subTaskItem.description}</p>
+                    <p>
+                      <span>Thời gian làm việc:</span>{" "}
+                      {subTaskItem.actualEffortHour} giờ{" "}
+                      {subTaskItem.actualEfforMinutes} phút
+                    </p>
+                    {subTaskItem.description ? (
+                      <p>
+                        <span>Mô tả:</span> {subTaskItem.description}
+                      </p>
+                    ) : (
+                      <p>Chưa có mô tả</p>
+                    )}
                   </div>
                 </div>
               </div>

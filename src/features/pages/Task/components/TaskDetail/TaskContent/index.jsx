@@ -46,7 +46,7 @@ function TaskContent({ taskData }) {
   return (
     <>
       {taskData && (
-        <>
+        <div className="task-detail">
           <div className="task-detail-title">
             <h3>#{taskData.code}</h3>
             <h2 className="task-title-item">{taskData.name}</h2>
@@ -54,12 +54,8 @@ function TaskContent({ taskData }) {
               {taskData.priority} - {taskData.status}
             </p>
           </div>
-          <Collapse
-            activeKey={activePanels}
-            onChange={setActivePanels}
-            className="task-detail-content"
-          >
-            <Panel header="Nơi thực hiện" key="0">
+          <div className="task-detail-content">
+            <Card title="Nơi thực hiện" bordered={false}>
               <p>
                 <GrMap />
                 Khu vực: {taskData.areaName}
@@ -78,8 +74,8 @@ function TaskContent({ taskData }) {
                   Chuồng: {taskData.fieldName}
                 </p>
               ) : null}
-            </Panel>
-            <Panel header="Thời gian" key="1">
+            </Card>
+            <Card title="Thời gian" bordered={false}>
               <p>
                 <GrDocumentTime />
                 Ngày tạo: {formattedCreateDate}
@@ -120,8 +116,40 @@ function TaskContent({ taskData }) {
                   taskData.overallEffortHour
                 } giờ {taskData.overallEfforMinutes} phút
               </p>
-            </Panel>
-            <Panel header="Đối tượng">
+            </Card>
+            
+            <Card title="Phụ trách" bordered={false}>
+              <p>
+                <GrUserManager />
+                Người quản lý: {taskData.managerName}
+              </p>
+              <p>
+                <GrUser />
+                Người giám sát: {taskData.supervisorName}
+              </p>
+              <p>
+                <GrUserWorker />
+                Người thực hiện: {taskData.employeeName}
+              </p>
+            </Card>
+            <Card title="Loại công việc" bordered={false}>
+              <p>
+                <GrHostMaintenance />
+                Loại công việc: {taskData.taskTypeName}
+              </p>
+              {taskData.materialName ? (
+                <p>
+                  <GrTools />
+                  Dụng cụ: {taskData.materialName}
+                </p>
+              ) : (
+                <p>
+                  <GrTools />
+                  Chưa có dụng cụ
+                </p>
+              )}
+            </Card>
+            <Card title="Đối tượng" bordered={false}>
               {taskData.externalId && taskData.fieldStatus === "Thực vật" ? (
                 <p>
                   <GiFruitTree />
@@ -144,39 +172,8 @@ function TaskContent({ taskData }) {
                   Mã con vật: {taskData.externalId}
                 </p>
               ) : null}
-            </Panel>
-            <Panel header="Phụ trách">
-              <p>
-                <GrUserManager />
-                Người quản lý: {taskData.managerName}
-              </p>
-              <p>
-                <GrUser />
-                Người giám sát: {taskData.supervisorName}
-              </p>
-              <p>
-                <GrUserWorker />
-                Người thực hiện: {taskData.employeeName}
-              </p>
-            </Panel>
-            <Panel header="Loại công việc">
-              <p>
-                <GrHostMaintenance />
-                Loại công việc: {taskData.taskTypeName}
-              </p>
-              {taskData.materialName ? (
-                <p>
-                  <GrTools />
-                  Dụng cụ: {taskData.materialName}
-                </p>
-              ) : (
-                <p>
-                  <GrTools />
-                  Chưa có dụng cụ
-                </p>
-              )}
-            </Panel>
-            <Panel header="Thông báo công việc">
+            </Card>
+            <Card title="Thông báo công việc" bordered={false}>
               {taskData.remind === 0 ? (
                 <p>
                   <GiRingingBell />
@@ -210,9 +207,9 @@ function TaskContent({ taskData }) {
                   Chưa có ngày lặp lại
                 </p>
               )}
-            </Panel>
-          </Collapse>
-        </>
+            </Card>
+          </div>
+        </div>
       )}{" "}
     </>
   );

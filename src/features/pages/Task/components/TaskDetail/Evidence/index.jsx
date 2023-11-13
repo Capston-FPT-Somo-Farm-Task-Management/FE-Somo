@@ -1,10 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import NoImage from "../../../../../../assets/no-image.png";
-import { Image, Modal } from "antd";
+import { Collapse, Image } from "antd";
+import { GrDocumentImage } from "react-icons/gr";
 
-function Evidence({ visible, onCancel, taskData }) {
+function Evidence() {
   const evidenceData = useSelector((state) => state.evidence.data);
+
+  const { Panel } = Collapse;
 
   const renderImages = () => {
     let totalEvidenceCount = 0;
@@ -20,71 +23,86 @@ function Evidence({ visible, onCancel, taskData }) {
             </div>
             <p className="evidence-desc">Mô tả: {evidence.description}</p>
             <p className="evidence-time">Được gửi {evidence.time}</p>
-            <div className="img-contain">
-              <Image.PreviewGroup>
-                {evidence.urlImage && evidence.urlImage ? (
-                  evidence.urlImage.map((url, imageIndex) => (
-                    <>
-                      {evidence.urlImage.length === 1 ? (
-                        <div className="img-evidence" key={imageIndex}>
-                          <Image src={url} alt={`evidence-${imageIndex}`} />
-                        </div>
-                      ) : evidence.urlImage.length === 2 ? (
-                        <div
-                          style={{ width: "45%" }}
-                          className="img-evidence"
-                          key={imageIndex}
-                        >
-                          <Image src={url} alt={`evidence-${imageIndex}`} />
-                        </div>
-                      ) : evidence.urlImage.length === 3 ? (
-                        <div
-                          style={{ width: "30%" }}
-                          className="img-evidence"
-                          key={imageIndex}
-                        >
-                          <Image src={url} alt={`evidence-${imageIndex}`} />
-                        </div>
-                      ) : evidence.urlImage.length === 4 ? (
-                        <div
-                          style={{ width: "45%", margin: "10px" }}
-                          className="img-evidence"
-                          key={imageIndex}
-                        >
-                          <Image src={url} alt={`evidence-${imageIndex}`} />
-                        </div>
-                      ) : evidence.urlImage.length > 4 ? (
-                        <div
-                          style={{
-                            width: "45%",
-                            margin: "10px",
-                            display:
-                              imageIndex >= 4 && evidence.urlImage.length > 4
-                                ? "none"
-                                : "block",
-                          }}
-                          className={`img-evidence ${
-                            imageIndex === 3 && evidence.urlImage.length > 4
-                              ? "overlay"
-                              : ""
-                          }`}
-                          key={imageIndex}
-                        >
-                          <Image src={url} alt={`evidence-${imageIndex}`} />
-                          {imageIndex === 3 && evidence.urlImage.length > 4 && (
-                            <div className="overlay-text">
-                              +{evidence.urlImage.length - 4}
+            <Collapse accordion className="collapse-evidence">
+              <Panel
+                header={
+                  <span>
+                    <GrDocumentImage style={{ marginRight: "8px", transform: "translateY(10%)" }} />
+                    Xem hình ảnh báo cáo
+                  </span>
+                }
+              >
+                <div className="img-contain">
+                  <Image.PreviewGroup>
+                    {evidence.urlImage && evidence.urlImage ? (
+                      evidence.urlImage.map((url, imageIndex) => (
+                        <>
+                          {evidence.urlImage.length === 1 ? (
+                            <div className="img-evidence" key={imageIndex}>
+                              <Image src={url} alt={`evidence-${imageIndex}`} />
                             </div>
-                          )}
-                        </div>
-                      ) : null}
-                    </>
-                  ))
-                ) : (
-                  <img src={NoImage} alt="Không có ảnh" />
-                )}
-              </Image.PreviewGroup>
-            </div>
+                          ) : evidence.urlImage.length === 2 ? (
+                            <div
+                              style={{ width: "45%" }}
+                              className="img-evidence"
+                              key={imageIndex}
+                            >
+                              <Image src={url} alt={`evidence-${imageIndex}`} />
+                            </div>
+                          ) : evidence.urlImage.length === 3 ? (
+                            <div
+                              style={{ width: "30%" }}
+                              className="img-evidence"
+                              key={imageIndex}
+                            >
+                              <Image src={url} alt={`evidence-${imageIndex}`} />
+                            </div>
+                          ) : evidence.urlImage.length === 4 ? (
+                            <div
+                              style={{ width: "45%", margin: "10px" }}
+                              className="img-evidence"
+                              key={imageIndex}
+                            >
+                              <Image src={url} alt={`evidence-${imageIndex}`} />
+                            </div>
+                          ) : evidence.urlImage.length > 4 ? (
+                            <div
+                              style={{
+                                width: "45%",
+                                margin: "10px",
+                                display:
+                                  imageIndex >= 4 &&
+                                  evidence.urlImage.length > 4
+                                    ? "none"
+                                    : "block",
+                              }}
+                              className={`img-evidence ${
+                                imageIndex === 3 && evidence.urlImage.length > 4
+                                  ? "overlay"
+                                  : ""
+                              }`}
+                              key={imageIndex}
+                            >
+                              <Image src={url} alt={`evidence-${imageIndex}`} />
+                              {imageIndex === 3 &&
+                                evidence.urlImage.length > 4 && (
+                                  <div className="overlay-background">
+                                    <div className="overlay-text">
+                                      +{evidence.urlImage.length - 4}
+                                    </div>
+                                  </div>
+                                )}
+                            </div>
+                          ) : null}
+                        </>
+                      ))
+                    ) : (
+                      <img src={NoImage} alt="Không có ảnh" />
+                    )}
+                  </Image.PreviewGroup>
+                </div>
+              </Panel>
+            </Collapse>
           </div>
         );
       });
@@ -93,19 +111,12 @@ function Evidence({ visible, onCancel, taskData }) {
     }
   };
   return (
-    <Modal
-      title="Báo cáo công việc"
-      visible={visible}
-      onCancel={onCancel}
-      footer={null}
-      width={550}
-      className="modal-detail"
-      style={{ maxWidth: "90%", margin: "0 auto" }}
-    >
-      <div className="evidence">
-        {renderImages()}
-      </div>
-    </Modal>
+    <div className="evidence">
+      <h6 style={{ fontSize: "24px", fontWeight: "500" }}>
+        Báo cáo công việc:
+      </h6>
+      {renderImages()}
+    </div>
   );
 }
 

@@ -11,23 +11,25 @@ function AddSubTask({
   availableEmployees,
   description,
   handleDescription,
-  editingTask
+  editingTask,
+  handleSelectStartDay,
+  handleSelectEndDay
 }) {
   console.log(editingTask);
   const disabledDate = (current) => {
     if (!editingTask.startDate && !editingTask.endDate) {
       return false;
     }
-  
+
     // Disable dates in the past relative to editingTask.startDate
     if (editingTask.startDate && editingTask.endDate) {
-      const endDatePlusOne = dayjs(editingTask.endDate).add(1, 'day');
+      const endDatePlusOne = dayjs(editingTask.endDate).add(1, "day");
       return (
         current < dayjs(editingTask.startDate).startOf("day") ||
         current > endDatePlusOne.startOf("day")
       );
     }
-    return false
+    return false;
   };
 
   return (
@@ -95,52 +97,52 @@ function AddSubTask({
           />
         </Form.Item>
         <Space nowrap>
-      <Form.Item
-        label="Chọn thời gian bắt đầu"
-        rules={[
-          {
-            required: true,
-            message: "Vui lòng chọn ngày bắt đầu",
-          },
-        ]}
-        name="startDay"
-      >
-        <DatePicker
-          placeholder="Chọn thời gian bắt đầu"
-          format="HH:mm DD-MM-YYYY"
-          disabledDate={disabledDate}
-          showTime={{
-            defaultValue: dayjs("00:00", "HH:mm"),
-            format: "HH:mm",
-          }}
-          showSecond="false"
-          // onChange={handleSelectStartDate}
-        />
-      </Form.Item>
-      <Form.Item
-        label="Chọn thời gian kết thúc"
-        rules={[
-          {
-            required: true,
-            message: "Vui lòng chọn ngày kết thúc",
-          },
-        ]}
-        name="endDay"
-      >
-        <DatePicker
-          placeholder="Chọn thời gian kết thúc"
-          format="HH:mm DD-MM-YYYY"
-          disabledDate={disabledDate}
-          showTime={{
-            defaultValue: dayjs("00:00", "HH:mm"),
-            format: "HH:mm",
-          }}
-          showSecond="false"
-          // onChange={handleSelectEndDate}
-          // disabled={!editingTask.startDate}
-        />
-      </Form.Item>
-    </Space>
+          <Form.Item
+            label="Chọn thời gian bắt đầu"
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng chọn ngày bắt đầu",
+              },
+            ]}
+            name="startDay"
+          >
+            <DatePicker
+              placeholder="Chọn thời gian bắt đầu"
+              format="HH:mm DD-MM-YYYY"
+              disabledDate={disabledDate}
+              showTime={{
+                defaultValue: dayjs("00:00", "HH:mm"),
+                format: "HH:mm",
+              }}
+              showSecond="false"
+              onChange={handleSelectStartDay}
+            />
+          </Form.Item>
+          <Form.Item
+            label="Chọn thời gian kết thúc"
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng chọn ngày kết thúc",
+              },
+            ]}
+            name="endDay"
+          >
+            <DatePicker
+              placeholder="Chọn thời gian kết thúc"
+              format="HH:mm DD-MM-YYYY"
+              disabledDate={disabledDate}
+              showTime={{
+                defaultValue: dayjs("00:00", "HH:mm"),
+                format: "HH:mm",
+              }}
+              showSecond="false"
+              onChange={handleSelectEndDay}
+              // disabled={!editingTask.startDate}
+            />
+          </Form.Item>
+        </Space>
         <Form.Item label="Mô tả" name="description">
           <TextArea
             value={description}

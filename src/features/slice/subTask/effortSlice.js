@@ -28,7 +28,7 @@ export const updateEffort = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        baseUrl + `/FarmSubTask/Task(${data.id})`,
+        baseUrl + `/FarmSubTask/Task(${data.taskId})`,
         data.body,
         {
           headers: {

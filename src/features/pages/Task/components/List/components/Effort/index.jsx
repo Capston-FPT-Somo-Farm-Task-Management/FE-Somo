@@ -8,11 +8,15 @@ function Effort({
   handleEffortVisible,
   effort,
   handleMenuEffortClick,
+  handleMenuSubTaskClick,
   editEffortVisible,
   closeEditEffortModal,
   handleUpdateEffort,
   currentTaskId,
   editingEffort,
+  editingSubTask,
+  isHaveSubTask,
+  openEditSubTaskEffortModal
 }) {
   return (
     <>
@@ -21,6 +25,9 @@ function Effort({
         handleEffortVisible={handleEffortVisible}
         effort={effort}
         handleMenuEffortClick={handleMenuEffortClick}
+        handleMenuSubTaskClick={handleMenuSubTaskClick}
+        isHaveSubTask={isHaveSubTask}
+        openEditSubTaskEffortModal={openEditSubTaskEffortModal}
       />
       <UpdateEffort
         editEffortVisible={editEffortVisible}
@@ -28,6 +35,7 @@ function Effort({
         handleUpdateEffort={handleUpdateEffort}
         currentTaskId={currentTaskId}
         editingEffort={editingEffort}
+        editingSubTask={editingSubTask}
       />
     </>
   );

@@ -199,11 +199,17 @@ html {
   font-size: 28px;
   margin-bottom: 30px;
 }
+.subTask-modal .ant-modal-content .subTask {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
 .subTask-modal .ant-modal-content .subTask .subTask-content {
-  background-color: rgba(0, 0, 0, 0.02);
+  background-color: #f5f5f5;
   padding: 10px 0px;
   margin-bottom: 20px;
   border-radius: 10px;
+  width: 48%;
 }
 .subTask-modal .ant-modal-content .subTask .subTask-content .subTask-header {
   display: flex;
@@ -224,20 +230,16 @@ html {
   justify-content: flex-end;
 }
 .subTask-modal .ant-modal-content .subTask .subTask-content .subTask-container {
-  display: flex;
-  justify-content: space-between;
   padding: 10px 25px;
   border-radius: 10px;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-container .subTask-item {
-  width: 80%;
-}
 .subTask-modal .ant-modal-content .subTask .subTask-content p {
   margin-bottom: 5px;
-  font-size: 16px;
-}
-.subTask-modal .ant-modal-content .subTask .subTask-content strong {
   font-size: 18px;
+}
+.subTask-modal .ant-modal-content .subTask .subTask-content span {
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .effort-modal .ant-modal-content .ant-modal-title {
@@ -667,40 +669,50 @@ html {
   margin-bottom: 20px;
 }
 
-.task-detail-title {
+.task-detail {
+  background-color: #f5f5f5;
+  padding: 20px 10px;
+  margin-top: 20px;
+  border-radius: 8px;
+}
+.task-detail .task-detail-title {
   text-align: center;
 }
-.task-detail-title h3 {
+.task-detail .task-detail-title h3 {
   color: #8ead48;
   margin-bottom: 10px;
 }
-.task-detail-title p {
+.task-detail .task-detail-title p {
   font-size: 16px;
   margin: 10px 0px;
 }
-
-.task-detail-content p {
+.task-detail .task-detail-content {
   display: flex;
-  align-items: center;
-  font-size: 14px;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 20px;
 }
-.task-detail-content p svg {
+.task-detail .task-detail-content .ant-card {
+  width: 30%;
+  margin-bottom: 30px;
+}
+.task-detail .task-detail-content .ant-card svg {
+  transform: translateY(10%);
   margin-right: 5px;
-  font-size: 14px;
 }
 
 .evidence {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 .evidence .evidence-content {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  background-color: #f5f5f5;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.02);
   margin: 20px 0px;
   padding: 20px 0px;
-  border-radius: 5px;
+  border-radius: 8px;
 }
 .evidence .evidence-content .evidence-count {
   width: 100%;
@@ -711,6 +723,19 @@ html {
 }
 .evidence .evidence-content .evidence-count span {
   text-decoration: underline;
+}
+.evidence .evidence-content .collapse-evidence {
+  margin-top: 10px;
+  background-color: #fff;
+  transition: 0.3s all;
+}
+.evidence .evidence-content .collapse-evidence:hover {
+  box-shadow: 0 0 11px #38b000;
+  transition: 0.3s all;
+}
+.evidence .evidence-content .ant-collapse-item-active .ant-collapse-header {
+  background-color: #f5f5f5;
+  border-radius: 0;
 }
 .evidence .evidence-content p {
   width: 40%;
@@ -733,7 +758,7 @@ html {
   margin-top: 10px;
   background-color: white;
   padding: 15px 10px;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 .evidence .evidence-content .img-contain .img-evidence {
   width: 100%;
@@ -746,32 +771,48 @@ html {
   height: 100%;
 }
 .evidence .evidence-content .img-contain .img-evidence .ant-image .ant-image-mask {
-  border-radius: 10px;
+  border-radius: 8px;
 }
 .evidence .evidence-content .img-contain .img-evidence .ant-image img {
   -o-object-fit: cover;
      object-fit: cover;
   width: 100%;
   height: 100%;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 .evidence .evidence-content .img-contain .overlay {
   position: relative;
 }
+.evidence .evidence-content .img-contain .overlay .ant-image {
+  position: absolute;
+}
 .evidence .evidence-content .img-contain .overlay .ant-image .ant-image-mask {
-  border-radius: 10px;
+  border-radius: 8px;
+  z-index: 1000;
 }
 .evidence .evidence-content .img-contain .overlay .ant-image img {
-  border-radius: 10px;
+  border-radius: 8px;
 }
-.evidence .evidence-content .img-contain .overlay .overlay-text {
+.evidence .evidence-content .img-contain .overlay .overlay-background {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
-  font-size: 24px;
+  transition: 0.5s all;
   font-weight: bold;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.evidence .evidence-content .img-contain .overlay .overlay-background .overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 30px;
 }
 
 .plant-content h3 {

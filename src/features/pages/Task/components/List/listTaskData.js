@@ -3,6 +3,12 @@ import dayjs from 'dayjs';
 
 export const taskTitle = [
   {
+    title: <p>Mã công việc</p>,
+    dataIndex: 'code',
+    key: 'code',
+    render: (code) => <h4 className="task-name" data-name-clicked="true">#{code}</h4>,
+  },
+  {
     title: <p>Tên công việc</p>,
     dataIndex: 'name',
     key: 'name',
