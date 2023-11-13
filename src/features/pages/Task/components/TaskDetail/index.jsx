@@ -10,7 +10,7 @@ const TaskDetail = ({ visible, onCancel, taskData }) => {
       visible={visible}
       onCancel={onCancel}
       footer={null}
-      width={1000}
+      width={1200}
       className="modal-detail"
       style={{ maxWidth: "90%", margin: "0 auto" }}
     >

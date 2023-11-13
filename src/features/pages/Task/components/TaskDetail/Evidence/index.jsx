@@ -43,24 +43,21 @@ function Evidence() {
                             </div>
                           ) : evidence.urlImage.length === 2 ? (
                             <div
-                              style={{ width: "45%" }}
-                              className="img-evidence"
+                              className="img-evidence-2"
                               key={imageIndex}
                             >
                               <Image src={url} alt={`evidence-${imageIndex}`} />
                             </div>
                           ) : evidence.urlImage.length === 3 ? (
                             <div
-                              style={{ width: "30%" }}
-                              className="img-evidence"
+                              className="img-evidence-3"
                               key={imageIndex}
                             >
                               <Image src={url} alt={`evidence-${imageIndex}`} />
                             </div>
                           ) : evidence.urlImage.length === 4 ? (
                             <div
-                              style={{ width: "45%", margin: "10px" }}
-                              className="img-evidence"
+                              className="img-evidence-4"
                               key={imageIndex}
                             >
                               <Image src={url} alt={`evidence-${imageIndex}`} />
@@ -68,15 +65,13 @@ function Evidence() {
                           ) : evidence.urlImage.length > 4 ? (
                             <div
                               style={{
-                                width: "45%",
-                                margin: "10px",
                                 display:
                                   imageIndex >= 4 &&
                                   evidence.urlImage.length > 4
                                     ? "none"
                                     : "block",
                               }}
-                              className={`img-evidence ${
+                              className={`img-evidence-more-4 ${
                                 imageIndex === 3 && evidence.urlImage.length > 4
                                   ? "overlay"
                                   : ""
@@ -113,7 +108,7 @@ function Evidence() {
   return (
     <div className="evidence">
       <h6 style={{ fontSize: "24px", fontWeight: "500" }}>
-        Báo cáo công việc:
+        Báo cáo công việc
       </h6>
       {renderImages()}
     </div>
