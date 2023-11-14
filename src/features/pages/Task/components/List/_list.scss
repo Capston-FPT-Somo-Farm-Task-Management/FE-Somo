@@ -5,7 +5,15 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  .list-checkTask{
+    display: flex;
+    justify-content: space-between;
+    .checkParent{
+      display: inline-block;
+      padding: 12px 0px;
+    }
   }
   .menu-icon {
     font-size: 20px;

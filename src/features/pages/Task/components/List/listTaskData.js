@@ -18,13 +18,13 @@ export const taskTitle = [
     title: <p>Ngày bắt đầu</p>,
     dataIndex: 'startDate',
     key: 'startDate',
-    render: (text) => dayjs(text).format('HH:mm DD/MM/YYYY'),
+    render: (text) => dayjs(text).format('DD/MM/YYYY HH:mm'),
   },
   {
     title: <p>Ngày kết thúc</p>,
     dataIndex: 'endDate',
     key: 'endDate',
-    render: (text) => dayjs(text).format('HH:mm DD/MM/YYYY'),
+    render: (text) => dayjs(text).format('DD/MM/YYYY HH:mm'),
   },
   {
     title: <p>Ưu tiên</p>,

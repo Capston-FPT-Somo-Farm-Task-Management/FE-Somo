@@ -28,7 +28,6 @@ const supervisorSlice = createSlice({
         state.loading = false;
         state.error = "";
         state.data = action.payload;
-        console.log(action.payload);
       })
       .addCase(getSupervisor.rejected, (state, action) => {
         state.loading = false;
