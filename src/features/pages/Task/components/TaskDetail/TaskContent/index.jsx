@@ -48,10 +48,10 @@ function TaskContent({ taskData }) {
       {taskData && (
         <div className="task-detail">
           <div className="task-detail-title">
-            <h3>#{taskData.code}</h3>
-            <h2 className="task-title-item">{taskData.name}</h2>
-            <p className="task-title-item" style={{ color: "#f3722c " }}>
-              {taskData.priority} - {taskData.status}
+            <h2>#{taskData.code}</h2>
+            <h2 className="task-title-name">{taskData.name}</h2>
+            <p className="task-title-priority">
+              Độ ưu tiên {taskData.priority} - Trạng thái {taskData.status}
             </p>
           </div>
           <div className="task-detail-content">

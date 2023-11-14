@@ -34,6 +34,7 @@ function RepeatUpdate({
     selected: initialSelectedDays.map((day) => new Date(day)),
     today: new Date(),
   };
+  
 
   const onDayClick = (day) => {
     const formattedDay = dayjs(day).format("YYYY-MM-DD");
@@ -51,6 +52,7 @@ function RepeatUpdate({
     }
 
     const indexInSelectedDays = selectedDays.indexOf(formattedDay);
+    const indexInitialSelectedDays = initialSelectedDays.indexOf(formattedDay);
 
     if (indexInSelectedDays > -1) {
       // Ngày đã chọn trong selectedDays: loại bỏ khỏi mảng
@@ -58,6 +60,7 @@ function RepeatUpdate({
     } else {
       // Ngày chưa chọn trong selectedDays: thêm vào mảng
       setSelectedDays([...selectedDays, formattedDay]);
+      setInitialSelectedDays([...initialSelectedDays, formattedDay]);
     }
   };
 
@@ -95,8 +98,19 @@ function RepeatUpdate({
       }
     }
 
+    for (let selectedDay of initialSelectedDays) {
+      let dayAfterSelected = dayjs(selectedDay);
+      for (let i = 1; i <= daysDifference; i++) {
+        if (currentDayjs.isSame(dayAfterSelected.add(i, "day"), "day")) {
+          return true;
+        }
+      }
+    }
+
     let daysAvailableBefore = 0;
     let daysAvailableAfter = 0;
+    let daysRepeatAvailableBefore = 0;
+    let daysRepeatAvailableAfter = 0;
 
     for (let i = 1; i <= daysDifference; i++) {
       let dayBefore = currentDayjs.subtract(i, "day").format("YYYY-MM-DD");
@@ -110,6 +124,18 @@ function RepeatUpdate({
       }
     }
 
+    for (let i = 1; i <= daysDifference; i++) {
+      let dayBefore = currentDayjs.subtract(i, "day").format("YYYY-MM-DD");
+      if (!initialSelectedDays.includes(dayBefore)) {
+        daysRepeatAvailableBefore++;
+      }
+  
+      let dayAfter = currentDayjs.add(i, "day").format("YYYY-MM-DD");
+      if (!initialSelectedDays.includes(dayAfter)) {
+        daysRepeatAvailableAfter++;
+      }
+    }
+
     // Nếu không đủ ngày trống trước hoặc sau ngày hiện tại để hoàn thành công việc, thì ngày đó cũng sẽ bị disabled
     if (
       daysAvailableBefore < daysDifference ||
@@ -118,9 +144,15 @@ function RepeatUpdate({
       return true;
     }
 
+    if (
+      daysRepeatAvailableBefore < daysDifference ||
+      daysRepeatAvailableAfter < daysDifference
+    ) {
+      return true;
+    }
     return false;
   };
-
+  
   const RenderFooter = () => {
     return (
       <div>

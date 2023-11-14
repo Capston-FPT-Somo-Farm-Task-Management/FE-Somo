@@ -678,9 +678,16 @@ html {
 .task-detail .task-detail-title {
   text-align: center;
 }
-.task-detail .task-detail-title h3 {
+.task-detail .task-detail-title h2 {
   color: #8ead48;
   margin-bottom: 10px;
+}
+.task-detail .task-detail-title .task-title-name {
+  color: black;
+}
+.task-detail .task-detail-title .task-title-priority {
+  color: #f3722c;
+  font-size: 18px;
 }
 .task-detail .task-detail-title p {
   font-size: 16px;
