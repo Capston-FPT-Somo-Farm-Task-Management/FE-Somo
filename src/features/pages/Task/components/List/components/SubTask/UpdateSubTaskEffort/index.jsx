@@ -1,26 +1,24 @@
 import { Button, Form, Input, Modal } from "antd";
 import React from "react";
 
-function UpdateEffort({
-  editEffortVisible,
-  closeEditEffortModal,
-  handleUpdateEffort,
-  currentTaskId,
-  editingEffort,
+function UpdateSubTaskEffort({
+  editSubTaskEffortModalVisible,
+  closeEditSubTaskEffortModal,
+  handleUpdateSubTaskEffort,
+  editingSubTask,
 }) {
-  console.log(currentTaskId);
   return (
     <>
-      {editEffortVisible && (
+      {editSubTaskEffortModalVisible && (
         <Modal
           title="Sửa chấm công"
-          visible={editEffortVisible}
-          onCancel={closeEditEffortModal}
+          visible={editSubTaskEffortModalVisible}
+          onCancel={closeEditSubTaskEffortModal}
           footer={[
-            <Button form="updateEffort" type="primary" htmlType="submit">
+            <Button form="updateSubTaskEffort" type="primary" htmlType="submit">
               Lưu thay đổi
             </Button>,
-            <Button type="primary" onClick={closeEditEffortModal}>
+            <Button type="primary" onClick={closeEditSubTaskEffortModal}>
               Đóng
             </Button>,
           ]}
@@ -28,21 +26,21 @@ function UpdateEffort({
           <Form
             layout="vertical"
             onFinish={(values) => {
-              handleUpdateEffort(
-                currentTaskId,
-                editingEffort.employeeId,
+              handleUpdateSubTaskEffort(
+                editingSubTask.subtaskId,
+                editingSubTask.employeeId,
                 values.actualEffortHour,
                 values.actualEfforMinutes
               );
             }}
-            id="updateEffort"
-            key={editingEffort ? editingEffort.employeeId : "new"}
+            id="updateSubTaskEffort"
+            key={editingSubTask ? editingSubTask.employeeId : "new"}
           >
             <Form.Item
               label="Số giờ chấm công"
               name="actualEffortHour"
               required
-              initialValue={editingEffort ? editingEffort.totalActualEffortHour : null}
+              initialValue={editingSubTask ? editingSubTask.actualEffortHour  : null}
             >
               <Input placeholder="Nhập số giờ chấm công" />
             </Form.Item>
@@ -50,7 +48,7 @@ function UpdateEffort({
               label="Số phút chấm công"
               name="actualEfforMinutes"
               required
-              initialValue={editingEffort ? editingEffort.totalActualEfforMinutes : null}
+              initialValue={editingSubTask ? editingSubTask.actualEfforMinutes : null}
             >
               <Input placeholder="Nhập số phút chấm công" />
             </Form.Item>
@@ -61,4 +59,4 @@ function UpdateEffort({
   );
 }
 
-export default UpdateEffort;
+export default UpdateSubTaskEffort;

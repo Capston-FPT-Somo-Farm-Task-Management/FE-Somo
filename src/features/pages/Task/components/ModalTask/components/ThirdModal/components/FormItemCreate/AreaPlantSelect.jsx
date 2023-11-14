@@ -1,7 +1,7 @@
 import { Form, Select } from 'antd'
 import React from 'react'
 
-function AreaUpdate({handleSelectAreaChange, area, editingTask}) {
+function AreaPlantSelect({handleSelectAreaChange, areaPlantByZone}) {
   return (
     <Form.Item
           label="Khu vực"
@@ -13,14 +13,13 @@ function AreaUpdate({handleSelectAreaChange, area, editingTask}) {
             },
           ]}
           name="areaId"
-          initialValue={editingTask ? editingTask.areaId : ""}
         >
           <Select
             onChange={handleSelectAreaChange}
             placeholder="Chọn khu vực"
             options={
-              area && area.data
-                ? area.data.map((item) => ({
+              areaPlantByZone && areaPlantByZone.data
+                ? areaPlantByZone.data.map((item) => ({
                     label: item.name,
                     value: item.id,
                   }))
@@ -31,4 +30,4 @@ function AreaUpdate({handleSelectAreaChange, area, editingTask}) {
   )
 }
 
-export default AreaUpdate
+export default AreaPlantSelect

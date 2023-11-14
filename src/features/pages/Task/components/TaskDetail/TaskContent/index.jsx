@@ -14,7 +14,7 @@ import {
   GrUserWorker,
   GrTools,
   GrHostMaintenance,
-  GrSync
+  GrSync,
 } from "react-icons/gr";
 import { GiCow, GiFruitTree, GiRingingBell } from "react-icons/gi";
 
@@ -33,6 +33,9 @@ function TaskContent({ taskData }) {
     "DD-MM-YYYY / HH:mm"
   );
   const formattedEndDate = dayjs(taskData.endDate).format("DD-MM-YYYY / HH:mm");
+  const formattedUpdateDate = dayjs(taskData.updateDate).format(
+    "DD-MM-YYYY / HH:mm"
+  );
 
   const formattedRepeatDate = taskData.dateRepeate.map((date) =>
     dayjs(date).format("DD-MM-YYYY")
@@ -43,20 +46,16 @@ function TaskContent({ taskData }) {
   return (
     <>
       {taskData && (
-        <>
+        <div className="task-detail">
           <div className="task-detail-title">
-            <h3>#{taskData.code}</h3>
-            <h2 className="task-title-item">{taskData.name}</h2>
-            <p className="task-title-item" style={{ color: "#f3722c " }}>
-              {taskData.priority} - {taskData.status}
+            <h2>#{taskData.code}</h2>
+            <h2 className="task-title-name">{taskData.name}</h2>
+            <p className="task-title-priority">
+              Độ ưu tiên {taskData.priority} - Trạng thái {taskData.status}
             </p>
           </div>
-          <Collapse
-            activeKey={activePanels}
-            onChange={setActivePanels}
-            className="task-detail-content"
-          >
-            <Panel header="Nơi thực hiện" key="0">
+          <div className="task-detail-content">
+            <Card title="Nơi thực hiện" bordered={false}>
               <p>
                 <GrMap />
                 Khu vực: {taskData.areaName}
@@ -75,8 +74,8 @@ function TaskContent({ taskData }) {
                   Chuồng: {taskData.fieldName}
                 </p>
               ) : null}
-            </Panel>
-            <Panel header="Thời gian" key="1">
+            </Card>
+            <Card title="Thời gian" bordered={false}>
               <p>
                 <GrDocumentTime />
                 Ngày tạo: {formattedCreateDate}
@@ -100,14 +99,57 @@ function TaskContent({ taskData }) {
                   Chưa có ngày lặp lại
                 </p>
               )}
+              {taskData.updateDate && taskData.updateDate.length > 0 ? (
+                <p>
+                  <GrDocumentTime />
+                  Ngày cập nhật: {formattedUpdateDate}
+                </p>
+              ) : (
+                <p>
+                  <GrDocumentTime />
+                  Ngày cập nhật: Chưa có
+                </p>
+              )}
               <p>
                 <GrAnnounce />
                 Thời gian dự kiến phải bỏ ra: {
                   taskData.overallEffortHour
                 } giờ {taskData.overallEfforMinutes} phút
               </p>
-            </Panel>
-            <Panel header="Đối tượng">
+            </Card>
+            
+            <Card title="Phụ trách" bordered={false}>
+              <p>
+                <GrUserManager />
+                Người quản lý: {taskData.managerName}
+              </p>
+              <p>
+                <GrUser />
+                Người giám sát: {taskData.supervisorName}
+              </p>
+              <p>
+                <GrUserWorker />
+                Người thực hiện: {taskData.employeeName}
+              </p>
+            </Card>
+            <Card title="Loại công việc" bordered={false}>
+              <p>
+                <GrHostMaintenance />
+                Loại công việc: {taskData.taskTypeName}
+              </p>
+              {taskData.materialName ? (
+                <p>
+                  <GrTools />
+                  Dụng cụ: {taskData.materialName}
+                </p>
+              ) : (
+                <p>
+                  <GrTools />
+                  Chưa có dụng cụ
+                </p>
+              )}
+            </Card>
+            <Card title="Đối tượng" bordered={false}>
               {taskData.externalId && taskData.fieldStatus === "Thực vật" ? (
                 <p>
                   <GiFruitTree />
@@ -130,39 +172,8 @@ function TaskContent({ taskData }) {
                   Mã con vật: {taskData.externalId}
                 </p>
               ) : null}
-            </Panel>
-            <Panel header="Phụ trách">
-              <p>
-                <GrUserManager />
-                Người quản lý: {taskData.managerName}
-              </p>
-              <p>
-                <GrUser />
-                Người giám sát: {taskData.supervisorName}
-              </p>
-              <p>
-                <GrUserWorker />
-                Người thực hiện: {taskData.employeeName}
-              </p>
-            </Panel>
-            <Panel header="Loại công việc">
-              <p>
-                <GrHostMaintenance />
-                Loại công việc: {taskData.taskTypeName}
-              </p>
-              {taskData.materialName ? (
-                <p>
-                  <GrTools />
-                  Dụng cụ: {taskData.materialName}
-                </p>
-              ) : (
-                <p>
-                  <GrTools />
-                  Chưa có dụng cụ
-                </p>
-              )}
-            </Panel>
-            <Panel header="Thông báo công việc">
+            </Card>
+            <Card title="Thông báo công việc" bordered={false}>
               {taskData.remind === 0 ? (
                 <p>
                   <GiRingingBell />
@@ -175,9 +186,15 @@ function TaskContent({ taskData }) {
                 </p>
               )}
               {taskData.isRepeat === true ? (
-                <p><GrSync/>Lặp lại: Có</p>
+                <p>
+                  <GrSync />
+                  Lặp lại: Có
+                </p>
               ) : (
-                <p><GrSync/>Lặp lại: Không</p>
+                <p>
+                  <GrSync />
+                  Lặp lại: Không
+                </p>
               )}
               {taskData.dateRepeate && taskData.dateRepeate.length > 0 ? (
                 <p>
@@ -190,9 +207,9 @@ function TaskContent({ taskData }) {
                   Chưa có ngày lặp lại
                 </p>
               )}
-            </Panel>
-          </Collapse>
-        </>
+            </Card>
+          </div>
+        </div>
       )}{" "}
     </>
   );

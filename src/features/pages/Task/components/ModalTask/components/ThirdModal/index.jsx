@@ -1,30 +1,33 @@
-import React, { useEffect, useState } from 'react'
-import customParseFormat from 'dayjs/plugin/customParseFormat'
-import dayjs from 'dayjs'
-import { Form } from 'antd'
-import { useSelector, useDispatch } from 'react-redux'
-import { getAreaActive } from 'features/slice/area/areaSlice'
-import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
-import { getZoneByAreaPlant } from 'features/slice/zone/zonePlantSlice'
-import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
-import { getTaskTypeLivestock } from 'features/slice/task/taskTypeAnimalSlice'
-import { getTaskTypePlant } from 'features/slice/task/taskTypePlantSlice'
-import { getSupervisor } from 'features/slice/supervisor/supervisorSlice'
-import { getEmployeeByTaskTypeAndFarmId } from 'features/slice/employee/employeeSlice'
-import { getAnimalActive } from 'features/slice/animal/animalSlice'
-import { getPlantActive } from 'features/slice/plant/plantSlice'
-import { createTask } from 'features/slice/task/taskSlice'
-import { getMemberById } from 'features/slice/user/memberSlice'
-import { authServices } from 'services/authServices'
-import SpecificAnimal from './components/specificAnimal'
-import WholeBarn from './components/wholeBarn'
-import SpecificPlant from './components/specificPlant'
-import WholeGarden from './components/wholeGarden'
-import Other from './components/other'
-import UpdateTask from '../../../List/components/UpdateTask'
-import { getMaterialActiveByFarmId } from 'features/slice/material/materialActiveByFarmSlice'
+import React, { useEffect, useState } from "react";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import dayjs from "dayjs";
+import { Form } from "antd";
+import { useSelector, useDispatch } from "react-redux";
+import { getZoneByAreaAnimal } from "features/slice/zone/zoneAnimalSlice";
+import { getZoneByAreaPlant } from "features/slice/zone/zonePlantSlice";
+import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
+import { getTaskTypeLivestock } from "features/slice/task/taskTypeAnimalSlice";
+import { getTaskTypePlant } from "features/slice/task/taskTypePlantSlice";
+import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
+import { getEmployeeByTaskTypeAndFarmId } from "features/slice/employee/employeeSlice";
+import { getAnimalActive } from "features/slice/animal/animalSlice";
+import { getPlantActive } from "features/slice/plant/plantSlice";
+import { createTask } from "features/slice/task/taskSlice";
+import { getMemberById } from "features/slice/user/memberSlice";
+import { authServices } from "services/authServices";
+import SpecificAnimal from "./components/specificAnimal";
+import WholeBarn from "./components/wholeBarn";
+import SpecificPlant from "./components/specificPlant";
+import WholeGarden from "./components/wholeGarden";
+import { getMaterialActiveByFarmId } from "features/slice/material/materialActiveByFarmSlice";
+import { getAreaWithZoneTypeLivestock } from "features/slice/area/areaLivestockWithZoneSlice";
+import { getAreaWithZoneTypePlant } from "features/slice/area/areaPlantWithZoneSlice";
+import OtherTaskType from "./components/OtherTaskType";
+import { getAreaActiveByFarmId } from "features/slice/area/areaByFarmSlice";
+import { getZoneByAreaId } from "features/slice/zone/zoneByAreaSlice";
+import { getTaskTypeActive } from "features/slice/task/taskTypeActiveSlice";
 
-dayjs.extend(customParseFormat)
+dayjs.extend(customParseFormat);
 
 function ThirdModal({
   loadDataTask,
@@ -33,86 +36,104 @@ function ThirdModal({
   onDateChange,
   handleCloseModal,
 }) {
-  const [selectedAreaId, setSelectedAreaId] = useState(null)
-  const [selectedZoneId, setSelectedZoneId] = useState(null)
-  const [selectedFieldId, setSelectedFieldId] = useState(null)
-  const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(null)
-  const [selectedFarmId, setSelectedFarmId] = useState(null)
-  const [employeesValue, setEmployeesValue] = useState(null)
-  const [materialsValue, setMaterialsValue] = useState(0)
-  const [priorityValue, setPriorityValue] = useState('')
-  const [remindValue, setRemindValue] = useState(0)
-  const [repeatValue, setRepeatValue] = useState(false)
-  const [startDate, setStartDate] = useState(null)
-  const [endDate, setEndDate] = useState(null)
-  const [description, setDescription] = useState('')
-  const [selectedDays, setSelectedDays] = useState([])
-  const [overallEfforMinutes, setOverallEfforMinutes] = useState(0)
-  const [overallEffortHour, setOverallEffortHour] = useState(0)
-  const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true)
+  const [selectedAreaId, setSelectedAreaId] = useState(null);
+  const [selectedZoneId, setSelectedZoneId] = useState(null);
+  const [selectedFieldId, setSelectedFieldId] = useState(null);
+  const [addressDetail, setAddressDetail] = useState("");
+  const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(null);
+  const [selectedFarmId, setSelectedFarmId] = useState(null);
+  const [employeesValue, setEmployeesValue] = useState(null);
+  const [materialsValue, setMaterialsValue] = useState(0);
+  const [priorityValue, setPriorityValue] = useState("");
+  const [remindValue, setRemindValue] = useState(0);
+  const [repeatValue, setRepeatValue] = useState(false);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [description, setDescription] = useState("");
+  const [selectedDays, setSelectedDays] = useState([]);
+  const [overallEfforMinutes, setOverallEfforMinutes] = useState(0);
+  const [overallEffortHour, setOverallEffortHour] = useState(0);
+  const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
 
-  const [form] = Form.useForm()
+  const [form] = Form.useForm();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const member = useSelector((state) => state.member.data)
+  const member = useSelector((state) => state.member.data);
 
-  const farmId = member.farmId
+  const farmId = member.farmId;
 
-  const area = useSelector((state) => state.area.data)
+  const areaByFarm = useSelector((state) => state.areaByFarm.data);
 
-  const zoneAnimal = useSelector((state) => state.zoneAnimal.data)
+  const areaLivestockByZone = useSelector(
+    (state) => state.areaLivestockByZone.data
+  );
+  const areaPlantByZone = useSelector((state) => state.areaPlantByZone.data);
 
-  const zonePlant = useSelector((state) => state.zonePlant.data)
+  const zoneByArea = useSelector((state) => state.zoneByArea.data);
 
-  const animal = useSelector((state) => state.animal.data)
-  const dataAnimal = animal.data
+  const zoneAnimal = useSelector((state) => state.zoneAnimal.data);
 
-  const plant = useSelector((state) => state.plant.data)
-  const dataPlant = plant.data
+  const zonePlant = useSelector((state) => state.zonePlant.data);
 
-  const fieldByZone = useSelector((state) => state.fieldByZone.data)
+  const animal = useSelector((state) => state.animal.data);
+  const dataAnimal = animal.data;
 
-  const taskTypeLivestock = useSelector((state) => state.taskTypeLivestock.data)
-  const dataTaskTypeLivestock = taskTypeLivestock.data
+  const plant = useSelector((state) => state.plant.data);
+  const dataPlant = plant.data;
 
-  const taskTypePlant = useSelector((state) => state.taskTypePlant.data)
-  const dataTaskTypePlant = taskTypePlant.data
+  const fieldByZone = useSelector((state) => state.fieldByZone.data);
 
-  const supervisor = useSelector((state) => state.supervisor.data)
+  const taskTypeActive = useSelector((state) => state.taskTypeActive.data);
 
-  const dataEmployee = useSelector((state) => state.employee.data)
+  const taskTypeLivestock = useSelector(
+    (state) => state.taskTypeLivestock.data
+  );
+  const dataTaskTypeLivestock = taskTypeLivestock.data;
+  console.log(dataTaskTypeLivestock);
 
-  const material = useSelector((state) => state.materialActive.data)
+  const taskTypePlant = useSelector((state) => state.taskTypePlant.data);
+  const dataTaskTypePlant = taskTypePlant.data;
+
+  const supervisor = useSelector((state) => state.supervisor.data);
+
+  const dataEmployee = useSelector((state) => state.employee.data);
+  console.log(dataEmployee);
+
+  const material = useSelector((state) => state.materialActive.data);
 
   useEffect(() => {
-    dispatch(getAreaActive(farmId))
-    dispatch(getTaskTypeLivestock())
-    dispatch(getTaskTypePlant())
-    dispatch(getSupervisor(farmId))
-    dispatch(getMaterialActiveByFarmId(farmId))
-    dispatch(getMemberById(authServices.getUserId()))
-  }, [farmId])
+    dispatch(getAreaActiveByFarmId(farmId));
+    dispatch(getAreaWithZoneTypeLivestock(farmId));
+    dispatch(getAreaWithZoneTypePlant(farmId));
+    dispatch(getTaskTypeActive());
+    dispatch(getTaskTypeLivestock());
+    dispatch(getTaskTypePlant());
+    dispatch(getSupervisor(farmId));
+    dispatch(getMaterialActiveByFarmId(farmId));
+    dispatch(getMemberById(authServices.getUserId()));
+  }, [farmId]);
 
   useEffect(() => {
     if (selectedAreaId) {
-      dispatch(getZoneByAreaAnimal(selectedAreaId))
-      dispatch(getZoneByAreaPlant(selectedAreaId))
+      dispatch(getZoneByAreaId(selectedAreaId));
+      dispatch(getZoneByAreaAnimal(selectedAreaId));
+      dispatch(getZoneByAreaPlant(selectedAreaId));
     }
-  }, [selectedAreaId])
+  }, [selectedAreaId]);
 
   useEffect(() => {
     if (selectedZoneId) {
-      dispatch(getFieldByZone(selectedZoneId))
+      dispatch(getFieldByZone(selectedZoneId));
     }
-  }, [selectedZoneId])
+  }, [selectedZoneId]);
 
   useEffect(() => {
     if (selectedFieldId) {
-      dispatch(getAnimalActive(selectedFieldId))
-      dispatch(getPlantActive(selectedFieldId))
+      dispatch(getAnimalActive(selectedFieldId));
+      dispatch(getPlantActive(selectedFieldId));
     }
-  }, [selectedFieldId])
+  }, [selectedFieldId]);
 
   useEffect(() => {
     if (selectedTaskTypeId) {
@@ -121,42 +142,42 @@ function ThirdModal({
           taskTypeId: selectedTaskTypeId,
           farmId: farmId,
         })
-      )
+      );
       form.setFieldsValue({
         employeeIds: undefined,
-      })
+      });
     }
-  }, [selectedTaskTypeId])
+  }, [selectedTaskTypeId]);
 
   useEffect(() => {
     if (endDate && startDate && startDate.isAfter(endDate)) {
       form.setFieldsValue({
         endDate: null,
         dates: null,
-      })
+      });
     }
-  }, [startDate, endDate])
+  }, [startDate, endDate]);
 
   const handleSelectAreaChange = (value) => {
-    setSelectedAreaId(value)
-    setSelectedZoneId(value)
-    setSelectedFieldId(value)
+    setSelectedAreaId(value);
+    setSelectedZoneId(value);
+    setSelectedFieldId(value);
     form.setFieldsValue({
       zoneId: null,
       fieldId: null,
       liveStockId: null,
       plantId: null,
-    })
-  }
+    });
+  };
 
   const handleSelectZoneChange = async (value) => {
-    setSelectedZoneId(value)
-    setSelectedFieldId(value)
+    setSelectedZoneId(value);
+    setSelectedFieldId(value);
     form.setFieldsValue({
       fieldId: null,
       liveStockId: null,
       plantId: null,
-    })
+    });
 
     try {
       await dispatch(
@@ -164,110 +185,110 @@ function ThirdModal({
           taskTypeId: selectedTaskTypeId,
           farmId: selectedFarmId,
         })
-      )
+      );
     } catch (error) {}
-  }
+  };
 
   const handleSelectFieldChange = (value) => {
-    setSelectedFieldId(value)
+    setSelectedFieldId(value);
     form.setFieldsValue({
       liveStockId: null,
       plantId: null,
-    })
-  }
+    });
+  };
 
   const handlePriorityChange = (value) => {
-    setPriorityValue(value)
-  }
+    setPriorityValue(value);
+  };
 
   const handleSelectStartDate = (date) => {
-    setStartDate(date)
+    setStartDate(date);
     console.log(date);
-  }
+  };
 
   const handleSelectEndDate = (date) => {
-    const selectedDate = dayjs(date).second(0)
-    setEndDate(selectedDate)
+    const selectedDate = dayjs(date).second(0);
+    setEndDate(selectedDate);
     console.log(endDate);
 
-    const startDate = form.getFieldValue('startDate')
+    const startDate = form.getFieldValue("startDate");
     if (selectedDate.isAfter(startDate)) {
-      form.setFieldsValue({ endDate: selectedDate })
+      form.setFieldsValue({ endDate: selectedDate });
       form.setFields([
         {
-          name: 'endDate',
+          name: "endDate",
           errors: [],
         },
-      ])
-      const repeatDates = form.getFieldValue('dates')
+      ]);
+      const repeatDates = form.getFieldValue("dates");
       if (
         repeatDates &&
         repeatDates.some((date) => selectedDate.isAfter(dayjs(date)))
       ) {
-        form.setFieldsValue({ dates: null })
+        form.setFieldsValue({ dates: null });
       }
       form.setFields([
         {
-          name: 'dates',
-          value: form.getFieldValue('dates'),
+          name: "dates",
+          value: form.getFieldValue("dates"),
           errors: [],
         },
-      ])
+      ]);
     } else {
-      form.setFieldsValue({ endDate: null })
+      form.setFieldsValue({ endDate: null });
       form.setFields([
         {
-          name: 'endDate',
-          errors: ['Vui lòng chọn lại'],
+          name: "endDate",
+          errors: ["Vui lòng chọn lại"],
         },
-      ])
-      form.setFieldsValue({ dates: null })
+      ]);
+      form.setFieldsValue({ dates: null });
       form.setFields([
         {
-          name: 'dates',
-          value: form.getFieldValue('dates'),
-          errors: ['Không thể chọn ngày lặp'],
+          name: "dates",
+          value: form.getFieldValue("dates"),
+          errors: ["Không thể chọn ngày lặp"],
         },
-      ])
+      ]);
     }
-  }
+  };
 
   const handleDescriptionChange = (e) => {
-    setDescription(e.target.value)
-  }
+    setDescription(e.target.value);
+  };
 
   const handleTaskTypeChange = (value) => {
-    setSelectedTaskTypeId(value)
-  }
+    setSelectedTaskTypeId(value);
+  };
 
   const handleEmployeeChange = (value) => {
-    setEmployeesValue(value)
-  }
+    setEmployeesValue(value);
+  };
 
   const handleMaterialChange = (value) => {
-    setMaterialsValue(value)
-  }
+    setMaterialsValue(value);
+  };
 
   const handleSelectRemind = (value) => {
-    setRemindValue(parseInt(value, 10))
-  }
+    setRemindValue(parseInt(value, 10));
+  };
 
   const handleSelectRepeat = (value) => {
-    setRepeatValue(value === 'Có')
-    setShouldCheckRepeat(value === 'Có')
-  }
+    setRepeatValue(value === "Có");
+    setShouldCheckRepeat(value === "Có");
+  };
 
   const disabledDate = (current) => {
-    return current && current < dayjs().startOf('day')
-  }
+    return current && current < dayjs().startOf("day");
+  };
 
   const handleOverallEfforMinutes = (value) => {
-    setOverallEfforMinutes(parseInt(value, 10))
-  }
+    setOverallEfforMinutes(parseInt(value, 10));
+  };
 
   const handleOverallEffortHour = (value) => {
-    setOverallEffortHour(parseInt(value, 10))
-  }
+    setOverallEffortHour(parseInt(value, 10));
+  };
 
   const transformData = (originalData) => {
     const transformedData = {
@@ -291,28 +312,29 @@ function ThirdModal({
         remind: originalData.remind,
         overallEfforMinutes: originalData.overallEfforMinutes,
         overallEffortHour: originalData.overallEffortHour,
+        addressDetail: originalData.addressDetail,
       },
-    }
+    };
 
-    return transformedData
-  }
+    return transformedData;
+  };
 
-  const onFinish = (values) => {
+  const handleCreateTask = (values) => {
     form
       .validateFields()
       .then(() => {
         const startDateFormatted = dayjs(startDate)
           .second(0)
-          .format('YYYY-MM-DD[T]HH:mm:ss.SSS')
+          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
         const endDateFormatted = dayjs(endDate)
           .second(0)
-          .format('YYYY-MM-DD[T]HH:mm:ss.SSS')
+          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
 
-        const remindValueToSend = remindValue || 0
+        const remindValueToSend = remindValue || 0;
 
-        const repeatValueToSend = repeatValue || false
+        const repeatValueToSend = repeatValue || false;
 
-        const materialToSend = materialsValue || []
+        const materialToSend = materialsValue || [];
 
         // if (shouldCheckRepeat && isRepeat && (!dates || dates.length === 0)) {
         //   form.setFields([
@@ -340,28 +362,103 @@ function ThirdModal({
           otherId: 0,
           overallEffortHour: overallEffortHour,
           overallEfforMinutes: overallEfforMinutes,
-        }
+        };
 
-        const transformedValues = transformData(finalValues)
+        const transformedValues = transformData(finalValues);
 
         dispatch(createTask(transformedValues)).then(() => {
-          loadDataTask()
-          onDateChange()
-          onTaskAdded()
-          handleCloseModal()
-        })
+          loadDataTask();
+          onDateChange();
+          onTaskAdded();
+          handleCloseModal();
+        });
       })
       .catch((errorInfo) => {
-        console.log('Validation failed:', errorInfo)
-      })
-  }
+        console.log("Validation failed:", errorInfo);
+      });
+  };
 
-  if (option === 'other') {
-    return <Other />
-  } else if (option === 'specificAnimal') {
+  const handleCreateTaskOther = (values) => {
+    form
+      .validateFields()
+      .then(() => {
+        const startDateFormatted = dayjs(startDate)
+          .second(0)
+          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+        const endDateFormatted = dayjs(endDate)
+          .second(0)
+          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+
+        const remindValueToSend = remindValue || 0;
+
+        const repeatValueToSend = repeatValue || false;
+
+        const materialToSend = materialsValue || [];
+
+        // if (shouldCheckRepeat && isRepeat && (!dates || dates.length === 0)) {
+        //   form.setFields([
+        //     {
+        //       name: 'dates',
+        //       errors: ['Vui lòng chọn ngày lặp lại'],
+        //     },
+        //   ])
+        //   return
+        // }
+
+        console.log(startDateFormatted, endDateFormatted, selectedDays);
+
+        const areaName =
+          areaByFarm.data.find((area) => area.id === selectedAreaId)?.name ||
+          "";
+        const zoneName =
+          zoneByArea.data.find((zone) => zone.id === selectedZoneId)?.name ||
+          "";
+        const fieldName =
+          fieldByZone.data.find((field) => field.id === selectedFieldId)
+            ?.nameCode || "";
+
+        const formattedAddress = `${areaName ? areaName + `, ` : ""}${
+          zoneName ? zoneName + `, ` : ""
+        }${fieldName ? fieldName + `, ` : ""} ${
+          addressDetail ? addressDetail : ""
+        }`;
+
+        const finalValues = {
+          ...values,
+          fieldId: null,
+          startDate: startDateFormatted,
+          endDate: endDateFormatted,
+          dates: selectedDays,
+          materialIds: materialToSend,
+          priority: priorityValue,
+          remind: remindValueToSend,
+          isRepeat: repeatValueToSend,
+          description: description,
+          managerId: member.id,
+          otherId: 0,
+          overallEffortHour: overallEffortHour,
+          overallEfforMinutes: overallEfforMinutes,
+          addressDetail: formattedAddress,
+        };
+
+        const transformedValues = transformData(finalValues);
+
+        dispatch(createTask(transformedValues)).then(() => {
+          loadDataTask();
+          onDateChange();
+          onTaskAdded();
+          handleCloseModal();
+        });
+      })
+      .catch((errorInfo) => {
+        console.log("Validation failed:", errorInfo);
+      });
+  };
+
+  if (option === "other") {
     return (
-      <SpecificAnimal
-        onFinish={onFinish}
+      <OtherTaskType
+        handleCreateTaskOther={handleCreateTaskOther}
         selectedAreaId={selectedAreaId}
         handleSelectAreaChange={handleSelectAreaChange}
         handleSelectZoneChange={handleSelectZoneChange}
@@ -378,7 +475,51 @@ function ThirdModal({
         handleOverallEfforMinutes={handleOverallEfforMinutes}
         handleOverallEffortHour={handleOverallEffortHour}
         form={form}
-        area={area}
+        areaByFarm={areaByFarm}
+        zoneByArea={zoneByArea}
+        fieldByZone={fieldByZone}
+        addressDetail={addressDetail}
+        setAddressDetail={setAddressDetail}
+        priorityValue={priorityValue}
+        description={description}
+        overallEfforMinutes={overallEfforMinutes}
+        overallEffortHour={overallEffortHour}
+        taskTypeActive={taskTypeActive}
+        employeesValue={employeesValue}
+        dataEmployee={dataEmployee}
+        supervisor={supervisor}
+        materialsValue={materialsValue}
+        material={material}
+        remindValue={remindValue}
+        repeatValue={repeatValue}
+        disabledDate={disabledDate}
+        startDate={startDate}
+        endDate={endDate}
+        selectedDays={selectedDays}
+        setSelectedDays={setSelectedDays}
+      />
+    );
+  } else if (option === "specificAnimal") {
+    return (
+      <SpecificAnimal
+        handleCreateTask={handleCreateTask}
+        selectedAreaId={selectedAreaId}
+        handleSelectAreaChange={handleSelectAreaChange}
+        handleSelectZoneChange={handleSelectZoneChange}
+        handleSelectFieldChange={handleSelectFieldChange}
+        handlePriorityChange={handlePriorityChange}
+        handleSelectStartDate={handleSelectStartDate}
+        handleSelectEndDate={handleSelectEndDate}
+        handleDescriptionChange={handleDescriptionChange}
+        handleTaskTypeChange={handleTaskTypeChange}
+        handleEmployeeChange={handleEmployeeChange}
+        handleMaterialChange={handleMaterialChange}
+        handleSelectRemind={handleSelectRemind}
+        handleSelectRepeat={handleSelectRepeat}
+        handleOverallEfforMinutes={handleOverallEfforMinutes}
+        handleOverallEffortHour={handleOverallEffortHour}
+        form={form}
+        areaLivestockByZone={areaLivestockByZone}
         zoneAnimal={zoneAnimal}
         fieldByZone={fieldByZone}
         dataAnimal={dataAnimal}
@@ -400,11 +541,11 @@ function ThirdModal({
         selectedDays={selectedDays}
         setSelectedDays={setSelectedDays}
       />
-    )
-  } else if (option === 'wholeBarn') {
+    );
+  } else if (option === "wholeBarn") {
     return (
       <WholeBarn
-        onFinish={onFinish}
+        handleCreateTask={handleCreateTask}
         selectedAreaId={selectedAreaId}
         handleSelectAreaChange={handleSelectAreaChange}
         handleSelectZoneChange={handleSelectZoneChange}
@@ -421,7 +562,7 @@ function ThirdModal({
         handleOverallEfforMinutes={handleOverallEfforMinutes}
         handleOverallEffortHour={handleOverallEffortHour}
         form={form}
-        area={area}
+        areaLivestockByZone={areaLivestockByZone}
         zoneAnimal={zoneAnimal}
         fieldByZone={fieldByZone}
         priorityValue={priorityValue}
@@ -442,11 +583,11 @@ function ThirdModal({
         selectedDays={selectedDays}
         setSelectedDays={setSelectedDays}
       />
-    )
-  } else if (option === 'specificPlant') {
+    );
+  } else if (option === "specificPlant") {
     return (
       <SpecificPlant
-        onFinish={onFinish}
+        handleCreateTask={handleCreateTask}
         selectedAreaId={selectedAreaId}
         handleSelectAreaChange={handleSelectAreaChange}
         handleSelectZoneChange={handleSelectZoneChange}
@@ -463,7 +604,7 @@ function ThirdModal({
         handleOverallEfforMinutes={handleOverallEfforMinutes}
         handleOverallEffortHour={handleOverallEffortHour}
         form={form}
-        area={area}
+        areaPlantByZone={areaPlantByZone}
         zonePlant={zonePlant}
         fieldByZone={fieldByZone}
         dataPlant={dataPlant}
@@ -485,11 +626,11 @@ function ThirdModal({
         selectedDays={selectedDays}
         setSelectedDays={setSelectedDays}
       />
-    )
-  } else if (option === 'wholeGarden') {
+    );
+  } else if (option === "wholeGarden") {
     return (
       <WholeGarden
-        onFinish={onFinish}
+        handleCreateTask={handleCreateTask}
         selectedAreaId={selectedAreaId}
         handleSelectAreaChange={handleSelectAreaChange}
         handleSelectZoneChange={handleSelectZoneChange}
@@ -506,7 +647,7 @@ function ThirdModal({
         handleOverallEfforMinutes={handleOverallEfforMinutes}
         handleOverallEffortHour={handleOverallEffortHour}
         form={form}
-        area={area}
+        areaPlantByZone={areaPlantByZone}
         zonePlant={zonePlant}
         fieldByZone={fieldByZone}
         priorityValue={priorityValue}
@@ -527,9 +668,9 @@ function ThirdModal({
         selectedDays={selectedDays}
         setSelectedDays={setSelectedDays}
       />
-    )
+    );
   }
-  return null
+  return null;
 }
 
-export default ThirdModal
+export default ThirdModal;

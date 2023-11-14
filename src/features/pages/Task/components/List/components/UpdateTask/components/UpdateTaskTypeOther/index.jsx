@@ -1,10 +1,7 @@
 import React from "react";
-import ZoneAnimalUpdate from "../FormItemUpdate/zoneAnimalUpdate";
-import FieldAnimalUpdate from "../FormItemUpdate/fieldAnimalUpdate";
 import PriorityUpdate from "../FormItemUpdate/priorityUpdate";
 import DescriptionUpdate from "../FormItemUpdate/descriptionUpdate";
 import NameTaskUpdate from "../FormItemUpdate/nameTaskUpdate";
-import TaskTypeLivestockUpdate from "../FormItemUpdate/taskTypeLivestockUpdate";
 import SupervisorUpdate from "../FormItemUpdate/supervisorUpdate";
 import EmployeeUpdate from "../FormItemUpdate/employeeUpdate";
 import OverallEffortUpdate from "../FormItemUpdate/overallEffortUpdate";
@@ -12,9 +9,13 @@ import MaterialUpdate from "../FormItemUpdate/materialUpdate";
 import RemindUpdate from "../FormItemUpdate/remindUpdate";
 import RepeatUpdate from "../FormItemUpdate/repeatUpdate";
 import DateUpdate from "../FormItemUpdate/dateUpdate";
-import AreaLivestockUpdate from "../FormItemUpdate/AreaLivestockUpdate";
+import AddressDetailUpdate from "../FormItemUpdate/AddressDetailUpdate";
+import AreaByFarmUpdate from "../FormItemUpdate/AreaByFarmUpdate";
+import ZoneByAreaUpdate from "../FormItemUpdate/ZoneByAreaUpdate";
+import FieldOtherUpdate from "../FormItemUpdate/FieldOtherUpdate";
+import TaskTypeActiveUpdate from "../FormItemUpdate/TaskTypeActiveUpdate";
 
-function UpdateWholeBarn({
+function UpdateTaskTypeOther({
   editingTask,
   handleSelectAreaChange,
   handleSelectZoneChange,
@@ -30,14 +31,16 @@ function UpdateWholeBarn({
   handleSelectRepeat,
   handleOverallEffortHour,
   handleOverallEfforMinutes,
-  areaLivestockByZone,
-  zoneAnimal,
+  areaByFarm,
+  zoneByArea,
   fieldByZone,
+  addressDetail,
+  setAddressDetail,
   priorityValue,
   description,
   overallEfforMinutes,
   overallEffortHour,
-  dataTaskTypeLivestock,
+  taskTypeActive,
   employeesValue,
   dataEmployee,
   supervisor,
@@ -49,24 +52,29 @@ function UpdateWholeBarn({
   startDate,
   endDate,
   selectedDays,
-  setSelectedDays
+  setSelectedDays,
 }) {
   return (
     <>
       <div className="form-left">
-        <AreaLivestockUpdate
+        <AreaByFarmUpdate
           handleSelectAreaChange={handleSelectAreaChange}
-          areaLivestockByZone={areaLivestockByZone}
+          areaByFarm={areaByFarm}
           editingTask={editingTask}
         />
-        <ZoneAnimalUpdate
+        <ZoneByAreaUpdate
           handleSelectZoneChange={handleSelectZoneChange}
-          zoneAnimal={zoneAnimal}
+          zoneByArea={zoneByArea}
           editingTask={editingTask}
         />
-        <FieldAnimalUpdate
+        <FieldOtherUpdate
           handleSelectFieldChange={handleSelectFieldChange}
           fieldByZone={fieldByZone}
+          editingTask={editingTask}
+        />
+        <AddressDetailUpdate
+          addressDetail={addressDetail}
+          setAddressDetail={setAddressDetail}
           editingTask={editingTask}
         />
         <PriorityUpdate
@@ -96,8 +104,8 @@ function UpdateWholeBarn({
       </div>
       <div className="form-right">
         <NameTaskUpdate editingTask={editingTask} />
-        <TaskTypeLivestockUpdate
-          dataTaskTypeLivestock={dataTaskTypeLivestock}
+        <TaskTypeActiveUpdate
+          taskTypeActive={taskTypeActive}
           handleTaskTypeChange={handleTaskTypeChange}
           editingTask={editingTask}
         />
@@ -133,4 +141,4 @@ function UpdateWholeBarn({
   );
 }
 
-export default UpdateWholeBarn;
+export default UpdateTaskTypeOther;

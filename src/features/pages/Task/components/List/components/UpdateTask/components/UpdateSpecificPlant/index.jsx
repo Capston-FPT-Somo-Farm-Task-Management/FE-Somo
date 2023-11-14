@@ -1,5 +1,4 @@
 import React from "react";
-import AreaUpdate from "../FormItemUpdate/areaUpdate";
 import PriorityUpdate from "../FormItemUpdate/priorityUpdate";
 import DescriptionUpdate from "../FormItemUpdate/descriptionUpdate";
 import NameTaskUpdate from "../FormItemUpdate/nameTaskUpdate";
@@ -14,6 +13,7 @@ import FieldPlantUpdate from "../FormItemUpdate/fieldPlantUpdate";
 import PlantUpdate from "../FormItemUpdate/plantUpdate";
 import TaskTypePlantUpdate from "../FormItemUpdate/taskTypePlantUpdate";
 import DateUpdate from "../FormItemUpdate/dateUpdate";
+import AreaPlantUpdate from "../FormItemUpdate/AreaPlantUpdate";
 
 function UpdateSpecificPlant({
   editingTask,
@@ -31,7 +31,7 @@ function UpdateSpecificPlant({
   handleSelectRepeat,
   handleOverallEffortHour,
   handleOverallEfforMinutes,
-  area,
+  areaPlantByZone,
   zonePlant,
   fieldByZone,
   dataPlant,
@@ -56,9 +56,9 @@ function UpdateSpecificPlant({
   return (
     <>
       <div className="form-left">
-        <AreaUpdate
+        <AreaPlantUpdate
           handleSelectAreaChange={handleSelectAreaChange}
-          area={area}
+          areaPlantByZone={areaPlantByZone}
           editingTask={editingTask}
         />
         <ZonePlantUpdate
