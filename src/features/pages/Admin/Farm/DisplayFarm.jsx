@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { Card } from 'antd'
 import FarmDetail from './FarmDetail'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 const DisplayFarm = ({ farm }) => {
+  const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedFarm, setSelectedFarm] = useState(null)
 
@@ -16,6 +18,7 @@ const DisplayFarm = ({ farm }) => {
     localStorage.setItem('farmId', farmId)
     toast.success('Đổi trang trại thành công')
     closeModal()
+    navigate('/dashboard')
   }
 
   const closeModal = () => {
