@@ -1,8 +1,29 @@
 import { Card, Col, Row, Statistic } from 'antd'
 import CountUp from 'react-countup'
 
-const CardMember = () => {
+const CardMember = ({ member }) => {
   const formatter = (value) => <CountUp end={value} separator="," />
+
+  const filterManager = (member) => {
+    if (member && member.data) {
+      const manager = member.data.filter((mem) => mem.roleName === 'Manager')
+      return manager.length
+    }
+    return 0
+  }
+
+  const filterSupervisor = (member) => {
+    if (member && member.data) {
+      const supervisor = member.data.filter(
+        (mem) => mem.roleName === 'Supervisor'
+      )
+      return supervisor.length
+    }
+    return 0
+  }
+
+  const managerCount = filterManager(member)
+  const supervisorCount = filterSupervisor(member)
 
   return (
     <>
@@ -11,7 +32,7 @@ const CardMember = () => {
           <Card>
             <Statistic
               title="Số lượng người quản lý"
-              value={99}
+              value={managerCount}
               precision={2}
               formatter={formatter}
             />
@@ -22,7 +43,7 @@ const CardMember = () => {
           <Card>
             <Statistic
               title="Số lượng người giám sát"
-              value={111}
+              value={supervisorCount}
               precision={2}
               formatter={formatter}
             />

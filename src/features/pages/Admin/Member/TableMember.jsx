@@ -3,7 +3,7 @@ import Column from 'antd/es/table/Column'
 import { useState } from 'react'
 import DetailMember from './DetailMember'
 
-const TableMember = ({ member }) => {
+const TableMember = ({ member, onFinishDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedMember, setSelectedMember] = useState(null)
 
@@ -49,16 +49,16 @@ const TableMember = ({ member }) => {
         />
 
         <Column
-          title="Đổi trạng thái"
+          title="Xoá"
           key="5"
           dataIndex="id"
           render={(_, record) => (
             <Button
               size="middle"
               danger
-              // onClick={() => handleDelete(record.id)}
+              onClick={() => onFinishDelete(record.id)}
             >
-              Đổi
+              Xoá
             </Button>
           )}
         />
