@@ -418,7 +418,7 @@ function UpdateTask({
           remind: typeof remind === "object" ? remind.value : 0,
           dates: dateRepeate
             ? dateRepeate.map((date) =>
-                dayjs(date).format("YYYY-MM-DDTHH:mm:ss.SSSZ")
+                dayjs(date).format("YYYY-MM-DDTHH:mm:ss.SSS")
               )
             : [],
           managerId: member.id,

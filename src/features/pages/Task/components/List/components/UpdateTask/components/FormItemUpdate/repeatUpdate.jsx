@@ -60,7 +60,15 @@ function RepeatUpdate({
     } else {
       // Ngày chưa chọn trong selectedDays: thêm vào mảng
       setSelectedDays([...selectedDays, formattedDay]);
-      setInitialSelectedDays([...initialSelectedDays, formattedDay]);
+      // setInitialSelectedDays([...initialSelectedDays, formattedDay]);
+    }
+    if (indexInitialSelectedDays > -1) {
+      // Ngày đã chọn trong selectedDays: loại bỏ khỏi mảng
+      setSelectedDays(selectedDays.filter((_, i) => i !== indexInitialSelectedDays));
+    } else {
+      // Ngày chưa chọn trong selectedDays: thêm vào mảng
+      setSelectedDays([...selectedDays, formattedDay]);
+      // setInitialSelectedDays([...initialSelectedDays, formattedDay]);
     }
   };
 

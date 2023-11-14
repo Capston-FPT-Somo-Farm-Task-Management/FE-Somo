@@ -9,7 +9,7 @@ function DisplayEffort({
   handleMenuEffortClick,
   handleMenuSubTaskClick,
   isHaveSubTask,
-  openEditSubTaskEffortModal,
+  openSubtaskModal,
 }) {
   let totalEffortCount = 0; 
   console.log(isHaveSubTask);
@@ -66,7 +66,7 @@ function DisplayEffort({
                       <Dropdown
                         placement="bottomRight"
                         overlay={
-                          <Menu onClick={openEditSubTaskEffortModal}>
+                          <Menu onClick={openSubtaskModal}>
                             <Menu.Item key="editEffort">
                               <EditOutlined
                                 style={{ color: "gold", marginRight: "8px" }}

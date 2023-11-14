@@ -10,6 +10,7 @@ const StatisticFarm = () => {
   useEffect(() => {
     dispatch(getFarm())
   }, [dispatch])
+
   return (
     <>
       <DisplayFarm farm={farm} />

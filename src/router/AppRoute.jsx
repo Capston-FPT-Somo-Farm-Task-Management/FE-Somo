@@ -209,9 +209,9 @@ const AppRoute = () => {
         path="/statistic-farm"
         element={
           <AdminPrivateRoute>
-            <AdminLayoutWithRoute>
-              <StatisticFarm />
-            </AdminLayoutWithRoute>
+            {/* <AdminLayoutWithRoute> */}
+            <StatisticFarm />
+            {/* </AdminLayoutWithRoute> */}
           </AdminPrivateRoute>
         }
       />

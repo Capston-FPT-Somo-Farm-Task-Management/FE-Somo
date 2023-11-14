@@ -439,7 +439,7 @@ const List = () => {
         editingEffort={editingEffort}
         isHaveSubTask={isHaveSubTask}
         handleMenuSubTaskClick={handleMenuSubTaskClick}
-        openEditSubTaskEffortModal={openEditSubTaskEffortModal}
+        openSubtaskModal={openSubtaskModal}
       />
     </div>
   );

@@ -287,7 +287,7 @@ const SideMenu = () => {
                     <span>Trang chủ</span>
                     <Link to="/home"></Link>
                   </Menu.Item>
-                  
+
                   <Menu.Item key="/schedule">
                     <CalendarOutlined />
                     <span>Lịch trình</span>

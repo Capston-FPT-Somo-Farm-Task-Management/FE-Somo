@@ -63,9 +63,10 @@ const effortSlice = createSlice({
         state.error = null;
       })
       .addCase(getEffort.fulfilled, (state, action) => {
+        console.log(action.payload.data);
         state.loading = false;
         state.data = action.payload.data.subtasks || [];
-        state.isHaveSubTask = action.payload.data.isHaveSubTask || false;
+        state.isHaveSubTask = action.payload.data.isHaveSubtask;
       })
       .addCase(getEffort.rejected, (state, action) => {
         state.loading = false;
