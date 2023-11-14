@@ -13,6 +13,7 @@ const DisplayCard = ({ areaByFarm }) => {
     }
     return 0
   }
+  
   const activeAreaCount = filterActiveAreas(areaByFarm)
   const inActiveAreaCount = areaByFarm?.data?.length - activeAreaCount
 

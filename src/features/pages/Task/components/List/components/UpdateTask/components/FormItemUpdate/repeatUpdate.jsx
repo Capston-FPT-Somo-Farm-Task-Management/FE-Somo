@@ -1,9 +1,9 @@
-import { Form, Select } from "antd";
-import React, { useEffect, useState } from "react";
-import { DayPicker } from "react-day-picker";
-import { vi } from "date-fns/locale";
-import "react-day-picker/dist/style.css";
-import dayjs from "dayjs";
+import { Form, Select } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { DayPicker } from 'react-day-picker'
+import { vi } from 'date-fns/locale'
+import 'react-day-picker/dist/style.css'
+import dayjs from 'dayjs'
 
 function RepeatUpdate({
   repeatValue,
@@ -14,99 +14,98 @@ function RepeatUpdate({
   selectedDays,
   setSelectedDays,
 }) {
-  const [initialSelectedDays, setInitialSelectedDays] = useState([]);
-  const disableRepeat = endDate ? !endDate.isValid() : null;
+  const [initialSelectedDays, setInitialSelectedDays] = useState([])
+  const disableRepeat = endDate ? !endDate.isValid() : null
   const dateRepeateArray =
     editingTask && editingTask.dateRepeate
-      ? editingTask.dateRepeate.map((date) => dayjs(date).format("YYYY-MM-DD"))
-      : [];
-  console.log(editingTask);
+      ? editingTask.dateRepeate.map((date) => dayjs(date).format('YYYY-MM-DD'))
+      : []
+  console.log(editingTask)
   useEffect(() => {
     if (editingTask && editingTask.dateRepeate) {
       const formattedDays = editingTask.dateRepeate.map((date) =>
-        dayjs(date).format("YYYY-MM-DD")
-      );
-      setInitialSelectedDays(formattedDays);
+        dayjs(date).format('YYYY-MM-DD')
+      )
+      setInitialSelectedDays(formattedDays)
     }
-  }, [editingTask]);
+  }, [editingTask])
 
   const modifiers = {
     selected: initialSelectedDays.map((day) => new Date(day)),
     today: new Date(),
-  };
+  }
 
   const onDayClick = (day) => {
-    const formattedDay = dayjs(day).format("YYYY-MM-DD");
-    const indexInInitialSelectedDays =
-      initialSelectedDays.indexOf(formattedDay);
+    const formattedDay = dayjs(day).format('YYYY-MM-DD')
+    const indexInInitialSelectedDays = initialSelectedDays.indexOf(formattedDay)
 
     if (indexInInitialSelectedDays > -1) {
       // Ngày đã chọn trong initialSelectedDays: loại bỏ khỏi mảng
       setInitialSelectedDays(
         initialSelectedDays.filter((date) => date !== formattedDay)
-      );
+      )
     } else {
       // Ngày chưa chọn trong initialSelectedDays: thêm vào mảng
-      setInitialSelectedDays([...initialSelectedDays, formattedDay]);
+      setInitialSelectedDays([...initialSelectedDays, formattedDay])
     }
 
-    const indexInSelectedDays = selectedDays.indexOf(formattedDay);
+    const indexInSelectedDays = selectedDays.indexOf(formattedDay)
 
     if (indexInSelectedDays > -1) {
       // Ngày đã chọn trong selectedDays: loại bỏ khỏi mảng
-      setSelectedDays(selectedDays.filter((_, i) => i !== indexInSelectedDays));
+      setSelectedDays(selectedDays.filter((_, i) => i !== indexInSelectedDays))
     } else {
       // Ngày chưa chọn trong selectedDays: thêm vào mảng
-      setSelectedDays([...selectedDays, formattedDay]);
+      setSelectedDays([...selectedDays, formattedDay])
     }
-  };
+  }
 
-  console.log(selectedDays);
+  console.log(selectedDays)
 
   const disabledDate = (current) => {
-    const currentDayjs = dayjs(current);
+    const currentDayjs = dayjs(current)
 
     // Tính khoảng cách ngày
     const daysDifference =
       editingTask.endDate || editingTask.startDate
-        ? dayjs(editingTask.endDate).diff(editingTask.startDate, "day") + 1
-        : dayjs(endDate).diff(startDate, "day") + 1;
+        ? dayjs(editingTask.endDate).diff(editingTask.startDate, 'day') + 1
+        : dayjs(endDate).diff(startDate, 'day') + 1
 
     // Disable ngày từ quá khứ đến endDate
     if (
       editingTask.endDate
-        ? currentDayjs.isBefore(dayjs(), "day") ||
-          currentDayjs.isSame(dayjs(editingTask.endDate), "day") ||
-          currentDayjs.isBefore(dayjs(editingTask.endDate), "day")
-        : currentDayjs.isBefore(dayjs(), "day") ||
-          currentDayjs.isSame(dayjs(endDate), "day") ||
-          currentDayjs.isBefore(dayjs(endDate), "day")
+        ? currentDayjs.isBefore(dayjs(), 'day') ||
+          currentDayjs.isSame(dayjs(editingTask.endDate), 'day') ||
+          currentDayjs.isBefore(dayjs(editingTask.endDate), 'day')
+        : currentDayjs.isBefore(dayjs(), 'day') ||
+          currentDayjs.isSame(dayjs(endDate), 'day') ||
+          currentDayjs.isBefore(dayjs(endDate), 'day')
     ) {
-      return true;
+      return true
     }
 
     // Disable các ngày sau ngày đã chọn dựa vào khoảng cách ngày
     for (let selectedDay of selectedDays) {
-      let dayAfterSelected = dayjs(selectedDay);
+      let dayAfterSelected = dayjs(selectedDay)
       for (let i = 1; i <= daysDifference; i++) {
-        if (currentDayjs.isSame(dayAfterSelected.add(i, "day"), "day")) {
-          return true;
+        if (currentDayjs.isSame(dayAfterSelected.add(i, 'day'), 'day')) {
+          return true
         }
       }
     }
 
-    let daysAvailableBefore = 0;
-    let daysAvailableAfter = 0;
+    let daysAvailableBefore = 0
+    let daysAvailableAfter = 0
 
     for (let i = 1; i <= daysDifference; i++) {
-      let dayBefore = currentDayjs.subtract(i, "day").format("YYYY-MM-DD");
+      let dayBefore = currentDayjs.subtract(i, 'day').format('YYYY-MM-DD')
       if (!selectedDays.includes(dayBefore)) {
-        daysAvailableBefore++;
+        daysAvailableBefore++
       }
 
-      let dayAfter = currentDayjs.add(i, "day").format("YYYY-MM-DD");
+      let dayAfter = currentDayjs.add(i, 'day').format('YYYY-MM-DD')
       if (!selectedDays.includes(dayAfter)) {
-        daysAvailableAfter++;
+        daysAvailableAfter++
       }
     }
 
@@ -115,11 +114,11 @@ function RepeatUpdate({
       daysAvailableBefore < daysDifference ||
       daysAvailableAfter < daysDifference
     ) {
-      return true;
+      return true
     }
 
-    return false;
-  };
+    return false
+  }
 
   const RenderFooter = () => {
     return (
@@ -130,13 +129,13 @@ function RepeatUpdate({
         ) : (
           <ul>
             {initialSelectedDays.map((day) => (
-              <li key={day}>{dayjs(day).format("DD/MM/YYYY")}</li>
+              <li key={day}>{dayjs(day).format('DD/MM/YYYY')}</li>
             ))}
           </ul>
         )}
       </div>
-    );
-  };
+    )
+  }
   const css = `
       .my-selected:not([disabled]) { 
         font-weight: bold; 
@@ -151,7 +150,7 @@ function RepeatUpdate({
         font-size: 140%; 
         color: red;
       }
-    `;
+    `
   return (
     <>
       <Form.Item
@@ -160,10 +159,10 @@ function RepeatUpdate({
         initialValue={
           editingTask
             ? {
-                label: editingTask.isRepeat === true ? "Có" : "Không",
+                label: editingTask.isRepeat === true ? 'Có' : 'Không',
                 value: editingTask.isRepeat,
               }
-            : ""
+            : ''
         }
       >
         <Select
@@ -181,6 +180,7 @@ function RepeatUpdate({
           name="dateRepeate"
           initialValue={dateRepeateArray}
         >
+          <style>{css}</style>
           <DayPicker
             mode="multiple"
             selected={initialSelectedDays.map((day) => new Date(day))} // Chuyển đổi chuỗi ngày thành đối tượng Date
@@ -190,11 +190,11 @@ function RepeatUpdate({
             formatters="YYYY-MM-DD"
             locale={vi}
             modifiersClassNames={{
-              selected: "my-selected",
-              today: "my-today",
+              selected: 'my-selected',
+              today: 'my-today',
             }}
             modifiersStyles={{
-              disabled: { fontSize: "100%" },
+              disabled: { fontSize: '100%' },
             }}
             modifiers={modifiers}
             footer={<RenderFooter />}
@@ -202,7 +202,7 @@ function RepeatUpdate({
         </Form.Item>
       ) : null}
     </>
-  );
+  )
 }
 
-export default RepeatUpdate;
+export default RepeatUpdate

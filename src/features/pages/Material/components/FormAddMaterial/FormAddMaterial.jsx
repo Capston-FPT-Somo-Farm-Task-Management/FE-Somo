@@ -2,40 +2,33 @@ import { Button, Form, Image, Input, Modal, Upload, message } from 'antd'
 import ImgCrop from 'antd-img-crop'
 import React, { useState } from 'react'
 import { UploadOutlined } from '@ant-design/icons'
-
-import { useDispatch } from 'react-redux'
-import { render } from '@testing-library/react'
 const FormAddMaterial = ({
   isModalOpen,
   closeModal,
   onFinishCreate,
   farmId,
 }) => {
-  const dispatch = useDispatch()
+  const [fileList, setFileList] = useState([])
+  const [uploadError, setUploadError] = useState(false)
+
   const onFinish = (values) => {
-    const finalValues = {
+    if (fileList.length === 0) {
+      setUploadError(true)
+      return
+    }
+    setUploadError(false)
+    const formData = {
       ...values,
-      // imageFile: image,
+      imageFile: fileList[0].originFileObj,
       farmId: farmId,
     }
-    console.log(finalValues)
-    dispatch(onFinishCreate(finalValues))
+    onFinishCreate(formData)
     closeModal()
   }
 
-  // const [image, setImage] = useState('')
-  // const convertToBase64 = (e) => {
-  //   console.log(e)
-  //   const reader = new FileReader()
-  //   reader.readAsDataURL(e.target.files[0])
-  //   reader.onload = () => {
-  //     console.log(reader.result)
-  //     setImage(reader.result)
-  //   }
-  //   reader.onerror = (error) => {
-  //     console.log('Error: ', error)
-  //   }
-  // }
+  const onFileChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList)
+  }
 
   return (
     <>
@@ -80,20 +73,22 @@ const FormAddMaterial = ({
             <Input placeholder="Nhập tên công cụ" />
           </Form.Item>
 
-          <Form.Item
-            label="Hình ảnh công cụ"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: 'Vui lòng tải lên hình ảnh công cụ',
-            //   },
-            // ]}
-            // name="imageFile"
-          >
-            {/* <input accept="image/*" onChange={convertToBase64} type="file" /> */}
-            {/* <Button icon={<UploadOutlined />}>Upload</Button> */}
-
-            {/* {image && <Image src={image} alt="Công cụ" width={200} />} */}
+          <Form.Item label="Hình ảnh công cụ" required>
+            <ImgCrop rotationSlider>
+              <Upload
+                listType="picture-card"
+                maxCount={1}
+                onChange={onFileChange}
+                beforeUpload={() => false}
+              >
+                <UploadOutlined />
+              </Upload>
+            </ImgCrop>
+            {uploadError && (
+              <div style={{ color: 'red' }}>
+                Vui lòng tải lên hình ảnh công cụ
+              </div>
+            )}
           </Form.Item>
         </Form>
       </Modal>
