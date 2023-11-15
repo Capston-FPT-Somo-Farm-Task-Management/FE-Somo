@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import NoImage from "../../../../../../assets/no-image.png";
-import { Collapse, Image } from "antd";
+import { Collapse, Empty, Image, Space } from "antd";
 import { GrDocumentImage } from "react-icons/gr";
 
 function Evidence() {
@@ -13,6 +13,7 @@ function Evidence() {
     let totalEvidenceCount = 0;
     if (evidenceData && evidenceData.data && evidenceData.data.length > 0) {
       return evidenceData.data.map((evidence, index) => {
+        console.log(evidence);
         totalEvidenceCount++;
         const evidenceCount = totalEvidenceCount;
         return (
@@ -26,10 +27,15 @@ function Evidence() {
             <Collapse accordion className="collapse-evidence">
               <Panel
                 header={
-                  <span>
-                    <GrDocumentImage style={{ marginRight: "8px", transform: "translateY(10%)" }} />
+                  <div className="evidence-panel">
+                  <div className="evidence-panel-title">
+                  <GrDocumentImage style={{ marginRight: "8px", transform: "translateY(10%)" }} />
                     Xem hình ảnh báo cáo
-                  </span>
+                  </div>
+                    <div className="evidence-panel-img">
+                      {evidence.urlImage ? <span>{evidence.urlImage.length} hình ảnh</span> : <span>Không có ảnh nào</span>}
+                    </div>
+                  </div>
                 }
               >
                 <div className="img-contain">
@@ -102,7 +108,7 @@ function Evidence() {
         );
       });
     } else {
-      return <p>Chưa có báo cáo nào</p>;
+      return <Empty description="Chưa có báo cáo nào"/>;
     }
   };
   return (

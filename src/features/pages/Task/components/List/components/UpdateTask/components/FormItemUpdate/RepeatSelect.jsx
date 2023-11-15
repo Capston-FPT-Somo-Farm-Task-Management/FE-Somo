@@ -19,8 +19,6 @@ function RepeatSelect({ repeatValue, handleSelectRepeat, startDate, endDate, sel
     }
   }
 
-  console.log(selectedDays);
-
   const disabledDate = (current) => {
     const currentDayjs = dayjs(current)
 

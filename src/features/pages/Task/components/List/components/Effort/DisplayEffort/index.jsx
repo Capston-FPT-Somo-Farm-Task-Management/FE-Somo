@@ -1,6 +1,7 @@
-import { Button, Dropdown, Menu, Modal } from "antd";
+import { Button, Dropdown, Empty, Menu, Modal, notification } from "antd";
 import React from "react";
 import { MoreOutlined, EditOutlined } from "@ant-design/icons";
+import { FrownOutlined } from "@ant-design/icons";
 
 function DisplayEffort({
   effortVisible,
@@ -11,8 +12,16 @@ function DisplayEffort({
   isHaveSubTask,
   openSubtaskModal,
 }) {
-  let totalEffortCount = 0; 
+  let totalEffortCount = 0;
   console.log(isHaveSubTask);
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = () => {
+    api.open({
+      message: "Công việc này có công việc con",
+      description: "Bạn vui lòng chấm công ở từng công việc con!",
+      icon: <FrownOutlined style={{ color: "red" }} />,
+    });
+  };
   return (
     <Modal
       title="Xem chấm công tổng"
@@ -66,11 +75,12 @@ function DisplayEffort({
                       <Dropdown
                         placement="bottomRight"
                         overlay={
-                          <Menu onClick={openSubtaskModal}>
+                          <Menu onClick={openNotification}>
                             <Menu.Item key="editEffort">
                               <EditOutlined
                                 style={{ color: "gold", marginRight: "8px" }}
                               />
+                              {contextHolder}
                               Sửa chấm công
                             </Menu.Item>
                           </Menu>
@@ -96,7 +106,7 @@ function DisplayEffort({
             );
           })
         ) : (
-          <p>Chưa có công việc con</p>
+          <Empty description="Không có người thực hiện để chấm công" />
         )}
       </div>
     </Modal>

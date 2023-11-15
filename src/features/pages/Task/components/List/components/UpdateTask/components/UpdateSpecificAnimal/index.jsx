@@ -1,19 +1,19 @@
 import React from "react";
-import ZoneAnimalUpdate from "../FormItemUpdate/zoneAnimalUpdate";
-import FieldAnimalUpdate from "../FormItemUpdate/fieldAnimalUpdate";
-import AnimalUpdate from "../FormItemUpdate/animalUpdate";
-import PriorityUpdate from "../FormItemUpdate/priorityUpdate";
-import DescriptionUpdate from "../FormItemUpdate/descriptionUpdate";
-import NameTaskUpdate from "../FormItemUpdate/nameTaskUpdate";
-import TaskTypeLivestockUpdate from "../FormItemUpdate/taskTypeLivestockUpdate";
-import SupervisorUpdate from "../FormItemUpdate/supervisorUpdate";
-import EmployeeUpdate from "../FormItemUpdate/employeeUpdate";
-import OverallEffortUpdate from "../FormItemUpdate/overallEffortUpdate";
-import MaterialUpdate from "../FormItemUpdate/materialUpdate";
-import RemindUpdate from "../FormItemUpdate/remindUpdate";
-import RepeatUpdate from "../FormItemUpdate/repeatUpdate";
-import DateUpdate from "../FormItemUpdate/dateUpdate";
 import AreaLivestockUpdate from "../FormItemUpdate/AreaLivestockUpdate";
+import ZoneAnimalUpdate from "../FormItemUpdate/ZoneAnimalUpdate";
+import FieldAnimalUpdate from "../FormItemUpdate/FieldAnimalUpdate";
+import AnimalUpdate from "../FormItemUpdate/AnimalUpdate";
+import DateUpdate from "../FormItemUpdate/DateUpdate";
+import OverallEffortUpdate from "../FormItemUpdate/OverallEffortUpdate";
+import DescriptionUpdate from "../FormItemUpdate/DescriptionUpdate";
+import NameTaskUpdate from "../FormItemUpdate/NameTaskUpdate";
+import TaskTypeLivestockUpdate from "../FormItemUpdate/TaskTypeLivestockUpdate";
+import SupervisorUpdate from "../FormItemUpdate/SupervisorUpdate";
+import EmployeeUpdate from "../FormItemUpdate/EmployeeUpdate";
+import MaterialUpdate from "../FormItemUpdate/MaterialUpdate";
+import PriorityUpdate from "../FormItemUpdate/PriorityUpdate";
+import RemindUpdate from "../FormItemUpdate/RemindUpdate";
+import RepeatUpdate from "../FormItemUpdate/RepeatUpdate";
 
 function UpdateSpecificAnimal({
   editingTask,
@@ -51,7 +51,7 @@ function UpdateSpecificAnimal({
   startDate,
   endDate,
   selectedDays,
-  setSelectedDays
+  setSelectedDays,
 }) {
   return (
     <>

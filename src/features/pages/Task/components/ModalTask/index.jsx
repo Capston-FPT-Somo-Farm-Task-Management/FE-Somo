@@ -1,21 +1,28 @@
 import React, { useState } from "react";
 import { Button, Modal, Steps } from "antd";
-
 import FirstModal from "./components/FirstModal";
 import SecondModal from "./components/SecondModal";
 import ThirdModal from "./components/ThirdModal";
 import { steps } from "./modalTaskData";
+import { ArrowLeftOutlined, CheckCircleOutlined } from "@ant-design/icons";
 
 const { Step } = Steps;
 
-function ModalTask({ onTaskAdded, onDateChange, loadDataTask }) {
-  const [currentStep, setCurrentStep] = useState(-1);
+function ModalTask({
+  currentStep,
+  setCurrentStep,
+  onTaskAdded,
+  onDateChange,
+  loadDataTask,
+  handleBackOtherTask,
+  task,
+}) {
   const [selectedType, setSelectedType] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
-  
+
   const handleCloseModal = () => {
-    setCurrentStep(-1)
-  }
+    setCurrentStep(-1);
+  };
 
   const handleNext = (type) => {
     setSelectedType(type);
@@ -24,12 +31,15 @@ function ModalTask({ onTaskAdded, onDateChange, loadDataTask }) {
 
   const handleBack = () => {
     setCurrentStep(currentStep - 1);
+    console.log(currentStep);
   };
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setCurrentStep(currentStep + 1);
   };
+
+  console.log(handleBackOtherTask);
 
   const renderStepContent = (step) => {
     switch (step) {
@@ -74,24 +84,55 @@ function ModalTask({ onTaskAdded, onDateChange, loadDataTask }) {
             <Step key={item.title} title={item.title} />
           ))}
         </Steps>
-        <div style={{ marginTop: 24 }}>{renderStepContent(currentStep)}
-        
-        </div>
+        <div style={{ marginTop: 24 }}>{renderStepContent(currentStep)}</div>
         <div
-          style={{ marginTop: 24, display: "flex", justifyContent: "flex-end" }}
+          style={{
+            marginTop: 24,
+            display: "flex",
+            justifyContent: "space-between",
+          }}
         >
-          {currentStep > 0 && (
-            <Button style={{ margin: "0 8px" }} onClick={handleBack}>
-              Trở lại
-            </Button>
-          )}
+          {currentStep > 0 &&
+            (selectedOption === "other" ? (
+              <Button
+                style={{
+                  margin: "0 8px",
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                }}
+                onClick={handleBackOtherTask}
+              >
+                <ArrowLeftOutlined />
+                Trở lại
+              </Button>
+            ) : (
+              <Button
+                style={{
+                  margin: "0 8px",
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                }}
+                onClick={handleBack}
+              >
+                <ArrowLeftOutlined />
+                Trở lại
+              </Button>
+            ))}
           {currentStep === steps.length - 1 && (
             <Button
               type="primary"
               form="createTask"
               htmlType="submit"
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center",
+              }}
             >
-              Thêm
+              Tạo công việc
+              <CheckCircleOutlined />
             </Button>
           )}
         </div>

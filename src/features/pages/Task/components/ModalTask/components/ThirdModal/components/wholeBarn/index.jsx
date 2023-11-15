@@ -1,20 +1,19 @@
 import React from "react";
 import { Form } from "antd";
-import AreaSelect from "../FormItemCreate/areaSelect";
-import ZoneAnimalSelect from "../FormItemCreate/zoneAnimal";
-import FieldAnimalSelect from "../FormItemCreate/fieldAnimalSelect";
-import PrioritySelect from "../FormItemCreate/prioritySelect";
-import DescriptionInput from "../FormItemCreate/descriptionInput";
-import NameTaskInput from "../FormItemCreate/nameTaskInput";
-import TaskTypeLivestockSelect from "../FormItemCreate/taskTypeLivestockSelect";
-import SupervisorSelect from "../FormItemCreate/supervisorSelect";
-import EmployeeSelect from "../FormItemCreate/employeeSelect";
-import OverallEffortSelect from "../FormItemCreate/overallEffortSelect";
-import MaterialSelect from "../FormItemCreate/materialSelect";
-import RemindSelect from "../FormItemCreate/remindSelect";
-import RepeatSelect from "../FormItemCreate/repeatSelect";
-import DateSelect from "../FormItemCreate/dateSelect";
 import AreaLivestockSelect from "../FormItemCreate/AreaLivestockSelect";
+import ZoneAnimalSelect from "../FormItemCreate/ZoneAnimal";
+import FieldAnimalSelect from "../FormItemCreate/FieldAnimalSelect";
+import DateSelect from "../FormItemCreate/DateSelect";
+import OverallEffortSelect from "../FormItemCreate/OverallEffortSelect";
+import DescriptionInput from "../FormItemCreate/DescriptionInput";
+import NameTaskInput from "../FormItemCreate/NameTaskInput";
+import TaskTypeLivestockSelect from "../FormItemCreate/TaskTypeLivestockSelect";
+import SupervisorSelect from "../FormItemCreate/SupervisorSelect";
+import EmployeeSelect from "../FormItemCreate/EmployeeSelect";
+import MaterialSelect from "../FormItemCreate/MaterialSelect";
+import PrioritySelect from "../FormItemCreate/PrioritySelect";
+import RemindSelect from "../FormItemCreate/RemindSelect";
+import RepeatSelect from "features/pages/Task/components/List/components/UpdateTask/components/FormItemUpdate/RepeatSelect";
 
 function WholeBarn({
   handleCreateTask,

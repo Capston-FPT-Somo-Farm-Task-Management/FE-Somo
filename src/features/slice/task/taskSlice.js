@@ -6,12 +6,12 @@ import { authServices } from "services/authServices";
 
 export const getTasks = createAsyncThunk(
   "tasks/getTasks",
-  async ({ pageIndex, status, date, taskName }, { rejectWithValue }) => {
+  async ({ pageIndex, status, date, taskName,checkTaskParent }, { rejectWithValue }) => {
     try {
       const formattedDate = date ? date.toISOString().split("T")[0] : "";
       const { data } = await axios.get(
         baseUrl +
-          `/FarmTask/PageIndex(${pageIndex})/PageSize(10)/Manager(${authServices.getUserId()})/Status(${status})/Date?date=${formattedDate}&taskName=${taskName}`,
+          `/FarmTask/PageIndex(${pageIndex})/PageSize(10)/Manager(${authServices.getUserId()})/Status(${status})/Date?date=${formattedDate}&taskName=${taskName}&checkTaskParent=${checkTaskParent}`,
         {
           headers: {
             "Content-Type": "application/json",

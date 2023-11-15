@@ -1,4 +1,4 @@
-import { Button, Dropdown, Menu, Modal } from "antd";
+import { Button, Dropdown, Empty, Menu, Modal } from "antd";
 import React from "react";
 import { MoreOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
@@ -119,7 +119,7 @@ function DisplaySubTask({
             );
           })
         ) : (
-          <p>Chưa có công việc con</p>
+          <Empty description="Chưa có công việc con" />
         )}
       </div>
     </Modal>
