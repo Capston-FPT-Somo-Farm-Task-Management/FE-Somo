@@ -21,7 +21,7 @@ const Area = () => {
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
     dispatch(getAreaByFarmId(farmId))
-  }, [dispatch])
+  }, [dispatch, farmId])
 
   const onFinishCreate = (values) => {
     const finalValues = {

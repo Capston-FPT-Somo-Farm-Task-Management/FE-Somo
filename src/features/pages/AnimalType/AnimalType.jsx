@@ -21,13 +21,7 @@ const AnimalType = () => {
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
     dispatch(getAnimalType(farmId))
-  }, [dispatch])
-
-  // Type
-
-  useEffect(() => {
-    dispatch(getAnimalType(farmId))
-  }, [dispatch])
+  }, [dispatch, farmId])
 
   const onFinishCreateAnimalType = (values) => {
     dispatch(createHabitantType(values)).then(() => {
