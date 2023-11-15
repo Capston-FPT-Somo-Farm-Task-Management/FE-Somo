@@ -3,17 +3,17 @@ import AreaByFarmUpdate from "../FormItemUpdate/AreaByFarmUpdate";
 import ZoneByAreaUpdate from "../FormItemUpdate/ZoneByAreaUpdate";
 import FieldOtherUpdate from "../FormItemUpdate/FieldOtherUpdate";
 import AddressDetailUpdate from "../FormItemUpdate/AddressDetailUpdate";
-import DateUpdate from "../FormItemUpdate/DateUpdate";
 import OverallEffortUpdate from "../FormItemUpdate/OverallEffortUpdate";
-import DescriptionUpdate from "../FormItemUpdate/DescriptionUpdate";
 import NameTaskUpdate from "../FormItemUpdate/NameTaskUpdate";
 import TaskTypeActiveUpdate from "../FormItemUpdate/TaskTypeActiveUpdate";
 import SupervisorUpdate from "../FormItemUpdate/SupervisorUpdate";
-import EmployeeUpdate from "../FormItemUpdate/EmployeeUpdate";
 import MaterialUpdate from "../FormItemUpdate/MaterialUpdate";
 import PriorityUpdate from "../FormItemUpdate/PriorityUpdate";
 import RemindUpdate from "../FormItemUpdate/RemindUpdate";
-import RepeatUpdate from "../FormItemUpdate/RepeatUpdate";
+import RepeatUpdate from "../FormItemUpdate/RepeatUpdate.jsx";
+import DateUpdate from "../FormItemUpdate/DateUpdate";
+import DescriptionUpdate from "../FormItemUpdate/DescriptionUpdate";
+import EmployeeUpdate from "../FormItemUpdate/EmployeeUpdate";
 
 function UpdateTaskTypeOther({
   editingTask,
