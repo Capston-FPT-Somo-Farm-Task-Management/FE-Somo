@@ -27,6 +27,8 @@ import StatisticAnimalGroup from 'features/pages/Admin/AnimalGroup/StatisticAnim
 import StatisticCropGroup from 'features/pages/Admin/CropGroup/StatisticCropGroup'
 import StatisticTask from 'features/pages/Admin/Task/StatisticTask'
 import StatisticMaterial from 'features/pages/Admin/Material/StatisticMaterial'
+import AnimalType from 'features/pages/AnimalType/AnimalType'
+import PlantType from 'features/pages/PlantType/PlantType'
 
 const AppRoute = () => {
   return (
@@ -115,6 +117,18 @@ const AppRoute = () => {
           </PrivateRoute>
         }
       />
+
+      <Route
+        path="/animal-type"
+        element={
+          <PrivateRoute>
+            <LayoutWithRoute>
+              <AnimalType />
+            </LayoutWithRoute>
+          </PrivateRoute>
+        }
+      />
+
       <Route
         path="/animal-group"
         element={
@@ -132,6 +146,17 @@ const AppRoute = () => {
           <PrivateRoute>
             <LayoutWithRoute>
               <MyCrops />
+            </LayoutWithRoute>
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/plant-type"
+        element={
+          <PrivateRoute>
+            <LayoutWithRoute>
+              <PlantType />
             </LayoutWithRoute>
           </PrivateRoute>
         }

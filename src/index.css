@@ -1011,14 +1011,14 @@ html {
   width: 45%;
 }
 
-.first-step-animal-type {
+.first-step-animal {
   display: flex;
   justify-content: space-around;
 }
-.first-step-animal-type .form-left {
+.first-step-animal .form-left {
   width: 45%;
 }
-.first-step-animal-type .form-right {
+.first-step-animal .form-right {
   width: 45%;
 }
 
@@ -1060,14 +1060,14 @@ html {
   width: 45%;
 }
 
-.first-step-plan-type {
+.first-step-plant {
   display: flex;
   justify-content: space-around;
 }
-.first-step-plan-type .form-left {
+.first-step-plant .form-left {
   width: 45%;
 }
-.first-step-plan-type .form-right {
+.first-step-plant .form-right {
   width: 45%;
 }
 

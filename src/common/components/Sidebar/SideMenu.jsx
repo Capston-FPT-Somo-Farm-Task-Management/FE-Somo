@@ -230,6 +230,12 @@ const SideMenu = () => {
               <Link to="/animals"></Link>
             </Menu.Item>
 
+            <Menu.Item key="/animal-type">
+              <GiCow />
+              <span style={{ marginLeft: '10px' }}>Loại vật nuôi</span>
+              <Link to="/animal-type"></Link>
+            </Menu.Item>
+
             <Menu.Item key="/animal-group">
               <AppstoreOutlined />
               <span>Chuồng</span>
@@ -240,6 +246,12 @@ const SideMenu = () => {
               <GiPlantRoots />
               <span style={{ marginLeft: '10px' }}>Cây trồng</span>
               <Link to="/plants"></Link>
+            </Menu.Item>
+
+            <Menu.Item key="/plant-type">
+              <GiPlantRoots />
+              <span style={{ marginLeft: '10px' }}>Loại cây trồng</span>
+              <Link to="/plant-type"></Link>
             </Menu.Item>
 
             <Menu.Item key="/crop-group">
@@ -349,6 +361,12 @@ const SideMenu = () => {
                     <Link to="/animals"></Link>
                   </Menu.Item>
 
+                  <Menu.Item key="/animal-type">
+                    <GiCow />
+                    <span style={{ marginLeft: '10px' }}>Loại vật nuôi</span>
+                    <Link to="/animal-type"></Link>
+                  </Menu.Item>
+
                   <Menu.Item key="/animal-group">
                     <TeamOutlined />
                     <span>Chuồng</span>
@@ -359,6 +377,12 @@ const SideMenu = () => {
                     <GiPlantRoots />
                     <span style={{ marginLeft: '10px' }}>Cây trồng</span>
                     <Link to="/plants"></Link>
+                  </Menu.Item>
+
+                  <Menu.Item key="/plant-type">
+                    <GiPlantRoots />
+                    <span style={{ marginLeft: '10px' }}>Loại cây trồng</span>
+                    <Link to="/plant-type"></Link>
                   </Menu.Item>
 
                   <Menu.Item key="/crop-group">

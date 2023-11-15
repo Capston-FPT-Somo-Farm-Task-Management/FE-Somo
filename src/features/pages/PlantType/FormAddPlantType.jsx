@@ -1,11 +1,11 @@
 import { Button, Form, Input, Modal } from 'antd'
 const { TextArea } = Input
 
-const FirstStepAddPlantType = ({
+const FormAddPlantType = ({
+  farmId,
   isModalOpenType,
   closeModalType,
   onFinishCreatePlantType,
-  farmId,
 }) => {
   const onFinish = (values) => {
     const finalValues = {
@@ -78,4 +78,4 @@ const FirstStepAddPlantType = ({
     </>
   )
 }
-export default FirstStepAddPlantType
+export default FormAddPlantType
