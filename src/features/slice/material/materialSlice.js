@@ -45,7 +45,7 @@ export const updateMaterial = createAsyncThunk(
     try {
       const response = await axios.put(baseUrl + `/Material/${data.id}`, data, {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
         },
       })
       if (response.status === 200) {
@@ -98,6 +98,11 @@ const materialSlice = createSlice({
     loading: false,
     error: '',
   },
+  reducers: {
+    setMaterialData: (state, action) => {
+      state.data = action.payload
+    },
+  },
   extraReducers(builder) {
     builder
 
@@ -106,7 +111,6 @@ const materialSlice = createSlice({
       })
       .addCase(getMaterialByFarmId.fulfilled, (state, action) => {
         state.loading = false
-        state.error = ''
         state.data = action.payload
       })
       .addCase(getMaterialByFarmId.rejected, (state, action) => {
@@ -166,3 +170,4 @@ const materialSlice = createSlice({
 })
 
 export default materialSlice.reducer
+export const { setMaterialData } = materialSlice.actions

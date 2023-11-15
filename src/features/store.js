@@ -7,16 +7,16 @@ import animalTypeActiveReducer from './slice/animal/animalTypeActiveSlice'
 import animalByFarmReducer from './slice/animal/animalByFarmSlice'
 import areaReducer from './slice/area/areaSlice'
 import areaByFarmReducer from './slice/area/areaByFarmSlice'
-import areaLivestockByZoneReducer from "./slice/area/areaLivestockWithZoneSlice"
-import areaPlantByZoneReducer from "./slice/area/areaPlantWithZoneSlice"
+import areaLivestockByZoneReducer from './slice/area/areaLivestockWithZoneSlice'
+import areaPlantByZoneReducer from './slice/area/areaPlantWithZoneSlice'
 import zoneReducer from './slice/zone/zoneSlice'
 import zoneByFarmReducer from './slice/zone/zoneByFarmSlice'
 import zonePlantReducer from './slice/zone/zonePlantSlice'
 import zoneAnimalReducer from './slice/zone/zoneAnimalSlice'
 import zoneTypeReducer from './slice/zone/zoneTypeSlice'
-import zoneByAreaReducer from "./slice/zone/zoneByAreaSlice"
+import zoneByAreaReducer from './slice/zone/zoneByAreaSlice'
 import taskTypeReducer from './slice/task/taskTypeSlice'
-import taskTypeActiveReducer from "./slice/task/taskTypeActiveSlice"
+import taskTypeActiveReducer from './slice/task/taskTypeActiveSlice'
 import taskForCalendarReducer from './slice/task/taskForCalendarSlice'
 import taskTypePlantReducer from './slice/task/taskTypePlantSlice'
 import taskTypeLivestockReducer from './slice/task/taskTypeAnimalSlice'
@@ -24,6 +24,7 @@ import supervisorReducer from './slice/supervisor/supervisorSlice'
 import employeeReducer from './slice/employee/employeeSlice'
 import employeeByTaskReducer from './slice/employee/employeeByTask'
 import materialReducer from './slice/material/materialSlice'
+import materialByIdReducer from './slice/material/materialById'
 import materialActiveReducer from './slice/material/materialActiveByFarmSlice'
 import fieldReducer from './slice/field/fieldSlice'
 import fieldPlantReducer from './slice/field/fieldPlantSlice'
@@ -68,6 +69,7 @@ export const store = configureStore({
     employeeByTask: employeeByTaskReducer,
     material: materialReducer,
     materialActive: materialActiveReducer,
+    materialById: materialByIdReducer,
     field: fieldReducer,
     fieldPlant: fieldPlantReducer,
     fieldAnimal: fieldAnimalReducer,

@@ -27,7 +27,7 @@ const Zone = () => {
     dispatch(getAreaActiveByFarmId(farmId))
     dispatch(getZoneByFarmId(farmId))
     dispatch(getZoneType())
-  }, [dispatch])
+  }, [dispatch, farmId])
 
   const onFinishCreateZone = (values) => {
     dispatch(createZone(values)).then(() => {

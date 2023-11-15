@@ -23,7 +23,7 @@ const AnimalGroup = () => {
     dispatch(getMemberById(authServices.getUserId()))
     dispatch(getFieldAnimalByFarmId(farmId))
     dispatch(getAreaActiveByFarmId(farmId))
-  }, [dispatch])
+  }, [dispatch, farmId])
 
   const onFinishCreate = (values) => {
     dispatch(createField(values)).then(() => {

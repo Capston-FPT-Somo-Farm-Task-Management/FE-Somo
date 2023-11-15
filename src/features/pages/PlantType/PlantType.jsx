@@ -21,12 +21,7 @@ const PlantType = () => {
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
     dispatch(getPlantType(farmId))
-  }, [dispatch])
-  // Type
-
-  useEffect(() => {
-    dispatch(getPlantType(farmId))
-  }, [dispatch])
+  }, [dispatch, farmId])
 
   const onFinishCreatePlantType = (values) => {
     dispatch(createHabitantType(values)).then(() => {

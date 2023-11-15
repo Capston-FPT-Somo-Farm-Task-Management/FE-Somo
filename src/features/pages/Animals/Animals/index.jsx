@@ -26,7 +26,7 @@ const Animals = () => {
     dispatch(getAnimalByFarmId(farmId))
     dispatch(getAreaActiveByFarmId(farmId))
     dispatch(getAnimalType(farmId))
-  }, [dispatch])
+  }, [dispatch, farmId])
 
   const onFinishCreateAnimal = (values) => {
     dispatch(createAnimal(values)).then(() => {

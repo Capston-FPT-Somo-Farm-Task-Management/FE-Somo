@@ -21,7 +21,7 @@ const Material = () => {
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
     dispatch(getMaterialByFarmId(farmId))
-  }, [dispatch])
+  }, [dispatch, farmId])
 
   const onFinishCreate = (values) => {
     dispatch(createMaterial(values)).then(() => {
@@ -52,6 +52,8 @@ const Material = () => {
         material={material}
         onFinishDelete={onFinishDelete}
         onFinishUpdate={onFinishUpdate}
+        farmId={farmId}
+        loadData={loadData}
       />
     </>
   )
