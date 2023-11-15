@@ -1,6 +1,5 @@
 import { useDispatch } from 'react-redux'
 import AddZone from './components/AddZone/AddZone'
-import DisplayZone from './components/DisplayZone/DisplayZone'
 import { useSelector } from 'react-redux'
 import { getMemberById } from 'features/slice/user/memberSlice'
 import { authServices } from 'services/authServices'
@@ -13,6 +12,7 @@ import {
 } from 'features/slice/zone/zoneSlice'
 import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarmSlice'
 import { getZoneType } from 'features/slice/zone/zoneTypeSlice'
+import TableDisplayZone from './components/DisplayZone/TableDisplayZone'
 
 const Zone = () => {
   const dispatch = useDispatch()
@@ -58,7 +58,7 @@ const Zone = () => {
         zoneType={zoneType}
         onFinishCreateZone={onFinishCreateZone}
       />
-      <DisplayZone
+      <TableDisplayZone
         areaByFarm={areaByFarm}
         zoneByFarm={zoneByFarm}
         zoneType={zoneType}

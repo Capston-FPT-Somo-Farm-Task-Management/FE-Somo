@@ -32,8 +32,6 @@ const AddZone = ({ onFinishCreateZone, areaByFarm, zoneType }) => {
               areaByFarm={areaByFarm}
               zoneType={zoneType}
             />
-
-            <Button type="default">Thêm loại vùng</Button>
           </div>
 
           <div className="animal-group-operate-right">

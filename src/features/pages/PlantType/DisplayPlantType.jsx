@@ -53,9 +53,9 @@ const DisplayPlantType = ({
           key="5"
           render={(isActive) =>
             isActive === true ? (
-              <Badge status="success" text="Active" />
+              <Badge status="success" text="Tồn tại" />
             ) : (
-              <Badge status="error" text="Inactive" />
+              <Badge status="error" text="Không tồn tại" />
             )
           }
         />

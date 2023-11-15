@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import AddAnimalAndAnimalType from './components/AddAnimal/AddAnimal'
 import { useSelector } from 'react-redux'
 import { getAnimalByFarmId } from 'features/slice/animal/animalByFarmSlice'
 import { useDispatch } from 'react-redux'
@@ -11,9 +10,9 @@ import {
   updateAnimal,
 } from 'features/slice/animal/animalSlice'
 import { getAnimalType } from 'features/slice/animal/animalTypeSlice'
-import { createHabitantType } from 'features/slice/habitant/habitantTypeSlice'
 import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarmSlice'
 import TableDisplayAnimal from './components/DisplayAnimal/TableDisplayAnimal'
+import AddAnimal from './components/AddAnimal/AddAnimal'
 
 const Animals = () => {
   const dispatch = useDispatch()
@@ -51,29 +50,12 @@ const Animals = () => {
     dispatch(getAnimalByFarmId(farmId))
   }
 
-  // Type
-
-  useEffect(() => {
-    dispatch(getAnimalType(farmId))
-  }, [dispatch])
-
-  const onFinishCreateAnimalType = (values) => {
-    dispatch(createHabitantType(values)).then(() => {
-      loadDataAnimalType()
-    })
-  }
-
-  const loadDataAnimalType = () => {
-    dispatch(getAnimalType(farmId))
-  }
-
   return (
     <>
-      <AddAnimalAndAnimalType
+      <AddAnimal
         farmId={farmId}
         areaByFarm={areaByFarm}
         onFinishCreateAnimal={onFinishCreateAnimal}
-        onFinishCreateAnimalType={onFinishCreateAnimalType}
       />
       <TableDisplayAnimal
         farmId={farmId}
