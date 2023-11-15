@@ -38,10 +38,10 @@ const TableDisplayZone = ({
           dataIndex="status"
           key="6"
           render={(status) =>
-            status === 'Active' ? (
-              <Badge status="success" text="Active" />
+            status === 'Tồn tại' ? (
+              <Badge status="success" text="Tồn tại" />
             ) : (
-              <Badge status="error" text="Inactive" />
+              <Badge status="error" text="Không tồn tại" />
             )
           }
         />

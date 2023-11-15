@@ -22,7 +22,7 @@ const AddPlantType = ({ farmId, onFinishCreatePlantType }) => {
         <div className="plant-operate">
           <div className="plant-operate-left">
             {/* Add Plant Type */}
-            <Button type="default" onClick={openModalType}>
+            <Button type="primary" onClick={openModalType}>
               Tạo mới loại cây
             </Button>
             <FormAddPlantType

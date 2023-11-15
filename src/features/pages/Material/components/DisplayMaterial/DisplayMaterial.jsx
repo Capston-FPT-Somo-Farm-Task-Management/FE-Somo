@@ -1,13 +1,36 @@
 import { Badge, Button, Image, Table } from 'antd'
 import Column from 'antd/es/table/Column'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import UpdateMaterial from './UpdateMaterial'
+import { getMaterialById } from 'features/slice/material/materialById'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
-const DisplayMaterial = ({ material, onFinishDelete, onFinishUpdate }) => {
+const DisplayMaterial = ({
+  material,
+  onFinishDelete,
+  onFinishUpdate,
+  farmId,
+  loadData,
+}) => {
+  const dispatch = useDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
+  const materialById = useSelector((state) => state.materialById.data)
+
+  useEffect(() => {
+    if (selectedData) {
+      dispatch(getMaterialById(selectedData.id)).then(() => {
+        loadData()
+      })
+    }
+  }, [selectedData, dispatch])
 
   const openModal = (record) => {
+    dispatch(getMaterialById(record.id)).then(() => {
+      loadData()
+    })
+    console.log(record)
     setSelectedData(record)
     setIsModalOpen(true)
   }
@@ -36,10 +59,10 @@ const DisplayMaterial = ({ material, onFinishDelete, onFinishUpdate }) => {
           dataIndex="status"
           key="3"
           render={(status) =>
-            status === 'Active' ? (
-              <Badge status="success" text="Active" />
+            status === 'Tồn tại' ? (
+              <Badge status="success" text="Tồn tại" />
             ) : (
-              <Badge status="error" text="Inactive" />
+              <Badge status="error" text="Không tồn tại" />
             )
           }
         />
@@ -75,10 +98,12 @@ const DisplayMaterial = ({ material, onFinishDelete, onFinishUpdate }) => {
       </Table>
       <UpdateMaterial
         key={selectedData ? selectedData.id : null}
+        materialById={materialById}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}
         onFinishUpdate={onFinishUpdate}
+        farmId={farmId}
       />
     </>
   )

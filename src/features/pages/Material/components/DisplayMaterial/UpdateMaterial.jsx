@@ -1,4 +1,4 @@
-import { Button, Form, Input, InputNumber, Modal, Upload } from 'antd'
+import { Button, Form, Image, Input, Modal, Upload } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
 import ImgCrop from 'antd-img-crop'
 import { useEffect, useState } from 'react'
@@ -6,34 +6,38 @@ import { useEffect, useState } from 'react'
 const UpdateMaterial = ({
   isModalOpen,
   closeModal,
-  selectedData,
   onFinishUpdate,
+  materialById,
+  farmId,
 }) => {
   const [fileList, setFileList] = useState([])
 
   useEffect(() => {
-    if (selectedData && selectedData.imageFile) {
-      const file = {
-        uid: '-1', // Đảm bảo mỗi file có uid duy nhất
-        name: 'image', // Bạn có thể lấy tên thực sự từ selectedData nếu có
-        status: 'done',
-        url: selectedData.imageFile, // Đường dẫn đến hình ảnh
-      }
-      setFileList([file])
+    if (materialById?.data?.urlImage) {
+      setFileList([
+        {
+          uid: '-1',
+          name: 'image.png',
+          status: 'done',
+          url: materialById.data.urlImage,
+        },
+      ])
     }
-  }, [selectedData])
+  }, [materialById])
 
   const onFileChange = ({ fileList: newFileList }) => {
     setFileList(newFileList)
   }
 
   const onFinish = (values) => {
-    const finalValues = {
-      id: selectedData.id,
+    const formData = {
       ...values,
-      imageFile: fileList.length > 0 ? fileList[0].url : null,
+      id: materialById ? materialById?.data?.id : null,
+      imageFile: fileList[0].originFileObj,
+      farmId: farmId,
     }
-    onFinishUpdate(finalValues)
+    console.log(formData)
+    onFinishUpdate(formData)
     closeModal()
   }
 
@@ -65,7 +69,6 @@ const UpdateMaterial = ({
           id="updateMaterial"
           onFinish={onFinish}
         >
-          {/* Area Name */}
           <Form.Item
             label="Tên công cụ"
             rules={[
@@ -75,23 +78,19 @@ const UpdateMaterial = ({
               },
             ]}
             name="name"
-            initialValue={selectedData ? selectedData.name : ''}
+            initialValue={materialById ? materialById?.data?.name : null}
           >
             <Input placeholder="Nhập tên công cụ" />
           </Form.Item>
 
-          <Form.Item
-            label="Hình ảnh công cụ"
-            name="imageFile"
-            initialValue={selectedData ? selectedData.imageFile : ''}
-          >
+          <Form.Item label="Hình ảnh công cụ" name="imageFile">
             <ImgCrop rotationSlider>
               <Upload
                 listType="picture-card"
                 maxCount={1}
-                onChange={onFileChange}
                 beforeUpload={() => false}
                 fileList={fileList}
+                onChange={onFileChange}
               >
                 <UploadOutlined />
               </Upload>

@@ -35,14 +35,15 @@ import { toast } from "react-toastify";
 import {
   useDesktopMediaQuery,
   useTabletMediaQuery,
-} from "common/hooks/responsive";
-import Notification from "features/pages/Notification";
-import { useDispatch } from "react-redux";
-import { deleteHubConnection } from "features/slice/hub/hubSlice";
-import { changeAllNotifyNewToRead } from "features/slice/notification/notificationIsNewSlice";
-import { useSelector } from "react-redux";
-import { changeNotifyIsReadAll } from "features/slice/notification/notificationReadSlice";
-import { countNewNotify } from "features/slice/notification/notificationCountSlice";
+} from 'common/hooks/responsive'
+import Notification from 'features/pages/Notification'
+import { useDispatch } from 'react-redux'
+import { deleteHubConnection } from 'features/slice/hub/hubSlice'
+import { changeAllNotifyNewToRead } from 'features/slice/notification/notificationIsNewSlice'
+import { useSelector } from 'react-redux'
+import { changeNotifyIsReadAll } from 'features/slice/notification/notificationReadSlice'
+import { countNewNotify } from 'features/slice/notification/notificationCountSlice'
+import SubMenu from 'antd/es/menu/SubMenu'
 
 const { Sider } = Layout;
 
@@ -132,7 +133,7 @@ const SideMenu = () => {
               <img src={logoSomo} alt="logo" />
             </Link>
           <Menu
-            theme="dark"
+            theme="light"
             mode="inline"
             defaultSelectedKeys={[location.pathname]}
           >
@@ -212,53 +213,61 @@ const SideMenu = () => {
               <Link to="/task"></Link>
             </Menu.Item>
 
-            <Menu.Item key="/area">
-              <BorderOutlined />
-              <span>Khu vực</span>
-              <Link to="/area"></Link>
-            </Menu.Item>
+            <SubMenu key="location" icon={<BorderOutlined />} title="Vị trí">
+              <Menu.Item key="area">
+                <BorderOutlined />
+                <span>Khu vực</span>
+                <Link to="/area"></Link>
+              </Menu.Item>
 
-            <Menu.Item key="/zone">
-              <TableOutlined />
-              <span>Vùng</span>
-              <Link to="/zone"></Link>
-            </Menu.Item>
+              <Menu.Item key="zone">
+                <TableOutlined />
+                <span>Vùng</span>
+                <Link to="/zone"></Link>
+              </Menu.Item>
+            </SubMenu>
 
-            <Menu.Item key="/animals">
-              <GiCow />
-              <span style={{ marginLeft: "10px" }}>Vật nuôi</span>
-              <Link to="/animals"></Link>
-            </Menu.Item>
+            {/* Động vật */}
+            <SubMenu key="animal" icon={<GiCow />} title="Động vật">
+              <Menu.Item key="/animals">
+                <GiCow />
+                <span style={{ marginLeft: '10px' }}>Vật nuôi</span>
+                <Link to="/animals"></Link>
+              </Menu.Item>
 
-            <Menu.Item key="/animal-type">
-              <GiCow />
-              <span style={{ marginLeft: "10px" }}>Loại vật nuôi</span>
-              <Link to="/animal-type"></Link>
-            </Menu.Item>
+              <Menu.Item key="/animal-type">
+                <GiCow />
+                <span style={{ marginLeft: '10px' }}>Loại vật nuôi</span>
+                <Link to="/animal-type"></Link>
+              </Menu.Item>
 
-            <Menu.Item key="/animal-group">
-              <AppstoreOutlined />
-              <span>Chuồng</span>
-              <Link to="/animal-group"></Link>
-            </Menu.Item>
+              <Menu.Item key="/animal-group">
+                <AppstoreOutlined />
+                <span>Chuồng</span>
+                <Link to="/animal-group"></Link>
+              </Menu.Item>
+            </SubMenu>
 
-            <Menu.Item key="/plants">
-              <GiPlantRoots />
-              <span style={{ marginLeft: "10px" }}>Cây trồng</span>
-              <Link to="/plants"></Link>
-            </Menu.Item>
+            {/* Thực vật */}
+            <SubMenu key="plant" icon={<GiPlantRoots />} title="Thực vật">
+              <Menu.Item key="/plants">
+                <GiPlantRoots />
+                <span style={{ marginLeft: '10px' }}>Cây trồng</span>
+                <Link to="/plants"></Link>
+              </Menu.Item>
 
-            <Menu.Item key="/plant-type">
-              <GiPlantRoots />
-              <span style={{ marginLeft: "10px" }}>Loại cây trồng</span>
-              <Link to="/plant-type"></Link>
-            </Menu.Item>
+              <Menu.Item key="/plant-type">
+                <GiPlantRoots />
+                <span style={{ marginLeft: '10px' }}>Loại cây trồng</span>
+                <Link to="/plant-type"></Link>
+              </Menu.Item>
 
-            <Menu.Item key="/crop-group">
-              <AppstoreOutlined />
-              <span>Vườn</span>
-              <Link to="/crop-group"></Link>
-            </Menu.Item>
+              <Menu.Item key="/crop-group">
+                <AppstoreOutlined />
+                <span>Vườn</span>
+                <Link to="/crop-group"></Link>
+              </Menu.Item>
+            </SubMenu>
 
             <Menu.Item key="/material">
               <FormatPainterOutlined />

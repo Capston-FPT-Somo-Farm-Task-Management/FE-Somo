@@ -25,7 +25,7 @@ const MyCrops = () => {
     dispatch(getMemberById(authServices.getUserId()))
     dispatch(getPlantByFarmId(farmId))
     dispatch(getAreaActiveByFarmId(farmId))
-  }, [dispatch])
+  }, [dispatch, farmId])
 
   const onFinishCreatePlant = (values) => {
     dispatch(createPlant(values)).then(() => {
