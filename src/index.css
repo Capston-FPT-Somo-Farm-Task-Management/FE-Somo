@@ -48,6 +48,9 @@ html {
 .ant-layout {
   background: #fff;
 }
+.ant-layout .ant-layout-content {
+  background-color: #fff;
+}
 @media (max-width: 991px) {
   .ant-layout {
     display: block;
@@ -56,6 +59,7 @@ html {
 
 .site-layout {
   margin-left: 200px;
+  background-color: #f5f5f5;
 }
 @media (max-width: 991px) {
   .site-layout {
@@ -329,6 +333,16 @@ html {
   text-decoration: underline;
   color: #007bff;
   opacity: 0.8;
+}
+
+.ant-ribbon.ant-ribbon-placement-end {
+  border-end-start-radius: 0;
+}
+.ant-ribbon.ant-ribbon-placement-end .ant-ribbon-corner {
+  inset-inline-start: 0;
+  border-inline-start-color: transparent;
+  border-inline-end-color: unset;
+  border-block-end-color: transparent;
 }
 
 .first-modal {
@@ -683,9 +697,6 @@ html {
   margin-top: 20px;
   border-radius: 8px;
 }
-.task-detail .task-detail-title {
-  text-align: center;
-}
 .task-detail .task-detail-title h2 {
   color: #8ead48;
   margin-bottom: 10px;
@@ -716,8 +727,6 @@ html {
 .task-detail .task-detail-content .work-location p {
   font-size: 16px;
   width: 33%;
-  display: flex;
-  justify-content: center;
 }
 .task-detail .task-detail-content .work-location svg {
   transform: translateY(10%);
