@@ -35,16 +35,14 @@
     width: 90%;
     .work-location{
       display: flex;
-      justify-content: space-around;
+      justify-content: flex-start;
       padding: 10px 20px;
       background-color: #fff;
       border-radius: 8px;
+      margin-bottom: 10px;
       p{
         font-size: 16px;
         width: 33%;
-        // padding: 0px 20px;
-          // border-left: 1px solid black;
-          // border-right: 1px solid black;
       }
       svg {
         transform: translateY(10%);
@@ -53,7 +51,75 @@
     }
     .work-time{
       display: flex;
-      justify-content: space-around;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      padding: 10px 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      p{
+        font-size: 16px;
+        width: 33%;
+      }
+      svg {
+        transform: translateY(10%);
+        margin-right: 5px;
+      }
+    }
+    .work-user{
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      padding: 10px 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      p{
+        font-size: 16px;
+        width: 33%;
+      }
+      svg {
+        transform: translateY(10%);
+        margin-right: 5px;
+      }
+    }
+    .work-taskType{
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      padding: 10px 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      p{
+        font-size: 16px;
+        width: 33%;
+      }
+      svg {
+        transform: translateY(10%);
+        margin-right: 5px;
+      }
+    }
+    .work-habitant{
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      padding: 10px 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      p{
+        font-size: 16px;
+        width: 33%;
+      }
+      svg {
+        transform: translateY(10%);
+        margin-right: 5px;
+      }
+    }
+    .work-notification{
+      display: flex;
+      justify-content: flex-start;
       flex-wrap: wrap;
       padding: 10px 20px;
       background-color: #fff;
@@ -61,9 +127,6 @@
       p{
         font-size: 16px;
         width: 33%;
-        // padding: 0px 20px;
-          // border-left: 1px solid black;
-          // border-right: 1px solid black;
       }
       svg {
         transform: translateY(10%);

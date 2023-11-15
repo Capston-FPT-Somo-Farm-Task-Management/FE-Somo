@@ -130,6 +130,116 @@ function TaskContent({ taskData }) {
                     </p>
                   </div>
                 </>
+                <>
+                  <h2>Phụ trách</h2>
+                  <div className="work-user">
+                    <p>
+                      <GrUserManager />
+                      Người quản lý: {taskData.managerName}
+                    </p>
+                    <p>
+                      <GrUser />
+                      Người giám sát: {taskData.supervisorName}
+                    </p>
+                    <p>
+                      <GrUserWorker />
+                      Người thực hiện: {taskData.employeeName}
+                    </p>
+                  </div>
+                </>
+                <>
+                  <h2>Loại công việc</h2>
+                  <div className="work-taskType">
+                    <p>
+                      <GrHostMaintenance />
+                      Loại công việc: {taskData.taskTypeName}
+                    </p>
+                    {taskData.materialName ? (
+                      <p>
+                        <GrTools />
+                        Dụng cụ: {taskData.materialName}
+                      </p>
+                    ) : (
+                      <p>
+                        <GrTools />
+                        Chưa có dụng cụ
+                      </p>
+                    )}
+                  </div>
+                </>
+                <>
+                  <h2>Đối tượng</h2>
+                  <div className="work-habitant">
+                    {taskData.addressDetail ? (
+                      <p>Không có đối tượng nào được chọn</p>
+                    ) : (
+                      <>
+                        {taskData.externalId &&
+                        taskData.fieldStatus === "Thực vật" ? (
+                          <p>
+                            <GiFruitTree />
+                            Cây trồng: {taskData.plantName}
+                          </p>
+                        ) : taskData.fieldStatus === "Động vật" ? (
+                          <p>
+                            <GiCow />
+                            Con vật: {taskData.liveStockName}
+                          </p>
+                        ) : null}
+                        {taskData.externalId &&
+                        taskData.fieldStatus === "Thực vật" ? (
+                          <p>
+                            <GiFruitTree />
+                            Mã cây trồng: {taskData.externalId}
+                          </p>
+                        ) : taskData.fieldStatus === "Động vật" ? (
+                          <p>
+                            <GiCow />
+                            Mã con vật: {taskData.externalId}
+                          </p>
+                        ) : null}
+                      </>
+                    )}
+                  </div>
+                </>
+                <>
+                  <h2>Thông báo công việc</h2>
+                  <div className="work-notification">
+                    {taskData.remind === 0 ? (
+                      <p>
+                        <GiRingingBell />
+                        Nhắc nhở trước khi bắt đầu: Không
+                      </p>
+                    ) : (
+                      <p>
+                        <GiRingingBell />
+                        Nhắc nhở trước khi bắt đầu: Có
+                      </p>
+                    )}
+                    {taskData.isRepeat === true ? (
+                      <p>
+                        <GrSync />
+                        Lặp lại: Có
+                      </p>
+                    ) : (
+                      <p>
+                        <GrSync />
+                        Lặp lại: Không
+                      </p>
+                    )}
+                    {taskData.dateRepeate && taskData.dateRepeate.length > 0 ? (
+                      <p>
+                        <GrCycle />
+                        Ngày lặp lại: {formattedRepeatDate.join(", ")}
+                      </p>
+                    ) : (
+                      <p>
+                        <GrCycle />
+                        Chưa có ngày lặp lại
+                      </p>
+                    )}
+                  </div>
+                </>
                 {/* <Card title="Nơi thực hiện" bordered={false}>
                 <p>
                   <GrMap />
