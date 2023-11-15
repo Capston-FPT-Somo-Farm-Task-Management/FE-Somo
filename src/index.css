@@ -702,10 +702,42 @@ html {
   margin: 10px 0px;
 }
 .task-detail .task-detail-content {
+  margin: auto;
+  padding-top: 20px;
+  width: 90%;
+}
+.task-detail .task-detail-content .work-location {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 20px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+.task-detail .task-detail-content .work-location p {
+  font-size: 16px;
+  width: 33%;
+  display: flex;
+  justify-content: center;
+}
+.task-detail .task-detail-content .work-location svg {
+  transform: translateY(10%);
+  margin-right: 5px;
+}
+.task-detail .task-detail-content .work-time {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+.task-detail .task-detail-content .work-time p {
+  font-size: 16px;
+  width: 33%;
+}
+.task-detail .task-detail-content .work-time svg {
+  transform: translateY(10%);
+  margin-right: 5px;
 }
 .task-detail .task-detail-content .ant-card {
   width: 30%;

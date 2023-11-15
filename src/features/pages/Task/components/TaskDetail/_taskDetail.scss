@@ -28,15 +28,57 @@
     }
   }
   .task-detail-content {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin-top: 20px;
+    // display: flex;
+    // justify-content: space-around;
+    // flex-wrap: wrap;
+    margin: auto;
+    padding-top: 20px;
+    width: 90%;
+    .work-location{
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      p{
+        font-size: 16px;
+        width: 33%;
+        display: flex;
+        justify-content: center;
+        // padding: 0px 20px;
+          // border-left: 1px solid black;
+          // border-right: 1px solid black;
+      }
+      svg {
+        transform: translateY(10%);
+        margin-right: 5px;
+      }
+    }
+    .work-time{
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      padding: 10px 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      p{
+        font-size: 16px;
+        width: 33%;
+        // padding: 0px 20px;
+          // border-left: 1px solid black;
+          // border-right: 1px solid black;
+      }
+      svg {
+        transform: translateY(10%);
+        margin-right: 5px;
+      }
+    }
     .ant-card {
       width: 30%;
       margin-bottom: 30px;
       p{
         font-size: 16px;
+        
       }
       svg {
         transform: translateY(10%);
