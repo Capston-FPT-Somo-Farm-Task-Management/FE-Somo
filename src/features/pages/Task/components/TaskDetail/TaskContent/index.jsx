@@ -61,7 +61,76 @@ function TaskContent({ taskData }) {
                 </p>
               </Card>
             ) : (
-              <Card title="Nơi thực hiện" bordered={false}>
+              <>
+                <h2>Nơi thực hiện</h2>
+                <div className="work-location">
+                  <p>
+                    <GrMap />
+                    Khu vực: {taskData.areaName}
+                  </p>
+                  <p>
+                    <GrProjects /> Vùng: {taskData.zoneName}
+                  </p>
+                  {taskData.externalId &&
+                  taskData.fieldStatus === "Thực vật" ? (
+                    <p>
+                      <GrObjectGroup />
+                      Vườn: {taskData.fieldName}
+                    </p>
+                  ) : taskData.fieldStatus === "Động vật" ? (
+                    <p>
+                      <GrObjectGroup />
+                      Chuồng: {taskData.fieldName}
+                    </p>
+                  ) : null}
+                </div>
+                <>
+                  <h2>Thời gian</h2>
+                  <div className="work-time">
+                    <p>
+                      <GrDocumentTime />
+                      Ngày tạo: {formattedCreateDate}
+                    </p>
+                    <p>
+                      <GrAlarm />
+                      Ngày bắt đầu: {formattedStartDate}
+                    </p>
+                    <p>
+                      <GrAlarm />
+                      Ngày kết thúc: {formattedEndDate}
+                    </p>
+                    {taskData.dateRepeate && taskData.dateRepeate.length > 0 ? (
+                      <p>
+                        <GrCycle />
+                        Ngày lặp lại: {formattedRepeatDate.join(", ")}
+                      </p>
+                    ) : (
+                      <p>
+                        <GrCycle />
+                        Chưa có ngày lặp lại
+                      </p>
+                    )}
+                    {taskData.updateDate && taskData.updateDate.length > 0 ? (
+                      <p>
+                        <GrDocumentTime />
+                        Ngày cập nhật: {formattedUpdateDate}
+                      </p>
+                    ) : (
+                      <p>
+                        <GrDocumentTime />
+                        Ngày cập nhật: Chưa có
+                      </p>
+                    )}
+                    <p>
+                      <GrAnnounce />
+                      Thời gian dự kiến phải bỏ ra: {
+                        taskData.overallEffortHour
+                      }{" "}
+                      giờ {taskData.overallEfforMinutes} phút
+                    </p>
+                  </div>
+                </>
+                {/* <Card title="Nơi thực hiện" bordered={false}>
                 <p>
                   <GrMap />
                   Khu vực: {taskData.areaName}
@@ -80,10 +149,11 @@ function TaskContent({ taskData }) {
                     Chuồng: {taskData.fieldName}
                   </p>
                 ) : null}
-              </Card>
+              </Card> */}
+              </>
             )}
 
-            <Card title="Thời gian" bordered={false}>
+            {/* <Card title="Thời gian" bordered={false}>
               <p>
                 <GrDocumentTime />
                 Ngày tạo: {formattedCreateDate}
@@ -222,7 +292,7 @@ function TaskContent({ taskData }) {
                   Chưa có ngày lặp lại
                 </p>
               )}
-            </Card>
+            </Card> */}
           </div>
         </div>
       )}{" "}

@@ -7,10 +7,10 @@
     flex-wrap: wrap;
     margin-bottom: 20px;
   }
-  .list-checkTask{
+  .list-checkTask {
     display: flex;
     justify-content: space-between;
-    .checkParent{
+    .checkParent {
       display: inline-block;
       padding: 12px 0px;
     }
@@ -34,4 +34,12 @@
   opacity: 0.8;
 }
 
-
+.ant-ribbon.ant-ribbon-placement-end {
+  border-end-start-radius: 0;
+  .ant-ribbon-corner {
+    inset-inline-start: 0;
+    border-inline-start-color: transparent;
+    border-inline-end-color: unset;
+    border-block-end-color: transparent;
+  }
+}
