@@ -1,23 +1,22 @@
 import { Form, Select } from 'antd'
 import React from 'react'
 
-function FieldAnimalUpdate({handleSelectFieldChange, fieldByZone, editingTask}) {
+function FieldPlantSelect({handleSelectFieldChange, fieldByZone}) {
   return (
     <Form.Item
-          label="Chuồng"
+          label="Vườn"
           name="fieldId"
           required
           rules={[
             {
               required: true,
-              message: "Vui lòng chọn chuồng",
+              message: "Vui lòng chọn vườn",
             },
           ]}
-          initialValue={editingTask ? editingTask.fieldId : 0}
         >
           <Select
             onChange={handleSelectFieldChange}
-            placeholder="Chọn chuồng"
+            placeholder="Chọn vườn"
             options={
               fieldByZone && fieldByZone.data
                 ? fieldByZone.data.map((item) => ({
@@ -31,4 +30,4 @@ function FieldAnimalUpdate({handleSelectFieldChange, fieldByZone, editingTask}) 
   )
 }
 
-export default FieldAnimalUpdate
+export default FieldPlantSelect
