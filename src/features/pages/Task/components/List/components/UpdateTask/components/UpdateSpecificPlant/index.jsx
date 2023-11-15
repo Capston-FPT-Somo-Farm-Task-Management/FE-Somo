@@ -51,7 +51,9 @@ function UpdateSpecificPlant({
   startDate,
   endDate,
   selectedDays,
-  setSelectedDays
+  setSelectedDays,
+  initialSelectedDays,
+  setInitialSelectedDays
 }) {
   return (
     <>
@@ -130,6 +132,8 @@ function UpdateSpecificPlant({
           endDate={endDate}
           selectedDays={selectedDays}
           setSelectedDays={setSelectedDays}
+          initialSelectedDays={initialSelectedDays}
+                setInitialSelectedDays={setInitialSelectedDays}
         />
       </div>
     </>

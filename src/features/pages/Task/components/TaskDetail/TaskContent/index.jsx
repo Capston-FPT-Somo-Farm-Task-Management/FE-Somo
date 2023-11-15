@@ -1,4 +1,4 @@
-import { Card } from "antd";
+import { Card, Space } from "antd";
 import dayjs from "dayjs";
 import React, { useState } from "react";
 import {
@@ -45,12 +45,41 @@ function TaskContent({ taskData }) {
     <>
       {taskData && (
         <div className="task-detail">
-          <div className="task-detail-title">
-            <h2>#{taskData.code}</h2>
-            <h2 className="task-title-name">{taskData.name}</h2>
-            <p className="task-title-priority">
-              Độ ưu tiên {taskData.priority} - Trạng thái {taskData.status}
-            </p>
+          <div
+            className="task-detail-title-row"
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "0px 20px",
+              borderBotton: "1px solid black",
+            }}
+          >
+            <div className="task-detail-title">
+              <Space>
+                <h2>#{taskData.code}</h2>
+                <h2 className="task-title-name"> - {taskData.name}</h2>
+              </Space>
+              <p>
+                <GrDocumentTime />
+                Ngày tạo: {formattedCreateDate}
+              </p>
+              {taskData.updateDate && taskData.updateDate.length > 0 ? (
+                <p>
+                  <GrDocumentTime />
+                  Ngày cập nhật: {formattedUpdateDate}
+                </p>
+              ) : (
+                <p>
+                  <GrDocumentTime />
+                  Ngày cập nhật: Chưa có
+                </p>
+              )}
+            </div>
+            <div>
+              <p className="task-title-priority">
+                Độ ưu tiên {taskData.priority} - Trạng thái {taskData.status}
+              </p>
+            </div>
           </div>
           <div className="task-detail-content">
             {taskData.addressDetail ? (
@@ -62,35 +91,33 @@ function TaskContent({ taskData }) {
               </Card>
             ) : (
               <>
-                <h2>Nơi thực hiện</h2>
                 <div className="work-location">
-                  <p>
-                    <GrMap />
-                    Khu vực: {taskData.areaName}
-                  </p>
-                  <p>
-                    <GrProjects /> Vùng: {taskData.zoneName}
-                  </p>
-                  {taskData.externalId &&
-                  taskData.fieldStatus === "Thực vật" ? (
+                  <h2>Nơi thực hiện</h2>
+                  <div style={{width: "100%", display: "flex", justifyContent: "flex-start"}}>
                     <p>
-                      <GrObjectGroup />
-                      Vườn: {taskData.fieldName}
+                      <GrMap />
+                      Khu vực: {taskData.areaName}
                     </p>
-                  ) : taskData.fieldStatus === "Động vật" ? (
                     <p>
-                      <GrObjectGroup />
-                      Chuồng: {taskData.fieldName}
+                      <GrProjects /> Vùng: {taskData.zoneName}
                     </p>
-                  ) : null}
+                    {taskData.externalId &&
+                    taskData.fieldStatus === "Thực vật" ? (
+                      <p>
+                        <GrObjectGroup />
+                        Vườn: {taskData.fieldName}
+                      </p>
+                    ) : taskData.fieldStatus === "Động vật" ? (
+                      <p>
+                        <GrObjectGroup />
+                        Chuồng: {taskData.fieldName}
+                      </p>
+                    ) : null}
+                  </div>
                 </div>
                 <>
                   <h2>Thời gian</h2>
                   <div className="work-time">
-                    <p>
-                      <GrDocumentTime />
-                      Ngày tạo: {formattedCreateDate}
-                    </p>
                     <p>
                       <GrAlarm />
                       Ngày bắt đầu: {formattedStartDate}
@@ -99,28 +126,6 @@ function TaskContent({ taskData }) {
                       <GrAlarm />
                       Ngày kết thúc: {formattedEndDate}
                     </p>
-                    {taskData.dateRepeate && taskData.dateRepeate.length > 0 ? (
-                      <p>
-                        <GrCycle />
-                        Ngày lặp lại: {formattedRepeatDate.join(", ")}
-                      </p>
-                    ) : (
-                      <p>
-                        <GrCycle />
-                        Chưa có ngày lặp lại
-                      </p>
-                    )}
-                    {taskData.updateDate && taskData.updateDate.length > 0 ? (
-                      <p>
-                        <GrDocumentTime />
-                        Ngày cập nhật: {formattedUpdateDate}
-                      </p>
-                    ) : (
-                      <p>
-                        <GrDocumentTime />
-                        Ngày cập nhật: Chưa có
-                      </p>
-                    )}
                     <p>
                       <GrAnnounce />
                       Thời gian dự kiến phải bỏ ra: {

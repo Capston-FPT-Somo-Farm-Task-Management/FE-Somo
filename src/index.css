@@ -336,6 +336,7 @@ html {
 }
 
 .ant-ribbon.ant-ribbon-placement-end {
+  border-radius: 4px;
   border-end-start-radius: 0;
 }
 .ant-ribbon.ant-ribbon-placement-end .ant-ribbon-corner {
@@ -692,25 +693,24 @@ html {
 }
 
 .task-detail {
-  background-color: #f5f5f5;
-  padding: 20px 10px;
+  background-color: #fff;
+  padding: 10px;
   margin-top: 20px;
   border-radius: 8px;
 }
 .task-detail .task-detail-title h2 {
   color: #8ead48;
-  margin-bottom: 10px;
 }
 .task-detail .task-detail-title .task-title-name {
   color: black;
 }
-.task-detail .task-detail-title .task-title-priority {
+.task-detail .task-detail-title p {
+  font-size: 12px;
+  margin: 10px 0px;
+}
+.task-detail .task-title-priority {
   color: #f3722c;
   font-size: 18px;
-}
-.task-detail .task-detail-title p {
-  font-size: 16px;
-  margin: 10px 0px;
 }
 .task-detail .task-detail-content {
   margin: auto;
@@ -718,12 +718,13 @@ html {
   width: 90%;
 }
 .task-detail .task-detail-content .work-location {
-  display: flex;
-  justify-content: flex-start;
   padding: 10px 20px;
-  background-color: #fff;
+  background-color: #f5f5f5;
   border-radius: 8px;
   margin-bottom: 10px;
+}
+.task-detail .task-detail-content .work-location h2 {
+  width: 100%;
 }
 .task-detail .task-detail-content .work-location p {
   font-size: 16px;
@@ -738,7 +739,7 @@ html {
   justify-content: flex-start;
   flex-wrap: wrap;
   padding: 10px 20px;
-  background-color: #fff;
+  background-color: #f5f5f5;
   border-radius: 8px;
   margin-bottom: 10px;
 }
@@ -755,7 +756,7 @@ html {
   justify-content: flex-start;
   flex-wrap: wrap;
   padding: 10px 20px;
-  background-color: #fff;
+  background-color: #f5f5f5;
   border-radius: 8px;
   margin-bottom: 10px;
 }
@@ -772,7 +773,7 @@ html {
   justify-content: flex-start;
   flex-wrap: wrap;
   padding: 10px 20px;
-  background-color: #fff;
+  background-color: #f5f5f5;
   border-radius: 8px;
   margin-bottom: 10px;
 }
@@ -789,7 +790,7 @@ html {
   justify-content: flex-start;
   flex-wrap: wrap;
   padding: 10px 20px;
-  background-color: #fff;
+  background-color: #f5f5f5;
   border-radius: 8px;
   margin-bottom: 10px;
 }
@@ -806,7 +807,7 @@ html {
   justify-content: flex-start;
   flex-wrap: wrap;
   padding: 10px 20px;
-  background-color: #fff;
+  background-color: #f5f5f5;
   border-radius: 8px;
 }
 .task-detail .task-detail-content .work-notification p {

@@ -5,26 +5,26 @@
 }
 
 .task-detail {
-  background-color: #f5f5f5;
-  padding: 20px 10px;
+  background-color: #fff;
+  padding: 10px;
   margin-top: 20px;
   border-radius: 8px;
   .task-detail-title {
     h2 {
       color: #8ead48;
-      margin-bottom: 10px;
     }
     .task-title-name{
       color: black
     }
-    .task-title-priority{
-      color: #f3722c;
-      font-size: 18px;
-    }
+    
     p {
-      font-size: 16px;
+      font-size: 12px;
       margin: 10px 0px;
     }
+  }
+  .task-title-priority{
+    color: #f3722c;
+    font-size: 18px;
   }
   .task-detail-content {
     // display: flex;
@@ -34,12 +34,15 @@
     padding-top: 20px;
     width: 90%;
     .work-location{
-      display: flex;
-      justify-content: flex-start;
+      // display: flex;
+      // justify-content: flex-start;
       padding: 10px 20px;
-      background-color: #fff;
+      background-color: #f5f5f5;
       border-radius: 8px;
       margin-bottom: 10px;
+      h2{
+        width: 100%;
+      }
       p{
         font-size: 16px;
         width: 33%;
@@ -54,7 +57,7 @@
       justify-content: flex-start;
       flex-wrap: wrap;
       padding: 10px 20px;
-      background-color: #fff;
+      background-color: #f5f5f5;
       border-radius: 8px;
       margin-bottom: 10px;
       p{
@@ -71,7 +74,7 @@
       justify-content: flex-start;
       flex-wrap: wrap;
       padding: 10px 20px;
-      background-color: #fff;
+      background-color: #f5f5f5;
       border-radius: 8px;
       margin-bottom: 10px;
       p{
@@ -88,7 +91,7 @@
       justify-content: flex-start;
       flex-wrap: wrap;
       padding: 10px 20px;
-      background-color: #fff;
+      background-color: #f5f5f5;
       border-radius: 8px;
       margin-bottom: 10px;
       p{
@@ -105,7 +108,7 @@
       justify-content: flex-start;
       flex-wrap: wrap;
       padding: 10px 20px;
-      background-color: #fff;
+      background-color: #f5f5f5;
       border-radius: 8px;
       margin-bottom: 10px;
       p{
@@ -122,7 +125,7 @@
       justify-content: flex-start;
       flex-wrap: wrap;
       padding: 10px 20px;
-      background-color: #fff;
+      background-color: #f5f5f5;
       border-radius: 8px;
       p{
         font-size: 16px;

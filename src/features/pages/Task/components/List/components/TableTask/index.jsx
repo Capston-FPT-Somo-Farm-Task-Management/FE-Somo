@@ -37,7 +37,6 @@ function TableTask({
     <>
       {task && (
         <Table
-          bordered={true}
           rowKey="id"
           pagination={{
             current: pageIndex,
@@ -182,7 +181,7 @@ function TableTask({
           }}
         />
       )}
-      
+
       <UpdateTask
         editTaskModalVisible={editTaskModalVisible}
         closeEditTaskModal={closeEditTaskModal}

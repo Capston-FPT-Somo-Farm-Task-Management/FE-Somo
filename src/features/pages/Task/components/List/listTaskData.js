@@ -9,13 +9,13 @@ export const taskTitle = [
     render: (code, record) => (
       <h4 className="task-name" data-name-clicked="true">
         <div>
-          {record.isHaveEvidence && (
+          {record && record.isHaveEvidence ? (
             <Badge.Ribbon
               color="#8EAD48"
               style={{ top: -20, right: "64%" }}
               text={<p style={{ fontSize: "10px" }}>Có báo cáo</p>}
             />
-          )}
+          ) : null}
           <h4>#{code}</h4>
         </div>
       </h4>

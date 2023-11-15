@@ -13,14 +13,16 @@ function RepeatUpdate({
   endDate,
   selectedDays,
   setSelectedDays,
+  initialSelectedDays,
+  setInitialSelectedDays
 }) {
-  const [initialSelectedDays, setInitialSelectedDays] = useState([]);
+  
   const disableRepeat = endDate ? !endDate.isValid() : null;
   const dateRepeateArray =
     editingTask && editingTask.dateRepeate
       ? editingTask.dateRepeate.map((date) => dayjs(date).format("YYYY-MM-DD"))
       : [];
-  console.log(editingTask);
+  console.log(initialSelectedDays);
   useEffect(() => {
     if (editingTask && editingTask.dateRepeate) {
       const formattedDays = editingTask.dateRepeate.map((date) =>
