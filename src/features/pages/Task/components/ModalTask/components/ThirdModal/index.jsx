@@ -90,7 +90,6 @@ function ThirdModal({
     (state) => state.taskTypeLivestock.data
   );
   const dataTaskTypeLivestock = taskTypeLivestock.data;
-  console.log(dataTaskTypeLivestock);
 
   const taskTypePlant = useSelector((state) => state.taskTypePlant.data);
   const dataTaskTypePlant = taskTypePlant.data;
@@ -98,7 +97,6 @@ function ThirdModal({
   const supervisor = useSelector((state) => state.supervisor.data);
 
   const dataEmployee = useSelector((state) => state.employee.data);
-  console.log(dataEmployee);
 
   const material = useSelector((state) => state.materialActive.data);
 
@@ -203,13 +201,11 @@ function ThirdModal({
 
   const handleSelectStartDate = (date) => {
     setStartDate(date);
-    console.log(date);
   };
 
   const handleSelectEndDate = (date) => {
     const selectedDate = dayjs(date).second(0);
     setEndDate(selectedDate);
-    console.log(endDate);
 
     const startDate = form.getFieldValue("startDate");
     if (selectedDate.isAfter(startDate)) {
@@ -336,17 +332,15 @@ function ThirdModal({
 
         const materialToSend = materialsValue || [];
 
-        // if (shouldCheckRepeat && isRepeat && (!dates || dates.length === 0)) {
-        //   form.setFields([
-        //     {
-        //       name: 'dates',
-        //       errors: ['Vui lòng chọn ngày lặp lại'],
-        //     },
-        //   ])
-        //   return
-        // }
-
-        console.log(startDateFormatted, endDateFormatted, selectedDays);
+        if (shouldCheckRepeat && repeatValueToSend && (!selectedDays || selectedDays.length === 0)) {
+          form.setFields([
+            {
+              name: 'dates',
+              errors: ['Vui lòng chọn ngày lặp lại'],
+            },
+          ])
+          return
+        }
 
         const finalValues = {
           ...values,
@@ -395,17 +389,15 @@ function ThirdModal({
 
         const materialToSend = materialsValue || [];
 
-        // if (shouldCheckRepeat && isRepeat && (!dates || dates.length === 0)) {
-        //   form.setFields([
-        //     {
-        //       name: 'dates',
-        //       errors: ['Vui lòng chọn ngày lặp lại'],
-        //     },
-        //   ])
-        //   return
-        // }
-
-        console.log(startDateFormatted, endDateFormatted, selectedDays);
+        if (shouldCheckRepeat && repeatValueToSend && (!selectedDays || selectedDays.length === 0)) {
+          form.setFields([
+            {
+              name: 'dates',
+              errors: ['Vui lòng chọn ngày lặp lại'],
+            },
+          ])
+          return
+        }
 
         const areaName =
           areaByFarm.data.find((area) => area.id === selectedAreaId)?.name ||

@@ -34,7 +34,6 @@ export const createSubTask = createAsyncThunk(
       });
       if (response.status === 200) {
         toast.success(response.data.message);
-        console.log(response);
         return response.data.data;
       }
     } catch (error) {
@@ -59,7 +58,6 @@ export const updateSubTask = createAsyncThunk(
       );
       if (response.status === 200) {
         toast.success(response.data.message);
-        console.log(response);
         return response.data.data;
       }
     } catch (error) {
@@ -84,7 +82,6 @@ export const updateEffortBySubTask = createAsyncThunk(
       );
       if (response.status === 200) {
         toast.success(response.data.message);
-        console.log(response);
         return response.data.data;
       }
     } catch (error) {

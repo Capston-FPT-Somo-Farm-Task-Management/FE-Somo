@@ -1,4 +1,4 @@
-import { Badge, Card, Collapse, Descriptions } from "antd";
+import { Card } from "antd";
 import dayjs from "dayjs";
 import React, { useState } from "react";
 import {
@@ -19,11 +19,11 @@ import {
 import { GiCow, GiFruitTree, GiRingingBell } from "react-icons/gi";
 
 function TaskContent({ taskData }) {
-  const [activePanels, setActivePanels] = useState(["0", "1"]);
-  const { Panel } = Collapse;
   if (!taskData) {
     return null;
   }
+
+  console.log(taskData);
 
   const formattedCreateDate = dayjs(taskData.createDate).format(
     "DD-MM-YYYY / HH:mm"
@@ -41,8 +41,6 @@ function TaskContent({ taskData }) {
     dayjs(date).format("DD-MM-YYYY")
   );
 
-  const { externalId, fieldStatus, liveStockName, plantName } = taskData;
-
   return (
     <>
       {taskData && (
@@ -55,26 +53,36 @@ function TaskContent({ taskData }) {
             </p>
           </div>
           <div className="task-detail-content">
-            <Card title="Nơi thực hiện" bordered={false}>
-              <p>
-                <GrMap />
-                Khu vực: {taskData.areaName}
-              </p>
-              <p>
-                <GrProjects /> Vùng: {taskData.zoneName}
-              </p>
-              {taskData.externalId && taskData.fieldStatus === "Thực vật" ? (
+            {taskData.addressDetail ? (
+              <Card title="Nơi thực hiện" bordered={false}>
                 <p>
-                  <GrObjectGroup />
-                  Vườn: {taskData.fieldName}
+                  <GrMap />
+                  Địa điểm cụ thể: {taskData.addressDetail}
                 </p>
-              ) : taskData.fieldStatus === "Động vật" ? (
+              </Card>
+            ) : (
+              <Card title="Nơi thực hiện" bordered={false}>
                 <p>
-                  <GrObjectGroup />
-                  Chuồng: {taskData.fieldName}
+                  <GrMap />
+                  Khu vực: {taskData.areaName}
                 </p>
-              ) : null}
-            </Card>
+                <p>
+                  <GrProjects /> Vùng: {taskData.zoneName}
+                </p>
+                {taskData.externalId && taskData.fieldStatus === "Thực vật" ? (
+                  <p>
+                    <GrObjectGroup />
+                    Vườn: {taskData.fieldName}
+                  </p>
+                ) : taskData.fieldStatus === "Động vật" ? (
+                  <p>
+                    <GrObjectGroup />
+                    Chuồng: {taskData.fieldName}
+                  </p>
+                ) : null}
+              </Card>
+            )}
+
             <Card title="Thời gian" bordered={false}>
               <p>
                 <GrDocumentTime />
@@ -117,7 +125,7 @@ function TaskContent({ taskData }) {
                 } giờ {taskData.overallEfforMinutes} phút
               </p>
             </Card>
-            
+
             <Card title="Phụ trách" bordered={false}>
               <p>
                 <GrUserManager />
@@ -149,30 +157,37 @@ function TaskContent({ taskData }) {
                 </p>
               )}
             </Card>
-            <Card title="Đối tượng" bordered={false}>
-              {taskData.externalId && taskData.fieldStatus === "Thực vật" ? (
-                <p>
-                  <GiFruitTree />
-                  Cây trồng: {taskData.plantName}
-                </p>
-              ) : taskData.fieldStatus === "Động vật" ? (
-                <p>
-                  <GiCow />
-                  Con vật: {taskData.liveStockName}
-                </p>
-              ) : null}
-              {taskData.externalId && taskData.fieldStatus === "Thực vật" ? (
-                <p>
-                  <GiFruitTree />
-                  Mã cây trồng: {taskData.externalId}
-                </p>
-              ) : taskData.fieldStatus === "Động vật" ? (
-                <p>
-                  <GiCow />
-                  Mã con vật: {taskData.externalId}
-                </p>
-              ) : null}
-            </Card>
+            {taskData.addressDetail ? (
+              <Card title="Đối tượng" bordered={false}>
+                <p>Không có đối tượng nào được chọn</p>
+              </Card>
+            ) : (
+              <Card title="Đối tượng" bordered={false}>
+                {taskData.externalId && taskData.fieldStatus === "Thực vật" ? (
+                  <p>
+                    <GiFruitTree />
+                    Cây trồng: {taskData.plantName}
+                  </p>
+                ) : taskData.fieldStatus === "Động vật" ? (
+                  <p>
+                    <GiCow />
+                    Con vật: {taskData.liveStockName}
+                  </p>
+                ) : null}
+                {taskData.externalId && taskData.fieldStatus === "Thực vật" ? (
+                  <p>
+                    <GiFruitTree />
+                    Mã cây trồng: {taskData.externalId}
+                  </p>
+                ) : taskData.fieldStatus === "Động vật" ? (
+                  <p>
+                    <GiCow />
+                    Mã con vật: {taskData.externalId}
+                  </p>
+                ) : null}
+              </Card>
+            )}
+
             <Card title="Thông báo công việc" bordered={false}>
               {taskData.remind === 0 ? (
                 <p>

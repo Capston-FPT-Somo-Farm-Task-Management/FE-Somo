@@ -1,21 +1,20 @@
 import React from 'react'
 import { Form } from 'antd'
 import AreaLivestockSelect from '../FormItemCreate/AreaLivestockSelect'
-import FieldAnimalSelect from '../FormItemCreate/fieldAnimalSelect'
-import AnimalSelect from '../FormItemCreate/animalSelect'
-import PrioritySelect from '../FormItemCreate/prioritySelect'
-import DescriptionInput from '../FormItemCreate/descriptionInput'
-import NameTaskInput from '../FormItemCreate/nameTaskInput'
-import TaskTypeLivestockSelect from '../FormItemCreate/taskTypeLivestockSelect'
-import SupervisorSelect from '../FormItemCreate/supervisorSelect'
-import EmployeeSelect from '../FormItemCreate/employeeSelect'
-import OverallEffortSelect from '../FormItemCreate/overallEffortSelect'
-import MaterialSelect from '../FormItemCreate/materialSelect'
-import RemindSelect from '../FormItemCreate/remindSelect'
-import RepeatSelect from '../FormItemCreate/repeatSelect'
-import ZoneAnimalSelect from '../FormItemCreate/zoneAnimal'
-import DateSelect from '../FormItemCreate/dateSelect'
-import dayjs from 'dayjs'
+import ZoneAnimalSelect from '../FormItemCreate/ZoneAnimal'
+import FieldAnimalSelect from '../FormItemCreate/FieldAnimalSelect'
+import AnimalSelect from '../FormItemCreate/AnimalSelect'
+import DateSelect from '../FormItemCreate/DateSelect'
+import OverallEffortSelect from '../FormItemCreate/OverallEffortSelect'
+import DescriptionInput from '../FormItemCreate/DescriptionInput'
+import NameTaskInput from '../FormItemCreate/NameTaskInput'
+import TaskTypeLivestockSelect from '../FormItemCreate/TaskTypeLivestockSelect'
+import SupervisorSelect from '../FormItemCreate/SupervisorSelect'
+import EmployeeSelect from '../FormItemCreate/EmployeeSelect'
+import MaterialSelect from '../FormItemCreate/MaterialSelect'
+import PrioritySelect from '../FormItemCreate/PrioritySelect'
+import RemindSelect from '../FormItemCreate/RemindSelect'
+import RepeatSelect from 'features/pages/Task/components/List/components/UpdateTask/components/FormItemUpdate/RepeatSelect'
 
 function SpecificAnimal({
   handleCreateTask,
@@ -56,11 +55,6 @@ function SpecificAnimal({
   selectedDays,
   setSelectedDays
 }) {
-  const calculateDaysDifference = (startDate, endDate) => {
-    const start = dayjs(startDate)
-    const end = dayjs(endDate)
-    return end.diff(start, 'days')
-  }
   return (
     <Form
       layout="vertical"
@@ -93,7 +87,6 @@ function SpecificAnimal({
           handleSelectStartDate={handleSelectStartDate}
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
-          calculateDaysDifference={calculateDaysDifference}
         />
         <OverallEffortSelect
           overallEffortHour={overallEffortHour}
@@ -132,7 +125,6 @@ function SpecificAnimal({
           handleSelectRepeat={handleSelectRepeat}
           startDate={startDate}
           endDate={endDate}
-          calculateDaysDifference={calculateDaysDifference}
           selectedDays={selectedDays}
           setSelectedDays={setSelectedDays}
         />

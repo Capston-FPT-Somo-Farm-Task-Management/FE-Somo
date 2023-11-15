@@ -23,6 +23,7 @@ import Effort from "./components/Effort";
 import TableTask from "./components/TableTask";
 import Evidence from "../TaskDetail/Evidence";
 import dayjs from "dayjs";
+import CheckParent from "./components/CheckParent";
 
 const List = () => {
   const [subTasks, setSubTasks] = useState([]);
@@ -48,17 +49,21 @@ const List = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [taskNameSearch, setTaskNameSearch] = useState("");
   const [statusForEdit, setStatusForEdit] = useState(null);
+  const [checkTaskParent, setCheckTaskParent] = useState(1);
   const [startDay, setStartDay] = useState(null);
   const [endDay, setEndDay] = useState(null);
+  const [currentStep, setCurrentStep] = useState(-1);
 
   const [form] = Form.useForm();
   const task = useSelector((state) => state.task.data);
 
   const dataTotalPages = useSelector((state) => state.task.totalPages);
 
-  const isHaveSubTask = useSelector((state) => state.effort.isHaveSubTask)
+  const isHaveSubTask = useSelector((state) => state.effort.isHaveSubTask);
 
   const loading = useSelector((state) => state.task.loading);
+
+  console.log(checkTaskParent);
 
   const dispatch = useDispatch();
 
@@ -69,6 +74,7 @@ const List = () => {
         status,
         date: selectedDate,
         taskName: taskNameSearch,
+        checkTaskParent: checkTaskParent,
       })
     );
   };
@@ -76,7 +82,14 @@ const List = () => {
   useEffect(() => {
     loadDataTask();
     dispatch(getStatus());
-  }, [dispatch, pageIndex, status, selectedDate, taskNameSearch]);
+  }, [
+    dispatch,
+    pageIndex,
+    status,
+    selectedDate,
+    taskNameSearch,
+    checkTaskParent,
+  ]);
 
   useEffect(() => {
     dispatch(getEmployeeByTask(currentTaskId)).then((data) => {
@@ -84,6 +97,14 @@ const List = () => {
       console.log(data.payload);
     });
   }, [currentTaskId]);
+
+  const handleBackOtherTask = () => {
+    setCurrentStep(currentStep - 2);
+  };
+
+  const handleCheckChange = (value) => {
+    setCheckTaskParent(value);
+  };
 
   const onChange = (pagination) => {
     setPageIndex(pagination.current);
@@ -146,7 +167,7 @@ const List = () => {
   const openSubtaskModal = (record) => {
     setCurrentTaskId(record.id);
     setSubTaskModalVisible(true);
-    setEditingTask(record)
+    setEditingTask(record);
     dispatch(getSubTasksByTaskId(record.id)).then((data) => {
       setSubTasks(data.payload);
     });
@@ -359,9 +380,12 @@ const List = () => {
     <div className="list">
       <div className="list-header">
         <ModalTask
+          currentStep={currentStep}
+          setCurrentStep={setCurrentStep}
           onTaskAdded={handleTaskAdded}
           onDateChange={handleDateChange}
           loadDataTask={loadDataTask}
+          handleBackOtherTask={handleBackOtherTask}
         />
         <div className="list-header-item-right">
           <DateSelectionComp
@@ -371,7 +395,11 @@ const List = () => {
           <SearchComp handleSearchChange={handleSearchChange} />
         </div>
       </div>
-      <StatusTabs onTabChange={handleTabChange} />
+      <div className="list-checkTask">
+        <StatusTabs onTabChange={handleTabChange} />
+        <CheckParent onCheckChange={handleCheckChange} />
+      </div>
+
       {loading === true ? (
         <Skeleton active />
       ) : (
