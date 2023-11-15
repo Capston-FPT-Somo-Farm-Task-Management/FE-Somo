@@ -1,17 +1,16 @@
 import { Button, Form, Input, Modal } from 'antd'
 const { TextArea } = Input
 
-const FirstStepAddAnimalType = ({
+const FormAddAnimalType = ({
+  farmId,
   isModalOpenType,
   closeModalType,
   onFinishCreateAnimalType,
-  farmId,
 }) => {
   const onFinish = (values) => {
     const finalValues = {
       ...values,
       farmId: farmId,
-
       status: 1,
     }
     onFinishCreateAnimalType(finalValues)
@@ -78,4 +77,4 @@ const FirstStepAddAnimalType = ({
     </>
   )
 }
-export default FirstStepAddAnimalType
+export default FormAddAnimalType

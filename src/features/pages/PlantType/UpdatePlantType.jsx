@@ -1,9 +1,8 @@
 import { Button, Form, Input, Modal } from 'antd'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 const { TextArea } = Input
 
-const UpdateCropType = ({
+const UpdatePlantType = ({
   isModalOpen,
   closeModal,
   selectedData,
@@ -101,4 +100,4 @@ const UpdateCropType = ({
     </>
   )
 }
-export default UpdateCropType
+export default UpdatePlantType

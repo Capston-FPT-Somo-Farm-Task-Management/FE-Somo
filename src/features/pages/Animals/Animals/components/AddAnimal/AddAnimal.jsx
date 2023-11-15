@@ -1,19 +1,10 @@
 import { Button } from 'antd'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { DashOutlined } from '@ant-design/icons'
 import Search from 'antd/es/input/Search'
 import FirstStepAddAnimal from '../FirstStepAddAnimal/FirstStepAddAnimal'
-import FirstStepAddAnimalType from '../FirstStepAddAnimalType/FirstStepAddAnimalType'
 
-const AddAnimalAndAnimalType = ({
-  farmId,
-  areaByFarm,
-  onFinishCreateAnimal,
-  onFinishCreateAnimalType,
-}) => {
+const AddAnimal = ({ farmId, areaByFarm, onFinishCreateAnimal }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isModalOpenType, setIsModalOpenType] = useState(false)
 
   const openModal = () => {
     setIsModalOpen(true)
@@ -21,16 +12,6 @@ const AddAnimalAndAnimalType = ({
 
   const closeModal = () => {
     setIsModalOpen(false)
-  }
-
-  // Type
-
-  const openModalType = () => {
-    setIsModalOpenType(true)
-  }
-
-  const closeModalType = () => {
-    setIsModalOpenType(false)
   }
 
   return (
@@ -51,23 +32,6 @@ const AddAnimalAndAnimalType = ({
               areaByFarm={areaByFarm}
               onFinishCreateAnimal={onFinishCreateAnimal}
             />
-
-            {/* Add Animal Type */}
-            <Button type="default" onClick={openModalType}>
-              Tạo mới loại vật nuôi
-            </Button>
-            <FirstStepAddAnimalType
-              farmId={farmId}
-              isModalOpenType={isModalOpenType}
-              closeModalType={closeModalType}
-              onFinishCreateAnimalType={onFinishCreateAnimalType}
-            />
-
-            <Button type="dashed">
-              <Link to="">
-                <DashOutlined />
-              </Link>
-            </Button>
           </div>
 
           <div className="animal-operate-right">
@@ -85,4 +49,4 @@ const AddAnimalAndAnimalType = ({
     </>
   )
 }
-export default AddAnimalAndAnimalType
+export default AddAnimal

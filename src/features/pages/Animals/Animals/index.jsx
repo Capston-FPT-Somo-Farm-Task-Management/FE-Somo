@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
-import DisplayAnimal from './components/DisplayAnimal/DisplayAnimal'
-import AddAnimalAndAnimalType from './components/AddAnimalAndAnimalType/AddAnimalAndAnimalType'
+import AddAnimalAndAnimalType from './components/AddAnimal/AddAnimal'
 import { useSelector } from 'react-redux'
 import { getAnimalByFarmId } from 'features/slice/animal/animalByFarmSlice'
 import { useDispatch } from 'react-redux'
@@ -12,18 +11,14 @@ import {
   updateAnimal,
 } from 'features/slice/animal/animalSlice'
 import { getAnimalType } from 'features/slice/animal/animalTypeSlice'
-import {
-  createHabitantType,
-  deleteHabitantType,
-  updateHabitantType,
-} from 'features/slice/habitant/habitantTypeSlice'
+import { createHabitantType } from 'features/slice/habitant/habitantTypeSlice'
 import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarmSlice'
+import TableDisplayAnimal from './components/DisplayAnimal/TableDisplayAnimal'
 
 const Animals = () => {
   const dispatch = useDispatch()
   const animalByFarm = useSelector((state) => state.animalByFarm.data)
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
-  const animalType = useSelector((state) => state.animalType.data)
   const member = useSelector((state) => state.member.data)
   const farmId = member.farmId
 
@@ -68,18 +63,6 @@ const Animals = () => {
     })
   }
 
-  const onFinishUpdateAnimalType = (values) => {
-    dispatch(updateHabitantType(values)).then(() => {
-      loadDataAnimalType()
-    })
-  }
-
-  const onFinishDeleteAnimalType = (id) => {
-    dispatch(deleteHabitantType(id)).then(() => {
-      loadDataAnimalType()
-    })
-  }
-
   const loadDataAnimalType = () => {
     dispatch(getAnimalType(farmId))
   }
@@ -92,16 +75,12 @@ const Animals = () => {
         onFinishCreateAnimal={onFinishCreateAnimal}
         onFinishCreateAnimalType={onFinishCreateAnimalType}
       />
-      <DisplayAnimal
+      <TableDisplayAnimal
         farmId={farmId}
         areaByFarm={areaByFarm}
         animalByFarm={animalByFarm}
-        animalType={animalType}
-        loadDataAnimalType={loadDataAnimalType}
         onFinishDeleteAnimal={onFinishDeleteAnimal}
         onFinishUpdateAnimal={onFinishUpdateAnimal}
-        onFinishDeleteAnimalType={onFinishDeleteAnimalType}
-        onFinishUpdateAnimalType={onFinishUpdateAnimalType}
       />
     </>
   )

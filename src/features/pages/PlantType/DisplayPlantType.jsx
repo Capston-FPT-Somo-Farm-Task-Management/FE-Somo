@@ -1,24 +1,24 @@
-import { useEffect, useState } from 'react'
 import { Badge, Button, Table } from 'antd'
 import Column from 'antd/es/table/Column'
-import UpdateAnimalType from './UpdateAnimalType'
 
-const TableDisplayAnimalType = ({
-  farmId,
-  animalType,
-  onFinishDeleteAnimalType,
-  onFinishUpdateAnimalType,
-  loadDataAnimalType,
+import { useEffect, useState } from 'react'
+import UpdatePlantType from './UpdatePlantType'
+
+const DisplayPlantType = ({
+  plantType,
+  loadDataPlantType,
+  onFinishDeletePlantType,
+  onFinishUpdatePlantType,
 }) => {
   useEffect(() => {
-    loadDataAnimalType()
+    loadDataPlantType()
   }, [])
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
 
   const handleDelete = (id) => {
-    onFinishDeleteAnimalType(id)
+    onFinishDeletePlantType(id)
   }
 
   const openModal = (record) => {
@@ -33,12 +33,12 @@ const TableDisplayAnimalType = ({
   return (
     <>
       <Table
-        dataSource={animalType ? animalType.data : ''}
+        dataSource={plantType ? plantType.data : null}
         rowKey="id"
-        locale={{ emptyText: 'Chưa có loại vật nuôi nào' }}
+        locale={{ emptyText: 'Chưa có loại cây trồng nào' }}
       >
         <Column
-          title="Tên vật nuôi"
+          title="Tên cây trồng"
           dataIndex="name"
           key="1"
           render={(text) => <h4>{text}</h4>}
@@ -61,7 +61,7 @@ const TableDisplayAnimalType = ({
         />
         <Column
           title="Đổi trạng thái"
-          key="5"
+          key="6"
           dataIndex="id"
           render={(_, record) => (
             <Button
@@ -76,7 +76,7 @@ const TableDisplayAnimalType = ({
 
         <Column
           title="Cập nhật"
-          key="6"
+          key="7"
           dataIndex="id"
           render={(_, record) => (
             <Button
@@ -89,15 +89,15 @@ const TableDisplayAnimalType = ({
           )}
         />
       </Table>
-      <UpdateAnimalType
+      <UpdatePlantType
         key={selectedData ? selectedData.id : null}
-        farmId={farmId}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        loadDataPlantType={loadDataPlantType}
         selectedData={selectedData}
-        onFinishUpdateAnimalType={onFinishUpdateAnimalType}
+        onFinishUpdatePlantType={onFinishUpdatePlantType}
       />
     </>
   )
 }
-export default TableDisplayAnimalType
+export default DisplayPlantType

@@ -7,9 +7,12 @@ const FormAddZone = ({
   areaByFarm,
   zoneType,
 }) => {
+  const [form] = Form.useForm()
+
   const onFinish = (values) => {
     onFinishCreateZone(values)
     closeModal()
+    form.resetFields()
   }
   return (
     <>
@@ -34,6 +37,7 @@ const FormAddZone = ({
           className="first-step-animal"
           id="createZone"
           onFinish={onFinish}
+          form={form}
         >
           <div className="form-left">
             {/* Name Animal */}

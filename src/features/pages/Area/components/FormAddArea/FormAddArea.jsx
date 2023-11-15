@@ -1,9 +1,11 @@
 import { Button, Form, Input, InputNumber, Modal } from 'antd'
 
 const FormAddArea = ({ isModalOpen, closeModal, onFinishCreate }) => {
+  const [form] = Form.useForm()
   const onFinish = (values) => {
     onFinishCreate(values)
     closeModal()
+    form.resetFields()
   }
 
   return (
@@ -29,6 +31,7 @@ const FormAddArea = ({ isModalOpen, closeModal, onFinishCreate }) => {
           className="first-step-area"
           id="createArea"
           onFinish={onFinish}
+          form={form}
         >
           {/* Area Name */}
           <Form.Item
