@@ -14,7 +14,7 @@ import EmployeeSelect from '../FormItemCreate/EmployeeSelect'
 import MaterialSelect from '../FormItemCreate/MaterialSelect'
 import PrioritySelect from '../FormItemCreate/PrioritySelect'
 import RemindSelect from '../FormItemCreate/RemindSelect'
-import RepeatSelect from '../FormItemCreate/RepeatSelect'
+import RepeatSelect from 'features/pages/Task/components/List/components/UpdateTask/components/FormItemUpdate/RepeatSelect'
 
 function SpecificAnimal({
   handleCreateTask,
