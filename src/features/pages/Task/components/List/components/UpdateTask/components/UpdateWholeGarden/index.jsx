@@ -1,5 +1,4 @@
 import React from "react";
-import AreaUpdate from "../FormItemUpdate/areaUpdate";
 import ZonePlantUpdate from "../FormItemUpdate/zonePlantUpdate";
 import FieldPlantUpdate from "../FormItemUpdate/fieldPlantUpdate";
 import PriorityUpdate from "../FormItemUpdate/priorityUpdate";
@@ -13,6 +12,7 @@ import MaterialUpdate from "../FormItemUpdate/materialUpdate";
 import RemindUpdate from "../FormItemUpdate/remindUpdate";
 import RepeatUpdate from "../FormItemUpdate/repeatUpdate";
 import DateUpdate from "../FormItemUpdate/dateUpdate";
+import AreaPlantUpdate from "../FormItemUpdate/AreaPlantUpdate";
 
 function UpdateWholeGarden({
   editingTask,
@@ -54,7 +54,7 @@ function UpdateWholeGarden({
   return (
     <>
       <div className="form-left">
-        <AreaUpdate
+        <AreaPlantUpdate
           handleSelectAreaChange={handleSelectAreaChange}
           area={area}
           editingTask={editingTask}

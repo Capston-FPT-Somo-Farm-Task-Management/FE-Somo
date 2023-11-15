@@ -2,6 +2,7 @@ import { Form, Select } from "antd";
 import React from "react";
 
 function RemindUpdate({ remindValue, handleSelectRemind, editingTask }) {
+  const remindData = editingTask.remind === 0 ? "Không" : `Sau ${editingTask.remind} phút`;
   return (
     <Form.Item
       label="Nhắc lại"
@@ -9,7 +10,7 @@ function RemindUpdate({ remindValue, handleSelectRemind, editingTask }) {
       initialValue={
         editingTask
           ? {
-              label: `Sau ${editingTask.remind} phút`,
+              label: remindData,
               value: editingTask.remind,
             }
           : ""

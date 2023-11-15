@@ -7,12 +7,16 @@ import animalTypeActiveReducer from './slice/animal/animalTypeActiveSlice'
 import animalByFarmReducer from './slice/animal/animalByFarmSlice'
 import areaReducer from './slice/area/areaSlice'
 import areaByFarmReducer from './slice/area/areaByFarmSlice'
+import areaLivestockByZoneReducer from "./slice/area/areaLivestockWithZoneSlice"
+import areaPlantByZoneReducer from "./slice/area/areaPlantWithZoneSlice"
 import zoneReducer from './slice/zone/zoneSlice'
 import zoneByFarmReducer from './slice/zone/zoneByFarmSlice'
 import zonePlantReducer from './slice/zone/zonePlantSlice'
 import zoneAnimalReducer from './slice/zone/zoneAnimalSlice'
 import zoneTypeReducer from './slice/zone/zoneTypeSlice'
+import zoneByAreaReducer from "./slice/zone/zoneByAreaSlice"
 import taskTypeReducer from './slice/task/taskTypeSlice'
+import taskTypeActiveReducer from "./slice/task/taskTypeActiveSlice"
 import taskForCalendarReducer from './slice/task/taskForCalendarSlice'
 import taskTypePlantReducer from './slice/task/taskTypePlantSlice'
 import taskTypeLivestockReducer from './slice/task/taskTypeAnimalSlice'
@@ -51,14 +55,14 @@ export const store = configureStore({
     animal: animalReducer,
     area: areaReducer,
     areaByFarm: areaByFarmReducer,
+    areaLivestockByZone: areaLivestockByZoneReducer,
+    areaPlantByZone: areaPlantByZoneReducer,
     zone: zoneReducer,
     zoneByFarm: zoneByFarmReducer,
+    zoneByArea: zoneByAreaReducer,
     zonePlant: zonePlantReducer,
     zoneAnimal: zoneAnimalReducer,
     zoneType: zoneTypeReducer,
-    taskType: taskTypeReducer,
-    taskTypePlant: taskTypePlantReducer,
-    taskTypeLivestock: taskTypeLivestockReducer,
     supervisor: supervisorReducer,
     employee: employeeReducer,
     employeeByTask: employeeByTaskReducer,
@@ -78,6 +82,10 @@ export const store = configureStore({
     taskById: taskByIdReducer,
     taskByWeek: taskByWeekReducer,
     taskForCalendar: taskForCalendarReducer,
+    taskType: taskTypeReducer,
+    taskTypeActive: taskTypeActiveReducer,
+    taskTypePlant: taskTypePlantReducer,
+    taskTypeLivestock: taskTypeLivestockReducer,
     evidence: evidenceReducer,
     subTask: subTaskReducer,
     effort: effortReducer,

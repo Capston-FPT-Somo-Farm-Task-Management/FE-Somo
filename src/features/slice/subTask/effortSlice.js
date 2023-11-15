@@ -28,7 +28,7 @@ export const updateEffort = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        baseUrl + `/FarmSubTask/Task(${data.id})`,
+        baseUrl + `/FarmSubTask/Task(${data.taskId})`,
         data.body,
         {
           headers: {
@@ -54,6 +54,7 @@ const effortSlice = createSlice({
     data: [],
     loading: false,
     error: null,
+    isHaveSubTask: false
   },
   extraReducers(builder) {
     builder
@@ -62,8 +63,10 @@ const effortSlice = createSlice({
         state.error = null;
       })
       .addCase(getEffort.fulfilled, (state, action) => {
+        console.log(action.payload.data);
         state.loading = false;
-        state.data = action.payload;
+        state.data = action.payload.data.subtasks || [];
+        state.isHaveSubTask = action.payload.data.isHaveSubtask;
       })
       .addCase(getEffort.rejected, (state, action) => {
         state.loading = false;

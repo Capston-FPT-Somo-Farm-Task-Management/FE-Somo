@@ -20,6 +20,12 @@ import UpdateSpecificAnimal from "./components/UpdateSpecificAnimal";
 import UpdateSpecificPlant from "./components/UpdateSpecificPlant";
 import UpdateWholeBarn from "./components/UpdateWholeBarn";
 import UpdateWholeGarden from "./components/UpdateWholeGarden";
+import UpdateTaskTypeOther from "./components/UpdateTaskTypeOther";
+import { getAreaActiveByFarmId } from "features/slice/area/areaByFarmSlice";
+import { getAreaWithZoneTypeLivestock } from "features/slice/area/areaLivestockWithZoneSlice";
+import { getAreaWithZoneTypePlant } from "features/slice/area/areaPlantWithZoneSlice";
+import { getZoneByAreaId } from "features/slice/zone/zoneByAreaSlice";
+import { getTaskTypeActive } from "features/slice/task/taskTypeActiveSlice";
 
 function UpdateTask({
   editTaskModalVisible,
@@ -39,6 +45,7 @@ function UpdateTask({
   const [selectedFieldId, setSelectedFieldId] = useState(
     editingTask ? editingTask.fieldId : null
   );
+  const [addressDetail, setAddressDetail] = useState("");
   const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(
     editingTask ? editingTask.taskTypeId : null
   );
@@ -70,7 +77,14 @@ function UpdateTask({
 
   const farmId = member.farmId;
 
-  const area = useSelector((state) => state.area.data);
+  const areaByFarm = useSelector((state) => state.areaByFarm.data);
+
+  const areaLivestockByZone = useSelector(
+    (state) => state.areaLivestockByZone.data
+  );
+  const areaPlantByZone = useSelector((state) => state.areaPlantByZone.data);
+
+  const zoneByArea = useSelector((state) => state.zoneByArea.data);
 
   const zoneAnimal = useSelector((state) => state.zoneAnimal.data);
 
@@ -83,6 +97,8 @@ function UpdateTask({
   const dataPlant = plant.data;
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
+
+  const taskTypeActive = useSelector((state) => state.taskTypeActive.data);
 
   const taskTypeLivestock = useSelector(
     (state) => state.taskTypeLivestock.data
@@ -98,10 +114,11 @@ function UpdateTask({
 
   const material = useSelector((state) => state.materialActive.data);
 
-  console.log(editingTask);
-
   useEffect(() => {
-    dispatch(getAreaActive(farmId));
+    dispatch(getAreaActiveByFarmId(farmId));
+    dispatch(getAreaWithZoneTypeLivestock(farmId));
+    dispatch(getAreaWithZoneTypePlant(farmId));
+    dispatch(getTaskTypeActive());
     dispatch(getTaskTypeLivestock());
     dispatch(getTaskTypePlant());
     dispatch(getAnimalActive(selectedFieldId));
@@ -113,6 +130,7 @@ function UpdateTask({
 
   useEffect(() => {
     if (selectedAreaId) {
+      dispatch(getZoneByAreaId(selectedAreaId));
       dispatch(getZoneByAreaAnimal(selectedAreaId));
       dispatch(getZoneByAreaPlant(selectedAreaId));
     }
@@ -156,6 +174,7 @@ function UpdateTask({
       fieldId: null,
       liveStockId: null,
       plantId: null,
+      addressDetail: null
     });
   };
 
@@ -321,6 +340,7 @@ function UpdateTask({
         overallEfforMinutes: originalData.overallEfforMinutes,
         overallEffortHour: originalData.overallEffortHour,
         isRepeat: originalData.isRepeat,
+        addressDetail: originalData.addressDetail
       },
     };
 
@@ -346,7 +366,8 @@ function UpdateTask({
     employeeId,
     materialId,
     isRepeat,
-    dateRepeate
+    dateRepeate,
+    addressDetail
   ) => {
     form
       .validateFields()
@@ -397,12 +418,12 @@ function UpdateTask({
           remind: typeof remind === "object" ? remind.value : 0,
           dates: dateRepeate
             ? dateRepeate.map((date) =>
-                dayjs(date).format("YYYY-MM-DDTHH:mm:ss.SSSZ")
+                dayjs(date).format("YYYY-MM-DDTHH:mm:ss.SSS")
               )
             : [],
           managerId: member.id,
           otherId: 0,
-          addressDetail: "Khong co",
+          addressDetail: addressDetail,
         };
 
         const transformedValues = transformData(finalValues);
@@ -459,7 +480,8 @@ function UpdateTask({
                 values.employeeId,
                 values.materialId,
                 values.isRepeat,
-                values.dateRepeate
+                values.dateRepeate,
+                values.addressDetail
               );
             }}
             id="updateTask"
@@ -485,7 +507,7 @@ function UpdateTask({
                 handleSelectRepeat={handleSelectRepeat}
                 handleOverallEffortHour={handleOverallEffortHour}
                 handleOverallEfforMinutes={handleOverallEfforMinutes}
-                area={area}
+                areaLivestockByZone={areaLivestockByZone}
                 zoneAnimal={zoneAnimal}
                 fieldByZone={fieldByZone}
                 dataAnimal={dataAnimal}
@@ -527,7 +549,7 @@ function UpdateTask({
                 handleSelectRepeat={handleSelectRepeat}
                 handleOverallEffortHour={handleOverallEffortHour}
                 handleOverallEfforMinutes={handleOverallEfforMinutes}
-                area={area}
+                areaLivestockByZone={areaLivestockByZone}
                 zoneAnimal={zoneAnimal}
                 fieldByZone={fieldByZone}
                 priorityValue={priorityValue}
@@ -568,7 +590,7 @@ function UpdateTask({
                 handleSelectRepeat={handleSelectRepeat}
                 handleOverallEffortHour={handleOverallEffortHour}
                 handleOverallEfforMinutes={handleOverallEfforMinutes}
-                area={area}
+                areaPlantByZone={areaPlantByZone}
                 zonePlant={zonePlant}
                 fieldByZone={fieldByZone}
                 dataPlant={dataPlant}
@@ -610,7 +632,7 @@ function UpdateTask({
                 handleSelectRepeat={handleSelectRepeat}
                 handleOverallEffortHour={handleOverallEffortHour}
                 handleOverallEfforMinutes={handleOverallEfforMinutes}
-                area={area}
+                areaPlantByZone={areaPlantByZone}
                 zonePlant={zonePlant}
                 fieldByZone={fieldByZone}
                 priorityValue={priorityValue}
@@ -629,6 +651,49 @@ function UpdateTask({
                 startDate={startDate}
                 endDate={endDate}
                 currentTaskId={currentTaskId}
+                selectedDays={selectedDays}
+                setSelectedDays={setSelectedDays}
+              />
+            ) : editingTask.addressDetail !== null ? (
+              <UpdateTaskTypeOther
+                // handleCreateTaskOther={handleCreateTaskOther}
+                editingTask={editingTask}
+                selectedAreaId={selectedAreaId}
+                handleSelectAreaChange={handleSelectAreaChange}
+                handleSelectZoneChange={handleSelectZoneChange}
+                handleSelectFieldChange={handleSelectFieldChange}
+                handlePriorityChange={handlePriorityChange}
+                handleSelectStartDate={handleSelectStartDate}
+                handleSelectEndDate={handleSelectEndDate}
+                handleDescriptionChange={handleDescriptionChange}
+                handleTaskTypeChange={handleTaskTypeChange}
+                handleEmployeeChange={handleEmployeeChange}
+                handleMaterialChange={handleMaterialChange}
+                handleSelectRemind={handleSelectRemind}
+                handleSelectRepeat={handleSelectRepeat}
+                handleOverallEfforMinutes={handleOverallEfforMinutes}
+                handleOverallEffortHour={handleOverallEffortHour}
+                form={form}
+                areaByFarm={areaByFarm}
+                zoneByArea={zoneByArea}
+                fieldByZone={fieldByZone}
+                addressDetail={addressDetail}
+                setAddressDetail={setAddressDetail}
+                priorityValue={priorityValue}
+                description={description}
+                overallEfforMinutes={overallEfforMinutes}
+                overallEffortHour={overallEffortHour}
+                taskTypeActive={taskTypeActive}
+                employeesValue={employeesValue}
+                dataEmployee={dataEmployee}
+                supervisor={supervisor}
+                materialsValue={materialsValue}
+                material={material}
+                remindValue={remindValue}
+                repeatValue={repeatValue}
+                disabledDate={disabledDate}
+                startDate={startDate}
+                endDate={endDate}
                 selectedDays={selectedDays}
                 setSelectedDays={setSelectedDays}
               />
