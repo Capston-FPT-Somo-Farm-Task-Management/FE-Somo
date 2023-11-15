@@ -1,7 +1,7 @@
 import { Form, Select } from 'antd'
 import React from 'react'
 
-function TaskTypeLivestockUpdate({dataTaskTypeLivestock, handleTaskTypeChange, editingTask}) {
+function TaskTypePlantUpdate({dataTaskTypePlant, handleTaskTypeChange, editingTask}) {
   return (
     <Form.Item
           label="Loại công việc"
@@ -17,18 +17,14 @@ function TaskTypeLivestockUpdate({dataTaskTypeLivestock, handleTaskTypeChange, e
         >
           <Select
             placeholder="Chọn loại công việc"
-            options={
-              dataTaskTypeLivestock && dataTaskTypeLivestock
-                ? dataTaskTypeLivestock.map((item) => ({
-                    label: item.name,
-                    value: item.id,
-                  }))
-                : null
-            }
+            options={dataTaskTypePlant?.map((item) => ({
+              label: item.name,
+              value: item.id,
+            }))}
             onChange={handleTaskTypeChange}
           />
         </Form.Item>
   )
 }
 
-export default TaskTypeLivestockUpdate
+export default TaskTypePlantUpdate

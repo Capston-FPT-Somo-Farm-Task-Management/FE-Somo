@@ -1,7 +1,7 @@
 import { Form, Select } from 'antd'
 import React from 'react'
 
-function PriorityUpdate({priorityValue, handlePriorityChange, editingTask}) {
+function PrioritySelect({priorityValue, handlePriorityChange}) {
   return (
     <Form.Item
           label="Độ ưu tiên"
@@ -13,7 +13,6 @@ function PriorityUpdate({priorityValue, handlePriorityChange, editingTask}) {
               message: "Vui lòng chọn độ ưu tiên",
             },
           ]}
-          initialValue={editingTask ? editingTask.priority : ""}
         >
           <Select
             value={priorityValue}
@@ -28,4 +27,4 @@ function PriorityUpdate({priorityValue, handlePriorityChange, editingTask}) {
   )
 }
 
-export default PriorityUpdate
+export default PrioritySelect

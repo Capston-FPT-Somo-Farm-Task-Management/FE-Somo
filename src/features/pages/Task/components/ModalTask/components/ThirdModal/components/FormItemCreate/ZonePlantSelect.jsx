@@ -1,7 +1,7 @@
 import { Form, Select } from 'antd'
 import React from 'react'
 
-function ZoneAnimalUpdate({handleSelectZoneChange, zoneAnimal, editingTask}) {
+function ZonePlantSelect({handleSelectZoneChange, zonePlant}) {
   return (
     <Form.Item
           label="Vùng"
@@ -13,14 +13,13 @@ function ZoneAnimalUpdate({handleSelectZoneChange, zoneAnimal, editingTask}) {
             },
           ]}
           name="zoneId"
-          initialValue={editingTask ? editingTask.zoneId : ""}
         >
           <Select
             onChange={handleSelectZoneChange}
             placeholder="Chọn vùng"
             options={
-              zoneAnimal && zoneAnimal.data
-                ? zoneAnimal.data.map((item) => ({
+              zonePlant && zonePlant.data
+                ? zonePlant.data.map((item) => ({
                     label: item.name,
                     value: item.id,
                   }))
@@ -31,4 +30,4 @@ function ZoneAnimalUpdate({handleSelectZoneChange, zoneAnimal, editingTask}) {
   )
 }
 
-export default ZoneAnimalUpdate
+export default ZonePlantSelect
