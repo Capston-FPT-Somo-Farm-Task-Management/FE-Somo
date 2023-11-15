@@ -29,6 +29,7 @@ import StatisticTask from 'features/pages/Admin/Task/StatisticTask'
 import StatisticMaterial from 'features/pages/Admin/Material/StatisticMaterial'
 import AnimalType from 'features/pages/AnimalType/AnimalType'
 import PlantType from 'features/pages/PlantType/PlantType'
+import TaskType from 'features/pages/TaskType/TaskType'
 
 const AppRoute = () => {
   return (
@@ -82,6 +83,17 @@ const AppRoute = () => {
           <PrivateRoute>
             <LayoutWithRoute>
               <Task />
+            </LayoutWithRoute>
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/task-type"
+        element={
+          <PrivateRoute>
+            <LayoutWithRoute>
+              <TaskType />
             </LayoutWithRoute>
           </PrivateRoute>
         }
