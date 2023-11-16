@@ -8,7 +8,6 @@ function UpdateEffort({
   currentTaskId,
   editingEffort,
 }) {
-  console.log(currentTaskId);
   return (
     <>
       {editEffortVisible && (

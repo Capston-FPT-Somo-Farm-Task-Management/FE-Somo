@@ -76,7 +76,7 @@ function UpdateTask({
 
   const member = useSelector((state) => state.member.data);
 
-  const farmId = member.farmId;
+  const farmId = member ? member.farmId : null;
 
   const areaByFarm = useSelector((state) => state.areaByFarm.data);
 
@@ -301,8 +301,9 @@ function UpdateTask({
   };
 
   const handleSelectRepeat = (value) => {
-    setRepeatValue(value === "Có");
-    setShouldCheckRepeat(value === "Có");
+    setRepeatValue(value === "true");
+    setShouldCheckRepeat(value === "true");
+    console.log(shouldCheckRepeat);
   };
 
   const disabledDate = (current) => {
@@ -355,7 +356,6 @@ function UpdateTask({
     endDate,
     description,
     priority,
-    repeatValue,
     suppervisorId,
     fieldId,
     taskTypeId,
@@ -384,17 +384,20 @@ function UpdateTask({
 
         if (
           shouldCheckRepeat &&
-          repeatValue &&
-          (!dateRepeate || dateRepeate.length === 0)
+          editingTask.isRepeat &&
+          (!initialSelectedDays || initialSelectedDays.length === 0)
         ) {
           form.setFields([
             {
-              name: "dates",
+              name: "dateRepeate",
               errors: ["Vui lòng chọn ngày lặp lại"],
             },
           ]);
           return;
         }
+
+        console.log(isRepeat);
+        console.log("repeatValue: ",repeatValue);
 
         const finalValues = {
           name: name,
@@ -402,7 +405,7 @@ function UpdateTask({
           endDate: endDateFormatted,
           description: descriptionToSend,
           priority: priority,
-          isRepeat: typeof isRepeat === "object" ? isRepeat.value : false,
+          isRepeat: typeof isRepeat === "object" ? isRepeat.value : repeatValue,
           suppervisorId: suppervisorId,
           fieldId: fieldId,
           plantId: typeof plantId === "object" ? plantId.value : 0,
@@ -469,7 +472,6 @@ function UpdateTask({
                 values.endDate,
                 values.description,
                 values.priority,
-                values.repeatValue,
                 values.suppervisorId,
                 values.fieldId,
                 values.taskTypeId,
