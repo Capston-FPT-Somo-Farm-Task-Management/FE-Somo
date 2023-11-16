@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import { baseUrl } from "features/api/baseUrl";
-import { toast } from "react-toastify";
+import { createAxiosInstance } from "features/api/axiosInstance";
 import { authServices } from "services/authServices";
+
+const axiosInstance = createAxiosInstance()
 
 export const getTaskForCalendar = createAsyncThunk('taskForCalendar/getTaskForCalendar', async ({rejectWithValue}) => {
   try {
-    const { data } = await axios.get(baseUrl + `/FarmTask/GetTaskPrepareAndDoing/Member(${authServices.getUserId()})`, {
+    const { data } = await axiosInstance.get(`/FarmTask/GetTaskPrepareAndDoing/Member(${authServices.getUserId()})`, {
       headers: {
         'Content-Type': 'application/json',
       },

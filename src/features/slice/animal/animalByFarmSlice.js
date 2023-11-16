@@ -1,12 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createAxiosInstance } from 'features/api/axiosInstance'
 import { baseUrl } from 'features/api/baseUrl'
+
+const axiosInstance = createAxiosInstance()
 
 export const getAnimalByFarmId = createAsyncThunk(
   'animals/getAnimalByFarmId',
   async (id, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(baseUrl + `/LiveStock/Farm(${id})`)
+      const { data } = await axiosInstance.get(`/LiveStock/Farm(${id})`)
       return data
     } catch (error) {
       rejectWithValue(error.message)

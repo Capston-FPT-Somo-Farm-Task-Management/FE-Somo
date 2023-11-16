@@ -1,16 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { createAxiosInstance } from "features/api/axiosInstance";
 import { baseUrl } from "features/api/baseUrl";
 import { toast } from "react-toastify";
 import { authServices } from "services/authServices";
+
+const axiosInstance = createAxiosInstance()
 
 export const getTasks = createAsyncThunk(
   "tasks/getTasks",
   async ({ pageIndex, status, date, taskName,checkTaskParent }, { rejectWithValue }) => {
     try {
       const formattedDate = date ? date.toISOString().split("T")[0] : "";
-      const { data } = await axios.get(
-        baseUrl +
+      const { data } = await axiosInstance.get(
           `/FarmTask/PageIndex(${pageIndex})/PageSize(10)/Manager(${authServices.getUserId()})/Status(${status})/Date?date=${formattedDate}&taskName=${taskName}&checkTaskParent=${checkTaskParent}`,
         {
           headers: {
@@ -29,8 +31,8 @@ export const createTask = createAsyncThunk(
   "tasks/createTask",
   async (data, id) => {
     try {
-      const response = await axios.post(
-        baseUrl + `/FarmTask?memberId=${authServices.getUserId()}`,
+      const response = await axiosInstance.post(
+        `/FarmTask?memberId=${authServices.getUserId()}`,
         data,
         {
           headers: {
@@ -52,8 +54,8 @@ export const updateTask = createAsyncThunk(
   "task/updateTask",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        baseUrl + `/FarmTask/${data.id}`,
+      const response = await axiosInstance.put(
+        `/FarmTask/${data.id}`,
         data.body,
         {
           headers: {
@@ -76,7 +78,7 @@ export const deleteTask = createAsyncThunk(
   "tasks/deleteTask",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.put(baseUrl + `/FarmTask/DeleteTask/${id}`);
+      const response = await axiosInstance.put(`/FarmTask/DeleteTask/${id}`);
       if (response.status === 200) {
         toast.success("Xóa thành công");
       }

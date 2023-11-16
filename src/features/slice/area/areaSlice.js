@@ -1,13 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createAxiosInstance } from 'features/api/axiosInstance'
 import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
+
+const axiosInstance = createAxiosInstance()
 
 export const getAreaActive = createAsyncThunk(
   'areas/getAreaActive',
   async (id, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(baseUrl + `/Area/Active/Farm(${id})`)
+      const { data } = await axiosInstance.get(+ `/Area/Active/Farm(${id})`)
       // console.log(data)
       return data
     } catch (error) {
