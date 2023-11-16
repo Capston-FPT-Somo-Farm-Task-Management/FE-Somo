@@ -1,17 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createAxiosInstance } from 'features/api/axiosInstance'
 import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
+
+const axiosInstance = createAxiosInstance()
 
 export const createHabitantType = createAsyncThunk(
   'habitantType/createHabitantType',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post(baseUrl + '/HabitantType', data, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const response = await axiosInstance.post('/HabitantType', data)
       if (response.status === 200) {
         toast.success(response.data.message)
         return response.data

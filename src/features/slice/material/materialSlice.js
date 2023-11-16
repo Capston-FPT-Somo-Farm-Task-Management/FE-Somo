@@ -1,17 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createAxiosInstance } from 'features/api/axiosInstance'
 import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
+
+const axiosInstance = createAxiosInstance()
 
 export const getMaterialByFarmId = createAsyncThunk(
   'materials/getMaterials',
   async (farmId, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(baseUrl + `/Material/Farm(${farmId})`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const { data } = await axiosInstance.get(`/Material/Farm(${farmId})`)
       return data
     } catch (error) {
       rejectWithValue(error)

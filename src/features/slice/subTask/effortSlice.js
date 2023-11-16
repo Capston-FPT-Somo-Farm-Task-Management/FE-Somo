@@ -1,19 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { createAxiosInstance } from "features/api/axiosInstance";
 import { baseUrl } from "features/api/baseUrl";
 import { toast } from "react-toastify";
+
+const axiosInstance = createAxiosInstance();
 
 export const getEffort = createAsyncThunk(
   "effort/getEffort",
   async (taskId, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(
-        baseUrl + `/FarmSubTask/Task(${taskId})/Effort`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      const { data } = await axiosInstance.get(
+        `/FarmSubTask/Task(${taskId})/Effort`
       );
 
       return data;
@@ -54,7 +52,7 @@ const effortSlice = createSlice({
     data: [],
     loading: false,
     error: null,
-    isHaveSubTask: false
+    isHaveSubTask: false,
   },
   extraReducers(builder) {
     builder

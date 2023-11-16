@@ -1,17 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createAxiosInstance } from 'features/api/axiosInstance'
 import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
+
+const axiosInstance = createAxiosInstance()
 
 export const getTaskType = createAsyncThunk(
   'taskType/getTaskType',
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(baseUrl + '/TaskType', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const { data } = await axiosInstance.get('/TaskType')
       return data
     } catch (error) {
       rejectWithValue(error)
@@ -87,7 +86,7 @@ const taskTypeSlice = createSlice({
       })
       .addCase(createTaskType.fulfilled, (state, action) => {
         state.loading = false
-        state.data = [action.payload]
+        state.data = action.payload
       })
       .addCase(createTaskType.rejected, (state, action) => {
         state.loading = false

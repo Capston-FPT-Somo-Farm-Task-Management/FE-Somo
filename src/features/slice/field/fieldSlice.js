@@ -1,13 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createAxiosInstance } from 'features/api/axiosInstance'
 import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
+
+const axiosInstance = createAxiosInstance()
 
 export const createField = createAsyncThunk(
   'fields/createField',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post(baseUrl + '/Field', data, {
+      const response = await axiosInstance.post('/Field', data, {
         headers: {
           'Content-Type': 'application/json',
         },

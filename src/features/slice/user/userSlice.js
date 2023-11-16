@@ -1,13 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createAxiosInstance } from 'features/api/axiosInstance'
 import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
+
+const axiosInstance = createAxiosInstance()
 
 export const postLogin = createAsyncThunk(
   'user/postLogin',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post(baseUrl + '/login', data)
+      const response = await axiosInstance.post('/login', data)
       localStorage.setItem('somoFarm', response.data.accessToken)
       toast.success('Đăng nhập thành công')
       return response.data
