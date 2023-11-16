@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 
 import {
   Avatar,
@@ -11,7 +11,7 @@ import {
   Popconfirm,
   Popover,
   Space,
-} from 'antd'
+} from "antd";
 import {
   DashboardOutlined,
   TeamOutlined,
@@ -25,13 +25,13 @@ import {
   AppstoreOutlined,
   LogoutOutlined,
   FormatPainterOutlined,
-} from '@ant-design/icons'
-import { GiCow, GiPlantRoots } from 'react-icons/gi'
-import { GrUserWorker } from 'react-icons/gr'
-import logoSomo from '../../../assets/logo_Somo.png'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { authServices } from 'services/authServices'
-import { toast } from 'react-toastify'
+} from "@ant-design/icons";
+import { GiCow, GiPlantRoots } from "react-icons/gi";
+import { GrUserWorker } from "react-icons/gr";
+import logoSomo from "../../../assets/logo_Somo.png";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { authServices } from "services/authServices";
+import { toast } from "react-toastify";
 import {
   useDesktopMediaQuery,
   useTabletMediaQuery,
@@ -45,75 +45,75 @@ import { changeNotifyIsReadAll } from 'features/slice/notification/notificationR
 import { countNewNotify } from 'features/slice/notification/notificationCountSlice'
 import SubMenu from 'antd/es/menu/SubMenu'
 
-const { Sider } = Layout
+const { Sider } = Layout;
 
 const SideMenu = () => {
-  const [userName, setUserName] = useState()
-  const [userRole, setUserRole] = useState()
-  const [collapsed, setCollapsed] = useState(false)
-  const location = useLocation()
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const isDesktop = useDesktopMediaQuery()
-  const isTablet = useTabletMediaQuery()
+  const [userName, setUserName] = useState();
+  const [userRole, setUserRole] = useState();
+  const [collapsed, setCollapsed] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isDesktop = useDesktopMediaQuery();
+  const isTablet = useTabletMediaQuery();
 
-  const countNew = useSelector((state) => state.notificationCount.data)
+  const countNew = useSelector((state) => state.notificationCount.data);
 
   useEffect(() => {
-    dispatch(countNewNotify(authServices.getUserId()))
-  }, [dispatch])
+    dispatch(countNewNotify(authServices.getUserId()));
+  }, [dispatch]);
 
   const changeReadAll = () => {
-    dispatch(changeNotifyIsReadAll(authServices.getUserId()))
-    console.log('SideMenu')
-  }
+    dispatch(changeNotifyIsReadAll(authServices.getUserId()));
+    console.log("SideMenu");
+  };
 
   // Lớn
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
   const showDrawerNotify = () => {
-    dispatch(changeAllNotifyNewToRead(authServices.getUserId()))
-    setOpen(true)
-  }
+    dispatch(changeAllNotifyNewToRead(authServices.getUserId()));
+    setOpen(true);
+  };
 
   const onClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   // Nhỏ
-  const [openOnTablet, setOpenOnTablet] = useState(false)
+  const [openOnTablet, setOpenOnTablet] = useState(false);
 
   const showDrawerOnTablet = () => {
-    setOpenOnTablet(true)
-  }
+    setOpenOnTablet(true);
+  };
 
   const showDrawerNotifyOnTablet = () => {
-    dispatch(changeAllNotifyNewToRead(authServices.getUserId()))
-    setOpenOnTablet(true)
-  }
+    dispatch(changeAllNotifyNewToRead(authServices.getUserId()));
+    setOpenOnTablet(true);
+  };
 
   const onCloseOnTablet = () => {
-    setOpenOnTablet(false)
-  }
+    setOpenOnTablet(false);
+  };
 
   useEffect(() => {
-    const role = authServices.getRole()
-    setUserRole(role)
-    const userName = authServices.getUserName()
-    setUserName(userName)
-  }, [])
+    const role = authServices.getRole();
+    setUserRole(role);
+    const userName = authServices.getUserName();
+    setUserName(userName);
+  }, []);
 
   const logout = () => {
-    const data = { token: localStorage.getItem('connectionId') }
-    dispatch(deleteHubConnection(data))
-    authServices.logOut()
-    toast.success('Đăng xuất thành công')
-    navigate('/login')
-  }
+    const data = { token: localStorage.getItem("connectionId") };
+    dispatch(deleteHubConnection(data));
+    authServices.logOut();
+    toast.success("Đăng xuất thành công");
+    navigate("/login");
+  };
 
   return (
     <div className="sider">
@@ -121,17 +121,17 @@ const SideMenu = () => {
         <Sider
           theme="light"
           style={{
-            overflow: 'auto',
-            height: '100vh',
-            position: 'fixed',
+            overflow: "auto",
+            height: "100vh",
+            position: "fixed",
             left: 0,
             top: 0,
             bottom: 0,
           }}
         >
-          <div className="logoSomo">
-            <img src={logoSomo} alt="logo" />
-          </div>
+            <Link to="/" className="logoSomo">
+              <img src={logoSomo} alt="logo" />
+            </Link>
           <Menu
             theme="light"
             mode="inline"
@@ -185,9 +185,9 @@ const SideMenu = () => {
                   >
                     <BellOutlined
                       style={{
-                        fontSize: '20px',
-                        marginLeft: '90%',
-                        color: 'red',
+                        fontSize: "20px",
+                        marginLeft: "90%",
+                        color: "red",
                       }}
                       // onClick={() => console.log('ss')}
                     />
@@ -197,8 +197,8 @@ const SideMenu = () => {
                 <>
                   <BellOutlined
                     style={{
-                      fontSize: '20px',
-                      marginLeft: '90%',
+                      fontSize: "20px",
+                      marginLeft: "90%",
                     }}
                     disabled
                   />
@@ -284,7 +284,7 @@ const SideMenu = () => {
 
             <Menu.Item key="/employee">
               <GrUserWorker />
-              <span style={{ marginLeft: '10px' }}>Nhân viên</span>
+              <span style={{ marginLeft: "10px" }}>Nhân viên</span>
               <Link to="/employee"></Link>
             </Menu.Item>
 
@@ -298,9 +298,9 @@ const SideMenu = () => {
       )}
       {isTablet && (
         <div className="header-tablet">
-          <div className="logoSomo">
-            <img src={logoSomo} alt="logo" />
-          </div>
+            <Link to="/" className="logoSomo">
+              <img src={logoSomo} alt="logo" />
+            </Link>
           <div className="menu-popover">
             <Popover
               placement="bottomRight"
@@ -347,8 +347,8 @@ const SideMenu = () => {
                     open={openOnTablet}
                   >
                     <BellOutlined
-                      style={{ fontSize: '20px', marginLeft: '90%' }}
-                      onClick={() => console.log('ss')}
+                      style={{ fontSize: "20px", marginLeft: "90%" }}
+                      onClick={() => console.log("ss")}
                     />
                     <Notification />
                   </Drawer>
@@ -373,13 +373,13 @@ const SideMenu = () => {
 
                   <Menu.Item key="/animals">
                     <GiCow />
-                    <span style={{ marginLeft: '10px' }}>Vật nuôi</span>
+                    <span style={{ marginLeft: "10px" }}>Vật nuôi</span>
                     <Link to="/animals"></Link>
                   </Menu.Item>
 
                   <Menu.Item key="/animal-type">
                     <GiCow />
-                    <span style={{ marginLeft: '10px' }}>Loại vật nuôi</span>
+                    <span style={{ marginLeft: "10px" }}>Loại vật nuôi</span>
                     <Link to="/animal-type"></Link>
                   </Menu.Item>
 
@@ -391,13 +391,13 @@ const SideMenu = () => {
 
                   <Menu.Item key="/plants">
                     <GiPlantRoots />
-                    <span style={{ marginLeft: '10px' }}>Cây trồng</span>
+                    <span style={{ marginLeft: "10px" }}>Cây trồng</span>
                     <Link to="/plants"></Link>
                   </Menu.Item>
 
                   <Menu.Item key="/plant-type">
                     <GiPlantRoots />
-                    <span style={{ marginLeft: '10px' }}>Loại cây trồng</span>
+                    <span style={{ marginLeft: "10px" }}>Loại cây trồng</span>
                     <Link to="/plant-type"></Link>
                   </Menu.Item>
 
@@ -415,7 +415,7 @@ const SideMenu = () => {
 
                   <Menu.Item key="/employee">
                     <GrUserWorker />
-                    <span style={{ marginLeft: '10px' }}>Nhân viên</span>
+                    <span style={{ marginLeft: "10px" }}>Nhân viên</span>
                     <Link to="/employee"></Link>
                   </Menu.Item>
 
@@ -436,7 +436,7 @@ const SideMenu = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default SideMenu
+export default SideMenu;

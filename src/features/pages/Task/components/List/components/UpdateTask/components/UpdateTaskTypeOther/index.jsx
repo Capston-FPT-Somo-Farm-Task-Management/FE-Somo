@@ -53,6 +53,8 @@ function UpdateTaskTypeOther({
   endDate,
   selectedDays,
   setSelectedDays,
+  initialSelectedDays,
+  setInitialSelectedDays,
 }) {
   return (
     <>
@@ -135,6 +137,8 @@ function UpdateTaskTypeOther({
           endDate={endDate}
           selectedDays={selectedDays}
           setSelectedDays={setSelectedDays}
+          initialSelectedDays={initialSelectedDays}
+          setInitialSelectedDays={setInitialSelectedDays}
         />
       </div>
     </>

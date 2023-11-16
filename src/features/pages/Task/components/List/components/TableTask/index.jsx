@@ -181,6 +181,7 @@ function TableTask({
           }}
         />
       )}
+
       <UpdateTask
         editTaskModalVisible={editTaskModalVisible}
         closeEditTaskModal={closeEditTaskModal}

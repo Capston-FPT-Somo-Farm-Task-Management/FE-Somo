@@ -52,6 +52,8 @@ function UpdateSpecificAnimal({
   endDate,
   selectedDays,
   setSelectedDays,
+  initialSelectedDays,
+  setInitialSelectedDays,
 }) {
   return (
     <>
@@ -130,6 +132,8 @@ function UpdateSpecificAnimal({
           endDate={endDate}
           selectedDays={selectedDays}
           setSelectedDays={setSelectedDays}
+          initialSelectedDays={initialSelectedDays}
+          setInitialSelectedDays={setInitialSelectedDays}
         />
       </div>
     </>

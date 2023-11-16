@@ -49,7 +49,9 @@ function UpdateWholeGarden({
   startDate,
   endDate,
   selectedDays,
-  setSelectedDays
+  setSelectedDays,
+  initialSelectedDays,
+  setInitialSelectedDays,
 }) {
   return (
     <>
@@ -127,6 +129,8 @@ function UpdateWholeGarden({
           endDate={endDate}
           selectedDays={selectedDays}
           setSelectedDays={setSelectedDays}
+          initialSelectedDays={initialSelectedDays}
+          setInitialSelectedDays={setInitialSelectedDays}
         />
       </div>
     </>
