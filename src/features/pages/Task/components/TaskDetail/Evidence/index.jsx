@@ -114,7 +114,7 @@ function Evidence() {
   return (
     <div className="evidence">
       <h6 style={{ fontSize: "24px", fontWeight: "500" }}>
-        Báo cáo công việc
+        Báo cáo công việc 
       </h6>
       {renderImages()}
     </div>
