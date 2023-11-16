@@ -20,6 +20,9 @@ import taskTypeActiveReducer from './slice/task/taskTypeActiveSlice'
 import taskForCalendarReducer from './slice/task/taskForCalendarSlice'
 import taskTypePlantReducer from './slice/task/taskTypePlantSlice'
 import taskTypeLivestockReducer from './slice/task/taskTypeAnimalSlice'
+import taskTypeByIdReducer from './slice/task/taskTypeByIdSlice'
+import taskTypeTemplateReducer from './slice/task/taskTypeTemplate'
+import taskTypeExcelReducer from './slice/task/taskTypeExcelSlice'
 import supervisorReducer from './slice/supervisor/supervisorSlice'
 import employeeReducer from './slice/employee/employeeSlice'
 import employeeByTaskReducer from './slice/employee/employeeByTask'
@@ -85,6 +88,9 @@ export const store = configureStore({
     taskByWeek: taskByWeekReducer,
     taskForCalendar: taskForCalendarReducer,
     taskType: taskTypeReducer,
+    taskTypeExcel: taskTypeExcelReducer,
+    taskTypeById: taskTypeByIdReducer,
+    taskTypeTemplate: taskTypeTemplateReducer,
     taskTypeActive: taskTypeActiveReducer,
     taskTypePlant: taskTypePlantReducer,
     taskTypeLivestock: taskTypeLivestockReducer,
