@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 import { createAxiosInstance } from 'features/api/axiosInstance'
-import { baseUrl } from 'features/api/baseUrl'
 
 const axiosInstance = createAxiosInstance()
 
@@ -21,13 +19,8 @@ export const getEmployeeByTaskTypeAndFarmId = createAsyncThunk(
   'employeeByTaskTypeAndFarmId/getEmployeeByTaskTypeAndFarmId',
   async ({ taskTypeId, farmId }) => {
     try {
-      const { data } = await axios.get(
-        baseUrl + `/Employee/Active/TaskType(${taskTypeId})/Farm(${farmId})`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
+      const { data } = await axiosInstance.get(
+        `/Employee/Active/TaskType(${taskTypeId})/Farm(${farmId})`
       )
       return data
     } catch (error) {

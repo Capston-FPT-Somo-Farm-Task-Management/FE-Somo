@@ -1,8 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { createAxiosInstance } from "features/api/axiosInstance";
-import { baseUrl } from "features/api/baseUrl";
-import { toast } from "react-toastify";
 
 const axiosInstance = createAxiosInstance();
 
@@ -24,10 +21,9 @@ export const changeNotifyIsRead = createAsyncThunk(
 export const changeNotifyIsReadAll = createAsyncThunk(
   "notificationRead/changeNotifyIsReadAll",
   async (data, { rejectWithValue }) => {
-    console.log(data);
     try {
-      const response = await axios.put(
-        baseUrl + `/Notification/All/IsRead/Member(${data})`
+      const response = await axiosInstance.put(
+        `/Notification/All/IsRead/Member(${data})`
       );
       if (response.status === 200) {
         console.log("Đổi thành công tất cả");

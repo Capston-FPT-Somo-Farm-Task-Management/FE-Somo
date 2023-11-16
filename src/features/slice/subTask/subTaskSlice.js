@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { createAxiosInstance } from "features/api/axiosInstance";
-import { baseUrl } from "features/api/baseUrl";
 import { toast } from "react-toastify";
 
 const axiosInstance = createAxiosInstance();
@@ -23,11 +21,7 @@ export const createSubTask = createAsyncThunk(
   "subTasks/createSubTask",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post(baseUrl + `/FarmSubTask`, data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axiosInstance.post(`/FarmSubTask`, data);
       if (response.status === 200) {
         toast.success(response.data.message);
         return response.data.data;
@@ -43,14 +37,9 @@ export const updateSubTask = createAsyncThunk(
   "subTask/updateSubTask",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        baseUrl + `/FarmSubTask/(${data.subTaskId})`,
-        data.body,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      const response = await axiosInstance.put(
+        `/FarmSubTask/(${data.subTaskId})`,
+        data.body
       );
       if (response.status === 200) {
         toast.success(response.data.message);
@@ -67,14 +56,9 @@ export const updateEffortBySubTask = createAsyncThunk(
   "effortBySubTask/updateEffortBySubTask",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        baseUrl + `/FarmSubTask/(${data.subTaskId})/Effort`,
-        data.body,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      const response = await axiosInstance.put(
+        `/FarmSubTask/(${data.subTaskId})/Effort`,
+        data.body
       );
       if (response.status === 200) {
         toast.success(response.data.message);
@@ -91,8 +75,8 @@ export const deleteSubTask = createAsyncThunk(
   "subTasks/deleteSubTask",
   async ({ subTaskId }, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(
-        baseUrl + `/FarmSubTask/Delete(${subTaskId})`
+      const response = await axiosInstance.delete(
+        `/FarmSubTask/Delete(${subTaskId})`
       );
       return response.data;
     } catch (error) {

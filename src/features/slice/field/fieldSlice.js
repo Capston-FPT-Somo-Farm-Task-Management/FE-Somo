@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 import { createAxiosInstance } from 'features/api/axiosInstance'
-import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
 
 const axiosInstance = createAxiosInstance()
@@ -10,11 +8,7 @@ export const createField = createAsyncThunk(
   'fields/createField',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post('/Field', data, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const response = await axiosInstance.post('/Field', data)
       if (response.status === 200) {
         toast.success(response.data.message)
         return response.data.data
@@ -30,11 +24,7 @@ export const getFields = createAsyncThunk(
   'fields/getFields',
   async ({ rejectWithValue }) => {
     try {
-      const { data } = await axios.get(baseUrl + '/Field/Active', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const { data } = await axiosInstance.get('/Field/Active')
       console.log(data)
       return data
     } catch (error) {
@@ -47,11 +37,7 @@ export const updateField = createAsyncThunk(
   'fields/updateField',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.put(baseUrl + `/Field/${data.id}`, data, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const response = await axiosInstance.put(`/Field/${data.id}`, data)
       if (response.status === 200) {
         toast.success(response.data.message)
       }
@@ -67,7 +53,7 @@ export const deleteField = createAsyncThunk(
   'fields/deleteField',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.put(baseUrl + `/Field/Delete/${id}`)
+      const response = await axiosInstance.put(`/Field/Delete/${id}`)
       if (response.status === 200) {
         toast.success(response.data.message)
       }
@@ -83,7 +69,7 @@ export const adminDeleteField = createAsyncThunk(
   'fields/adminDeleteField',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(baseUrl + `/Field/${id}`)
+      const response = await axiosInstance.delete(`/Field/${id}`)
       if (response.status === 200) {
         toast.success(response.data.message)
       }

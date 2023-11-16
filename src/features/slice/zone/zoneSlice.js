@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 import { createAxiosInstance } from 'features/api/axiosInstance'
-import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
 
 const axiosInstance = createAxiosInstance()
@@ -22,11 +20,7 @@ export const createZone = createAsyncThunk(
   'zones/createZone',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post(baseUrl + '/Zone', data, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const response = await axiosInstance.post('/Zone', data)
       if (response.status === 200) {
         toast.success(response.data.message)
         return response.data.data
@@ -43,11 +37,7 @@ export const updateZone = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     console.log(data)
     try {
-      const response = await axios.put(baseUrl + `/Zone/${data.id}`, data, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const response = await axiosInstance.put(`/Zone/${data.id}`, data)
       if (response.status === 200) {
         toast.success(response.data.message)
       }
@@ -64,7 +54,7 @@ export const deleteZone = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     console.log(id)
     try {
-      const response = await axios.put(baseUrl + `/Zone/Delete/${id}`)
+      const response = await axiosInstance.put(`/Zone/Delete/${id}`)
       if (response.status === 200) {
         toast.success('Đổi trạng thái thành công')
         return response.data
@@ -80,7 +70,7 @@ export const adminDeleteZone = createAsyncThunk(
   'zones/adminDeleteZone',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(baseUrl + `/Zone/${id}`)
+      const response = await axiosInstance.delete(`/Zone/${id}`)
       if (response.status === 200) {
         toast.success(response.data.message)
         return response.data

@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { createAxiosInstance } from "features/api/axiosInstance";
-import { baseUrl } from "features/api/baseUrl";
 import { toast } from "react-toastify";
 
 const axiosInstance = createAxiosInstance();
@@ -25,14 +23,9 @@ export const updateEffort = createAsyncThunk(
   "effort/updateEffort",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        baseUrl + `/FarmSubTask/Task(${data.taskId})`,
-        data.body,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      const response = await axiosInstance.put(
+        `/FarmSubTask/Task(${data.taskId})`,
+        data.body
       );
       if (response.status === 200) {
         toast.success("Cập nhật thành công");

@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 import { createAxiosInstance } from 'features/api/axiosInstance'
-import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
 
 const axiosInstance = createAxiosInstance()
@@ -22,11 +20,7 @@ export const getMemberByFarmId = createAsyncThunk(
   'member/getMemberByFarmId',
   async (farmId, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(baseUrl + `/Member/Farm(${farmId})`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const { data } = await axiosInstance.get(`/Member/Farm(${farmId})`)
       return data
     } catch (error) {
       rejectWithValue(error)
@@ -39,7 +33,7 @@ export const adminDeleteMember = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       console.log(id)
-      const response = await axios.delete(baseUrl + `/Member/${id}`)
+      const response = await axiosInstance.delete(`/Member/${id}`)
       if (response.status === 200) {
         toast.success('Xoá thành công')
         return response.data
