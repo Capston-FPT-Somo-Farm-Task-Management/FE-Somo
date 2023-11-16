@@ -15,7 +15,6 @@ function AddSubTask({
   handleSelectStartDay,
   handleSelectEndDay
 }) {
-  console.log(editingTask);
   const disabledDate = (current) => {
     if (!editingTask.startDate && !editingTask.endDate) {
       return false;

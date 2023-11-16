@@ -13,7 +13,6 @@ function DisplayEffort({
   openSubtaskModal,
 }) {
   let totalEffortCount = 0;
-  console.log(isHaveSubTask);
   const [api, contextHolder] = notification.useNotification();
   const openNotification = () => {
     api.open({

@@ -7,7 +7,7 @@ const axiosInstance = createAxiosInstance()
 
 export const getTasks = createAsyncThunk(
   "tasks/getTasks",
-  async ({ pageIndex, status, date, taskName,checkTaskParent }, { rejectWithValue }) => {
+  async ({ pageIndex, status, date, taskName, checkTaskParent }, { rejectWithValue }) => {
     try {
       const formattedDate = date ? date.toISOString().split("T")[0] : "";
       const { data } = await axiosInstance.get(

@@ -39,8 +39,6 @@ function ModalTask({
     setCurrentStep(currentStep + 1);
   };
 
-  console.log(handleBackOtherTask);
-
   const renderStepContent = (step) => {
     switch (step) {
       case 0:
