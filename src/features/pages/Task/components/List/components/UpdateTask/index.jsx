@@ -68,6 +68,7 @@ function UpdateTask({
   const [overallEfforMinutes, setOverallEfforMinutes] = useState(0);
   const [overallEffortHour, setOverallEffortHour] = useState(0);
   const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
+  const [initialSelectedDays, setInitialSelectedDays] = useState([]);
 
   const [form] = Form.useForm();
 
@@ -416,8 +417,8 @@ function UpdateTask({
           materialIds: materialId || [],
           employeeIds: employeeId || [],
           remind: typeof remind === "object" ? remind.value : 0,
-          dates: dateRepeate
-            ? dateRepeate.map((date) =>
+          dates: initialSelectedDays
+            ? initialSelectedDays.map((date) =>
                 dayjs(date).format("YYYY-MM-DDTHH:mm:ss.SSS")
               )
             : [],
@@ -529,6 +530,8 @@ function UpdateTask({
                 currentTaskId={currentTaskId}
                 selectedDays={selectedDays}
                 setSelectedDays={setSelectedDays}
+                initialSelectedDays={initialSelectedDays}
+                setInitialSelectedDays={setInitialSelectedDays}
               />
             ) : editingTask &&
               editingTask.fieldStatus === "Động vật" &&
@@ -570,6 +573,8 @@ function UpdateTask({
                 currentTaskId={currentTaskId}
                 selectedDays={selectedDays}
                 setSelectedDays={setSelectedDays}
+                initialSelectedDays={initialSelectedDays}
+                setInitialSelectedDays={setInitialSelectedDays}
               />
             ) : editingTask &&
               editingTask.fieldStatus === "Thực vật" &&
@@ -612,6 +617,8 @@ function UpdateTask({
                 currentTaskId={currentTaskId}
                 selectedDays={selectedDays}
                 setSelectedDays={setSelectedDays}
+                initialSelectedDays={initialSelectedDays}
+                setInitialSelectedDays={setInitialSelectedDays}
               />
             ) : editingTask &&
               editingTask.fieldStatus === "Thực vật" &&
@@ -653,6 +660,8 @@ function UpdateTask({
                 currentTaskId={currentTaskId}
                 selectedDays={selectedDays}
                 setSelectedDays={setSelectedDays}
+                initialSelectedDays={initialSelectedDays}
+                setInitialSelectedDays={setInitialSelectedDays}
               />
             ) : editingTask.addressDetail !== null ? (
               <UpdateTaskTypeOther
@@ -696,6 +705,8 @@ function UpdateTask({
                 endDate={endDate}
                 selectedDays={selectedDays}
                 setSelectedDays={setSelectedDays}
+                initialSelectedDays={initialSelectedDays}
+                setInitialSelectedDays={setInitialSelectedDays}
               />
             ) : null}
           </Form>
