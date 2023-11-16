@@ -1,18 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
-import { baseUrl } from 'features/api/baseUrl'
+import { createAxiosInstance } from 'features/api/axiosInstance'
+
+const axiosInstance = createAxiosInstance()
 
 export const getTaskByWeek = createAsyncThunk(
   'taskByWeek/getTaskByWeek',
   async (memberId, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(
-        baseUrl + `/FarmTask/GetTotalTaskOfWeekByMember(${memberId})`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
+      const { data } = await axiosInstance.get(
+        `/FarmTask/GetTotalTaskOfWeekByMember(${memberId})`
       )
       return data
     } catch (error) {

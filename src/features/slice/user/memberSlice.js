@@ -1,13 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createAxiosInstance } from 'features/api/axiosInstance'
 import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
+
+const axiosInstance = createAxiosInstance()
 
 export const getMemberById = createAsyncThunk(
   'member/getMemberById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.get(baseUrl + `/member/${id}`)
+      const response = await axiosInstance.get(`/member/${id}`)
       return response.data.data
     } catch (error) {
       rejectWithValue(error)

@@ -10,17 +10,16 @@ export const getTaskTypeTemplate = createAsyncThunk(
       const response = await axios.get(baseUrl + '/TaskType/Template', {
         responseType: 'blob',
         headers: {
-          Accept: 'application/vnd.ms-excel', 
+          Accept: 'application/vnd.ms-excel',
         },
       })
-
 
       const url = window.URL.createObjectURL(new Blob([response.data]))
 
       const link = document.createElement('a')
       link.href = url
 
-      link.setAttribute('download', 'MaiTaoDiTreXiu.xlsx') 
+      link.setAttribute('download', 'MaiTaoDiTreXiu.xlsx')
 
       document.body.appendChild(link)
       link.click()
