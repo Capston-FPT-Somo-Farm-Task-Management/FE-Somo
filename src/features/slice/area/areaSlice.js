@@ -23,11 +23,7 @@ export const createArea = createAsyncThunk(
   'areas/createArea',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post(baseUrl + '/Area', data, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const response = await axiosInstance.post('/Area', data)
       if (response.status === 200) {
         toast.success(response.data.message)
         return response.data.data
@@ -43,11 +39,7 @@ export const updateArea = createAsyncThunk(
   'areas/updateArea',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.put(baseUrl + `/Area/${data.id}`, data, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const response = await axiosInstance.put(`/Area/${data.id}`, data)
       if (response.status === 200) {
         toast.success(response.data.message)
       }
@@ -63,7 +55,7 @@ export const deleteArea = createAsyncThunk(
   'areas/deleteArea',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.put(baseUrl + `/Area/Delete/${id}`)
+      const response = await axiosInstance.put(`/Area/Delete/${id}`)
       if (response.status === 200) {
         toast.success('Đổi trạng thái thành công')
         return response.data
@@ -79,7 +71,7 @@ export const adminDeleteArea = createAsyncThunk(
   'areas/adminDeleteArea',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(baseUrl + `/Area/${id}`)
+      const response = await axiosInstance.delete(`/Area/${id}`)
       if (response.status === 200) {
         toast.success(response.data.message)
         return response.data

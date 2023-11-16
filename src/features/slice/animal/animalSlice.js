@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { createAxiosInstance } from "features/api/axiosInstance";
-import { baseUrl } from "features/api/baseUrl";
 import { toast } from "react-toastify";
 import { Exception } from "sass";
 
@@ -26,11 +24,7 @@ export const createAnimal = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     console.log(data);
     try {
-      const response = await axios.post(baseUrl + "/Livestock", data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axiosInstance.post("/Livestock", data);
       if (response.status === 200) {
         toast.success(response.data.message);
       }
@@ -46,15 +40,7 @@ export const updateAnimal = createAsyncThunk(
   "animals/updateAnimal",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        baseUrl + `/Livestock/${data.id}`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axiosInstance.put(`/Livestock/${data.id}`, data);
       if (response.status === 200) {
         toast.success(response.data.message);
       }
@@ -70,7 +56,7 @@ export const deleteAnimal = createAsyncThunk(
   "animals/deleteAnimal",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.put(baseUrl + `/Livestock/Delete/${id}`);
+      const response = await axiosInstance.put(`/Livestock/Delete/${id}`);
       if (response.status === 200) {
         toast.success(response.data.message);
       }

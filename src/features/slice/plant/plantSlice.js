@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { createAxiosInstance } from "features/api/axiosInstance";
-import { baseUrl } from "features/api/baseUrl";
 import { toast } from "react-toastify";
 
 const axiosInstance = createAxiosInstance();
@@ -24,11 +22,7 @@ export const createPlant = createAsyncThunk(
   "plants/createPlant",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post(baseUrl + "/Plant", data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axiosInstance.post("/Plant", data);
       if (response.status === 200) {
         toast.success(response.data.message);
         return response.data.data;
@@ -44,11 +38,7 @@ export const updatePlant = createAsyncThunk(
   "plants/updatePlant",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.put(baseUrl + `/Plant/${data.id}`, data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axiosInstance.put(`/Plant/${data.id}`, data);
       if (response.status === 200) {
         toast.success(response.data.message);
         return response.data.data;
@@ -66,7 +56,7 @@ export const deletePlant = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     console.log(id);
     try {
-      const response = await axios.put(baseUrl + `/Plant/Delete/${id}`);
+      const response = await axiosInstance.put(`/Plant/Delete/${id}`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error);

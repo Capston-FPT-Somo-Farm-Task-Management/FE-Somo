@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 import { createAxiosInstance } from 'features/api/axiosInstance'
-import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
 
 const axiosInstance = createAxiosInstance()
@@ -25,16 +23,10 @@ export const createHabitantType = createAsyncThunk(
 export const updateHabitantType = createAsyncThunk(
   'habitantType/updateHabitantType',
   async (data, { rejectWithValue }) => {
-    console.log(data)
     try {
-      const response = await axios.put(
-        baseUrl + `/HabitantType/${data.id}`,
-        data,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
+      const response = await axiosInstance.put(
+        `/HabitantType/${data.id}`,
+        data
       )
       if (response.status === 200) {
         toast.success(response.data.message)
@@ -51,7 +43,7 @@ export const deleteHabitantType = createAsyncThunk(
   'habitantType/deleteHabitantType',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.put(baseUrl + `/HabitantType/Delete/${id}`)
+      const response = await axiosInstance.put(`/HabitantType/Delete/${id}`)
       if (response.status === 200) {
         toast.success(response.data.message)
         return response.data
