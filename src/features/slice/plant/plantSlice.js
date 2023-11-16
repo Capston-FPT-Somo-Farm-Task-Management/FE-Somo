@@ -1,91 +1,89 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
-import { baseUrl } from 'features/api/baseUrl'
-import { toast } from 'react-toastify'
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { createAxiosInstance } from "features/api/axiosInstance";
+import { baseUrl } from "features/api/baseUrl";
+import { toast } from "react-toastify";
+
+const axiosInstance = createAxiosInstance();
 
 export const getPlantActive = createAsyncThunk(
-  'plants/getPlantActive',
+  "plants/getPlantActive",
   async (id) => {
     try {
-      const { data } = await axios.get(
-        baseUrl + `/Plant/ExternalId/Field(${id})`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      return data
+      const { data } = await axiosInstance.get(
+        `/Plant/ExternalId/Field(${id})`
+      );
+      return data;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
-)
+);
 
 export const createPlant = createAsyncThunk(
-  'plants/createPlant',
+  "plants/createPlant",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post(baseUrl + '/Plant', data, {
+      const response = await axios.post(baseUrl + "/Plant", data, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-      })
+      });
       if (response.status === 200) {
-        toast.success(response.data.message)
-        return response.data.data
+        toast.success(response.data.message);
+        return response.data.data;
       }
     } catch (error) {
-      toast.error(error.response.data.message)
-      rejectWithValue(error)
+      toast.error(error.response.data.message);
+      rejectWithValue(error);
     }
   }
-)
+);
 
 export const updatePlant = createAsyncThunk(
-  'plants/updatePlant',
+  "plants/updatePlant",
   async (data, { rejectWithValue }) => {
     try {
       const response = await axios.put(baseUrl + `/Plant/${data.id}`, data, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-      })
+      });
       if (response.status === 200) {
-        toast.success(response.data.message)
-        return response.data.data
+        toast.success(response.data.message);
+        return response.data.data;
       }
-      return response.json()
+      return response.json();
     } catch (error) {
-      toast.error(error.response.data.message)
-      rejectWithValue(error)
+      toast.error(error.response.data.message);
+      rejectWithValue(error);
     }
   }
-)
+);
 
 export const deletePlant = createAsyncThunk(
-  'plants/deletePlant',
+  "plants/deletePlant",
   async (id, { rejectWithValue }) => {
-    console.log(id)
+    console.log(id);
     try {
-      const response = await axios.put(baseUrl + `/Plant/Delete/${id}`)
-      return response.data
+      const response = await axios.put(baseUrl + `/Plant/Delete/${id}`);
+      return response.data;
     } catch (error) {
-      return rejectWithValue(error)
+      return rejectWithValue(error);
     }
   }
-)
+);
 
 const plantSlice = createSlice({
-  name: 'plant',
+  name: "plant",
   initialState: {
     data: [],
     loading: false,
-    error: '',
+    error: "",
   },
   reducers: {
     clearPlant: (state) => {
-      state.data = null
+      state.data = null;
     },
   },
   extraReducers(builder) {
@@ -93,57 +91,57 @@ const plantSlice = createSlice({
 
       // getPlantActive
       .addCase(getPlantActive.pending, (state) => {
-        state.loading = true
+        state.loading = true;
       })
       .addCase(getPlantActive.fulfilled, (state, action) => {
-        state.loading = false
-        state.error = ''
-        state.data = action.payload
+        state.loading = false;
+        state.error = "";
+        state.data = action.payload;
       })
       .addCase(getPlantActive.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
-        state.data = []
+        state.loading = false;
+        state.error = action.payload;
+        state.data = [];
       })
 
       .addCase(createPlant.pending, (state) => {
-        state.loading = true
+        state.loading = true;
       })
       .addCase(createPlant.fulfilled, (state, action) => {
-        state.loading = false
-        state.data = action.payload
+        state.loading = false;
+        state.data = action.payload;
       })
       .addCase(createPlant.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
+        state.loading = false;
+        state.error = action.payload;
       })
 
       .addCase(updatePlant.pending, (state) => {
-        state.loading = true
+        state.loading = true;
       })
       .addCase(updatePlant.fulfilled, (state, action) => {
-        state.loading = false
-        state.data = [action.payload]
+        state.loading = false;
+        state.data = [action.payload];
       })
       .addCase(updatePlant.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
+        state.loading = false;
+        state.error = action.payload;
       })
 
       .addCase(deletePlant.pending, (state) => {
-        state.loading = true
+        state.loading = true;
       })
       .addCase(deletePlant.fulfilled, (state, action) => {
-        state.loading = false
-        toast.success(`Xoá thành công`)
-        state.data = action.payload
+        state.loading = false;
+        toast.success(`Xoá thành công`);
+        state.data = action.payload;
       })
       .addCase(deletePlant.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
-      })
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
-})
+});
 
-export default plantSlice.reducer
-export const { clearPlant } = plantSlice.actions
+export default plantSlice.reducer;
+export const { clearPlant } = plantSlice.actions;

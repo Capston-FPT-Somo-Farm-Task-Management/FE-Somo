@@ -1,13 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createAxiosInstance } from 'features/api/axiosInstance'
 import { baseUrl } from 'features/api/baseUrl'
 import { authServices } from 'services/authServices'
+
+const axiosInstance = createAxiosInstance()
 
 export const getNotifyIsNewById = createAsyncThunk(
   'notificationIsNew/getNotifyIsNewById',
   async ({ pageNumber, pageSize, id }, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(
+      const { data } = await axiosInstance.get(
         baseUrl +
           `/Notification/PageIndex(${pageNumber})/PageSize(${pageSize})/NotSeen/Member${id}`
       )

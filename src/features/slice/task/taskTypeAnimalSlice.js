@@ -1,14 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createAxiosInstance } from 'features/api/axiosInstance'
 import { baseUrl } from 'features/api/baseUrl'
+
+const axiosInstance = createAxiosInstance()
 
 export const getTaskTypeLivestock = createAsyncThunk('taskTypeLivestock/getTaskTypeLivestock', async () => {
     try {
-      const { data } = await axios.get(baseUrl + '/TaskType/ListTaskTypeLivestock', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const { data } = await axiosInstance.get('/TaskType/ListTaskTypeLivestock')
       return data
     } catch (error) {
       console.log(error)

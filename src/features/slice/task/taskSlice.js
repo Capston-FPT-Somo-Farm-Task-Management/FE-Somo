@@ -13,12 +13,7 @@ export const getTasks = createAsyncThunk(
     try {
       const formattedDate = date ? date.toISOString().split("T")[0] : "";
       const { data } = await axiosInstance.get(
-          `/FarmTask/PageIndex(${pageIndex})/PageSize(10)/Manager(${authServices.getUserId()})/Status(${status})/Date?date=${formattedDate}&taskName=${taskName}&checkTaskParent=${checkTaskParent}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+          `/FarmTask/PageIndex(${pageIndex})/PageSize(10)/Manager(${authServices.getUserId()})/Status(${status})/Date?date=${formattedDate}&taskName=${taskName}&checkTaskParent=${checkTaskParent}`
       );
       return data;
     } catch (error) {
@@ -33,12 +28,7 @@ export const createTask = createAsyncThunk(
     try {
       const response = await axiosInstance.post(
         `/FarmTask?memberId=${authServices.getUserId()}`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        data
       );
       if (response.status === 200) {
         toast.success("Thêm công việc thành công");
@@ -56,12 +46,7 @@ export const updateTask = createAsyncThunk(
     try {
       const response = await axiosInstance.put(
         `/FarmTask/${data.id}`,
-        data.body,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        data.body
       );
       if (response.status === 200) {
         toast.success("Cập nhật thành công");

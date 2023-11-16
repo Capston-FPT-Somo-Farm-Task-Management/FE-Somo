@@ -1,13 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createAxiosInstance } from 'features/api/axiosInstance'
 import { baseUrl } from 'features/api/baseUrl'
+
+const axiosInstance = createAxiosInstance()
 
 export const getZoneByAreaPlant = createAsyncThunk(
   'zonePlant/getZoneByAreaPlant',
   async (areaId) => {
     try {
-      const { data } = await axios.get(baseUrl + `/Zone/AreaPlant(${areaId})`)
-      console.log(data)
+      const { data } = await axiosInstance.get(`/Zone/AreaPlant(${areaId})`)
       return data
     } catch (error) {
       console.log(error)

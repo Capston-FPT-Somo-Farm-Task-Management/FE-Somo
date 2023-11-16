@@ -1,13 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createAxiosInstance } from 'features/api/axiosInstance'
 import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
+
+const axiosInstance = createAxiosInstance()
 
 export const getZoneActive = createAsyncThunk(
   'zones/getZoneActive',
   async () => {
     try {
-      const { data } = await axios.get(baseUrl + '/Zone/Active')
+      const { data } = await axiosInstance.get('/Zone/Active')
       return data
     } catch (error) {
       console.log(error)

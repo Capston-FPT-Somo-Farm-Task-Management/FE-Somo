@@ -6,12 +6,7 @@ const axiosInstance = createAxiosInstance()
 
 export const getTaskForCalendar = createAsyncThunk('taskForCalendar/getTaskForCalendar', async ({rejectWithValue}) => {
   try {
-    const { data } = await axiosInstance.get(`/FarmTask/GetTaskPrepareAndDoing/Member(${authServices.getUserId()})`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    console.log(data);
+    const { data } = await axiosInstance.get(`/FarmTask/GetTaskPrepareAndDoing/Member(${authServices.getUserId()})`)
     return data
   } catch (error) {
     rejectWithValue(error.message)
