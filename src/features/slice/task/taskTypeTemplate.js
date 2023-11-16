@@ -1,17 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
-import { baseUrl } from 'features/api/baseUrl'
-import { toast } from 'react-toastify'
+import { createAxiosInstance } from 'features/api/axiosInstance'
+
+const axiosInstance = createAxiosInstance()
 
 export const getTaskTypeTemplate = createAsyncThunk(
   'taskTypeTemplate/getTaskTypeTemplate',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(baseUrl + '/TaskType/Template', {
+      axiosInstance.defaults.headers.common['Accept'] =
+        'application/vnd.ms-excel'
+      const response = await axiosInstance.get('/TaskType/Template', {
         responseType: 'blob',
-        headers: {
-          Accept: 'application/vnd.ms-excel',
-        },
       })
 
       const url = window.URL.createObjectURL(new Blob([response.data]))
@@ -19,7 +18,7 @@ export const getTaskTypeTemplate = createAsyncThunk(
       const link = document.createElement('a')
       link.href = url
 
-      link.setAttribute('download', 'MaiTaoDiTreXiu.xlsx')
+      link.setAttribute('download', 'TaskTypeTemplate.xlsx')
 
       document.body.appendChild(link)
       link.click()
