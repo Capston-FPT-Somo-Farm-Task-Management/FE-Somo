@@ -1,12 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createAxiosInstance } from 'features/api/axiosInstance'
 import { baseUrl } from 'features/api/baseUrl'
+
+const axiosInstance = createAxiosInstance()
 
 export const getFarm = createAsyncThunk(
   'farm/getFarm',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(baseUrl + '/Farm')
+      const response = await axiosInstance.get('/Farm')
       return response.data
     } catch (error) {
       rejectWithValue(error)

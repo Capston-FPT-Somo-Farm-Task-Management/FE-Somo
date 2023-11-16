@@ -1,15 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { createAxiosInstance } from "features/api/axiosInstance";
 import { baseUrl } from "features/api/baseUrl";
 import { toast } from "react-toastify";
 
+const axiosInstance = createAxiosInstance()
+
 export const getEmployeeByTask = createAsyncThunk('employeeByTask/getEmployeeByTask', async (taskId) => {
     try {
-      const { data } = await axios.get(baseUrl + `/FarmSubTask/EmployeeNoSubTask(${taskId})`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const { data } = await axiosInstance.get(`/FarmSubTask/EmployeeNoSubTask(${taskId})`)
       return data
     } catch (error) {
       console.log(error)

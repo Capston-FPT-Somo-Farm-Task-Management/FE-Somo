@@ -1,46 +1,46 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
-import { baseUrl } from 'features/api/baseUrl'
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { createAxiosInstance } from "features/api/axiosInstance";
+import { baseUrl } from "features/api/baseUrl";
+
+const axiosInstance = createAxiosInstance();
 
 export const getFieldByZone = createAsyncThunk(
-  'fieldPlant/getFieldByZonePlant',
+  "fieldPlant/getFieldByZonePlant",
   async (zoneId) => {
     try {
-      const { data } = await axios.get(
-        baseUrl + `/Field/Active/Zone(${zoneId})`
-      )
-      console.log(data)
-      return data
+      const { data } = await axiosInstance.get(`/Field/Active/Zone(${zoneId})`);
+      return data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
-)
+);
 
 const fieldByZoneSlice = createSlice({
-  name: 'fieldByZone',
+  name: "fieldByZone",
   initialState: {
     data: [],
     loading: false,
-    error: '',
+    error: "",
   },
   extraReducers(builder) {
     builder
 
       .addCase(getFieldByZone.pending, (state) => {
-        state.loading = true
+        state.loading = true;
       })
       .addCase(getFieldByZone.fulfilled, (state, action) => {
-        state.loading = false
-        state.error = ''
-        state.data = action.payload
+        state.loading = false;
+        state.error = "";
+        state.data = action.payload;
       })
       .addCase(getFieldByZone.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
-        state.data = []
-      })
+        state.loading = false;
+        state.error = action.payload;
+        state.data = [];
+      });
   },
-})
+});
 
-export default fieldByZoneSlice.reducer
+export default fieldByZoneSlice.reducer;

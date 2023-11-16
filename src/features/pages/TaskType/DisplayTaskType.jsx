@@ -43,7 +43,7 @@ const DisplayTaskType = ({ taskType, onFinishUpdateTaskType, loadData }) => {
     <>
       <>
         <Table
-          dataSource={taskType ? taskType : null}
+          dataSource={taskType ? taskType?.data : null}
           rowKey="id"
           locale={{ emptyText: 'Chưa có loại công việc nào' }}
         >

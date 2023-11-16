@@ -1,43 +1,45 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
-import { baseUrl } from 'features/api/baseUrl'
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { createAxiosInstance } from "features/api/axiosInstance";
+import { baseUrl } from "features/api/baseUrl";
 
-export const getTaskTypePlant = createAsyncThunk('taskTypePlant/getTaskTypePlant', async () => {
+const axiosInstance = createAxiosInstance();
+
+export const getTaskTypePlant = createAsyncThunk(
+  "taskTypePlant/getTaskTypePlant",
+  async () => {
     try {
-      const { data } = await axios.get(baseUrl + '/TaskType/ListTaskTypePlant', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      return data
+      const { data } = await axiosInstance.get("/TaskType/ListTaskTypePlant");
+      return data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  })
+  }
+);
 
-  const taskTypePlantSlice = createSlice({
-    name: 'taskTypePlant',
-    initialState: {
-      data: [],
-      loading: false,
-      error: '',
-    },
-    extraReducers(builder) {
-      builder
-        .addCase(getTaskTypePlant.pending, (state) => {
-          state.loading = true
-        })
-        .addCase(getTaskTypePlant.fulfilled, (state, action) => {
-          state.loading = false
-          state.error = ''
-          state.data = action.payload
-        })
-        .addCase(getTaskTypePlant.rejected, (state, action) => {
-          state.loading = false
-          state.error = action.payload
-          state.data = []
-        })
-    },
-  })
+const taskTypePlantSlice = createSlice({
+  name: "taskTypePlant",
+  initialState: {
+    data: [],
+    loading: false,
+    error: "",
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(getTaskTypePlant.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getTaskTypePlant.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = "";
+        state.data = action.payload;
+      })
+      .addCase(getTaskTypePlant.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.data = [];
+      });
+  },
+});
 
-  export default taskTypePlantSlice.reducer
+export default taskTypePlantSlice.reducer;

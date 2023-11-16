@@ -1,8 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createAxiosInstance } from 'features/api/axiosInstance'
 import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
 import { authServices } from 'services/authServices'
+
+const axiosInstance = createAxiosInstance()
 
 export const createHub = createAsyncThunk(
   'hub/createHubConnection',
@@ -12,11 +15,7 @@ export const createHub = createAsyncThunk(
       connectionId: data,
     }
     try {
-      const response = await axios.post(baseUrl + '/HubConnection', finalData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const response = await axiosInstance.post('/HubConnection', finalData)
       if (response.status === 200) {
         console.log(response.data.message)
         return response.data.data

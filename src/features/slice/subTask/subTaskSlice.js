@@ -1,20 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { createAxiosInstance } from "features/api/axiosInstance";
 import { baseUrl } from "features/api/baseUrl";
 import { toast } from "react-toastify";
+
+const axiosInstance = createAxiosInstance();
 
 export const getSubTasksByTaskId = createAsyncThunk(
   "subTasks/getSubTasksByTaskId",
   async (taskId, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(
-        baseUrl + `/FarmSubTask/Task(${taskId})`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const { data } = await axiosInstance.get(`/FarmSubTask/Task(${taskId})`);
 
       return data;
     } catch (error) {

@@ -1,42 +1,45 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
-import { baseUrl } from 'features/api/baseUrl'
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { createAxiosInstance } from "features/api/axiosInstance";
+import { baseUrl } from "features/api/baseUrl";
+
+const axiosInstance = createAxiosInstance();
 
 export const countNewNotify = createAsyncThunk(
-  'notificationCount/countNewNotify',
+  "notificationCount/countNewNotify",
   async (id, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(
-        baseUrl + `/Notification/New/Member(${id})/Count`
-      )
-      return data
+      const { data } = await axiosInstance.get(
+        `/Notification/New/Member(${id})/Count`
+      );
+      return data;
     } catch (error) {
-      rejectWithValue(error)
+      rejectWithValue(error);
     }
   }
-)
+);
 
 const notificationCountSlice = createSlice({
-  name: 'notificationCount',
+  name: "notificationCount",
   initialState: {
     data: [],
     loading: false,
-    error: '',
+    error: "",
   },
   extraReducers(builder) {
     builder
       .addCase(countNewNotify.pending, (state) => {
-        state.loading = true
+        state.loading = true;
       })
       .addCase(countNewNotify.fulfilled, (state, action) => {
-        state.loading = false
-        state.data = action.payload
+        state.loading = false;
+        state.data = action.payload;
       })
       .addCase(countNewNotify.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
-      })
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
-})
+});
 
-export default notificationCountSlice.reducer
+export default notificationCountSlice.reducer;
