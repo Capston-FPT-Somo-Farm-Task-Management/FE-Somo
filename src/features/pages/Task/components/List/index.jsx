@@ -12,7 +12,6 @@ import {
 } from "features/slice/subTask/subTaskSlice";
 import { getEffort, updateEffort } from "features/slice/subTask/effortSlice";
 import { taskTitle } from "./listTaskData";
-import { getStatus } from "features/slice/status/statusSlice";
 import TaskDetail from "../TaskDetail";
 import ModalTask from "../ModalTask";
 import StatusTabs from "./components/StatusTabs";
@@ -21,7 +20,6 @@ import DateSelectionComp from "./components/DateSelection";
 import SubTask from "./components/SubTask/subTask";
 import Effort from "./components/Effort";
 import TableTask from "./components/TableTask";
-import Evidence from "../TaskDetail/Evidence";
 import dayjs from "dayjs";
 import CheckParent from "./components/CheckParent";
 
@@ -55,6 +53,7 @@ const List = () => {
   const [currentStep, setCurrentStep] = useState(-1);
 
   const [form] = Form.useForm();
+  
   const task = useSelector((state) => state.task.data);
 
   const dataTotalPages = useSelector((state) => state.task.totalPages);
@@ -62,8 +61,6 @@ const List = () => {
   const isHaveSubTask = useSelector((state) => state.effort.isHaveSubTask);
 
   const loading = useSelector((state) => state.task.loading);
-
-  console.log(checkTaskParent);
 
   const dispatch = useDispatch();
 
@@ -81,7 +78,7 @@ const List = () => {
 
   useEffect(() => {
     loadDataTask();
-    dispatch(getStatus());
+    console.log(pageIndex);
   }, [
     dispatch,
     pageIndex,
@@ -91,10 +88,13 @@ const List = () => {
     checkTaskParent,
   ]);
 
+  // useEffect(() => {
+  //   console.log("pageIndex ", pageIndex);
+  // }, [pageIndex])
+
   useEffect(() => {
     dispatch(getEmployeeByTask(currentTaskId)).then((data) => {
       setAvailableEmployees(data.payload);
-      console.log(data.payload);
     });
   }, [currentTaskId]);
 
@@ -108,6 +108,7 @@ const List = () => {
 
   const onChange = (pagination) => {
     setPageIndex(pagination.current);
+    console.log("pageIndex: ", pagination.current);
   };
 
   const handleDescription = (e) => {
@@ -313,8 +314,6 @@ const List = () => {
         actualEfforMinutes: parseFloat(actualEfforMinutes),
       },
     ];
-
-    console.log(taskId);
 
     dispatch(updateEffort({ taskId: taskId, body: updatedEffort })).then(() => {
       dispatch(getEffort(currentTaskId)).then((data) => {

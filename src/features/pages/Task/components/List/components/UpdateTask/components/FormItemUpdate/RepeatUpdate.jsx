@@ -14,7 +14,8 @@ function RepeatUpdate({
   selectedDays,
   setSelectedDays,
   initialSelectedDays,
-  setInitialSelectedDays
+  setInitialSelectedDays,
+  shouldCheckRepeat
 }) {
   
   const disableRepeat = endDate ? !endDate.isValid() : null;
@@ -31,6 +32,10 @@ function RepeatUpdate({
       setInitialSelectedDays(formattedDays);
     }
   }, [editingTask]);
+
+  console.log("editingTask.isRepeat", editingTask.isRepeat);
+  console.log("repeatValue: ", repeatValue);
+  
 
   const modifiers = {
     selected: initialSelectedDays.map((day) => new Date(day)),
@@ -194,6 +199,7 @@ function RepeatUpdate({
         color: red;
       }
     `;
+    const setRepeat = repeatValue ? editingTask.isRepeat === false : editingTask.isRepeat === true
   return (
     <>
       <Form.Item
@@ -203,7 +209,7 @@ function RepeatUpdate({
           editingTask
             ? {
                 label: editingTask.isRepeat === true ? "Có" : "Không",
-                value: editingTask.isRepeat,
+                value: editingTask.isRepeat ? editingTask.isRepeat : repeatValue,
               }
             : ""
         }
@@ -213,11 +219,11 @@ function RepeatUpdate({
           onChange={handleSelectRepeat}
           placeholder="Không"
         >
-          <Select.Option value="Không">Không</Select.Option>
-          <Select.Option value="Có">Có</Select.Option>
+          <Select.Option value="false">Không</Select.Option>
+          <Select.Option value="true">Có</Select.Option>
         </Select>
       </Form.Item>
-      {editingTask.isRepeat === true || repeatValue ? (
+      {setRepeat || repeatValue ? (
         <Form.Item
           label="Lặp những ngày"
           name="dateRepeate"

@@ -11,7 +11,6 @@ function DisplaySubTask({
   statusForEdit,
   editingTask,
 }) {
-  console.log(editingTask);
   return (
     <Modal
       title={editingTask ? `#${editingTask.code} - ${editingTask.name}` : null}
