@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 import { createAxiosInstance } from 'features/api/axiosInstance'
-import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
 
 const axiosInstance = createAxiosInstance()
@@ -22,11 +20,7 @@ export const createTaskType = createAsyncThunk(
   'taskType/createTaskType',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post(baseUrl + '/TaskType', data, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const response = await axiosInstance.post('/TaskType', data)
       if (response.status === 200) {
         toast.success(response.data.message)
         return response.data.data
@@ -43,11 +37,7 @@ export const updateTaskType = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     console.log(data)
     try {
-      const response = await axios.put(baseUrl + `/TaskType/${data.id}`, data, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const response = await axiosInstance.put(`/TaskType/${data.id}`, data)
       if (response.status === 200) {
         toast.success(response.data.message)
       }

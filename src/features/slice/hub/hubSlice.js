@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 import { createAxiosInstance } from 'features/api/axiosInstance'
-import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
 import { authServices } from 'services/authServices'
 
@@ -31,7 +29,7 @@ export const deleteHubConnection = createAsyncThunk(
   'hub/deleteHubConnection',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(baseUrl + `/HubConnection`, {
+      const response = await axiosInstance.delete(`/HubConnection`, {
         headers: {
           'Content-Type': 'application/json',
         },
