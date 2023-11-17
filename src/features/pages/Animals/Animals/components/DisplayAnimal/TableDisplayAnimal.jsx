@@ -9,6 +9,7 @@ const TableDisplayAnimal = ({
   animalByFarm,
   onFinishDeleteAnimal,
   onFinishUpdateAnimal,
+  searchTerm,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
@@ -39,10 +40,16 @@ const TableDisplayAnimal = ({
     setIsModalDetailOpen(false)
   }
 
+  const searchAnimal = animalByFarm
+    ? animalByFarm?.data?.filter((m) =>
+        m.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : []
+
   return (
     <>
       <Table
-        dataSource={animalByFarm ? animalByFarm.data : null}
+        dataSource={searchAnimal}
         rowKey="id"
         locale={{ emptyText: 'Chưa có vật nuôi nào' }}
       >
@@ -67,6 +74,11 @@ const TableDisplayAnimal = ({
           title="Trạng thái"
           dataIndex="status"
           key="6"
+          filters={[
+            { text: 'Tồn tại', value: 'Tồn tại' },
+            { text: 'Không tồn tại', value: 'Không tồn tại' },
+          ]}
+          onFilter={(value, record) => record.status.indexOf(value) === 0}
           render={(status) =>
             status === 'Tồn tại' ? (
               <Badge status="success" text="Tồn tại" />
