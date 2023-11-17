@@ -4,7 +4,12 @@ import { Button } from 'antd'
 import Search from 'antd/es/input/Search'
 import FirstStepAddPlant from '../FirstStepAddPlant/FirstStepAddPlant'
 
-const AddPlant = ({ areaByFarm, onFinishCreatePlant, farmId }) => {
+const AddPlant = ({
+  areaByFarm,
+  onFinishCreatePlant,
+  farmId,
+  handleSearch,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => {
@@ -36,7 +41,15 @@ const AddPlant = ({ areaByFarm, onFinishCreatePlant, farmId }) => {
           </div>
 
           <div className="plant-operate-right">
-            <Search placeholder="Tìm kiếm" allowClear />
+            <Search
+              placeholder="Tìm kiếm"
+              allowClear
+              style={{
+                marginLeft: '15px',
+                width: 300,
+              }}
+              onChange={(e) => handleSearch(e.target.value)}
+            />
           </div>
         </div>
       </div>
