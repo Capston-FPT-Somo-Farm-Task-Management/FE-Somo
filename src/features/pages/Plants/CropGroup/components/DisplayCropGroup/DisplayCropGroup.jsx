@@ -2,6 +2,7 @@ import { Badge, Button, Table } from 'antd'
 import { useState } from 'react'
 import Column from 'antd/es/table/Column'
 import UpdateCropGroup from './UpdateCropGroup'
+import DetailCropGroup from './DetailCropGroup'
 
 const DisplayCropGroup = ({
   areaByFarm,
@@ -12,6 +13,9 @@ const DisplayCropGroup = ({
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
 
+  const [isModalDetailOpen, setIsModalDetailOpen] = useState(false)
+  const [selectedDataDetail, setSelectedDataDetail] = useState(null)
+
   const openModal = (record) => {
     setSelectedData(record)
     setIsModalOpen(true)
@@ -19,6 +23,16 @@ const DisplayCropGroup = ({
 
   const closeModal = () => {
     setIsModalOpen(false)
+  }
+
+  // Detail
+  const openModalDetail = (record) => {
+    setSelectedDataDetail(record)
+    setIsModalDetailOpen(true)
+  }
+  const closeModalDetail = () => {
+    setSelectedDataDetail(null)
+    setIsModalDetailOpen(false)
   }
 
   return (
@@ -32,13 +46,19 @@ const DisplayCropGroup = ({
           title="Tên vườn"
           dataIndex="name"
           key="1"
-          render={(text) => <h4>{text}</h4>}
-        />
+          render={(text, record) => (
+            <h4
+              onClick={() => openModalDetail(record)}
+              style={{ cursor: 'pointer' }}
+            >
+              {text}
+            </h4>
+          )}
+        />{' '}
         <Column title="Mã vườn" dataIndex="code" key="2" />
-        <Column title="Diện tích" dataIndex="area" key="3" />
+        {/* <Column title="Diện tích" dataIndex="area" key="3" />
         <Column title="Vùng" dataIndex="zoneName" key="4" />
-        <Column title="Khu vực" dataIndex="areaName" key="5" />
-
+        <Column title="Khu vực" dataIndex="areaName" key="5" /> */}
         <Column
           title="Trạng thái"
           dataIndex="isDelete"
@@ -65,7 +85,6 @@ const DisplayCropGroup = ({
             </Button>
           )}
         />
-
         <Column
           title="Cập nhật"
           key="7"
@@ -81,6 +100,14 @@ const DisplayCropGroup = ({
           )}
         />
       </Table>
+
+      <DetailCropGroup
+        key={selectedDataDetail ? selectedDataDetail.id : null}
+        isModalDetailOpen={isModalDetailOpen}
+        closeModalDetail={closeModalDetail}
+        selectedDataDetail={selectedDataDetail}
+      />
+
       <UpdateCropGroup
         key={selectedData ? selectedData.id : null}
         isModalOpen={isModalOpen}
