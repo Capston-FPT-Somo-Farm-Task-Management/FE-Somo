@@ -26,11 +26,10 @@ const DisplayMaterial = ({
     }
   }, [selectedData, dispatch])
 
-  const openModal = (record) => {
-    dispatch(getMaterialById(record.id)).then(() => {
+  const openModal = async (record) => {
+    await dispatch(getMaterialById(record.id)).then(() => {
       loadData()
     })
-    console.log(record)
     setSelectedData(record)
     setIsModalOpen(true)
   }
