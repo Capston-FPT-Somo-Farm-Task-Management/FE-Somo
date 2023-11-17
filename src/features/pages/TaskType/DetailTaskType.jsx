@@ -28,7 +28,7 @@ const DetailTaskType = ({
             <Descriptions.Item label="Mô tả">
               {selectedDataDetail.description}
             </Descriptions.Item>
-            <Descriptions.Item label="Diện tích">
+            <Descriptions.Item label="Loại">
               {selectedDataDetail.status}
             </Descriptions.Item>
             <Descriptions.Item label="Trạng thái">
