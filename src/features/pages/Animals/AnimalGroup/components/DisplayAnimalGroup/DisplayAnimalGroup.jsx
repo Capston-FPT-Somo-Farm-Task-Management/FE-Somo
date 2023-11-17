@@ -9,6 +9,7 @@ const DisplayAnimalGroup = ({
   fieldAnimal,
   onFinishDelete,
   onFinishUpdate,
+  searchTerm,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
@@ -35,13 +36,15 @@ const DisplayAnimalGroup = ({
     setIsModalDetailOpen(false)
   }
 
+  const searchAnimalGroup = fieldAnimal
+    ? fieldAnimal?.data?.filter((m) =>
+        m.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : []
+
   return (
     <>
-      <Table
-        dataSource={fieldAnimal ? fieldAnimal.data : null}
-        rowKey="id"
-        locale={{ emptyText: 'Chưa có chuồng nào' }}
-      >
+      <Table dataSource={searchAnimalGroup} rowKey="id">
         <Column
           title="Tên chuồng"
           dataIndex="name"
@@ -63,6 +66,11 @@ const DisplayAnimalGroup = ({
           title="Trạng thái"
           dataIndex="isDelete"
           key="6"
+          filters={[
+            { text: 'Tồn tại', value: false }, // giả sử 'false' đại diện cho 'Tồn tại'
+            { text: 'Không tồn tại', value: true }, // và 'true' đại diện cho 'Không tồn tại'
+          ]}
+          onFilter={(value, record) => record.isDelete === value}
           render={(isDelete) =>
             isDelete === false ? (
               <Badge status="success" text="Tồn tại" />
