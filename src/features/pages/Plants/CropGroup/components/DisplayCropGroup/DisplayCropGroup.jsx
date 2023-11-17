@@ -9,6 +9,7 @@ const DisplayCropGroup = ({
   fieldPlant,
   onFinishDelete,
   onFinishUpdate,
+  searchTerm,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
@@ -35,13 +36,15 @@ const DisplayCropGroup = ({
     setIsModalDetailOpen(false)
   }
 
+  const searchPlantGroup = fieldPlant
+    ? fieldPlant?.data?.filter((m) =>
+        m.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : []
+
   return (
     <>
-      <Table
-        dataSource={fieldPlant ? fieldPlant.data : null}
-        rowKey="id"
-        locale={{ emptyText: 'Chưa có vườn nào' }}
-      >
+      <Table dataSource={searchPlantGroup} rowKey="id">
         <Column
           title="Tên vườn"
           dataIndex="name"
@@ -63,6 +66,11 @@ const DisplayCropGroup = ({
           title="Trạng thái"
           dataIndex="isDelete"
           key="5"
+          filters={[
+            { text: 'Tồn tại', value: false }, // giả sử 'false' đại diện cho 'Tồn tại'
+            { text: 'Không tồn tại', value: true }, // và 'true' đại diện cho 'Không tồn tại'
+          ]}
+          onFilter={(value, record) => record.isDelete === value}
           render={(isDelete) =>
             isDelete === false ? (
               <Badge status="success" text="Tồn tại" />
