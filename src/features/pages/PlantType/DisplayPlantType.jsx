@@ -3,6 +3,7 @@ import Column from 'antd/es/table/Column'
 
 import { useEffect, useState } from 'react'
 import UpdatePlantType from './UpdatePlantType'
+import DetailPlantType from './DetailPlantType'
 
 const DisplayPlantType = ({
   plantType,
@@ -17,6 +18,9 @@ const DisplayPlantType = ({
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
 
+  const [isModalDetailOpen, setIsModalDetailOpen] = useState(false)
+  const [selectedDataDetail, setSelectedDataDetail] = useState(null)
+
   const handleDelete = (id) => {
     onFinishDeletePlantType(id)
   }
@@ -30,6 +34,16 @@ const DisplayPlantType = ({
     setIsModalOpen(false)
   }
 
+  // Detail
+  const openModalDetail = (record) => {
+    setSelectedDataDetail(record)
+    setIsModalDetailOpen(true)
+  }
+  const closeModalDetail = () => {
+    setSelectedDataDetail(null)
+    setIsModalDetailOpen(false)
+  }
+
   return (
     <>
       <Table
@@ -38,15 +52,21 @@ const DisplayPlantType = ({
         locale={{ emptyText: 'Chưa có loại cây trồng nào' }}
       >
         <Column
-          title="Tên cây trồng"
+          title="Tên loại cây trồng"
           dataIndex="name"
           key="1"
-          render={(text) => <h4>{text}</h4>}
-        />
-        <Column title="Nguồn gốc" dataIndex="origin" key="2" />
+          render={(text, record) => (
+            <h4
+              onClick={() => openModalDetail(record)}
+              style={{ cursor: 'pointer' }}
+            >
+              {text}
+            </h4>
+          )}
+        />{' '}
+        {/* <Column title="Nguồn gốc" dataIndex="origin" key="2" />
         <Column title="Môi trường sống" dataIndex="environment" key="3" />
-        <Column title="Mô tả" dataIndex="description" key="4" />
-
+        <Column title="Mô tả" dataIndex="description" key="4" /> */}
         <Column
           title="Trạng thái"
           dataIndex="isActive"
@@ -73,7 +93,6 @@ const DisplayPlantType = ({
             </Button>
           )}
         />
-
         <Column
           title="Cập nhật"
           key="7"
@@ -89,6 +108,14 @@ const DisplayPlantType = ({
           )}
         />
       </Table>
+
+      <DetailPlantType
+        key={selectedDataDetail ? selectedDataDetail.id : null}
+        isModalDetailOpen={isModalDetailOpen}
+        closeModalDetail={closeModalDetail}
+        selectedDataDetail={selectedDataDetail}
+      />
+
       <UpdatePlantType
         key={selectedData ? selectedData.id : null}
         isModalOpen={isModalOpen}
