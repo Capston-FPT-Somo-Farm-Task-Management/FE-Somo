@@ -55,7 +55,7 @@ const DisplayFarm = ({ farm }) => {
           justifyContent: 'space-around',
         }}
       >
-        {farm.map((item) => (
+        {farm?.map((item) => (
           <Card
             key={item.key}
             hoverable

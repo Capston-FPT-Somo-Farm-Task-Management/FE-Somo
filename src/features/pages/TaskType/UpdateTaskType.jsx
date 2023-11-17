@@ -1,5 +1,4 @@
 import { Button, Form, Input, Modal, Radio, Space } from 'antd'
-import { useEffect } from 'react'
 const { TextArea } = Input
 
 const UpdateTaskType = ({

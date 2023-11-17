@@ -22,7 +22,7 @@ export const createMaterial = createAsyncThunk(
   'materials/createMaterial',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post(baseUrl + '/Material', data, {
+      const response = await axiosInstance.post('/Material', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -62,7 +62,7 @@ export const deleteMaterial = createAsyncThunk(
   'materials/deleteMaterial',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.put(baseUrl + `/Material/Delete/${id}`)
+      const response = await axiosInstance.put(`/Material/Delete/${id}`)
       if (response.status === 200) {
         toast.success('Đổi trạng thái thành công')
         return response.data

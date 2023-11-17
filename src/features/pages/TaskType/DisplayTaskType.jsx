@@ -6,7 +6,12 @@ import { useSelector } from 'react-redux'
 import { getTaskTypeById } from 'features/slice/task/taskTypeByIdSlice'
 import { useDispatch } from 'react-redux'
 
-const DisplayTaskType = ({ taskType, onFinishUpdateTaskType, loadData }) => {
+const DisplayTaskType = ({
+  taskType,
+  onFinishUpdateTaskType,
+  loadData,
+  onFinishDeleteTaskType,
+}) => {
   const dispatch = useDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
@@ -23,14 +28,9 @@ const DisplayTaskType = ({ taskType, onFinishUpdateTaskType, loadData }) => {
     fetchData()
   }, [selectedData, dispatch, loadData])
 
-  // const handleDelete = (id) => {
-  //   onFinishDeletePlantType(id)
-  // }
-
   const openModal = async (record) => {
     await dispatch(getTaskTypeById(record.id))
     loadData()
-    console.log(record)
     setSelectedData(record)
     setIsModalOpen(true)
   }
@@ -54,12 +54,10 @@ const DisplayTaskType = ({ taskType, onFinishUpdateTaskType, loadData }) => {
             render={(text) => <h4>{text}</h4>}
           />
           <Column title="Loại công việc" dataIndex="status" key="2" />
-          {/* <Column title="Mô tả" dataIndex="description" key="3" /> */}
-
           <Column
             title="Trạng thái"
             dataIndex="isDelete"
-            key="5"
+            key="3"
             render={(isDelete) =>
               isDelete === false ? (
                 <Badge status="success" text="Tồn tại" />
@@ -70,13 +68,13 @@ const DisplayTaskType = ({ taskType, onFinishUpdateTaskType, loadData }) => {
           />
           <Column
             title="Đổi trạng thái"
-            key="6"
+            key="4"
             dataIndex="id"
             render={(_, record) => (
               <Button
                 size="middle"
                 danger
-                // onClick={() => handleDelete(record.id)}
+                onClick={() => onFinishDeleteTaskType(record.id)}
               >
                 Đổi
               </Button>
@@ -85,7 +83,7 @@ const DisplayTaskType = ({ taskType, onFinishUpdateTaskType, loadData }) => {
 
           <Column
             title="Cập nhật"
-            key="7"
+            key="5"
             dataIndex="id"
             render={(_, record) => (
               <Button
@@ -103,7 +101,6 @@ const DisplayTaskType = ({ taskType, onFinishUpdateTaskType, loadData }) => {
           taskTypeById={taskTypeById}
           isModalOpen={isModalOpen}
           closeModal={closeModal}
-          // loadDataPlantType={loadDataPlantType}
           selectedData={selectedData}
           onFinishUpdateTaskType={onFinishUpdateTaskType}
         />

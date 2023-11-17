@@ -7,6 +7,7 @@ import AddTaskType from './AddTaskType'
 import DisplayTaskType from './DisplayTaskType'
 import {
   createTaskType,
+  deleteTaskType,
   getTaskType,
   updateTaskType,
 } from 'features/slice/task/taskTypeSlice'
@@ -44,6 +45,12 @@ const TaskType = () => {
     })
   }
 
+  const onFinishDeleteTaskType = (id) => {
+    dispatch(deleteTaskType(id)).then(() => {
+      loadData()
+    })
+  }
+
   const loadData = () => {
     dispatch(getTaskType())
   }
@@ -57,8 +64,9 @@ const TaskType = () => {
       />
       <DisplayTaskType
         taskType={taskType}
-        onFinishUpdateTaskType={onFinishUpdateTaskType}
         loadData={loadData}
+        onFinishUpdateTaskType={onFinishUpdateTaskType}
+        onFinishDeleteTaskType={onFinishDeleteTaskType}
       />
     </>
   )

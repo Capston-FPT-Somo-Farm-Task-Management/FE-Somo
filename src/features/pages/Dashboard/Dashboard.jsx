@@ -12,7 +12,7 @@ const Dashboard = () => {
   const member = useSelector((state) => state.member.data)
   const taskByWeek = useSelector((state) => state.taskByWeek.data)
   const memberId = member.id
-  console.log(memberId);
+  console.log(memberId)
 
   const [selectedDay, setSelectedDay] = useState(null)
 

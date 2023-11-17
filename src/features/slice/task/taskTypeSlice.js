@@ -49,6 +49,22 @@ export const updateTaskType = createAsyncThunk(
   }
 )
 
+export const deleteTaskType = createAsyncThunk(
+  'taskType/deleteTaskType',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`/TaskType/(${id})/UpdateStatus`)
+      if (response.status === 200) {
+        toast.success(response.data.message)
+      }
+      return response.data
+    } catch (error) {
+      toast.error(error.response.data.message)
+      return rejectWithValue(error)
+    }
+  }
+)
+
 const taskTypeSlice = createSlice({
   name: 'taskType',
   initialState: {
@@ -91,6 +107,18 @@ const taskTypeSlice = createSlice({
         state.data = [action.payload]
       })
       .addCase(updateTaskType.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+
+      .addCase(deleteTaskType.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(deleteTaskType.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = action.payload
+      })
+      .addCase(deleteTaskType.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
       })
