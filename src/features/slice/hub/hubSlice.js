@@ -15,7 +15,6 @@ export const createHub = createAsyncThunk(
     try {
       const response = await axiosInstance.post('/HubConnection', finalData)
       if (response.status === 200) {
-        console.log(response.data.message)
         return response.data.data
       }
     } catch (error) {

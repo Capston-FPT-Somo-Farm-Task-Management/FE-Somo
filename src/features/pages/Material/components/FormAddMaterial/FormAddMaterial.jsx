@@ -10,6 +10,17 @@ const FormAddMaterial = ({
 }) => {
   const [fileList, setFileList] = useState([])
   const [uploadError, setUploadError] = useState(false)
+  const [form] = Form.useForm()
+
+  const onFileChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList)
+  }
+
+  const handleFormReset = () => {
+    form.resetFields()
+    setFileList([]) // Resetting fileList to its initial state
+    setUploadError(false)
+  }
 
   const onFinish = (values) => {
     if (fileList.length === 0) {
@@ -24,10 +35,7 @@ const FormAddMaterial = ({
     }
     onFinishCreate(formData)
     closeModal()
-  }
-
-  const onFileChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList)
+    handleFormReset()
   }
 
   return (
@@ -58,6 +66,7 @@ const FormAddMaterial = ({
           className="first-step-area"
           id="createMaterial"
           onFinish={onFinish}
+          form={form}
         >
           {/* Name */}
           <Form.Item
@@ -78,6 +87,7 @@ const FormAddMaterial = ({
               <Upload
                 listType="picture-card"
                 maxCount={1}
+                fileList={fileList}
                 onChange={onFileChange}
                 beforeUpload={() => false}
               >
