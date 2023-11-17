@@ -10,6 +10,7 @@ const DisplayPlantType = ({
   loadDataPlantType,
   onFinishDeletePlantType,
   onFinishUpdatePlantType,
+  searchTerm,
 }) => {
   useEffect(() => {
     loadDataPlantType()
@@ -44,10 +45,16 @@ const DisplayPlantType = ({
     setIsModalDetailOpen(false)
   }
 
+  const searchPlantType = plantType
+    ? plantType?.data?.filter((m) =>
+        m.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : []
+
   return (
     <>
       <Table
-        dataSource={plantType ? plantType.data : null}
+        dataSource={searchPlantType}
         rowKey="id"
         locale={{ emptyText: 'Chưa có loại cây trồng nào' }}
       >
@@ -71,6 +78,11 @@ const DisplayPlantType = ({
           title="Trạng thái"
           dataIndex="isActive"
           key="5"
+          filters={[
+            { text: 'Tồn tại', value: true },
+            { text: 'Không tồn tại', value: false },
+          ]}
+          onFilter={(value, record) => record.isActive === value}
           render={(isActive) =>
             isActive === true ? (
               <Badge status="success" text="Tồn tại" />

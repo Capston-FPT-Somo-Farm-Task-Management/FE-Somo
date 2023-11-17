@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import AddPlantType from './AddPlantType'
 import { useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { authServices } from 'services/authServices'
 import { getMemberById } from 'features/slice/user/memberSlice'
 import { getPlantType } from 'features/slice/plant/plantTypeSlice'
@@ -17,6 +17,12 @@ const PlantType = () => {
   const plantType = useSelector((state) => state.plantType.data)
   const member = useSelector((state) => state.member.data)
   const farmId = member.farmId
+
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleSearch = (value) => {
+    setSearchTerm(value)
+  }
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
@@ -50,6 +56,7 @@ const PlantType = () => {
       <AddPlantType
         onFinishCreatePlantType={onFinishCreatePlantType}
         farmId={farmId}
+        handleSearch={handleSearch}
       />
       <DisplayPlantType
         plantType={plantType}
@@ -57,6 +64,7 @@ const PlantType = () => {
         loadDataPlantType={loadDataPlantType}
         onFinishUpdatePlantType={onFinishUpdatePlantType}
         onFinishDeletePlantType={onFinishDeletePlantType}
+        searchTerm={searchTerm}
       />
     </>
   )
