@@ -5,6 +5,7 @@ import UpdateMaterial from './UpdateMaterial'
 import { getMaterialById } from 'features/slice/material/materialById'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
+import DetailMaterial from './DetailMaterial'
 
 const DisplayMaterial = ({
   material,
@@ -17,6 +18,9 @@ const DisplayMaterial = ({
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
   const materialById = useSelector((state) => state.materialById.data)
+
+  const [isModalDetailOpen, setIsModalDetailOpen] = useState(false)
+  const [selectedDataDetail, setSelectedDataDetail] = useState(null)
 
   useEffect(() => {
     if (selectedData) {
@@ -39,6 +43,16 @@ const DisplayMaterial = ({
     setIsModalOpen(false)
   }
 
+  // Detail
+  const openModalDetail = (record) => {
+    setSelectedDataDetail(record)
+    setIsModalDetailOpen(true)
+  }
+  const closeModalDetail = () => {
+    setSelectedDataDetail(null)
+    setIsModalDetailOpen(false)
+  }
+
   return (
     <>
       <Table
@@ -46,7 +60,19 @@ const DisplayMaterial = ({
         dataSource={material ? material.data : null}
         locale={{ emptyText: 'Chưa có công cụ nào' }}
       >
-        <Column title="Tên công cụ" dataIndex="name" key="1" />
+        <Column
+          title="Tên công cụ"
+          dataIndex="name"
+          key="1"
+          render={(text, record) => (
+            <h4
+              onClick={() => openModalDetail(record)}
+              style={{ cursor: 'pointer' }}
+            >
+              {text}
+            </h4>
+          )}
+        />{' '}
         <Column
           title="Hình ảnh"
           dataIndex="urlImage"
@@ -79,7 +105,6 @@ const DisplayMaterial = ({
             </Button>
           )}
         />
-
         <Column
           title="Cập nhật"
           key="5"
@@ -95,6 +120,14 @@ const DisplayMaterial = ({
           )}
         />
       </Table>
+
+      <DetailMaterial
+        key={selectedDataDetail ? selectedDataDetail.id : null}
+        isModalDetailOpen={isModalDetailOpen}
+        closeModalDetail={closeModalDetail}
+        selectedDataDetail={selectedDataDetail}
+      />
+
       <UpdateMaterial
         key={selectedData ? selectedData.id : null}
         materialById={materialById}
