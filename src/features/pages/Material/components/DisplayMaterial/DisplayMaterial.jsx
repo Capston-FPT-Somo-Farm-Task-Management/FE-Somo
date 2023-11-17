@@ -54,7 +54,7 @@ const DisplayMaterial = ({
     setIsModalDetailOpen(false)
   }
 
-  const filteredMaterials = material
+  const searchMaterial = material
     ? material?.data?.filter((m) =>
         m.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
@@ -62,7 +62,7 @@ const DisplayMaterial = ({
 
   return (
     <>
-      <Table rowKey="id" dataSource={filteredMaterials}>
+      <Table rowKey="id" dataSource={searchMaterial}>
         <Column
           title="Tên công cụ"
           dataIndex="name"
