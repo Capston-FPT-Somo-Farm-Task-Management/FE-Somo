@@ -1,29 +1,28 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import NoImage from "../../../../../../assets/no-image.png";
-import { Collapse, Empty, Image, Space } from "antd";
+import { Collapse, Empty, Image, Space, Timeline } from "antd";
 import { GrDocumentImage } from "react-icons/gr";
+import dayjs from "dayjs";
 
 function Evidence() {
   const evidenceData = useSelector((state) => state.evidence.data);
 
   const { Panel } = Collapse;
+  console.log(evidenceData);
 
   const renderImages = () => {
-    let totalEvidenceCount = 0;
     if (evidenceData && evidenceData.data && evidenceData.data.length > 0) {
-      return evidenceData.data.map((evidence, index) => {
-        console.log(evidence);
-        totalEvidenceCount++;
-        const evidenceCount = totalEvidenceCount;
-        return (
-          <div key={evidence.id} className="evidence-content">
-            <div className="evidence-count">
-              <span style={{ textDecoration: "none", color: "red" }}>* </span>
-              <span>Báo cáo số {evidenceCount}</span>{" "}
-            </div>
+      const timelineItems = evidenceData.data.map((evidence, index) => {
+        const formattedUpdateDate = dayjs(evidence.submitDate).format(
+          "Ngày DD-MM-YYYY HH:mm"
+        );
+        return {
+          date: formattedUpdateDate,
+          content: (
+            <div key={evidence.id} className="evidence-content">
             <p className="evidence-desc">Mô tả: {evidence.description}</p>
-            <p className="evidence-time">Được gửi {evidence.time}</p>
+            <p className="evidence-time">Đã gửi {evidence.time}</p>
             <Collapse accordion className="collapse-evidence">
               <Panel
                 header={
@@ -105,10 +104,23 @@ function Evidence() {
               </Panel>
             </Collapse>
           </div>
-        );
+          ),
+        };
       });
+
+      return (
+        <Space direction="horizontal">
+          <Timeline mode="left">
+            {timelineItems.map((item, index) => (
+              <Timeline.Item color="green" key={index} label={item.date}>
+                {item.content}
+              </Timeline.Item>
+            ))}
+          </Timeline>
+        </Space>
+      );
     } else {
-      return <Empty description="Chưa có báo cáo nào"/>;
+      return <Empty description="Chưa có báo cáo nào" />;
     }
   };
   return (
