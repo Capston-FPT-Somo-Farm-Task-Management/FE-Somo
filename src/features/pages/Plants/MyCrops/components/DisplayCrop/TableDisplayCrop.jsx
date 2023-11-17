@@ -2,6 +2,7 @@ import { Badge, Button, Table } from 'antd'
 import { useState } from 'react'
 import Column from 'antd/es/table/Column'
 import UpdateCrop from './UpdateCrop'
+import DetailCrop from './DetailCrop'
 
 const TableDisplayCrop = ({
   areaByFarm,
@@ -12,6 +13,9 @@ const TableDisplayCrop = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
+
+  const [isModalDetailOpen, setIsModalDetailOpen] = useState(false)
+  const [selectedDataDetail, setSelectedDataDetail] = useState(null)
 
   const handleDelete = (id) => {
     onFinishDeletePlant(id)
@@ -26,6 +30,16 @@ const TableDisplayCrop = ({
     setIsModalOpen(false)
   }
 
+  // Detail
+  const openModalDetail = (record) => {
+    setSelectedDataDetail(record)
+    setIsModalDetailOpen(true)
+  }
+  const closeModalDetail = () => {
+    setSelectedDataDetail(null)
+    setIsModalDetailOpen(false)
+  }
+
   return (
     <>
       <Table
@@ -37,13 +51,19 @@ const TableDisplayCrop = ({
           title="Tên cây trồng"
           dataIndex="name"
           key="1"
-          render={(text) => <h4>{text}</h4>}
-        />
+          render={(text, record) => (
+            <h4
+              onClick={() => openModalDetail(record)}
+              style={{ cursor: 'pointer' }}
+            >
+              {text}
+            </h4>
+          )}
+        />{' '}
         <Column title="Mã cây trồng" dataIndex="externalId" key="2" />
-        <Column title="Vườn" dataIndex="fieldName" key="3" />
+        {/* <Column title="Vườn" dataIndex="fieldName" key="3" />
         <Column title="Vùng" dataIndex="zoneName" key="4" />
-        <Column title="Khu vực" dataIndex="areaName" key="5" />
-
+        <Column title="Khu vực" dataIndex="areaName" key="5" /> */}
         <Column
           title="Trạng thái"
           dataIndex="status"
@@ -56,7 +76,6 @@ const TableDisplayCrop = ({
             )
           }
         />
-
         <Column
           title="Tuỳ chọn"
           key="7"
@@ -71,7 +90,6 @@ const TableDisplayCrop = ({
             </Button>
           )}
         />
-
         <Column
           title="Cập nhật"
           key="7"
@@ -87,6 +105,14 @@ const TableDisplayCrop = ({
           )}
         />
       </Table>
+
+      <DetailCrop
+        key={selectedDataDetail ? selectedDataDetail.id : null}
+        isModalDetailOpen={isModalDetailOpen}
+        closeModalDetail={closeModalDetail}
+        selectedDataDetail={selectedDataDetail}
+      />
+
       <UpdateCrop
         key={selectedData ? selectedData.id : null}
         farmId={farmId}
