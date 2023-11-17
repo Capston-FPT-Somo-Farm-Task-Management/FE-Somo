@@ -10,6 +10,7 @@ const TableDisplayZone = ({
   zoneType,
   onFinishUpdateZone,
   onFinishDeleteZone,
+  searchTerm,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
@@ -36,13 +37,14 @@ const TableDisplayZone = ({
     setIsModalDetailOpen(false)
   }
 
+  const searchZone = zoneByFarm
+    ? zoneByFarm?.data?.filter((m) =>
+        m.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : []
   return (
     <>
-      <Table
-        rowKey="id"
-        dataSource={zoneByFarm ? zoneByFarm.data : null}
-        locale={{ emptyText: 'Chưa có vùng nào' }}
-      >
+      <Table rowKey="id" dataSource={searchZone}>
         <Column
           title="Tên vùng"
           dataIndex="name"
@@ -64,6 +66,11 @@ const TableDisplayZone = ({
           title="Trạng thái"
           dataIndex="status"
           key="6"
+          filters={[
+            { text: 'Tồn tại', value: 'Tồn tại' },
+            { text: 'Không tồn tại', value: 'Không tồn tại' },
+          ]}
+          onFilter={(value, record) => record.status.indexOf(value) === 0}
           render={(status) =>
             status === 'Tồn tại' ? (
               <Badge status="success" text="Tồn tại" />

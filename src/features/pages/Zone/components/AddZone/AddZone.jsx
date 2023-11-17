@@ -3,7 +3,12 @@ import Search from 'antd/es/input/Search'
 import { useState } from 'react'
 import FormAddZone from '../FormAddZone/FormAddZone'
 
-const AddZone = ({ onFinishCreateZone, areaByFarm, zoneType }) => {
+const AddZone = ({
+  onFinishCreateZone,
+  areaByFarm,
+  zoneType,
+  handleSearch,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => {
@@ -42,6 +47,7 @@ const AddZone = ({ onFinishCreateZone, areaByFarm, zoneType }) => {
                 marginLeft: '15px',
                 width: 300,
               }}
+              onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
         </div>
