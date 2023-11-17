@@ -10,6 +10,7 @@ const DisplayAnimalType = ({
   onFinishDeleteAnimalType,
   onFinishUpdateAnimalType,
   loadDataAnimalType,
+  searchTerm,
 }) => {
   useEffect(() => {
     loadDataAnimalType()
@@ -44,10 +45,16 @@ const DisplayAnimalType = ({
     setIsModalDetailOpen(false)
   }
 
+  const searchAnimalType = animalType
+    ? animalType?.data?.filter((m) =>
+        m.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : []
+
   return (
     <>
       <Table
-        dataSource={animalType ? animalType.data : ''}
+        dataSource={searchAnimalType}
         rowKey="id"
         locale={{ emptyText: 'Chưa có loại vật nuôi nào' }}
       >
@@ -71,6 +78,11 @@ const DisplayAnimalType = ({
           title="Trạng thái"
           dataIndex="isActive"
           key="5"
+          filters={[
+            { text: 'Tồn tại', value: true },
+            { text: 'Không tồn tại', value: false },
+          ]}
+          onFilter={(value, record) => record.isActive === value}
           render={(isActive) =>
             isActive === true ? (
               <Badge status="success" text="Tồn tại" />
