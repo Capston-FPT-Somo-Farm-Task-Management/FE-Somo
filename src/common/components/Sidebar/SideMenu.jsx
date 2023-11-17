@@ -50,9 +50,7 @@ const { Sider } = Layout;
 const SideMenu = () => {
   const [userName, setUserName] = useState();
   const [userRole, setUserRole] = useState();
-  const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const isDesktop = useDesktopMediaQuery();
   const isTablet = useTabletMediaQuery();
@@ -106,14 +104,6 @@ const SideMenu = () => {
     const userName = authServices.getUserName();
     setUserName(userName);
   }, []);
-
-  const logout = () => {
-    const data = { token: localStorage.getItem("connectionId") };
-    dispatch(deleteHubConnection(data));
-    authServices.logOut();
-    toast.success("Đăng xuất thành công");
-    navigate("/login");
-  };
 
   return (
     <div className="sider">
@@ -287,12 +277,6 @@ const SideMenu = () => {
               <span style={{ marginLeft: "10px" }}>Nhân viên</span>
               <Link to="/employee"></Link>
             </Menu.Item>
-
-            <Menu.Item key="/login" onClick={logout}>
-              <LogoutOutlined />
-              <span>Đăng xuất</span>
-              <Link to="/login"></Link>
-            </Menu.Item>
           </Menu>
         </Sider>
       )}
@@ -417,12 +401,6 @@ const SideMenu = () => {
                     <GrUserWorker />
                     <span style={{ marginLeft: "10px" }}>Nhân viên</span>
                     <Link to="/employee"></Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="/login" onClick={logout}>
-                    <LogoutOutlined />
-                    <span>Đăng xuất</span>
-                    <Link to="/login"></Link>
                   </Menu.Item>
                 </Menu>
               }
