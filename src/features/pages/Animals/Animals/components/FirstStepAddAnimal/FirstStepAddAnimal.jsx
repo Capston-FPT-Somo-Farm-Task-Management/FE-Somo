@@ -64,6 +64,7 @@ const FirstStepAddAnimal = ({
     }
     onFinishCreateAnimal(finalValues)
     closeModal()
+    form.resetFields()
   }
 
   return (
