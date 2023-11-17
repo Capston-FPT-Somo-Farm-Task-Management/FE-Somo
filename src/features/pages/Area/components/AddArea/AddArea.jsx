@@ -3,7 +3,7 @@ import Search from 'antd/es/input/Search'
 import { useState } from 'react'
 import FormAddArea from '../FormAddArea/FormAddArea'
 
-const AddArea = ({ onFinishCreate }) => {
+const AddArea = ({ onFinishCreate, handleSearch }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => {
@@ -40,6 +40,7 @@ const AddArea = ({ onFinishCreate }) => {
                 marginLeft: '15px',
                 width: 300,
               }}
+              onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
         </div>

@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 import AddArea from './components/AddArea/AddArea'
 import DisplayArea from './components/DisplayArea/DisplayArea'
 import { useDispatch } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { getMemberById } from 'features/slice/user/memberSlice'
 import { getAreaByFarmId } from 'features/slice/area/areaByFarmSlice'
 import { authServices } from 'services/authServices'
@@ -17,7 +17,12 @@ const Area = () => {
   const member = useSelector((state) => state.member.data)
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const farmId = member.farmId
-  console.log(member)
+
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleSearch = (value) => {
+    setSearchTerm(value)
+  }
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
@@ -56,11 +61,12 @@ const Area = () => {
 
   return (
     <>
-      <AddArea onFinishCreate={onFinishCreate} />
+      <AddArea onFinishCreate={onFinishCreate} handleSearch={handleSearch} />
       <DisplayArea
         areaByFarm={areaByFarm}
         onFinishDelete={onFinishDelete}
         onFinishUpdate={onFinishUpdate}
+        searchTerm={searchTerm}
       />
     </>
   )
