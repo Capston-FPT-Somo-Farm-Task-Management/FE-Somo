@@ -12,7 +12,10 @@ import {
   updateTaskType,
 } from 'features/slice/task/taskTypeSlice'
 import { getTaskTypeTemplate } from 'features/slice/task/taskTypeTemplate'
-import { getTaskTypeExcel } from 'features/slice/task/taskTypeExcelSlice'
+import {
+  createTaskTypeByExcel,
+  getTaskTypeExcel,
+} from 'features/slice/task/taskTypeExcelSlice'
 
 const TaskType = () => {
   const dispatch = useDispatch()
@@ -31,6 +34,12 @@ const TaskType = () => {
 
   const getTaskTypeByExcel = () => {
     dispatch(getTaskTypeExcel())
+  }
+
+  const onFinishCreateTaskTypeExcel = (value) => {
+    dispatch(createTaskTypeByExcel(value)).then(() => {
+      loadData()
+    })
   }
 
   const onFinishCreateTaskType = (values) => {
@@ -61,6 +70,7 @@ const TaskType = () => {
         onFinishCreateTaskType={onFinishCreateTaskType}
         getTemplate={getTemplate}
         getTaskTypeByExcel={getTaskTypeByExcel}
+        onFinishCreateTaskTypeExcel={onFinishCreateTaskTypeExcel}
       />
       <DisplayTaskType
         taskType={taskType}

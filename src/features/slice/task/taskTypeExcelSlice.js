@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { createAxiosInstance } from 'features/api/axiosInstance'
+import { toast } from 'react-toastify'
 
 const axiosInstance = createAxiosInstance()
 
@@ -27,6 +28,32 @@ export const getTaskTypeExcel = createAsyncThunk(
 
       return response.data
     } catch (error) {
+      rejectWithValue(error)
+    }
+  }
+)
+
+export const createTaskTypeByExcel = createAsyncThunk(
+  'taskTypeExcel/createTaskTypeByExcel',
+  async (data, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+      const response = await axiosInstance.post(
+        '/TaskType/ImortExcel',
+        data,
+        config
+      )
+      if (response.status === 200) {
+        console.log('abc')
+        toast.success(response.data.message)
+        return response.data.data
+      }
+    } catch (error) {
+      toast.error(error.response.data.message)
       rejectWithValue(error)
     }
   }
