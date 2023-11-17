@@ -54,7 +54,7 @@ export const taskTitle = [
           color = "#f94144";
           break;
         case "Trung bình":
-          color = "#fca311";
+          color = "#e09f3e";
           break;
         case "Thấp":
           color = "#90be6d";
