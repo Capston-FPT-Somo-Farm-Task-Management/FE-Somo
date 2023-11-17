@@ -8,11 +8,11 @@ import { getTaskByWeek } from 'features/slice/task/taskByWeekSlice'
 import { authServices } from 'services/authServices'
 
 const Dashboard = () => {
+  const barChartRef = useRef(null)
   const dispatch = useDispatch()
   const member = useSelector((state) => state.member.data)
   const taskByWeek = useSelector((state) => state.taskByWeek.data)
-  const memberId = member.id
-  console.log(memberId)
+  const memberId = member?.id
 
   const [selectedDay, setSelectedDay] = useState(null)
 
@@ -24,8 +24,6 @@ const Dashboard = () => {
   const handleBarClick = (index) => {
     setSelectedDay(index)
   }
-
-  const barChartRef = useRef(null)
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -45,7 +43,6 @@ const Dashboard = () => {
     <>
       <PieChartTaskWeek taskByWeek={taskByWeek} selectedDay={selectedDay} />
       <Divider dashed />
-      {/* <ChartTaskWeek taskByWeek={taskByWeek} onBarClick={handleBarClick} /> */}
       <div ref={barChartRef}>
         <ChartTaskWeek taskByWeek={taskByWeek} onBarClick={handleBarClick} />
       </div>

@@ -5,6 +5,7 @@ import Column from 'antd/es/table/Column'
 import { useSelector } from 'react-redux'
 import { getTaskTypeById } from 'features/slice/task/taskTypeByIdSlice'
 import { useDispatch } from 'react-redux'
+import DetailTaskType from './DetailTaskType'
 
 const DisplayTaskType = ({
   taskType,
@@ -15,6 +16,10 @@ const DisplayTaskType = ({
   const dispatch = useDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
+
+  const [isModalDetailOpen, setIsModalDetailOpen] = useState(false)
+  const [selectedDataDetail, setSelectedDataDetail] = useState(null)
+
   const taskTypeById = useSelector((state) => state.taskTypeById.data)
 
   useEffect(() => {
@@ -39,6 +44,17 @@ const DisplayTaskType = ({
     setIsModalOpen(false)
   }
 
+  // Detail
+
+  const openModalDetail = (record) => {
+    setSelectedDataDetail(record)
+    setIsModalDetailOpen(true)
+  }
+  const closeModalDetail = () => {
+    setSelectedDataDetail(null)
+    setIsModalDetailOpen(false)
+  }
+
   return (
     <>
       <>
@@ -51,9 +67,16 @@ const DisplayTaskType = ({
             title="Tên công việc"
             dataIndex="name"
             key="1"
-            render={(text) => <h4>{text}</h4>}
+            render={(text, record) => (
+              <h4
+                onClick={() => openModalDetail(record)}
+                style={{ cursor: 'pointer' }}
+              >
+                {text}
+              </h4>
+            )}
           />
-          <Column title="Loại công việc" dataIndex="status" key="2" />
+          {/* <Column title="Loại công việc" dataIndex="status" key="2" /> */}
           <Column
             title="Trạng thái"
             dataIndex="isDelete"
@@ -96,12 +119,18 @@ const DisplayTaskType = ({
             )}
           />
         </Table>
+        <DetailTaskType
+          key={selectedDataDetail ? selectedDataDetail.id : null}
+          isModalDetailOpen={isModalDetailOpen}
+          closeModalDetail={closeModalDetail}
+          selectedDataDetail={selectedDataDetail}
+        />
         <UpdateTaskType
           key={selectedData ? selectedData.id : null}
-          taskTypeById={taskTypeById}
           isModalOpen={isModalOpen}
           closeModal={closeModal}
           selectedData={selectedData}
+          taskTypeById={taskTypeById}
           onFinishUpdateTaskType={onFinishUpdateTaskType}
         />
       </>
