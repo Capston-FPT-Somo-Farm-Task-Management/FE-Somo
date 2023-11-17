@@ -7,6 +7,7 @@ const FormAddPlantType = ({
   closeModalType,
   onFinishCreatePlantType,
 }) => {
+  const [form] = Form.useForm()
   const onFinish = (values) => {
     const finalValues = {
       ...values,
@@ -15,6 +16,7 @@ const FormAddPlantType = ({
     }
     onFinishCreatePlantType(finalValues)
     closeModalType()
+    form.resetFields()
   }
 
   return (
@@ -45,6 +47,7 @@ const FormAddPlantType = ({
           id="createPlantType"
           className="first-step-plan-type"
           onFinish={onFinish}
+          form={form}
         >
           {/* Plant Type Name */}
 
