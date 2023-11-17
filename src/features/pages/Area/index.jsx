@@ -17,7 +17,7 @@ const Area = () => {
   const member = useSelector((state) => state.member.data)
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const farmId = member.farmId
-  console.log(member);
+  console.log(member)
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
