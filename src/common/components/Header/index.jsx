@@ -1,79 +1,87 @@
 import React from "react";
 import LogoSomo from "../../../assets/logo_Somo.png";
-import { Link } from "react-router-dom";
-import { CaretDownOutlined } from "@ant-design/icons";
-import { Dropdown, Space, Select, Input } from "antd";
-import { quickAdd, themeMode, userName, userDropdown } from "./headerData";
+import { Link, useNavigate } from "react-router-dom";
+import { UserOutlined, BellOutlined, LogoutOutlined } from "@ant-design/icons";
+import { Dropdown, Avatar, Menu, Space } from "antd";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteHubConnection } from "features/slice/hub/hubSlice";
+import { authServices } from "services/authServices";
+import { toast } from "react-toastify";
 
-function Header() {
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
+function HeaderComp() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const member = useSelector((state) => state.member.data);
+  console.log(member);
+
+  const handleMenuClick = (e) => {
+    if (e.key === "logout") {
+      // Xử lý logic đăng xuất ở đây
+    } else if (e.key === "profile") {
+      // Xử lý hiển thị thông tin cá nhân ở đây
+    }
   };
-  const { Search } = Input;
-  const onSearch = (value, _e, info) => console.log(info?.source, value);
+
+  const logout = () => {
+    const data = { token: localStorage.getItem("connectionId") };
+    dispatch(deleteHubConnection(data));
+    authServices.logOut();
+    toast.success("Đăng xuất thành công");
+    navigate("/login");
+  };
+
+  const items = [
+    {
+      key: "profile",
+      label: <Link to="/">Xem thông tin</Link>,
+    },
+    {
+      key: "logout",
+      label: (
+        <div key="/login" onClick={logout}>
+          <span>Đăng xuất</span>
+          <Link to="/login"></Link>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <>
       <nav className="navBar">
-        <div className="navLeft">
-          {/* Logo */}
-          <div className="logo">
-            <Link to="/">
-              <img src={LogoSomo} alt="" />
-            </Link>
-          </div>
-
-          {/* Search */}
-          <div className="searchBar">
-            <Space direction="vertical">
-              <Search
-                placeholder="Tìm kiếm"
-                allowClear
-                onSearch={onSearch}
-                style={{
-                  marginLeft: "15px",
-                  width: 300,
-                }}
-              />
-            </Space>
-          </div>
-        </div>
-
         <div className="navRight">
-          {/* quickAdd */}
-          <div className="quickAdd">
-            <Select
-              defaultValue="Thêm nhanh"
-              style={{
-                width: 150,
+          <div className="header-notification">
+            <Dropdown
+              menu={{
+                items,
               }}
-              onChange={handleChange}
-              options={quickAdd}
-            />
+              trigger={["hover"]}
+              placement="bottom"
+              arrow
+            >
+              <BellOutlined />
+            </Dropdown>
           </div>
-
-          {/* userDropdown */}
-          <div className="profile">
-            <Dropdown menu={{ items: userDropdown }} trigger={["click"]}>
+          <div className="header-profile">
+            <Dropdown
+              menu={{
+                items,
+              }}
+              trigger={["hover"]}
+              placement="bottom"
+              arrow
+            >
               <a onClick={(e) => e.preventDefault()}>
                 <Space>
-                  {userName}
-                  <CaretDownOutlined />
+                  <Avatar
+                    src={member.avatar}
+                    size="large"
+                    icon={<UserOutlined />}
+                  />
+                  {member.name}
                 </Space>
               </a>
             </Dropdown>
-          </div>
-
-          {/* themeMode */}
-          <div className="themeMode">
-            <Select
-              defaultValue="lightMode"
-              style={{
-                width: 150,
-              }}
-              onChange={handleChange}
-              options={themeMode}
-            />
           </div>
         </div>
       </nav>
@@ -81,4 +89,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default HeaderComp;

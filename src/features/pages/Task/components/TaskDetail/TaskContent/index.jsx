@@ -2,21 +2,8 @@ import { Card, Space } from "antd";
 import dayjs from "dayjs";
 import React, { useState } from "react";
 import {
-  GrMap,
-  GrProjects,
-  GrObjectGroup,
   GrDocumentTime,
-  GrAlarm,
-  GrCycle,
-  GrAnnounce,
-  GrUserManager,
-  GrUser,
-  GrUserWorker,
-  GrTools,
-  GrHostMaintenance,
-  GrSync,
 } from "react-icons/gr";
-import { GiCow, GiFruitTree, GiRingingBell } from "react-icons/gi";
 import TaskDetailHabitant from "./components/taskDetailHabitant";
 import TaskDetailOther from "./components/taskDetailOther";
 
@@ -49,11 +36,6 @@ function TaskContent({ taskData }) {
         <div className="task-detail">
           <div
             className="task-detail-title-row"
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              borderBotton: "1px solid black",
-            }}
           >
             <div className="task-detail-title">
               <Space>
@@ -82,7 +64,7 @@ function TaskContent({ taskData }) {
                 </p>
               )}
             </div>
-            <div className="task-title-priority">
+            <div className="task-title-priority-status">
               {taskData.priority === "Cao" ? (
                 <p style={{ color: "#f94144" }}>
                   <span>Độ ưu tiên: </span> {taskData.priority}

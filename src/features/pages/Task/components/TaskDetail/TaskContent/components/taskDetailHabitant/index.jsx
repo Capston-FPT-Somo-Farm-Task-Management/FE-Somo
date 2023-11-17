@@ -16,7 +16,7 @@ const TaskDetailHabitant = ({
   return (
     <>
       <h2>
-        <GrMap /> Nơi thực hiện
+        <GrMap color="white" /> Nơi thực hiện
       </h2>
       <div className="task-detail-item">
         <div className="task-detail-text">
