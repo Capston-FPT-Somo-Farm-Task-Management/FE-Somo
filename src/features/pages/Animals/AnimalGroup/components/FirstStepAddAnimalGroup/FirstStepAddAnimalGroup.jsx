@@ -34,6 +34,7 @@ const FirstStepAddAnimalGroup = ({
     }
     onFinishCreate(finalValues)
     closeModal()
+    form.resetFields()
   }
 
   return (
