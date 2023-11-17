@@ -12,6 +12,7 @@ const DisplayTaskType = ({
   onFinishUpdateTaskType,
   loadData,
   onFinishDeleteTaskType,
+  searchTerm,
 }) => {
   const dispatch = useDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -55,14 +56,16 @@ const DisplayTaskType = ({
     setIsModalDetailOpen(false)
   }
 
+  const searchTaskType = taskType
+    ? taskType?.data?.filter((m) =>
+        m.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : []
+
   return (
     <>
       <>
-        <Table
-          dataSource={taskType ? taskType?.data : null}
-          rowKey="id"
-          locale={{ emptyText: 'Chưa có loại công việc nào' }}
-        >
+        <Table dataSource={searchTaskType} rowKey="id">
           <Column
             title="Tên công việc"
             dataIndex="name"
@@ -81,6 +84,11 @@ const DisplayTaskType = ({
             title="Trạng thái"
             dataIndex="isDelete"
             key="3"
+            filters={[
+              { text: 'Tồn tại', value: false }, // giả sử 'false' đại diện cho 'Tồn tại'
+              { text: 'Không tồn tại', value: true }, // và 'true' đại diện cho 'Không tồn tại'
+            ]}
+            onFilter={(value, record) => record.isDelete === value}
             render={(isDelete) =>
               isDelete === false ? (
                 <Badge status="success" text="Tồn tại" />

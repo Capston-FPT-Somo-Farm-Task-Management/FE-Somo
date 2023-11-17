@@ -9,6 +9,7 @@ const AddTaskType = ({
   getTemplate,
   getTaskTypeByExcel,
   onFinishCreateTaskTypeExcel,
+  handleSearch,
 }) => {
   const [isModalOpenType, setIsModalOpenType] = useState(false)
 
@@ -82,6 +83,7 @@ const AddTaskType = ({
                 marginLeft: '15px',
                 width: 300,
               }}
+              onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
         </div>
