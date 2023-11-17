@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Badge, Button, Table } from 'antd'
 import Column from 'antd/es/table/Column'
 import UpdateAnimalType from './UpdateAnimalType'
+import DetailAnimalType from './DetailAnimalType'
 
 const DisplayAnimalType = ({
   farmId,
@@ -17,6 +18,9 @@ const DisplayAnimalType = ({
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
 
+  const [isModalDetailOpen, setIsModalDetailOpen] = useState(false)
+  const [selectedDataDetail, setSelectedDataDetail] = useState(null)
+
   const handleDelete = (id) => {
     onFinishDeleteAnimalType(id)
   }
@@ -30,6 +34,16 @@ const DisplayAnimalType = ({
     setIsModalOpen(false)
   }
 
+  // Detail
+  const openModalDetail = (record) => {
+    setSelectedDataDetail(record)
+    setIsModalDetailOpen(true)
+  }
+  const closeModalDetail = () => {
+    setSelectedDataDetail(null)
+    setIsModalDetailOpen(false)
+  }
+
   return (
     <>
       <Table
@@ -38,15 +52,21 @@ const DisplayAnimalType = ({
         locale={{ emptyText: 'Chưa có loại vật nuôi nào' }}
       >
         <Column
-          title="Tên vật nuôi"
+          title="Tên loại vật nuôi"
           dataIndex="name"
           key="1"
-          render={(text) => <h4>{text}</h4>}
-        />
-        <Column title="Nguồn gốc" dataIndex="origin" key="2" />
+          render={(text, record) => (
+            <h4
+              onClick={() => openModalDetail(record)}
+              style={{ cursor: 'pointer' }}
+            >
+              {text}
+            </h4>
+          )}
+        />{' '}
+        {/* <Column title="Nguồn gốc" dataIndex="origin" key="2" />
         <Column title="Môi trường sống" dataIndex="environment" key="3" />
-        <Column title="Mô tả" dataIndex="description" key="4" />
-
+        <Column title="Mô tả" dataIndex="description" key="4" /> */}
         <Column
           title="Trạng thái"
           dataIndex="isActive"
@@ -73,7 +93,6 @@ const DisplayAnimalType = ({
             </Button>
           )}
         />
-
         <Column
           title="Cập nhật"
           key="6"
@@ -89,6 +108,14 @@ const DisplayAnimalType = ({
           )}
         />
       </Table>
+
+      <DetailAnimalType
+        key={selectedDataDetail ? selectedDataDetail.id : null}
+        isModalDetailOpen={isModalDetailOpen}
+        closeModalDetail={closeModalDetail}
+        selectedDataDetail={selectedDataDetail}
+      />
+
       <UpdateAnimalType
         key={selectedData ? selectedData.id : null}
         farmId={farmId}
