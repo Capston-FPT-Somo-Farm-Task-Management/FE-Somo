@@ -13,6 +13,7 @@ const DisplayMaterial = ({
   onFinishUpdate,
   farmId,
   loadData,
+  searchTerm,
 }) => {
   const dispatch = useDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -53,13 +54,15 @@ const DisplayMaterial = ({
     setIsModalDetailOpen(false)
   }
 
+  const filteredMaterials = material
+    ? material?.data?.filter((m) =>
+        m.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : []
+
   return (
     <>
-      <Table
-        rowKey="id"
-        dataSource={material ? material.data : null}
-        locale={{ emptyText: 'Chưa có công cụ nào' }}
-      >
+      <Table rowKey="id" dataSource={filteredMaterials}>
         <Column
           title="Tên công cụ"
           dataIndex="name"
