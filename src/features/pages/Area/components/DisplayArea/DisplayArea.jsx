@@ -2,10 +2,19 @@ import { Badge, Button, Table } from 'antd'
 import Column from 'antd/es/table/Column'
 import UpdateArea from './UpdateArea'
 import { useState } from 'react'
+import DetailArea from './DetailArea'
 
-const DisplayArea = ({ areaByFarm, onFinishDelete, onFinishUpdate }) => {
+const DisplayArea = ({
+  areaByFarm,
+  onFinishDelete,
+  onFinishUpdate,
+  searchTerm,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
+
+  const [isModalDetailOpen, setIsModalDetailOpen] = useState(false)
+  const [selectedDataDetail, setSelectedDataDetail] = useState(null)
 
   const openModal = (record) => {
     setSelectedData(record)
@@ -16,21 +25,51 @@ const DisplayArea = ({ areaByFarm, onFinishDelete, onFinishUpdate }) => {
     setIsModalOpen(false)
   }
 
+  // Detail
+
+  const openModalDetail = (record) => {
+    setSelectedDataDetail(record)
+    setIsModalDetailOpen(true)
+  }
+  const closeModalDetail = () => {
+    setSelectedDataDetail(null)
+    setIsModalDetailOpen(false)
+  }
+
+  const searchArea = areaByFarm
+    ? areaByFarm?.data?.filter((m) =>
+        m.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : []
+
   return (
     <>
-      <Table
-        rowKey="id"
-        dataSource={areaByFarm ? areaByFarm.data : null}
-        locale={{ emptyText: 'Chưa có khu vực' }}
-      >
-        <Column title="Tên khu vực" dataIndex="name" key="1" />
+      <Table rowKey="id" dataSource={searchArea}>
+        <Column
+          title="Tên khu vực"
+          dataIndex="name"
+          key="1"
+          render={(text, record) => (
+            <h4
+              onClick={() => openModalDetail(record)}
+              style={{ cursor: 'pointer' }}
+            >
+              {text}
+            </h4>
+          )}
+        />{' '}
         <Column title="Mã khu vực" dataIndex="code" key="2" />
-        <Column title="Diện tích" dataIndex="fArea" key="3" />
-        <Column title="Tên trang trại" dataIndex="farmName" key="4" />
+        {/* <Column title="Diện tích" dataIndex="fArea" key="3" /> */}
+        {/* <Column title="Tên trang trại" dataIndex="farmName" key="4" /> */}
         <Column
           title="Trạng thái"
           dataIndex="status"
           key="5"
+          filters={[
+            { text: 'Tồn tại', value: 'Tồn tại' },
+            { text: 'Không tồn tại', value: 'Không tồn tại' },
+          ]}
+          onFilter={(value, record) => record.status.indexOf(value) === 0}
           render={(status) =>
             status === 'Tồn tại' ? (
               <Badge status="success" text="Tồn tại" />
@@ -53,7 +92,6 @@ const DisplayArea = ({ areaByFarm, onFinishDelete, onFinishUpdate }) => {
             </Button>
           )}
         />
-
         <Column
           title="Cập nhật"
           key="7"
@@ -69,6 +107,14 @@ const DisplayArea = ({ areaByFarm, onFinishDelete, onFinishUpdate }) => {
           )}
         />
       </Table>
+
+      <DetailArea
+        key={selectedDataDetail ? selectedDataDetail.id : null}
+        isModalDetailOpen={isModalDetailOpen}
+        closeModalDetail={closeModalDetail}
+        selectedDataDetail={selectedDataDetail}
+      />
+
       <UpdateArea
         key={selectedData ? selectedData.id : null}
         isModalOpen={isModalOpen}

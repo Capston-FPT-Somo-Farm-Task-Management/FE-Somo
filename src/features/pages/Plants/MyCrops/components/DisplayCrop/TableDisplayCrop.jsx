@@ -2,6 +2,7 @@ import { Badge, Button, Table } from 'antd'
 import { useState } from 'react'
 import Column from 'antd/es/table/Column'
 import UpdateCrop from './UpdateCrop'
+import DetailCrop from './DetailCrop'
 
 const TableDisplayCrop = ({
   areaByFarm,
@@ -9,9 +10,13 @@ const TableDisplayCrop = ({
   onFinishDeletePlant,
   onFinishUpdatePlant,
   farmId,
+  searchTerm,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
+
+  const [isModalDetailOpen, setIsModalDetailOpen] = useState(false)
+  const [selectedDataDetail, setSelectedDataDetail] = useState(null)
 
   const handleDelete = (id) => {
     onFinishDeletePlant(id)
@@ -26,28 +31,51 @@ const TableDisplayCrop = ({
     setIsModalOpen(false)
   }
 
+  // Detail
+  const openModalDetail = (record) => {
+    setSelectedDataDetail(record)
+    setIsModalDetailOpen(true)
+  }
+  const closeModalDetail = () => {
+    setSelectedDataDetail(null)
+    setIsModalDetailOpen(false)
+  }
+
+  const searchPlant = plantByFarm
+    ? plantByFarm?.data?.filter((m) =>
+        m.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : []
+
   return (
     <>
-      <Table
-        dataSource={plantByFarm ? plantByFarm.data : null}
-        rowKey="id"
-        locale={{ emptyText: 'Chưa có cây trồng nào' }}
-      >
+      <Table dataSource={searchPlant} rowKey="id">
         <Column
           title="Tên cây trồng"
           dataIndex="name"
           key="1"
-          render={(text) => <h4>{text}</h4>}
-        />
+          render={(text, record) => (
+            <h4
+              onClick={() => openModalDetail(record)}
+              style={{ cursor: 'pointer' }}
+            >
+              {text}
+            </h4>
+          )}
+        />{' '}
         <Column title="Mã cây trồng" dataIndex="externalId" key="2" />
-        <Column title="Vườn" dataIndex="fieldName" key="3" />
+        {/* <Column title="Vườn" dataIndex="fieldName" key="3" />
         <Column title="Vùng" dataIndex="zoneName" key="4" />
-        <Column title="Khu vực" dataIndex="areaName" key="5" />
-
+        <Column title="Khu vực" dataIndex="areaName" key="5" /> */}
         <Column
           title="Trạng thái"
           dataIndex="status"
           key="6"
+          filters={[
+            { text: 'Tồn tại', value: 'Tồn tại' },
+            { text: 'Không tồn tại', value: 'Không tồn tại' },
+          ]}
+          onFilter={(value, record) => record.status.indexOf(value) === 0}
           render={(status) =>
             status === 'Tồn tại' ? (
               <Badge status="success" text="Tồn tại" />
@@ -56,7 +84,6 @@ const TableDisplayCrop = ({
             )
           }
         />
-
         <Column
           title="Tuỳ chọn"
           key="7"
@@ -71,7 +98,6 @@ const TableDisplayCrop = ({
             </Button>
           )}
         />
-
         <Column
           title="Cập nhật"
           key="7"
@@ -87,6 +113,14 @@ const TableDisplayCrop = ({
           )}
         />
       </Table>
+
+      <DetailCrop
+        key={selectedDataDetail ? selectedDataDetail.id : null}
+        isModalDetailOpen={isModalDetailOpen}
+        closeModalDetail={closeModalDetail}
+        selectedDataDetail={selectedDataDetail}
+      />
+
       <UpdateCrop
         key={selectedData ? selectedData.id : null}
         farmId={farmId}

@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 import { createAxiosInstance } from 'features/api/axiosInstance'
-import { baseUrl } from 'features/api/baseUrl'
 import { toast } from 'react-toastify'
 
 const axiosInstance = createAxiosInstance()
@@ -22,7 +20,7 @@ export const createMaterial = createAsyncThunk(
   'materials/createMaterial',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post(baseUrl + '/Material', data, {
+      const response = await axiosInstance.post('/Material', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -42,11 +40,17 @@ export const updateMaterial = createAsyncThunk(
   'materials/updateMaterial',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.put(baseUrl + `/Material/${data.id}`, data, {
+      const config = {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-      })
+      }
+      const response = await axiosInstance.put(
+        `/Material/${data.id}`,
+        data,
+        config
+      )
+
       if (response.status === 200) {
         toast.success(response.data.message)
       }
@@ -62,7 +66,7 @@ export const deleteMaterial = createAsyncThunk(
   'materials/deleteMaterial',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.put(baseUrl + `/Material/Delete/${id}`)
+      const response = await axiosInstance.put(`/Material/Delete/${id}`)
       if (response.status === 200) {
         toast.success('Đổi trạng thái thành công')
         return response.data
@@ -78,7 +82,7 @@ export const adminDeleteMaterial = createAsyncThunk(
   'materials/adminDeleteMaterial',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(baseUrl + `/Material/${id}`)
+      const response = await axiosInstance.delete(`/Material/${id}`)
       if (response.status === 200) {
         toast.success('Xoá thành công')
         return response.data

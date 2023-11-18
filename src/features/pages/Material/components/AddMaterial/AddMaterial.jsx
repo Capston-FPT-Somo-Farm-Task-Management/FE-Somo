@@ -1,9 +1,9 @@
-import { Button } from 'antd'
+import { Button, Form } from 'antd'
 import { useState } from 'react'
 import FormAddMaterial from '../FormAddMaterial/FormAddMaterial'
 import Search from 'antd/es/input/Search'
 
-const AddMaterial = ({ onFinishCreate, farmId }) => {
+const AddMaterial = ({ onFinishCreate, farmId, handleSearch }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => {
@@ -42,6 +42,7 @@ const AddMaterial = ({ onFinishCreate, farmId }) => {
                   marginLeft: '15px',
                   width: 300,
                 }}
+                onChange={(e) => handleSearch(e.target.value)}
               />
             </div>
           </div>

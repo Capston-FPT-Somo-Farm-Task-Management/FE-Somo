@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import AddAndSearchAnimalGroup from './components/AddAndSearchAnimalGroup/AddAndSearchAnimalGroup'
 import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarmSlice'
 import DisplayAnimalGroup from './components/DisplayAnimalGroup/DisplayAnimalGroup'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { getMemberById } from 'features/slice/user/memberSlice'
 import { authServices } from 'services/authServices'
 import {
@@ -18,6 +18,12 @@ const AnimalGroup = () => {
   const farmId = member.farmId
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const fieldAnimal = useSelector((state) => state.fieldAnimal.data)
+
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleSearch = (value) => {
+    setSearchTerm(value)
+  }
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
@@ -52,12 +58,14 @@ const AnimalGroup = () => {
       <AddAndSearchAnimalGroup
         areaByFarm={areaByFarm}
         onFinishCreate={onFinishCreate}
+        handleSearch={handleSearch}
       />
       <DisplayAnimalGroup
         areaByFarm={areaByFarm}
         fieldAnimal={fieldAnimal}
         onFinishDelete={onFinishDelete}
         onFinishUpdate={onFinishUpdate}
+        searchTerm={searchTerm}
       />
     </>
   )

@@ -3,7 +3,7 @@ import AddAnimalType from './AddAnimalType'
 import DisplayAnimalType from './DisplayAnimalType'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
   createHabitantType,
   deleteHabitantType,
@@ -17,6 +17,12 @@ const AnimalType = () => {
   const animalType = useSelector((state) => state.animalType.data)
   const member = useSelector((state) => state.member.data)
   const farmId = member.farmId
+
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleSearch = (value) => {
+    setSearchTerm(value)
+  }
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
@@ -50,6 +56,7 @@ const AnimalType = () => {
       <AddAnimalType
         farmId={farmId}
         onFinishCreateAnimalType={onFinishCreateAnimalType}
+        handleSearch={handleSearch}
       />
       <DisplayAnimalType
         farmId={farmId}
@@ -57,6 +64,7 @@ const AnimalType = () => {
         onFinishDeleteAnimalType={onFinishDeleteAnimalType}
         onFinishUpdateAnimalType={onFinishUpdateAnimalType}
         loadDataAnimalType={loadDataAnimalType}
+        searchTerm={searchTerm}
       />
     </>
   )

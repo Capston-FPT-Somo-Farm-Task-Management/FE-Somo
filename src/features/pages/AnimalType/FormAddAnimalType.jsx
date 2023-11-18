@@ -7,6 +7,7 @@ const FormAddAnimalType = ({
   closeModalType,
   onFinishCreateAnimalType,
 }) => {
+  const [form] = Form.useForm()
   const onFinish = (values) => {
     const finalValues = {
       ...values,
@@ -15,6 +16,7 @@ const FormAddAnimalType = ({
     }
     onFinishCreateAnimalType(finalValues)
     closeModalType()
+    form.resetFields()
   }
 
   return (
@@ -44,6 +46,7 @@ const FormAddAnimalType = ({
           layout="vertical"
           id="createAnimalType"
           onFinish={onFinish}
+          form={form}
           className="first-step-animal-type"
         >
           <div className="form-left">

@@ -5,11 +5,22 @@ import Column from 'antd/es/table/Column'
 import { useSelector } from 'react-redux'
 import { getTaskTypeById } from 'features/slice/task/taskTypeByIdSlice'
 import { useDispatch } from 'react-redux'
+import DetailTaskType from './DetailTaskType'
 
-const DisplayTaskType = ({ taskType, onFinishUpdateTaskType, loadData }) => {
+const DisplayTaskType = ({
+  taskType,
+  onFinishUpdateTaskType,
+  loadData,
+  onFinishDeleteTaskType,
+  searchTerm,
+}) => {
   const dispatch = useDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
+
+  const [isModalDetailOpen, setIsModalDetailOpen] = useState(false)
+  const [selectedDataDetail, setSelectedDataDetail] = useState(null)
+
   const taskTypeById = useSelector((state) => state.taskTypeById.data)
 
   useEffect(() => {
@@ -23,14 +34,9 @@ const DisplayTaskType = ({ taskType, onFinishUpdateTaskType, loadData }) => {
     fetchData()
   }, [selectedData, dispatch, loadData])
 
-  // const handleDelete = (id) => {
-  //   onFinishDeletePlantType(id)
-  // }
-
   const openModal = async (record) => {
     await dispatch(getTaskTypeById(record.id))
     loadData()
-    console.log(record)
     setSelectedData(record)
     setIsModalOpen(true)
   }
@@ -39,27 +45,50 @@ const DisplayTaskType = ({ taskType, onFinishUpdateTaskType, loadData }) => {
     setIsModalOpen(false)
   }
 
+  // Detail
+
+  const openModalDetail = (record) => {
+    setSelectedDataDetail(record)
+    setIsModalDetailOpen(true)
+  }
+  const closeModalDetail = () => {
+    setSelectedDataDetail(null)
+    setIsModalDetailOpen(false)
+  }
+
+  const searchTaskType = taskType
+    ? taskType?.data?.filter((m) =>
+        m.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : []
+
   return (
     <>
       <>
-        <Table
-          dataSource={taskType ? taskType?.data : null}
-          rowKey="id"
-          locale={{ emptyText: 'Chưa có loại công việc nào' }}
-        >
+        <Table dataSource={searchTaskType} rowKey="id">
           <Column
             title="Tên công việc"
             dataIndex="name"
             key="1"
-            render={(text) => <h4>{text}</h4>}
+            render={(text, record) => (
+              <h4
+                onClick={() => openModalDetail(record)}
+                style={{ cursor: 'pointer' }}
+              >
+                {text}
+              </h4>
+            )}
           />
-          <Column title="Loại công việc" dataIndex="status" key="2" />
-          {/* <Column title="Mô tả" dataIndex="description" key="3" /> */}
-
+          {/* <Column title="Loại công việc" dataIndex="status" key="2" /> */}
           <Column
             title="Trạng thái"
             dataIndex="isDelete"
-            key="5"
+            key="3"
+            filters={[
+              { text: 'Tồn tại', value: false }, // giả sử 'false' đại diện cho 'Tồn tại'
+              { text: 'Không tồn tại', value: true }, // và 'true' đại diện cho 'Không tồn tại'
+            ]}
+            onFilter={(value, record) => record.isDelete === value}
             render={(isDelete) =>
               isDelete === false ? (
                 <Badge status="success" text="Tồn tại" />
@@ -70,13 +99,13 @@ const DisplayTaskType = ({ taskType, onFinishUpdateTaskType, loadData }) => {
           />
           <Column
             title="Đổi trạng thái"
-            key="6"
+            key="4"
             dataIndex="id"
             render={(_, record) => (
               <Button
                 size="middle"
                 danger
-                // onClick={() => handleDelete(record.id)}
+                onClick={() => onFinishDeleteTaskType(record.id)}
               >
                 Đổi
               </Button>
@@ -85,7 +114,7 @@ const DisplayTaskType = ({ taskType, onFinishUpdateTaskType, loadData }) => {
 
           <Column
             title="Cập nhật"
-            key="7"
+            key="5"
             dataIndex="id"
             render={(_, record) => (
               <Button
@@ -98,13 +127,18 @@ const DisplayTaskType = ({ taskType, onFinishUpdateTaskType, loadData }) => {
             )}
           />
         </Table>
+        <DetailTaskType
+          key={selectedDataDetail ? selectedDataDetail.id : null}
+          isModalDetailOpen={isModalDetailOpen}
+          closeModalDetail={closeModalDetail}
+          selectedDataDetail={selectedDataDetail}
+        />
         <UpdateTaskType
           key={selectedData ? selectedData.id : null}
-          taskTypeById={taskTypeById}
           isModalOpen={isModalOpen}
           closeModal={closeModal}
-          // loadDataPlantType={loadDataPlantType}
           selectedData={selectedData}
+          taskTypeById={taskTypeById}
           onFinishUpdateTaskType={onFinishUpdateTaskType}
         />
       </>
