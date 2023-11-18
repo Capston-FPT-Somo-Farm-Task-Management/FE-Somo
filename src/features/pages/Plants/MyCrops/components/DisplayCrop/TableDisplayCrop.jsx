@@ -29,6 +29,7 @@ const TableDisplayCrop = ({
 
   const closeModal = () => {
     setIsModalOpen(false)
+    setSelectedData(null)
   }
 
   // Detail

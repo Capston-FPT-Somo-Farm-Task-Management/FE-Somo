@@ -24,6 +24,7 @@ const DisplayAnimalGroup = ({
 
   const closeModal = () => {
     setIsModalOpen(false)
+    setSelectedData(null)
   }
 
   // Detail

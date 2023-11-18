@@ -33,6 +33,7 @@ const DisplayPlantType = ({
 
   const closeModal = () => {
     setIsModalOpen(false)
+    setSelectedData(null)
   }
 
   // Detail

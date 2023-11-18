@@ -17,7 +17,6 @@ const UpdateCropGroup = ({
   const [selectedAreaId, setSelectedAreaId] = useState(null)
 
   const zonePlant = useSelector((state) => state.zonePlant.data)
-  const dataZonePlant = zonePlant.data
 
   useEffect(() => {
     if (selectedAreaId) {

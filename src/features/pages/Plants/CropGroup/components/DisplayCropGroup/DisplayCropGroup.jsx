@@ -24,6 +24,7 @@ const DisplayCropGroup = ({
 
   const closeModal = () => {
     setIsModalOpen(false)
+    setSelectedData(null)
   }
 
   // Detail

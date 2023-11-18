@@ -29,6 +29,7 @@ const TableDisplayAnimal = ({
 
   const closeModal = () => {
     setIsModalOpen(false)
+    setSelectedData(null)
   }
 
   // Detail
