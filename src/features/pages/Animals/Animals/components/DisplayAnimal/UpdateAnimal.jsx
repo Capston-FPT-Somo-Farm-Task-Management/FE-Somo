@@ -24,6 +24,7 @@ const UpdateAnimal = ({
   console.log(zoneAnimal)
   const fieldByZone = useSelector((state) => state.fieldByZone.data)
   console.log(fieldByZone)
+  console.log("selectedZone: ", selectedZoneId);
 
   const animalTypeActive = useSelector((state) => state.animalTypeActive.data)
 
@@ -60,10 +61,12 @@ const UpdateAnimal = ({
 
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value)
+    setSelectedZoneId(value)
   }
 
   const handleSelectZoneChange = (value) => {
     setSelectedZoneId(value)
+    
   }
 
   const onFinish = (values) => {

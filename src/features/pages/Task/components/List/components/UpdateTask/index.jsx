@@ -49,10 +49,6 @@ function UpdateTask({
   const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(
     editingTask ? editingTask.taskTypeId : null
   );
-  const [selectedFarmId, setSelectedFarmId] = useState(null);
-  const [employeesValue, setEmployeesValue] = useState(
-    editingTask ? editingTask.employeeId : []
-  );
   const [materialsValue, setMaterialsValue] = useState(
     editingTask ? editingTask.materialId : []
   );
@@ -65,8 +61,6 @@ function UpdateTask({
   const [endDate, setEndDate] = useState(null);
   const [description, setDescription] = useState("");
   const [selectedDays, setSelectedDays] = useState([]);
-  const [overallEfforMinutes, setOverallEfforMinutes] = useState(0);
-  const [overallEffortHour, setOverallEffortHour] = useState(0);
   const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
   const [initialSelectedDays, setInitialSelectedDays] = useState([]);
 
@@ -114,6 +108,8 @@ function UpdateTask({
   const dataEmployee = useSelector((state) => state.employee.data);
 
   const material = useSelector((state) => state.materialActive.data);
+
+  console.log("selectedZone: ", selectedZoneId);
 
   useEffect(() => {
     dispatch(getAreaActiveByFarmId(farmId));
@@ -170,6 +166,7 @@ function UpdateTask({
     setSelectedAreaId(value);
     setSelectedZoneId(value);
     setSelectedFieldId(value);
+    console.log(value);
     form.setFieldsValue({
       zoneId: null,
       fieldId: null,
@@ -179,7 +176,7 @@ function UpdateTask({
     });
   };
 
-  const handleSelectZoneChange = async (value) => {
+  const handleSelectZoneChange = (value) => {
     setSelectedZoneId(value);
     setSelectedFieldId(value);
     form.setFieldsValue({
@@ -187,15 +184,6 @@ function UpdateTask({
       liveStockId: null,
       plantId: null,
     });
-
-    try {
-      await dispatch(
-        getEmployeeByTaskTypeAndFarmId({
-          taskTypeId: selectedTaskTypeId,
-          farmId: selectedFarmId,
-        })
-      );
-    } catch (error) {}
   };
 
   const handleSelectFieldChange = (value) => {
@@ -288,10 +276,6 @@ function UpdateTask({
     setSelectedTaskTypeId(value);
   };
 
-  const handleEmployeeChange = (value) => {
-    setEmployeesValue(value);
-  };
-
   const handleMaterialChange = (value) => {
     setMaterialsValue(value);
   };
@@ -310,17 +294,8 @@ function UpdateTask({
     return current && current < dayjs().startOf("day");
   };
 
-  const handleOverallEfforMinutes = (value) => {
-    setOverallEfforMinutes(parseInt(value, 10));
-  };
-
-  const handleOverallEffortHour = (value) => {
-    setOverallEffortHour(parseInt(value, 10));
-  };
-
   const transformData = (originalData) => {
     const transformedData = {
-      employeeIds: originalData.employeeIds,
       materialIds: originalData.materialIds,
       dates: originalData.dates,
       farmTask: {
@@ -339,8 +314,6 @@ function UpdateTask({
         liveStockId: originalData.liveStockId,
         remind: originalData.remind,
         addressDetail: originalData.addressDetail,
-        overallEfforMinutes: originalData.overallEfforMinutes,
-        overallEffortHour: originalData.overallEffortHour,
         isRepeat: originalData.isRepeat,
         addressDetail: originalData.addressDetail
       },
@@ -362,9 +335,6 @@ function UpdateTask({
     plantId,
     liveStockId,
     remind,
-    overallEffortHour,
-    overallEfforMinutes,
-    employeeId,
     materialId,
     isRepeat,
     dateRepeate,
@@ -411,14 +381,7 @@ function UpdateTask({
           plantId: typeof plantId === "object" ? plantId.value : 0,
           liveStockId: typeof liveStockId === "object" ? liveStockId.value : 0,
           taskTypeId: taskTypeId,
-          overallEffortHour:
-            typeof overallEffortHour === "object" ? overallEffortHour.value : 0,
-          overallEfforMinutes:
-            typeof overallEfforMinutes === "object"
-              ? overallEfforMinutes.value
-              : 0,
           materialIds: materialId || [],
-          employeeIds: employeeId || [],
           remind: typeof remind === "object" ? remind.value : 0,
           dates: initialSelectedDays
             ? initialSelectedDays.map((date) =>
@@ -480,7 +443,6 @@ function UpdateTask({
                 values.remind,
                 values.overallEffortHour,
                 values.overallEfforMinutes,
-                values.employeeId,
                 values.materialId,
                 values.isRepeat,
                 values.dateRepeate,
@@ -504,12 +466,9 @@ function UpdateTask({
                 handleSelectEndDate={handleSelectEndDate}
                 handleDescriptionChange={handleDescriptionChange}
                 handleTaskTypeChange={handleTaskTypeChange}
-                handleEmployeeChange={handleEmployeeChange}
                 handleMaterialChange={handleMaterialChange}
                 handleSelectRemind={handleSelectRemind}
                 handleSelectRepeat={handleSelectRepeat}
-                handleOverallEffortHour={handleOverallEffortHour}
-                handleOverallEfforMinutes={handleOverallEfforMinutes}
                 areaLivestockByZone={areaLivestockByZone}
                 zoneAnimal={zoneAnimal}
                 fieldByZone={fieldByZone}
@@ -517,11 +476,8 @@ function UpdateTask({
                 priorityValue={priorityValue}
                 disabledDate={disabledDate}
                 description={description}
-                overallEfforMinutes={overallEfforMinutes}
-                overallEffortHour={overallEffortHour}
                 dataTaskTypeLivestock={dataTaskTypeLivestock}
                 supervisor={supervisor}
-                employeesValue={employeesValue}
                 dataEmployee={dataEmployee}
                 materialsValue={materialsValue}
                 material={material}
@@ -548,23 +504,17 @@ function UpdateTask({
                 handleSelectEndDate={handleSelectEndDate}
                 handleDescriptionChange={handleDescriptionChange}
                 handleTaskTypeChange={handleTaskTypeChange}
-                handleEmployeeChange={handleEmployeeChange}
                 handleMaterialChange={handleMaterialChange}
                 handleSelectRemind={handleSelectRemind}
                 handleSelectRepeat={handleSelectRepeat}
-                handleOverallEffortHour={handleOverallEffortHour}
-                handleOverallEfforMinutes={handleOverallEfforMinutes}
                 areaLivestockByZone={areaLivestockByZone}
                 zoneAnimal={zoneAnimal}
                 fieldByZone={fieldByZone}
                 priorityValue={priorityValue}
                 disabledDate={disabledDate}
                 description={description}
-                overallEfforMinutes={overallEfforMinutes}
-                overallEffortHour={overallEffortHour}
                 dataTaskTypeLivestock={dataTaskTypeLivestock}
                 supervisor={supervisor}
-                employeesValue={employeesValue}
                 dataEmployee={dataEmployee}
                 materialsValue={materialsValue}
                 material={material}
@@ -591,12 +541,9 @@ function UpdateTask({
                 handleSelectEndDate={handleSelectEndDate}
                 handleDescriptionChange={handleDescriptionChange}
                 handleTaskTypeChange={handleTaskTypeChange}
-                handleEmployeeChange={handleEmployeeChange}
                 handleMaterialChange={handleMaterialChange}
                 handleSelectRemind={handleSelectRemind}
                 handleSelectRepeat={handleSelectRepeat}
-                handleOverallEffortHour={handleOverallEffortHour}
-                handleOverallEfforMinutes={handleOverallEfforMinutes}
                 areaPlantByZone={areaPlantByZone}
                 zonePlant={zonePlant}
                 fieldByZone={fieldByZone}
@@ -604,11 +551,8 @@ function UpdateTask({
                 priorityValue={priorityValue}
                 disabledDate={disabledDate}
                 description={description}
-                overallEfforMinutes={overallEfforMinutes}
-                overallEffortHour={overallEffortHour}
                 dataTaskTypePlant={dataTaskTypePlant}
                 supervisor={supervisor}
-                employeesValue={employeesValue}
                 dataEmployee={dataEmployee}
                 materialsValue={materialsValue}
                 material={material}
@@ -635,23 +579,17 @@ function UpdateTask({
                 handleSelectEndDate={handleSelectEndDate}
                 handleDescriptionChange={handleDescriptionChange}
                 handleTaskTypeChange={handleTaskTypeChange}
-                handleEmployeeChange={handleEmployeeChange}
                 handleMaterialChange={handleMaterialChange}
                 handleSelectRemind={handleSelectRemind}
                 handleSelectRepeat={handleSelectRepeat}
-                handleOverallEffortHour={handleOverallEffortHour}
-                handleOverallEfforMinutes={handleOverallEfforMinutes}
                 areaPlantByZone={areaPlantByZone}
                 zonePlant={zonePlant}
                 fieldByZone={fieldByZone}
                 priorityValue={priorityValue}
                 disabledDate={disabledDate}
                 description={description}
-                overallEfforMinutes={overallEfforMinutes}
-                overallEffortHour={overallEffortHour}
                 dataTaskTypePlant={dataTaskTypePlant}
                 supervisor={supervisor}
-                employeesValue={employeesValue}
                 dataEmployee={dataEmployee}
                 materialsValue={materialsValue}
                 material={material}
@@ -678,12 +616,9 @@ function UpdateTask({
                 handleSelectEndDate={handleSelectEndDate}
                 handleDescriptionChange={handleDescriptionChange}
                 handleTaskTypeChange={handleTaskTypeChange}
-                handleEmployeeChange={handleEmployeeChange}
                 handleMaterialChange={handleMaterialChange}
                 handleSelectRemind={handleSelectRemind}
                 handleSelectRepeat={handleSelectRepeat}
-                handleOverallEfforMinutes={handleOverallEfforMinutes}
-                handleOverallEffortHour={handleOverallEffortHour}
                 form={form}
                 areaByFarm={areaByFarm}
                 zoneByArea={zoneByArea}
@@ -692,10 +627,7 @@ function UpdateTask({
                 setAddressDetail={setAddressDetail}
                 priorityValue={priorityValue}
                 description={description}
-                overallEfforMinutes={overallEfforMinutes}
-                overallEffortHour={overallEffortHour}
                 taskTypeActive={taskTypeActive}
-                employeesValue={employeesValue}
                 dataEmployee={dataEmployee}
                 supervisor={supervisor}
                 materialsValue={materialsValue}

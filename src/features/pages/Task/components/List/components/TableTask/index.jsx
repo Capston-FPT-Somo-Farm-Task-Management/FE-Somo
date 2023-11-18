@@ -53,7 +53,7 @@ function TableTask({
                 const isManager = record && record.managerName;
                 const isStatus =
                   record &&
-                  (record.status === "Chuẩn bị" ||
+                  (record.status === "Bản nháp" || record.status === "Chuẩn bị" ||
                     record.status === "Đang thực hiện");
                 const isStatusEffort =
                   record &&

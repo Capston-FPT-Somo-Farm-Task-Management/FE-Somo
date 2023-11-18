@@ -13,6 +13,7 @@ const TaskDetailHabitant = ({
   formattedEndDate,
   formattedRepeatDate,
 }) => {
+  console.log(taskData);
   return (
     <>
       <h2>
@@ -31,7 +32,7 @@ const TaskDetailHabitant = ({
           <h5>Vùng</h5>
           {taskData.zoneName ? <p>{taskData.zoneName}</p> : <p>Chưa có vùng</p>}
         </div>
-        {taskData.externalId && taskData.fieldStatus === "Thực vật" ? (
+        {taskData.externalId && taskData.isOther === false && taskData.fieldStatus === "Thực vật" ? (
           <div className="task-detail-text">
             <h5>Vườn</h5>
             {taskData.fieldName ? (
@@ -97,6 +98,14 @@ const TaskDetailHabitant = ({
               <p>{taskData.supervisorName}</p>
             ) : (
               <p>Chưa có người giám sát</p>
+            )}
+          </div>
+          <div className="task-detail-text">
+            <h5>Người thực hiện</h5>
+            {taskData.employeeName ? (
+              <p>{taskData.employeeName}</p>
+            ) : (
+              <p>Chưa có người thực hiện</p>
             )}
           </div>
         </div>

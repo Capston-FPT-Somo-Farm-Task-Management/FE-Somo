@@ -76,6 +76,14 @@ const TaskDetailOther = ({
               <p>Chưa có người giám sát</p>
             )}
           </div>
+          <div className="task-detail-text">
+            <h5>Người thực hiện</h5>
+            {taskData.employeeName ? (
+              <p>{taskData.employeeName}</p>
+            ) : (
+              <p>Chưa có người thực hiện</p>
+            )}
+          </div>
         </div>
       </>
       <>
