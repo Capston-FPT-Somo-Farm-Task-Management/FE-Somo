@@ -10,7 +10,7 @@ export const getFarm = createAsyncThunk(
       const response = await axiosInstance.get('/Farm')
       return response.data
     } catch (error) {
-      rejectWithValue(error)
+      rejectWithValue(error.response.data)
     }
   }
 )
@@ -19,18 +19,12 @@ const initialState = {
   data: [],
   loading: false,
   error: '',
-  farmId: null,
 }
 
 const farmSlice = createSlice({
   name: 'farm',
   initialState,
 
-  reducers: {
-    setFarmId: (state, action) => {
-      state.farmId = action.payload
-    },
-  },
   extraReducers(builder) {
     builder
       .addCase(getFarm.pending, (state) => {

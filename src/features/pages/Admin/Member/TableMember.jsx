@@ -3,12 +3,12 @@ import Column from 'antd/es/table/Column'
 import { useState } from 'react'
 import DetailMember from './DetailMember'
 
-const TableMember = ({ member, onFinishDelete }) => {
+const TableMember = ({ memberByFarm, onFinishDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedMember, setSelectedMember] = useState(null)
 
-  const showModal = (member) => {
-    setSelectedMember(member)
+  const showModal = (memberByFarm) => {
+    setSelectedMember(memberByFarm)
     setIsModalOpen(true)
   }
 
@@ -17,11 +17,7 @@ const TableMember = ({ member, onFinishDelete }) => {
   }
   return (
     <>
-      <Table
-        dataSource={member ? member.data : null}
-        rowKey="id"
-        locale={{ emptyText: 'Chưa có nhân viên nào' }}
-      >
+      <Table dataSource={memberByFarm ? memberByFarm.data : null} rowKey="id">
         <Column
           title="Tên nhân viên"
           dataIndex="name"
