@@ -35,13 +35,13 @@ export const taskTitle = [
     title: <p>Ngày bắt đầu</p>,
     dataIndex: "startDate",
     key: "startDate",
-    render: (text) => dayjs(text).format("DD/MM/YYYY HH:mm"),
+    render: (date) => { return date ? dayjs(date).format("DD/MM/YYYY HH:mm") : "Chưa có"},
   },
   {
     title: <p>Ngày kết thúc</p>,
     dataIndex: "endDate",
     key: "endDate",
-    render: (text) => dayjs(text).format("DD/MM/YYYY HH:mm"),
+    render: (date) => { return date ? dayjs(date).format("DD/MM/YYYY HH:mm") : "Chưa có"},
   },
   {
     title: <p>Ưu tiên</p>,
@@ -69,6 +69,7 @@ export const taskTitle = [
     title: <p>Người giám sát</p>,
     dataIndex: "supervisorName",
     key: "supervisorName",
+    render: (text) => {return text ? text : "Chưa có"}
   },
   {
     title: <p>Được tạo bởi</p>,

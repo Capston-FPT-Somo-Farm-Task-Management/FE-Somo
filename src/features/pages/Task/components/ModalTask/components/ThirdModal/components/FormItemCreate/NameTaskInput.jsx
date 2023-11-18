@@ -1,7 +1,7 @@
 import { Form, Input } from 'antd'
 import React from 'react'
 
-function NameTaskInput() {
+function NameTaskInput({name, handleNameChange}) {
   return (
     <Form.Item
           label="Tên công việc"
@@ -14,7 +14,7 @@ function NameTaskInput() {
             },
           ]}
         >
-          <Input placeholder="Nhập tên công việc" />
+          <Input value={name} onChange={handleNameChange} placeholder="Nhập tên công việc" />
         </Form.Item>
   )
 }

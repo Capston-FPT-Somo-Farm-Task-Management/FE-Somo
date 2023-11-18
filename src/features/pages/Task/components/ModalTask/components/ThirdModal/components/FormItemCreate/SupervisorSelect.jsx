@@ -1,7 +1,7 @@
 import { Form, Select } from 'antd'
 import React from 'react'
 
-function SupervisorSelect({supervisor}) {
+function SupervisorSelect({supervisor, supervisorValue, handleSupervisorValue, isDraft}) {
   return (
     <Form.Item
           label="Người giám sát"
@@ -9,13 +9,15 @@ function SupervisorSelect({supervisor}) {
           required
           rules={[
             {
-              required: true,
+              required: !isDraft,
               message: "Vui lòng chọn người giám sát",
             },
           ]}
         >
           <Select
             placeholder="Chọn người giám sát"
+            value={supervisorValue}
+            onChange={handleSupervisorValue}
             options={
               supervisor && supervisor.data
                 ? supervisor.data.map((item) => ({

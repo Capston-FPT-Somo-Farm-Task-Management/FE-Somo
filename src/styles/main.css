@@ -84,6 +84,9 @@ html {
 .task-form .form-right .ql-editor {
   min-height: 150px;
 }
+.task-form .form-task-button {
+  display: inline-block;
+}
 
 .custom-input {
   border-radius: 6px;

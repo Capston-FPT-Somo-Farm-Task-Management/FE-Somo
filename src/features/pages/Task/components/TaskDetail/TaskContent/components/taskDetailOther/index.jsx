@@ -13,6 +13,7 @@ const TaskDetailOther = ({
   formattedEndDate,
   formattedRepeatDate,
 }) => {
+  console.log(taskData);
   return (
     <>
       <h2>
@@ -21,9 +22,12 @@ const TaskDetailOther = ({
       <div className="task-detail-item">
         <div className="task-detail-text">
           <h5>Địa điểm cụ thể</h5>
-          <p>{taskData.addressDetail}</p>
+          {taskData.addressDetail === "" ? (
+              <p>{taskData.addressDetail}</p>
+            ) : (
+              <p>Chưa có địa điểm cụ thể</p>
+            )}
         </div>
-        
       </div>
       <>
         <h2>
@@ -32,11 +36,19 @@ const TaskDetailOther = ({
         <div className="task-detail-item">
           <div className="task-detail-text">
             <h5>Ngày bắt đầu</h5>
-            <p>{formattedStartDate}</p>
+            {taskData.startDate ? (
+              <p>{formattedStartDate}</p>
+            ) : (
+              <p>Chưa có ngày bắt đầu</p>
+            )}
           </div>
           <div className="task-detail-text">
             <h5>Ngày kết thúc</h5>
-            <p>{formattedEndDate}</p>
+            {taskData.startDate ? (
+              <p>{formattedEndDate}</p>
+            ) : (
+              <p>Chưa có ngày kết thúc</p>
+            )}
           </div>
           <div className="task-detail-text">
             <h5>Thời gian dự kiến phải bỏ ra</h5>
@@ -59,11 +71,11 @@ const TaskDetailOther = ({
           </div>
           <div className="task-detail-text">
             <h5>Người giám sát</h5>
-            <p>{taskData.supervisorName}</p>
-          </div>
-          <div className="task-detail-text">
-            <h5>Người thực hiện</h5>
-            <p>{taskData.employeeName}</p>
+            {taskData.supervisorName ? (
+              <p>{taskData.supervisorName}</p>
+            ) : (
+              <p>Chưa có người giám sát</p>
+            )}
           </div>
         </div>
       </>
@@ -75,7 +87,11 @@ const TaskDetailOther = ({
         <div className="task-detail-item">
           <div className="task-detail-text">
             <h5>Loại công việc</h5>
-            <p>{taskData.taskTypeName}</p>
+            {taskData.taskTypeName ? (
+              <p>{taskData.taskTypeName}</p>
+            ) : (
+              <p>Chưa có loại công việc</p>
+            )}
           </div>
           {taskData.materialName ? (
             <div className="task-detail-text">

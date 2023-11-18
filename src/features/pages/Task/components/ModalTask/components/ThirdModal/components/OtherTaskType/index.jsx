@@ -1,5 +1,5 @@
 import React from "react";
-import { Form } from "antd";
+import { Button, Form } from "antd";
 import dayjs from "dayjs";
 import AreaByFarmSelect from "../FormItemCreate/AreaByFarmSelect";
 import ZoneByAreaSelect from "../FormItemCreate/ZoneByAreaSelect";
@@ -18,42 +18,42 @@ import RemindSelect from "../FormItemCreate/RemindSelect";
 import RepeatSelect from "../FormItemCreate/RepeatSelect";
 
 function OtherTaskType({
-  handleCreateTaskOther,
+  handleIsDraftOther,
+  handleIsTaskOtherToDo,
+  handleFormOtherSubmit,
+  isDraft,
   handleSelectAreaChange,
   handleSelectZoneChange,
   handleSelectFieldChange,
   addressDetail,
+  handleNameChange,
   setAddressDetail,
   handlePriorityChange,
+  handleSupervisorValue,
   handleSelectStartDate,
   handleSelectEndDate,
   handleDescriptionChange,
   handleTaskTypeChange,
-  handleEmployeeChange,
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
-  handleOverallEfforMinutes,
-  handleOverallEffortHour,
   form,
   areaByFarm,
   zoneByArea,
   fieldByZone,
-  priorityValue,
+  name,
+  startDate,
+  endDate,
   description,
-  overallEfforMinutes,
-  overallEffortHour,
+  priorityValue,
+  supervisorValue,
   taskTypeActive,
-  employeesValue,
-  dataEmployee,
   supervisor,
   materialsValue,
   material,
   remindValue,
   repeatValue,
   disabledDate,
-  startDate,
-  endDate,
   selectedDays,
   setSelectedDays,
 }) {
@@ -65,81 +65,99 @@ function OtherTaskType({
   return (
     <Form
       layout="vertical"
-      className="task-form"
-      onFinish={handleCreateTaskOther}
+      onFinish={handleFormOtherSubmit}
       id="createTaskToDo"
       name="createTask"
       form={form}
     >
-      <div className="form-left">
-        <AreaByFarmSelect
-          handleSelectAreaChange={handleSelectAreaChange}
-          areaByFarm={areaByFarm}
-        />
-        <ZoneByAreaSelect
-          handleSelectZoneChange={handleSelectZoneChange}
-          zoneByArea={zoneByArea}
-        />
-        <FieldOtherSelect
-          handleSelectFieldChange={handleSelectFieldChange}
-          fieldByZone={fieldByZone}
-        />
-        <AddressDetailInput
-          addressDetail={addressDetail}
-          setAddressDetail={setAddressDetail}
-        />
-        <PrioritySelect
-          priorityValue={priorityValue}
-          handlePriorityChange={handlePriorityChange}
-        />
-        <DateSelect
-          disabledDate={disabledDate}
-          handleSelectStartDate={handleSelectStartDate}
-          handleSelectEndDate={handleSelectEndDate}
-          startDate={startDate}
-          calculateDaysDifference={calculateDaysDifference}
-        />
-        {/* <OverallEffortSelect
+      <div className="task-form">
+        <div className="form-left">
+          <AreaByFarmSelect
+            handleSelectAreaChange={handleSelectAreaChange}
+            areaByFarm={areaByFarm}
+            isDraft={isDraft}
+          />
+          <ZoneByAreaSelect
+            handleSelectZoneChange={handleSelectZoneChange}
+            zoneByArea={zoneByArea}
+          />
+          <FieldOtherSelect
+            handleSelectFieldChange={handleSelectFieldChange}
+            fieldByZone={fieldByZone}
+          />
+          <AddressDetailInput
+            addressDetail={addressDetail}
+            setAddressDetail={setAddressDetail}
+            isDraft={isDraft}
+          />
+          <PrioritySelect
+            priorityValue={priorityValue}
+            handlePriorityChange={handlePriorityChange}
+          />
+          <DateSelect
+            disabledDate={disabledDate}
+            handleSelectStartDate={handleSelectStartDate}
+            handleSelectEndDate={handleSelectEndDate}
+            startDate={startDate}
+            calculateDaysDifference={calculateDaysDifference}
+            isDraft={isDraft}
+          />
+          {/* <OverallEffortSelect
           overallEffortHour={overallEffortHour}
           handleOverallEffortHour={handleOverallEffortHour}
           overallEfforMinutes={overallEfforMinutes}
           handleOverallEfforMinutes={handleOverallEfforMinutes}
         /> */}
-        <DescriptionInput
-          description={description}
-          handleDescriptionChange={handleDescriptionChange}
-        />
-      </div>
-      <div className="form-right">
-        <NameTaskInput />
-        <TaskTypeActiveSelect
-          taskTypeActive={taskTypeActive}
-          handleTaskTypeChange={handleTaskTypeChange}
-        />
-        <SupervisorSelect supervisor={supervisor} />
-        {/* <EmployeeSelect
+          <DescriptionInput
+            description={description}
+            handleDescriptionChange={handleDescriptionChange}
+          />
+        </div>
+        <div className="form-right">
+          <NameTaskInput name={name} handleNameChange={handleNameChange}/>
+          <TaskTypeActiveSelect
+            taskTypeActive={taskTypeActive}
+            handleTaskTypeChange={handleTaskTypeChange}
+            isDraft={isDraft}
+          />
+          <SupervisorSelect
+            supervisor={supervisor}
+            supervisorValue={supervisorValue}
+            handleSupervisorValue={handleSupervisorValue}
+            isDraft={isDraft}
+          />
+          {/* <EmployeeSelect
           employeesValue={employeesValue}
           handleEmployeeChange={handleEmployeeChange}
           dataEmployee={dataEmployee}
         /> */}
-        <MaterialSelect
-          materialsValue={materialsValue}
-          handleMaterialChange={handleMaterialChange}
-          material={material}
-        />
-        <RemindSelect
-          remindValue={remindValue}
-          handleSelectRemind={handleSelectRemind}
-        />
-        <RepeatSelect
-          repeatValue={repeatValue}
-          handleSelectRepeat={handleSelectRepeat}
-          startDate={startDate}
-          endDate={endDate}
-          calculateDaysDifference={calculateDaysDifference}
-          selectedDays={selectedDays}
-          setSelectedDays={setSelectedDays}
-        />
+          <MaterialSelect
+            materialsValue={materialsValue}
+            handleMaterialChange={handleMaterialChange}
+            material={material}
+          />
+          <RemindSelect
+            remindValue={remindValue}
+            handleSelectRemind={handleSelectRemind}
+          />
+          <RepeatSelect
+            repeatValue={repeatValue}
+            handleSelectRepeat={handleSelectRepeat}
+            startDate={startDate}
+            endDate={endDate}
+            calculateDaysDifference={calculateDaysDifference}
+            selectedDays={selectedDays}
+            setSelectedDays={setSelectedDays}
+          />
+        </div>
+      </div>
+      <div className="form-task-button">
+        <Button onClick={handleIsDraftOther} htmlType="submit">
+          Lưu bản nháp
+        </Button>
+        <Button onClick={handleIsTaskOtherToDo} htmlType="submit">
+          Tạo công việc
+        </Button>
       </div>
     </Form>
   );

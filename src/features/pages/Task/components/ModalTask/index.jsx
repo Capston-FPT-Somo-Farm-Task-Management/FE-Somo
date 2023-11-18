@@ -118,7 +118,7 @@ function ModalTask({
                 Trở lại
               </Button>
             ))}
-          {currentStep === steps.length - 1 && (
+          {/* {currentStep === steps.length - 1 && (
             <div className="button-create">
               <Button
                 type="dashed"
@@ -137,7 +137,7 @@ function ModalTask({
                 <CheckCircleOutlined />
               </Button>
             </div>
-          )}
+          )} */}
         </div>
       </Modal>
     </>
