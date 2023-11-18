@@ -23,6 +23,7 @@ const DisplayArea = ({
 
   const closeModal = () => {
     setIsModalOpen(false)
+    setSelectedData(null)
   }
 
   // Detail
