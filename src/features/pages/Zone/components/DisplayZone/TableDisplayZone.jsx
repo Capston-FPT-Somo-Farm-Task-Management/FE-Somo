@@ -25,6 +25,7 @@ const TableDisplayZone = ({
 
   const closeModal = () => {
     setIsModalOpen(false)
+    setSelectedData(null)
   }
 
   // Detail
