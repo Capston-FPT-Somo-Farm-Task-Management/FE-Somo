@@ -4,7 +4,7 @@ import { Button } from 'antd'
 import { Link } from 'react-router-dom'
 import Search from 'antd/es/input/Search'
 
-const AddAnimalType = ({ farmId, onFinishCreateAnimalType }) => {
+const AddAnimalType = ({ farmId, onFinishCreateAnimalType, handleSearch }) => {
   const [isModalOpenType, setIsModalOpenType] = useState(false)
 
   const openModalType = () => {
@@ -42,6 +42,7 @@ const AddAnimalType = ({ farmId, onFinishCreateAnimalType }) => {
                 marginLeft: '15px',
                 width: 300,
               }}
+              onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
         </div>

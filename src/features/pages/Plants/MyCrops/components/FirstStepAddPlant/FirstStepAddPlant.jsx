@@ -58,6 +58,7 @@ const FirstStepAddPlant = ({
   const onFinish = (values) => {
     onFinishCreatePlant(values)
     closeModal()
+    form.resetFields()
   }
 
   return (

@@ -5,6 +5,7 @@ import UpdateMaterial from './UpdateMaterial'
 import { getMaterialById } from 'features/slice/material/materialById'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
+import DetailMaterial from './DetailMaterial'
 
 const DisplayMaterial = ({
   material,
@@ -12,11 +13,15 @@ const DisplayMaterial = ({
   onFinishUpdate,
   farmId,
   loadData,
+  searchTerm,
 }) => {
   const dispatch = useDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
   const materialById = useSelector((state) => state.materialById.data)
+
+  const [isModalDetailOpen, setIsModalDetailOpen] = useState(false)
+  const [selectedDataDetail, setSelectedDataDetail] = useState(null)
 
   useEffect(() => {
     if (selectedData) {
@@ -26,11 +31,10 @@ const DisplayMaterial = ({
     }
   }, [selectedData, dispatch])
 
-  const openModal = (record) => {
-    dispatch(getMaterialById(record.id)).then(() => {
+  const openModal = async (record) => {
+    await dispatch(getMaterialById(record.id)).then(() => {
       loadData()
     })
-    console.log(record)
     setSelectedData(record)
     setIsModalOpen(true)
   }
@@ -40,14 +44,38 @@ const DisplayMaterial = ({
     setIsModalOpen(false)
   }
 
+  // Detail
+  const openModalDetail = (record) => {
+    setSelectedDataDetail(record)
+    setIsModalDetailOpen(true)
+  }
+  const closeModalDetail = () => {
+    setSelectedDataDetail(null)
+    setIsModalDetailOpen(false)
+  }
+
+  const searchMaterial = material
+    ? material?.data?.filter((m) =>
+        m.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : []
+
   return (
     <>
-      <Table
-        rowKey="id"
-        dataSource={material ? material.data : null}
-        locale={{ emptyText: 'Chưa có công cụ nào' }}
-      >
-        <Column title="Tên công cụ" dataIndex="name" key="1" />
+      <Table rowKey="id" dataSource={searchMaterial}>
+        <Column
+          title="Tên công cụ"
+          dataIndex="name"
+          key="1"
+          render={(text, record) => (
+            <h4
+              onClick={() => openModalDetail(record)}
+              style={{ cursor: 'pointer' }}
+            >
+              {text}
+            </h4>
+          )}
+        />{' '}
         <Column
           title="Hình ảnh"
           dataIndex="urlImage"
@@ -58,6 +86,11 @@ const DisplayMaterial = ({
           title="Trạng thái"
           dataIndex="status"
           key="3"
+          filters={[
+            { text: 'Tồn tại', value: 'Tồn tại' },
+            { text: 'Không tồn tại', value: 'Không tồn tại' },
+          ]}
+          onFilter={(value, record) => record.status.indexOf(value) === 0}
           render={(status) =>
             status === 'Tồn tại' ? (
               <Badge status="success" text="Tồn tại" />
@@ -80,7 +113,6 @@ const DisplayMaterial = ({
             </Button>
           )}
         />
-
         <Column
           title="Cập nhật"
           key="5"
@@ -96,6 +128,14 @@ const DisplayMaterial = ({
           )}
         />
       </Table>
+
+      <DetailMaterial
+        key={selectedDataDetail ? selectedDataDetail.id : null}
+        isModalDetailOpen={isModalDetailOpen}
+        closeModalDetail={closeModalDetail}
+        selectedDataDetail={selectedDataDetail}
+      />
+
       <UpdateMaterial
         key={selectedData ? selectedData.id : null}
         materialById={materialById}

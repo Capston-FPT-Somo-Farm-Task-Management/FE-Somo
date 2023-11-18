@@ -8,6 +8,8 @@ const AddTaskType = ({
   onFinishCreateTaskType,
   getTemplate,
   getTaskTypeByExcel,
+  onFinishCreateTaskTypeExcel,
+  handleSearch,
 }) => {
   const [isModalOpenType, setIsModalOpenType] = useState(false)
 
@@ -69,8 +71,7 @@ const AddTaskType = ({
             <FormUploadExcel
               isModalOpenExcel={isModalOpenExcel}
               closeModalExcel={closeModalExcel}
-              // onFinishCreateTaskType={onFinishCreateTaskType}
-              // // farmId={farmId}
+              onFinishCreateTaskTypeExcel={onFinishCreateTaskTypeExcel}
             />
           </div>
 
@@ -82,6 +83,7 @@ const AddTaskType = ({
                 marginLeft: '15px',
                 width: 300,
               }}
+              onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
         </div>

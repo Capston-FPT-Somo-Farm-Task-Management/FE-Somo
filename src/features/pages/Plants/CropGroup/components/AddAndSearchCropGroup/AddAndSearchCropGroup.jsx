@@ -3,7 +3,11 @@ import Search from 'antd/es/input/Search'
 import FirstStepAddCropGroup from '../FirstStepAddCropGroup/FirstStepAddCropGroup'
 import { useState } from 'react'
 
-const AddAndSearchCropGroup = ({ areaByFarm, onFinishCreate }) => {
+const AddAndSearchCropGroup = ({
+  areaByFarm,
+  onFinishCreate,
+  handleSearch,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => {
@@ -39,6 +43,7 @@ const AddAndSearchCropGroup = ({ areaByFarm, onFinishCreate }) => {
                 marginLeft: '15px',
                 width: 300,
               }}
+              onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
         </div>

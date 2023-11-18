@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { getMemberById } from 'features/slice/user/memberSlice'
 import { authServices } from 'services/authServices'
 import { getZoneByFarmId } from 'features/slice/zone/zoneByFarmSlice'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
   createZone,
   deleteZone,
@@ -21,6 +21,12 @@ const Zone = () => {
   const zoneByFarm = useSelector((state) => state.zoneByFarm.data)
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const zoneType = useSelector((state) => state.zoneType.data)
+
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleSearch = (value) => {
+    setSearchTerm(value)
+  }
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
@@ -57,6 +63,7 @@ const Zone = () => {
         areaByFarm={areaByFarm}
         zoneType={zoneType}
         onFinishCreateZone={onFinishCreateZone}
+        handleSearch={handleSearch}
       />
       <TableDisplayZone
         areaByFarm={areaByFarm}
@@ -64,6 +71,7 @@ const Zone = () => {
         zoneType={zoneType}
         onFinishUpdateZone={onFinishUpdateZone}
         onFinishDeleteZone={onFinishDeleteZone}
+        searchTerm={searchTerm}
       />
     </>
   )

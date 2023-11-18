@@ -35,7 +35,6 @@ export const createTaskType = createAsyncThunk(
 export const updateTaskType = createAsyncThunk(
   'taskType/updateTaskType',
   async (data, { rejectWithValue }) => {
-    console.log(data)
     try {
       const response = await axiosInstance.put(`/TaskType/${data.id}`, data)
       if (response.status === 200) {

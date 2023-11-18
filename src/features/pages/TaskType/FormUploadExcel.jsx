@@ -3,12 +3,17 @@ import { InboxOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 
 const { Dragger } = Upload
-const FormUploadExcel = ({ isModalOpenExcel, closeModalExcel }) => {
+const FormUploadExcel = ({
+  isModalOpenExcel,
+  closeModalExcel,
+  onFinishCreateTaskTypeExcel,
+}) => {
   const [form] = Form.useForm()
   const [fileList, setFileList] = useState([])
 
   const onFinish = (values) => {
-    // onFinishCreateTaskType(values)
+    console.log(values)
+    onFinishCreateTaskTypeExcel(values)
     closeModalExcel()
     form.resetFields()
   }
@@ -19,23 +24,28 @@ const FormUploadExcel = ({ isModalOpenExcel, closeModalExcel }) => {
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
       file.type === 'application/vnd.ms-excel'
     if (!isExcel) {
-      message.error(`${file.name} không phải là file Excel.`)
+      message.error(`${file.name} không phải là tệp tin Excel.`)
       return Upload.LIST_IGNORE
     }
-    // Chỉ cho phép một file trong fileList
+
     if (fileList.length >= 1) {
-      message.error('Chỉ có thể tải lên một file.')
+      message.error('Chỉ có thể tải lên một tệp tin')
       return Upload.LIST_IGNORE
     }
-    return false // Đừng thêm file vào list nếu không phải Excel
+    return false
   }
 
   const onChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList.slice(-1)) // Chỉ giữ file mới nhất
+    setFileList(newFileList.slice(-1))
+    if (newFileList.length > 0) {
+      form.setFieldsValue({ excelFile: newFileList })
+    } else {
+      form.setFieldsValue({ excelFile: null })
+    }
   }
 
-  const onRemove = (file) => {
-    setFileList([]) // Xóa file khỏi fileList
+  const onRemove = () => {
+    setFileList([])
   }
   return (
     <>
@@ -94,7 +104,7 @@ const FormUploadExcel = ({ isModalOpenExcel, closeModalExcel }) => {
                   <InboxOutlined />
                 </p>
                 <p className="ant-upload-text">
-                  Kéo và thả tệp vào khu vực này, hoặc nhấp để chọn tệp
+                  Kéo và thả tệp vào khu vực này hoặc nhấp để chọn tệp
                 </p>
               </Upload.Dragger>
             </Form.Item>

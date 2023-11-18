@@ -3,7 +3,11 @@ import React, { useState } from 'react'
 import Search from 'antd/es/input/Search'
 import FirstStepAddAnimalGroup from '../FirstStepAddAnimalGroup/FirstStepAddAnimalGroup'
 
-const AddAndSearchAnimalGroup = ({ areaByFarm, onFinishCreate }) => {
+const AddAndSearchAnimalGroup = ({
+  areaByFarm,
+  onFinishCreate,
+  handleSearch,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => {
@@ -41,6 +45,7 @@ const AddAndSearchAnimalGroup = ({ areaByFarm, onFinishCreate }) => {
                 marginLeft: '15px',
                 width: 300,
               }}
+              onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
         </div>

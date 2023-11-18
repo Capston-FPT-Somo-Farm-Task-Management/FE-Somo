@@ -8,7 +8,7 @@ import {
   getMaterialByFarmId,
   updateMaterial,
 } from 'features/slice/material/materialSlice'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { authServices } from 'services/authServices'
 import { getMemberById } from 'features/slice/user/memberSlice'
 
@@ -18,6 +18,11 @@ const Material = () => {
   const member = useSelector((state) => state.member.data)
   const farmId = member.farmId
 
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleSearch = (value) => {
+    setSearchTerm(value)
+  }
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
     dispatch(getMaterialByFarmId(farmId))
@@ -47,13 +52,18 @@ const Material = () => {
 
   return (
     <>
-      <AddMaterial onFinishCreate={onFinishCreate} farmId={farmId} />
+      <AddMaterial
+        onFinishCreate={onFinishCreate}
+        farmId={farmId}
+        handleSearch={handleSearch}
+      />
       <DisplayMaterial
         material={material}
         onFinishDelete={onFinishDelete}
         onFinishUpdate={onFinishUpdate}
         farmId={farmId}
         loadData={loadData}
+        searchTerm={searchTerm}
       />
     </>
   )

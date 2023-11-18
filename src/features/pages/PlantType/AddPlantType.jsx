@@ -3,7 +3,7 @@ import FormAddPlantType from './FormAddPlantType'
 import { Button } from 'antd'
 import Search from 'antd/es/input/Search'
 
-const AddPlantType = ({ farmId, onFinishCreatePlantType }) => {
+const AddPlantType = ({ farmId, onFinishCreatePlantType, handleSearch }) => {
   const [isModalOpenType, setIsModalOpenType] = useState(false)
 
   const openModalType = () => {
@@ -41,6 +41,7 @@ const AddPlantType = ({ farmId, onFinishCreatePlantType }) => {
                 marginLeft: '15px',
                 width: 300,
               }}
+              onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
         </div>

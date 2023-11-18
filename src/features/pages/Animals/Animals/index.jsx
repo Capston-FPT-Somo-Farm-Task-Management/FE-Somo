@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { getAnimalByFarmId } from 'features/slice/animal/animalByFarmSlice'
 import { useDispatch } from 'react-redux'
@@ -20,6 +20,12 @@ const Animals = () => {
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const member = useSelector((state) => state.member.data)
   const farmId = member.farmId
+
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleSearch = (value) => {
+    setSearchTerm(value)
+  }
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
@@ -56,6 +62,7 @@ const Animals = () => {
         farmId={farmId}
         areaByFarm={areaByFarm}
         onFinishCreateAnimal={onFinishCreateAnimal}
+        handleSearch={handleSearch}
       />
       <TableDisplayAnimal
         farmId={farmId}
@@ -63,6 +70,7 @@ const Animals = () => {
         animalByFarm={animalByFarm}
         onFinishDeleteAnimal={onFinishDeleteAnimal}
         onFinishUpdateAnimal={onFinishUpdateAnimal}
+        searchTerm={searchTerm}
       />
     </>
   )

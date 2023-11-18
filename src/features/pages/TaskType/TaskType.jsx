@@ -1,5 +1,5 @@
 import { getMemberById } from 'features/slice/user/memberSlice'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { authServices } from 'services/authServices'
@@ -12,13 +12,22 @@ import {
   updateTaskType,
 } from 'features/slice/task/taskTypeSlice'
 import { getTaskTypeTemplate } from 'features/slice/task/taskTypeTemplate'
-import { getTaskTypeExcel } from 'features/slice/task/taskTypeExcelSlice'
+import {
+  createTaskTypeByExcel,
+  getTaskTypeExcel,
+} from 'features/slice/task/taskTypeExcelSlice'
 
 const TaskType = () => {
   const dispatch = useDispatch()
   const member = useSelector((state) => state.member.data)
   const taskType = useSelector((state) => state.taskType.data)
   const farmId = member.farmId
+
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleSearch = (value) => {
+    setSearchTerm(value)
+  }
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
@@ -31,6 +40,12 @@ const TaskType = () => {
 
   const getTaskTypeByExcel = () => {
     dispatch(getTaskTypeExcel())
+  }
+
+  const onFinishCreateTaskTypeExcel = (value) => {
+    dispatch(createTaskTypeByExcel(value)).then(() => {
+      loadData()
+    })
   }
 
   const onFinishCreateTaskType = (values) => {
@@ -61,12 +76,15 @@ const TaskType = () => {
         onFinishCreateTaskType={onFinishCreateTaskType}
         getTemplate={getTemplate}
         getTaskTypeByExcel={getTaskTypeByExcel}
+        onFinishCreateTaskTypeExcel={onFinishCreateTaskTypeExcel}
+        handleSearch={handleSearch}
       />
       <DisplayTaskType
         taskType={taskType}
         loadData={loadData}
         onFinishUpdateTaskType={onFinishUpdateTaskType}
         onFinishDeleteTaskType={onFinishDeleteTaskType}
+        searchTerm={searchTerm}
       />
     </>
   )

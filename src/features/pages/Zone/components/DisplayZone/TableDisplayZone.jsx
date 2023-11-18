@@ -2,6 +2,7 @@ import { Badge, Button, Table } from 'antd'
 import Column from 'antd/es/table/Column'
 import { useState } from 'react'
 import UpdateZone from './UpdateZone'
+import DetailZone from './DetailZone'
 
 const TableDisplayZone = ({
   areaByFarm,
@@ -9,9 +10,13 @@ const TableDisplayZone = ({
   zoneType,
   onFinishUpdateZone,
   onFinishDeleteZone,
+  searchTerm,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
+
+  const [isModalDetailOpen, setIsModalDetailOpen] = useState(false)
+  const [selectedDataDetail, setSelectedDataDetail] = useState(null)
 
   const openModal = (record) => {
     setSelectedData(record)
@@ -21,22 +26,51 @@ const TableDisplayZone = ({
   const closeModal = () => {
     setIsModalOpen(false)
   }
+
+  // Detail
+  const openModalDetail = (record) => {
+    setSelectedDataDetail(record)
+    setIsModalDetailOpen(true)
+  }
+  const closeModalDetail = () => {
+    setSelectedDataDetail(null)
+    setIsModalDetailOpen(false)
+  }
+
+  const searchZone = zoneByFarm
+    ? zoneByFarm?.data?.filter((m) =>
+        m.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : []
   return (
     <>
-      <Table
-        rowKey="id"
-        dataSource={zoneByFarm ? zoneByFarm.data : null}
-        locale={{ emptyText: 'Chưa có vùng nào' }}
-      >
-        <Column title="Tên vùng" dataIndex="name" key="1" />
+      <Table rowKey="id" dataSource={searchZone}>
+        <Column
+          title="Tên vùng"
+          dataIndex="name"
+          key="1"
+          render={(text, record) => (
+            <h4
+              onClick={() => openModalDetail(record)}
+              style={{ cursor: 'pointer' }}
+            >
+              {text}
+            </h4>
+          )}
+        />
         <Column title="Mã vùng" dataIndex="code" key="2" />
-        <Column title="Diện tích" dataIndex="farmArea" key="3" />
-        <Column title="Loại vùng" dataIndex="zoneTypeName" key="4" />
-        <Column title="Tên khu vực" dataIndex="areaName" key="5" />
+        {/* <Column title="Diện tích" dataIndex="farmArea" key="3" /> */}
+        {/* <Column title="Loại vùng" dataIndex="zoneTypeName" key="4" /> */}
+        {/* <Column title="Tên khu vực" dataIndex="areaName" key="5" /> */}
         <Column
           title="Trạng thái"
           dataIndex="status"
           key="6"
+          filters={[
+            { text: 'Tồn tại', value: 'Tồn tại' },
+            { text: 'Không tồn tại', value: 'Không tồn tại' },
+          ]}
+          onFilter={(value, record) => record.status.indexOf(value) === 0}
           render={(status) =>
             status === 'Tồn tại' ? (
               <Badge status="success" text="Tồn tại" />
@@ -59,7 +93,6 @@ const TableDisplayZone = ({
             </Button>
           )}
         />
-
         <Column
           title="Cập nhật"
           key="8"
@@ -75,6 +108,13 @@ const TableDisplayZone = ({
           )}
         />
       </Table>
+      <DetailZone
+        key={selectedDataDetail ? selectedDataDetail.id : null}
+        isModalDetailOpen={isModalDetailOpen}
+        closeModalDetail={closeModalDetail}
+        selectedDataDetail={selectedDataDetail}
+      />
+
       <UpdateZone
         key={selectedData ? selectedData.id : null}
         areaByFarm={areaByFarm}

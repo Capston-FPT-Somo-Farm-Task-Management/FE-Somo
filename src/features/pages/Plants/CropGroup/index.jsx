@@ -4,7 +4,7 @@ import DisplayCropGroup from './components/DisplayCropGroup/DisplayCropGroup'
 import { useSelector } from 'react-redux'
 import { getFieldPlantByFarmId } from 'features/slice/field/fieldPlantSlice'
 import { getMemberById } from 'features/slice/user/memberSlice'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { authServices } from 'services/authServices'
 import {
   createField,
@@ -19,6 +19,12 @@ const CropGroup = () => {
   const farmId = member.farmId
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const fieldPlant = useSelector((state) => state.fieldPlant.data)
+
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleSearch = (value) => {
+    setSearchTerm(value)
+  }
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
@@ -53,12 +59,14 @@ const CropGroup = () => {
       <AddAndSearchCropGroup
         areaByFarm={areaByFarm}
         onFinishCreate={onFinishCreate}
+        handleSearch={handleSearch}
       />
       <DisplayCropGroup
         areaByFarm={areaByFarm}
         fieldPlant={fieldPlant}
         onFinishDelete={onFinishDelete}
         onFinishUpdate={onFinishUpdate}
+        searchTerm={searchTerm}
       />
     </>
   )

@@ -5,7 +5,7 @@ import { getMemberById } from 'features/slice/user/memberSlice'
 import { getPlantByFarmId } from 'features/slice/plant/plantByFarmSlice'
 import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarmSlice'
 import { authServices } from 'services/authServices'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
   createPlant,
   deletePlant,
@@ -20,6 +20,12 @@ const MyCrops = () => {
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const member = useSelector((state) => state.member.data)
   const farmId = member.farmId
+
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleSearch = (value) => {
+    setSearchTerm(value)
+  }
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()))
@@ -55,6 +61,7 @@ const MyCrops = () => {
         areaByFarm={areaByFarm}
         onFinishCreatePlant={onFinishCreatePlant}
         farmId={farmId}
+        handleSearch={handleSearch}
       />
       <TableDisplayCrop
         farmId={farmId}
@@ -62,6 +69,7 @@ const MyCrops = () => {
         plantByFarm={plantByFarm}
         onFinishUpdatePlant={onFinishUpdatePlant}
         onFinishDeletePlant={onFinishDeletePlant}
+        searchTerm={searchTerm}
       />
     </>
   )
