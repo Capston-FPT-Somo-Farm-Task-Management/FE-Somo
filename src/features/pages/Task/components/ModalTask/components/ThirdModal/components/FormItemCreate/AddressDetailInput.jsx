@@ -1,7 +1,7 @@
 import { Form, Input } from "antd";
 import React from "react";
 
-function AddressDetailInput({ addressDetail, setAddressDetail }) {
+function AddressDetailInput({ addressDetail, setAddressDetail, isDraft }) {
   return (
     <Form.Item
       label="Vị trí cụ thể"
@@ -9,7 +9,7 @@ function AddressDetailInput({ addressDetail, setAddressDetail }) {
       required
       rules={[
         {
-          required: true,
+          required: !isDraft,
           message: "Vui lòng nhập vị trí cụ thể",
         },
       ]}

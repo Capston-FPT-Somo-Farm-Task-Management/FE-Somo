@@ -1,7 +1,7 @@
 import { Form, Select } from 'antd'
 import React from 'react'
 
-function FieldPlantSelect({handleSelectFieldChange, fieldByZone}) {
+function FieldPlantSelect({handleSelectFieldChange, fieldByZone, selectedFieldId, isDraft}) {
   return (
     <Form.Item
           label="Vườn"
@@ -9,12 +9,13 @@ function FieldPlantSelect({handleSelectFieldChange, fieldByZone}) {
           required
           rules={[
             {
-              required: true,
+              required: !isDraft,
               message: "Vui lòng chọn vườn",
             },
           ]}
         >
           <Select
+          value={selectedFieldId}
             onChange={handleSelectFieldChange}
             placeholder="Chọn vườn"
             options={

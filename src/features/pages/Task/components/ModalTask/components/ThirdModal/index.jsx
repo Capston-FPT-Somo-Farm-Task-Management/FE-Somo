@@ -12,7 +12,7 @@ import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
 import { getEmployeeByTaskTypeAndFarmId } from "features/slice/employee/employeeSlice";
 import { getAnimalActive } from "features/slice/animal/animalSlice";
 import { getPlantActive } from "features/slice/plant/plantSlice";
-import { createTask } from "features/slice/task/taskSlice";
+import { createTaskDraft, createTaskToDo } from "features/slice/task/taskSlice";
 import { getMemberById } from "features/slice/user/memberSlice";
 import { authServices } from "services/authServices";
 import SpecificAnimal from "./components/specificAnimal";
@@ -35,24 +35,30 @@ function ThirdModal({
   onTaskAdded,
   onDateChange,
   handleCloseModal,
+  handleIsDraft,
+  handleIsTaskToDo,
+  handleIsDraftOther,
+  handleIsTaskOtherToDo,
+  isDraft
 }) {
   const [selectedAreaId, setSelectedAreaId] = useState(null);
   const [selectedZoneId, setSelectedZoneId] = useState(null);
   const [selectedFieldId, setSelectedFieldId] = useState(null);
-  const [addressDetail, setAddressDetail] = useState("");
-  const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(null);
   const [selectedFarmId, setSelectedFarmId] = useState(null);
-  const [employeesValue, setEmployeesValue] = useState(null);
-  const [materialsValue, setMaterialsValue] = useState(0);
-  const [priorityValue, setPriorityValue] = useState("");
-  const [remindValue, setRemindValue] = useState(0);
-  const [repeatValue, setRepeatValue] = useState(false);
+  const [name, setName] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [description, setDescription] = useState("");
+  const [priorityValue, setPriorityValue] = useState("");
+  const [supervisorValue, setSupervisorValue] = useState(0);
+  const [repeatValue, setRepeatValue] = useState(false);
+  const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(0);
+  const [plantValue, setPlantValue] = useState(0);
+  const [livestockValue, setLivestockValue] = useState(0);
+  const [addressDetail, setAddressDetail] = useState("");
+  const [remindValue, setRemindValue] = useState(0);
+  const [materialsValue, setMaterialsValue] = useState(0);
   const [selectedDays, setSelectedDays] = useState([]);
-  const [overallEfforMinutes, setOverallEfforMinutes] = useState(0);
-  const [overallEffortHour, setOverallEffortHour] = useState(0);
   const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
 
   const [form] = Form.useForm();
@@ -97,8 +103,6 @@ function ThirdModal({
 
   const supervisor = useSelector((state) => state.supervisor.data);
 
-  const dataEmployee = useSelector((state) => state.employee.data);
-
   const material = useSelector((state) => state.materialActive.data);
 
   useEffect(() => {
@@ -133,20 +137,6 @@ function ThirdModal({
       dispatch(getPlantActive(selectedFieldId));
     }
   }, [selectedFieldId]);
-
-  useEffect(() => {
-    if (selectedTaskTypeId) {
-      dispatch(
-        getEmployeeByTaskTypeAndFarmId({
-          taskTypeId: selectedTaskTypeId,
-          farmId: farmId,
-        })
-      );
-      form.setFieldsValue({
-        employeeIds: undefined,
-      });
-    }
-  }, [selectedTaskTypeId]);
 
   useEffect(() => {
     if (endDate && startDate && startDate.isAfter(endDate)) {
@@ -196,8 +186,8 @@ function ThirdModal({
     });
   };
 
-  const handlePriorityChange = (value) => {
-    setPriorityValue(value);
+  const handleNameChange = (e) => {
+    setName(e.target.value);
   };
 
   const handleSelectStartDate = (date) => {
@@ -254,12 +244,24 @@ function ThirdModal({
     setDescription(e.target.value);
   };
 
+  const handlePriorityChange = (value) => {
+    setPriorityValue(value);
+  };
+
+  const handleSupervisorValue = (value) => {
+    setSupervisorValue(value);
+  };
+
   const handleTaskTypeChange = (value) => {
     setSelectedTaskTypeId(value);
   };
 
-  const handleEmployeeChange = (value) => {
-    setEmployeesValue(value);
+  const handlePlantValue = (value) => {
+    setPlantValue(value);
+  };
+
+  const handleLivestockValue = (value) => {
+    setLivestockValue(value);
   };
 
   const handleMaterialChange = (value) => {
@@ -279,17 +281,8 @@ function ThirdModal({
     return current && current < dayjs().startOf("day");
   };
 
-  const handleOverallEfforMinutes = (value) => {
-    setOverallEfforMinutes(parseInt(value, 10));
-  };
-
-  const handleOverallEffortHour = (value) => {
-    setOverallEffortHour(parseInt(value, 10));
-  };
-
   const transformData = (originalData) => {
     const transformedData = {
-      employeeIds: originalData.employeeIds,
       materialIds: originalData.materialIds,
       dates: originalData.dates,
       farmTask: {
@@ -298,17 +291,14 @@ function ThirdModal({
         endDate: originalData.endDate,
         description: originalData.description,
         priority: originalData.priority,
-        isRepeat: originalData.isRepeat,
-        suppervisorId: originalData.suppervisorId,
-        fieldId: originalData.fieldId,
-        taskTypeId: originalData.taskTypeId,
+        supervisorId: originalData.supervisorId,
         managerId: originalData.managerId,
-        otherId: originalData.otherId,
+        fieldId: originalData.fieldId,
+        isRepeat: originalData.isRepeat,
+        taskTypeId: originalData.taskTypeId,
         plantId: originalData.plantId,
         liveStockId: originalData.liveStockId,
         remind: originalData.remind,
-        overallEfforMinutes: originalData.overallEfforMinutes,
-        overallEffortHour: originalData.overallEffortHour,
         addressDetail: originalData.addressDetail,
       },
     };
@@ -316,7 +306,7 @@ function ThirdModal({
     return transformedData;
   };
 
-  const handleCreateTask = (values) => {
+  const handleCreateTaskToDo = (values) => {
     form
       .validateFields()
       .then(() => {
@@ -333,35 +323,43 @@ function ThirdModal({
 
         const materialToSend = materialsValue || [];
 
-        if (shouldCheckRepeat && repeatValueToSend && (!selectedDays || selectedDays.length === 0)) {
+        if (
+          shouldCheckRepeat &&
+          repeatValueToSend &&
+          (!selectedDays || selectedDays.length === 0)
+        ) {
           form.setFields([
             {
-              name: 'dates',
-              errors: ['Vui lòng chọn ngày lặp lại'],
+              name: "dates",
+              errors: ["Vui lòng chọn ngày lặp lại"],
             },
-          ])
-          return
+          ]);
+          return;
         }
 
         const finalValues = {
           ...values,
+          name: name,
           startDate: startDateFormatted,
           endDate: endDateFormatted,
+          description: description,
+          priority: priorityValue,
+          supervisorId: supervisorValue,
+          managerId: member.id,
+          fieldId: selectedFieldId,
+          isRepeat: repeatValueToSend,
+          taskTypeId: selectedTaskTypeId,
+          plantId: plantValue,
+          liveStockId: livestockValue,
+          addressDetail: addressDetail,
+          remind: remindValueToSend,
           dates: selectedDays,
           materialIds: materialToSend,
-          priority: priorityValue,
-          remind: remindValueToSend,
-          isRepeat: repeatValueToSend,
-          description: description,
-          managerId: member.id,
-          otherId: 0,
-          overallEffortHour: overallEffortHour,
-          overallEfforMinutes: overallEfforMinutes,
         };
 
         const transformedValues = transformData(finalValues);
 
-        dispatch(createTask(transformedValues)).then(() => {
+        dispatch(createTaskToDo(transformedValues)).then(() => {
           loadDataTask();
           onDateChange();
           onTaskAdded();
@@ -373,7 +371,83 @@ function ThirdModal({
       });
   };
 
-  const handleCreateTaskOther = (values) => {
+  const handleCreateDraft = (values) => {
+    form
+      .validateFields()
+      .then(() => {
+        const startDateFormatted = dayjs(startDate)
+          .second(0)
+          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+        const endDateFormatted = dayjs(endDate)
+          .second(0)
+          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+
+        const startDateToSend = startDate ? startDateFormatted : null;
+        const endDateToSend = endDate ? endDateFormatted : null;
+
+        const remindValueToSend = remindValue || 0;
+
+        const repeatValueToSend = repeatValue || false;
+
+        const materialToSend = materialsValue || [];
+
+        if (
+          shouldCheckRepeat &&
+          repeatValueToSend &&
+          (!selectedDays || selectedDays.length === 0)
+        ) {
+          form.setFields([
+            {
+              name: "dates",
+              errors: ["Vui lòng chọn ngày lặp lại"],
+            },
+          ]);
+          return;
+        }
+
+        const finalValues = {
+          ...values,
+          name: name,
+          startDate: startDateToSend,
+          endDate: endDateToSend,
+          description: description,
+          priority: priorityValue,
+          supervisorId: supervisorValue,
+          managerId: member.id,
+          fieldId: selectedFieldId,
+          isRepeat: repeatValueToSend,
+          taskTypeId: selectedTaskTypeId,
+          plantId: plantValue,
+          liveStockId: livestockValue,
+          addressDetail: addressDetail,
+          remind: remindValueToSend,
+          dates: selectedDays,
+          materialIds: materialToSend,
+        };
+
+        const transformedValues = transformData(finalValues);
+
+        dispatch(createTaskDraft(transformedValues)).then(() => {
+          loadDataTask();
+          onDateChange();
+          onTaskAdded();
+          handleCloseModal();
+        });
+      })
+      .catch((errorInfo) => {
+        console.log("Validation failed:", errorInfo);
+      });
+  };
+
+  const handleFormSubmit = () => {
+    if (isDraft) {
+      handleCreateDraft();
+    } else {
+      handleCreateTaskToDo();
+    }
+  };
+
+  const handleCreateTaskOtherToDo = (values) => {
     form
       .validateFields()
       .then(() => {
@@ -390,14 +464,18 @@ function ThirdModal({
 
         const materialToSend = materialsValue || [];
 
-        if (shouldCheckRepeat && repeatValueToSend && (!selectedDays || selectedDays.length === 0)) {
+        if (
+          shouldCheckRepeat &&
+          repeatValueToSend &&
+          (!selectedDays || selectedDays.length === 0)
+        ) {
           form.setFields([
             {
-              name: 'dates',
-              errors: ['Vui lòng chọn ngày lặp lại'],
+              name: "dates",
+              errors: ["Vui lòng chọn ngày lặp lại"],
             },
-          ])
-          return
+          ]);
+          return;
         }
 
         const areaName =
@@ -418,25 +496,27 @@ function ThirdModal({
 
         const finalValues = {
           ...values,
-          fieldId: null,
+          name: name,
           startDate: startDateFormatted,
           endDate: endDateFormatted,
+          description: description,
+          priority: priorityValue,
+          supervisorId: supervisorValue,
+          managerId: member.id,
+          fieldId: selectedFieldId,
+          isRepeat: repeatValueToSend,
+          taskTypeId: selectedTaskTypeId,
+          plantId: plantValue,
+          liveStockId: livestockValue,
+          remind: remindValueToSend,
           dates: selectedDays,
           materialIds: materialToSend,
-          priority: priorityValue,
-          remind: remindValueToSend,
-          isRepeat: repeatValueToSend,
-          description: description,
-          managerId: member.id,
-          otherId: 0,
-          overallEffortHour: overallEffortHour,
-          overallEfforMinutes: overallEfforMinutes,
           addressDetail: formattedAddress,
         };
 
         const transformedValues = transformData(finalValues);
 
-        dispatch(createTask(transformedValues)).then(() => {
+        dispatch(createTaskToDo(transformedValues)).then(() => {
           loadDataTask();
           onDateChange();
           onTaskAdded();
@@ -448,46 +528,141 @@ function ThirdModal({
       });
   };
 
+  const handleCreateTaskOtherDraft = (values) => {
+    form
+      .validateFields()
+      .then(() => {
+        const startDateFormatted = dayjs(startDate)
+          .second(0)
+          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+        const endDateFormatted = dayjs(endDate)
+          .second(0)
+          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+
+        const startDateToSend = startDate ? startDateFormatted : null;
+        const endDateToSend = endDate ? endDateFormatted : null;
+
+        const remindValueToSend = remindValue || 0;
+
+        const repeatValueToSend = repeatValue || false;
+
+        const materialToSend = materialsValue || [];
+
+        if (
+          shouldCheckRepeat &&
+          repeatValueToSend &&
+          (!selectedDays || selectedDays.length === 0)
+        ) {
+          form.setFields([
+            {
+              name: "dates",
+              errors: ["Vui lòng chọn ngày lặp lại"],
+            },
+          ]);
+          return;
+        }
+
+        const areaName =
+          areaByFarm.data.find((area) => area.id === selectedAreaId)?.name ||
+          "";
+        const zoneName =
+          zoneByArea.data.find((zone) => zone.id === selectedZoneId)?.name ||
+          "";
+        const fieldName =
+          fieldByZone.data.find((field) => field.id === selectedFieldId)
+            ?.nameCode || "";
+
+        const formattedAddress = `${areaName ? areaName + `, ` : ""}${
+          zoneName ? zoneName + `, ` : ""
+        }${fieldName ? fieldName + `, ` : ""} ${
+          addressDetail ? addressDetail : ""
+        }`;
+
+        const finalValues = {
+          ...values,
+          name: name,
+          startDate: startDateToSend,
+          endDate: endDateToSend,
+          description: description,
+          priority: priorityValue,
+          supervisorId: supervisorValue,
+          managerId: member.id,
+          fieldId: selectedFieldId,
+          isRepeat: repeatValueToSend,
+          taskTypeId: selectedTaskTypeId,
+          plantId: plantValue,
+          liveStockId: livestockValue,
+          remind: remindValueToSend,
+          dates: selectedDays,
+          materialIds: materialToSend,
+          addressDetail: formattedAddress,
+        };
+
+        const transformedValues = transformData(finalValues);
+
+        dispatch(createTaskDraft(transformedValues)).then(() => {
+          loadDataTask();
+          onDateChange();
+          onTaskAdded();
+          handleCloseModal();
+        });
+      })
+      .catch((errorInfo) => {
+        console.log("Validation failed:", errorInfo);
+      });
+  };
+
+  const handleFormOtherSubmit = () => {
+    if (isDraft) {
+      handleCreateTaskOtherDraft();
+    } else {
+      handleCreateTaskOtherToDo();
+    }
+  };
+
   if (option === "other") {
     return (
       <OtherTaskType
-        handleCreateTaskOther={handleCreateTaskOther}
+        handleIsDraftOther={handleIsDraftOther}
+        handleIsTaskOtherToDo={handleIsTaskOtherToDo}
+        handleFormOtherSubmit={handleFormOtherSubmit}
+        isDraft={isDraft}
         selectedAreaId={selectedAreaId}
         handleSelectAreaChange={handleSelectAreaChange}
         handleSelectZoneChange={handleSelectZoneChange}
         handleSelectFieldChange={handleSelectFieldChange}
-        handlePriorityChange={handlePriorityChange}
+        handleNameChange={handleNameChange}
         handleSelectStartDate={handleSelectStartDate}
         handleSelectEndDate={handleSelectEndDate}
         handleDescriptionChange={handleDescriptionChange}
+        handlePriorityChange={handlePriorityChange}
+        handleSupervisorValue={handleSupervisorValue}
         handleTaskTypeChange={handleTaskTypeChange}
-        handleEmployeeChange={handleEmployeeChange}
         handleMaterialChange={handleMaterialChange}
         handleSelectRemind={handleSelectRemind}
         handleSelectRepeat={handleSelectRepeat}
-        handleOverallEfforMinutes={handleOverallEfforMinutes}
-        handleOverallEffortHour={handleOverallEffortHour}
         form={form}
         areaByFarm={areaByFarm}
         zoneByArea={zoneByArea}
         fieldByZone={fieldByZone}
         addressDetail={addressDetail}
-        setAddressDetail={setAddressDetail}
-        priorityValue={priorityValue}
-        description={description}
-        overallEfforMinutes={overallEfforMinutes}
-        overallEffortHour={overallEffortHour}
-        taskTypeActive={taskTypeActive}
-        employeesValue={employeesValue}
-        dataEmployee={dataEmployee}
         supervisor={supervisor}
-        materialsValue={materialsValue}
         material={material}
+        setAddressDetail={setAddressDetail}
+        name={name}
+        startDate={startDate}
+        endDate={endDate}
+        description={description}
+        priorityValue={priorityValue}
+        supervisorValue={supervisorValue}
+        selectedFieldId={selectedFieldId}
+        taskTypeActive={taskTypeActive}
+        plantValue={plantValue}
+        livestockValue={livestockValue}
+        materialsValue={materialsValue}
         remindValue={remindValue}
         repeatValue={repeatValue}
         disabledDate={disabledDate}
-        startDate={startDate}
-        endDate={endDate}
         selectedDays={selectedDays}
         setSelectedDays={setSelectedDays}
       />
@@ -495,42 +670,45 @@ function ThirdModal({
   } else if (option === "specificAnimal") {
     return (
       <SpecificAnimal
-        handleCreateTask={handleCreateTask}
+        handleIsDraft={handleIsDraft}
+        handleIsTaskToDo={handleIsTaskToDo}
+        handleFormSubmit={handleFormSubmit}
+        isDraft={isDraft}
         selectedAreaId={selectedAreaId}
         handleSelectAreaChange={handleSelectAreaChange}
         handleSelectZoneChange={handleSelectZoneChange}
         handleSelectFieldChange={handleSelectFieldChange}
-        handlePriorityChange={handlePriorityChange}
+        handleNameChange={handleNameChange}
         handleSelectStartDate={handleSelectStartDate}
         handleSelectEndDate={handleSelectEndDate}
         handleDescriptionChange={handleDescriptionChange}
+        handlePriorityChange={handlePriorityChange}
+        handleSupervisorValue={handleSupervisorValue}
         handleTaskTypeChange={handleTaskTypeChange}
-        handleEmployeeChange={handleEmployeeChange}
+        handleLivestockValue={handleLivestockValue}
         handleMaterialChange={handleMaterialChange}
         handleSelectRemind={handleSelectRemind}
         handleSelectRepeat={handleSelectRepeat}
-        handleOverallEfforMinutes={handleOverallEfforMinutes}
-        handleOverallEffortHour={handleOverallEffortHour}
         form={form}
         areaLivestockByZone={areaLivestockByZone}
         zoneAnimal={zoneAnimal}
         fieldByZone={fieldByZone}
         dataAnimal={dataAnimal}
-        priorityValue={priorityValue}
-        description={description}
-        overallEfforMinutes={overallEfforMinutes}
-        overallEffortHour={overallEffortHour}
-        dataTaskTypeLivestock={dataTaskTypeLivestock}
-        employeesValue={employeesValue}
-        dataEmployee={dataEmployee}
-        supervisor={supervisor}
-        materialsValue={materialsValue}
-        material={material}
-        remindValue={remindValue}
-        repeatValue={repeatValue}
-        disabledDate={disabledDate}
+        name={name}
         startDate={startDate}
         endDate={endDate}
+        description={description}
+        priorityValue={priorityValue}
+        supervisorValue={supervisorValue}
+        selectedFieldId={selectedFieldId}
+        dataTaskTypeLivestock={dataTaskTypeLivestock}
+        livestockValue={livestockValue}
+        materialsValue={materialsValue}
+        remindValue={remindValue}
+        repeatValue={repeatValue}
+        supervisor={supervisor}
+        material={material}
+        disabledDate={disabledDate}
         selectedDays={selectedDays}
         setSelectedDays={setSelectedDays}
       />
@@ -538,41 +716,44 @@ function ThirdModal({
   } else if (option === "wholeBarn") {
     return (
       <WholeBarn
-        handleCreateTask={handleCreateTask}
+        handleIsDraft={handleIsDraft}
+        handleIsTaskToDo={handleIsTaskToDo}
+        handleFormSubmit={handleFormSubmit}
+        isDraft={isDraft}
         selectedAreaId={selectedAreaId}
         handleSelectAreaChange={handleSelectAreaChange}
         handleSelectZoneChange={handleSelectZoneChange}
         handleSelectFieldChange={handleSelectFieldChange}
-        handlePriorityChange={handlePriorityChange}
+        handleNameChange={handleNameChange}
         handleSelectStartDate={handleSelectStartDate}
         handleSelectEndDate={handleSelectEndDate}
         handleDescriptionChange={handleDescriptionChange}
+        handlePriorityChange={handlePriorityChange}
+        handleSupervisorValue={handleSupervisorValue}
         handleTaskTypeChange={handleTaskTypeChange}
-        handleEmployeeChange={handleEmployeeChange}
+        handleLivestockValue={handleLivestockValue}
         handleMaterialChange={handleMaterialChange}
         handleSelectRemind={handleSelectRemind}
         handleSelectRepeat={handleSelectRepeat}
-        handleOverallEfforMinutes={handleOverallEfforMinutes}
-        handleOverallEffortHour={handleOverallEffortHour}
         form={form}
         areaLivestockByZone={areaLivestockByZone}
         zoneAnimal={zoneAnimal}
         fieldByZone={fieldByZone}
-        priorityValue={priorityValue}
-        description={description}
-        overallEfforMinutes={overallEfforMinutes}
-        overallEffortHour={overallEffortHour}
-        dataTaskTypeLivestock={dataTaskTypeLivestock}
-        employeesValue={employeesValue}
-        dataEmployee={dataEmployee}
-        supervisor={supervisor}
-        materialsValue={materialsValue}
-        material={material}
-        remindValue={remindValue}
-        repeatValue={repeatValue}
-        disabledDate={disabledDate}
+        dataAnimal={dataAnimal}
+        name={name}
         startDate={startDate}
         endDate={endDate}
+        description={description}
+        priorityValue={priorityValue}
+        supervisorValue={supervisorValue}
+        selectedFieldId={selectedFieldId}
+        dataTaskTypeLivestock={dataTaskTypeLivestock}
+        materialsValue={materialsValue}
+        remindValue={remindValue}
+        repeatValue={repeatValue}
+        supervisor={supervisor}
+        material={material}
+        disabledDate={disabledDate}
         selectedDays={selectedDays}
         setSelectedDays={setSelectedDays}
       />
@@ -580,42 +761,45 @@ function ThirdModal({
   } else if (option === "specificPlant") {
     return (
       <SpecificPlant
-        handleCreateTask={handleCreateTask}
+        handleIsDraft={handleIsDraft}
+        handleIsTaskToDo={handleIsTaskToDo}
+        handleFormSubmit={handleFormSubmit}
+        isDraft={isDraft}
         selectedAreaId={selectedAreaId}
         handleSelectAreaChange={handleSelectAreaChange}
         handleSelectZoneChange={handleSelectZoneChange}
         handleSelectFieldChange={handleSelectFieldChange}
-        handlePriorityChange={handlePriorityChange}
+        handleNameChange={handleNameChange}
         handleSelectStartDate={handleSelectStartDate}
         handleSelectEndDate={handleSelectEndDate}
         handleDescriptionChange={handleDescriptionChange}
+        handlePriorityChange={handlePriorityChange}
+        handleSupervisorValue={handleSupervisorValue}
         handleTaskTypeChange={handleTaskTypeChange}
-        handleEmployeeChange={handleEmployeeChange}
+        handlePlantValue={handlePlantValue}
         handleMaterialChange={handleMaterialChange}
         handleSelectRemind={handleSelectRemind}
         handleSelectRepeat={handleSelectRepeat}
-        handleOverallEfforMinutes={handleOverallEfforMinutes}
-        handleOverallEffortHour={handleOverallEffortHour}
         form={form}
         areaPlantByZone={areaPlantByZone}
         zonePlant={zonePlant}
         fieldByZone={fieldByZone}
-        dataPlant={dataPlant}
-        priorityValue={priorityValue}
-        description={description}
-        overallEfforMinutes={overallEfforMinutes}
-        overallEffortHour={overallEffortHour}
-        dataTaskTypePlant={dataTaskTypePlant}
-        employeesValue={employeesValue}
-        dataEmployee={dataEmployee}
-        supervisor={supervisor}
-        materialsValue={materialsValue}
-        material={material}
-        remindValue={remindValue}
-        repeatValue={repeatValue}
-        disabledDate={disabledDate}
+        name={name}
         startDate={startDate}
         endDate={endDate}
+        description={description}
+        priorityValue={priorityValue}
+        supervisorValue={supervisorValue}
+        selectedFieldId={selectedFieldId}
+        dataTaskTypePlant={dataTaskTypePlant}
+        plantValue={plantValue}
+        dataPlant={dataPlant}
+        materialsValue={materialsValue}
+        remindValue={remindValue}
+        repeatValue={repeatValue}
+        supervisor={supervisor}
+        material={material}
+        disabledDate={disabledDate}
         selectedDays={selectedDays}
         setSelectedDays={setSelectedDays}
       />
@@ -623,41 +807,43 @@ function ThirdModal({
   } else if (option === "wholeGarden") {
     return (
       <WholeGarden
-        handleCreateTask={handleCreateTask}
+        handleIsDraft={handleIsDraft}
+        handleIsTaskToDo={handleIsTaskToDo}
+        handleFormSubmit={handleFormSubmit}
+        isDraft={isDraft}
         selectedAreaId={selectedAreaId}
         handleSelectAreaChange={handleSelectAreaChange}
         handleSelectZoneChange={handleSelectZoneChange}
         handleSelectFieldChange={handleSelectFieldChange}
-        handlePriorityChange={handlePriorityChange}
+        handleNameChange={handleNameChange}
         handleSelectStartDate={handleSelectStartDate}
         handleSelectEndDate={handleSelectEndDate}
         handleDescriptionChange={handleDescriptionChange}
+        handlePriorityChange={handlePriorityChange}
+        handleSupervisorValue={handleSupervisorValue}
         handleTaskTypeChange={handleTaskTypeChange}
-        handleEmployeeChange={handleEmployeeChange}
+        handlePlantValue={handlePlantValue}
         handleMaterialChange={handleMaterialChange}
         handleSelectRemind={handleSelectRemind}
         handleSelectRepeat={handleSelectRepeat}
-        handleOverallEfforMinutes={handleOverallEfforMinutes}
-        handleOverallEffortHour={handleOverallEffortHour}
         form={form}
         areaPlantByZone={areaPlantByZone}
         zonePlant={zonePlant}
         fieldByZone={fieldByZone}
-        priorityValue={priorityValue}
-        description={description}
-        overallEfforMinutes={overallEfforMinutes}
-        overallEffortHour={overallEffortHour}
-        dataTaskTypePlant={dataTaskTypePlant}
-        employeesValue={employeesValue}
-        dataEmployee={dataEmployee}
-        supervisor={supervisor}
-        materialsValue={materialsValue}
-        material={material}
-        remindValue={remindValue}
-        repeatValue={repeatValue}
-        disabledDate={disabledDate}
+        name={name}
         startDate={startDate}
         endDate={endDate}
+        description={description}
+        priorityValue={priorityValue}
+        supervisorValue={supervisorValue}
+        selectedFieldId={selectedFieldId}
+        dataTaskTypePlant={dataTaskTypePlant}
+        materialsValue={materialsValue}
+        remindValue={remindValue}
+        repeatValue={repeatValue}
+        supervisor={supervisor}
+        material={material}
+        disabledDate={disabledDate}
         selectedDays={selectedDays}
         setSelectedDays={setSelectedDays}
       />

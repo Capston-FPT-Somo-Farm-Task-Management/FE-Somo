@@ -1,14 +1,14 @@
 import { Form, Select } from 'antd'
 import React from 'react'
 
-function AreaLivestockSelect({handleSelectAreaChange, areaLivestockByZone}) {
+function AreaLivestockSelect({handleSelectAreaChange, areaLivestockByZone, isDraft}) {
   return (
     <Form.Item
           label="Khu vực"
           required
           rules={[
             {
-              required: true,
+              required: !isDraft,
               message: "Vui lòng chọn khu vực",
             },
           ]}

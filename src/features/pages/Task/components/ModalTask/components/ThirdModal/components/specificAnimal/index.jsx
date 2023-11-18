@@ -1,65 +1,64 @@
-import React from 'react'
-import { Form } from 'antd'
-import AreaLivestockSelect from '../FormItemCreate/AreaLivestockSelect'
-import ZoneAnimalSelect from '../FormItemCreate/ZoneAnimal'
-import FieldAnimalSelect from '../FormItemCreate/FieldAnimalSelect'
-import AnimalSelect from '../FormItemCreate/AnimalSelect'
-import DateSelect from '../FormItemCreate/DateSelect'
-import OverallEffortSelect from '../FormItemCreate/OverallEffortSelect'
-import DescriptionInput from '../FormItemCreate/DescriptionInput'
-import NameTaskInput from '../FormItemCreate/NameTaskInput'
-import TaskTypeLivestockSelect from '../FormItemCreate/TaskTypeLivestockSelect'
-import SupervisorSelect from '../FormItemCreate/SupervisorSelect'
-import EmployeeSelect from '../FormItemCreate/EmployeeSelect'
-import MaterialSelect from '../FormItemCreate/MaterialSelect'
-import PrioritySelect from '../FormItemCreate/PrioritySelect'
-import RemindSelect from '../FormItemCreate/RemindSelect'
-import RepeatSelect from '../FormItemCreate/RepeatSelect'
+import React from "react";
+import {  Form } from "antd";
+import AreaLivestockSelect from "../FormItemCreate/AreaLivestockSelect";
+import ZoneAnimalSelect from "../FormItemCreate/ZoneAnimal";
+import FieldAnimalSelect from "../FormItemCreate/FieldAnimalSelect";
+import AnimalSelect from "../FormItemCreate/AnimalSelect";
+import DateSelect from "../FormItemCreate/DateSelect";
+import DescriptionInput from "../FormItemCreate/DescriptionInput";
+import NameTaskInput from "../FormItemCreate/NameTaskInput";
+import TaskTypeLivestockSelect from "../FormItemCreate/TaskTypeLivestockSelect";
+import SupervisorSelect from "../FormItemCreate/SupervisorSelect";
+import MaterialSelect from "../FormItemCreate/MaterialSelect";
+import PrioritySelect from "../FormItemCreate/PrioritySelect";
+import RemindSelect from "../FormItemCreate/RemindSelect";
+import RepeatSelect from "../FormItemCreate/RepeatSelect";
 
 function SpecificAnimal({
-  handleCreateTask,
+  handleFormSubmit,
+  isDraft,
   handleSelectAreaChange,
   handleSelectZoneChange,
   handleSelectFieldChange,
-  handlePriorityChange,
+  handleNameChange,
   handleSelectStartDate,
   handleSelectEndDate,
   handleDescriptionChange,
+  handlePriorityChange,
+  handleSupervisorValue,
   handleTaskTypeChange,
-  handleEmployeeChange,
+  handleLivestockValue,
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
-  handleOverallEfforMinutes,
-  handleOverallEffortHour,
   form,
   areaLivestockByZone,
   zoneAnimal,
   fieldByZone,
-  dataAnimal,
-  priorityValue,
-  description,
-  overallEfforMinutes,
-  overallEffortHour,
-  dataTaskTypeLivestock,
-  employeesValue,
-  dataEmployee,
-  supervisor,
-  materialsValue,
-  material,
-  remindValue,
-  repeatValue,
-  disabledDate,
+  name,
   startDate,
   endDate,
+  description,
+  priorityValue,
+  supervisorValue,
+  selectedFieldId,
+  dataTaskTypeLivestock,
+  livestockValue,
+  materialsValue,
+  remindValue,
+  repeatValue,
+  dataAnimal,
+  supervisor,
+  material,
+  disabledDate,
   selectedDays,
-  setSelectedDays
+  setSelectedDays,
 }) {
   return (
     <Form
       layout="vertical"
+      onFinish={handleFormSubmit}
       className="task-form"
-      onFinish={handleCreateTask}
       id="createTask"
       name="createTask"
       form={form}
@@ -68,16 +67,25 @@ function SpecificAnimal({
         <AreaLivestockSelect
           handleSelectAreaChange={handleSelectAreaChange}
           areaLivestockByZone={areaLivestockByZone}
+          isDraft={isDraft}
         />
         <ZoneAnimalSelect
           handleSelectZoneChange={handleSelectZoneChange}
           zoneAnimal={zoneAnimal}
+          isDraft={isDraft}
         />
         <FieldAnimalSelect
           handleSelectFieldChange={handleSelectFieldChange}
           fieldByZone={fieldByZone}
+          selectedFieldId={selectedFieldId}
+          isDraft={isDraft}
         />
-        <AnimalSelect dataAnimal={dataAnimal} />
+        <AnimalSelect
+          dataAnimal={dataAnimal}
+          livestockValue={livestockValue}
+          handleLivestockValue={handleLivestockValue}
+          isDraft={isDraft}
+        />
         <PrioritySelect
           priorityValue={priorityValue}
           handlePriorityChange={handlePriorityChange}
@@ -87,12 +95,7 @@ function SpecificAnimal({
           handleSelectStartDate={handleSelectStartDate}
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
-        />
-        <OverallEffortSelect
-          overallEffortHour={overallEffortHour}
-          handleOverallEffortHour={handleOverallEffortHour}
-          overallEfforMinutes={overallEfforMinutes}
-          handleOverallEfforMinutes={handleOverallEfforMinutes}
+          isDraft={isDraft}
         />
         <DescriptionInput
           description={description}
@@ -100,16 +103,17 @@ function SpecificAnimal({
         />
       </div>
       <div className="form-right">
-        <NameTaskInput />
+        <NameTaskInput name={name} handleNameChange={handleNameChange} />
         <TaskTypeLivestockSelect
           dataTaskTypeLivestock={dataTaskTypeLivestock}
           handleTaskTypeChange={handleTaskTypeChange}
+          isDraft={isDraft}
         />
-        <SupervisorSelect supervisor={supervisor} />
-        <EmployeeSelect
-          employeesValue={employeesValue}
-          handleEmployeeChange={handleEmployeeChange}
-          dataEmployee={dataEmployee}
+        <SupervisorSelect
+          supervisor={supervisor}
+          supervisorValue={supervisorValue}
+          handleSupervisorValue={handleSupervisorValue}
+          isDraft={isDraft}
         />
         <MaterialSelect
           materialsValue={materialsValue}
@@ -130,7 +134,7 @@ function SpecificAnimal({
         />
       </div>
     </Form>
-  )
+  );
 }
 
-export default SpecificAnimal
+export default SpecificAnimal;

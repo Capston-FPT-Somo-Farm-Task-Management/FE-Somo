@@ -6,54 +6,50 @@ import ZoneByAreaSelect from "../FormItemCreate/ZoneByAreaSelect";
 import FieldOtherSelect from "../FormItemCreate/FieldOtherSelect";
 import AddressDetailInput from "../FormItemCreate/AddressDetailInput";
 import DateSelect from "../FormItemCreate/DateSelect";
-import OverallEffortSelect from "../FormItemCreate/OverallEffortSelect";
 import DescriptionInput from "../FormItemCreate/DescriptionInput";
 import NameTaskInput from "../FormItemCreate/NameTaskInput";
 import TaskTypeActiveSelect from "../FormItemCreate/TaskTypeActiveSelect";
 import SupervisorSelect from "../FormItemCreate/SupervisorSelect";
-import EmployeeSelect from "../FormItemCreate/EmployeeSelect";
 import MaterialSelect from "../FormItemCreate/MaterialSelect";
 import PrioritySelect from "../FormItemCreate/PrioritySelect";
 import RemindSelect from "../FormItemCreate/RemindSelect";
 import RepeatSelect from "../FormItemCreate/RepeatSelect";
 
 function OtherTaskType({
-  handleCreateTaskOther,
+  handleFormOtherSubmit,
+  isDraft,
   handleSelectAreaChange,
   handleSelectZoneChange,
   handleSelectFieldChange,
   addressDetail,
+  handleNameChange,
   setAddressDetail,
   handlePriorityChange,
+  handleSupervisorValue,
   handleSelectStartDate,
   handleSelectEndDate,
   handleDescriptionChange,
   handleTaskTypeChange,
-  handleEmployeeChange,
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
-  handleOverallEfforMinutes,
-  handleOverallEffortHour,
   form,
   areaByFarm,
   zoneByArea,
   fieldByZone,
-  priorityValue,
+  name,
+  startDate,
+  endDate,
   description,
-  overallEfforMinutes,
-  overallEffortHour,
+  priorityValue,
+  supervisorValue,
   taskTypeActive,
-  employeesValue,
-  dataEmployee,
   supervisor,
   materialsValue,
   material,
   remindValue,
   repeatValue,
   disabledDate,
-  startDate,
-  endDate,
   selectedDays,
   setSelectedDays,
 }) {
@@ -65,8 +61,8 @@ function OtherTaskType({
   return (
     <Form
       layout="vertical"
+      onFinish={handleFormOtherSubmit}
       className="task-form"
-      onFinish={handleCreateTaskOther}
       id="createTask"
       name="createTask"
       form={form}
@@ -75,6 +71,7 @@ function OtherTaskType({
         <AreaByFarmSelect
           handleSelectAreaChange={handleSelectAreaChange}
           areaByFarm={areaByFarm}
+          isDraft={isDraft}
         />
         <ZoneByAreaSelect
           handleSelectZoneChange={handleSelectZoneChange}
@@ -87,6 +84,7 @@ function OtherTaskType({
         <AddressDetailInput
           addressDetail={addressDetail}
           setAddressDetail={setAddressDetail}
+          isDraft={isDraft}
         />
         <PrioritySelect
           priorityValue={priorityValue}
@@ -98,12 +96,7 @@ function OtherTaskType({
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
           calculateDaysDifference={calculateDaysDifference}
-        />
-        <OverallEffortSelect
-          overallEffortHour={overallEffortHour}
-          handleOverallEffortHour={handleOverallEffortHour}
-          overallEfforMinutes={overallEfforMinutes}
-          handleOverallEfforMinutes={handleOverallEfforMinutes}
+          isDraft={isDraft}
         />
         <DescriptionInput
           description={description}
@@ -111,16 +104,17 @@ function OtherTaskType({
         />
       </div>
       <div className="form-right">
-        <NameTaskInput />
+        <NameTaskInput name={name} handleNameChange={handleNameChange} />
         <TaskTypeActiveSelect
           taskTypeActive={taskTypeActive}
           handleTaskTypeChange={handleTaskTypeChange}
+          isDraft={isDraft}
         />
-        <SupervisorSelect supervisor={supervisor} />
-        <EmployeeSelect
-          employeesValue={employeesValue}
-          handleEmployeeChange={handleEmployeeChange}
-          dataEmployee={dataEmployee}
+        <SupervisorSelect
+          supervisor={supervisor}
+          supervisorValue={supervisorValue}
+          handleSupervisorValue={handleSupervisorValue}
+          isDraft={isDraft}
         />
         <MaterialSelect
           materialsValue={materialsValue}

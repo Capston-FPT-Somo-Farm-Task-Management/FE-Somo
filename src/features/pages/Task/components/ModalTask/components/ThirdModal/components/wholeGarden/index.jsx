@@ -4,126 +4,124 @@ import AreaPlantSelect from "../FormItemCreate/AreaPlantSelect";
 import ZonePlantSelect from "../FormItemCreate/ZonePlantSelect";
 import FieldPlantSelect from "../FormItemCreate/FieldPlantSelect";
 import DateSelect from "../FormItemCreate/DateSelect";
-import OverallEffortSelect from "../FormItemCreate/OverallEffortSelect";
 import DescriptionInput from "../FormItemCreate/DescriptionInput";
 import NameTaskInput from "../FormItemCreate/NameTaskInput";
 import TaskTypePlantSelect from "../FormItemCreate/TaskTypePlantSelect";
 import SupervisorSelect from "../FormItemCreate/SupervisorSelect";
-import EmployeeSelect from "../FormItemCreate/EmployeeSelect";
 import MaterialSelect from "../FormItemCreate/MaterialSelect";
 import PrioritySelect from "../FormItemCreate/PrioritySelect";
 import RemindSelect from "../FormItemCreate/RemindSelect";
 import RepeatSelect from "../FormItemCreate/RepeatSelect";
 
 function WholeGarden({
-  handleCreateTask,
+  handleFormSubmit,
+  isDraft,
   handleSelectAreaChange,
   handleSelectZoneChange,
   handleSelectFieldChange,
-  handlePriorityChange,
+  handleNameChange,
   handleSelectStartDate,
   handleSelectEndDate,
   handleDescriptionChange,
+  handlePriorityChange,
+  handleSupervisorValue,
   handleTaskTypeChange,
-  handleEmployeeChange,
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
-  handleOverallEfforMinutes,
-  handleOverallEffortHour,
   form,
   areaPlantByZone,
   zonePlant,
   fieldByZone,
-  priorityValue,
-  description,
-  overallEfforMinutes,
-  overallEffortHour,
-  dataTaskTypePlant,
-  employeesValue,
-  dataEmployee,
-  supervisor,
-  materialsValue,
-  material,
-  remindValue,
-  repeatValue,
-  disabledDate,
+  name,
   startDate,
   endDate,
+  description,
+  priorityValue,
+  supervisorValue,
+  selectedFieldId,
+  dataTaskTypePlant,
+  materialsValue,
+  remindValue,
+  repeatValue,
+  supervisor,
+  material,
+  disabledDate,
   selectedDays,
-  setSelectedDays
+  setSelectedDays,
 }) {
   return (
     <Form
       layout="vertical"
+      onFinish={handleFormSubmit}
       className="task-form"
-      onFinish={handleCreateTask}
       id="createTask"
+      name="createTask"
       form={form}
     >
-      <div className="form-left">
-        <AreaPlantSelect
-          handleSelectAreaChange={handleSelectAreaChange}
-          areaPlantByZone={areaPlantByZone}
-        />
-        <ZonePlantSelect
-          handleSelectZoneChange={handleSelectZoneChange}
-          zonePlant={zonePlant}
-        />
-        <FieldPlantSelect
-          handleSelectFieldChange={handleSelectFieldChange}
-          fieldByZone={fieldByZone}
-        />
-        <PrioritySelect
-          priorityValue={priorityValue}
-          handlePriorityChange={handlePriorityChange}
-        />
-        <DateSelect
-          disabledDate={disabledDate}
-          handleSelectStartDate={handleSelectStartDate}
-          handleSelectEndDate={handleSelectEndDate}
-          startDate={startDate}
-        />
-        <OverallEffortSelect
-          overallEffortHour={overallEffortHour}
-          handleOverallEffortHour={handleOverallEffortHour}
-          overallEfforMinutes={overallEfforMinutes}
-          handleOverallEfforMinutes={handleOverallEfforMinutes}
-        />
-        <DescriptionInput
-          description={description}
-          handleDescriptionChange={handleDescriptionChange}
-        />
-      </div>
-      <div className="form-right">
-        <NameTaskInput />
-        <TaskTypePlantSelect
-          dataTaskTypePlant={dataTaskTypePlant}
-          handleTaskTypeChange={handleTaskTypeChange}
-        />
-        <SupervisorSelect supervisor={supervisor} />
-        <EmployeeSelect
-          employeesValue={employeesValue}
-          handleEmployeeChange={handleEmployeeChange}
-          dataEmployee={dataEmployee}
-        />
-        <MaterialSelect
-          materialsValue={materialsValue}
-          handleMaterialChange={handleMaterialChange}
-          material={material}
-        />
-        <RemindSelect
-          remindValue={remindValue}
-          handleSelectRemind={handleSelectRemind}
-        />
-        <RepeatSelect
-          repeatValue={repeatValue}
-          handleSelectRepeat={handleSelectRepeat}
-          endDate={endDate}
-          selectedDays={selectedDays}
-          setSelectedDays={setSelectedDays}
-        />
-      </div>
+        <div className="form-left">
+          <AreaPlantSelect
+            handleSelectAreaChange={handleSelectAreaChange}
+            areaPlantByZone={areaPlantByZone}
+            isDraft={isDraft}
+          />
+          <ZonePlantSelect
+            handleSelectZoneChange={handleSelectZoneChange}
+            zonePlant={zonePlant}
+            isDraft={isDraft}
+          />
+          <FieldPlantSelect
+            handleSelectFieldChange={handleSelectFieldChange}
+            fieldByZone={fieldByZone}
+            selectedFieldId={selectedFieldId}
+            isDraft={isDraft}
+          />
+          <PrioritySelect
+            priorityValue={priorityValue}
+            handlePriorityChange={handlePriorityChange}
+          />
+          <DateSelect
+            disabledDate={disabledDate}
+            handleSelectStartDate={handleSelectStartDate}
+            handleSelectEndDate={handleSelectEndDate}
+            startDate={startDate}
+            isDraft={isDraft}
+          />
+          <DescriptionInput
+            description={description}
+            handleDescriptionChange={handleDescriptionChange}
+          />
+        </div>
+        <div className="form-right">
+          <NameTaskInput name={name} handleNameChange={handleNameChange} />
+          <TaskTypePlantSelect
+            dataTaskTypePlant={dataTaskTypePlant}
+            handleTaskTypeChange={handleTaskTypeChange}
+            isDraft={isDraft}
+          />
+          <SupervisorSelect
+            supervisor={supervisor}
+            supervisorValue={supervisorValue}
+            handleSupervisorValue={handleSupervisorValue}
+            isDraft={isDraft}
+          />
+          <MaterialSelect
+            materialsValue={materialsValue}
+            handleMaterialChange={handleMaterialChange}
+            material={material}
+          />
+          <RemindSelect
+            remindValue={remindValue}
+            handleSelectRemind={handleSelectRemind}
+          />
+          <RepeatSelect
+            repeatValue={repeatValue}
+            handleSelectRepeat={handleSelectRepeat}
+            endDate={endDate}
+            selectedDays={selectedDays}
+            setSelectedDays={setSelectedDays}
+          />
+        </div>
     </Form>
   );
 }

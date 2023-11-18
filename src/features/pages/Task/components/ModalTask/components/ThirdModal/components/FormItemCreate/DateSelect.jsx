@@ -7,7 +7,7 @@ function DateSelect({
   handleSelectStartDate,
   handleSelectEndDate,
   startDate,
-  
+  isDraft
 }) {
   return (
     <Space nowrap>
@@ -15,7 +15,7 @@ function DateSelect({
         label="Chọn thời gian bắt đầu"
         rules={[
           {
-            required: true,
+            required: !isDraft,
             message: "Vui lòng chọn ngày bắt đầu",
           },
         ]}
@@ -37,7 +37,7 @@ function DateSelect({
         label="Chọn thời gian kết thúc"
         rules={[
           {
-            required: true,
+            required: !isDraft,
             message: "Vui lòng chọn ngày kết thúc",
           },
         ]}

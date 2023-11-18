@@ -1,7 +1,7 @@
 import { Form, Select } from 'antd'
 import React from 'react'
 
-function TaskTypePlantSelect({dataTaskTypePlant, handleTaskTypeChange}) {
+function TaskTypePlantSelect({dataTaskTypePlant, handleTaskTypeChange, isDraft}) {
   return (
     <Form.Item
           label="Loại công việc"
@@ -9,7 +9,7 @@ function TaskTypePlantSelect({dataTaskTypePlant, handleTaskTypeChange}) {
           required
           rules={[
             {
-              required: true,
+              required: !isDraft,
               message: "Vui lòng chọn loại công việc",
             },
           ]}
