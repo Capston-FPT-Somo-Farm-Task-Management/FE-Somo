@@ -67,7 +67,7 @@ function OtherTaskType({
       layout="vertical"
       className="task-form"
       onFinish={handleCreateTaskOther}
-      id="createTask"
+      id="createTaskToDo"
       name="createTask"
       form={form}
     >
@@ -99,12 +99,12 @@ function OtherTaskType({
           startDate={startDate}
           calculateDaysDifference={calculateDaysDifference}
         />
-        <OverallEffortSelect
+        {/* <OverallEffortSelect
           overallEffortHour={overallEffortHour}
           handleOverallEffortHour={handleOverallEffortHour}
           overallEfforMinutes={overallEfforMinutes}
           handleOverallEfforMinutes={handleOverallEfforMinutes}
-        />
+        /> */}
         <DescriptionInput
           description={description}
           handleDescriptionChange={handleDescriptionChange}
@@ -117,11 +117,11 @@ function OtherTaskType({
           handleTaskTypeChange={handleTaskTypeChange}
         />
         <SupervisorSelect supervisor={supervisor} />
-        <EmployeeSelect
+        {/* <EmployeeSelect
           employeesValue={employeesValue}
           handleEmployeeChange={handleEmployeeChange}
           dataEmployee={dataEmployee}
-        />
+        /> */}
         <MaterialSelect
           materialsValue={materialsValue}
           handleMaterialChange={handleMaterialChange}

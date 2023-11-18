@@ -58,7 +58,7 @@ function WholeBarn({
       layout="vertical"
       className="task-form"
       onFinish={handleCreateTask}
-      id="createTask"
+      id="createTaskToDo"
       form={form}
     >
       <div className="form-left">
@@ -84,12 +84,12 @@ function WholeBarn({
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
         />
-        <OverallEffortSelect
+        {/* <OverallEffortSelect
           overallEffortHour={overallEffortHour}
           handleOverallEffortHour={handleOverallEffortHour}
           overallEfforMinutes={overallEfforMinutes}
           handleOverallEfforMinutes={handleOverallEfforMinutes}
-        />
+        /> */}
         <DescriptionInput
           description={description}
           handleDescriptionChange={handleDescriptionChange}
@@ -102,11 +102,11 @@ function WholeBarn({
           handleTaskTypeChange={handleTaskTypeChange}
         />
         <SupervisorSelect supervisor={supervisor} />
-        <EmployeeSelect
+        {/* <EmployeeSelect
           employeesValue={employeesValue}
           handleEmployeeChange={handleEmployeeChange}
           dataEmployee={dataEmployee}
-        />
+        /> */}
         <MaterialSelect
           materialsValue={materialsValue}
           handleMaterialChange={handleMaterialChange}

@@ -4,7 +4,7 @@ import FirstModal from "./components/FirstModal";
 import SecondModal from "./components/SecondModal";
 import ThirdModal from "./components/ThirdModal";
 import { steps } from "./modalTaskData";
-import { ArrowLeftOutlined, CheckCircleOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, CheckCircleOutlined, ProfileOutlined } from "@ant-design/icons";
 
 const { Step } = Steps;
 
@@ -119,19 +119,24 @@ function ModalTask({
               </Button>
             ))}
           {currentStep === steps.length - 1 && (
-            <Button
-              type="primary"
-              form="createTask"
-              htmlType="submit"
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "center",
-              }}
-            >
-              Tạo công việc
-              <CheckCircleOutlined />
-            </Button>
+            <div className="button-create">
+              <Button
+                type="dashed"
+                form="createTaskDraft"
+                htmlType="submit"
+              >
+                Lưu bảng nháp
+                <ProfileOutlined />
+              </Button>
+              <Button
+                type="primary"
+                form="createTaskToDo"
+                htmlType="submit"
+              >
+                Tạo công việc
+                <CheckCircleOutlined />
+              </Button>
+            </div>
           )}
         </div>
       </Modal>

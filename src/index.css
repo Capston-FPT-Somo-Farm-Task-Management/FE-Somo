@@ -112,7 +112,7 @@ html {
 }
 .navBar .navRight .header-profile {
   font-size: 16px;
-  margin: 0px 20px;
+  margin: 0px 40px;
 }
 .navBar .navRight .header-profile .ant-space .ant-space-item {
   color: black;
@@ -365,6 +365,11 @@ html {
 }
 .ant-modal .ant-modal-title {
   font-size: 24px;
+}
+.ant-modal .button-create {
+  display: flex;
+  width: 35%;
+  justify-content: space-between;
 }
 
 .list {

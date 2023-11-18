@@ -12,7 +12,7 @@ import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
 import { getEmployeeByTaskTypeAndFarmId } from "features/slice/employee/employeeSlice";
 import { getAnimalActive } from "features/slice/animal/animalSlice";
 import { getPlantActive } from "features/slice/plant/plantSlice";
-import { createTask } from "features/slice/task/taskSlice";
+import { createTaskToDo } from "features/slice/task/taskSlice";
 import { getMemberById } from "features/slice/user/memberSlice";
 import { authServices } from "services/authServices";
 import SpecificAnimal from "./components/specificAnimal";
@@ -289,7 +289,6 @@ function ThirdModal({
 
   const transformData = (originalData) => {
     const transformedData = {
-      employeeIds: originalData.employeeIds,
       materialIds: originalData.materialIds,
       dates: originalData.dates,
       farmTask: {
@@ -298,17 +297,14 @@ function ThirdModal({
         endDate: originalData.endDate,
         description: originalData.description,
         priority: originalData.priority,
-        isRepeat: originalData.isRepeat,
-        suppervisorId: originalData.suppervisorId,
-        fieldId: originalData.fieldId,
-        taskTypeId: originalData.taskTypeId,
+        supervisorId: originalData.supervisorId,
         managerId: originalData.managerId,
-        otherId: originalData.otherId,
+        fieldId: originalData.fieldId,
+        isRepeat: originalData.isRepeat,
+        taskTypeId: originalData.taskTypeId,
         plantId: originalData.plantId,
         liveStockId: originalData.liveStockId,
         remind: originalData.remind,
-        overallEfforMinutes: originalData.overallEfforMinutes,
-        overallEffortHour: originalData.overallEffortHour,
         addressDetail: originalData.addressDetail,
       },
     };
@@ -354,14 +350,11 @@ function ThirdModal({
           isRepeat: repeatValueToSend,
           description: description,
           managerId: member.id,
-          otherId: 0,
-          overallEffortHour: overallEffortHour,
-          overallEfforMinutes: overallEfforMinutes,
         };
 
         const transformedValues = transformData(finalValues);
 
-        dispatch(createTask(transformedValues)).then(() => {
+        dispatch(createTaskToDo(transformedValues)).then(() => {
           loadDataTask();
           onDateChange();
           onTaskAdded();
@@ -429,14 +422,12 @@ function ThirdModal({
           description: description,
           managerId: member.id,
           otherId: 0,
-          overallEffortHour: overallEffortHour,
-          overallEfforMinutes: overallEfforMinutes,
           addressDetail: formattedAddress,
         };
 
         const transformedValues = transformData(finalValues);
 
-        dispatch(createTask(transformedValues)).then(() => {
+        dispatch(createTaskToDo(transformedValues)).then(() => {
           loadDataTask();
           onDateChange();
           onTaskAdded();

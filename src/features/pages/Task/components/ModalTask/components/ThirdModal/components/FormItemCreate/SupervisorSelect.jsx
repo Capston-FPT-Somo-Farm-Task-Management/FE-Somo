@@ -5,7 +5,7 @@ function SupervisorSelect({supervisor}) {
   return (
     <Form.Item
           label="Người giám sát"
-          name="suppervisorId"
+          name="supervisorId"
           required
           rules={[
             {

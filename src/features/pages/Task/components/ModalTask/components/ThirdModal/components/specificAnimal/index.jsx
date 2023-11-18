@@ -60,7 +60,7 @@ function SpecificAnimal({
       layout="vertical"
       className="task-form"
       onFinish={handleCreateTask}
-      id="createTask"
+      id="createTaskToDo"
       name="createTask"
       form={form}
     >
@@ -88,12 +88,12 @@ function SpecificAnimal({
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
         />
-        <OverallEffortSelect
+        {/* <OverallEffortSelect
           overallEffortHour={overallEffortHour}
           handleOverallEffortHour={handleOverallEffortHour}
           overallEfforMinutes={overallEfforMinutes}
           handleOverallEfforMinutes={handleOverallEfforMinutes}
-        />
+        /> */}
         <DescriptionInput
           description={description}
           handleDescriptionChange={handleDescriptionChange}
@@ -106,11 +106,11 @@ function SpecificAnimal({
           handleTaskTypeChange={handleTaskTypeChange}
         />
         <SupervisorSelect supervisor={supervisor} />
-        <EmployeeSelect
+        {/* <EmployeeSelect
           employeesValue={employeesValue}
           handleEmployeeChange={handleEmployeeChange}
           dataEmployee={dataEmployee}
-        />
+        /> */}
         <MaterialSelect
           materialsValue={materialsValue}
           handleMaterialChange={handleMaterialChange}
