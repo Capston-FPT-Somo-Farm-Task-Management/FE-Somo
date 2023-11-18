@@ -5,8 +5,10 @@ import UpdateAnimal from './UpdateAnimal'
 import DetailAnimal from './DetailAnimal'
 
 const TableDisplayAnimal = ({
+  farmId,
   areaByFarm,
   animalByFarm,
+  animalTypeActive,
   onFinishDeleteAnimal,
   onFinishUpdateAnimal,
   searchTerm,
@@ -126,8 +128,10 @@ const TableDisplayAnimal = ({
 
       <UpdateAnimal
         key={selectedData ? selectedData.id : null}
+        farmId={farmId}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        animalTypeActive={animalTypeActive}
         selectedData={selectedData}
         areaByFarm={areaByFarm}
         onFinishUpdateAnimal={onFinishUpdateAnimal}
