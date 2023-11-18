@@ -23,12 +23,30 @@ export const getTasks = createAsyncThunk(
   }
 )
 
-export const createTask = createAsyncThunk(
-  'tasks/createTask',
-  async (data, id) => {
+export const createTaskToDo = createAsyncThunk(
+  'tasks/createTaskToDo',
+  async (data) => {
     try {
       const response = await axiosInstance.post(
-        `/FarmTask?memberId=${authServices.getUserId()}`,
+        "/FarmTask/CreateTaskToDo",
+        data
+      )
+      if (response.status === 200) {
+        toast.success('Thêm công việc thành công')
+      }
+      return response.data
+    } catch (error) {
+      throw error
+    }
+  }
+)
+
+export const createTaskDraft = createAsyncThunk(
+  'tasks/createTaskDraft',
+  async (data) => {
+    try {
+      const response = await axiosInstance.post(
+        "/FarmTask/CreateTaskDraft",
         data
       )
       if (response.status === 200) {
@@ -100,10 +118,10 @@ const taskSlice = createSlice({
         state.error = action.payload
         state.data = []
       })
-      .addCase(createTask.pending, (state) => {
+      .addCase(createTaskToDo.pending, (state) => {
         state.loading = true
       })
-      .addCase(createTask.fulfilled, (state, action) => {
+      .addCase(createTaskToDo.fulfilled, (state, action) => {
         if (Array.isArray(state.data)) {
           state.data.push(action.payload.task)
         } else {
@@ -112,7 +130,23 @@ const taskSlice = createSlice({
 
         state.loading = false
       })
-      .addCase(createTask.rejected, (state, action) => {
+      .addCase(createTaskToDo.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+      .addCase(createTaskDraft.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(createTaskDraft.fulfilled, (state, action) => {
+        if (Array.isArray(state.data)) {
+          state.data.push(action.payload.task)
+        } else {
+          state.data = [action.payload.task]
+        }
+
+        state.loading = false
+      })
+      .addCase(createTaskDraft.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
       })
