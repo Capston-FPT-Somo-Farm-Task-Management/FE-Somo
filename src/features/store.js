@@ -44,6 +44,7 @@ import subTaskReducer from './slice/subTask/subTaskSlice'
 import effortReducer from './slice/subTask/effortSlice'
 import habitantTypeReducer from './slice/habitant/habitantTypeSlice'
 import memberReducer from './slice/user/memberSlice'
+import memberByFarmReducer from './slice/user/memberByFarm'
 import statusReducer from './slice/status/statusSlice'
 import hubReducer from './slice/hub/hubSlice'
 import notificationReducer from './slice/notification/notificationSlice'
@@ -99,6 +100,7 @@ export const store = configureStore({
     effort: effortReducer,
     habitantType: habitantTypeReducer,
     member: memberReducer,
+    memberByFarm: memberByFarmReducer,
     status: statusReducer,
     hub: hubReducer,
     notification: notificationReducer,

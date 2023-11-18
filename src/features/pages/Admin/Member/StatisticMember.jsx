@@ -3,16 +3,14 @@ import AddMember from './AddMember'
 import CardMember from './CardMember'
 import TableMember from './TableMember'
 import { useDispatch } from 'react-redux'
-import {
-  adminDeleteMember,
-  getMemberByFarmId,
-} from 'features/slice/user/memberSlice'
+import { adminDeleteMember } from 'features/slice/user/memberSlice'
 import { useSelector } from 'react-redux'
 import { Divider } from 'antd'
+import { getMemberByFarmId } from 'features/slice/user/memberByFarm'
 
 const StatisticMember = () => {
   const dispatch = useDispatch()
-  const member = useSelector((state) => state.member.data)
+  const memberByFarm = useSelector((state) => state.memberByFarm.data)
   const farmId = localStorage.getItem('farmId')
 
   useEffect(() => {
@@ -33,9 +31,12 @@ const StatisticMember = () => {
   return (
     <div>
       <AddMember />
-      <CardMember member={member} />
+      <CardMember memberByFarm={memberByFarm} />
       <Divider dashed />
-      <TableMember member={member} onFinishDelete={onFinishDelete} />
+      <TableMember
+        memberByFarm={memberByFarm}
+        onFinishDelete={onFinishDelete}
+      />
     </div>
   )
 }
