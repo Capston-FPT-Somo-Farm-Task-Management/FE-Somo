@@ -69,7 +69,6 @@ const UpdateCrop = ({
       fieldId:
         typeof values.field === 'object' ? values.field.value : values.field,
     }
-    console.log(finalValues)
     onFinishUpdatePlant(finalValues)
     closeModal()
   }

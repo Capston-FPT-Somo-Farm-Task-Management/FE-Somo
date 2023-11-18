@@ -26,7 +26,6 @@ const FirstStepAddPlant = ({
   useEffect(() => {
     dispatch(getPlantTypeActive(farmId))
   }, [dispatch])
-  console.log(farmId)
 
   useEffect(() => {
     if (selectedAreaId) {

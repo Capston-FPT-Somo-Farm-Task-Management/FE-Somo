@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux'
-import AddCropTypeAndPlant from './components/AddPlant/AddPlant'
 import { useDispatch } from 'react-redux'
 import { getMemberById } from 'features/slice/user/memberSlice'
 import { getPlantByFarmId } from 'features/slice/plant/plantByFarmSlice'
