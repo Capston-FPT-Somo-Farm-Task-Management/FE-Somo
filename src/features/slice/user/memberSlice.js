@@ -8,20 +8,8 @@ export const getMemberById = createAsyncThunk(
   'member/getMemberById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`/member/${id}`)
+      const response = await axiosInstance.get(`/Member/${id}`)
       return response.data.data
-    } catch (error) {
-      rejectWithValue(error)
-    }
-  }
-)
-
-export const getMemberByFarmId = createAsyncThunk(
-  'member/getMemberByFarmId',
-  async (farmId, { rejectWithValue }) => {
-    try {
-      const { data } = await axiosInstance.get(`/Member/Farm(${farmId})`)
-      return data
     } catch (error) {
       rejectWithValue(error)
     }
@@ -70,19 +58,6 @@ const memberSlice = createSlice({
         state.data = action.payload
       })
       .addCase(getMemberById.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
-        state.data = []
-      })
-
-      .addCase(getMemberByFarmId.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(getMemberByFarmId.fulfilled, (state, action) => {
-        state.loading = false
-        state.data = action.payload
-      })
-      .addCase(getMemberByFarmId.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
         state.data = []
