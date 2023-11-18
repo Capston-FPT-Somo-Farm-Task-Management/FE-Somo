@@ -4,7 +4,11 @@ import FirstModal from "./components/FirstModal";
 import SecondModal from "./components/SecondModal";
 import ThirdModal from "./components/ThirdModal";
 import { steps } from "./modalTaskData";
-import { ArrowLeftOutlined, CheckCircleOutlined, ProfileOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined,
+  CheckCircleOutlined,
+  ProfileOutlined,
+} from "@ant-design/icons";
 
 const { Step } = Steps;
 
@@ -19,6 +23,24 @@ function ModalTask({
 }) {
   const [selectedType, setSelectedType] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [isDraft, setIsDraft] = useState(false);
+  console.log(isDraft);
+
+  const handleIsDraft = () => {
+    setIsDraft(true);
+  };
+
+  const handleIsTaskToDo = () => {
+    setIsDraft(false);
+  };
+
+  const handleIsDraftOther = () => {
+    setIsDraft(true);
+  };
+
+  const handleIsTaskOtherToDo = () => {
+    setIsDraft(false);
+  };
 
   const handleCloseModal = () => {
     setCurrentStep(-1);
@@ -58,6 +80,11 @@ function ModalTask({
             onTaskAdded={onTaskAdded}
             onDateChange={onDateChange}
             handleCloseModal={handleCloseModal}
+            handleIsDraft={handleIsDraft}
+            handleIsTaskToDo={handleIsTaskToDo}
+            handleIsDraftOther={handleIsDraftOther}
+            handleIsTaskOtherToDo={handleIsTaskOtherToDo}
+            isDraft={isDraft}
           />
         );
       default:
@@ -118,26 +145,50 @@ function ModalTask({
                 Trở lại
               </Button>
             ))}
-          {/* {currentStep === steps.length - 1 && (
-            <div className="button-create">
-              <Button
-                type="dashed"
-                form="createTaskDraft"
-                htmlType="submit"
-              >
-                Lưu bảng nháp
-                <ProfileOutlined />
-              </Button>
-              <Button
-                type="primary"
-                form="createTaskToDo"
-                htmlType="submit"
-              >
-                Tạo công việc
-                <CheckCircleOutlined />
-              </Button>
-            </div>
-          )} */}
+          {currentStep === steps.length - 1 &&
+            (selectedOption === "other" ? (
+              <div className="button-create">
+                <Button
+                  type="dashed"
+                  form="createTask"
+                  htmlType="submit"
+                  onClick={handleIsDraftOther}
+                >
+                  Lưu bảng nháp
+                  <ProfileOutlined />
+                </Button>
+                <Button
+                  type="primary"
+                  form="createTask"
+                  htmlType="submit"
+                  onClick={handleIsTaskOtherToDo}
+                >
+                  Tạo công việc
+                  <CheckCircleOutlined />
+                </Button>
+              </div>
+            ) : (
+              <div className="button-create">
+                <Button
+                  type="dashed"
+                  form="createTask"
+                  htmlType="submit"
+                  onClick={handleIsDraft}
+                >
+                  Lưu bảng nháp
+                  <ProfileOutlined />
+                </Button>
+                <Button
+                  type="primary"
+                  form="createTask"
+                  htmlType="submit"
+                  onClick={handleIsTaskToDo}
+                >
+                  Tạo công việc
+                  <CheckCircleOutlined />
+                </Button>
+              </div>
+            ))}
         </div>
       </Modal>
     </>

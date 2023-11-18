@@ -35,6 +35,11 @@ function ThirdModal({
   onTaskAdded,
   onDateChange,
   handleCloseModal,
+  handleIsDraft,
+  handleIsTaskToDo,
+  handleIsDraftOther,
+  handleIsTaskOtherToDo,
+  isDraft
 }) {
   const [selectedAreaId, setSelectedAreaId] = useState(null);
   const [selectedZoneId, setSelectedZoneId] = useState(null);
@@ -55,7 +60,6 @@ function ThirdModal({
   const [materialsValue, setMaterialsValue] = useState(0);
   const [selectedDays, setSelectedDays] = useState([]);
   const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
-  const [isDraft, setIsDraft] = useState(false);
 
   const [form] = Form.useForm();
 
@@ -435,14 +439,6 @@ function ThirdModal({
       });
   };
 
-  const handleIsDraft = () => {
-    setIsDraft(true);
-  };
-
-  const handleIsTaskToDo = () => {
-    setIsDraft(false);
-  };
-
   const handleFormSubmit = () => {
     if (isDraft) {
       handleCreateDraft();
@@ -614,14 +610,6 @@ function ThirdModal({
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
       });
-  };
-
-  const handleIsDraftOther = () => {
-    setIsDraft(true);
-  };
-
-  const handleIsTaskOtherToDo = () => {
-    setIsDraft(false);
   };
 
   const handleFormOtherSubmit = () => {

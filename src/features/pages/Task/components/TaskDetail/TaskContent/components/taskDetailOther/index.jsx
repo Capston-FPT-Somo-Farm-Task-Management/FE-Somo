@@ -13,7 +13,6 @@ const TaskDetailOther = ({
   formattedEndDate,
   formattedRepeatDate,
 }) => {
-  console.log(taskData);
   return (
     <>
       <h2>

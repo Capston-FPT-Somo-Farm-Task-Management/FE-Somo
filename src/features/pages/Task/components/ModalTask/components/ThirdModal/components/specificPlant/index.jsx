@@ -1,24 +1,20 @@
 import React from "react";
-import { Button, Form } from "antd";
+import { Form } from "antd";
 import AreaPlantSelect from "../FormItemCreate/AreaPlantSelect";
 import ZonePlantSelect from "../FormItemCreate/ZonePlantSelect";
 import FieldPlantSelect from "../FormItemCreate/FieldPlantSelect";
 import PlantSelect from "../FormItemCreate/PlantSelect";
 import DateSelect from "../FormItemCreate/DateSelect";
-import OverallEffortSelect from "../FormItemCreate/OverallEffortSelect";
 import DescriptionInput from "../FormItemCreate/DescriptionInput";
 import NameTaskInput from "../FormItemCreate/NameTaskInput";
 import TaskTypePlantSelect from "../FormItemCreate/TaskTypePlantSelect";
 import SupervisorSelect from "../FormItemCreate/SupervisorSelect";
-import EmployeeSelect from "../FormItemCreate/EmployeeSelect";
 import MaterialSelect from "../FormItemCreate/MaterialSelect";
 import PrioritySelect from "../FormItemCreate/PrioritySelect";
 import RemindSelect from "../FormItemCreate/RemindSelect";
 import RepeatSelect from "../FormItemCreate/RepeatSelect";
 
 function SpecificPlant({
-  handleIsDraft,
-  handleIsTaskToDo,
   handleFormSubmit,
   isDraft,
   handleSelectAreaChange,
@@ -62,11 +58,11 @@ function SpecificPlant({
     <Form
       layout="vertical"
       onFinish={handleFormSubmit}
-      id="createTaskToDo"
+      className="task-form"
+      id="createTask"
       name="createTask"
       form={form}
     >
-      <div className="task-form">
         <div className="form-left">
           <AreaPlantSelect
             handleSelectAreaChange={handleSelectAreaChange}
@@ -101,12 +97,6 @@ function SpecificPlant({
             startDate={startDate}
             isDraft={isDraft}
           />
-          {/* <OverallEffortSelect
-          overallEffortHour={overallEffortHour}
-          handleOverallEffortHour={handleOverallEffortHour}
-          overallEfforMinutes={overallEfforMinutes}
-          handleOverallEfforMinutes={handleOverallEfforMinutes}
-        /> */}
           <DescriptionInput
             description={description}
             handleDescriptionChange={handleDescriptionChange}
@@ -125,11 +115,6 @@ function SpecificPlant({
             handleSupervisorValue={handleSupervisorValue}
             isDraft={isDraft}
           />
-          {/* <EmployeeSelect
-          employeesValue={employeesValue}
-          handleEmployeeChange={handleEmployeeChange}
-          dataEmployee={dataEmployee}
-        /> */}
           <MaterialSelect
             materialsValue={materialsValue}
             handleMaterialChange={handleMaterialChange}
@@ -147,15 +132,6 @@ function SpecificPlant({
             setSelectedDays={setSelectedDays}
           />
         </div>
-      </div>
-      <div className="form-task-button">
-        <Button onClick={handleIsDraft} htmlType="submit">
-          Lưu bản nháp
-        </Button>
-        <Button onClick={handleIsTaskToDo} htmlType="submit">
-          Tạo công việc
-        </Button>
-      </div>
     </Form>
   );
 }
