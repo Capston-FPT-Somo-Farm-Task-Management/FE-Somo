@@ -5,7 +5,6 @@ import UpdateAnimal from './UpdateAnimal'
 import DetailAnimal from './DetailAnimal'
 
 const TableDisplayAnimal = ({
-  farmId,
   areaByFarm,
   animalByFarm,
   animalTypeActive,
@@ -128,7 +127,6 @@ const TableDisplayAnimal = ({
 
       <UpdateAnimal
         key={selectedData ? selectedData.id : null}
-        farmId={farmId}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         animalTypeActive={animalTypeActive}

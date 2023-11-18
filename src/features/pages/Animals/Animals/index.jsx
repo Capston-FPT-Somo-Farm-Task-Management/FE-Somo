@@ -62,14 +62,12 @@ const Animals = () => {
   return (
     <>
       <AddAnimal
-        farmId={farmId}
         areaByFarm={areaByFarm}
         onFinishCreateAnimal={onFinishCreateAnimal}
         handleSearch={handleSearch}
         animalTypeActive={animalTypeActive}
       />
       <TableDisplayAnimal
-        farmId={farmId}
         areaByFarm={areaByFarm}
         animalByFarm={animalByFarm}
         animalTypeActive={animalTypeActive}
