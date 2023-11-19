@@ -5,7 +5,7 @@ import {
   GrUserManager,
   GrHostMaintenance,
 } from "react-icons/gr";
-import { GiCow, GiRingingBell } from "react-icons/gi";
+import { GiCow, GiFruitTree, GiRingingBell } from "react-icons/gi";
 
 const TaskDetailHabitant = ({
   taskData,
@@ -137,57 +137,60 @@ const TaskDetailHabitant = ({
           )}
         </div>
       </>
-      {taskData.externalId ? (
+      {taskData.isSpecific && taskData.isPlant ? (
+        <>
+          <h2>
+          <GiFruitTree />
+            Đối tượng
+          </h2>
+          <div className="task-detail-item">
+            <>
+              <div className="task-detail-text">
+                <h5>Cây trồng</h5>
+                {taskData.plantName ? (
+                  <p>{taskData.plantName}</p>
+                ) : (
+                  <p>Chưa có cây trồng</p>
+                )}
+              </div>
+
+              <div className="task-detail-text">
+                <h5>Mã cây trồng</h5>
+                {taskData.externalId ? (
+                  <p>{taskData.externalId}</p>
+                ) : (
+                  <p>Chưa có mã cây trồng</p>
+                )}
+              </div>
+            </>
+          </div>
+        </>
+      ) : taskData.isSpecific && !taskData.isPlant ? (
         <>
           <h2>
             <GiCow />
             Đối tượng
           </h2>
           <div className="task-detail-item">
-            {taskData.addressDetail ? (
-              <p>Không có đối tượng nào được chọn</p>
-            ) : (
-              <>
-                {taskData.isPlant === true && taskData.isSpecific === true ? (
-                  <div className="task-detail-text">
-                    <h5>Cây trồng</h5>
-                    {taskData.plantName ? (
-                      <p>{taskData.plantName}</p>
-                    ) : (
-                      <p>Chưa có cây trồng</p>
-                    )}
-                  </div>
-                ) : taskData.isPlant === false && taskData.isSpecific === true ? (
-                  <div className="task-detail-text">
-                    <h5>Con vật</h5>
-                    {taskData.liveStockName ? (
-                      <p>{taskData.liveStockName}</p>
-                    ) : (
-                      <p>Chưa có con vật</p>
-                    )}
-                  </div>
-                ) : null}
-                {taskData.isPlant === true && taskData.isSpecific === true ? (
-                  <div className="task-detail-text">
-                    <h5>Mã cây trồng</h5>
-                    {taskData.externalId ? (
-                      <p>{taskData.externalId}</p>
-                    ) : (
-                      <p>Chưa có mã cây trồng</p>
-                    )}
-                  </div>
-                ) : taskData.isPlant === false && taskData.isSpecific === true ? (
-                  <div className="task-detail-text">
-                    <h5>Mã con vật</h5>
-                    {taskData.externalId ? (
-                      <p>{taskData.externalId}</p>
-                    ) : (
-                      <p>Chưa có mã con vật</p>
-                    )}
-                  </div>
-                ) : null}
-              </>
-            )}
+            <>
+              <div className="task-detail-text">
+                <h5>Con vật</h5>
+                {taskData.liveStockName ? (
+                  <p>{taskData.liveStockName}</p>
+                ) : (
+                  <p>Chưa có con vật</p>
+                )}
+              </div>
+
+              <div className="task-detail-text">
+                <h5>Mã con vật</h5>
+                {taskData.externalId ? (
+                  <p>{taskData.externalId}</p>
+                ) : (
+                  <p>Chưa có mã con vật</p>
+                )}
+              </div>
+            </>
           </div>
         </>
       ) : null}

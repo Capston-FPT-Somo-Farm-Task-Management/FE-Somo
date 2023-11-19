@@ -347,6 +347,8 @@ function ThirdModal({
           remind: remindValueToSend,
           dates: selectedDays,
           materialIds: materialToSend,
+          isPlant: option === "specificPlant" || option === "wholeGarden" ? true : false,
+          isSpecific: option === "specificAnimal" || option === "specificPlant" ? true : false
         };
 
         const transformedValues = transformData(finalValues);
@@ -506,6 +508,8 @@ function ThirdModal({
           dates: selectedDays,
           materialIds: materialToSend,
           addressDetail: formattedAddress,
+          isPlant: null,
+          isSpecific: false
         };
 
         const transformedValues = transformData(finalValues);
@@ -577,7 +581,7 @@ function ThirdModal({
         }`;
 
         const addressToSend =
-          formattedAddress.trim() !== "" ? formattedAddress : null;
+          formattedAddress.trim() !== "" ? formattedAddress : "";
 
         console.log("areaName: ", areaName);
         console.log("zoneName: ", zoneName);
@@ -604,7 +608,7 @@ function ThirdModal({
           materialIds: materialToSend,
           addressDetail: addressToSend,
           isPlant: null,
-          isSpecific: null
+          isSpecific: false
         };
 
         const transformedValues = transformData(finalValues);
