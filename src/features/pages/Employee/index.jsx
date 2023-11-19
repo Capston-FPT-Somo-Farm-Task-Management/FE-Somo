@@ -14,7 +14,7 @@ const Employee = () => {
   const member = useSelector((state) => state.member.data)
   const employeeByFarm = useSelector((state) => state.employeeByFarm.data)
   const taskTypeActive = useSelector((state) => state.taskTypeActive.data)
-  
+
   const farmId = member.farmId
 
   const [searchTerm, setSearchTerm] = useState('')
@@ -67,9 +67,11 @@ const Employee = () => {
         taskTypeActive={taskTypeActive}
       />
       <DisplayEmployee
+        taskTypeActive={taskTypeActive}
         onFinishDelete={onFinishDelete}
         employeeByFarm={employeeByFarm}
         searchTerm={searchTerm}
+        loadData={loadData}
       />
     </>
   )

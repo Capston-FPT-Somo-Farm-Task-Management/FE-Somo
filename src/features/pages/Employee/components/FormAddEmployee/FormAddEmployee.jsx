@@ -11,9 +11,19 @@ import {
   Select,
 } from 'antd'
 import ImgCrop from 'antd-img-crop'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { UploadOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
+import { useSelector } from 'react-redux'
+import {
+  getCities,
+  getDistrict,
+  getWard,
+  selectCities,
+  selectDistricts,
+  selectWards,
+} from 'features/slice/location/locationSlice'
+import { useDispatch } from 'react-redux'
 
 const FormAddEmployee = ({
   isModalOpen,
@@ -22,6 +32,7 @@ const FormAddEmployee = ({
   farmId,
   taskTypeActive,
 }) => {
+  const dispatch = useDispatch()
   const [fileList, setFileList] = useState([])
   const [uploadError, setUploadError] = useState(false)
 
@@ -59,6 +70,49 @@ const FormAddEmployee = ({
     return current && current > dayjs().endOf('day')
   }
 
+  // --Location
+  const cities = useSelector(selectCities)
+  const districts = useSelector(selectDistricts)
+  const wards = useSelector(selectWards)
+
+  console.log(districts)
+  console.log(wards)
+
+  useEffect(() => {
+    dispatch(getCities())
+  }, [dispatch])
+
+  const handleCityChange = (e) => {
+    const selectedCityCode = e.target.value
+    dispatch(getDistrict(selectedCityCode))
+  }
+
+  const handleDistrictChange = (e) => {
+    const selectedDistrictCode = e.target.value
+    dispatch(getWard(selectedDistrictCode))
+  }
+
+  const handleWardChange = () => {
+    printResult()
+  }
+
+  const printResult = () => {
+    const selectedCity = cities.find(
+      (city) => city.code === document.getElementById('city').value
+    )
+    const selectedDistrict = districts.find(
+      (district) => district.code === document.getElementById('district').value
+    )
+    const selectedWard = wards.find(
+      (ward) => ward.code === document.getElementById('ward').value
+    )
+
+    if (selectedCity && selectedDistrict && selectedWard) {
+      const result = `${selectedCity.name} | ${selectedDistrict.name} | ${selectedWard.name}`
+      document.getElementById('result').innerText = result
+    }
+  }
+
   return (
     <>
       <Modal
@@ -90,7 +144,6 @@ const FormAddEmployee = ({
           form={form}
         >
           <div className="form-left">
-            {/* Area Name */}
             <Form.Item
               label="Tên nhân viên"
               rules={[
@@ -104,7 +157,6 @@ const FormAddEmployee = ({
               <Input placeholder="Nhập tên nhân viên" />
             </Form.Item>
 
-            {/* Area Code */}
             <Form.Item
               label="Mã nhân viên"
               rules={[
@@ -158,7 +210,7 @@ const FormAddEmployee = ({
               </Radio.Group>
             </Form.Item>
 
-            <Form.Item
+            {/* <Form.Item
               label="Địa chỉ"
               rules={[
                 {
@@ -168,9 +220,43 @@ const FormAddEmployee = ({
               ]}
               name="address"
             >
-              <div>s</div>
-            </Form.Item>
+              
+            </Form.Item> */}
+
+            <div>
+              <select id="city" onChange={handleCityChange}>
+                <option value="" defaultValue>
+                  Chọn tỉnh thành
+                </option>
+                {cities.map((city) => (
+                  <option key={city.code} value={city.code}>
+                    {city.name}
+                  </option>
+                ))}
+              </select>
+
+              <select id="district" onChange={handleDistrictChange}>
+                <option value="">Chọn quận huyện</option>
+                {districts.length > 0 &&
+                  districts.map((district) => (
+                    <option key={district.code} value={district.code}>
+                      {district.name}
+                    </option>
+                  ))}
+              </select>
+
+              <select id="ward" onChange={handleWardChange}>
+                <option value="">Chọn phường xã</option>
+                {wards.length > 0 &&
+                  wards.map((ward) => (
+                    <option key={ward.code} value={ward.code}>
+                      {ward.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
           </div>
+
           <div className="form-right">
             <Form.Item label="Hình ảnh nhân viên" required>
               <ImgCrop rotationSlider>
