@@ -7,8 +7,8 @@ export const getEmployeeByFarmId = createAsyncThunk(
   'employees/getEmployeeByFarmId',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`/Employee/Farm(${id})`)
-      return response.data.data
+      const { data } = await axiosInstance.get(`/Employee/Farm(${id})`)
+      return data
     } catch (error) {
       rejectWithValue(error.message)
     }
@@ -18,7 +18,7 @@ export const getEmployeeByFarmId = createAsyncThunk(
 const employeeByFarmSlice = createSlice({
   name: 'employeeByFarm',
   initialState: {
-    data: {},
+    data: [],
     loading: false,
     error: '',
   },

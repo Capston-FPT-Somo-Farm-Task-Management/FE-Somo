@@ -9,8 +9,8 @@ const TableDisplayCrop = ({
   plantByFarm,
   onFinishDeletePlant,
   onFinishUpdatePlant,
-  farmId,
   searchTerm,
+  plantTypeActive,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
@@ -73,15 +73,15 @@ const TableDisplayCrop = ({
           dataIndex="status"
           key="6"
           filters={[
-            { text: 'Tồn tại', value: 'Tồn tại' },
-            { text: 'Không tồn tại', value: 'Không tồn tại' },
+            { text: 'Hiện', value: 'Hiện' },
+            { text: 'Ẩn', value: 'Ẩn' },
           ]}
           onFilter={(value, record) => record.status.indexOf(value) === 0}
           render={(status) =>
-            status === 'Tồn tại' ? (
-              <Badge status="success" text="Tồn tại" />
+            status === 'Hiện' ? (
+              <Badge status="success" text="Hiện" />
             ) : (
-              <Badge status="error" text="Không tồn tại" />
+              <Badge status="error" text="Ẩn" />
             )
           }
         />
@@ -124,12 +124,12 @@ const TableDisplayCrop = ({
 
       <UpdateCrop
         key={selectedData ? selectedData.id : null}
-        farmId={farmId}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         selectedData={selectedData}
         areaByFarm={areaByFarm}
         onFinishUpdatePlant={onFinishUpdatePlant}
+        plantTypeActive={plantTypeActive}
       />
     </>
   )

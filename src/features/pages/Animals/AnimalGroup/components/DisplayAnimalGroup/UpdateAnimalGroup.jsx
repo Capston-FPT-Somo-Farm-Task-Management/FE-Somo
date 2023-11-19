@@ -17,16 +17,24 @@ const UpdateAnimalGroup = ({
   const zoneAnimal = useSelector((state) => state.zoneAnimal.data)
 
   useEffect(() => {
+    if (isModalOpen && selectedData) {
+      if (selectedData.areaId) {
+        dispatch(getZoneByAreaAnimal(selectedData.areaId))
+      }
+    }
+  }, [isModalOpen, selectedAreaId, dispatch])
+
+  useEffect(() => {
     if (selectedAreaId) {
       dispatch(getZoneByAreaAnimal(selectedAreaId))
+      form.setFieldsValue({
+        zone: null,
+      })
     }
-  }, [selectedAreaId])
+  }, [selectedAreaId, isModalOpen])
 
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value)
-    form.setFieldsValue({
-      zone: null,
-    })
   }
 
   const onFinish = (values) => {

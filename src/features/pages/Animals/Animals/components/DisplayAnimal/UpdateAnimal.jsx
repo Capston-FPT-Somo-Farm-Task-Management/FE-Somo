@@ -22,6 +22,17 @@ const UpdateAnimal = ({
   const fieldByZone = useSelector((state) => state.fieldByZone.data)
 
   useEffect(() => {
+    if (isModalOpen && selectedData) {
+      if (selectedData.areaId) {
+        dispatch(getZoneByAreaAnimal(selectedData.areaId))
+      }
+      if (selectedData.zoneId) {
+        dispatch(getFieldByZone(selectedData.zoneId))
+      }
+    }
+  }, [isModalOpen, selectedData, dispatch])
+
+  useEffect(() => {
     if (selectedAreaId) {
       dispatch(getZoneByAreaAnimal(selectedAreaId))
       form.setFieldsValue({

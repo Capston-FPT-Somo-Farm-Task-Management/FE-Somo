@@ -11,7 +11,7 @@ const FirstStepAddPlant = ({
   closeModal,
   areaByFarm,
   onFinishCreatePlant,
-  farmId,
+  plantTypeActive,
 }) => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
@@ -20,12 +20,6 @@ const FirstStepAddPlant = ({
 
   const zonePlant = useSelector((state) => state.zonePlant.data)
   const fieldByZone = useSelector((state) => state.fieldByZone.data)
-
-  const plantTypeActive = useSelector((state) => state.plantTypeActive.data)
-
-  useEffect(() => {
-    dispatch(getPlantTypeActive(farmId))
-  }, [dispatch])
 
   useEffect(() => {
     if (selectedAreaId) {

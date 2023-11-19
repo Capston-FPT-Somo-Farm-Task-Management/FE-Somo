@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { createAxiosInstance } from 'features/api/axiosInstance'
 import { toast } from 'react-toastify'
+import { authServices } from 'services/authServices'
 
 const axiosInstance = createAxiosInstance()
 
@@ -9,11 +10,13 @@ export const postLogin = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post('/login', data)
-      localStorage.setItem('somoFarm', response.data.accessToken)
-      toast.success('Đăng nhập thành công')
+      if (response.status === 200) {
+        localStorage.setItem('somoFarm', response.data.accessToken)
+        toast.success('Đăng nhập thành công')
+      }
       return response.data
     } catch (error) {
-      toast.error('Tài khoản hoặc mật khẩu sai')
+      toast.error(error.response.data)
       rejectWithValue(error)
     }
   }

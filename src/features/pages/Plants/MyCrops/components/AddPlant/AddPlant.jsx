@@ -7,8 +7,8 @@ import FirstStepAddPlant from '../FirstStepAddPlant/FirstStepAddPlant'
 const AddPlant = ({
   areaByFarm,
   onFinishCreatePlant,
-  farmId,
   handleSearch,
+  plantTypeActive,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -32,9 +32,9 @@ const AddPlant = ({
               Tạo mới cây
             </Button>
             <FirstStepAddPlant
-              farmId={farmId}
               isModalOpen={isModalOpen}
               closeModal={closeModal}
+              plantTypeActive={plantTypeActive}
               areaByFarm={areaByFarm}
               onFinishCreatePlant={onFinishCreatePlant}
             />

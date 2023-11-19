@@ -11,7 +11,7 @@ const UpdateCrop = ({
   closeModal,
   selectedData,
   onFinishUpdatePlant,
-  farmId,
+  plantTypeActive,
 }) => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
@@ -23,11 +23,16 @@ const UpdateCrop = ({
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data)
 
-  const plantTypeActive = useSelector((state) => state.plantTypeActive.data)
-
   useEffect(() => {
-    dispatch(getPlantTypeActive(farmId))
-  }, [dispatch])
+    if (isModalOpen && selectedData) {
+      if (selectedData.areaId) {
+        dispatch(getZoneByAreaPlant(selectedData.areaId))
+      }
+      if (selectedData.zoneId) {
+        dispatch(getFieldByZone(selectedData.zoneId))
+      }
+    }
+  }, [isModalOpen, selectedData, dispatch])
 
   useEffect(() => {
     if (selectedAreaId) {
