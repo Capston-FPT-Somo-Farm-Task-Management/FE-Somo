@@ -64,7 +64,26 @@ export const updateTask = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(
-        `/FarmTask/${data.id}`,
+        `/FarmTask/(${data.id})/UpdateTask`,
+        data.body
+      )
+      if (response.status === 200) {
+        toast.success('Cập nhật thành công')
+      }
+      return response.data
+    } catch (error) {
+      toast.error(error.response.data.message)
+      return rejectWithValue(error)
+    }
+  }
+)
+
+export const updateTaskDraftToPrepare = createAsyncThunk(
+  'task/updateTaskDraftToPrepare',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(
+        `/FarmTask/(${data.id})/UpdateTaskDraftAndToPrePare`,
         data.body
       )
       if (response.status === 200) {
@@ -82,7 +101,7 @@ export const deleteTask = createAsyncThunk(
   'tasks/deleteTask',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(`/FarmTask/DeleteTask/${id}`)
+      const response = await axiosInstance.delete(`/FarmTask/(${id})`)
       if (response.status === 200) {
         toast.success('Xóa thành công')
       }
@@ -163,6 +182,22 @@ const taskSlice = createSlice({
         state.loading = false
       })
       .addCase(updateTask.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+      .addCase(updateTaskDraftToPrepare.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(updateTaskDraftToPrepare.fulfilled, (state, action) => {
+        if (Array.isArray(state.data)) {
+          state.data.push(action.payload.task)
+        } else {
+          state.data = [action.payload.task]
+        }
+
+        state.loading = false
+      })
+      .addCase(updateTaskDraftToPrepare.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
       })

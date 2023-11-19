@@ -2,6 +2,13 @@ import { Form, Input } from "antd";
 import React from "react";
 
 function AddressDetailInput({ addressDetail, setAddressDetail, isDraft }) {
+  const handleAddressDetail = (e) => {
+    if(addressDetail){
+      setAddressDetail(e.target.value);
+    }else{
+      setAddressDetail(null)
+    }
+  }
   return (
     <Form.Item
       label="Vị trí cụ thể"
@@ -17,7 +24,7 @@ function AddressDetailInput({ addressDetail, setAddressDetail, isDraft }) {
       <Input
         placeholder="Nhập vị trí cụ thể"
         value={addressDetail}
-        onChange={(e) => setAddressDetail(e.target.value)}
+        onChange={handleAddressDetail}
       />
     </Form.Item>
   );

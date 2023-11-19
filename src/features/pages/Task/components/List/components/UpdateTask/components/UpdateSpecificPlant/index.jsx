@@ -3,7 +3,6 @@ import AreaPlantUpdate from "../FormItemUpdate/AreaPlantUpdate";
 import ZonePlantUpdate from "../FormItemUpdate/ZonePlantUpdate";
 import FieldPlantUpdate from "../FormItemUpdate/FieldPlantUpdate";
 import PlantUpdate from "../FormItemUpdate/PlantUpdate";
-import OverallEffortUpdate from "../FormItemUpdate/OverallEffortUpdate";
 import NameTaskUpdate from "../FormItemUpdate/NameTaskUpdate";
 import TaskTypePlantUpdate from "../FormItemUpdate/TaskTypePlantUpdate";
 import SupervisorUpdate from "../FormItemUpdate/SupervisorUpdate";
@@ -13,7 +12,6 @@ import RemindUpdate from "../FormItemUpdate/RemindUpdate";
 import RepeatUpdate from "../FormItemUpdate/RepeatUpdate.jsx";
 import DateUpdate from "../FormItemUpdate/DateUpdate";
 import DescriptionUpdate from "../FormItemUpdate/DescriptionUpdate";
-import EmployeeUpdate from "../FormItemUpdate/EmployeeUpdate";
 
 function UpdateSpecificPlant({
   editingTask,
@@ -25,23 +23,16 @@ function UpdateSpecificPlant({
   handleSelectEndDate,
   handleDescriptionChange,
   handleTaskTypeChange,
-  handleEmployeeChange,
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
-  handleOverallEffortHour,
-  handleOverallEfforMinutes,
   areaPlantByZone,
   zonePlant,
   fieldByZone,
   dataPlant,
   priorityValue,
   description,
-  overallEfforMinutes,
-  overallEffortHour,
   dataTaskTypePlant,
-  employeesValue,
-  dataEmployee,
   supervisor,
   materialsValue,
   material,
@@ -86,13 +77,6 @@ function UpdateSpecificPlant({
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
         />
-        <OverallEffortUpdate
-          overallEffortHour={overallEffortHour}
-          handleOverallEffortHour={handleOverallEffortHour}
-          overallEfforMinutes={overallEfforMinutes}
-          handleOverallEfforMinutes={handleOverallEfforMinutes}
-          editingTask={editingTask}
-        />
         <DescriptionUpdate
           description={description}
           handleDescriptionChange={handleDescriptionChange}
@@ -107,12 +91,6 @@ function UpdateSpecificPlant({
           editingTask={editingTask}
         />
         <SupervisorUpdate supervisor={supervisor} editingTask={editingTask} />
-        <EmployeeUpdate
-          employeesValue={employeesValue}
-          handleEmployeeChange={handleEmployeeChange}
-          dataEmployee={dataEmployee}
-          editingTask={editingTask}
-        />
         <MaterialUpdate
           materialsValue={materialsValue}
           handleMaterialChange={handleMaterialChange}

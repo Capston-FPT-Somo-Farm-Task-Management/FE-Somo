@@ -26,6 +26,7 @@ import { getAreaWithZoneTypeLivestock } from "features/slice/area/areaLivestockW
 import { getAreaWithZoneTypePlant } from "features/slice/area/areaPlantWithZoneSlice";
 import { getZoneByAreaId } from "features/slice/zone/zoneByAreaSlice";
 import { getTaskTypeActive } from "features/slice/task/taskTypeActiveSlice";
+import {EditOutlined, CarryOutOutlined, CheckCircleOutlined} from '@ant-design/icons';
 
 function UpdateTask({
   editTaskModalVisible,
@@ -49,10 +50,6 @@ function UpdateTask({
   const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(
     editingTask ? editingTask.taskTypeId : null
   );
-  const [selectedFarmId, setSelectedFarmId] = useState(null);
-  const [employeesValue, setEmployeesValue] = useState(
-    editingTask ? editingTask.employeeId : []
-  );
   const [materialsValue, setMaterialsValue] = useState(
     editingTask ? editingTask.materialId : []
   );
@@ -65,10 +62,28 @@ function UpdateTask({
   const [endDate, setEndDate] = useState(null);
   const [description, setDescription] = useState("");
   const [selectedDays, setSelectedDays] = useState([]);
-  const [overallEfforMinutes, setOverallEfforMinutes] = useState(0);
-  const [overallEffortHour, setOverallEffortHour] = useState(0);
   const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
   const [initialSelectedDays, setInitialSelectedDays] = useState([]);
+  const [selectedType, setSelectedType] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [isDraft, setIsDraft] = useState(false);
+  console.log(isDraft);
+
+  const handleIsDraft = () => {
+    setIsDraft(true);
+  };
+
+  const handleIsTaskToDo = () => {
+    setIsDraft(false);
+  };
+
+  const handleIsDraftOther = () => {
+    setIsDraft(true);
+  };
+
+  const handleIsTaskOtherToDo = () => {
+    setIsDraft(false);
+  };
 
   const [form] = Form.useForm();
 
@@ -111,9 +126,9 @@ function UpdateTask({
 
   const supervisor = useSelector((state) => state.supervisor.data);
 
-  const dataEmployee = useSelector((state) => state.employee.data);
-
   const material = useSelector((state) => state.materialActive.data);
+
+  console.log("selectedZone: ", selectedZoneId);
 
   useEffect(() => {
     dispatch(getAreaActiveByFarmId(farmId));
@@ -144,20 +159,6 @@ function UpdateTask({
   }, [selectedZoneId, editTaskModalVisible]);
 
   useEffect(() => {
-    if (selectedTaskTypeId) {
-      dispatch(
-        getEmployeeByTaskTypeAndFarmId({
-          taskTypeId: selectedTaskTypeId,
-          farmId: farmId,
-        })
-      );
-      form.setFieldsValue({
-        employeeIds: undefined,
-      });
-    }
-  }, [selectedTaskTypeId, editTaskModalVisible]);
-
-  useEffect(() => {
     if (endDate && startDate && startDate.isAfter(endDate)) {
       form.setFieldsValue({
         endDate: null,
@@ -170,16 +171,17 @@ function UpdateTask({
     setSelectedAreaId(value);
     setSelectedZoneId(value);
     setSelectedFieldId(value);
+    console.log(value);
     form.setFieldsValue({
       zoneId: null,
       fieldId: null,
       liveStockId: null,
       plantId: null,
-      addressDetail: null
+      addressDetail: null,
     });
   };
 
-  const handleSelectZoneChange = async (value) => {
+  const handleSelectZoneChange = (value) => {
     setSelectedZoneId(value);
     setSelectedFieldId(value);
     form.setFieldsValue({
@@ -187,15 +189,6 @@ function UpdateTask({
       liveStockId: null,
       plantId: null,
     });
-
-    try {
-      await dispatch(
-        getEmployeeByTaskTypeAndFarmId({
-          taskTypeId: selectedTaskTypeId,
-          farmId: selectedFarmId,
-        })
-      );
-    } catch (error) {}
   };
 
   const handleSelectFieldChange = (value) => {
@@ -288,10 +281,6 @@ function UpdateTask({
     setSelectedTaskTypeId(value);
   };
 
-  const handleEmployeeChange = (value) => {
-    setEmployeesValue(value);
-  };
-
   const handleMaterialChange = (value) => {
     setMaterialsValue(value);
   };
@@ -310,17 +299,8 @@ function UpdateTask({
     return current && current < dayjs().startOf("day");
   };
 
-  const handleOverallEfforMinutes = (value) => {
-    setOverallEfforMinutes(parseInt(value, 10));
-  };
-
-  const handleOverallEffortHour = (value) => {
-    setOverallEffortHour(parseInt(value, 10));
-  };
-
   const transformData = (originalData) => {
     const transformedData = {
-      employeeIds: originalData.employeeIds,
       materialIds: originalData.materialIds,
       dates: originalData.dates,
       farmTask: {
@@ -329,20 +309,15 @@ function UpdateTask({
         endDate: originalData.endDate,
         description: originalData.description,
         priority: originalData.priority,
-        isRepeat: originalData.isRepeat,
         suppervisorId: originalData.suppervisorId,
-        fieldId: originalData.fieldId,
-        taskTypeId: originalData.taskTypeId,
         managerId: originalData.managerId,
-        otherId: originalData.otherId,
+        fieldId: originalData.fieldId,
+        isRepeat: originalData.isRepeat,
+        taskTypeId: originalData.taskTypeId,
         plantId: originalData.plantId,
         liveStockId: originalData.liveStockId,
-        remind: originalData.remind,
         addressDetail: originalData.addressDetail,
-        overallEfforMinutes: originalData.overallEfforMinutes,
-        overallEffortHour: originalData.overallEffortHour,
-        isRepeat: originalData.isRepeat,
-        addressDetail: originalData.addressDetail
+        remind: originalData.remind,
       },
     };
 
@@ -362,9 +337,6 @@ function UpdateTask({
     plantId,
     liveStockId,
     remind,
-    overallEffortHour,
-    overallEfforMinutes,
-    employeeId,
     materialId,
     isRepeat,
     dateRepeate,
@@ -373,12 +345,12 @@ function UpdateTask({
     form
       .validateFields()
       .then(() => {
-        const startDateFormatted = dayjs(startDate)
+        const startDateFormatted = startDate ? dayjs(startDate)
           .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
-        const endDateFormatted = dayjs(endDate)
+          .format("YYYY-MM-DD[T]HH:mm:ss.SSS") : null;
+        const endDateFormatted = endDate ? dayjs(endDate)
           .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+          .format("YYYY-MM-DD[T]HH:mm:ss.SSS") : null;
 
         const descriptionToSend = description || "";
 
@@ -397,7 +369,7 @@ function UpdateTask({
         }
 
         console.log(isRepeat);
-        console.log("repeatValue: ",repeatValue);
+        console.log("repeatValue: ", repeatValue);
 
         const finalValues = {
           name: name,
@@ -405,29 +377,21 @@ function UpdateTask({
           endDate: endDateFormatted,
           description: descriptionToSend,
           priority: priority,
-          isRepeat: typeof isRepeat === "object" ? isRepeat.value : repeatValue,
           suppervisorId: suppervisorId,
+          managerId: member.id,
           fieldId: fieldId,
+          isRepeat: typeof isRepeat === "object" ? isRepeat.value : repeatValue,
+          taskTypeId: taskTypeId,
           plantId: typeof plantId === "object" ? plantId.value : 0,
           liveStockId: typeof liveStockId === "object" ? liveStockId.value : 0,
-          taskTypeId: taskTypeId,
-          overallEffortHour:
-            typeof overallEffortHour === "object" ? overallEffortHour.value : 0,
-          overallEfforMinutes:
-            typeof overallEfforMinutes === "object"
-              ? overallEfforMinutes.value
-              : 0,
-          materialIds: materialId || [],
-          employeeIds: employeeId || [],
+          addressDetail: addressDetail,
           remind: typeof remind === "object" ? remind.value : 0,
+          materialIds: materialId || [],
           dates: initialSelectedDays
             ? initialSelectedDays.map((date) =>
                 dayjs(date).format("YYYY-MM-DDTHH:mm:ss.SSS")
               )
             : [],
-          managerId: member.id,
-          otherId: 0,
-          addressDetail: addressDetail,
         };
 
         const transformedValues = transformData(finalValues);
@@ -445,6 +409,31 @@ function UpdateTask({
         console.log("Validation failed:", errorInfo);
       });
   };
+  console.log(editingTask);
+
+  const handleShowButton = () => {
+    if (editingTask.status === "Bản nháp") {
+      return (
+        <>
+          <Button onClick={closeEditTaskModal}>Chuyển sang chuẩn bị <CarryOutOutlined /></Button>,
+          <Button form="updateTask" type="primary" htmlType="submit">
+            Cập nhật
+            <EditOutlined />
+          </Button>
+        </>
+      );
+    }else{
+      return (
+        <>
+          <Button onClick={closeEditTaskModal}>Đóng</Button>,
+          <Button form="updateTask" type="primary" htmlType="submit">
+            Lưu thay đổi
+            <CheckCircleOutlined />
+          </Button>
+        </>
+      );
+    }
+  };
 
   return (
     <>
@@ -454,12 +443,7 @@ function UpdateTask({
           visible={editTaskModalVisible}
           onCancel={closeEditTaskModal}
           width={900}
-          footer={[
-            <Button onClick={closeEditTaskModal}>Đóng</Button>,
-            <Button form="updateTask" type="primary" htmlType="submit">
-              Lưu thay đổi
-            </Button>,
-          ]}
+          footer={handleShowButton}
         >
           <Form
             layout="vertical"
@@ -480,7 +464,6 @@ function UpdateTask({
                 values.remind,
                 values.overallEffortHour,
                 values.overallEfforMinutes,
-                values.employeeId,
                 values.materialId,
                 values.isRepeat,
                 values.dateRepeate,
@@ -492,8 +475,8 @@ function UpdateTask({
             form={form}
           >
             {editingTask &&
-            editingTask.fieldStatus === "Động vật" &&
-            editingTask.externalId ? (
+            editingTask.isPlant === false &&
+            editingTask.isSpecific ? (
               <UpdateSpecificAnimal
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
@@ -504,12 +487,9 @@ function UpdateTask({
                 handleSelectEndDate={handleSelectEndDate}
                 handleDescriptionChange={handleDescriptionChange}
                 handleTaskTypeChange={handleTaskTypeChange}
-                handleEmployeeChange={handleEmployeeChange}
                 handleMaterialChange={handleMaterialChange}
                 handleSelectRemind={handleSelectRemind}
                 handleSelectRepeat={handleSelectRepeat}
-                handleOverallEffortHour={handleOverallEffortHour}
-                handleOverallEfforMinutes={handleOverallEfforMinutes}
                 areaLivestockByZone={areaLivestockByZone}
                 zoneAnimal={zoneAnimal}
                 fieldByZone={fieldByZone}
@@ -517,12 +497,8 @@ function UpdateTask({
                 priorityValue={priorityValue}
                 disabledDate={disabledDate}
                 description={description}
-                overallEfforMinutes={overallEfforMinutes}
-                overallEffortHour={overallEffortHour}
                 dataTaskTypeLivestock={dataTaskTypeLivestock}
                 supervisor={supervisor}
-                employeesValue={employeesValue}
-                dataEmployee={dataEmployee}
                 materialsValue={materialsValue}
                 material={material}
                 remindValue={remindValue}
@@ -536,8 +512,8 @@ function UpdateTask({
                 setInitialSelectedDays={setInitialSelectedDays}
               />
             ) : editingTask &&
-              editingTask.fieldStatus === "Động vật" &&
-              !editingTask.externalId ? (
+              editingTask.isPlant === false &&
+              !editingTask.isSpecific ? (
               <UpdateWholeBarn
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
@@ -548,24 +524,17 @@ function UpdateTask({
                 handleSelectEndDate={handleSelectEndDate}
                 handleDescriptionChange={handleDescriptionChange}
                 handleTaskTypeChange={handleTaskTypeChange}
-                handleEmployeeChange={handleEmployeeChange}
                 handleMaterialChange={handleMaterialChange}
                 handleSelectRemind={handleSelectRemind}
                 handleSelectRepeat={handleSelectRepeat}
-                handleOverallEffortHour={handleOverallEffortHour}
-                handleOverallEfforMinutes={handleOverallEfforMinutes}
                 areaLivestockByZone={areaLivestockByZone}
                 zoneAnimal={zoneAnimal}
                 fieldByZone={fieldByZone}
                 priorityValue={priorityValue}
                 disabledDate={disabledDate}
                 description={description}
-                overallEfforMinutes={overallEfforMinutes}
-                overallEffortHour={overallEffortHour}
                 dataTaskTypeLivestock={dataTaskTypeLivestock}
                 supervisor={supervisor}
-                employeesValue={employeesValue}
-                dataEmployee={dataEmployee}
                 materialsValue={materialsValue}
                 material={material}
                 remindValue={remindValue}
@@ -579,8 +548,8 @@ function UpdateTask({
                 setInitialSelectedDays={setInitialSelectedDays}
               />
             ) : editingTask &&
-              editingTask.fieldStatus === "Thực vật" &&
-              editingTask.externalId ? (
+              editingTask.isPlant === true &&
+              editingTask.isSpecific ? (
               <UpdateSpecificPlant
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
@@ -591,12 +560,9 @@ function UpdateTask({
                 handleSelectEndDate={handleSelectEndDate}
                 handleDescriptionChange={handleDescriptionChange}
                 handleTaskTypeChange={handleTaskTypeChange}
-                handleEmployeeChange={handleEmployeeChange}
                 handleMaterialChange={handleMaterialChange}
                 handleSelectRemind={handleSelectRemind}
                 handleSelectRepeat={handleSelectRepeat}
-                handleOverallEffortHour={handleOverallEffortHour}
-                handleOverallEfforMinutes={handleOverallEfforMinutes}
                 areaPlantByZone={areaPlantByZone}
                 zonePlant={zonePlant}
                 fieldByZone={fieldByZone}
@@ -604,12 +570,8 @@ function UpdateTask({
                 priorityValue={priorityValue}
                 disabledDate={disabledDate}
                 description={description}
-                overallEfforMinutes={overallEfforMinutes}
-                overallEffortHour={overallEffortHour}
                 dataTaskTypePlant={dataTaskTypePlant}
                 supervisor={supervisor}
-                employeesValue={employeesValue}
-                dataEmployee={dataEmployee}
                 materialsValue={materialsValue}
                 material={material}
                 remindValue={remindValue}
@@ -623,8 +585,8 @@ function UpdateTask({
                 setInitialSelectedDays={setInitialSelectedDays}
               />
             ) : editingTask &&
-              editingTask.fieldStatus === "Thực vật" &&
-              !editingTask.externalId ? (
+              editingTask.isPlant === true &&
+              !editingTask.isSpecific ? (
               <UpdateWholeGarden
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
@@ -635,24 +597,17 @@ function UpdateTask({
                 handleSelectEndDate={handleSelectEndDate}
                 handleDescriptionChange={handleDescriptionChange}
                 handleTaskTypeChange={handleTaskTypeChange}
-                handleEmployeeChange={handleEmployeeChange}
                 handleMaterialChange={handleMaterialChange}
                 handleSelectRemind={handleSelectRemind}
                 handleSelectRepeat={handleSelectRepeat}
-                handleOverallEffortHour={handleOverallEffortHour}
-                handleOverallEfforMinutes={handleOverallEfforMinutes}
                 areaPlantByZone={areaPlantByZone}
                 zonePlant={zonePlant}
                 fieldByZone={fieldByZone}
                 priorityValue={priorityValue}
                 disabledDate={disabledDate}
                 description={description}
-                overallEfforMinutes={overallEfforMinutes}
-                overallEffortHour={overallEffortHour}
                 dataTaskTypePlant={dataTaskTypePlant}
                 supervisor={supervisor}
-                employeesValue={employeesValue}
-                dataEmployee={dataEmployee}
                 materialsValue={materialsValue}
                 material={material}
                 remindValue={remindValue}
@@ -665,7 +620,7 @@ function UpdateTask({
                 initialSelectedDays={initialSelectedDays}
                 setInitialSelectedDays={setInitialSelectedDays}
               />
-            ) : editingTask.addressDetail !== null ? (
+            ) : editingTask.isPlant === null ? (
               <UpdateTaskTypeOther
                 // handleCreateTaskOther={handleCreateTaskOther}
                 editingTask={editingTask}
@@ -678,12 +633,9 @@ function UpdateTask({
                 handleSelectEndDate={handleSelectEndDate}
                 handleDescriptionChange={handleDescriptionChange}
                 handleTaskTypeChange={handleTaskTypeChange}
-                handleEmployeeChange={handleEmployeeChange}
                 handleMaterialChange={handleMaterialChange}
                 handleSelectRemind={handleSelectRemind}
                 handleSelectRepeat={handleSelectRepeat}
-                handleOverallEfforMinutes={handleOverallEfforMinutes}
-                handleOverallEffortHour={handleOverallEffortHour}
                 form={form}
                 areaByFarm={areaByFarm}
                 zoneByArea={zoneByArea}
@@ -692,11 +644,7 @@ function UpdateTask({
                 setAddressDetail={setAddressDetail}
                 priorityValue={priorityValue}
                 description={description}
-                overallEfforMinutes={overallEfforMinutes}
-                overallEffortHour={overallEffortHour}
                 taskTypeActive={taskTypeActive}
-                employeesValue={employeesValue}
-                dataEmployee={dataEmployee}
                 supervisor={supervisor}
                 materialsValue={materialsValue}
                 material={material}

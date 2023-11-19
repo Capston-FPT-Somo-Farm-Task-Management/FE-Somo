@@ -22,10 +22,10 @@ const TaskDetailOther = ({
         <div className="task-detail-text">
           <h5>Địa điểm cụ thể</h5>
           {taskData.addressDetail === "" ? (
-              <p>{taskData.addressDetail}</p>
-            ) : (
-              <p>Chưa có địa điểm cụ thể</p>
-            )}
+            <p>Chưa có địa điểm cụ thể</p>
+          ) : (
+            <p>{taskData.addressDetail}</p>
+          )}
         </div>
       </div>
       <>
@@ -76,6 +76,14 @@ const TaskDetailOther = ({
               <p>Chưa có người giám sát</p>
             )}
           </div>
+          <div className="task-detail-text">
+            <h5>Người thực hiện</h5>
+            {taskData.employeeName ? (
+              <p>{taskData.employeeName}</p>
+            ) : (
+              <p>Chưa có người thực hiện</p>
+            )}
+          </div>
         </div>
       </>
       <>
@@ -105,45 +113,6 @@ const TaskDetailOther = ({
           )}
         </div>
       </>
-      {taskData.externalId ? (
-        <>
-          <h2>
-            <GiCow />
-            Đối tượng
-          </h2>
-          <div className="task-detail-item">
-            {taskData.addressDetail ? (
-              <p>Không có đối tượng nào được chọn</p>
-            ) : (
-              <>
-                {taskData.externalId && taskData.fieldStatus === "Thực vật" ? (
-                  <div className="task-detail-text">
-                    <h5>Cây trồng</h5>
-                    <p>{taskData.plantName}</p>
-                  </div>
-                ) : taskData.fieldStatus === "Động vật" ? (
-                  <div className="task-detail-text">
-                    <h5>Con vật</h5>
-                    <p>{taskData.liveStockName}</p>
-                  </div>
-                ) : null}
-                {taskData.externalId && taskData.fieldStatus === "Thực vật" ? (
-                  <div className="task-detail-text">
-                    <h5>Mã cây trồng</h5>
-                    <p>{taskData.externalId}</p>
-                  </div>
-                ) : taskData.fieldStatus === "Động vật" ? (
-                  <div className="task-detail-text">
-                    <h5>Mã con vật</h5>
-                    <p>{taskData.externalId}</p>
-                  </div>
-                ) : null}
-              </>
-            )}
-          </div>
-        </>
-      ) : null}
-
       <>
         <h2>
           <GiRingingBell />

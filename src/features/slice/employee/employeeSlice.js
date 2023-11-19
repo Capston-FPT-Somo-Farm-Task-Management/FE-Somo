@@ -4,32 +4,6 @@ import { toast } from 'react-toastify'
 
 const axiosInstance = createAxiosInstance()
 
-export const getEmployee = createAsyncThunk(
-  'employees/getEmployees',
-  async (_, { rejectWithValue }) => {
-    try {
-      const { data } = await axiosInstance.get('/Employee')
-      return data
-    } catch (error) {
-      rejectWithValue(error)
-    }
-  }
-)
-
-export const getEmployeeByTaskTypeAndFarmId = createAsyncThunk(
-  'employeeByTaskTypeAndFarmId/getEmployeeByTaskTypeAndFarmId',
-  async ({ taskTypeId, farmId }, { rejectWithValue }) => {
-    try {
-      const { data } = await axiosInstance.get(
-        `/Employee/Active/TaskType(${taskTypeId})/Farm(${farmId})`
-      )
-      return data
-    } catch (error) {
-      rejectWithValue(error)
-    }
-  }
-)
-
 export const deleteEmployee = createAsyncThunk(
   'employees/deleteEmployee',
   async (id, { rejectWithValue }) => {
@@ -55,33 +29,6 @@ const employeeSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-
-      .addCase(getEmployee.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(getEmployee.fulfilled, (state, action) => {
-        state.loading = false
-        state.error = ''
-        state.data = action.payload
-      })
-      .addCase(getEmployee.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
-        state.data = []
-      })
-      .addCase(getEmployeeByTaskTypeAndFarmId.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(getEmployeeByTaskTypeAndFarmId.fulfilled, (state, action) => {
-        state.loading = false
-        state.error = ''
-        state.data = action.payload
-      })
-      .addCase(getEmployeeByTaskTypeAndFarmId.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
-        state.data = []
-      })
 
       .addCase(deleteEmployee.pending, (state) => {
         state.loading = true

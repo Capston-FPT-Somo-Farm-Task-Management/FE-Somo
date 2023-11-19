@@ -1,7 +1,7 @@
 import { Form, Select } from 'antd'
 import React from 'react'
 
-function TaskTypeActiveSelect({taskTypeActive, handleTaskTypeChange, isDraft}) {
+function TaskTypeActiveSelect({taskTypeActiveOther, handleTaskTypeChange, isDraft}) {
   return (
     <Form.Item
           label="Loại công việc"
@@ -17,8 +17,8 @@ function TaskTypeActiveSelect({taskTypeActive, handleTaskTypeChange, isDraft}) {
           <Select
             placeholder="Chọn loại công việc"
             options={
-              taskTypeActive && taskTypeActive.data
-                ? taskTypeActive.data.map((item) => ({
+              taskTypeActiveOther && taskTypeActiveOther.data
+                ? taskTypeActiveOther.data.map((item) => ({
                     label: item.name,
                     value: item.id,
                   }))

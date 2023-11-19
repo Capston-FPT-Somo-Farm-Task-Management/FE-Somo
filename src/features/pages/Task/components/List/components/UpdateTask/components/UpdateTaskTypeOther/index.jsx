@@ -3,7 +3,6 @@ import AreaByFarmUpdate from "../FormItemUpdate/AreaByFarmUpdate";
 import ZoneByAreaUpdate from "../FormItemUpdate/ZoneByAreaUpdate";
 import FieldOtherUpdate from "../FormItemUpdate/FieldOtherUpdate";
 import AddressDetailUpdate from "../FormItemUpdate/AddressDetailUpdate";
-import OverallEffortUpdate from "../FormItemUpdate/OverallEffortUpdate";
 import NameTaskUpdate from "../FormItemUpdate/NameTaskUpdate";
 import TaskTypeActiveUpdate from "../FormItemUpdate/TaskTypeActiveUpdate";
 import SupervisorUpdate from "../FormItemUpdate/SupervisorUpdate";
@@ -13,7 +12,6 @@ import RemindUpdate from "../FormItemUpdate/RemindUpdate";
 import RepeatUpdate from "../FormItemUpdate/RepeatUpdate.jsx";
 import DateUpdate from "../FormItemUpdate/DateUpdate";
 import DescriptionUpdate from "../FormItemUpdate/DescriptionUpdate";
-import EmployeeUpdate from "../FormItemUpdate/EmployeeUpdate";
 
 function UpdateTaskTypeOther({
   editingTask,
@@ -25,12 +23,9 @@ function UpdateTaskTypeOther({
   handleSelectEndDate,
   handleDescriptionChange,
   handleTaskTypeChange,
-  handleEmployeeChange,
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
-  handleOverallEffortHour,
-  handleOverallEfforMinutes,
   areaByFarm,
   zoneByArea,
   fieldByZone,
@@ -38,11 +33,7 @@ function UpdateTaskTypeOther({
   setAddressDetail,
   priorityValue,
   description,
-  overallEfforMinutes,
-  overallEffortHour,
   taskTypeActive,
-  employeesValue,
-  dataEmployee,
   supervisor,
   materialsValue,
   material,
@@ -91,13 +82,6 @@ function UpdateTaskTypeOther({
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
         />
-        <OverallEffortUpdate
-          overallEffortHour={overallEffortHour}
-          handleOverallEffortHour={handleOverallEffortHour}
-          overallEfforMinutes={overallEfforMinutes}
-          handleOverallEfforMinutes={handleOverallEfforMinutes}
-          editingTask={editingTask}
-        />
         <DescriptionUpdate
           description={description}
           handleDescriptionChange={handleDescriptionChange}
@@ -112,12 +96,6 @@ function UpdateTaskTypeOther({
           editingTask={editingTask}
         />
         <SupervisorUpdate supervisor={supervisor} editingTask={editingTask} />
-        <EmployeeUpdate
-          employeesValue={employeesValue}
-          handleEmployeeChange={handleEmployeeChange}
-          dataEmployee={dataEmployee}
-          editingTask={editingTask}
-        />
         <MaterialUpdate
           materialsValue={materialsValue}
           handleMaterialChange={handleMaterialChange}
