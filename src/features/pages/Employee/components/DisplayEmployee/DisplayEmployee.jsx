@@ -1,22 +1,40 @@
 import { Badge, Button, Table } from 'antd'
 import Column from 'antd/es/table/Column'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import UpdateEmployee from './UpdateEmployee'
 import DetailEmployee from './DetailEmployee'
+import { getEmployeeById } from 'features/slice/employee/employeeSlice'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 const DisplayEmployee = ({
   employeeByFarm,
   onFinishDelete,
   onFinishUpdate,
   searchTerm,
+  loadData,
+  taskTypeActive,
 }) => {
+  const dispatch = useDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
+  const employeeById = useSelector((state) => state.employee.data)
 
   const [isModalDetailOpen, setIsModalDetailOpen] = useState(false)
   const [selectedDataDetail, setSelectedDataDetail] = useState(null)
 
-  const openModal = (record) => {
+  useEffect(() => {
+    if (selectedData) {
+      dispatch(getEmployeeById(selectedData.id)).then(() => {
+        loadData()
+      })
+    }
+  }, [selectedData, dispatch])
+
+  const openModal = async (record) => {
+    await dispatch(getEmployeeById(record.id)).then(() => {
+      loadData()
+    })
     setSelectedData(record)
     setIsModalOpen(true)
   }
@@ -119,6 +137,8 @@ const DisplayEmployee = ({
         key={selectedData ? selectedData.id : null}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        employeeById={employeeById}
+        taskTypeActive={taskTypeActive}
         selectedData={selectedData}
         onFinishUpdate={onFinishUpdate}
       />
