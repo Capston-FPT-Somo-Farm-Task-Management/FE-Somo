@@ -1,9 +1,62 @@
-import { Button, Form, Input, InputNumber, Modal, Radio } from 'antd'
+import {
+  Button,
+  DatePicker,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  Radio,
+  Upload,
+  Space,
+  Select,
+} from 'antd'
+import ImgCrop from 'antd-img-crop'
+import { useState } from 'react'
+import { UploadOutlined } from '@ant-design/icons'
+import dayjs from 'dayjs'
 
-const FormAddEmployee = ({ isModalOpen, closeModal, onFinishCreate }) => {
+const FormAddEmployee = ({
+  isModalOpen,
+  closeModal,
+  onFinishCreate,
+  farmId,
+  taskTypeActive,
+}) => {
+  const [fileList, setFileList] = useState([])
+  const [uploadError, setUploadError] = useState(false)
+
+  const [form] = Form.useForm()
+
+  const onFileChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList)
+  }
+
+  const handleFormReset = () => {
+    form.resetFields()
+    setFileList([])
+    setUploadError(false)
+  }
+
   const onFinish = (values) => {
-    onFinishCreate(values)
+    if (fileList.length === 0) {
+      setUploadError(true)
+      return
+    }
+    setUploadError(false)
+    const finalValues = {
+      ...values,
+      imageFile: fileList[0].originFileObj,
+      farmId: farmId,
+    }
+
+    console.log(finalValues)
+    // onFinishCreate(values)
     closeModal()
+    handleFormReset()
+  }
+
+  const disabledDate = (current) => {
+    return current && current > dayjs().endOf('day')
   }
 
   return (
@@ -34,6 +87,7 @@ const FormAddEmployee = ({ isModalOpen, closeModal, onFinishCreate }) => {
           className="first-step-animal"
           id="createEmployee"
           onFinish={onFinish}
+          form={form}
         >
           <div className="form-left">
             {/* Area Name */}
@@ -42,12 +96,12 @@ const FormAddEmployee = ({ isModalOpen, closeModal, onFinishCreate }) => {
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng nhập tên khu vực',
+                  message: 'Vui lòng nhập tên nhân viên',
                 },
               ]}
               name="name"
             >
-              <Input placeholder="Nhập tên khu vực" />
+              <Input placeholder="Nhập tên nhân viên" />
             </Form.Item>
 
             {/* Area Code */}
@@ -56,12 +110,12 @@ const FormAddEmployee = ({ isModalOpen, closeModal, onFinishCreate }) => {
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng nhập mã khu vực',
+                  message: 'Vui lòng nhập mã nhân viên',
                 },
               ]}
               name="code"
             >
-              <Input placeholder="Nhập mã cây trồng" />
+              <Input placeholder="Nhập mã nhân viên" />
             </Form.Item>
 
             <Form.Item
@@ -71,17 +125,23 @@ const FormAddEmployee = ({ isModalOpen, closeModal, onFinishCreate }) => {
                   required: true,
                   message: 'Vui lòng nhập số điện thoại nhân viên',
                 },
+                () => ({
+                  validator(_, value) {
+                    const phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})\b/
+                    if (!value || phoneRegex.test(value)) {
+                      return Promise.resolve()
+                    }
+                    return Promise.reject(
+                      new Error('Số điện thoại không hợp lệ')
+                    )
+                  },
+                }),
               ]}
               name="phoneNumber"
             >
-              <InputNumber
-                min={0}
-                style={{ width: '100%' }}
-                addonBefore="+84"
-              />
+              <Input style={{ width: '100%' }} />
             </Form.Item>
-          </div>
-          <div className="form-right">
+
             <Form.Item
               label="Giới tính"
               rules={[
@@ -103,12 +163,76 @@ const FormAddEmployee = ({ isModalOpen, closeModal, onFinishCreate }) => {
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng chọn giới tính',
+                  message: 'Vui lòng chọn địa chỉ',
                 },
               ]}
-              name="gender"
+              name="address"
             >
               <div>s</div>
+            </Form.Item>
+          </div>
+          <div className="form-right">
+            <Form.Item label="Hình ảnh nhân viên" required>
+              <ImgCrop rotationSlider>
+                <Upload
+                  listType="picture-card"
+                  maxCount={1}
+                  fileList={fileList}
+                  onChange={onFileChange}
+                  beforeUpload={() => false}
+                >
+                  <UploadOutlined />
+                </Upload>
+              </ImgCrop>
+              {uploadError && (
+                <div style={{ color: 'red' }}>
+                  Vui lòng tải lên hình ảnh nhân viên
+                </div>
+              )}
+            </Form.Item>
+
+            <Form.Item
+              label="Ngày sinh"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn ngày sinh',
+                },
+              ]}
+              name="dateOfBirth"
+            >
+              <DatePicker
+                format="YYYY-MM-DD"
+                disabledDate={disabledDate}
+                placeholder="Chọn ngày sinh"
+                style={{
+                  width: '100%',
+                }}
+              />
+            </Form.Item>
+
+            <Form.Item
+              label="Loại nhiệm vụ"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn loại nhiệm vụ',
+                },
+              ]}
+              name="taskTypeIds"
+            >
+              <Select
+                mode="multiple"
+                allowClear
+                style={{
+                  width: '100%',
+                }}
+                placeholder="Chọn loại nhiệm vụ"
+                options={taskTypeActive?.data?.map((taskType) => ({
+                  label: taskType.name,
+                  value: taskType.id,
+                }))}
+              />
             </Form.Item>
           </div>
         </Form>

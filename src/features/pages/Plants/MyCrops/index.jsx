@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux'
-import AddCropTypeAndPlant from './components/AddPlant/AddPlant'
 import { useDispatch } from 'react-redux'
 import { getMemberById } from 'features/slice/user/memberSlice'
 import { getPlantByFarmId } from 'features/slice/plant/plantByFarmSlice'
@@ -13,11 +12,13 @@ import {
 } from 'features/slice/plant/plantSlice'
 import TableDisplayCrop from './components/DisplayCrop/TableDisplayCrop'
 import AddPlant from './components/AddPlant/AddPlant'
+import { getPlantTypeActive } from 'features/slice/plant/plantTypeActiveSlice'
 
 const MyCrops = () => {
   const dispatch = useDispatch()
   const plantByFarm = useSelector((state) => state.plantByFarm.data)
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
+  const plantTypeActive = useSelector((state) => state.plantTypeActive.data)
   const member = useSelector((state) => state.member.data)
   const farmId = member.farmId
 
@@ -31,6 +32,7 @@ const MyCrops = () => {
     dispatch(getMemberById(authServices.getUserId()))
     dispatch(getPlantByFarmId(farmId))
     dispatch(getAreaActiveByFarmId(farmId))
+    dispatch(getPlantTypeActive(farmId))
   }, [dispatch, farmId])
 
   const onFinishCreatePlant = (values) => {
@@ -60,13 +62,13 @@ const MyCrops = () => {
       <AddPlant
         areaByFarm={areaByFarm}
         onFinishCreatePlant={onFinishCreatePlant}
-        farmId={farmId}
         handleSearch={handleSearch}
+        plantTypeActive={plantTypeActive}
       />
       <TableDisplayCrop
-        farmId={farmId}
         areaByFarm={areaByFarm}
         plantByFarm={plantByFarm}
+        plantTypeActive={plantTypeActive}
         onFinishUpdatePlant={onFinishUpdatePlant}
         onFinishDeletePlant={onFinishDeletePlant}
         searchTerm={searchTerm}

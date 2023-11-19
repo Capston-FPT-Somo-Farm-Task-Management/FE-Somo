@@ -4,10 +4,10 @@ import Search from 'antd/es/input/Search'
 import FirstStepAddAnimal from '../FirstStepAddAnimal/FirstStepAddAnimal'
 
 const AddAnimal = ({
-  farmId,
   areaByFarm,
   onFinishCreateAnimal,
   handleSearch,
+  animalTypeActive,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -31,11 +31,11 @@ const AddAnimal = ({
               Thêm vật nuôi
             </Button>
             <FirstStepAddAnimal
-              farmId={farmId}
               isModalOpen={isModalOpen}
               closeModal={closeModal}
               areaByFarm={areaByFarm}
               onFinishCreateAnimal={onFinishCreateAnimal}
+              animalTypeActive={animalTypeActive}
             />
           </div>
 

@@ -3,7 +3,12 @@ import Search from 'antd/es/input/Search'
 import { useState } from 'react'
 import FormAddEmployee from '../FormAddEmployee/FormAddEmployee'
 
-const AddEmployee = ({ onFinishCreate }) => {
+const AddEmployee = ({
+  onFinishCreate,
+  handleSearch,
+  farmId,
+  taskTypeActive,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => {
@@ -28,6 +33,8 @@ const AddEmployee = ({ onFinishCreate }) => {
               isModalOpen={isModalOpen}
               closeModal={closeModal}
               onFinishCreate={onFinishCreate}
+              farmId={farmId}
+              taskTypeActive={taskTypeActive}
             />
           </div>
 
@@ -39,6 +46,7 @@ const AddEmployee = ({ onFinishCreate }) => {
                 marginLeft: '15px',
                 width: 300,
               }}
+              onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
         </div>

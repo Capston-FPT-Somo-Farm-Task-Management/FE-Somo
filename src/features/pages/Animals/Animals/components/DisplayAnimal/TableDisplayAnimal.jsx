@@ -7,6 +7,7 @@ import DetailAnimal from './DetailAnimal'
 const TableDisplayAnimal = ({
   areaByFarm,
   animalByFarm,
+  animalTypeActive,
   onFinishDeleteAnimal,
   onFinishUpdateAnimal,
   searchTerm,
@@ -28,6 +29,7 @@ const TableDisplayAnimal = ({
 
   const closeModal = () => {
     setIsModalOpen(false)
+    setSelectedData(null)
   }
 
   // Detail
@@ -75,15 +77,15 @@ const TableDisplayAnimal = ({
           dataIndex="status"
           key="6"
           filters={[
-            { text: 'Tồn tại', value: 'Tồn tại' },
-            { text: 'Không tồn tại', value: 'Không tồn tại' },
+            { text: 'Hiện', value: 'Hiện' },
+            { text: 'Ẩn', value: 'Ẩn' },
           ]}
           onFilter={(value, record) => record.status.indexOf(value) === 0}
           render={(status) =>
-            status === 'Tồn tại' ? (
-              <Badge status="success" text="Tồn tại" />
+            status === 'Hiện' ? (
+              <Badge status="success" text="Hiện" />
             ) : (
-              <Badge status="error" text="Không tồn tại" />
+              <Badge status="error" text="Ẩn" />
             )
           }
         />
@@ -128,6 +130,7 @@ const TableDisplayAnimal = ({
         key={selectedData ? selectedData.id : null}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        animalTypeActive={animalTypeActive}
         selectedData={selectedData}
         areaByFarm={areaByFarm}
         onFinishUpdateAnimal={onFinishUpdateAnimal}
