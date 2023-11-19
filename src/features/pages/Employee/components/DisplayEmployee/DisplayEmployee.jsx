@@ -2,14 +2,19 @@ import { Badge, Button, Table } from 'antd'
 import Column from 'antd/es/table/Column'
 import { useState } from 'react'
 import UpdateEmployee from './UpdateEmployee'
+import DetailEmployee from './DetailEmployee'
 
 const DisplayEmployee = ({
   employeeByFarm,
   onFinishDelete,
   onFinishUpdate,
+  searchTerm,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
+
+  const [isModalDetailOpen, setIsModalDetailOpen] = useState(false)
+  const [selectedDataDetail, setSelectedDataDetail] = useState(null)
 
   const openModal = (record) => {
     setSelectedData(record)
@@ -18,23 +23,58 @@ const DisplayEmployee = ({
 
   const closeModal = () => {
     setIsModalOpen(false)
+    setSelectedData(null)
   }
+
+  // Detail
+
+  const openModalDetail = (record) => {
+    setSelectedDataDetail(record)
+    setIsModalDetailOpen(true)
+  }
+  const closeModalDetail = () => {
+    setSelectedDataDetail(null)
+    setIsModalDetailOpen(false)
+  }
+
+  const searchEmployee = employeeByFarm
+    ? employeeByFarm?.data?.filter((m) =>
+        m.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : []
 
   return (
     <>
-      <Table rowKey="id" dataSource={employeeByFarm ? employeeByFarm : null}>
-        <Column title="Tên nhân viên" dataIndex="name" key="1" />
+      <Table rowKey="id" dataSource={searchEmployee}>
+        <Column
+          title="Tên nhân viên"
+          dataIndex="name"
+          key="1"
+          render={(text, record) => (
+            <h4
+              onClick={() => openModalDetail(record)}
+              style={{ cursor: 'pointer' }}
+            >
+              {text}
+            </h4>
+          )}
+        />{' '}
         <Column title="Mã nhân viên" dataIndex="code" key="2" />
-        <Column title="Loại nhiệm vụ" dataIndex="taskTypeName" key="3" />
+        {/* <Column title="Loại nhiệm vụ" dataIndex="taskTypeName" key="3" /> */}
         <Column
           title="Trạng thái"
           dataIndex="status"
           key="3"
+          filters={[
+            { text: 'Đang làm việc', value: 'Đang làm việc' },
+            { text: 'Không làm việc', value: 'Không làm việc' },
+          ]}
+          onFilter={(value, record) => record.status.indexOf(value) === 0}
           render={(status) =>
-            status === 'Active' ? (
-              <Badge status="success" text="Active" />
+            status === 'Đang làm việc' ? (
+              <Badge status="success" text="Đang làm việc" />
             ) : (
-              <Badge status="error" text="Inactive" />
+              <Badge status="error" text="Không làm việc" />
             )
           }
         />
@@ -52,7 +92,6 @@ const DisplayEmployee = ({
             </Button>
           )}
         />
-
         <Column
           title="Cập nhật"
           key="7"
@@ -68,6 +107,14 @@ const DisplayEmployee = ({
           )}
         />
       </Table>
+
+      <DetailEmployee
+        key={selectedDataDetail ? selectedDataDetail.id : null}
+        isModalDetailOpen={isModalDetailOpen}
+        closeModalDetail={closeModalDetail}
+        selectedDataDetail={selectedDataDetail}
+      />
+
       <UpdateEmployee
         key={selectedData ? selectedData.id : null}
         isModalOpen={isModalOpen}

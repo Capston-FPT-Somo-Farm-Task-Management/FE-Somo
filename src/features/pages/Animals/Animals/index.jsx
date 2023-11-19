@@ -13,11 +13,13 @@ import { getAnimalType } from 'features/slice/animal/animalTypeSlice'
 import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarmSlice'
 import TableDisplayAnimal from './components/DisplayAnimal/TableDisplayAnimal'
 import AddAnimal from './components/AddAnimal/AddAnimal'
+import { getAnimalTypeActive } from 'features/slice/animal/animalTypeActiveSlice'
 
 const Animals = () => {
   const dispatch = useDispatch()
   const animalByFarm = useSelector((state) => state.animalByFarm.data)
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
+  const animalTypeActive = useSelector((state) => state.animalTypeActive.data)
   const member = useSelector((state) => state.member.data)
   const farmId = member.farmId
 
@@ -32,6 +34,7 @@ const Animals = () => {
     dispatch(getAnimalByFarmId(farmId))
     dispatch(getAreaActiveByFarmId(farmId))
     dispatch(getAnimalType(farmId))
+    dispatch(getAnimalTypeActive(farmId))
   }, [dispatch, farmId])
 
   const onFinishCreateAnimal = (values) => {
@@ -59,15 +62,15 @@ const Animals = () => {
   return (
     <>
       <AddAnimal
-        farmId={farmId}
         areaByFarm={areaByFarm}
         onFinishCreateAnimal={onFinishCreateAnimal}
         handleSearch={handleSearch}
+        animalTypeActive={animalTypeActive}
       />
       <TableDisplayAnimal
-        farmId={farmId}
         areaByFarm={areaByFarm}
         animalByFarm={animalByFarm}
+        animalTypeActive={animalTypeActive}
         onFinishDeleteAnimal={onFinishDeleteAnimal}
         onFinishUpdateAnimal={onFinishUpdateAnimal}
         searchTerm={searchTerm}

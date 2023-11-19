@@ -1,4 +1,7 @@
-import { Button, Form, Input, InputNumber, Modal } from 'antd'
+import { Button, Form, Input, InputNumber, Modal, Radio, Upload } from 'antd'
+import ImgCrop from 'antd-img-crop'
+import { useState } from 'react'
+import { UploadOutlined } from '@ant-design/icons'
 
 const UpdateEmployee = ({
   isModalOpen,
@@ -6,25 +9,45 @@ const UpdateEmployee = ({
   selectedData,
   onFinishUpdate,
 }) => {
+  const [fileList, setFileList] = useState([])
+
+  // useEffect(() => {
+  //   if (materialById?.data?.urlImage) {
+  //     setFileList([
+  //       {
+  //         uid: '-1',
+  //         name: 'image.png',
+  //         status: 'done',
+  //         url: materialById.data.urlImage,
+  //       },
+  //     ])
+  //   }
+  // }, [materialById])
+
+  const onFileChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList)
+  }
+
   const onFinish = (values) => {
     const finalValues = {
       id: selectedData.id,
       ...values,
     }
-    onFinishUpdate(finalValues)
+    console.log(finalValues)
+    // onFinishUpdate(finalValues)
     closeModal()
   }
 
   return (
     <>
       <Modal
-        title="Cập nhật khu vực"
+        title="Cập nhật thông tin nhân viên"
         open={isModalOpen}
         closeIcon
         onCancel={closeModal}
         footer={[
           <Button
-            form="updateArea"
+            form="updateEmployee"
             type="primary"
             htmlType="reset"
             danger
@@ -32,37 +55,37 @@ const UpdateEmployee = ({
           >
             Huỷ
           </Button>,
-          <Button form="updateArea" type="primary" htmlType="submit">
+          <Button form="updateEmployee" type="primary" htmlType="submit">
             Cập nhật
           </Button>,
         ]}
       >
-        {/* <Form
+        <Form
           layout="vertical"
           className="first-step-area"
-          id="updateArea"
+          id="updateEmployee"
           onFinish={onFinish}
         >
           <Form.Item
-            label="Tên khu vực"
+            label="Tên nhân viên"
             rules={[
               {
                 required: true,
-                message: 'Vui lòng nhập tên khu vực',
+                message: 'Vui lòng nhập tên nhân viên',
               },
             ]}
             name="name"
             initialValue={selectedData ? selectedData.name : ''}
           >
-            <Input placeholder="Nhập tên khu vực" />
+            <Input placeholder="Nhập tên nhân viên" />
           </Form.Item>
 
           <Form.Item
-            label="Mã khu vực"
+            label="Mã nhân viên"
             rules={[
               {
                 required: true,
-                message: 'Vui lòng nhập mã khu vực',
+                message: 'Vui lòng nhập mã nhân viên',
               },
             ]}
             name="code"
@@ -72,19 +95,95 @@ const UpdateEmployee = ({
           </Form.Item>
 
           <Form.Item
-            label="Diện tích (m2)"
+            label="Số điện thoại"
             rules={[
               {
                 required: true,
-                message: 'Vui lòng nhập diện tích khu vực',
+                message: 'Vui lòng nhập số điện thoại nhân viên',
+              },
+              () => ({
+                validator(_, value) {
+                  const phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})\b/
+                  if (!value || phoneRegex.test(value)) {
+                    return Promise.resolve()
+                  }
+                  return Promise.reject(new Error('Số điện thoại không hợp lệ'))
+                },
+              }),
+            ]}
+            initialValue={selectedData ? selectedData.phoneNumber : ''}
+            name="phoneNumber"
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Số điện thoại"
+            rules={[
+              {
+                required: true,
+                message: 'Vui lòng nhập số điện thoại nhân viên',
+              },
+              () => ({
+                validator(_, value) {
+                  const phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})\b/
+                  if (!value || phoneRegex.test(value)) {
+                    return Promise.resolve()
+                  }
+                  return Promise.reject(new Error('Số điện thoại không hợp lệ'))
+                },
+              }),
+            ]}
+            initialValue={selectedData ? selectedData.phoneNumber : ''}
+            name="phoneNumber"
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Giới tính"
+            rules={[
+              {
+                required: true,
+                message: 'Vui lòng chọn giới tính',
               },
             ]}
-            name="fArea"
-            initialValue={selectedData ? selectedData.fArea : ''}
+            name="gender"
+            initialValue={selectedData ? selectedData.gender : ''}
           >
-            <InputNumber min={0} addonAfter="m2" />
+            <Radio.Group>
+              <Radio value="Male">Nam</Radio>
+              <Radio value="Female">Nữ</Radio>
+            </Radio.Group>
           </Form.Item>
-        </Form> */}
+
+          <Form.Item
+            label="Địa chỉ"
+            rules={[
+              {
+                required: true,
+                message: 'Vui lòng chọn địa chỉ',
+              },
+            ]}
+            name="address"
+          >
+            <div>s</div>
+          </Form.Item>
+
+          <Form.Item label="Hình ảnh nhân viên" name="imageFile">
+            <ImgCrop rotationSlider>
+              <Upload
+                listType="picture-card"
+                maxCount={1}
+                beforeUpload={() => false}
+                fileList={fileList}
+                onChange={onFileChange}
+              >
+                <UploadOutlined />
+              </Upload>
+            </ImgCrop>
+          </Form.Item>
+        </Form>
       </Modal>
     </>
   )

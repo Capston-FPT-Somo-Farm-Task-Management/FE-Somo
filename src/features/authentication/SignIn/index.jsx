@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import { authServices } from 'services/authServices'
 import { createHub } from 'features/slice/hub/hubSlice'
 import { requestForToken } from 'features/firebase'
+import { toast } from 'react-toastify'
 
 const SignIn = () => {
   const dispatch = useDispatch()
@@ -23,6 +24,8 @@ const SignIn = () => {
         }, 100)
       } else if (authServices.getRole() === 'Admin') {
         navigate('/statistic-farm')
+      } else if (authServices.getRole() === 'Supervisor') {
+        toast.warning('Tài khoản của bạn không được phép vào')
       }
     })
   }

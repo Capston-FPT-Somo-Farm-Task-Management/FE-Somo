@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import FormAddAnimalType from './FormAddAnimalType'
 import { Button } from 'antd'
-import { Link } from 'react-router-dom'
 import Search from 'antd/es/input/Search'
 
 const AddAnimalType = ({ farmId, onFinishCreateAnimalType, handleSearch }) => {

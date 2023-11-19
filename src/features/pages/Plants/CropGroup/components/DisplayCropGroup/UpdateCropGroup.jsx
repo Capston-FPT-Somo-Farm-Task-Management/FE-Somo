@@ -17,19 +17,26 @@ const UpdateCropGroup = ({
   const [selectedAreaId, setSelectedAreaId] = useState(null)
 
   const zonePlant = useSelector((state) => state.zonePlant.data)
-  const dataZonePlant = zonePlant.data
+
+  useEffect(() => {
+    if (isModalOpen && selectedData) {
+      if (selectedData.areaId) {
+        dispatch(getZoneByAreaPlant(selectedData.areaId))
+      }
+    }
+  }, [isModalOpen, selectedAreaId, dispatch])
 
   useEffect(() => {
     if (selectedAreaId) {
       dispatch(getZoneByAreaPlant(selectedAreaId))
+      form.setFieldsValue({
+        zone: null,
+      })
     }
-  }, [selectedAreaId])
+  }, [selectedAreaId, isModalOpen])
 
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value)
-    form.setFieldsValue({
-      zone: null,
-    })
   }
 
   const onFinish = (values) => {

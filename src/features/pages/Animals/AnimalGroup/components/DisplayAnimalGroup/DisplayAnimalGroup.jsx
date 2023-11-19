@@ -24,6 +24,7 @@ const DisplayAnimalGroup = ({
 
   const closeModal = () => {
     setIsModalOpen(false)
+    setSelectedData(null)
   }
 
   // Detail
@@ -67,15 +68,15 @@ const DisplayAnimalGroup = ({
           dataIndex="isDelete"
           key="6"
           filters={[
-            { text: 'Tồn tại', value: false }, // giả sử 'false' đại diện cho 'Tồn tại'
-            { text: 'Không tồn tại', value: true }, // và 'true' đại diện cho 'Không tồn tại'
+            { text: 'Hiện', value: false },
+            { text: 'Ẩn', value: true },
           ]}
           onFilter={(value, record) => record.isDelete === value}
           render={(isDelete) =>
             isDelete === false ? (
-              <Badge status="success" text="Tồn tại" />
+              <Badge status="success" text="Hiện" />
             ) : (
-              <Badge status="error" text="Không tồn tại" />
+              <Badge status="error" text="Ẩn" />
             )
           }
         />

@@ -33,6 +33,7 @@ const DisplayPlantType = ({
 
   const closeModal = () => {
     setIsModalOpen(false)
+    setSelectedData(null)
   }
 
   // Detail
@@ -53,11 +54,7 @@ const DisplayPlantType = ({
 
   return (
     <>
-      <Table
-        dataSource={searchPlantType}
-        rowKey="id"
-        locale={{ emptyText: 'Chưa có loại cây trồng nào' }}
-      >
+      <Table dataSource={searchPlantType} rowKey="id">
         <Column
           title="Tên loại cây trồng"
           dataIndex="name"
@@ -79,15 +76,15 @@ const DisplayPlantType = ({
           dataIndex="isActive"
           key="5"
           filters={[
-            { text: 'Tồn tại', value: true },
-            { text: 'Không tồn tại', value: false },
+            { text: 'Hiện', value: true },
+            { text: 'Ẩn', value: false },
           ]}
           onFilter={(value, record) => record.isActive === value}
           render={(isActive) =>
             isActive === true ? (
-              <Badge status="success" text="Tồn tại" />
+              <Badge status="success" text="Hiện" />
             ) : (
-              <Badge status="error" text="Không tồn tại" />
+              <Badge status="error" text="Ẩn" />
             )
           }
         />

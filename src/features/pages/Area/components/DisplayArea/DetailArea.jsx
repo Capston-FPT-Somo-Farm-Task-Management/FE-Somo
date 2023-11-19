@@ -5,7 +5,6 @@ const DetailArea = ({
   closeModalDetail,
   selectedDataDetail,
 }) => {
-  console.log(selectedDataDetail)
   return (
     <Modal
       title="Chi tiết khu vực"

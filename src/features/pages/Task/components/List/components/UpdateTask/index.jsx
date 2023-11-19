@@ -64,6 +64,26 @@ function UpdateTask({
   const [selectedDays, setSelectedDays] = useState([]);
   const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
   const [initialSelectedDays, setInitialSelectedDays] = useState([]);
+  const [selectedType, setSelectedType] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [isDraft, setIsDraft] = useState(false);
+  console.log(isDraft);
+
+  const handleIsDraft = () => {
+    setIsDraft(true);
+  };
+
+  const handleIsTaskToDo = () => {
+    setIsDraft(false);
+  };
+
+  const handleIsDraftOther = () => {
+    setIsDraft(true);
+  };
+
+  const handleIsTaskOtherToDo = () => {
+    setIsDraft(false);
+  };
 
   const [form] = Form.useForm();
 
@@ -106,8 +126,6 @@ function UpdateTask({
 
   const supervisor = useSelector((state) => state.supervisor.data);
 
-  const dataEmployee = useSelector((state) => state.employee.data);
-
   const material = useSelector((state) => state.materialActive.data);
 
   console.log("selectedZone: ", selectedZoneId);
@@ -139,20 +157,6 @@ function UpdateTask({
       dispatch(getFieldByZone(selectedZoneId));
     }
   }, [selectedZoneId, editTaskModalVisible]);
-
-  useEffect(() => {
-    if (selectedTaskTypeId) {
-      dispatch(
-        getEmployeeByTaskTypeAndFarmId({
-          taskTypeId: selectedTaskTypeId,
-          farmId: farmId,
-        })
-      );
-      form.setFieldsValue({
-        employeeIds: undefined,
-      });
-    }
-  }, [selectedTaskTypeId, editTaskModalVisible]);
 
   useEffect(() => {
     if (endDate && startDate && startDate.isAfter(endDate)) {
@@ -495,7 +499,6 @@ function UpdateTask({
                 description={description}
                 dataTaskTypeLivestock={dataTaskTypeLivestock}
                 supervisor={supervisor}
-                dataEmployee={dataEmployee}
                 materialsValue={materialsValue}
                 material={material}
                 remindValue={remindValue}
@@ -532,7 +535,6 @@ function UpdateTask({
                 description={description}
                 dataTaskTypeLivestock={dataTaskTypeLivestock}
                 supervisor={supervisor}
-                dataEmployee={dataEmployee}
                 materialsValue={materialsValue}
                 material={material}
                 remindValue={remindValue}
@@ -570,7 +572,6 @@ function UpdateTask({
                 description={description}
                 dataTaskTypePlant={dataTaskTypePlant}
                 supervisor={supervisor}
-                dataEmployee={dataEmployee}
                 materialsValue={materialsValue}
                 material={material}
                 remindValue={remindValue}
@@ -607,7 +608,6 @@ function UpdateTask({
                 description={description}
                 dataTaskTypePlant={dataTaskTypePlant}
                 supervisor={supervisor}
-                dataEmployee={dataEmployee}
                 materialsValue={materialsValue}
                 material={material}
                 remindValue={remindValue}
@@ -645,7 +645,6 @@ function UpdateTask({
                 priorityValue={priorityValue}
                 description={description}
                 taskTypeActive={taskTypeActive}
-                dataEmployee={dataEmployee}
                 supervisor={supervisor}
                 materialsValue={materialsValue}
                 material={material}

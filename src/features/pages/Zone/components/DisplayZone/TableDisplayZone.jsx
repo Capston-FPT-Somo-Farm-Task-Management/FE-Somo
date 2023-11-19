@@ -25,6 +25,7 @@ const TableDisplayZone = ({
 
   const closeModal = () => {
     setIsModalOpen(false)
+    setSelectedData(null)
   }
 
   // Detail
@@ -67,15 +68,15 @@ const TableDisplayZone = ({
           dataIndex="status"
           key="6"
           filters={[
-            { text: 'Tồn tại', value: 'Tồn tại' },
-            { text: 'Không tồn tại', value: 'Không tồn tại' },
+            { text: 'Hiện', value: 'Hiện' },
+            { text: 'Ẩn', value: 'Ẩn' },
           ]}
           onFilter={(value, record) => record.status.indexOf(value) === 0}
           render={(status) =>
-            status === 'Tồn tại' ? (
-              <Badge status="success" text="Tồn tại" />
+            status === 'Hiện' ? (
+              <Badge status="success" text="Hiện" />
             ) : (
-              <Badge status="error" text="Không tồn tại" />
+              <Badge status="error" text="Ẩn" />
             )
           }
         />

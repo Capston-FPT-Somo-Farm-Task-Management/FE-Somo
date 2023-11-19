@@ -1,5 +1,4 @@
 import { Button, Form, Input, InputNumber, Modal, Radio, Select } from 'antd'
-import { getAnimalTypeActive } from 'features/slice/animal/animalTypeActiveSlice'
 import { getFieldByZone } from 'features/slice/field/fieldByZoneSlice'
 import { getZoneByAreaAnimal } from 'features/slice/zone/zoneAnimalSlice'
 import { useEffect, useState } from 'react'
@@ -11,34 +10,27 @@ const UpdateAnimal = ({
   closeModal,
   selectedData,
   onFinishUpdateAnimal,
-  farmId,
+  animalTypeActive,
 }) => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
 
   const [selectedAreaId, setSelectedAreaId] = useState(null)
   const [selectedZoneId, setSelectedZoneId] = useState(null)
-  const [gender, setGender] = useState(true)
 
   const zoneAnimal = useSelector((state) => state.zoneAnimal.data)
-  console.log(zoneAnimal)
   const fieldByZone = useSelector((state) => state.fieldByZone.data)
-  console.log(fieldByZone)
-  console.log("selectedZone: ", selectedZoneId);
-
-  const animalTypeActive = useSelector((state) => state.animalTypeActive.data)
 
   useEffect(() => {
-    dispatch(getAnimalTypeActive(farmId))
-  }, [dispatch])
-
-  useEffect(() => {
-    if (isModalOpen) {
-      if (selectedData) {
-        setGender(selectedData.gender)
+    if (isModalOpen && selectedData) {
+      if (selectedData.areaId) {
+        dispatch(getZoneByAreaAnimal(selectedData.areaId))
+      }
+      if (selectedData.zoneId) {
+        dispatch(getFieldByZone(selectedData.zoneId))
       }
     }
-  }, [isModalOpen, selectedData])
+  }, [isModalOpen, selectedData, dispatch])
 
   useEffect(() => {
     if (selectedAreaId) {
@@ -75,7 +67,7 @@ const UpdateAnimal = ({
       name: values.name,
       externalId: values.externalId,
       weight: values.weight,
-      gender: values.gender,
+      gender: values.gender === 'Đực' ? true : false,
       habitantTypeId:
         typeof values.habitantType === 'object'
           ? values.habitantType.value
@@ -203,11 +195,11 @@ const UpdateAnimal = ({
                 },
               ]}
               name="gender"
-              initialValue={gender}
+              initialValue={selectedData ? selectedData.gender : ''}
             >
               <Radio.Group>
-                <Radio value={true}>Đực/Trống</Radio>
-                <Radio value={false}>Cái/Mái</Radio>
+                <Radio value="Đực">Đực/Trống</Radio>
+                <Radio value="Cái">Cái/Mái</Radio>
               </Radio.Group>
             </Form.Item>
           </div>

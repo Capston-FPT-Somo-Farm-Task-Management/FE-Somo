@@ -5,7 +5,6 @@ const DetailCrop = ({
   closeModalDetail,
   selectedDataDetail,
 }) => {
-  console.log(selectedDataDetail)
   return (
     <Modal
       title="Chi tiết vật nuôi"
