@@ -290,7 +290,7 @@ function ThirdModal({
         liveStockId: originalData.liveStockId,
         remind: originalData.remind,
         addressDetail: originalData.addressDetail,
-        isOther: originalData.isOther,
+        isPlant: originalData.isPlant,
       },
     };
 
@@ -346,7 +346,6 @@ function ThirdModal({
           remind: remindValueToSend,
           dates: selectedDays,
           materialIds: materialToSend,
-          isOther: false,
         };
 
         const transformedValues = transformData(finalValues);
@@ -415,7 +414,7 @@ function ThirdModal({
           remind: remindValueToSend,
           dates: selectedDays,
           materialIds: materialToSend,
-          isOther: false,
+          isPlant: option === "specificPlant" || option === "wholeGarden" ? true : false
         };
 
         const transformedValues = transformData(finalValues);
@@ -505,7 +504,6 @@ function ThirdModal({
           dates: selectedDays,
           materialIds: materialToSend,
           addressDetail: formattedAddress,
-          isOther: true,
         };
 
         const transformedValues = transformData(finalValues);
@@ -603,7 +601,7 @@ function ThirdModal({
           dates: selectedDays,
           materialIds: materialToSend,
           addressDetail: addressToSend,
-          isOther: true,
+          isPlant: null
         };
 
         const transformedValues = transformData(finalValues);

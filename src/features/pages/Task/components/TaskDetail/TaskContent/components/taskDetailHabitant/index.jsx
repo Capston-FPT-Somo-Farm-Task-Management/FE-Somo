@@ -32,7 +32,7 @@ const TaskDetailHabitant = ({
           <h5>Vùng</h5>
           {taskData.zoneName ? <p>{taskData.zoneName}</p> : <p>Chưa có vùng</p>}
         </div>
-        {taskData.externalId && taskData.isOther === false && taskData.fieldStatus === "Thực vật" ? (
+        {taskData.isPlant !== null && taskData.isPlant ? (
           <div className="task-detail-text">
             <h5>Vườn</h5>
             {taskData.fieldName ? (
@@ -41,7 +41,7 @@ const TaskDetailHabitant = ({
               <p>Chưa có vườn</p>
             )}
           </div>
-        ) : taskData.fieldStatus === "Động vật" ? (
+        ) : taskData.isPlant !== null && taskData.isPlant === false ? (
           <div className="task-detail-text">
             <h5>Chuồng</h5>
             {taskData.fieldName ? (
