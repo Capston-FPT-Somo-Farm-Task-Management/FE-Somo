@@ -42,7 +42,7 @@ const DetailEmployee = ({
               {formatDate(selectedDataDetail.dateOfBirth)}
             </Descriptions.Item>
             <Descriptions.Item label="Giới tính">
-              {selectedDataDetail.gender}
+              {selectedDataDetail.gender === 'Male' ? 'Nam' : 'Nữ'}
             </Descriptions.Item>
             <Descriptions.Item label="Địa chỉ">
               {selectedDataDetail.address}

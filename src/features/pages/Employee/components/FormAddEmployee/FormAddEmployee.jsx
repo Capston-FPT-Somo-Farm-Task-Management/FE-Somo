@@ -24,6 +24,7 @@ const FormAddEmployee = ({
 }) => {
   const [fileList, setFileList] = useState([])
   const [uploadError, setUploadError] = useState(false)
+
   const [form] = Form.useForm()
 
   const onFileChange = ({ fileList: newFileList }) => {
@@ -48,8 +49,8 @@ const FormAddEmployee = ({
       farmId: farmId,
     }
 
-    // onFinishCreate(values)
     console.log(finalValues)
+    // onFinishCreate(values)
     closeModal()
     handleFormReset()
   }
@@ -124,10 +125,21 @@ const FormAddEmployee = ({
                   required: true,
                   message: 'Vui lòng nhập số điện thoại nhân viên',
                 },
+                () => ({
+                  validator(_, value) {
+                    const phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})\b/
+                    if (!value || phoneRegex.test(value)) {
+                      return Promise.resolve()
+                    }
+                    return Promise.reject(
+                      new Error('Số điện thoại không hợp lệ')
+                    )
+                  },
+                }),
               ]}
               name="phoneNumber"
             >
-              <InputNumber min={0} style={{ width: '100%' }} />
+              <Input style={{ width: '100%' }} />
             </Form.Item>
 
             <Form.Item
@@ -151,10 +163,10 @@ const FormAddEmployee = ({
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng chọn giới tính',
+                  message: 'Vui lòng chọn địa chỉ',
                 },
               ]}
-              name="gender"
+              name="address"
             >
               <div>s</div>
             </Form.Item>
