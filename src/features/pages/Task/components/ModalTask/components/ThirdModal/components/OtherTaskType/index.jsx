@@ -43,7 +43,7 @@ function OtherTaskType({
   description,
   priorityValue,
   supervisorValue,
-  taskTypeActive,
+  taskTypeActiveOther,
   supervisor,
   materialsValue,
   material,
@@ -106,7 +106,7 @@ function OtherTaskType({
       <div className="form-right">
         <NameTaskInput name={name} handleNameChange={handleNameChange} />
         <TaskTypeActiveSelect
-          taskTypeActive={taskTypeActive}
+          taskTypeActiveOther={taskTypeActiveOther}
           handleTaskTypeChange={handleTaskTypeChange}
           isDraft={isDraft}
         />

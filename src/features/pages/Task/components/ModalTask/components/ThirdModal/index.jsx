@@ -9,7 +9,6 @@ import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
 import { getTaskTypeLivestock } from "features/slice/task/taskTypeAnimalSlice";
 import { getTaskTypePlant } from "features/slice/task/taskTypePlantSlice";
 import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
-import { getEmployeeByTaskTypeAndFarmId } from "features/slice/employee/employeeSlice";
 import { getAnimalActive } from "features/slice/animal/animalSlice";
 import { getPlantActive } from "features/slice/plant/plantSlice";
 import { createTaskDraft, createTaskToDo } from "features/slice/task/taskSlice";
@@ -25,7 +24,7 @@ import { getAreaWithZoneTypePlant } from "features/slice/area/areaPlantWithZoneS
 import OtherTaskType from "./components/OtherTaskType";
 import { getAreaActiveByFarmId } from "features/slice/area/areaByFarmSlice";
 import { getZoneByAreaId } from "features/slice/zone/zoneByAreaSlice";
-import { getTaskTypeActive } from "features/slice/task/taskTypeActiveSlice";
+import { getTaskTypeActiveOther } from "features/slice/task/taskTypeOtherSlice";
 
 dayjs.extend(customParseFormat);
 
@@ -39,12 +38,11 @@ function ThirdModal({
   handleIsTaskToDo,
   handleIsDraftOther,
   handleIsTaskOtherToDo,
-  isDraft
+  isDraft,
 }) {
   const [selectedAreaId, setSelectedAreaId] = useState(null);
   const [selectedZoneId, setSelectedZoneId] = useState(null);
   const [selectedFieldId, setSelectedFieldId] = useState(null);
-  const [selectedFarmId, setSelectedFarmId] = useState(null);
   const [name, setName] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -55,7 +53,7 @@ function ThirdModal({
   const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(0);
   const [plantValue, setPlantValue] = useState(0);
   const [livestockValue, setLivestockValue] = useState(0);
-  const [addressDetail, setAddressDetail] = useState("");
+  const [addressDetail, setAddressDetail] = useState(null);
   const [remindValue, setRemindValue] = useState(0);
   const [materialsValue, setMaterialsValue] = useState(0);
   const [selectedDays, setSelectedDays] = useState([]);
@@ -91,7 +89,8 @@ function ThirdModal({
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
 
-  const taskTypeActive = useSelector((state) => state.taskTypeActive.data);
+  const taskTypeActiveOther = useSelector((state) => state.taskTypeActiveOther.data);
+  console.log(taskTypeActiveOther);
 
   const taskTypeLivestock = useSelector(
     (state) => state.taskTypeLivestock.data
@@ -109,7 +108,7 @@ function ThirdModal({
     dispatch(getAreaActiveByFarmId(farmId));
     dispatch(getAreaWithZoneTypeLivestock(farmId));
     dispatch(getAreaWithZoneTypePlant(farmId));
-    dispatch(getTaskTypeActive());
+    dispatch(getTaskTypeActiveOther());
     dispatch(getTaskTypeLivestock());
     dispatch(getTaskTypePlant());
     dispatch(getSupervisor(farmId));
@@ -159,7 +158,7 @@ function ThirdModal({
     });
   };
 
-  const handleSelectZoneChange = async (value) => {
+  const handleSelectZoneChange = (value) => {
     setSelectedZoneId(value);
     setSelectedFieldId(value);
     form.setFieldsValue({
@@ -167,15 +166,6 @@ function ThirdModal({
       liveStockId: null,
       plantId: null,
     });
-
-    try {
-      await dispatch(
-        getEmployeeByTaskTypeAndFarmId({
-          taskTypeId: selectedTaskTypeId,
-          farmId: selectedFarmId,
-        })
-      );
-    } catch (error) {}
   };
 
   const handleSelectFieldChange = (value) => {
@@ -300,6 +290,8 @@ function ThirdModal({
         liveStockId: originalData.liveStockId,
         remind: originalData.remind,
         addressDetail: originalData.addressDetail,
+        isPlant: originalData.isPlant,
+        isSpecific: originalData.isSpecific
       },
     };
 
@@ -355,6 +347,8 @@ function ThirdModal({
           remind: remindValueToSend,
           dates: selectedDays,
           materialIds: materialToSend,
+          isPlant: option === "specificPlant" || option === "wholeGarden" ? true : false,
+          isSpecific: option === "specificAnimal" || option === "specificPlant" ? true : false
         };
 
         const transformedValues = transformData(finalValues);
@@ -423,6 +417,8 @@ function ThirdModal({
           remind: remindValueToSend,
           dates: selectedDays,
           materialIds: materialToSend,
+          isPlant: option === "specificPlant" || option === "wholeGarden" ? true : false,
+          isSpecific: option === "specificAnimal" || option === "specificPlant" ? true : false
         };
 
         const transformedValues = transformData(finalValues);
@@ -512,6 +508,8 @@ function ThirdModal({
           dates: selectedDays,
           materialIds: materialToSend,
           addressDetail: formattedAddress,
+          isPlant: null,
+          isSpecific: false
         };
 
         const transformedValues = transformData(finalValues);
@@ -562,21 +560,34 @@ function ThirdModal({
           return;
         }
 
-        const areaName =
-          areaByFarm.data.find((area) => area.id === selectedAreaId)?.name ||
-          "";
-        const zoneName =
-          zoneByArea.data.find((zone) => zone.id === selectedZoneId)?.name ||
-          "";
-        const fieldName =
-          fieldByZone.data.find((field) => field.id === selectedFieldId)
-            ?.nameCode || "";
+        const area = areaByFarm.data
+          ? areaByFarm.data.find((area) => area.id === selectedAreaId)
+          : null;
+        const zone = zoneByArea.data
+          ? zoneByArea.data.find((zone) => zone.id === selectedZoneId)
+          : null;
+        const field = fieldByZone.data
+          ? fieldByZone.data.find((field) => field.id === selectedFieldId)
+          : null;
 
-        const formattedAddress = `${areaName ? areaName + `, ` : ""}${
-          zoneName ? zoneName + `, ` : ""
-        }${fieldName ? fieldName + `, ` : ""} ${
-          addressDetail ? addressDetail : ""
+        const areaName = area ? area.name : null;
+        const zoneName = zone ? zone.name : null;
+        const fieldName = field ? field.nameCode : null;
+
+        const formattedAddress = `${areaName ? areaName + ", " : ""}${
+          zoneName ? zoneName + ", " : ""
+        }${fieldName ? fieldName + ", " : ""}${
+          addressDetail ? addressDetail.trim() : ""
         }`;
+
+        const addressToSend =
+          formattedAddress.trim() !== "" ? formattedAddress : "";
+
+        console.log("areaName: ", areaName);
+        console.log("zoneName: ", zoneName);
+        console.log("fieldName: ", fieldName);
+        console.log("addressDetail: ", addressDetail);
+        console.log("formattedAddress: ", formattedAddress);
 
         const finalValues = {
           ...values,
@@ -595,7 +606,9 @@ function ThirdModal({
           remind: remindValueToSend,
           dates: selectedDays,
           materialIds: materialToSend,
-          addressDetail: formattedAddress,
+          addressDetail: addressToSend,
+          isPlant: null,
+          isSpecific: false
         };
 
         const transformedValues = transformData(finalValues);
@@ -656,7 +669,7 @@ function ThirdModal({
         priorityValue={priorityValue}
         supervisorValue={supervisorValue}
         selectedFieldId={selectedFieldId}
-        taskTypeActive={taskTypeActive}
+        taskTypeActiveOther={taskTypeActiveOther}
         plantValue={plantValue}
         livestockValue={livestockValue}
         materialsValue={materialsValue}

@@ -2,7 +2,6 @@ import React from "react";
 import AreaLivestockUpdate from "../FormItemUpdate/AreaLivestockUpdate";
 import ZoneAnimalUpdate from "../FormItemUpdate/ZoneAnimalUpdate";
 import FieldAnimalUpdate from "../FormItemUpdate/FieldAnimalUpdate";
-import OverallEffortUpdate from "../FormItemUpdate/OverallEffortUpdate";
 import NameTaskUpdate from "../FormItemUpdate/NameTaskUpdate";
 import TaskTypeLivestockUpdate from "../FormItemUpdate/TaskTypeLivestockUpdate";
 import SupervisorUpdate from "../FormItemUpdate/SupervisorUpdate";
@@ -12,7 +11,6 @@ import RemindUpdate from "../FormItemUpdate/RemindUpdate";
 import RepeatUpdate from "../FormItemUpdate/RepeatUpdate.jsx";
 import DateUpdate from "../FormItemUpdate/DateUpdate";
 import DescriptionUpdate from "../FormItemUpdate/DescriptionUpdate";
-import EmployeeUpdate from "../FormItemUpdate/EmployeeUpdate";
 
 function UpdateWholeBarn({
   editingTask,
@@ -24,22 +22,15 @@ function UpdateWholeBarn({
   handleSelectEndDate,
   handleDescriptionChange,
   handleTaskTypeChange,
-  handleEmployeeChange,
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
-  handleOverallEffortHour,
-  handleOverallEfforMinutes,
   areaLivestockByZone,
   zoneAnimal,
   fieldByZone,
   priorityValue,
   description,
-  overallEfforMinutes,
-  overallEffortHour,
   dataTaskTypeLivestock,
-  employeesValue,
-  dataEmployee,
   supervisor,
   materialsValue,
   material,
@@ -83,13 +74,6 @@ function UpdateWholeBarn({
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
         />
-        <OverallEffortUpdate
-          overallEffortHour={overallEffortHour}
-          handleOverallEffortHour={handleOverallEffortHour}
-          overallEfforMinutes={overallEfforMinutes}
-          handleOverallEfforMinutes={handleOverallEfforMinutes}
-          editingTask={editingTask}
-        />
         <DescriptionUpdate
           description={description}
           handleDescriptionChange={handleDescriptionChange}
@@ -104,12 +88,6 @@ function UpdateWholeBarn({
           editingTask={editingTask}
         />
         <SupervisorUpdate supervisor={supervisor} editingTask={editingTask} />
-        <EmployeeUpdate
-          employeesValue={employeesValue}
-          handleEmployeeChange={handleEmployeeChange}
-          dataEmployee={dataEmployee}
-          editingTask={editingTask}
-        />
         <MaterialUpdate
           materialsValue={materialsValue}
           handleMaterialChange={handleMaterialChange}

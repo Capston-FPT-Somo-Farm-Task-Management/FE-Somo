@@ -85,7 +85,7 @@ function TaskContent({ taskData }) {
             </div>
           </div>
           <div className="task-detail-content">
-            {taskData.addressDetail ? (
+            {taskData.isPlant === null ? (
               <TaskDetailOther
                 taskData={taskData}
                 formattedStartDate={formattedStartDate}

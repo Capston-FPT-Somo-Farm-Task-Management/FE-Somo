@@ -53,10 +53,12 @@ const UpdateAnimal = ({
 
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value)
+    setSelectedZoneId(value)
   }
 
   const handleSelectZoneChange = (value) => {
     setSelectedZoneId(value)
+    
   }
 
   const onFinish = (values) => {

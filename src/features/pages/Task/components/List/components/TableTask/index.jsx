@@ -53,7 +53,7 @@ function TableTask({
                 const isManager = record && record.managerName;
                 const isStatus =
                   record &&
-                  (record.status === "Chuẩn bị" ||
+                  (record.status === "Bản nháp" || record.status === "Chuẩn bị" ||
                     record.status === "Đang thực hiện");
                 const isStatusEffort =
                   record &&
@@ -101,7 +101,7 @@ function TableTask({
                                 <EditOutlined
                                   style={{ color: "gold", marginRight: "8px" }}
                                 />
-                                Sửa công việc
+                                Cập nhật công việc
                               </span>
                             </Menu.Item>
                           ) : null}

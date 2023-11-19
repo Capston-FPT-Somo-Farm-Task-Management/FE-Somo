@@ -154,7 +154,7 @@ function ModalTask({
                   htmlType="submit"
                   onClick={handleIsDraftOther}
                 >
-                  Lưu bảng nháp
+                  Lưu bản nháp
                   <ProfileOutlined />
                 </Button>
                 <Button
@@ -175,7 +175,7 @@ function ModalTask({
                   htmlType="submit"
                   onClick={handleIsDraft}
                 >
-                  Lưu bảng nháp
+                  Lưu bản nháp
                   <ProfileOutlined />
                 </Button>
                 <Button
