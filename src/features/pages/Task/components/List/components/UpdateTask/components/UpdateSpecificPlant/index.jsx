@@ -21,6 +21,8 @@ function UpdateSpecificPlant({
   handlePriorityChange,
   handleSelectStartDate,
   handleSelectEndDate,
+  handleNameChange,
+  handleSupervisorChange,
   handleDescriptionChange,
   handleTaskTypeChange,
   handleMaterialChange,
@@ -31,6 +33,8 @@ function UpdateSpecificPlant({
   fieldByZone,
   dataPlant,
   priorityValue,
+  nameValue,
+  supervisorValue,
   description,
   dataTaskTypePlant,
   supervisor,
@@ -44,7 +48,8 @@ function UpdateSpecificPlant({
   selectedDays,
   setSelectedDays,
   initialSelectedDays,
-  setInitialSelectedDays
+  setInitialSelectedDays,
+  isDraft,
 }) {
   return (
     <>
@@ -53,18 +58,25 @@ function UpdateSpecificPlant({
           handleSelectAreaChange={handleSelectAreaChange}
           areaPlantByZone={areaPlantByZone}
           editingTask={editingTask}
+          isDraft={isDraft}
         />
         <ZonePlantUpdate
           handleSelectZoneChange={handleSelectZoneChange}
           zonePlant={zonePlant}
           editingTask={editingTask}
+          isDraft={isDraft}
         />
         <FieldPlantUpdate
           handleSelectFieldChange={handleSelectFieldChange}
           fieldByZone={fieldByZone}
           editingTask={editingTask}
+          isDraft={isDraft}
         />
-        <PlantUpdate dataPlant={dataPlant} editingTask={editingTask} />
+        <PlantUpdate
+          dataPlant={dataPlant}
+          editingTask={editingTask}
+          isDraft={isDraft}
+        />
         <PriorityUpdate
           priorityValue={priorityValue}
           handlePriorityChange={handlePriorityChange}
@@ -76,6 +88,8 @@ function UpdateSpecificPlant({
           handleSelectStartDate={handleSelectStartDate}
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
+          endDate={endDate}
+          isDraft={isDraft}
         />
         <DescriptionUpdate
           description={description}
@@ -84,13 +98,24 @@ function UpdateSpecificPlant({
         />
       </div>
       <div className="form-right">
-        <NameTaskUpdate editingTask={editingTask} />
+        <NameTaskUpdate
+          editingTask={editingTask}
+          nameValue={nameValue}
+          handleNameChange={handleNameChange}
+        />
         <TaskTypePlantUpdate
           dataTaskTypePlant={dataTaskTypePlant}
           handleTaskTypeChange={handleTaskTypeChange}
           editingTask={editingTask}
+          isDraft={isDraft}
         />
-        <SupervisorUpdate supervisor={supervisor} editingTask={editingTask} />
+        <SupervisorUpdate
+          supervisor={supervisor}
+          supervisorValue={supervisorValue}
+          handleSupervisorChange={handleSupervisorChange}
+          editingTask={editingTask}
+          isDraft={isDraft}
+        />
         <MaterialUpdate
           materialsValue={materialsValue}
           handleMaterialChange={handleMaterialChange}
@@ -111,7 +136,7 @@ function UpdateSpecificPlant({
           selectedDays={selectedDays}
           setSelectedDays={setSelectedDays}
           initialSelectedDays={initialSelectedDays}
-                setInitialSelectedDays={setInitialSelectedDays}
+          setInitialSelectedDays={setInitialSelectedDays}
         />
       </div>
     </>

@@ -64,7 +64,7 @@ export const updateTask = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(
-        `/FarmTask/(${data.id})/UpdateTask`,
+        `/FarmTask/(${data.taskId})/UpdateTask`,
         data.body
       )
       if (response.status === 200) {
@@ -83,7 +83,7 @@ export const updateTaskDraftToPrepare = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(
-        `/FarmTask/(${data.id})/UpdateTaskDraftAndToPrePare`,
+        `/FarmTask/(${data.taskId})/UpdateTaskDraftAndToPrePare`,
         data.body
       )
       if (response.status === 200) {

@@ -1,7 +1,7 @@
 import { Form, Select } from 'antd'
 import React from 'react'
 
-function TaskTypeActiveUpdate({taskTypeActive, handleTaskTypeChange, editingTask}) {
+function TaskTypeActiveUpdate({taskTypeActive, handleTaskTypeChange, editingTask, isDraft}) {
   return (
     <Form.Item
           label="Loại công việc"
@@ -9,7 +9,7 @@ function TaskTypeActiveUpdate({taskTypeActive, handleTaskTypeChange, editingTask
           required
           rules={[
             {
-              required: true,
+              required: !isDraft,
               message: "Vui lòng chọn loại công việc",
             },
           ]}

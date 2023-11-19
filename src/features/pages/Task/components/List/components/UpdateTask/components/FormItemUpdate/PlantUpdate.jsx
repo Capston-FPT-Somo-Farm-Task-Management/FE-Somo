@@ -1,7 +1,7 @@
 import { Form, Select } from "antd";
 import React from "react";
 
-function PlantUpdate({ dataPlant, editingTask }) {
+function PlantUpdate({ dataPlant, editingTask, isDraft }) {
   return (
     <Form.Item
       label="Mã cây trồng"
@@ -9,7 +9,7 @@ function PlantUpdate({ dataPlant, editingTask }) {
       required
       rules={[
         {
-          required: true,
+          required: !isDraft,
           message: "Vui lòng nhập mã cây trồng",
         },
       ]}

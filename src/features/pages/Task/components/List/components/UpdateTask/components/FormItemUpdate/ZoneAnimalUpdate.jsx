@@ -1,14 +1,14 @@
 import { Form, Select } from 'antd'
 import React from 'react'
 
-function ZoneAnimalUpdate({handleSelectZoneChange, zoneAnimal, editingTask}) {
+function ZoneAnimalUpdate({handleSelectZoneChange, zoneAnimal, editingTask, isDraft}) {
   return (
     <Form.Item
           label="Vùng"
           required
           rules={[
             {
-              required: true,
+              required: !isDraft,
               message: "Vui lòng chọn vùng",
             },
           ]}

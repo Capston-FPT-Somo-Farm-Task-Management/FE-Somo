@@ -7,7 +7,7 @@ function DateUpdate({
   disabledDate,
   handleSelectStartDate,
   handleSelectEndDate,
-  startDate,
+  isDraft
 }) {
   return (
     <Space nowrap>
@@ -15,12 +15,12 @@ function DateUpdate({
         label="Chọn thời gian bắt đầu"
         rules={[
           {
-            required: true,
+            required: !isDraft,
             message: "Vui lòng chọn mgày bắt đầu",
           },
         ]}
         name="startDate"
-        initialValue={editingTask ? dayjs(editingTask.startDate) : null}
+        initialValue={editingTask.startDate ? dayjs(editingTask.startDate) : null}
       >
         <DatePicker
           placeholder="Chọn thời gian bắt đầu"
@@ -38,12 +38,12 @@ function DateUpdate({
         label="Chọn thời gian kết thúc"
         rules={[
           {
-            required: true,
+            required: !isDraft,
             message: "Vui lòng chọn ngày kết thúc",
           },
         ]}
         name="endDate"
-        initialValue={editingTask ? dayjs(editingTask.endDate) : null}
+        initialValue={editingTask.endDate ? dayjs(editingTask.endDate) : null}
       >
         <DatePicker
           placeholder="Chọn thời gian kết thúc"

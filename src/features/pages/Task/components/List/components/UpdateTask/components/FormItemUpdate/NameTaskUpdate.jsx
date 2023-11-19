@@ -1,7 +1,7 @@
 import { Form, Input } from "antd";
 import React from "react";
 
-function NameTaskUpdate({ editingTask }) {
+function NameTaskUpdate({ editingTask, nameValue, handleNameChange }) {
   return (
     <Form.Item
       label="Tên công việc"
@@ -15,7 +15,11 @@ function NameTaskUpdate({ editingTask }) {
       ]}
       initialValue={editingTask ? editingTask.name : ""}
     >
-      <Input placeholder="Nhập tên công việc" />
+      <Input
+        placeholder="Nhập tên công việc"
+        value={nameValue}
+        onChange={handleNameChange}
+      />
     </Form.Item>
   );
 }

@@ -1,7 +1,7 @@
 import { Form, Select } from 'antd'
 import React from 'react'
 
-function AnimalUpdate({dataAnimal, editingTask}) {
+function AnimalUpdate({dataAnimal, editingTask, isDraft}) {
   
   return (
     <Form.Item
@@ -10,7 +10,7 @@ function AnimalUpdate({dataAnimal, editingTask}) {
           required
           rules={[
             {
-              required: true,
+              required: !isDraft,
               message: "Vui lòng chọn mã vật nuôi",
             },
           ]}
