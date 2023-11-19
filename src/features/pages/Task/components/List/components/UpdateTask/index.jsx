@@ -454,8 +454,8 @@ function UpdateTask({
             form={form}
           >
             {editingTask &&
-            editingTask.fieldStatus === "Động vật" &&
-            editingTask.externalId ? (
+            editingTask.isPlant === false &&
+            editingTask.isSpecific ? (
               <UpdateSpecificAnimal
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
@@ -492,8 +492,8 @@ function UpdateTask({
                 setInitialSelectedDays={setInitialSelectedDays}
               />
             ) : editingTask &&
-              editingTask.fieldStatus === "Động vật" &&
-              !editingTask.externalId ? (
+              editingTask.isPlant === false &&
+              !editingTask.isSpecific ? (
               <UpdateWholeBarn
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
@@ -529,8 +529,8 @@ function UpdateTask({
                 setInitialSelectedDays={setInitialSelectedDays}
               />
             ) : editingTask &&
-              editingTask.fieldStatus === "Thực vật" &&
-              editingTask.externalId ? (
+              editingTask.isPlant === true &&
+              editingTask.isSpecific ? (
               <UpdateSpecificPlant
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
@@ -567,8 +567,8 @@ function UpdateTask({
                 setInitialSelectedDays={setInitialSelectedDays}
               />
             ) : editingTask &&
-              editingTask.fieldStatus === "Thực vật" &&
-              !editingTask.externalId ? (
+              editingTask.isPlant === true &&
+              !editingTask.isSpecific ? (
               <UpdateWholeGarden
                 editingTask={editingTask}
                 handleSelectAreaChange={handleSelectAreaChange}
@@ -603,7 +603,7 @@ function UpdateTask({
                 initialSelectedDays={initialSelectedDays}
                 setInitialSelectedDays={setInitialSelectedDays}
               />
-            ) : editingTask.addressDetail !== null ? (
+            ) : editingTask.isPlant === null ? (
               <UpdateTaskTypeOther
                 // handleCreateTaskOther={handleCreateTaskOther}
                 editingTask={editingTask}

@@ -32,7 +32,7 @@ const TaskDetailHabitant = ({
           <h5>Vùng</h5>
           {taskData.zoneName ? <p>{taskData.zoneName}</p> : <p>Chưa có vùng</p>}
         </div>
-        {taskData.isPlant !== null && taskData.isPlant ? (
+        {taskData.isPlant === true ? (
           <div className="task-detail-text">
             <h5>Vườn</h5>
             {taskData.fieldName ? (
@@ -41,7 +41,7 @@ const TaskDetailHabitant = ({
               <p>Chưa có vườn</p>
             )}
           </div>
-        ) : taskData.isPlant !== null && taskData.isPlant === false ? (
+        ) : taskData.isPlant === false ? (
           <div className="task-detail-text">
             <h5>Chuồng</h5>
             {taskData.fieldName ? (
@@ -148,7 +148,7 @@ const TaskDetailHabitant = ({
               <p>Không có đối tượng nào được chọn</p>
             ) : (
               <>
-                {taskData.externalId && taskData.fieldStatus === "Thực vật" ? (
+                {taskData.isPlant === true && taskData.isSpecific === true ? (
                   <div className="task-detail-text">
                     <h5>Cây trồng</h5>
                     {taskData.plantName ? (
@@ -157,7 +157,7 @@ const TaskDetailHabitant = ({
                       <p>Chưa có cây trồng</p>
                     )}
                   </div>
-                ) : taskData.fieldStatus === "Động vật" ? (
+                ) : taskData.isPlant === false && taskData.isSpecific === true ? (
                   <div className="task-detail-text">
                     <h5>Con vật</h5>
                     {taskData.liveStockName ? (
@@ -167,7 +167,7 @@ const TaskDetailHabitant = ({
                     )}
                   </div>
                 ) : null}
-                {taskData.externalId && taskData.fieldStatus === "Thực vật" ? (
+                {taskData.isPlant === true && taskData.isSpecific === true ? (
                   <div className="task-detail-text">
                     <h5>Mã cây trồng</h5>
                     {taskData.externalId ? (
@@ -176,7 +176,7 @@ const TaskDetailHabitant = ({
                       <p>Chưa có mã cây trồng</p>
                     )}
                   </div>
-                ) : taskData.fieldStatus === "Động vật" ? (
+                ) : taskData.isPlant === false && taskData.isSpecific === true ? (
                   <div className="task-detail-text">
                     <h5>Mã con vật</h5>
                     {taskData.externalId ? (
