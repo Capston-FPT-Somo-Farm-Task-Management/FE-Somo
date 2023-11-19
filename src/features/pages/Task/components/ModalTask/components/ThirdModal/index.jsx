@@ -9,7 +9,6 @@ import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
 import { getTaskTypeLivestock } from "features/slice/task/taskTypeAnimalSlice";
 import { getTaskTypePlant } from "features/slice/task/taskTypePlantSlice";
 import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
-import { getEmployeeByTaskTypeAndFarmId } from "features/slice/employee/employeeSlice";
 import { getAnimalActive } from "features/slice/animal/animalSlice";
 import { getPlantActive } from "features/slice/plant/plantSlice";
 import { createTaskDraft, createTaskToDo } from "features/slice/task/taskSlice";
@@ -25,7 +24,7 @@ import { getAreaWithZoneTypePlant } from "features/slice/area/areaPlantWithZoneS
 import OtherTaskType from "./components/OtherTaskType";
 import { getAreaActiveByFarmId } from "features/slice/area/areaByFarmSlice";
 import { getZoneByAreaId } from "features/slice/zone/zoneByAreaSlice";
-import { getTaskTypeActive } from "features/slice/task/taskTypeActiveSlice";
+import { getTaskTypeActiveOther } from "features/slice/task/taskTypeOtherSlice";
 
 dayjs.extend(customParseFormat);
 
@@ -90,7 +89,8 @@ function ThirdModal({
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
 
-  const taskTypeActive = useSelector((state) => state.taskTypeActive.data);
+  const taskTypeActiveOther = useSelector((state) => state.taskTypeActiveOther.data);
+  console.log(taskTypeActiveOther);
 
   const taskTypeLivestock = useSelector(
     (state) => state.taskTypeLivestock.data
@@ -108,7 +108,7 @@ function ThirdModal({
     dispatch(getAreaActiveByFarmId(farmId));
     dispatch(getAreaWithZoneTypeLivestock(farmId));
     dispatch(getAreaWithZoneTypePlant(farmId));
-    dispatch(getTaskTypeActive());
+    dispatch(getTaskTypeActiveOther());
     dispatch(getTaskTypeLivestock());
     dispatch(getTaskTypePlant());
     dispatch(getSupervisor(farmId));
@@ -669,7 +669,7 @@ function ThirdModal({
         priorityValue={priorityValue}
         supervisorValue={supervisorValue}
         selectedFieldId={selectedFieldId}
-        taskTypeActive={taskTypeActive}
+        taskTypeActiveOther={taskTypeActiveOther}
         plantValue={plantValue}
         livestockValue={livestockValue}
         materialsValue={materialsValue}

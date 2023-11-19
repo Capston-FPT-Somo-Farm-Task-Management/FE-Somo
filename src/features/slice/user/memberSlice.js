@@ -16,6 +16,26 @@ export const getMemberById = createAsyncThunk(
   }
 )
 
+export const updateMember = createAsyncThunk(
+  "member/updateMember",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(
+        `/Member/${data.memberId}`,
+        data.body
+      );
+      if (response.status === 200) {
+        toast.success("Cập nhật thành công");
+      }
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const adminDeleteMember = createAsyncThunk(
   'member/adminDeleteMember',
   async (id, { rejectWithValue }) => {
@@ -58,6 +78,19 @@ const memberSlice = createSlice({
         state.data = action.payload
       })
       .addCase(getMemberById.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+        state.data = []
+      })
+      .addCase(updateMember.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(updateMember.fulfilled, (state, action) => {
+        state.loading = false
+        state.error = ''
+        state.data = action.payload
+      })
+      .addCase(updateMember.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
         state.data = []

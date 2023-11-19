@@ -26,6 +26,7 @@ import { getAreaWithZoneTypeLivestock } from "features/slice/area/areaLivestockW
 import { getAreaWithZoneTypePlant } from "features/slice/area/areaPlantWithZoneSlice";
 import { getZoneByAreaId } from "features/slice/zone/zoneByAreaSlice";
 import { getTaskTypeActive } from "features/slice/task/taskTypeActiveSlice";
+import {EditOutlined, CarryOutOutlined, CheckCircleOutlined} from '@ant-design/icons';
 
 function UpdateTask({
   editTaskModalVisible,
@@ -172,7 +173,7 @@ function UpdateTask({
       fieldId: null,
       liveStockId: null,
       plantId: null,
-      addressDetail: null
+      addressDetail: null,
     });
   };
 
@@ -304,18 +305,15 @@ function UpdateTask({
         endDate: originalData.endDate,
         description: originalData.description,
         priority: originalData.priority,
-        isRepeat: originalData.isRepeat,
         suppervisorId: originalData.suppervisorId,
-        fieldId: originalData.fieldId,
-        taskTypeId: originalData.taskTypeId,
         managerId: originalData.managerId,
-        otherId: originalData.otherId,
+        fieldId: originalData.fieldId,
+        isRepeat: originalData.isRepeat,
+        taskTypeId: originalData.taskTypeId,
         plantId: originalData.plantId,
         liveStockId: originalData.liveStockId,
-        remind: originalData.remind,
         addressDetail: originalData.addressDetail,
-        isRepeat: originalData.isRepeat,
-        addressDetail: originalData.addressDetail
+        remind: originalData.remind,
       },
     };
 
@@ -343,12 +341,12 @@ function UpdateTask({
     form
       .validateFields()
       .then(() => {
-        const startDateFormatted = dayjs(startDate)
+        const startDateFormatted = startDate ? dayjs(startDate)
           .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
-        const endDateFormatted = dayjs(endDate)
+          .format("YYYY-MM-DD[T]HH:mm:ss.SSS") : null;
+        const endDateFormatted = endDate ? dayjs(endDate)
           .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+          .format("YYYY-MM-DD[T]HH:mm:ss.SSS") : null;
 
         const descriptionToSend = description || "";
 
@@ -367,7 +365,7 @@ function UpdateTask({
         }
 
         console.log(isRepeat);
-        console.log("repeatValue: ",repeatValue);
+        console.log("repeatValue: ", repeatValue);
 
         const finalValues = {
           name: name,
@@ -375,22 +373,21 @@ function UpdateTask({
           endDate: endDateFormatted,
           description: descriptionToSend,
           priority: priority,
-          isRepeat: typeof isRepeat === "object" ? isRepeat.value : repeatValue,
           suppervisorId: suppervisorId,
+          managerId: member.id,
           fieldId: fieldId,
+          isRepeat: typeof isRepeat === "object" ? isRepeat.value : repeatValue,
+          taskTypeId: taskTypeId,
           plantId: typeof plantId === "object" ? plantId.value : 0,
           liveStockId: typeof liveStockId === "object" ? liveStockId.value : 0,
-          taskTypeId: taskTypeId,
-          materialIds: materialId || [],
+          addressDetail: addressDetail,
           remind: typeof remind === "object" ? remind.value : 0,
+          materialIds: materialId || [],
           dates: initialSelectedDays
             ? initialSelectedDays.map((date) =>
                 dayjs(date).format("YYYY-MM-DDTHH:mm:ss.SSS")
               )
             : [],
-          managerId: member.id,
-          otherId: 0,
-          addressDetail: addressDetail,
         };
 
         const transformedValues = transformData(finalValues);
@@ -408,6 +405,31 @@ function UpdateTask({
         console.log("Validation failed:", errorInfo);
       });
   };
+  console.log(editingTask);
+
+  const handleShowButton = () => {
+    if (editingTask.status === "Bản nháp") {
+      return (
+        <>
+          <Button onClick={closeEditTaskModal}>Chuyển sang chuẩn bị <CarryOutOutlined /></Button>,
+          <Button form="updateTask" type="primary" htmlType="submit">
+            Cập nhật
+            <EditOutlined />
+          </Button>
+        </>
+      );
+    }else{
+      return (
+        <>
+          <Button onClick={closeEditTaskModal}>Đóng</Button>,
+          <Button form="updateTask" type="primary" htmlType="submit">
+            Lưu thay đổi
+            <CheckCircleOutlined />
+          </Button>
+        </>
+      );
+    }
+  };
 
   return (
     <>
@@ -417,12 +439,7 @@ function UpdateTask({
           visible={editTaskModalVisible}
           onCancel={closeEditTaskModal}
           width={900}
-          footer={[
-            <Button onClick={closeEditTaskModal}>Đóng</Button>,
-            <Button form="updateTask" type="primary" htmlType="submit">
-              Lưu thay đổi
-            </Button>,
-          ]}
+          footer={handleShowButton}
         >
           <Form
             layout="vertical"
