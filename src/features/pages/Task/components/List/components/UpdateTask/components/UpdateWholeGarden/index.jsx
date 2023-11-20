@@ -20,6 +20,8 @@ function UpdateWholeGarden({
   handlePriorityChange,
   handleSelectStartDate,
   handleSelectEndDate,
+  handleNameChange,
+  handleSupervisorChange,
   handleDescriptionChange,
   handleTaskTypeChange,
   handleMaterialChange,
@@ -29,6 +31,8 @@ function UpdateWholeGarden({
   zonePlant,
   fieldByZone,
   priorityValue,
+  nameValue,
+  supervisorValue,
   description,
   dataTaskTypePlant,
   supervisor,
@@ -43,6 +47,7 @@ function UpdateWholeGarden({
   setSelectedDays,
   initialSelectedDays,
   setInitialSelectedDays,
+  isDraft
 }) {
   return (
     <>
@@ -51,16 +56,19 @@ function UpdateWholeGarden({
           handleSelectAreaChange={handleSelectAreaChange}
           area={area}
           editingTask={editingTask}
+          isDraft={isDraft}
         />
         <ZonePlantUpdate
           handleSelectZoneChange={handleSelectZoneChange}
           zonePlant={zonePlant}
           editingTask={editingTask}
+          isDraft={isDraft}
         />
         <FieldPlantUpdate
           handleSelectFieldChange={handleSelectFieldChange}
           fieldByZone={fieldByZone}
           editingTask={editingTask}
+          isDraft={isDraft}
         />
         <PriorityUpdate
           priorityValue={priorityValue}
@@ -73,6 +81,8 @@ function UpdateWholeGarden({
           handleSelectStartDate={handleSelectStartDate}
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
+          endDate={endDate}
+          isDraft={isDraft}
         />
         <DescriptionUpdate
           description={description}
@@ -81,13 +91,24 @@ function UpdateWholeGarden({
         />
       </div>
       <div className="form-right">
-        <NameTaskUpdate editingTask={editingTask} />
+      <NameTaskUpdate
+          editingTask={editingTask}
+          nameValue={nameValue}
+          handleNameChange={handleNameChange}
+        />
         <TaskTypePlantUpdate
           dataTaskTypePlant={dataTaskTypePlant}
           handleTaskTypeChange={handleTaskTypeChange}
           editingTask={editingTask}
+          isDraft={isDraft}
         />
-        <SupervisorUpdate supervisor={supervisor} editingTask={editingTask} />
+        <SupervisorUpdate
+          supervisor={supervisor}
+          supervisorValue={supervisorValue}
+          handleSupervisorChange={handleSupervisorChange}
+          editingTask={editingTask}
+          isDraft={isDraft}
+        />
         <MaterialUpdate
           materialsValue={materialsValue}
           handleMaterialChange={handleMaterialChange}

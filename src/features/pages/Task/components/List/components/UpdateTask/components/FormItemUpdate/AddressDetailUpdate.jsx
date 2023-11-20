@@ -1,7 +1,7 @@
 import { Form, Input } from "antd";
 import React from "react";
 
-function AddressDetailUpdate({ addressDetail, setAddressDetail, editingTask }) {
+function AddressDetailUpdate({ addressDetail, setAddressDetail, editingTask, isDraft }) {
   const { TextArea } = Input;
   return (
     <Form.Item
@@ -10,7 +10,7 @@ function AddressDetailUpdate({ addressDetail, setAddressDetail, editingTask }) {
       required
       rules={[
         {
-          required: true,
+          required: !isDraft,
           message: "Vui lòng nhập vị trí cụ thể",
         },
       ]}
@@ -21,7 +21,6 @@ function AddressDetailUpdate({ addressDetail, setAddressDetail, editingTask }) {
         value={addressDetail}
         onChange={(e) => setAddressDetail(e.target.value)}
         rows={3}
-        
       />
     </Form.Item>
   );

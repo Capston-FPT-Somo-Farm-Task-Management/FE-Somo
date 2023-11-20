@@ -1,1 +1,1 @@
-export const baseUrl = 'https://somotaskmanagementapi.azurewebsites.net/api'
+export const baseUrl = 'https://somofarmmanagementtask.azurewebsites.net/api'

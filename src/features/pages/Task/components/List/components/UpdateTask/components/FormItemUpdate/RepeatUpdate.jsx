@@ -23,7 +23,6 @@ function RepeatUpdate({
     editingTask && editingTask.dateRepeate
       ? editingTask.dateRepeate.map((date) => dayjs(date).format("YYYY-MM-DD"))
       : [];
-  console.log(initialSelectedDays);
   useEffect(() => {
     if (editingTask && editingTask.dateRepeate) {
       const formattedDays = editingTask.dateRepeate.map((date) =>
@@ -32,10 +31,6 @@ function RepeatUpdate({
       setInitialSelectedDays(formattedDays);
     }
   }, [editingTask]);
-
-  console.log("editingTask.isRepeat", editingTask.isRepeat);
-  console.log("repeatValue: ", repeatValue);
-  
 
   const modifiers = {
     selected: initialSelectedDays.map((day) => new Date(day)),
@@ -219,8 +214,8 @@ function RepeatUpdate({
           onChange={handleSelectRepeat}
           placeholder="Không"
         >
-          <Select.Option value="false">Không</Select.Option>
-          <Select.Option value="true">Có</Select.Option>
+          <Select.Option value={false}>Không</Select.Option>
+          <Select.Option value={true}>Có</Select.Option>
         </Select>
       </Form.Item>
       {setRepeat || repeatValue ? (

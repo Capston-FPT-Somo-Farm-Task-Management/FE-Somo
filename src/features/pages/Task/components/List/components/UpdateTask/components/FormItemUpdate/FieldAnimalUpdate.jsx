@@ -1,7 +1,7 @@
 import { Form, Select } from 'antd'
 import React from 'react'
 
-function FieldAnimalUpdate({handleSelectFieldChange, fieldByZone, editingTask}) {
+function FieldAnimalUpdate({handleSelectFieldChange, fieldByZone, editingTask, isDraft}) {
   return (
     <Form.Item
           label="Chuồng"
@@ -9,7 +9,7 @@ function FieldAnimalUpdate({handleSelectFieldChange, fieldByZone, editingTask}) 
           required
           rules={[
             {
-              required: true,
+              required: !isDraft,
               message: "Vui lòng chọn chuồng",
             },
           ]}
