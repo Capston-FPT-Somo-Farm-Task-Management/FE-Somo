@@ -319,9 +319,11 @@ function UpdateTask({
   };
 
   const handleSelectRepeat = (value) => {
-    setRepeatValue(value === "true");
+    setRepeatValue(value);
     setShouldCheckRepeat(value === "true");
-    console.log(repeatValue);
+    console.log("repeatValue: ", repeatValue);
+    console.log("shouldCheckRepeat: ", shouldCheckRepeat);
+    console.log("value: ", value);
   };
 
   const disabledDate = (current) => {

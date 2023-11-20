@@ -214,8 +214,8 @@ function RepeatUpdate({
           onChange={handleSelectRepeat}
           placeholder="Không"
         >
-          <Select.Option value="false">Không</Select.Option>
-          <Select.Option value="true">Có</Select.Option>
+          <Select.Option value={false}>Không</Select.Option>
+          <Select.Option value={true}>Có</Select.Option>
         </Select>
       </Form.Item>
       {setRepeat || repeatValue ? (
