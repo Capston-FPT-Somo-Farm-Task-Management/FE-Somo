@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, Modal } from "antd";
+import { Button, Form, Modal, Space } from "antd";
 import dayjs from "dayjs";
 import { getAnimalActive } from "features/slice/animal/animalSlice";
 import { getAreaActive } from "features/slice/area/areaSlice";
@@ -8,7 +8,11 @@ import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
 import { getMaterialActiveByFarmId } from "features/slice/material/materialActiveByFarmSlice";
 import { getPlantActive } from "features/slice/plant/plantSlice";
 import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
-import { updateTask, updateTaskDraftToPrepare } from "features/slice/task/taskSlice";
+import {
+  updateStatusFromToDoToDraft,
+  updateTask,
+  updateTaskDraftToPrepare,
+} from "features/slice/task/taskSlice";
 import { getTaskTypeLivestock } from "features/slice/task/taskTypeAnimalSlice";
 import { getTaskTypePlant } from "features/slice/task/taskTypePlantSlice";
 import { getMemberById } from "features/slice/user/memberSlice";
@@ -26,7 +30,13 @@ import { getAreaWithZoneTypeLivestock } from "features/slice/area/areaLivestockW
 import { getAreaWithZoneTypePlant } from "features/slice/area/areaPlantWithZoneSlice";
 import { getZoneByAreaId } from "features/slice/zone/zoneByAreaSlice";
 import { getTaskTypeActive } from "features/slice/task/taskTypeActiveSlice";
-import {EditOutlined, CarryOutOutlined, CheckCircleOutlined} from '@ant-design/icons';
+import {
+  EditOutlined,
+  FileDoneOutlined,
+  CheckCircleOutlined,
+  FileOutlined
+} from "@ant-design/icons";
+
 
 function UpdateTask({
   editTaskModalVisible,
@@ -46,6 +56,8 @@ function UpdateTask({
   const [selectedFieldId, setSelectedFieldId] = useState(
     editingTask ? editingTask.fieldId : null
   );
+  const [selectedLivestockId, setSelectedLivestockId] = useState(0);
+  const [selectedPlantId, setSelectedPlantId] = useState(0);
   const [addressDetail, setAddressDetail] = useState("");
   const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(
     editingTask ? editingTask.taskTypeId : null
@@ -67,7 +79,8 @@ function UpdateTask({
   const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
   const [initialSelectedDays, setInitialSelectedDays] = useState([]);
   const [isDraft, setIsDraft] = useState(false);
-  const [draftToPrepare, setDraftToPrepare] = useState(false)
+  const [draftToPrepare, setDraftToPrepare] = useState(false);
+  const [prepareToDraft, setPrepareToDraft] = useState(false);
 
   const handleUpdateDraft = () => {
     setIsDraft(true);
@@ -79,6 +92,10 @@ function UpdateTask({
 
   const handleUpdateDraftToPrepareButton = () => {
     setDraftToPrepare(true);
+  };
+
+  const handleChangePrepareToDraft = () => {
+    setPrepareToDraft(true);
   };
 
   const [form] = Form.useForm();
@@ -195,6 +212,14 @@ function UpdateTask({
     });
   };
 
+  const handleLivestockChange = (value) => {
+    setSelectedLivestockId(value);
+  };
+
+  const handlePlantChange = (value) => {
+    setSelectedPlantId(value);
+  };
+
   const handlePriorityChange = (value) => {
     setPriorityValue(value);
   };
@@ -296,7 +321,7 @@ function UpdateTask({
   const handleSelectRepeat = (value) => {
     setRepeatValue(value === "true");
     setShouldCheckRepeat(value === "true");
-    console.log(shouldCheckRepeat);
+    console.log(repeatValue);
   };
 
   const disabledDate = (current) => {
@@ -342,21 +367,21 @@ function UpdateTask({
     liveStockId,
     remind,
     materialId,
-    isRepeat,
+    isRepeat
   ) => {
     form
       .validateFields()
       .then(() => {
-        const startDateFormatted = editingTask.startDate ? dayjs(editingTask.startDate)
-          .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS") : dayjs(startDate)
-          .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
-        const endDateFormatted = editingTask.endDate ? dayjs(editingTask.endDate)
-          .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS") : dayjs(endDate)
-          .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+        const startDateFormatted = editingTask.startDate
+          ? dayjs(editingTask.startDate)
+              .second(0)
+              .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
+          : dayjs(startDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+        const endDateFormatted = editingTask.endDate
+          ? dayjs(editingTask.endDate)
+              .second(0)
+              .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
+          : dayjs(endDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
 
         const descriptionToSend = description || "";
 
@@ -388,9 +413,13 @@ function UpdateTask({
         const zoneName = zone ? zone.name : null;
         const fieldName = field ? field.nameCode : null;
 
-        const formattedAddress = `${areaName ? areaName + ", " : ""}${
-          zoneName ? zoneName + ", " : ""
-        }${fieldName ? fieldName + ", " : ""}${
+        const formattedAddress = `${
+          areaName ? areaName + (zoneName || fieldName || addressDetail ? ", " : "") : ""
+        }${
+          zoneName ? zoneName + (fieldName || addressDetail ? ", " : "") : ""
+        }${
+          fieldName ? fieldName + (addressDetail ? ", " : "") : ""
+        }${
           addressDetail ? addressDetail.trim() : ""
         }`;
 
@@ -404,9 +433,13 @@ function UpdateTask({
           name: nameValue ? nameValue : editingTask.name,
           startDate: startDateFormatted,
           endDate: endDateFormatted,
-          description: descriptionToSend,
-          priority: priorityValue,
-          supervisorId: editingTask.suppervisorId ? editingTask.suppervisorId : supervisorValue,
+          description: description ? description : editingTask.description,
+          supervisorId: supervisorValue
+            ? supervisorValue
+            : editingTask.suppervisorId,
+          supervisorId: editingTask.suppervisorId
+            ? editingTask.suppervisorId
+            : supervisorValue,
           managerId: member.id,
           fieldId: selectedFieldId ? selectedFieldId : 0,
           isRepeat: typeof isRepeat === "object" ? isRepeat.value : repeatValue,
@@ -415,7 +448,7 @@ function UpdateTask({
           liveStockId: typeof liveStockId === "object" ? liveStockId.value : 0,
           addressDetail: addressDetailToSend,
           remind: typeof remind === "object" ? remind.value : 0,
-          materialIds: materialId || [],
+          materialIds: materialsValue ? materialsValue : editingTask.materialId,
           dates: initialSelectedDays
             ? initialSelectedDays.map((date) =>
                 dayjs(date).format("YYYY-MM-DDTHH:mm:ss.SSS")
@@ -425,14 +458,14 @@ function UpdateTask({
 
         const transformedValues = transformData(finalValues);
 
-        dispatch(updateTask({ taskId: currentTaskId, body: transformedValues })).then(
-          () => {
-            loadDataTask();
-            handleDateChange();
-            handleTaskAdded();
-            closeEditTaskModal();
-          }
-        );
+        dispatch(
+          updateTask({ taskId: currentTaskId, body: transformedValues })
+        ).then(() => {
+          loadDataTask();
+          handleDateChange();
+          handleTaskAdded();
+          closeEditTaskModal();
+        });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
@@ -441,45 +474,27 @@ function UpdateTask({
 
   const handleUpdateTaskDraft = (
     currentTaskId,
-    name,
-    startDate,
-    endDate,
-    description,
-    priority,
-    supervisorId,
-    fieldId,
-    taskTypeId,
-    plantId,
-    liveStockId,
-    remind,
-    materialId,
-    isRepeat,
   ) => {
     form
       .validateFields()
       .then(() => {
-        const startDateFormatted = startDate ? dayjs(startDate)
-          .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS") : null;
-        const endDateFormatted = endDate ? dayjs(endDate)
-          .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS") : null;
+        const startDateFormatted = startDate
+          ? dayjs(startDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS")
+          : editingTask.startDate
+          ? dayjs(editingTask.startDate)
+              .second(0)
+              .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
+          : null;
+        const endDateFormatted = endDate
+          ? dayjs(endDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS")
+          : editingTask.endDate
+          ? dayjs(editingTask.endDate)
+              .second(0)
+              .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
+          : null;
 
-        const descriptionToSend = description || "";
-
-        if (
-          shouldCheckRepeat &&
-          editingTask.isRepeat &&
-          (!initialSelectedDays || initialSelectedDays.length === 0)
-        ) {
-          form.setFields([
-            {
-              name: "dateRepeate",
-              errors: ["Vui lòng chọn ngày lặp lại"],
-            },
-          ]);
-          return;
-        }
+        console.log("startDate:", startDate);
+        console.log("endDate:", endDate);
 
         const area = areaByFarm.data
           ? areaByFarm.data.find((area) => area.id === selectedAreaId)
@@ -495,9 +510,13 @@ function UpdateTask({
         const zoneName = zone ? zone.name : null;
         const fieldName = field ? field.nameCode : null;
 
-        const formattedAddress = `${areaName ? areaName + ", " : ""}${
-          zoneName ? zoneName + ", " : ""
-        }${fieldName ? fieldName + ", " : ""}${
+        const formattedAddress = `${
+          areaName ? areaName + (zoneName || fieldName || addressDetail ? ", " : "") : ""
+        }${
+          zoneName ? zoneName + (fieldName || addressDetail ? ", " : "") : ""
+        }${
+          fieldName ? fieldName + (addressDetail ? ", " : "") : ""
+        }${
           addressDetail ? addressDetail.trim() : ""
         }`;
 
@@ -508,18 +527,22 @@ function UpdateTask({
           name: nameValue ? nameValue : editingTask.name,
           startDate: startDateFormatted,
           endDate: endDateFormatted,
-          description: descriptionToSend,
-          priority: priorityValue,
-          supervisorId: supervisorValue,
+          description: description ? description : editingTask.description,
+          priority: priorityValue ? priorityValue : editingTask.priority,
+          supervisorId: supervisorValue
+            ? supervisorValue
+            : editingTask.suppervisorId,
           managerId: member.id,
           fieldId: selectedFieldId ? selectedFieldId : 0,
-          isRepeat: typeof isRepeat === "object" ? isRepeat.value : repeatValue,
+          isRepeat: repeatValue ? repeatValue : editingTask.isRepeat,
           taskTypeId: selectedTaskTypeId ? selectedTaskTypeId : 0,
-          plantId: typeof plantId === "object" ? plantId.value : 0,
-          liveStockId: typeof liveStockId === "object" ? liveStockId.value : 0,
+          plantId: selectedPlantId ? selectedPlantId : editingTask.plantId,
+          liveStockId: selectedLivestockId
+            ? selectedLivestockId
+            : editingTask.livestockId,
           addressDetail: addressDetailToSend,
-          remind: typeof remind === "object" ? remind.value : 0,
-          materialIds: materialId || [],
+          remind: editingTask.remind ? remindValue : remindValue,
+          materialIds: materialsValue ? materialsValue : editingTask.materialId,
           dates: initialSelectedDays
             ? initialSelectedDays.map((date) =>
                 dayjs(date).format("YYYY-MM-DDTHH:mm:ss.SSS")
@@ -529,43 +552,18 @@ function UpdateTask({
 
         const transformedValues = transformData(finalValues);
 
-        dispatch(updateTask({ taskId: currentTaskId, body: transformedValues })).then(
-          () => {
-            loadDataTask();
-            handleDateChange();
-            handleTaskAdded();
-            closeEditTaskModal();
-          }
-        );
+        dispatch(
+          updateTask({ taskId: currentTaskId, body: transformedValues })
+        ).then(() => {
+          loadDataTask();
+          handleDateChange();
+          handleTaskAdded();
+          closeEditTaskModal();
+        });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
       });
-  };
-
-  const transformDataForChangeStatus = (originalData) => {
-    const transformedData = {
-      materialIds: originalData.materialIds,
-      dates: originalData.dates,
-      farmTask: {
-        name: originalData.name,
-        startDate: originalData.startDate,
-        endDate: originalData.endDate,
-        description: originalData.description,
-        priority: originalData.priority,
-        supervisorId: originalData.supervisorId,
-        managerId: originalData.managerId,
-        fieldId: originalData.fieldId,
-        isRepeat: originalData.isRepeat,
-        taskTypeId: originalData.taskTypeId,
-        plantId: originalData.plantId,
-        liveStockId: originalData.liveStockId,
-        addressDetail: originalData.addressDetail,
-        remind: originalData.remind,
-      },
-    };
-
-    return transformedData;
   };
 
   const handleUpdateTaskDraftToPrepare = (
@@ -582,21 +580,21 @@ function UpdateTask({
     liveStockId,
     remind,
     materialId,
-    isRepeat,
+    isRepeat
   ) => {
     form
       .validateFields()
       .then(() => {
-        const startDateFormatted = editingTask.startDate ? dayjs(editingTask.startDate)
-          .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS") : dayjs(startDate)
-          .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
-        const endDateFormatted = editingTask.endDate ? dayjs(editingTask.endDate)
-          .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS") : dayjs(endDate)
-          .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+        const startDateFormatted = editingTask.startDate
+          ? dayjs(editingTask.startDate)
+              .second(0)
+              .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
+          : dayjs(startDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+        const endDateFormatted = editingTask.endDate
+          ? dayjs(editingTask.endDate)
+              .second(0)
+              .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
+          : dayjs(endDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
 
         const descriptionToSend = description || "";
 
@@ -628,9 +626,13 @@ function UpdateTask({
         const zoneName = zone ? zone.name : null;
         const fieldName = field ? field.nameCode : null;
 
-        const formattedAddress = `${areaName ? areaName + ", " : ""}${
-          zoneName ? zoneName + ", " : ""
-        }${fieldName ? fieldName + ", " : ""}${
+        const formattedAddress = `${
+          areaName ? areaName + (zoneName || fieldName || addressDetail ? ", " : "") : ""
+        }${
+          zoneName ? zoneName + (fieldName || addressDetail ? ", " : "") : ""
+        }${
+          fieldName ? fieldName + (addressDetail ? ", " : "") : ""
+        }${
           addressDetail ? addressDetail.trim() : ""
         }`;
 
@@ -644,9 +646,11 @@ function UpdateTask({
           name: nameValue ? nameValue : editingTask.name,
           startDate: startDateFormatted,
           endDate: endDateFormatted,
-          description: descriptionToSend,
+          description: description ? description : editingTask.description,
           priority: priorityValue,
-          supervisorId: editingTask.suppervisorId ? editingTask.suppervisorId : supervisorValue,
+          supervisorId: supervisorValue
+            ? supervisorValue
+            : editingTask.suppervisorId,
           managerId: member.id,
           fieldId: selectedFieldId ? selectedFieldId : 0,
           isRepeat: typeof isRepeat === "object" ? isRepeat.value : repeatValue,
@@ -655,7 +659,7 @@ function UpdateTask({
           liveStockId: typeof liveStockId === "object" ? liveStockId.value : 0,
           addressDetail: addressDetailToSend,
           remind: typeof remind === "object" ? remind.value : 0,
-          materialIds: materialId || [],
+          materialIds: materialsValue ? materialsValue : editingTask.materialId,
           dates: initialSelectedDays
             ? initialSelectedDays.map((date) =>
                 dayjs(date).format("YYYY-MM-DDTHH:mm:ss.SSS")
@@ -663,49 +667,85 @@ function UpdateTask({
             : [],
         };
 
-        const transformedValues = transformDataForChangeStatus(finalValues);
+        const transformedValues = transformData(finalValues);
 
-        dispatch(updateTaskDraftToPrepare({ taskId: currentTaskId, body: transformedValues })).then(
-          () => {
-            loadDataTask();
-            handleDateChange();
-            handleTaskAdded();
-            closeEditTaskModal();
-          }
-        );
+        dispatch(
+          updateTaskDraftToPrepare({
+            taskId: currentTaskId,
+            body: transformedValues,
+          })
+        ).then(() => {
+          loadDataTask();
+          handleDateChange();
+          handleTaskAdded();
+          closeEditTaskModal();
+        });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
       });
   };
 
+  const handleChangeStatusToDoToDraft = (currentTaskId) => {
+    dispatch(updateStatusFromToDoToDraft(currentTaskId));
+  };
+
   const handleUpdateSubmit = (currentTaskId) => {
-    isDraft ? handleUpdateTaskDraft(currentTaskId) : handleUpdateTask(currentTaskId)
-    if(draftToPrepare){
-      handleUpdateTaskDraftToPrepare(currentTaskId); 
+    isDraft
+      ? handleUpdateTaskDraft(currentTaskId)
+      : handleUpdateTask(currentTaskId);
+    if (draftToPrepare) {
+      handleUpdateTaskDraftToPrepare(currentTaskId);
+    } else if (prepareToDraft) {
+      handleChangeStatusToDoToDraft(currentTaskId);
     }
-  }
+  };
 
   const handleShowButton = () => {
     if (editingTask.status === "Bản nháp") {
       return (
-        <>
-          <Button form="updateTask" htmlType="submit" onClick={handleUpdateDraftToPrepareButton}>Chuyển sang chuẩn bị <CarryOutOutlined /></Button>,
-          <Button form="updateTask" type="primary" htmlType="submit" onClick={handleUpdateDraft}>
+        <Space nowrap style={{width: "100%", justifyContent: "space-between"}}>
+          <Button
+            form="updateTask"
+            htmlType="submit"
+            onClick={handleUpdateDraftToPrepareButton}
+          >
+            Chuyển sang chuẩn bị <FileDoneOutlined />
+          </Button>
+          ,
+          <Button
+            form="updateTask"
+            type="primary"
+            htmlType="submit"
+            onClick={handleUpdateDraft}
+          >
             Cập nhật
             <EditOutlined />
           </Button>
-        </>
+        </Space>
       );
-    }else{
+    } else {
       return (
-        <>
-          <Button onClick={closeEditTaskModal}>Đóng</Button>,
-          <Button form="updateTask" type="primary" htmlType="submit" onClick={handleUpdateTaskToDo}>
+        <Space nowrap style={{width: "100%", justifyContent: "space-between"}}>
+          <Button
+            onClick={handleChangePrepareToDraft}
+            form="updateTask"
+            htmlType="submit"
+          >
+            Chuyển sang bản nháp
+            <FileOutlined />
+          </Button>
+          ,
+          <Button
+            form="updateTask"
+            type="primary"
+            htmlType="submit"
+            onClick={handleUpdateTaskToDo}
+          >
             Lưu thay đổi
             <CheckCircleOutlined />
           </Button>
-        </>
+        </Space>
       );
     }
   };
@@ -727,9 +767,6 @@ function UpdateTask({
               handleUpdateSubmit(
                 currentTaskId,
                 values.name,
-                values.startDate,
-                values.endDate,
-                values.description,
                 values.priority,
                 values.supervisorId,
                 values.fieldId,
@@ -740,7 +777,7 @@ function UpdateTask({
                 values.overallEffortHour,
                 values.overallEfforMinutes,
                 values.materialId,
-                values.isRepeat,
+                values.isRepeat
               );
             }}
             id="updateTask"
@@ -754,6 +791,7 @@ function UpdateTask({
                 handleSelectAreaChange={handleSelectAreaChange}
                 handleSelectZoneChange={handleSelectZoneChange}
                 handleSelectFieldChange={handleSelectFieldChange}
+                handleLivestockChange={handleLivestockChange}
                 handlePriorityChange={handlePriorityChange}
                 handleSelectStartDate={handleSelectStartDate}
                 handleSelectEndDate={handleSelectEndDate}
@@ -767,6 +805,7 @@ function UpdateTask({
                 areaLivestockByZone={areaLivestockByZone}
                 zoneAnimal={zoneAnimal}
                 fieldByZone={fieldByZone}
+                selectedLivestockId={selectedLivestockId}
                 dataAnimal={dataAnimal}
                 priorityValue={priorityValue}
                 disabledDate={disabledDate}
@@ -835,6 +874,7 @@ function UpdateTask({
                 handleSelectAreaChange={handleSelectAreaChange}
                 handleSelectZoneChange={handleSelectZoneChange}
                 handleSelectFieldChange={handleSelectFieldChange}
+                handlePlantChange={handlePlantChange}
                 handlePriorityChange={handlePriorityChange}
                 handleSelectStartDate={handleSelectStartDate}
                 handleSelectEndDate={handleSelectEndDate}
@@ -848,6 +888,7 @@ function UpdateTask({
                 areaPlantByZone={areaPlantByZone}
                 zonePlant={zonePlant}
                 fieldByZone={fieldByZone}
+                selectedPlantId={selectedPlantId}
                 dataPlant={dataPlant}
                 priorityValue={priorityValue}
                 disabledDate={disabledDate}

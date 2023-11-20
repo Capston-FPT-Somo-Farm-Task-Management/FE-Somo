@@ -8,6 +8,7 @@ function SupervisorUpdate({
   supervisorValue,
   handleSupervisorChange,
 }) {
+  const supervisorData = editingTask.suppervisorId === 0 ? "Chọn người giám sát" : editingTask.suppervisorId
   return (
     <Form.Item
       label="Người giám sát"
@@ -19,7 +20,7 @@ function SupervisorUpdate({
           message: "Vui lòng chọn người giám sát",
         },
       ]}
-      initialValue={editingTask ? editingTask.suppervisorId : ""}
+      initialValue={supervisorData}
     >
       <Select
         value={supervisorValue}

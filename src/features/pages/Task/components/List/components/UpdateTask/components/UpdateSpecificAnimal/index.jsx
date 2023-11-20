@@ -18,6 +18,7 @@ function UpdateSpecificAnimal({
   handleSelectAreaChange,
   handleSelectZoneChange,
   handleSelectFieldChange,
+  handleLivestockChange,
   handlePriorityChange,
   handleSelectStartDate,
   handleSelectEndDate,
@@ -31,6 +32,7 @@ function UpdateSpecificAnimal({
   areaLivestockByZone,
   zoneAnimal,
   fieldByZone,
+  selectedLivestockId,
   dataAnimal,
   priorityValue,
   nameValue,
@@ -73,6 +75,8 @@ function UpdateSpecificAnimal({
           isDraft={isDraft}
         />
         <AnimalUpdate
+          selectedLivestockId={selectedLivestockId}
+          handleLivestockChange={handleLivestockChange}
           dataAnimal={dataAnimal}
           editingTask={editingTask}
           isDraft={isDraft}
@@ -98,7 +102,7 @@ function UpdateSpecificAnimal({
         />
       </div>
       <div className="form-right">
-      <NameTaskUpdate
+        <NameTaskUpdate
           editingTask={editingTask}
           nameValue={nameValue}
           handleNameChange={handleNameChange}

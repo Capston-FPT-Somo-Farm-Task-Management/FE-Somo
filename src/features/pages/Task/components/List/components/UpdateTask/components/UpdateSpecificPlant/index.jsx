@@ -18,6 +18,7 @@ function UpdateSpecificPlant({
   handleSelectAreaChange,
   handleSelectZoneChange,
   handleSelectFieldChange,
+  handlePlantChange,
   handlePriorityChange,
   handleSelectStartDate,
   handleSelectEndDate,
@@ -31,6 +32,7 @@ function UpdateSpecificPlant({
   areaPlantByZone,
   zonePlant,
   fieldByZone,
+  selectedPlantId,
   dataPlant,
   priorityValue,
   nameValue,
@@ -73,6 +75,8 @@ function UpdateSpecificPlant({
           isDraft={isDraft}
         />
         <PlantUpdate
+          selectedPlantId={selectedPlantId}
+          handlePlantChange={handlePlantChange}
           dataPlant={dataPlant}
           editingTask={editingTask}
           isDraft={isDraft}

@@ -1,7 +1,13 @@
 import { Form, Select } from "antd";
 import React from "react";
 
-function PlantUpdate({ dataPlant, editingTask, isDraft }) {
+function PlantUpdate({
+  selectedPlantId,
+  handlePlantChange,
+  dataPlant,
+  editingTask,
+  isDraft,
+}) {
   return (
     <Form.Item
       label="Mã cây trồng"
@@ -23,6 +29,8 @@ function PlantUpdate({ dataPlant, editingTask, isDraft }) {
       }
     >
       <Select
+        value={selectedPlantId}
+        onChange={handlePlantChange}
         placeholder="Chọn mã cây trồng"
         options={dataPlant?.map((item) => ({
           label: item.externalId,

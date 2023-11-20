@@ -97,6 +97,24 @@ export const updateTaskDraftToPrepare = createAsyncThunk(
   }
 )
 
+export const updateStatusFromToDoToDraft = createAsyncThunk(
+  'task/updateStatusFromToDoToDraft',
+  async (taskId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(
+        `/FarmTask/(${taskId})/UpdateStatusFromTodoToDraft`
+      )
+      if (response.status === 200) {
+        toast.success('Cập nhật thành công')
+      }
+      return response.data
+    } catch (error) {
+      toast.error(error.response.data.message)
+      return rejectWithValue(error)
+    }
+  }
+)
+
 export const deleteTask = createAsyncThunk(
   'tasks/deleteTask',
   async (id, { rejectWithValue }) => {
@@ -198,6 +216,22 @@ const taskSlice = createSlice({
         state.loading = false
       })
       .addCase(updateTaskDraftToPrepare.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+      .addCase(updateStatusFromToDoToDraft.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(updateStatusFromToDoToDraft.fulfilled, (state, action) => {
+        if (Array.isArray(state.data)) {
+          state.data.push(action.payload.task)
+        } else {
+          state.data = [action.payload.task]
+        }
+
+        state.loading = false
+      })
+      .addCase(updateStatusFromToDoToDraft.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
       })
