@@ -52,13 +52,13 @@ export const deleteTaskType = createAsyncThunk(
   'taskType/deleteTaskType',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(`/TaskType/(${id})/UpdateStatus`)
+      const response = await axiosInstance.delete(`/TaskType/${id}`)
       if (response.status === 200) {
         toast.success(response.data.message)
       }
       return response.data
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error(error.response.data)
       return rejectWithValue(error)
     }
   }

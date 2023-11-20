@@ -14,6 +14,7 @@ const DisplayEmployee = ({
   searchTerm,
   loadData,
   taskTypeActive,
+  farmId,
 }) => {
   const dispatch = useDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false)

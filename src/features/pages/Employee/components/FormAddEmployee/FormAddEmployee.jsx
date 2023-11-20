@@ -24,6 +24,7 @@ import {
   selectWards,
 } from 'features/slice/location/locationSlice'
 import { useDispatch } from 'react-redux'
+import { Option } from 'antd/es/mentions'
 
 const FormAddEmployee = ({
   isModalOpen,
@@ -35,9 +36,22 @@ const FormAddEmployee = ({
   const dispatch = useDispatch()
   const [fileList, setFileList] = useState([])
   const [uploadError, setUploadError] = useState(false)
-
   const [form] = Form.useForm()
 
+  const [selectedCityName, setSelectedCityName] = useState('')
+  const [selectedDistrictName, setSelectedDistrictName] = useState('')
+  const [selectedWardName, setSelectedWardName] = useState('')
+
+  // --Location
+  const cities = useSelector(selectCities)
+  const districts = useSelector(selectDistricts)
+  const wards = useSelector(selectWards)
+
+  useEffect(() => {
+    dispatch(getCities())
+  }, [dispatch])
+
+  // Image
   const onFileChange = ({ fileList: newFileList }) => {
     setFileList(newFileList)
   }
@@ -48,69 +62,55 @@ const FormAddEmployee = ({
     setUploadError(false)
   }
 
+  // finish
   const onFinish = (values) => {
     if (fileList.length === 0) {
       setUploadError(true)
       return
     }
     setUploadError(false)
+
+    const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`
+
     const finalValues = {
       ...values,
       imageFile: fileList[0].originFileObj,
       farmId: farmId,
+      address: address,
     }
-
     console.log(finalValues)
-    // onFinishCreate(values)
+    onFinishCreate(finalValues)
     closeModal()
     handleFormReset()
   }
 
+  // validate Date
   const disabledDate = (current) => {
     return current && current > dayjs().endOf('day')
   }
 
-  // --Location
-  const cities = useSelector(selectCities)
-  const districts = useSelector(selectDistricts)
-  const wards = useSelector(selectWards)
-
-  console.log(districts)
-  console.log(wards)
-
-  useEffect(() => {
-    dispatch(getCities())
-  }, [dispatch])
-
-  const handleCityChange = (e) => {
-    const selectedCityCode = e.target.value
-    dispatch(getDistrict(selectedCityCode))
+  const handleCityChange = (value, option) => {
+    setSelectedCityName(option.children)
+    console.log(selectedCityName)
+    form.setFieldsValue({ district: null, ward: null })
+    dispatch(getDistrict(value))
   }
 
-  const handleDistrictChange = (e) => {
-    const selectedDistrictCode = e.target.value
-    dispatch(getWard(selectedDistrictCode))
+  const handleDistrictChange = (value, option) => {
+    setSelectedDistrictName(option.children)
+    console.log(selectedDistrictName)
+    form.setFieldsValue({ ward: null })
+    dispatch(getWard(value))
   }
 
-  const handleWardChange = () => {
-    printResult()
-  }
+  // const handleWardChange = (value) => {
+  //   setSelectedWard(value)
+  // }
 
-  const printResult = () => {
-    const selectedCity = cities.find(
-      (city) => city.code === document.getElementById('city').value
-    )
-    const selectedDistrict = districts.find(
-      (district) => district.code === document.getElementById('district').value
-    )
-    const selectedWard = wards.find(
-      (ward) => ward.code === document.getElementById('ward').value
-    )
-
-    if (selectedCity && selectedDistrict && selectedWard) {
-      const result = `${selectedCity.name} | ${selectedDistrict.name} | ${selectedWard.name}`
-      document.getElementById('result').innerText = result
-    }
+  const handleWardChange = (value, option) => {
+    setSelectedWardName(option.children)
+    console.log(selectedWardName)
+    form.setFieldsValue({ ward: option.children })
   }
 
   return (
@@ -144,6 +144,7 @@ const FormAddEmployee = ({
           form={form}
         >
           <div className="form-left">
+            {/* Tên */}
             <Form.Item
               label="Tên nhân viên"
               rules={[
@@ -157,6 +158,7 @@ const FormAddEmployee = ({
               <Input placeholder="Nhập tên nhân viên" />
             </Form.Item>
 
+            {/* Mã */}
             <Form.Item
               label="Mã nhân viên"
               rules={[
@@ -170,6 +172,7 @@ const FormAddEmployee = ({
               <Input placeholder="Nhập mã nhân viên" />
             </Form.Item>
 
+            {/* Số điện thoại */}
             <Form.Item
               label="Số điện thoại"
               rules={[
@@ -194,6 +197,7 @@ const FormAddEmployee = ({
               <Input style={{ width: '100%' }} />
             </Form.Item>
 
+            {/* Giới tính */}
             <Form.Item
               label="Giới tính"
               rules={[
@@ -205,56 +209,80 @@ const FormAddEmployee = ({
               name="gender"
             >
               <Radio.Group>
-                <Radio value={true}>Nam</Radio>
-                <Radio value={false}>Nữ</Radio>
+                <Radio value={false}>Nam</Radio>
+                <Radio value={true}>Nữ</Radio>
               </Radio.Group>
             </Form.Item>
 
-            {/* <Form.Item
-              label="Địa chỉ"
+            <Form.Item
+              label="Tỉnh/Thành phố"
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng chọn địa chỉ',
+                  message: 'Vui lòng chọn Tỉnh/Thành phố',
                 },
               ]}
-              name="address"
+              name="city"
             >
-              
-            </Form.Item> */}
-
-            <div>
-              <select id="city" onChange={handleCityChange}>
-                <option value="" defaultValue>
-                  Chọn tỉnh thành
-                </option>
+              <Select
+                placeholder="Chọn Tỉnh/Thành phố"
+                onChange={handleCityChange}
+                allowClear
+              >
                 {cities.map((city) => (
-                  <option key={city.code} value={city.code}>
+                  <Option key={city.code} value={city.code}>
                     {city.name}
-                  </option>
+                  </Option>
                 ))}
-              </select>
+              </Select>
+            </Form.Item>
 
-              <select id="district" onChange={handleDistrictChange}>
-                <option value="">Chọn quận huyện</option>
-                {districts.length > 0 &&
-                  districts.map((district) => (
-                    <option key={district.code} value={district.code}>
-                      {district.name}
-                    </option>
-                  ))}
-              </select>
+            <Form.Item
+              label="Quận/Huyện/Thị xã"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn Quận/Huyện/Thị xã',
+                },
+              ]}
+              name="district"
+            >
+              <Select
+                placeholder="Chọn Quận/Huyện/Thị xã"
+                onChange={handleDistrictChange}
+                allowClear
+              >
+                {districts.map((district) => (
+                  <Option key={district.code} value={district.code}>
+                    {district.name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
 
-              <select id="ward" onChange={handleWardChange}>
-                <option value="">Chọn phường xã</option>
-                {wards.length > 0 &&
-                  wards.map((ward) => (
-                    <option key={ward.code} value={ward.code}>
-                      {ward.name}
-                    </option>
-                  ))}
-              </select>
-            </div>
+            <Form.Item
+              label="Phường/Xã"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn Phường/Xã/Thị trấn',
+                },
+              ]}
+              name="ward"
+            >
+              <Select
+                placeholder="Chọn Phường/Xã/Thị trấn"
+                // onChange={(value) => form.setFieldsValue({ ward: value })}
+                onChange={handleWardChange}
+                allowClear
+              >
+                {wards.map((ward) => (
+                  <Option key={ward.code} value={ward.code}>
+                    {ward.name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
           </div>
 
           <div className="form-right">
@@ -288,6 +316,7 @@ const FormAddEmployee = ({
               name="dateOfBirth"
             >
               <DatePicker
+                // format="YYYY-MM-DD[T]HH:mm:ss:SSS"
                 format="YYYY-MM-DD"
                 disabledDate={disabledDate}
                 placeholder="Chọn ngày sinh"

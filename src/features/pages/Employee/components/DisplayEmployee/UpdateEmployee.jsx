@@ -13,6 +13,16 @@ import ImgCrop from 'antd-img-crop'
 import { useEffect, useState } from 'react'
 import { UploadOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
+import { useSelector } from 'react-redux'
+import {
+  getDistrict,
+  getWard,
+  selectCities,
+  selectDistricts,
+  selectWards,
+} from 'features/slice/location/locationSlice'
+import { useDispatch } from 'react-redux'
+import { Option } from 'antd/es/mentions'
 
 const UpdateEmployee = ({
   isModalOpen,
@@ -21,11 +31,24 @@ const UpdateEmployee = ({
   onFinishUpdate,
   employeeById,
   taskTypeActive,
+  farmId,
 }) => {
-  console.log(selectedData)
-  console.log(employeeById)
-
   const [fileList, setFileList] = useState([])
+  const [form] = Form.useForm()
+
+  const dispatch = useDispatch()
+  // --Location
+  const cities = useSelector(selectCities)
+  const districts = useSelector(selectDistricts)
+  const wards = useSelector(selectWards)
+
+  const [selectedCityCode, setSelectedCityCode] = useState(null)
+  const [selectedDistrictCode, setSelectedDistrictCode] = useState(null)
+  const [selectedWardCode, setSelectedWardCode] = useState(null)
+
+  const [selectedCityName, setSelectedCityName] = useState('')
+  const [selectedDistrictName, setSelectedDistrictName] = useState('')
+  const [selectedWardName, setSelectedWardName] = useState('')
 
   useEffect(() => {
     if (employeeById?.data?.avatar) {
@@ -44,17 +67,81 @@ const UpdateEmployee = ({
     setFileList(newFileList)
   }
 
-  const onFinish = (values) => {
-    const finalValues = {
-      id: selectedData.id,
-      ...values,
+  useEffect(() => {
+    if (selectedData) {
+      // Phân tích địa chỉ
+      const addressParts = selectedData.address.split(', ')
+
+      const selectedCityName = addressParts[2]
+      const selectedDistrictName = addressParts[1]
+      const selectedWardName = addressParts[0]
+
+      // Tìm kiếm và so sánh thành phố, quận/huyện
+      const cityMatch = cities.find((city) => city.name === selectedCityName)
+      if (cityMatch) {
+        setSelectedCityCode(cityMatch.code)
+        form.setFieldsValue({ city: cityMatch.code })
+        setSelectedCityName(selectedCityName)
+        dispatch(getDistrict(cityMatch.code)).then((newDistricts) => {
+          const districtMatch = newDistricts?.payload.find(
+            (district) => district.name === selectedDistrictName
+          )
+
+          if (districtMatch) {
+            setSelectedDistrictCode(districtMatch.code)
+            form.setFieldsValue({ district: districtMatch.code })
+
+            dispatch(getWard(districtMatch.code)).then((newWards) => {
+              const wardMatch = newWards?.payload.find(
+                (ward) => ward.name === selectedWardName
+              )
+              if (wardMatch) {
+                setSelectedWardCode(wardMatch.code)
+                form.setFieldsValue({ ward: wardMatch.code })
+              }
+            })
+          }
+        })
+      }
     }
-    // onFinishUpdate(finalValues)
+  }, [selectedData, cities, dispatch, form, selectedDistrictCode])
+
+  const onFinish = (values) => {
+    const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`
+    const finalValues = {
+      ...values,
+      gender: values.gender === 'Male' ? false : true,
+      id: selectedData.id,
+      imageFile: fileList[0].originFileObj,
+      address: address,
+      farmId: farmId,
+    }
+    onFinishUpdate(finalValues)
     closeModal()
+    form.resetFields()
   }
 
   const disabledDate = (current) => {
     return current && current > dayjs().endOf('day')
+  }
+
+  const handleCityChange = async (value, option) => {
+    setSelectedCityName(option.children)
+    setSelectedCityCode(value)
+    form.resetFields(['district', 'ward'])
+    await dispatch(getDistrict(value))
+  }
+
+  const handleDistrictChange = async (value, option) => {
+    setSelectedDistrictName(option.children)
+    setSelectedDistrictCode(value)
+    form.resetFields(['ward'])
+    await dispatch(getWard(value))
+  }
+
+  const handleWardChange = (value, option) => {
+    setSelectedWardName(option.children)
+    form.setFieldsValue({ ward: option.children })
   }
 
   return (
@@ -157,21 +244,74 @@ const UpdateEmployee = ({
             </Form.Item>
 
             <Form.Item
-              label="Địa chỉ"
+              name="city"
+              label="Tỉnh/Thành phố"
+              initialValue={selectedCityCode}
+            >
+              <Select
+                placeholder="Chọn Tỉnh/Thành phố"
+                onChange={handleCityChange}
+                allowClear
+              >
+                {cities.map((city) => (
+                  <Option key={city.code} value={city.code}>
+                    {city.name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+
+            <Form.Item
+              label="Quận/Huyện/Thị xã"
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng chọn địa chỉ',
+                  message: 'Vui lòng chọn Quận/Huyện/Thị xã',
                 },
               ]}
-              name="address"
+              name="district"
+              initialValue={selectedDistrictCode}
             >
-              <div>s</div>
+              <Select
+                placeholder="Chọn Quận/Huyện/Thị xã"
+                allowClear
+                onChange={handleDistrictChange}
+              >
+                {districts.map((district) => (
+                  <Option key={district.code} value={district.code}>
+                    {district.name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+
+            <Form.Item
+              label="Phường/Xã"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn Phường/Xã/Thị trấn',
+                },
+              ]}
+              name="ward"
+              initialValue={selectedWardCode}
+            >
+              <Select
+                placeholder="Chọn Phường/Xã/Thị trấn"
+                onChange={handleWardChange}
+                allowClear
+              >
+                {wards.map((ward) => (
+                  <Option key={ward.code} value={ward.code}>
+                    {ward.name}
+                  </Option>
+                ))}
+              </Select>
             </Form.Item>
           </div>
 
           <div className="form-right">
-            <Form.Item label="Hình ảnh công cụ" name="avatar">
+            <Form.Item label="Hình ảnh công cụ" name="imageFile">
               <ImgCrop rotationSlider>
                 <Upload
                   listType="picture-card"
@@ -194,7 +334,11 @@ const UpdateEmployee = ({
                 },
               ]}
               name="dateOfBirth"
-              // initialValue={selectedData ? selectedData.dateOfBirth : null}
+              // initialValue={
+              //   selectedData && selectedData.dateOfBirth
+              //     ? dayjs(selectedData.dateOfBirth).format('YYYY-MM-DD')
+              //     : null
+              // }
             >
               <DatePicker
                 format="YYYY-MM-DD"
@@ -215,7 +359,7 @@ const UpdateEmployee = ({
                 },
               ]}
               name="taskTypeIds"
-              initialValue={selectedData ? selectedData.taskTypeIds : null}
+              initialValue={selectedData ? selectedData.taskTypeId : null}
             >
               <Select
                 mode="multiple"

@@ -30,8 +30,8 @@ const locationSlice = createSlice({
   name: 'location',
   initialState: {
     cities: [],
-    district: [],
-    ward: [],
+    districts: [],
+    wards: [],
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -39,13 +39,11 @@ const locationSlice = createSlice({
       .addCase(getCities.fulfilled, (state, action) => {
         state.cities = action.payload
       })
-
       .addCase(getDistrict.fulfilled, (state, action) => {
-        state.district = action.payload
+        state.districts = action.payload
       })
-
       .addCase(getWard.fulfilled, (state, action) => {
-        state.ward = action.payload
+        state.wards = action.payload
       })
   },
 })

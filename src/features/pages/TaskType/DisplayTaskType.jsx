@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import UpdateTaskType from './UpdateTaskType'
-import { Badge, Button, Table } from 'antd'
+import { Badge, Button, Popconfirm, Table } from 'antd'
 import Column from 'antd/es/table/Column'
 import { useSelector } from 'react-redux'
 import { getTaskTypeById } from 'features/slice/task/taskTypeByIdSlice'
@@ -79,36 +79,24 @@ const DisplayTaskType = ({
               </h4>
             )}
           />
-          {/* <Column title="Loại công việc" dataIndex="status" key="2" /> */}
+          <Column title="Loại công việc" dataIndex="status" key="2" />
+
           <Column
-            title="Trạng thái"
-            dataIndex="isDelete"
-            key="3"
-            filters={[
-              { text: 'Hiện', value: false },
-              { text: 'Ẩn', value: true },
-            ]}
-            onFilter={(value, record) => record.isDelete === value}
-            render={(isDelete) =>
-              isDelete === false ? (
-                <Badge status="success" text="Hiện" />
-              ) : (
-                <Badge status="error" text="Ẩn" />
-              )
-            }
-          />
-          <Column
-            title="Đổi trạng thái"
+            title="Xoá"
             key="4"
             dataIndex="id"
             render={(_, record) => (
-              <Button
-                size="middle"
-                danger
-                onClick={() => onFinishDeleteTaskType(record.id)}
+              <Popconfirm
+                title="Xoá loại công việc"
+                description="Bạn có chắc muốn xoá loại công việc này?"
+                onConfirm={() => onFinishDeleteTaskType(record.id)}
+                okText="Xoá"
+                cancelText="Huỷ"
               >
-                Đổi
-              </Button>
+                <Button size="middle" danger>
+                  Xoá
+                </Button>
+              </Popconfirm>
             )}
           />
 
@@ -127,6 +115,7 @@ const DisplayTaskType = ({
             )}
           />
         </Table>
+
         <DetailTaskType
           key={selectedDataDetail ? selectedDataDetail.id : null}
           isModalDetailOpen={isModalDetailOpen}

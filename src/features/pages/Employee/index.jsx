@@ -7,7 +7,11 @@ import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { authServices } from 'services/authServices'
 import { getTaskTypeActive } from 'features/slice/task/taskTypeActiveSlice'
-import { deleteEmployee } from 'features/slice/employee/employeeSlice'
+import {
+  createEmployee,
+  deleteEmployee,
+  updateEmployee,
+} from 'features/slice/employee/employeeSlice'
 
 const Employee = () => {
   const dispatch = useDispatch()
@@ -16,7 +20,7 @@ const Employee = () => {
   const taskTypeActive = useSelector((state) => state.taskTypeActive.data)
 
   const farmId = member.farmId
-
+  console.log(farmId)
   const [searchTerm, setSearchTerm] = useState('')
 
   const handleSearch = (value) => {
@@ -29,25 +33,17 @@ const Employee = () => {
     dispatch(getTaskTypeActive())
   }, [dispatch, farmId])
 
-  //   const onFinishCreate = (values) => {
-  //     const finalValues = {
-  //       farmId: farmId,
-  //       ...values,
-  //     }
-  //     dispatch(createArea(finalValues)).then(() => {
-  //       loadData()
-  //     })
-  //   }
+  const onFinishCreate = (values) => {
+    dispatch(createEmployee(values)).then(() => {
+      loadData()
+    })
+  }
 
-  //   const onFinishUpdate = (values) => {
-  //     const finalValues = {
-  //       farmId: farmId,
-  //       ...values,
-  //     }
-  //     dispatch(updateArea(finalValues)).then(() => {
-  //       loadData()
-  //     })
-  //   }
+  const onFinishUpdate = (values) => {
+    dispatch(updateEmployee(values)).then(() => {
+      loadData()
+    })
+  }
 
   const onFinishDelete = (id) => {
     dispatch(deleteEmployee(id)).then(() => {
@@ -65,10 +61,13 @@ const Employee = () => {
         handleSearch={handleSearch}
         farmId={farmId}
         taskTypeActive={taskTypeActive}
+        onFinishCreate={onFinishCreate}
       />
       <DisplayEmployee
+        farmId={farmId}
         taskTypeActive={taskTypeActive}
         onFinishDelete={onFinishDelete}
+        onFinishUpdate={onFinishUpdate}
         employeeByFarm={employeeByFarm}
         searchTerm={searchTerm}
         loadData={loadData}

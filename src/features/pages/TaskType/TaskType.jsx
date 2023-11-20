@@ -61,6 +61,7 @@ const TaskType = () => {
   }
 
   const onFinishDeleteTaskType = (id) => {
+    console.log(id)
     dispatch(deleteTaskType(id)).then(() => {
       loadData()
     })
