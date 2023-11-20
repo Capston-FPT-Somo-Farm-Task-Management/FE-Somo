@@ -20,7 +20,7 @@ import taskTypeActiveReducer from './slice/task/taskTypeActiveSlice'
 import taskForCalendarReducer from './slice/task/taskForCalendarSlice'
 import taskTypePlantReducer from './slice/task/taskTypePlantSlice'
 import taskTypeLivestockReducer from './slice/task/taskTypeAnimalSlice'
-import taskTypeActiveOtherReducer from "./slice/task/taskTypeOtherSlice"
+import taskTypeActiveOtherReducer from './slice/task/taskTypeOtherSlice'
 import taskTypeByIdReducer from './slice/task/taskTypeByIdSlice'
 import taskTypeTemplateReducer from './slice/task/taskTypeTemplate'
 import taskTypeExcelReducer from './slice/task/taskTypeExcelSlice'
@@ -53,6 +53,7 @@ import notificationCountReducer from './slice/notification/notificationCountSlic
 import notificationIsNewReducer from './slice/notification/notificationIsNewSlice'
 import notificationReadReducer from './slice/notification/notificationReadSlice'
 import employeeByFarmReducer from './slice/employee/employeeByFarmSlice'
+import locationReducer from './slice/location/locationSlice'
 
 export const store = configureStore({
   reducer: {
@@ -110,5 +111,6 @@ export const store = configureStore({
     notificationIsNew: notificationIsNewReducer,
     notificationRead: notificationReadReducer,
     employeeByFarm: employeeByFarmReducer,
+    location: locationReducer,
   },
 })

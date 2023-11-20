@@ -4,6 +4,18 @@ import { toast } from 'react-toastify'
 
 const axiosInstance = createAxiosInstance()
 
+export const getEmployeeById = createAsyncThunk(
+  'employees/getEmployeeById',
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.get(`/Employee/${id}`)
+      return data
+    } catch (error) {
+      rejectWithValue(error.message)
+    }
+  }
+)
+
 export const deleteEmployee = createAsyncThunk(
   'employees/deleteEmployee',
   async (id, { rejectWithValue }) => {
@@ -21,7 +33,7 @@ export const deleteEmployee = createAsyncThunk(
 )
 
 const employeeSlice = createSlice({
-  name: 'employees',
+  name: 'employee',
   initialState: {
     data: [],
     loading: false,
@@ -29,6 +41,19 @@ const employeeSlice = createSlice({
   },
   extraReducers(builder) {
     builder
+
+      .addCase(getEmployeeById.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(getEmployeeById.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = action.payload
+      })
+      .addCase(getEmployeeById.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+        state.data = []
+      })
 
       .addCase(deleteEmployee.pending, (state) => {
         state.loading = true

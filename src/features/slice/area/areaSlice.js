@@ -10,8 +10,7 @@ export const getAreaActive = createAsyncThunk(
   'areas/getAreaActive',
   async (id, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.get(+`/Area/Active/Farm(${id})`)
-      // console.log(data)
+      const { data } = await axiosInstance.get(`/Area/Active/Farm(${id})`)
       return data
     } catch (error) {
       rejectWithValue(error.message)
