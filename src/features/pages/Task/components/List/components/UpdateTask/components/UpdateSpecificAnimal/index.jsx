@@ -18,9 +18,12 @@ function UpdateSpecificAnimal({
   handleSelectAreaChange,
   handleSelectZoneChange,
   handleSelectFieldChange,
+  handleLivestockChange,
   handlePriorityChange,
   handleSelectStartDate,
   handleSelectEndDate,
+  handleNameChange,
+  handleSupervisorChange,
   handleDescriptionChange,
   handleTaskTypeChange,
   handleMaterialChange,
@@ -29,8 +32,11 @@ function UpdateSpecificAnimal({
   areaLivestockByZone,
   zoneAnimal,
   fieldByZone,
+  selectedLivestockId,
   dataAnimal,
   priorityValue,
+  nameValue,
+  supervisorValue,
   description,
   dataTaskTypeLivestock,
   supervisor,
@@ -45,6 +51,7 @@ function UpdateSpecificAnimal({
   setSelectedDays,
   initialSelectedDays,
   setInitialSelectedDays,
+  isDraft,
 }) {
   return (
     <>
@@ -53,18 +60,27 @@ function UpdateSpecificAnimal({
           handleSelectAreaChange={handleSelectAreaChange}
           areaLivestockByZone={areaLivestockByZone}
           editingTask={editingTask}
+          isDraft={isDraft}
         />
         <ZoneAnimalUpdate
           handleSelectZoneChange={handleSelectZoneChange}
           zoneAnimal={zoneAnimal}
           editingTask={editingTask}
+          isDraft={isDraft}
         />
         <FieldAnimalUpdate
           handleSelectFieldChange={handleSelectFieldChange}
           fieldByZone={fieldByZone}
           editingTask={editingTask}
+          isDraft={isDraft}
         />
-        <AnimalUpdate dataAnimal={dataAnimal} editingTask={editingTask} />
+        <AnimalUpdate
+          selectedLivestockId={selectedLivestockId}
+          handleLivestockChange={handleLivestockChange}
+          dataAnimal={dataAnimal}
+          editingTask={editingTask}
+          isDraft={isDraft}
+        />
         <PriorityUpdate
           priorityValue={priorityValue}
           handlePriorityChange={handlePriorityChange}
@@ -76,6 +92,8 @@ function UpdateSpecificAnimal({
           handleSelectStartDate={handleSelectStartDate}
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
+          endDate={endDate}
+          isDraft={isDraft}
         />
         <DescriptionUpdate
           description={description}
@@ -84,13 +102,24 @@ function UpdateSpecificAnimal({
         />
       </div>
       <div className="form-right">
-        <NameTaskUpdate editingTask={editingTask} />
+        <NameTaskUpdate
+          editingTask={editingTask}
+          nameValue={nameValue}
+          handleNameChange={handleNameChange}
+        />
         <TaskTypeLivestockUpdate
           dataTaskTypeLivestock={dataTaskTypeLivestock}
           handleTaskTypeChange={handleTaskTypeChange}
           editingTask={editingTask}
+          isDraft={isDraft}
         />
-        <SupervisorUpdate supervisor={supervisor} editingTask={editingTask} />
+        <SupervisorUpdate
+          supervisor={supervisor}
+          supervisorValue={supervisorValue}
+          handleSupervisorChange={handleSupervisorChange}
+          editingTask={editingTask}
+          isDraft={isDraft}
+        />
         <MaterialUpdate
           materialsValue={materialsValue}
           handleMaterialChange={handleMaterialChange}

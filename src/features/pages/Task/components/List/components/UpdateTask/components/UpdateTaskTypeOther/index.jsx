@@ -21,6 +21,8 @@ function UpdateTaskTypeOther({
   handlePriorityChange,
   handleSelectStartDate,
   handleSelectEndDate,
+  handleNameChange,
+  handleSupervisorChange,
   handleDescriptionChange,
   handleTaskTypeChange,
   handleMaterialChange,
@@ -32,6 +34,8 @@ function UpdateTaskTypeOther({
   addressDetail,
   setAddressDetail,
   priorityValue,
+  nameValue,
+  supervisorValue,
   description,
   taskTypeActive,
   supervisor,
@@ -46,6 +50,7 @@ function UpdateTaskTypeOther({
   setSelectedDays,
   initialSelectedDays,
   setInitialSelectedDays,
+  isDraft,
 }) {
   return (
     <>
@@ -69,6 +74,7 @@ function UpdateTaskTypeOther({
           addressDetail={addressDetail}
           setAddressDetail={setAddressDetail}
           editingTask={editingTask}
+          isDraft={isDraft}
         />
         <PriorityUpdate
           priorityValue={priorityValue}
@@ -81,6 +87,8 @@ function UpdateTaskTypeOther({
           handleSelectStartDate={handleSelectStartDate}
           handleSelectEndDate={handleSelectEndDate}
           startDate={startDate}
+          endDate={endDate}
+          isDraft={isDraft}
         />
         <DescriptionUpdate
           description={description}
@@ -89,13 +97,24 @@ function UpdateTaskTypeOther({
         />
       </div>
       <div className="form-right">
-        <NameTaskUpdate editingTask={editingTask} />
+        <NameTaskUpdate
+          editingTask={editingTask}
+          nameValue={nameValue}
+          handleNameChange={handleNameChange}
+        />
         <TaskTypeActiveUpdate
           taskTypeActive={taskTypeActive}
           handleTaskTypeChange={handleTaskTypeChange}
           editingTask={editingTask}
+          isDraft={isDraft}
         />
-        <SupervisorUpdate supervisor={supervisor} editingTask={editingTask} />
+        <SupervisorUpdate
+          supervisor={supervisor}
+          supervisorValue={supervisorValue}
+          handleSupervisorChange={handleSupervisorChange}
+          editingTask={editingTask}
+          isDraft={isDraft}
+        />
         <MaterialUpdate
           materialsValue={materialsValue}
           handleMaterialChange={handleMaterialChange}
