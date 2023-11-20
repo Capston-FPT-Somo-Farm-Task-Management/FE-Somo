@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 const axiosInstance = createAxiosInstance()
 
 export const getEmployeeById = createAsyncThunk(
-  'employees/getEmployeeById',
+  'employee/getEmployeeById',
   async (id, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get(`/Employee/${id}`)
@@ -16,8 +16,48 @@ export const getEmployeeById = createAsyncThunk(
   }
 )
 
+export const createEmployee = createAsyncThunk(
+  'employee/createEmployee',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post('/Employee', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      if (response.status === 200) {
+        toast.success(response.data.message)
+        return response.data.data
+      }
+    } catch (error) {
+      toast.error(error.response.data.message)
+      rejectWithValue(error)
+    }
+  }
+)
+
+export const updateEmployee = createAsyncThunk(
+  'employee/updateEmployee',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`/Employee/${data.id}`, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      if (response.status === 200) {
+        toast.success(response.data.message)
+        return response.data.data
+      }
+    } catch (error) {
+      toast.error(error.response.data.message)
+      rejectWithValue(error)
+    }
+  }
+)
+
 export const deleteEmployee = createAsyncThunk(
-  'employees/deleteEmployee',
+  'employee/deleteEmployee',
   async (id, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(`/Employee/ChangeStatus/${id}`)
@@ -53,6 +93,30 @@ const employeeSlice = createSlice({
         state.loading = false
         state.error = action.payload
         state.data = []
+      })
+
+      .addCase(createEmployee.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(createEmployee.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = action.payload
+      })
+      .addCase(createEmployee.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+
+      .addCase(updateEmployee.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(updateEmployee.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = action.payload
+      })
+      .addCase(updateEmployee.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
       })
 
       .addCase(deleteEmployee.pending, (state) => {
