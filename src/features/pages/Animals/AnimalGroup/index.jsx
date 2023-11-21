@@ -18,6 +18,7 @@ const AnimalGroup = () => {
   const farmId = member.farmId
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const fieldAnimal = useSelector((state) => state.fieldAnimal.data)
+  const loading = useSelector((state) => state.fieldAnimal.loading)
 
   const [searchTerm, setSearchTerm] = useState('')
 
@@ -61,6 +62,7 @@ const AnimalGroup = () => {
         handleSearch={handleSearch}
       />
       <DisplayAnimalGroup
+        loading={loading}
         areaByFarm={areaByFarm}
         fieldAnimal={fieldAnimal}
         onFinishDelete={onFinishDelete}

@@ -17,6 +17,7 @@ import { getPlantTypeActive } from 'features/slice/plant/plantTypeActiveSlice'
 const MyCrops = () => {
   const dispatch = useDispatch()
   const plantByFarm = useSelector((state) => state.plantByFarm.data)
+  const loading = useSelector((state) => state.plantByFarm.loading)
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const plantTypeActive = useSelector((state) => state.plantTypeActive.data)
   const member = useSelector((state) => state.member.data)
@@ -66,6 +67,7 @@ const MyCrops = () => {
         plantTypeActive={plantTypeActive}
       />
       <TableDisplayCrop
+        loading={loading}
         areaByFarm={areaByFarm}
         plantByFarm={plantByFarm}
         plantTypeActive={plantTypeActive}

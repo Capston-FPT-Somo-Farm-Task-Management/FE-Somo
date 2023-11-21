@@ -17,6 +17,8 @@ const Employee = () => {
   const dispatch = useDispatch()
   const member = useSelector((state) => state.member.data)
   const employeeByFarm = useSelector((state) => state.employeeByFarm.data)
+  const loading = useSelector((state) => state.employeeByFarm.loading)
+
   const taskTypeActive = useSelector((state) => state.taskTypeActive.data)
 
   const farmId = member.farmId
@@ -64,6 +66,7 @@ const Employee = () => {
         onFinishCreate={onFinishCreate}
       />
       <DisplayEmployee
+        loading={loading}
         farmId={farmId}
         taskTypeActive={taskTypeActive}
         onFinishDelete={onFinishDelete}

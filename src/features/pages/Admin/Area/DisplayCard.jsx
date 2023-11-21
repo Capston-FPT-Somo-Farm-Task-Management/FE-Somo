@@ -7,13 +7,13 @@ const DisplayCard = ({ areaByFarm }) => {
   const filterActiveAreas = (areaByFarm) => {
     if (areaByFarm && areaByFarm.data) {
       const activeAreas = areaByFarm.data.filter(
-        (area) => area.status === 'Active'
+        (area) => area.status === 'Hiện'
       )
       return activeAreas.length
     }
     return 0
   }
-  
+
   const activeAreaCount = filterActiveAreas(areaByFarm)
   const inActiveAreaCount = areaByFarm?.data?.length - activeAreaCount
 

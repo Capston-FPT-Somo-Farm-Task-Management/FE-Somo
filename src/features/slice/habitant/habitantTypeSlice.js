@@ -24,10 +24,7 @@ export const updateHabitantType = createAsyncThunk(
   'habitantType/updateHabitantType',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(
-        `/HabitantType/${data.id}`,
-        data
-      )
+      const response = await axiosInstance.put(`/HabitantType/${data.id}`, data)
       if (response.status === 200) {
         toast.success(response.data.message)
       }
@@ -55,7 +52,7 @@ export const deleteHabitantType = createAsyncThunk(
   }
 )
 const habitantTypeSlice = createSlice({
-  name: 'animalType',
+  name: 'habitantType',
   initialState: {
     data: [],
     loading: false,

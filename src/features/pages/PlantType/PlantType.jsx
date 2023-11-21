@@ -15,6 +15,7 @@ import DisplayPlantType from './DisplayPlantType'
 const PlantType = () => {
   const dispatch = useDispatch()
   const plantType = useSelector((state) => state.plantType.data)
+  const loading = useSelector((state) => state.plantType.loading)
   const member = useSelector((state) => state.member.data)
   const farmId = member.farmId
 
@@ -59,8 +60,8 @@ const PlantType = () => {
         handleSearch={handleSearch}
       />
       <DisplayPlantType
+        loading={loading}
         plantType={plantType}
-        farmId={farmId}
         loadDataPlantType={loadDataPlantType}
         onFinishUpdatePlantType={onFinishUpdatePlantType}
         onFinishDeletePlantType={onFinishDeletePlantType}

@@ -19,6 +19,8 @@ const Zone = () => {
   const member = useSelector((state) => state.member.data)
   const farmId = member.farmId
   const zoneByFarm = useSelector((state) => state.zoneByFarm.data)
+  const loading = useSelector((state) => state.zoneByFarm.loading)
+
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const zoneType = useSelector((state) => state.zoneType.data)
 
@@ -66,6 +68,7 @@ const Zone = () => {
         handleSearch={handleSearch}
       />
       <TableDisplayZone
+        loading={loading}
         areaByFarm={areaByFarm}
         zoneByFarm={zoneByFarm}
         zoneType={zoneType}

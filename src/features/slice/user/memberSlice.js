@@ -16,25 +16,45 @@ export const getMemberById = createAsyncThunk(
   }
 )
 
-export const updateMember = createAsyncThunk(
-  "member/updateMember",
+export const createMember = createAsyncThunk(
+  'member/createMember',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(
-        `/Member/${data.memberId}`,
-        data.body
-      );
+      const response = await axiosInstance.post('/Member', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
       if (response.status === 200) {
-        toast.success("Cập nhật thành công");
+        toast.success(response.data.message)
+        return response.data.data
       }
-      console.log(response.data);
-      return response.data;
     } catch (error) {
-      toast.error(error.response.data.message);
-      return rejectWithValue(error);
+      toast.error(error.response.data.message)
+      rejectWithValue(error)
     }
   }
-);
+)
+
+export const updateMember = createAsyncThunk(
+  'member/updateMember',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`/Member/${data.id}`, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      if (response.status === 200) {
+        toast.success(response.data.message)
+        return response.data.data
+      }
+    } catch (error) {
+      toast.error(error.response.data.message)
+      rejectWithValue(error)
+    }
+  }
+)
 
 export const adminDeleteMember = createAsyncThunk(
   'member/adminDeleteMember',
@@ -82,12 +102,24 @@ const memberSlice = createSlice({
         state.error = action.payload
         state.data = []
       })
+
+      .addCase(createMember.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(createMember.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = action.payload
+      })
+      .addCase(createMember.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+
       .addCase(updateMember.pending, (state) => {
         state.loading = true
       })
       .addCase(updateMember.fulfilled, (state, action) => {
         state.loading = false
-        state.error = ''
         state.data = action.payload
       })
       .addCase(updateMember.rejected, (state, action) => {

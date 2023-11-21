@@ -6,8 +6,9 @@ import {
   InputNumber,
   Modal,
   Radio,
-  Select,
   Upload,
+  Space,
+  Select,
 } from 'antd'
 import ImgCrop from 'antd-img-crop'
 import { useEffect, useState } from 'react'
@@ -15,6 +16,7 @@ import { UploadOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
 import { useSelector } from 'react-redux'
 import {
+  getCities,
   getDistrict,
   getWard,
   selectCities,
@@ -23,158 +25,123 @@ import {
 } from 'features/slice/location/locationSlice'
 import { useDispatch } from 'react-redux'
 import { Option } from 'antd/es/mentions'
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 
-const UpdateEmployee = ({
-  isModalOpen,
-  closeModal,
-  selectedData,
-  onFinishUpdate,
-  employeeById,
-  taskTypeActive,
-  farmId,
-}) => {
-  const [fileList, setFileList] = useState([])
-  const [form] = Form.useForm()
-
+const FormAddMember = ({ isModalOpen, closeModal, onFinishCreate, farmId }) => {
   const dispatch = useDispatch()
-  // --Location
-  const cities = useSelector(selectCities)
-  const districts = useSelector(selectDistricts)
-  const wards = useSelector(selectWards)
-
-  const [selectedCityCode, setSelectedCityCode] = useState(null)
-  const [selectedDistrictCode, setSelectedDistrictCode] = useState(null)
-  const [selectedWardCode, setSelectedWardCode] = useState(null)
+  const [fileList, setFileList] = useState([])
+  const [uploadError, setUploadError] = useState(false)
+  const [form] = Form.useForm()
 
   const [selectedCityName, setSelectedCityName] = useState('')
   const [selectedDistrictName, setSelectedDistrictName] = useState('')
   const [selectedWardName, setSelectedWardName] = useState('')
 
-  useEffect(() => {
-    if (employeeById?.data?.avatar) {
-      setFileList([
-        {
-          uid: '-1',
-          name: 'image.png',
-          status: 'done',
-          url: employeeById?.data?.avatar,
-        },
-      ])
-    }
-  }, [employeeById])
+  // --Location
+  const cities = useSelector(selectCities)
+  const districts = useSelector(selectDistricts)
+  const wards = useSelector(selectWards)
 
+  useEffect(() => {
+    dispatch(getCities())
+  }, [dispatch])
+
+  // Image
   const onFileChange = ({ fileList: newFileList }) => {
     setFileList(newFileList)
   }
 
-  useEffect(() => {
-    if (selectedData) {
-      // Phân tích địa chỉ
-      const addressParts = selectedData.address.split(', ')
-
-      const selectedCityName = addressParts[2]
-      const selectedDistrictName = addressParts[1]
-      const selectedWardName = addressParts[0]
-
-      // Tìm kiếm và so sánh thành phố, quận/huyện
-      const cityMatch = cities.find((city) => city.name === selectedCityName)
-      if (cityMatch) {
-        setSelectedCityCode(cityMatch.code)
-        form.setFieldsValue({ city: cityMatch.code })
-        setSelectedCityName(selectedCityName)
-        dispatch(getDistrict(cityMatch.code)).then((newDistricts) => {
-          const districtMatch = newDistricts.find(
-            (district) => district.name === selectedDistrictName
-          )
-
-          if (districtMatch) {
-            setSelectedDistrictCode(districtMatch.code)
-            form.setFieldsValue({ district: districtMatch.code })
-
-            dispatch(getWard(districtMatch.code)).then((newWards) => {
-              const wardMatch = newWards.find(
-                (ward) => ward.name === selectedWardName
-              )
-              if (wardMatch) {
-                setSelectedWardCode(wardMatch.code)
-                form.setFieldsValue({ ward: wardMatch.code })
-              }
-            })
-          }
-        })
-      }
-    }
-  }, [selectedData, cities, dispatch, form])
-
-  const onFinish = (values) => {
-    const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`
-    const finalValues = {
-      ...values,
-      gender: values.gender === 'Male' ? false : true,
-      id: selectedData.id,
-      imageFile: fileList[0].originFileObj,
-      address: address,
-      farmId: farmId,
-    }
-    console.log(finalValues)
-    // onFinishUpdate(finalValues)
-    closeModal()
+  const handleFormReset = () => {
     form.resetFields()
+    setFileList([])
+    setUploadError(false)
   }
 
+  const parsedFarmId = parseInt(farmId, 10)
+
+  // finish
+  const onFinish = (values) => {
+    if (fileList.length === 0) {
+      setUploadError(true)
+      return
+    }
+    setUploadError(false)
+
+    const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`
+
+    const finalValues = {
+      ...values,
+      imageFile: fileList[0].originFileObj,
+      farmId: parsedFarmId,
+      address: address,
+    }
+    console.log(finalValues)
+    onFinishCreate(finalValues)
+    closeModal()
+    handleFormReset()
+  }
+
+  // validate Date
   const disabledDate = (current) => {
     return current && current > dayjs().endOf('day')
   }
 
-  const handleCityChange = async (value, option) => {
+  const handleCityChange = (value, option) => {
     setSelectedCityName(option.children)
-    setSelectedCityCode(value)
-
-    form.resetFields(['district', 'ward'])
-    await dispatch(getDistrict(value))
+    console.log(selectedCityName)
+    form.setFieldsValue({ district: null, ward: null })
+    dispatch(getDistrict(value))
   }
 
-  const handleDistrictChange = async (value, option) => {
+  const handleDistrictChange = (value, option) => {
     setSelectedDistrictName(option.children)
-    setSelectedDistrictCode(value)
-    form.resetFields(['ward'])
-    await dispatch(getWard(value))
+    console.log(selectedDistrictName)
+    form.setFieldsValue({ ward: null })
+    dispatch(getWard(value))
   }
+
+  // const handleWardChange = (value) => {
+  //   setSelectedWard(value)
+  // }
 
   const handleWardChange = (value, option) => {
     setSelectedWardName(option.children)
+    console.log(selectedWardName)
     form.setFieldsValue({ ward: option.children })
   }
 
   return (
     <>
       <Modal
-        title="Cập nhật thông tin nhân viên"
+        title="Thêm nhân sự"
         open={isModalOpen}
-        closeIcon
         onCancel={closeModal}
         footer={[
+          <Button form="createMember" type="dashed" htmlType="reset">
+            Làm mới
+          </Button>,
           <Button
-            form="updateEmployee"
+            form="createMember"
             type="primary"
-            htmlType="reset"
             danger
             onClick={closeModal}
           >
             Huỷ
           </Button>,
-          <Button form="updateEmployee" type="primary" htmlType="submit">
-            Cập nhật
+          <Button form="createMember" type="primary" htmlType="submit">
+            Hoàn thành
           </Button>,
         ]}
       >
         <Form
           layout="vertical"
           className="first-step-animal"
-          id="updateEmployee"
+          id="createMember"
           onFinish={onFinish}
+          form={form}
         >
           <div className="form-left">
+            {/* Tên */}
             <Form.Item
               label="Tên nhân viên"
               rules={[
@@ -184,25 +151,32 @@ const UpdateEmployee = ({
                 },
               ]}
               name="name"
-              initialValue={selectedData ? selectedData.name : ''}
             >
               <Input placeholder="Nhập tên nhân viên" />
             </Form.Item>
 
             <Form.Item
-              label="Mã nhân viên"
+              label="Ngày sinh"
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng nhập mã nhân viên',
+                  message: 'Vui lòng chọn ngày sinh',
                 },
               ]}
-              name="code"
-              initialValue={selectedData ? selectedData.code : ''}
+              name="dateOfBirth"
             >
-              <Input placeholder="Nhập mã khu vực" />
+              <DatePicker
+                // format="YYYY-MM-DD[T]HH:mm:ss:SSS"
+                format="YYYY-MM-DD"
+                disabledDate={disabledDate}
+                placeholder="Chọn ngày sinh"
+                style={{
+                  width: '100%',
+                }}
+              />
             </Form.Item>
 
+            {/* Số điện thoại */}
             <Form.Item
               label="Số điện thoại"
               rules={[
@@ -222,33 +196,40 @@ const UpdateEmployee = ({
                   },
                 }),
               ]}
-              initialValue={selectedData ? selectedData.phoneNumber : ''}
               name="phoneNumber"
             >
-              <Input />
+              <Input
+                style={{ width: '100%' }}
+                placeholder="Nhập số điện thoại"
+              />
             </Form.Item>
 
             <Form.Item
-              label="Giới tính"
+              label="Email"
+              rules={[
+                {
+                  type: 'email',
+                  message: 'Không phải email!!',
+                },
+                {
+                  required: true,
+                  message: 'Vui lòng nhập vào email',
+                },
+              ]}
+              name="email"
+            >
+              <Input placeholder="Nhập Email" />
+            </Form.Item>
+
+            <Form.Item
+              label="Tỉnh/Thành phố"
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng chọn giới tính',
+                  message: 'Vui lòng chọn Tỉnh/Thành phố',
                 },
               ]}
-              name="gender"
-              initialValue={selectedData ? selectedData.gender : ''}
-            >
-              <Radio.Group>
-                <Radio value="Male">Nam</Radio>
-                <Radio value="Female">Nữ</Radio>
-              </Radio.Group>
-            </Form.Item>
-
-            <Form.Item
               name="city"
-              label="Tỉnh/Thành phố"
-              initialValue={selectedCityCode}
             >
               <Select
                 placeholder="Chọn Tỉnh/Thành phố"
@@ -262,7 +243,6 @@ const UpdateEmployee = ({
                 ))}
               </Select>
             </Form.Item>
-
             <Form.Item
               label="Quận/Huyện/Thị xã"
               rules={[
@@ -272,12 +252,11 @@ const UpdateEmployee = ({
                 },
               ]}
               name="district"
-              initialValue={selectedDistrictCode}
             >
               <Select
                 placeholder="Chọn Quận/Huyện/Thị xã"
-                allowClear
                 onChange={handleDistrictChange}
+                allowClear
               >
                 {districts.map((district) => (
                   <Option key={district.code} value={district.code}>
@@ -286,7 +265,6 @@ const UpdateEmployee = ({
                 ))}
               </Select>
             </Form.Item>
-
             <Form.Item
               label="Phường/Xã"
               rules={[
@@ -296,10 +274,10 @@ const UpdateEmployee = ({
                 },
               ]}
               name="ward"
-              initialValue={selectedWardCode}
             >
               <Select
                 placeholder="Chọn Phường/Xã/Thị trấn"
+                // onChange={(value) => form.setFieldsValue({ ward: value })}
                 onChange={handleWardChange}
                 allowClear
               >
@@ -313,68 +291,86 @@ const UpdateEmployee = ({
           </div>
 
           <div className="form-right">
-            <Form.Item label="Hình ảnh công cụ" name="imageFile">
+            {/* Mã */}
+            <Form.Item
+              label="Mã nhân viên"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập mã nhân viên',
+                },
+              ]}
+              name="code"
+            >
+              <Input placeholder="Nhập mã nhân viên" />
+            </Form.Item>
+
+            {/* Mã */}
+            <Form.Item
+              label="Tên người dùng"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập tên người dùng',
+                },
+              ]}
+              name="userName"
+            >
+              <Input placeholder="Nhập tên người dùng" />
+            </Form.Item>
+
+            {/* Mã */}
+            <Form.Item
+              label="Mật khẩu"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập mật khẩu',
+                },
+              ]}
+              name="password"
+            >
+              <Input.Password
+                placeholder="Nhập mật khẩu"
+                iconRender={(visible) =>
+                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                }
+              />
+            </Form.Item>
+
+            <Form.Item label="Hình ảnh nhân viên" required>
               <ImgCrop rotationSlider>
                 <Upload
                   listType="picture-card"
                   maxCount={1}
-                  beforeUpload={() => false}
                   fileList={fileList}
                   onChange={onFileChange}
+                  beforeUpload={() => false}
                 >
                   <UploadOutlined />
                 </Upload>
               </ImgCrop>
+              {uploadError && (
+                <div style={{ color: 'red' }}>
+                  Vui lòng tải lên hình ảnh nhân viên
+                </div>
+              )}
             </Form.Item>
 
             <Form.Item
-              label="Ngày sinh"
+              label="Chức vụ"
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng chọn ngày sinh',
+                  message: 'Vui lòng chọn chức vụ',
                 },
               ]}
-              name="dateOfBirth"
-              // initialValue={
-              //   selectedData && selectedData.dateOfBirth
-              //     ? dayjs(selectedData.dateOfBirth).format('YYYY-MM-DD')
-              //     : null
-              // }
+              name="roleId"
             >
-              <DatePicker
-                format="YYYY-MM-DD"
-                disabledDate={disabledDate}
-                placeholder="Chọn ngày sinh"
-                style={{
-                  width: '100%',
-                }}
-              />
-            </Form.Item>
-
-            <Form.Item
-              label="Loại nhiệm vụ"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng chọn loại nhiệm vụ',
-                },
-              ]}
-              name="taskTypeIds"
-              initialValue={selectedData ? selectedData.taskTypeId : null}
-            >
-              <Select
-                mode="multiple"
-                allowClear
-                style={{
-                  width: '100%',
-                }}
-                placeholder="Chọn loại nhiệm vụ"
-                options={taskTypeActive?.data?.map((taskType) => ({
-                  label: taskType.name,
-                  value: taskType.id,
-                }))}
-              />
+              <Radio.Group>
+                <Radio value={1}>Ngưởi quản lý</Radio>
+                <Radio value={3}>Ngưởi giám sát</Radio>
+              </Radio.Group>
             </Form.Item>
           </div>
         </Form>
@@ -382,4 +378,4 @@ const UpdateEmployee = ({
     </>
   )
 }
-export default UpdateEmployee
+export default FormAddMember

@@ -15,6 +15,8 @@ import { getMemberById } from 'features/slice/user/memberSlice'
 const Material = () => {
   const dispatch = useDispatch()
   const material = useSelector((state) => state.material.data)
+
+  const loading = useSelector((state) => state.material.loading)
   const member = useSelector((state) => state.member.data)
   const farmId = member.farmId
 
@@ -58,6 +60,7 @@ const Material = () => {
         handleSearch={handleSearch}
       />
       <DisplayMaterial
+        loading={loading}
         material={material}
         onFinishDelete={onFinishDelete}
         onFinishUpdate={onFinishUpdate}

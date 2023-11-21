@@ -18,6 +18,7 @@ import { getAnimalTypeActive } from 'features/slice/animal/animalTypeActiveSlice
 const Animals = () => {
   const dispatch = useDispatch()
   const animalByFarm = useSelector((state) => state.animalByFarm.data)
+  const loading = useSelector((state) => state.animalByFarm.loading)
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const animalTypeActive = useSelector((state) => state.animalTypeActive.data)
   const member = useSelector((state) => state.member.data)
@@ -68,6 +69,7 @@ const Animals = () => {
         animalTypeActive={animalTypeActive}
       />
       <TableDisplayAnimal
+        loading={loading}
         areaByFarm={areaByFarm}
         animalByFarm={animalByFarm}
         animalTypeActive={animalTypeActive}
