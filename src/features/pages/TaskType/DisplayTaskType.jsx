@@ -10,7 +10,7 @@ import DetailTaskType from './DetailTaskType'
 const DisplayTaskType = ({
   taskType,
   onFinishUpdateTaskType,
-  loadData,
+  // loadData,
   onFinishDeleteTaskType,
   searchTerm,
   loading,
@@ -28,16 +28,15 @@ const DisplayTaskType = ({
     async function fetchData() {
       if (selectedData) {
         await dispatch(getTaskTypeById(selectedData.id))
-        loadData()
+        // loadData()
       }
     }
 
     fetchData()
-  }, [selectedData, dispatch, loadData])
+  }, [selectedData, dispatch])
 
   const openModal = async (record) => {
     await dispatch(getTaskTypeById(record.id))
-    loadData()
     setSelectedData(record)
     setIsModalOpen(true)
   }

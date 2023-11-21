@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Form, Button, Input } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import logoSomo from '../../../assets/logo_Somo.png'
@@ -13,21 +13,31 @@ const SignIn = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const onFinish = (values) => {
-    dispatch(postLogin(values)).then(() => {
-      if (authServices.getRole() === 'Manager') {
-        navigate('/home')
-        requestForToken()
-        setTimeout(() => {
-          const connectionId = localStorage.getItem('connectionId')
-          dispatch(createHub(connectionId))
-        }, 100)
-      } else if (authServices.getRole() === 'Admin') {
-        navigate('/statistic-farm')
-      } else if (authServices.getRole() === 'Supervisor') {
-        toast.warning('Tài khoản của bạn không được phép vào')
-      }
-    })
+    setIsSubmitting(true)
+
+    dispatch(postLogin(values))
+      .then(() => {
+        setIsSubmitting(false)
+
+        if (authServices.getRole() === 'Manager') {
+          navigate('/home')
+          requestForToken()
+          setTimeout(() => {
+            const connectionId = localStorage.getItem('connectionId')
+            dispatch(createHub(connectionId))
+          }, 100)
+        } else if (authServices.getRole() === 'Admin') {
+          navigate('/statistic-farm')
+        } else if (authServices.getRole() === 'Supervisor') {
+          toast.warning('Tài khoản của bạn không được phép vào')
+        }
+      })
+      .catch(() => {
+        setIsSubmitting(false)
+      })
   }
 
   return (
@@ -73,6 +83,7 @@ const SignIn = () => {
                 htmlType="submit"
                 className="btn-login"
                 style={{ margin: 0 }}
+                disabled={isSubmitting}
               >
                 Đăng nhập
               </Button>
