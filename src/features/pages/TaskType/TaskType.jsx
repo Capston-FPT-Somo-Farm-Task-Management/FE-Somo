@@ -63,7 +63,6 @@ const TaskType = () => {
   }
 
   const onFinishDeleteTaskType = (id) => {
-    console.log(id)
     dispatch(deleteTaskType(id)).then(() => {
       loadData()
     })
@@ -85,7 +84,7 @@ const TaskType = () => {
       <DisplayTaskType
         loading={loading}
         taskType={taskType}
-        loadData={loadData}
+        // loadData={loadData}
         onFinishUpdateTaskType={onFinishUpdateTaskType}
         onFinishDeleteTaskType={onFinishDeleteTaskType}
         searchTerm={searchTerm}
