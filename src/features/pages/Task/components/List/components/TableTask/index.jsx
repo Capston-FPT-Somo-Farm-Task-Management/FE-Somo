@@ -10,6 +10,7 @@ import {
 import { useDispatch } from "react-redux";
 import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
 import UpdateTask from "../UpdateTask";
+import { useSelector } from "react-redux";
 
 function TableTask({
   task,
@@ -32,7 +33,7 @@ function TableTask({
   currentTaskId,
 }) {
   const dispatch = useDispatch();
-
+  console.log(task);
   return (
     <>
       {task && (
@@ -160,7 +161,6 @@ function TableTask({
                   );
                 }
               },
-              
             },
           ]}
           dataSource={task}

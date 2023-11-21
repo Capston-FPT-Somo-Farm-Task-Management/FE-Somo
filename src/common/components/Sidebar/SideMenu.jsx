@@ -197,7 +197,7 @@ const SideMenu = () => {
               <Notification />
             </Drawer>
 
-            <SubMenu key="tasks" icon={<BorderOutlined />} title="Công việc">
+            <SubMenu key="tasks" icon={<AimOutlined />} title="Công việc">
               <Menu.Item key="/task">
                 <AimOutlined />
                 <span>Công việc</span>
