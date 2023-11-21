@@ -5,18 +5,11 @@ import { useDispatch } from 'react-redux'
 const { TextArea } = Input
 
 const UpdateAnimalType = ({
-  farmId,
   isModalOpen,
   closeModal,
   selectedData,
   onFinishUpdateAnimalType,
 }) => {
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(getAnimalTypeActive(farmId))
-  }, [])
-
   const onFinish = (values) => {
     const finalValues = {
       id: selectedData.id,

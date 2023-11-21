@@ -1,14 +1,18 @@
 import React from 'react'
 import { Button, Modal, Descriptions, Avatar, Image } from 'antd'
 
-const DetailMember = ({ isModalOpen, closeModal, selectedMember }) => {
+const DetailMember = ({
+  isModalOpenDetail,
+  closeModalDetail,
+  selectedMember,
+}) => {
   return (
     <Modal
       title="Thông tin nhân viên"
-      open={isModalOpen}
-      onCancel={closeModal}
+      open={isModalOpenDetail}
+      onCancel={closeModalDetail}
       footer={[
-        <Button key="back" onClick={closeModal}>
+        <Button key="back" onClick={closeModalDetail}>
           Đóng
         </Button>,
       ]}

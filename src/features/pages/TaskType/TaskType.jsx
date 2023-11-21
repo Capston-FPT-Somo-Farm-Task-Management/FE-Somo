@@ -21,6 +21,8 @@ const TaskType = () => {
   const dispatch = useDispatch()
   const member = useSelector((state) => state.member.data)
   const taskType = useSelector((state) => state.taskType.data)
+  const loading = useSelector((state) => state.taskType.loading)
+
   const farmId = member.farmId
 
   const [searchTerm, setSearchTerm] = useState('')
@@ -81,6 +83,7 @@ const TaskType = () => {
         handleSearch={handleSearch}
       />
       <DisplayTaskType
+        loading={loading}
         taskType={taskType}
         loadData={loadData}
         onFinishUpdateTaskType={onFinishUpdateTaskType}

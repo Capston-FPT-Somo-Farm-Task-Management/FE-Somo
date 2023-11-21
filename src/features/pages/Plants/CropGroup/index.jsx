@@ -19,6 +19,7 @@ const CropGroup = () => {
   const farmId = member.farmId
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const fieldPlant = useSelector((state) => state.fieldPlant.data)
+  const loading = useSelector((state) => state.fieldPlant.loading)
 
   const [searchTerm, setSearchTerm] = useState('')
 
@@ -62,6 +63,7 @@ const CropGroup = () => {
         handleSearch={handleSearch}
       />
       <DisplayCropGroup
+        loading={loading}
         areaByFarm={areaByFarm}
         fieldPlant={fieldPlant}
         onFinishDelete={onFinishDelete}

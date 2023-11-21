@@ -3,22 +3,19 @@ import DisplayCard from './DisplayCard'
 import TableZone from './TableZone'
 import { useDispatch, useSelector } from 'react-redux'
 import { getZoneByFarmId } from 'features/slice/zone/zoneByFarmSlice'
-import { getMemberById } from 'features/slice/user/memberSlice'
 import { useEffect } from 'react'
-import { authServices } from 'services/authServices'
 import { adminDeleteZone } from 'features/slice/zone/zoneSlice'
 import ChartZone from './ChartZone'
 import PieChartZone from './PieChartZone'
 
 const StatisticZone = () => {
   const dispatch = useDispatch()
-  const member = useSelector((state) => state.member.data)
-  // const farmId = member.farmId
   const zoneByFarm = useSelector((state) => state.zoneByFarm.data)
+  const loading = useSelector((state) => state.zoneByFarm.loading)
+
   const farmId = localStorage.getItem('farmId')
 
   useEffect(() => {
-    dispatch(getMemberById(authServices.getUserId()))
     dispatch(getZoneByFarmId(farmId))
   }, [dispatch])
 
@@ -37,7 +34,7 @@ const StatisticZone = () => {
   const filterActiveZones = (zoneByFarm) => {
     if (zoneByFarm && zoneByFarm.data) {
       const activeZones = zoneByFarm.data.filter(
-        (zone) => zone.status === 'Active'
+        (zone) => zone.status === 'Hiện'
       )
       return activeZones.length
     }
@@ -50,7 +47,7 @@ const StatisticZone = () => {
   const filterAnimalZones = (zoneByFarm) => {
     if (zoneByFarm && zoneByFarm.data) {
       const animalZones = zoneByFarm.data.filter(
-        (area) => area.zoneTypeName === 'Chăn nuôi'
+        (area) => area.zoneTypeName === 'Vùng chăn nuôi'
       )
       return animalZones.length
     }
@@ -61,7 +58,7 @@ const StatisticZone = () => {
   const filterPlantZones = (zoneByFarm) => {
     if (zoneByFarm && zoneByFarm.data) {
       const plantZones = zoneByFarm.data.filter(
-        (area) => area.zoneTypeName === 'Trồng trọt'
+        (area) => area.zoneTypeName === 'Vùng trồng trọt'
       )
       return plantZones.length
     }
@@ -77,7 +74,8 @@ const StatisticZone = () => {
   const filterActiveAnimalZones = (zoneByFarm) => {
     if (zoneByFarm && zoneByFarm.data) {
       const zones = zoneByFarm.data.filter(
-        (zone) => zone.status === 'Active' && zone.zoneTypeName === 'Chăn nuôi'
+        (zone) =>
+          zone.status === 'Hiện' && zone.zoneTypeName === 'Vùng chăn nuôi'
       )
       return zones.length
     }
@@ -90,7 +88,8 @@ const StatisticZone = () => {
   const filterActivePlantZones = (zoneByFarm) => {
     if (zoneByFarm && zoneByFarm.data) {
       const zones = zoneByFarm.data.filter(
-        (zone) => zone.status === 'Active' && zone.zoneTypeName === 'Trồng trọt'
+        (zone) =>
+          zone.status === 'Hiện' && zone.zoneTypeName === 'Vùng trồng trọt'
       )
       return zones.length
     }
@@ -103,7 +102,7 @@ const StatisticZone = () => {
   const filterActiveOtherZones = (zoneByFarm) => {
     if (zoneByFarm && zoneByFarm.data) {
       const zones = zoneByFarm.data.filter(
-        (zone) => zone.status === 'Active' && zone.zoneTypeName === 'Khác'
+        (zone) => zone.status === 'Hiện' && zone.zoneTypeName === 'Vùng khác'
       )
       return zones.length
     }
@@ -142,7 +141,11 @@ const StatisticZone = () => {
           otherZoneCount={otherZoneCount}
         />
         <Divider dashed />
-        <TableZone zoneByFarm={zoneByFarm} onFinishDelete={onFinishDelete} />
+        <TableZone
+          zoneByFarm={zoneByFarm}
+          onFinishDelete={onFinishDelete}
+          loading={loading}
+        />
       </div>
     </>
   )

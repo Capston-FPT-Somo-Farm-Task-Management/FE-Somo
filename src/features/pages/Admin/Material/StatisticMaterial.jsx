@@ -1,8 +1,6 @@
-import { getMemberById } from 'features/slice/user/memberSlice'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { authServices } from 'services/authServices'
 import { Divider } from 'antd'
 import TableMaterial from './TableMaterial'
 import {
@@ -14,12 +12,11 @@ import DisplayCard from './DisplayCard'
 const StatisticMaterial = () => {
   const dispatch = useDispatch()
   const material = useSelector((state) => state.material.data)
-  const member = useSelector((state) => state.member.data)
-  // const farmId = member.farmId
+  const loading = useSelector((state) => state.material.loading)
+
   const farmId = localStorage.getItem('farmId')
 
   useEffect(() => {
-    dispatch(getMemberById(authServices.getUserId()))
     dispatch(getMaterialByFarmId(farmId))
   }, [dispatch])
 
@@ -37,7 +34,7 @@ const StatisticMaterial = () => {
   const filterActiveMaterials = (material) => {
     if (material && material.data) {
       const activeMaterials = material.data.filter(
-        (mate) => mate.status === 'Active'
+        (mate) => mate.status === 'Hiện'
       )
       return activeMaterials.length
     }
@@ -53,7 +50,11 @@ const StatisticMaterial = () => {
         inActiveMaterialCount={inActiveMaterialCount}
       />
       <Divider dashed />
-      <TableMaterial material={material} onFinishDelete={onFinishDelete} />
+      <TableMaterial
+        material={material}
+        onFinishDelete={onFinishDelete}
+        loading={loading}
+      />
     </>
   )
 }

@@ -7,7 +7,7 @@ import DisplayFarm from './DisplayFarm'
 const StatisticFarm = () => {
   const dispatch = useDispatch()
   const farm = useSelector((state) => state.farm.data)
-  console.log(farm)
+
   useEffect(() => {
     dispatch(getFarm())
   }, [dispatch])
