@@ -115,6 +115,78 @@ export const updateStatusFromToDoToDraft = createAsyncThunk(
   }
 )
 
+export const refuseTask = createAsyncThunk(
+  'task/refuseTask',
+  async (taskId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(
+        `/FarmTask/Task(${taskId})/Refuse`
+      )
+      if (response.status === 200) {
+        toast.success('Cập nhật thành công')
+      }
+      return response.data
+    } catch (error) {
+      toast.error(error.response.data.message)
+      return rejectWithValue(error)
+    }
+  }
+)
+
+export const changeStatusDoneToClose = createAsyncThunk(
+  'task/changeStatusDoneToClose',
+  async (taskId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(
+        `/FarmTask/(${taskId})/ChangeStatusToClose`
+      )
+      if (response.status === 200) {
+        toast.success('Cập nhật thành công')
+      }
+      return response.data
+    } catch (error) {
+      toast.error(error.response.data.message)
+      return rejectWithValue(error)
+    }
+  }
+)
+
+export const changeStatusFromDoneToDoing = createAsyncThunk(
+  'task/changeStatusFromDoneToDoing',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(
+        `/FarmTask/(${data.taskId})/ChangeStatusFromDoneToDoing?managerId=${authServices.getUserId()}`, data.body
+      )
+      if (response.status === 200) {
+        toast.success('Cập nhật thành công')
+      }
+      return response.data
+    } catch (error) {
+      toast.error(error.response.data.message)
+      return rejectWithValue(error)
+    }
+  }
+)
+
+export const updateTaskDisagreeAndChangeToDo = createAsyncThunk(
+  'task/updateTaskDisagreeAndChangeToDo',
+  async (taskId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(
+        `/FarmTask/(${taskId})/UpdateTaskDisagreeAndChangeToDo`
+      )
+      if (response.status === 200) {
+        toast.success('Cập nhật thành công')
+      }
+      return response.data
+    } catch (error) {
+      toast.error(error.response.data.message)
+      return rejectWithValue(error)
+    }
+  }
+)
+
 export const deleteTask = createAsyncThunk(
   'tasks/deleteTask',
   async (id, { rejectWithValue }) => {
@@ -232,6 +304,70 @@ const taskSlice = createSlice({
         state.loading = false
       })
       .addCase(updateStatusFromToDoToDraft.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+      .addCase(refuseTask.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(refuseTask.fulfilled, (state, action) => {
+        if (Array.isArray(state.data)) {
+          state.data.push(action.payload.task)
+        } else {
+          state.data = [action.payload.task]
+        }
+
+        state.loading = false
+      })
+      .addCase(refuseTask.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+      .addCase(changeStatusDoneToClose.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(changeStatusDoneToClose.fulfilled, (state, action) => {
+        if (Array.isArray(state.data)) {
+          state.data.push(action.payload.task)
+        } else {
+          state.data = [action.payload.task]
+        }
+
+        state.loading = false
+      })
+      .addCase(changeStatusDoneToClose.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+      .addCase(changeStatusFromDoneToDoing.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(changeStatusFromDoneToDoing.fulfilled, (state, action) => {
+        if (Array.isArray(state.data)) {
+          state.data.push(action.payload.task)
+        } else {
+          state.data = [action.payload.task]
+        }
+
+        state.loading = false
+      })
+      .addCase(changeStatusFromDoneToDoing.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+      .addCase(updateTaskDisagreeAndChangeToDo.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(updateTaskDisagreeAndChangeToDo.fulfilled, (state, action) => {
+        if (Array.isArray(state.data)) {
+          state.data.push(action.payload.task)
+        } else {
+          state.data = [action.payload.task]
+        }
+
+        state.loading = false
+      })
+      .addCase(updateTaskDisagreeAndChangeToDo.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
       })

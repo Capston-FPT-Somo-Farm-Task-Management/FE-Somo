@@ -15,6 +15,7 @@ import {
   Form,
   Input,
   Spin,
+  Popover,
 } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteHubConnection } from "features/slice/hub/hubSlice";
@@ -22,15 +23,17 @@ import { authServices } from "services/authServices";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import { updateMember } from "features/slice/user/memberSlice";
+import Notification from "features/pages/Notification";
 
 function HeaderComp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalEditVisible, setIsModalEditVisible] = useState(false);
+  const [isNotificationVisible, setIsNotificationVisible] = useState(false);
+
   const member = useSelector((state) => state.member.data);
   const loading = useSelector((state) => state.member.loading);
-  console.log(loading);
 
   const handleOpenEditProfile = () => {
     setIsModalEditVisible(true);
@@ -112,17 +115,28 @@ function HeaderComp() {
       <nav className="navBar">
         <div className="navRight">
           <div className="header-notification">
-          {!loading ? <Dropdown
-              menu={{
-                items,
-              }}
-              trigger={["hover"]}
-              placement="bottom"
-              arrow
-            >
-              <BellOutlined />
-            </Dropdown> : null}
-            
+            {!loading ? (
+              <Popover
+                placement="bottomRight"
+                title={<h3>Thông báo</h3>}
+                content={
+                  <div
+                    style={{
+                      height: "500px",
+                      overflowY: "auto",
+                      padding: "10px"
+                    }}
+                  >
+                    <Notification />
+                  </div>
+                } // Thay thế bằng nội dung của thông báo
+                trigger="hover"
+                open={isNotificationVisible}
+                onVisibleChange={(visible) => setIsNotificationVisible(visible)}
+              >
+                <BellOutlined />
+              </Popover>
+            ) : null}
           </div>
           <div className="header-profile">
             <Dropdown

@@ -127,6 +127,10 @@ html {
   color: #1677ff;
 }
 
+.ant-popover .ant-popover-content {
+  width: 400px;
+}
+
 .modal-user-profile .ant-modal-content {
   padding: 0;
 }

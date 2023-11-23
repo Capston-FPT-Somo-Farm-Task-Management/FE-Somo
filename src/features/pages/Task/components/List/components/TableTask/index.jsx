@@ -6,11 +6,10 @@ import {
   DeleteOutlined,
   PlusCircleOutlined,
   FileTextOutlined,
+  CloseCircleOutlined
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
-import UpdateTask from "../UpdateTask";
-import { useSelector } from "react-redux";
 
 function TableTask({
   task,
@@ -25,6 +24,7 @@ function TableTask({
   openAddSubtaskModal,
   openSubtaskModal,
   openEffortModal,
+  handleCloseTask,
   onChange,
   openModal,
   handleTaskAdded,
@@ -33,7 +33,6 @@ function TableTask({
   currentTaskId,
 }) {
   const dispatch = useDispatch();
-  console.log(task);
   return (
     <>
       {task && (
@@ -54,7 +53,8 @@ function TableTask({
                 const isManager = record && record.managerName;
                 const isStatus =
                   record &&
-                  (record.status === "Bản nháp" || record.status === "Chuẩn bị" ||
+                  (record.status === "Bản nháp" ||
+                    record.status === "Chuẩn bị" ||
                     record.status === "Đang thực hiện");
                 const isStatusEffort =
                   record &&
@@ -103,6 +103,17 @@ function TableTask({
                                   style={{ color: "gold", marginRight: "8px" }}
                                 />
                                 Cập nhật công việc
+                              </span>
+                            </Menu.Item>
+                          ) : null}
+                          
+                          {record.status === "Hoàn thành" ? (
+                            <Menu.Item key="close">
+                              <span>
+                                <CloseCircleOutlined
+                                  style={{ color: "gold", marginRight: "8px" }}
+                                />
+                                Đóng công việc
                               </span>
                             </Menu.Item>
                           ) : null}
@@ -183,16 +194,7 @@ function TableTask({
         />
       )}
 
-      <UpdateTask
-        editTaskModalVisible={editTaskModalVisible}
-        closeEditTaskModal={closeEditTaskModal}
-        key={editingTask ? editingTask.id : null}
-        editingTask={editingTask}
-        handleTaskAdded={handleTaskAdded}
-        handleDateChange={handleDateChange}
-        loadDataTask={loadDataTask}
-        currentTaskId={currentTaskId}
-      />
+      
     </>
   );
 }

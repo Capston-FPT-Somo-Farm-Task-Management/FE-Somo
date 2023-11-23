@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, Modal, Space } from "antd";
 import dayjs from "dayjs";
 import { getAnimalActive } from "features/slice/animal/animalSlice";
-import { getAreaActive } from "features/slice/area/areaSlice";
-import { getEmployeeByTaskTypeAndFarmId } from "features/slice/employee/employeeSlice";
 import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
 import { getMaterialActiveByFarmId } from "features/slice/material/materialActiveByFarmSlice";
 import { getPlantActive } from "features/slice/plant/plantSlice";
@@ -136,7 +134,7 @@ function UpdateTask({
     dispatch(getSupervisor(farmId));
     dispatch(getMaterialActiveByFarmId(farmId));
     dispatch(getMemberById(authServices.getUserId()));
-  }, [farmId, selectedFieldId]);
+  }, [dispatch, farmId, selectedFieldId]);
 
   useEffect(() => {
     if (selectedAreaId) {
@@ -144,13 +142,13 @@ function UpdateTask({
       dispatch(getZoneByAreaAnimal(selectedAreaId));
       dispatch(getZoneByAreaPlant(selectedAreaId));
     }
-  }, [selectedAreaId, editTaskModalVisible]);
+  }, [dispatch, selectedAreaId, editTaskModalVisible]);
 
   useEffect(() => {
     if (selectedZoneId) {
       dispatch(getFieldByZone(selectedZoneId));
     }
-  }, [selectedZoneId, editTaskModalVisible]);
+  }, [dispatch, selectedZoneId, editTaskModalVisible]);
 
   useEffect(() => {
     if (endDate && startDate && startDate.isAfter(endDate)) {
@@ -159,7 +157,7 @@ function UpdateTask({
         dates: null,
       });
     }
-  }, [startDate, endDate]);
+  }, [dispatch, startDate, endDate, form]);
 
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value);
@@ -362,8 +360,6 @@ function UpdateTask({
               .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
           : dayjs(endDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
 
-        const descriptionToSend = description || "";
-
         if (
           shouldCheckRepeat &&
           editingTask.isRepeat &&
@@ -413,9 +409,6 @@ function UpdateTask({
           supervisorId: supervisorValue
             ? supervisorValue
             : editingTask.suppervisorId,
-          supervisorId: editingTask.suppervisorId
-            ? editingTask.suppervisorId
-            : supervisorValue,
           managerId: member.id,
           fieldId: selectedFieldId ? selectedFieldId : 0,
           isRepeat: typeof isRepeat === "object" ? isRepeat.value : repeatValue,
@@ -440,12 +433,12 @@ function UpdateTask({
           loadDataTask();
           handleDateChange();
           handleTaskAdded();
-          closeEditTaskModal();
         });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
       });
+      closeEditTaskModal();
   };
 
   const handleUpdateTaskDraft = (currentTaskId) => {
@@ -529,12 +522,12 @@ function UpdateTask({
           loadDataTask();
           handleDateChange();
           handleTaskAdded();
-          closeEditTaskModal();
         });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
       });
+      closeEditTaskModal();
   };
 
   const handleUpdateTaskDraftToPrepare = (
@@ -566,8 +559,6 @@ function UpdateTask({
               .second(0)
               .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
           : dayjs(endDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
-
-        const descriptionToSend = description || "";
 
         if (
           shouldCheckRepeat &&
@@ -646,12 +637,12 @@ function UpdateTask({
           loadDataTask();
           handleDateChange();
           handleTaskAdded();
-          closeEditTaskModal();
         });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
       });
+      closeEditTaskModal();
   };
 
   const handleChangeStatusToDoToDraft = (currentTaskId) => {
@@ -745,7 +736,7 @@ function UpdateTask({
       {editTaskModalVisible && (
         <Modal
           title="Cập nhật công việc"
-          visible={editTaskModalVisible}
+          open={editTaskModalVisible}
           onCancel={closeEditTaskModal}
           width={900}
           footer={handleShowButton}

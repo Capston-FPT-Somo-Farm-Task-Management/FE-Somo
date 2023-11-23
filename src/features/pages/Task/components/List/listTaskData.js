@@ -17,7 +17,11 @@ export const taskTitle = [
             />
           ) : null}
           <Tooltip placement="bottomLeft" title={code}>
-            <p>#{code.slice(0, 8) + (code.length > 8 ? "..." : "")}</p>
+            <>
+              {code ? (
+                <p>#{code.slice(0, 8) + (code.length > 8 ? "..." : "")}</p>
+              ) : null}
+            </>
           </Tooltip>
         </div>
       </p>
@@ -30,7 +34,9 @@ export const taskTitle = [
     render: (text) => (
       <Tooltip placement="bottomLeft" title="Xem chi tiết">
         <h4 className="task-name" data-name-clicked="true">
-          {text.slice(0, 15) + (text.length > 15 ? "..." : "")}
+          {text ? (
+            <>{text.slice(0, 15) + (text.length > 15 ? "..." : "")}</>
+          ) : null}
         </h4>
       </Tooltip>
     ),
@@ -73,7 +79,6 @@ export const taskTitle = [
       return (
         <span
           style={{
-            width: "75%",
             color: "black",
             border: "1px solid #f5f5f5",
             display: "flex",
@@ -81,7 +86,7 @@ export const taskTitle = [
             justifyContent: "flex-start",
             padding: "5px 0px",
             borderRadius: "8px",
-            boxShadow: "1px 1px #f5f5f5"
+            boxShadow: "1px 1px #f5f5f5",
           }}
         >
           <div
@@ -109,14 +114,13 @@ export const taskTitle = [
         <Tooltip placement="bottom" title={data}>
           <span
             style={{
-              width: "70%",
               border: "1px solid #f5f5f5",
               display: "flex",
               alignItems: "center",
               justifyContent: "flex-start",
               padding: "5px 0px",
               borderRadius: "8px",
-              boxShadow: "1px 1px #f5f5f5"
+              boxShadow: "1px 1px #f5f5f5",
             }}
           >
             <Avatar

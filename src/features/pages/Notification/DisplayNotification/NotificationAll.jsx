@@ -1,19 +1,30 @@
-import { Badge, List, Popover } from 'antd'
-import { getAllNotify } from 'features/slice/notification/notificationSlice'
-import { getTaskById } from 'features/slice/task/taskByIdSlice'
-import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
-import { authServices } from 'services/authServices'
+import { List, Modal } from "antd";
+import { getAllNotify } from "features/slice/notification/notificationSlice";
+import { getTaskById } from "features/slice/task/taskByIdSlice";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { authServices } from "services/authServices";
 
 const NotificationAll = ({ changeStatusNotify }) => {
-  const dispatch = useDispatch()
-  const [selectedTaskId, setSelectedTaskId] = useState(null)
-  const taskById = useSelector((state) => state.taskById.data)
+  const dispatch = useDispatch();
+  const [selectedTaskId, setSelectedTaskId] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const taskById = useSelector((state) => state.taskById.data);
 
   // Load notify
-  const notifyAll = useSelector((state) => state.notification.data)
-  const [pageNumber, setPageNumber] = useState(1)
+  const notifyAll = useSelector((state) => state.notification.data);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     dispatch(
@@ -22,19 +33,19 @@ const NotificationAll = ({ changeStatusNotify }) => {
         pageSize: 200,
         id: authServices.getUserId(),
       })
-    )
-  }, [dispatch, pageNumber])
+    );
+  }, [dispatch, pageNumber]);
 
   // Task detail
   useEffect(() => {
-    dispatch(getTaskById(selectedTaskId))
-  }, [dispatch, selectedTaskId])
+    dispatch(getTaskById(selectedTaskId));
+  }, [dispatch, selectedTaskId]);
 
-  const getDetailNotify = (item) => {
-    console.log(item)
-    setSelectedTaskId(item.taskId)
-    changeStatusNotify(item.id)
-  }
+  // const getDetailNotify = (item) => {
+  //   console.log(item);
+  //   setSelectedTaskId(item.taskId);
+  //   changeStatusNotify(item.id);
+  // };
 
   const content = (
     <div>
@@ -49,38 +60,41 @@ const NotificationAll = ({ changeStatusNotify }) => {
       <p>Vùng: {taskById ? taskById.data?.zoneName : null}</p>
       <p>Cụ thể: {taskById ? taskById.data?.fieldName : null}</p>
     </div>
-  )
+  );
 
   return (
     <>
       <List
         itemLayout="horizontal"
-        locale={{ emptyText: 'Chưa có thông báo' }}
+        locale={{ emptyText: "Chưa có thông báo" }}
         dataSource={notifyAll ? notifyAll : []}
         renderItem={(item) => (
           <List.Item>
             <List.Item.Meta
               title={
-                <Popover
-                  title={item.message}
-                  trigger="click"
-                  content={content}
-                  placement="topLeft"
-                  onClick={() => getDetailNotify(item)}
-                >
-                  {item.isNew === true ? (
-                    <a style={{ color: 'red' }}>{item.message}</a>
-                  ) : (
-                    <a>{item.message}</a>
-                  )}
-                </Popover>
+                item.isNew === true ? (
+                  <a style={{ color: "red" }} onClick={showModal}>
+                    {item.message}
+                  </a>
+                ) : (
+                  <a onClick={showModal}>{item.message}</a>
+                )
               }
               description={item.time}
             />
+            <Modal
+              title="Basic Modal"
+              open={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+              maskClosable={false}
+            >
+              {content}
+            </Modal>
           </List.Item>
         )}
       />
     </>
-  )
-}
-export default NotificationAll
+  );
+};
+export default NotificationAll;
