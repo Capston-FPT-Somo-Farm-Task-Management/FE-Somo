@@ -7,6 +7,7 @@ import {
   refuseTask,
   changeStatusDoneToClose,
   changeStatusFromDoneToDoing,
+  changeStatusToPendingAndCancel,
 } from "features/slice/task/taskSlice";
 import { getEmployeeByTask } from "features/slice/employee/employeeByTask";
 import {
@@ -30,6 +31,8 @@ import dayjs from "dayjs";
 import CheckParent from "./components/CheckParent";
 import UpdateTask from "./components/UpdateTask";
 import ChangeDoneToDoing from "./components/ChangeDoneToDoing";
+import ChangeDoingToPending from "./components/ChangeDoingToPendingAndCancel/ChangeDoingToPending";
+import ChangeDoingToCancel from "./components/ChangeDoingToPendingAndCancel/ChangeDoingToCancel";
 
 const List = () => {
   const [subTasks, setSubTasks] = useState([]);
@@ -46,6 +49,10 @@ const List = () => {
   const [addSubtaskVisible, setAddSubtaskVisible] = useState(false);
   const [effortVisible, setEffortVisible] = useState(false);
   const [taskDoneToDoingVisible, setTaskDoneToDoingVisible] = useState(false);
+  const [taskDoingToPendingModalVisible, setTaskDoingToPendingModalVisible] =
+    useState(false);
+  const [taskDoingToCancelModalVisible, setTaskDoingToCancelModalVisible] =
+    useState(false);
   const [description, setDescription] = useState("");
   const [pageIndex, setPageIndex] = useState(1);
   const [currentTaskId, setCurrentTaskId] = useState(0);
@@ -129,6 +136,10 @@ const List = () => {
       openEditTaskModal(record);
     } else if (e.key === "delete") {
       handleDelete(record.id);
+    } else if (e.key === "pending") {
+      openChangeDoingToPendingModal(record);
+    } else if (e.key === "cancel") {
+      openChangeDoingToCancelModal(record);
     } else if (e.key === "close") {
       handleChangeDoneToCloseTask(record.id);
     }
@@ -151,6 +162,24 @@ const List = () => {
     setModalVisible(false);
   };
 
+  const openChangeDoingToPendingModal = (record) => {
+    setTaskDoingToPendingModalVisible(true);
+    setCurrentTaskId(record.id);
+  };
+
+  const closeChangeDoingToPendingModal = () => {
+    setTaskDoingToPendingModalVisible(false);
+  };
+
+  const openChangeDoingToCancelModal = (record) => {
+    setTaskDoingToCancelModalVisible(true);
+    setCurrentTaskId(record.id);
+  };
+
+  const closeChangeDoingToCancelModal = () => {
+    setTaskDoingToCancelModalVisible(false);
+  };
+
   const handleRefuseTask = (id) => {
     dispatch(refuseTask(id)).then(() => {
       loadDataTask();
@@ -170,6 +199,42 @@ const List = () => {
     });
     setTaskDoneToDoingVisible(false);
     setModalVisible(false);
+  };
+
+  const handleChangeDoingToPendingTask = (id) => {
+    const descriptionValue = {
+      description: description,
+    };
+    dispatch(
+      changeStatusToPendingAndCancel({
+        taskId: id,
+        status: 5,
+        body: descriptionValue,
+      })
+    ).then(() => {
+      loadDataTask();
+      handleDateChange();
+      handleTaskAdded();
+    });
+    setTaskDoingToPendingModalVisible(false);
+  };
+
+  const handleChangeDoingToCancelTask = (id) => {
+    const descriptionValue = {
+      description: description,
+    };
+    dispatch(
+      changeStatusToPendingAndCancel({
+        taskId: id,
+        status: 7,
+        body: descriptionValue,
+      })
+    ).then(() => {
+      loadDataTask();
+      handleDateChange();
+      handleTaskAdded();
+    });
+    setTaskDoingToCancelModalVisible(false);
   };
 
   const handleChangeDoneToCloseTask = (id) => {
@@ -466,6 +531,8 @@ const List = () => {
           openSubtaskModal={openSubtaskModal}
           openAddSubtaskModal={openAddSubtaskModal}
           openEffortModal={openEffortModal}
+          openChangeDoingToPendingModal={openChangeDoingToPendingModal}
+          openChangeDoingToCancelModal={openChangeDoingToCancelModal}
           handleChangeDoneToCloseTask={handleChangeDoneToCloseTask}
           handleTaskAdded={handleTaskAdded}
           handleDateChange={handleDateChange}
@@ -537,6 +604,22 @@ const List = () => {
         taskDoneToDoingVisible={taskDoneToDoingVisible}
         closeChangeDoneToDoingModal={closeChangeDoneToDoingModal}
         handleChangeDoneToDoing={handleChangeDoneToDoing}
+        description={description}
+        handleDescription={handleDescription}
+      />
+      <ChangeDoingToPending
+        currentTaskId={currentTaskId}
+        handleChangeDoingToPendingTask={handleChangeDoingToPendingTask}
+        closeChangeDoingToPendingModal={closeChangeDoingToPendingModal}
+        taskDoingToPendingModalVisible={taskDoingToPendingModalVisible}
+        description={description}
+        handleDescription={handleDescription}
+      />
+      <ChangeDoingToCancel
+        currentTaskId={currentTaskId}
+        handleChangeDoingToCancelTask={handleChangeDoingToCancelTask}
+        closeChangeDoingToCancelModal={closeChangeDoingToCancelModal}
+        taskDoingToCancelModalVisible={taskDoingToCancelModalVisible}
         description={description}
         handleDescription={handleDescription}
       />

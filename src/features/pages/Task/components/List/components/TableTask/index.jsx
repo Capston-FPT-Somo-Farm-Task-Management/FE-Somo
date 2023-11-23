@@ -6,7 +6,8 @@ import {
   DeleteOutlined,
   PlusCircleOutlined,
   FileTextOutlined,
-  CloseCircleOutlined
+  CloseCircleOutlined,
+  PauseCircleOutlined,
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
@@ -17,20 +18,14 @@ function TableTask({
   dataTotalPages,
   taskTitle,
   handleMenuClick,
-  editingTask,
-  editTaskModalVisible,
   openEditTaskModal,
-  closeEditTaskModal,
   openAddSubtaskModal,
   openSubtaskModal,
   openEffortModal,
-  handleCloseTask,
+  openChangeDoingToPendingModal,
+  openChangeDoingToCancelModal,
   onChange,
   openModal,
-  handleTaskAdded,
-  handleDateChange,
-  loadDataTask,
-  currentTaskId,
 }) {
   const dispatch = useDispatch();
   return (
@@ -77,14 +72,6 @@ function TableTask({
                             </Menu.Item>
                           ) : null}
 
-                          <Menu.Item key="viewSubTask">
-                            <span onClick={() => openSubtaskModal(record)}>
-                              <FileTextOutlined
-                                style={{ color: "green", marginRight: "8px" }}
-                              />
-                              Xem công việc con
-                            </span>
-                          </Menu.Item>
                           {isStatusEffort && isStatusEffort ? (
                             <Menu.Item key="viewEffort">
                               <span onClick={() => openEffortModal(record)}>
@@ -106,7 +93,33 @@ function TableTask({
                               </span>
                             </Menu.Item>
                           ) : null}
-                          
+                          {record.status === "Đang thực hiện" ? (
+                            <>
+                              <Menu.Item key="pending">
+                                <span onClick={() => openChangeDoingToPendingModal(record)}>
+                                  <PauseCircleOutlined
+                                    style={{
+                                      color: "blue",
+                                      marginRight: "8px",
+                                    }}
+                                  />
+                                  Tạm hoãn
+                                </span>
+                              </Menu.Item>
+                              <Menu.Item key="cancel">
+                                <span onClick={() => openChangeDoingToCancelModal(record)}>
+                                  <CloseCircleOutlined
+                                    style={{
+                                      color: "red",
+                                      marginRight: "8px",
+                                    }}
+                                  />
+                                  Hủy bỏ
+                                </span>
+                              </Menu.Item>
+                            </>
+                          ) : null}
+
                           {record.status === "Hoàn thành" ? (
                             <Menu.Item key="close">
                               <span>
@@ -193,8 +206,6 @@ function TableTask({
           }}
         />
       )}
-
-      
     </>
   );
 }

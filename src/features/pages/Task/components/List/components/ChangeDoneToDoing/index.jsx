@@ -9,7 +9,6 @@ const ChangeDoneToDoing = ({
   description,
   handleDescription,
 }) => {
-  console.log(selectedTask);
   return (
     <>
       {taskDoneToDoingVisible && (
