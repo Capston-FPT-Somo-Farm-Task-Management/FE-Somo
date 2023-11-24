@@ -13,7 +13,10 @@ import {
   updateEmployee,
 } from 'features/slice/employee/employeeSlice'
 import { getEmployeeExcel } from 'features/slice/employee/employeeExcelSlice'
-import { getEmployeeEffortExcel } from 'features/slice/employee/employeeEffortSlice'
+import {
+  getEmployeeEffortByEmployeeId,
+  getEmployeeEffortExcel,
+} from 'features/slice/employee/employeeEffortSlice'
 
 const Employee = () => {
   const dispatch = useDispatch()
@@ -63,6 +66,10 @@ const Employee = () => {
     dispatch(getEmployeeEffortExcel(value))
   }
 
+  const getAnyEmployeeEffort = (value) => {
+    dispatch(getEmployeeEffortByEmployeeId(value))
+  }
+
   // LoadData
   const loadData = () => {
     dispatch(getEmployeeByFarmId(farmId))
@@ -87,6 +94,7 @@ const Employee = () => {
         employeeByFarm={employeeByFarm}
         searchTerm={searchTerm}
         loadData={loadData}
+        getAnyEmployeeEffort={getAnyEmployeeEffort}
       />
     </>
   )
