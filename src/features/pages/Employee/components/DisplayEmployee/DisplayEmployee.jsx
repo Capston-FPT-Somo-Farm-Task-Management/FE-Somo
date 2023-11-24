@@ -1,4 +1,4 @@
-import { Badge, Button, Skeleton, Table } from 'antd'
+import { Badge, Button, Dropdown, Menu, Skeleton, Table } from 'antd'
 import Column from 'antd/es/table/Column'
 import { useEffect, useState } from 'react'
 import UpdateEmployee from './UpdateEmployee'
@@ -6,6 +6,18 @@ import DetailEmployee from './DetailEmployee'
 import { getEmployeeById } from 'features/slice/employee/employeeSlice'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
+
+import {
+  MoreOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  PlusCircleOutlined,
+  FileTextOutlined,
+  CloseCircleOutlined,
+  PauseCircleOutlined,
+} from '@ant-design/icons'
+import ViewTimeKeeping from './ViewTimeKeeping'
+import { getEmployeeEffortTotal } from 'features/slice/employee/employeeEffortTotalSlice'
 
 const DisplayEmployee = ({
   employeeByFarm,
@@ -16,11 +28,15 @@ const DisplayEmployee = ({
   taskTypeActive,
   farmId,
   loading,
+  getAnyEmployeeEffort,
 }) => {
   const dispatch = useDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState(null)
   const employeeById = useSelector((state) => state.employee.data)
+  const employeeEffortTotal = useSelector(
+    (state) => state.employeeEffortTotal.data
+  )
 
   const [isModalDetailOpen, setIsModalDetailOpen] = useState(false)
   const [selectedDataDetail, setSelectedDataDetail] = useState(null)
@@ -28,15 +44,13 @@ const DisplayEmployee = ({
   useEffect(() => {
     if (selectedData) {
       dispatch(getEmployeeById(selectedData.id)).then(() => {
-        loadData()
+        // loadData()
       })
     }
   }, [selectedData, dispatch])
 
   const openModal = async (record) => {
-    await dispatch(getEmployeeById(record.id)).then(() => {
-      loadData()
-    })
+    await dispatch(getEmployeeById(record.id))
     setSelectedData(record)
     setIsModalOpen(true)
   }
@@ -55,6 +69,19 @@ const DisplayEmployee = ({
   const closeModalDetail = () => {
     setSelectedDataDetail(null)
     setIsModalDetailOpen(false)
+  }
+
+  // Drawer
+  const [openDrawer, setOpenDrawer] = useState(false)
+  const showDrawer = async (record) => {
+    await dispatch(getEmployeeEffortTotal(record.id))
+    setSelectedDataDetail(record)
+    setOpenDrawer(true)
+  }
+
+  const onClose = () => {
+    setSelectedDataDetail(null)
+    setOpenDrawer(false)
   }
 
   const searchEmployee = employeeByFarm
@@ -116,7 +143,7 @@ const DisplayEmployee = ({
                 </Button>
               )}
             />
-            <Column
+            {/* <Column
               title="Cập nhật"
               key="7"
               dataIndex="id"
@@ -129,6 +156,49 @@ const DisplayEmployee = ({
                   Cập nhật
                 </Button>
               )}
+            /> */}
+
+            <Column
+              title="Tuỳ chọn"
+              key="8"
+              dataIndex="id"
+              render={(_, record) => {
+                return (
+                  <Dropdown
+                    placement="bottomRight"
+                    overlay={
+                      <Menu
+                      // onClick={(e) => handleMenuClick(e, record)}
+                      >
+                        <Menu.Item key="updateEmployee">
+                          <span onClick={() => openModal(record)}>
+                            <EditOutlined
+                              style={{ color: 'green', marginRight: '8px' }}
+                            />
+                            Cập nhật
+                          </span>
+                        </Menu.Item>
+                        <Menu.Item key="viewSubTask">
+                          <span onClick={() => showDrawer(record)}>
+                            <FileTextOutlined
+                              style={{ color: 'green', marginRight: '8px' }}
+                            />
+                            Xem chấm công
+                          </span>
+                        </Menu.Item>
+                      </Menu>
+                    }
+                  >
+                    <div
+                      className="ant-dropdown-link"
+                      onClick={(e) => e.preventDefault()}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <MoreOutlined className="menu-icon" />
+                    </div>
+                  </Dropdown>
+                )
+              }}
             />
           </Table>
 
@@ -147,6 +217,20 @@ const DisplayEmployee = ({
             taskTypeActive={taskTypeActive}
             selectedData={selectedData}
             onFinishUpdate={onFinishUpdate}
+          />
+
+          <ViewTimeKeeping
+            key={selectedDataDetail ? selectedDataDetail.id : null}
+            // isModalOpen={isModalOpen}
+            // closeModal={closeModal}
+            employeeById={employeeById}
+            // taskTypeActive={taskTypeActive}
+            selectedDataDetail={selectedDataDetail}
+            // onFinishUpdate={onFinishUpdate}
+            onClose={onClose}
+            openDrawer={openDrawer}
+            getAnyEmployeeEffort={getAnyEmployeeEffort}
+            employeeEffortTotal={employeeEffortTotal}
           />
         </>
       )}
