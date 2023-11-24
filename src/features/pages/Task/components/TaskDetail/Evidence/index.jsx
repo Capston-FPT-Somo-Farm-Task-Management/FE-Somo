@@ -13,7 +13,7 @@ function Evidence({
   closeEditTaskModal,
 }) {
   const evidenceData = useSelector((state) => state.evidence.data);
-
+  console.log(evidenceData);
   const { Panel } = Collapse;
   console.log(taskData);
 
@@ -27,16 +27,51 @@ function Evidence({
           date: formattedUpdateDate,
           content: (
             <div key={evidence.id} className="evidence-content">
-              {taskData.status === "Từ chối" ? (
+              {evidence.evidenceType === 1 ? (
+                <p className="evidence-desc">
+                  <span style={{ color: "#f77f00" }}>Lý do không đồng ý:</span>{" "}
+                  {evidence.description}
+                </p>
+              ) : evidence.evidenceType === 2 ? (
+                <p className="evidence-desc">
+                  <span style={{ color: "red" }}>Lý do hủy bỏ:</span>{" "}
+                  {evidence.description}
+                </p>
+              ) : evidence.evidenceType === 3 ? (
+                <p className="evidence-desc">
+                  <span style={{ color: "#ffb703" }}>Lý do tạm hoãn:</span>{" "}
+                  {evidence.description}
+                </p>
+              ) : evidence.evidenceType === 4 ? (
+                <p className="evidence-desc">
+                  <span style={{ color: "#849b5c" }}>Mô tả:</span>{" "}
+                  {evidence.description}
+                </p>
+              ) : evidence.evidenceType === 5 ? (
                 <p className="evidence-desc">
                   <span style={{ color: "red" }}>Lý do từ chối:</span>{" "}
                   {evidence.description}
                 </p>
               ) : (
-                <p className="evidence-desc">Mô tả: {evidence.description}</p>
+                <p className="evidence-desc">
+                  <span style={{ color: "#849b5c" }}>Mô tả:</span>{" "}
+                  {evidence.description}
+                </p>
               )}
+              {evidence.evidenceType === 0 ? (
+                <p className="evidence-time" style={{color: "#849b5c"}}>Bình thường</p>
+              ) : evidence.evidenceType === 1 ? (
+                <p  className="evidence-time" style={{color: "#f77f00"}}>Không đồng ý</p>
+              ) : evidence.evidenceType === 2 ? (
+                <p className="evidence-time" style={{ color: "red" }}>Hủy bỏ</p>
+              ) : evidence.evidenceType === 3 ? (
+                <p className="evidence-time" style={{color: "#ffb703"}}>Tạm hoãn</p>
+              ) : evidence.evidenceType === 4 ? (
+                <p className="evidence-time" style={{color: "#849b5c"}}>Đang thực hiện</p>
+              ) : evidence.evidenceType === 5 ? (
+                <p className="evidence-time" style={{color: "red"}}>Từ chối người giám sát</p>
+              ) : null}
 
-              <p className="evidence-time">Đã gửi {evidence.time}</p>
               {evidence.urlImage && evidence.urlImage.length > 0 ? (
                 <Collapse accordion className="collapse-evidence">
                   <Panel
@@ -168,16 +203,16 @@ function Evidence({
     <div className="evidence">
       <h6 style={{ fontSize: "24px", fontWeight: "500" }}>Báo cáo công việc</h6>
       {renderImages()}
-      {taskData.status === "Từ chối" ? (
+      {taskData && taskData.status === "Từ chối" ? (
         <div>
           <Button
             form="refuseTask"
             type="primary"
             danger
-            onClick={openEditTaskModal}
+            onClick={() => openEditTaskModal(taskData)}
           >
             Chỉnh sửa
-            <UpdateTask/>
+            <UpdateTask />
           </Button>
           ,
           <Button
@@ -185,7 +220,7 @@ function Evidence({
             type="primary"
             htmlType="submit"
             onClick={() => {
-              handleRefuseTask(taskData.id)
+              handleRefuseTask(taskData.id);
             }}
           >
             Không chấp nhận

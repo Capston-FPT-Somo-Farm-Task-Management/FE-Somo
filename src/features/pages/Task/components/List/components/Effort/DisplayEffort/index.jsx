@@ -1,28 +1,11 @@
-import { Button, Dropdown, Empty, Menu, Modal, notification } from "antd";
+import { Button, Empty, Modal } from "antd";
+import dayjs from "dayjs";
 import React from "react";
-import { MoreOutlined, EditOutlined } from "@ant-design/icons";
-import { FrownOutlined } from "@ant-design/icons";
 
-function DisplayEffort({
-  effortVisible,
-  handleEffortVisible,
-  effort,
-  handleMenuEffortClick,
-  handleMenuSubTaskClick,
-  isHaveSubTask,
-  openSubtaskModal,
-}) {
-  const [api, contextHolder] = notification.useNotification();
-  const openNotification = () => {
-    api.open({
-      message: "Công việc này có công việc con",
-      description: "Bạn vui lòng chấm công ở từng công việc con!",
-      icon: <FrownOutlined style={{ color: "red" }} />,
-    });
-  };
+function DisplayEffort({ effortVisible, handleEffortVisible, effort }) {
   return (
     <Modal
-      title="Xem chấm công tổng"
+      title="Ghi nhận thời gian làm việc"
       open={effortVisible}
       onCancel={handleEffortVisible}
       footer={[
@@ -42,59 +25,20 @@ function DisplayEffort({
                     <span style={{ textDecoration: "none", color: "red" }}>
                       *{" "}
                     </span>
-                    <span>Chấm công theo {effortItem.employeeName}</span>{" "}
+                    <span>{effortItem.employeeName}</span>{" "}
                   </div>
-                  {isHaveSubTask === false ? (
-                    <div className="effort-dropdown">
-                      <Dropdown
-                        placement="bottomRight"
-                        overlay={
-                          <Menu
-                            onClick={(e) =>
-                              handleMenuEffortClick(e, effortItem)
-                            }
-                          >
-                            <Menu.Item key="edit">
-                              <EditOutlined
-                                style={{ color: "gold", marginRight: "8px" }}
-                              />
-                              Sửa chấm công
-                            </Menu.Item>
-                          </Menu>
-                        }
-                      >
-                        <Button icon={<MoreOutlined />} />
-                      </Dropdown>
-                    </div>
-                  ) : (
-                    <div className="effort-dropdown">
-                      <Dropdown
-                        placement="bottomRight"
-                        overlay={
-                          <Menu onClick={openNotification}>
-                            <Menu.Item key="editEffort">
-                              <EditOutlined
-                                style={{ color: "gold", marginRight: "8px" }}
-                              />
-                              {contextHolder}
-                              Sửa chấm công
-                            </Menu.Item>
-                          </Menu>
-                        }
-                      >
-                        <Button icon={<MoreOutlined />} />
-                      </Dropdown>
-                    </div>
-                  )}
                 </div>
 
                 <div className="effort-container" key={effortItem.employeeId}>
                   <div className="effort-item">
-                    {console.log(effortItem)}
                     <p>Mã nhân viên: {effortItem.employeeCode}</p>
                     <p>
                       Thời gian: {effortItem.totalActualEffortHour} giờ{" "}
                       {effortItem.totalActualEfforMinutes} phút
+                    </p>
+                    <p>
+                      Ngày thực hiện:{" "}
+                      {dayjs(effortItem.daySubmit).format("DD-MM-YYYY")}
                     </p>
                   </div>
                 </div>
@@ -102,7 +46,7 @@ function DisplayEffort({
             );
           })
         ) : (
-          <Empty description="Không có người thực hiện để chấm công" />
+          <Empty description="Không có người thực hiện để ghi nhận" />
         )}
       </div>
     </Modal>

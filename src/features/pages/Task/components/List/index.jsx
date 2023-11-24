@@ -8,45 +8,33 @@ import {
   changeStatusDoneToClose,
   changeStatusFromDoneToDoing,
   changeStatusToPendingAndCancel,
+  changeStatusToDoing,
 } from "features/slice/task/taskSlice";
-import { getEmployeeByTask } from "features/slice/employee/employeeByTask";
 import {
   getSubTasksByTaskId,
-  createSubTask,
-  deleteSubTask,
-  updateSubTask,
-  updateEffortBySubTask,
 } from "features/slice/subTask/subTaskSlice";
-import { getEffort, updateEffort } from "features/slice/subTask/effortSlice";
+import { getEffort } from "features/slice/subTask/effortSlice";
 import { taskTitle } from "./listTaskData";
 import TaskDetail from "../TaskDetail";
 import ModalTask from "../ModalTask";
 import StatusTabs from "./components/StatusTabs";
 import SearchComp from "./components/SearchComp";
 import DateSelectionComp from "./components/DateSelection";
-import SubTask from "./components/SubTask/subTask";
 import Effort from "./components/Effort";
 import TableTask from "./components/TableTask";
-import dayjs from "dayjs";
 import CheckParent from "./components/CheckParent";
 import UpdateTask from "./components/UpdateTask";
 import ChangeDoneToDoing from "./components/ChangeDoneToDoing";
 import ChangeDoingToPending from "./components/ChangeDoingToPendingAndCancel/ChangeDoingToPending";
 import ChangeDoingToCancel from "./components/ChangeDoingToPendingAndCancel/ChangeDoingToCancel";
+import SubTask from "./components/SubTask";
 
 const List = () => {
   const [subTasks, setSubTasks] = useState([]);
   const [effort, setEffort] = useState([]);
   const [editingTask, setEditingTask] = useState(null);
   const [editTaskModalVisible, setEditTaskModalVisible] = useState(false);
-  const [editingSubTask, setEditingSubTask] = useState(null);
-  const [editSubTaskModalVisible, setEditSubTaskModalVisible] = useState(false);
-  const [editSubTaskEffortModalVisible, setEditSubTaskEffortModalVisible] =
-    useState(false);
-  const [editingEffort, setEditingEffort] = useState(null);
-  const [editEffortVisible, setEditEffortVisible] = useState(false);
   const [subTaskModalVisible, setSubTaskModalVisible] = useState(false);
-  const [addSubtaskVisible, setAddSubtaskVisible] = useState(false);
   const [effortVisible, setEffortVisible] = useState(false);
   const [taskDoneToDoingVisible, setTaskDoneToDoingVisible] = useState(false);
   const [taskDoingToPendingModalVisible, setTaskDoingToPendingModalVisible] =
@@ -56,17 +44,16 @@ const List = () => {
   const [description, setDescription] = useState("");
   const [pageIndex, setPageIndex] = useState(1);
   const [currentTaskId, setCurrentTaskId] = useState(0);
-  const [availableEmployees, setAvailableEmployees] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [status, setStatus] = useState(0);
+  const [activeKey, setActiveKey] = useState("0");
   const [selectedDate, setSelectedDate] = useState(null);
   const [taskNameSearch, setTaskNameSearch] = useState("");
   const [statusForEdit, setStatusForEdit] = useState(null);
   const [checkTaskParent, setCheckTaskParent] = useState(1);
-  const [startDay, setStartDay] = useState(null);
-  const [endDay, setEndDay] = useState(null);
   const [currentStep, setCurrentStep] = useState(-1);
+  const [fileList, setFileList] = useState([])
 
   const [form] = Form.useForm();
 
@@ -80,11 +67,11 @@ const List = () => {
 
   const dispatch = useDispatch();
 
-  const loadDataTask = () => {
+  const loadDataTask = (newStatus) => {
     dispatch(
       getTasks({
         pageIndex,
-        status,
+        status: newStatus,
         date: selectedDate,
         taskName: taskNameSearch,
         checkTaskParent: checkTaskParent,
@@ -93,8 +80,7 @@ const List = () => {
   };
 
   useEffect(() => {
-    loadDataTask();
-    console.log(pageIndex);
+    loadDataTask(status);
   }, [
     dispatch,
     pageIndex,
@@ -104,15 +90,9 @@ const List = () => {
     checkTaskParent,
   ]);
 
-  // useEffect(() => {
-  //   console.log("pageIndex ", pageIndex);
-  // }, [pageIndex])
-
-  useEffect(() => {
-    dispatch(getEmployeeByTask(currentTaskId)).then((data) => {
-      setAvailableEmployees(data.payload);
-    });
-  }, [currentTaskId]);
+  const onFileChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList)
+  }
 
   const handleBackOtherTask = () => {
     setCurrentStep(currentStep - 2);
@@ -140,6 +120,8 @@ const List = () => {
       openChangeDoingToPendingModal(record);
     } else if (e.key === "cancel") {
       openChangeDoingToCancelModal(record);
+    } else if (e.key === "changeToDoing") {
+      handleChangePendingAndCancelToDoing(record.id);
     } else if (e.key === "close") {
       handleChangeDoneToCloseTask(record.id);
     }
@@ -185,6 +167,7 @@ const List = () => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
+      handleTabChange("1")
     });
     setModalVisible(false);
   };
@@ -204,6 +187,7 @@ const List = () => {
   const handleChangeDoingToPendingTask = (id) => {
     const descriptionValue = {
       description: description,
+      imageFile: fileList[0],
     };
     dispatch(
       changeStatusToPendingAndCancel({
@@ -215,6 +199,7 @@ const List = () => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
+      handleTabChange("5")
     });
     setTaskDoingToPendingModalVisible(false);
   };
@@ -222,6 +207,7 @@ const List = () => {
   const handleChangeDoingToCancelTask = (id) => {
     const descriptionValue = {
       description: description,
+      imageFile: fileList[0],
     };
     dispatch(
       changeStatusToPendingAndCancel({
@@ -233,8 +219,18 @@ const List = () => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
+      handleTabChange("7")
     });
     setTaskDoingToCancelModalVisible(false);
+  };
+
+  const handleChangePendingAndCancelToDoing = (id) => {
+    dispatch(changeStatusToDoing(id)).then(() => {
+      loadDataTask();
+      handleDateChange();
+      handleTaskAdded();
+      handleTabChange("3")
+    });
   };
 
   const handleChangeDoneToCloseTask = (id) => {
@@ -242,6 +238,7 @@ const List = () => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
+      handleTabChange("8")
     });
   };
 
@@ -265,16 +262,6 @@ const List = () => {
     setEditTaskModalVisible(false);
   };
 
-  const handleMenuSubTaskClick = (e, subTaskItem) => {
-    if (e.key === "edit") {
-      openEditSubTaskModal(subTaskItem);
-    } else if (e.key === "editEffort") {
-      openEditSubTaskEffortModal(subTaskItem);
-    } else if (e.key === "delete") {
-      handleDeleteSubTask(subTaskItem.subtaskId);
-    }
-  };
-
   const handleSubTaskModalVisible = () => {
     setSubTaskModalVisible(false);
   };
@@ -292,106 +279,6 @@ const List = () => {
     setStatusForEdit(isStatusEffort);
   };
 
-  const openAddSubtaskModal = (record) => {
-    setCurrentTaskId(record.id);
-    setAddSubtaskVisible(true);
-    setEditingTask(record);
-    const taskId = currentTaskId;
-    dispatch(getEmployeeByTask(taskId)).then((data) => {
-      setAvailableEmployees(data.payload);
-    });
-    form.resetFields();
-  };
-
-  const closeAddSubtaskModal = () => {
-    setAddSubtaskVisible(false);
-  };
-
-  const openEditSubTaskModal = (subTask) => {
-    setEditingSubTask(subTask);
-    setEditSubTaskModalVisible(true);
-    setDescription(subTask.description);
-  };
-
-  const openEditSubTaskEffortModal = (subTask) => {
-    setEditingSubTask(subTask);
-    setEditSubTaskEffortModalVisible(true);
-  };
-
-  const closeEditSubTaskModal = () => {
-    setEditingSubTask(null);
-    setEditSubTaskModalVisible(false);
-  };
-  const closeEditSubTaskEffortModal = () => {
-    setEditingSubTask(null);
-    setEditSubTaskEffortModalVisible(false);
-    console.log("closed modal");
-  };
-
-  const handleDeleteSubTask = (subTaskId) => {
-    const taskId = currentTaskId;
-    dispatch(deleteSubTask({ subTaskId })).then(() => {
-      dispatch(getSubTasksByTaskId(taskId)).then((data) => {
-        setSubTasks(data.payload);
-      });
-    });
-  };
-
-  const handleAddSubTask = (values) => {
-    const startDayFormatted = dayjs(startDay)
-      .second(0)
-      .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
-    const endDayFormatted = dayjs(endDay)
-      .second(0)
-      .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
-    const finalValues = {
-      ...values,
-      taskId: currentTaskId,
-      startDay: startDayFormatted,
-      endDay: endDayFormatted,
-    };
-    dispatch(createSubTask(finalValues)).then(() => {
-      dispatch(getSubTasksByTaskId(currentTaskId)).then((data) => {
-        setSubTasks(data.payload);
-        loadDataTask();
-        setAddSubtaskVisible(false);
-      });
-    });
-  };
-
-  const handleUpdateSubTask = (
-    subTaskId,
-    employeeId,
-    name,
-    startDay,
-    endDay,
-    description
-  ) => {
-    const updatedSubTask = {
-      employeeId: employeeId,
-      name: name,
-      startDay: startDay,
-      endDay: endDay,
-      description: description,
-    };
-
-    dispatch(
-      updateSubTask({ subTaskId: subTaskId, body: updatedSubTask })
-    ).then(() => {
-      dispatch(getSubTasksByTaskId(currentTaskId)).then((data) => {
-        setSubTasks(data.payload);
-        loadDataTask();
-        setEditSubTaskModalVisible(false);
-      });
-    });
-  };
-
-  const handleMenuEffortClick = (e, effortItem) => {
-    if (e.key === "edit") {
-      openEditEffort(effortItem);
-    }
-  };
-
   const handleEffortVisible = () => {
     setEffortVisible(false);
   };
@@ -404,66 +291,11 @@ const List = () => {
     });
   };
 
-  const openEditEffort = (effort) => {
-    setEditingEffort(effort);
-    setEditEffortVisible(true);
-    setDescription(effort.description);
-  };
-
-  const closeEditEffortModal = () => {
-    setEditingEffort(null);
-    setEditEffortVisible(false);
-  };
-
-  const handleUpdateEffort = (
-    taskId,
-    employeeId,
-    actualEffortHour,
-    actualEfforMinutes
-  ) => {
-    const updatedEffort = [
-      {
-        employeeId: employeeId,
-        actualEffortHour: parseFloat(actualEffortHour),
-        actualEfforMinutes: parseFloat(actualEfforMinutes),
-      },
-    ];
-
-    dispatch(updateEffort({ taskId: taskId, body: updatedEffort })).then(() => {
-      dispatch(getEffort(currentTaskId)).then((data) => {
-        setEffort(data.payload.data.subtasks);
-        setEditEffortVisible(false);
-      });
-    });
-  };
-
-  const handleUpdateSubTaskEffort = (
-    subTaskId,
-    employeeId,
-    actualEffortHour,
-    actualEfforMinutes
-  ) => {
-    const updatedEffort = {
-      employeeId: employeeId,
-      actualEffortHour: parseFloat(actualEffortHour),
-      actualEfforMinutes: parseFloat(actualEfforMinutes),
-    };
-    console.log(subTaskId);
-
-    dispatch(
-      updateEffortBySubTask({ subTaskId: subTaskId, body: updatedEffort })
-    ).then(() => {
-      dispatch(getSubTasksByTaskId(currentTaskId)).then((data) => {
-        setSubTasks(data.payload);
-        loadDataTask();
-        setEditSubTaskModalVisible(false);
-      });
-    });
-  };
-
   const handleTabChange = (key) => {
     setPageIndex(1);
     setStatus(Number(key));
+    setActiveKey(key)
+    console.log(key);
   };
 
   const handleTaskAdded = () => {
@@ -478,15 +310,6 @@ const List = () => {
   const handleSearchChange = (taskName) => {
     setTaskNameSearch(taskName);
     setPageIndex(1);
-  };
-
-  const handleSelectStartDay = (date) => {
-    setStartDay(date);
-  };
-
-  const handleSelectEndDay = (date) => {
-    setEndDay(date);
-    console.log(date);
   };
 
   return (
@@ -509,10 +332,9 @@ const List = () => {
         </div>
       </div>
       <div className="list-checkTask">
-        <StatusTabs onTabChange={handleTabChange} />
+        <StatusTabs handleTabChange={handleTabChange} activeKey={activeKey} />
         <CheckParent onCheckChange={handleCheckChange} />
       </div>
-
       {loading === true ? (
         <Skeleton active />
       ) : (
@@ -529,7 +351,6 @@ const List = () => {
           openEditTaskModal={openEditTaskModal}
           closeEditTaskModal={closeEditTaskModal}
           openSubtaskModal={openSubtaskModal}
-          openAddSubtaskModal={openAddSubtaskModal}
           openEffortModal={openEffortModal}
           openChangeDoingToPendingModal={openChangeDoingToPendingModal}
           openChangeDoingToCancelModal={openChangeDoingToCancelModal}
@@ -558,45 +379,21 @@ const List = () => {
         handleDateChange={handleDateChange}
         loadDataTask={loadDataTask}
         currentTaskId={currentTaskId}
+        closeModal={closeModal}
+        handleTabChange={handleTabChange}
       />
       <SubTask
-        addSubtaskVisible={addSubtaskVisible}
-        closeAddSubtaskModal={closeAddSubtaskModal}
-        form={form}
-        availableEmployees={availableEmployees}
-        description={description}
-        handleDescription={handleDescription}
         subTaskModalVisible={subTaskModalVisible}
         handleSubTaskModalVisible={handleSubTaskModalVisible}
         subTasks={subTasks}
-        handleAddSubTask={handleAddSubTask}
-        handleMenuSubTaskClick={handleMenuSubTaskClick}
-        handleUpdateSubTaskEffort={handleUpdateSubTaskEffort}
-        editSubTaskModalVisible={editSubTaskModalVisible}
-        editSubTaskEffortModalVisible={editSubTaskEffortModalVisible}
-        closeEditSubTaskModal={closeEditSubTaskModal}
-        handleUpdateSubTask={handleUpdateSubTask}
-        editingSubTask={editingSubTask}
         editingTask={editingTask}
-        openEditSubTaskEffortModal={openEditSubTaskEffortModal}
-        closeEditSubTaskEffortModal={closeEditSubTaskEffortModal}
         statusForEdit={statusForEdit}
-        currentTaskId={currentTaskId}
-        handleSelectStartDay={handleSelectStartDay}
-        handleSelectEndDay={handleSelectEndDay}
       />
       <Effort
         effortVisible={effortVisible}
         handleEffortVisible={handleEffortVisible}
         effort={effort}
-        handleMenuEffortClick={handleMenuEffortClick}
-        editEffortVisible={editEffortVisible}
-        closeEditEffortModal={closeEditEffortModal}
-        handleUpdateEffort={handleUpdateEffort}
-        currentTaskId={currentTaskId}
-        editingEffort={editingEffort}
         isHaveSubTask={isHaveSubTask}
-        handleMenuSubTaskClick={handleMenuSubTaskClick}
         openSubtaskModal={openSubtaskModal}
       />
       <ChangeDoneToDoing
@@ -614,6 +411,8 @@ const List = () => {
         taskDoingToPendingModalVisible={taskDoingToPendingModalVisible}
         description={description}
         handleDescription={handleDescription}
+        fileList={fileList}
+        onFileChange={onFileChange}
       />
       <ChangeDoingToCancel
         currentTaskId={currentTaskId}
@@ -622,6 +421,8 @@ const List = () => {
         taskDoingToCancelModalVisible={taskDoingToCancelModalVisible}
         description={description}
         handleDescription={handleDescription}
+        fileList={fileList}
+        onFileChange={onFileChange}
       />
     </div>
   );
