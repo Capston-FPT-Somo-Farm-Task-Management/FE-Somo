@@ -49,7 +49,6 @@
           text-align: left;
         }
       }
-      
     }
   }
   .task-detail-content {
@@ -76,7 +75,7 @@
       .task-detail-text {
         width: 33%;
       }
-      .task-detail-address{
+      .task-detail-address {
         width: 100%;
       }
       h5 {
@@ -99,21 +98,21 @@
       .ant-timeline-item {
         .ant-timeline-item-label {
           text-align: right;
-          inset-inline-start: 1%;
+          inset-inline-start: 0%;
           inset-block-start: -9px;
           font-size: 16px;
-          width: 18%;
+          width: 30%;
         }
         .ant-timeline-item-tail {
-          inset-inline-start: 20%;
+          inset-inline-start: 31%;
           height: 110%;
         }
         .ant-timeline-item-head {
-          inset-inline-start: 20%;
+          inset-inline-start: 31%;
         }
         .ant-timeline-item-content {
-          inset-inline-start: 20%;
-          width: 70%;
+          inset-inline-start: 30%;
+          width: 60%;
         }
       }
     }
@@ -152,7 +151,7 @@
           width: 30%;
           display: flex;
           justify-content: flex-end;
-          color: #f3722c;
+          color: #38b000;
         }
       }
     }
@@ -172,7 +171,11 @@
       font-size: 16px;
     }
     .evidence-desc {
-      font-weight: 500;
+      font-size: 16px;
+      h6 {
+        display: inline-block;
+        font-size: 16px;
+      }
     }
     .evidence-time {
       display: flex;

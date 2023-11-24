@@ -6,6 +6,8 @@ import { GrDocumentImage } from "react-icons/gr";
 import dayjs from "dayjs";
 import UpdateTask from "../../List/components/UpdateTask";
 
+const { Panel } = Collapse;
+
 function Evidence({
   taskData,
   handleRefuseTask,
@@ -13,64 +15,104 @@ function Evidence({
   closeEditTaskModal,
 }) {
   const evidenceData = useSelector((state) => state.evidence.data);
-  console.log(evidenceData);
-  const { Panel } = Collapse;
-  console.log(taskData);
 
   const renderImages = () => {
     if (evidenceData && evidenceData.data && evidenceData.data.length > 0) {
-      const timelineItems = evidenceData.data.map((evidence, index) => {
+      const timelineItems = evidenceData.data.map((evidence) => {
         const formattedUpdateDate = dayjs(evidence.submitDate).format(
           "Ngày DD-MM-YYYY HH:mm"
         );
         return {
+          status:
+            evidence.evidenceType === 0 ? (
+              <p className="evidence-time" style={{ color: "#38b000" }}>
+                Bình thường
+              </p>
+            ) : evidence.evidenceType === 1 ? (
+              <p className="evidence-time" style={{ color: "#f77f00" }}>
+                Từ chối
+              </p>
+            ) : evidence.evidenceType === 2 ? (
+              <p className="evidence-time" style={{ color: "red" }}>
+                Hủy bỏ
+              </p>
+            ) : evidence.evidenceType === 3 ? (
+              <p className="evidence-time" style={{ color: "#fca311" }}>
+                Tạm hoãn
+              </p>
+            ) : evidence.evidenceType === 4 ? (
+              <p className="evidence-time" style={{ color: "#38b000" }}>
+                Làm lại
+              </p>
+            ) : evidence.evidenceType === 5 ? (
+              <p className="evidence-time" style={{ color: "red" }}>
+                Từ chối người giám sát
+              </p>
+            ) : null,
           date: formattedUpdateDate,
           content: (
             <div key={evidence.id} className="evidence-content">
               {evidence.evidenceType === 1 ? (
-                <p className="evidence-desc">
-                  <span style={{ color: "#f77f00" }}>Lý do không đồng ý:</span>{" "}
-                  {evidence.description}
-                </p>
+                <>
+                  <p className="evidence-desc">
+                    <h6 style={{ color: "#000" }}>Lý do từ chối:</h6>{" "}
+                    {evidence.description}
+                  </p>
+                  <p className="evidence-time" style={{ color: "#f77f00" }}>
+                    Đã gửi {evidence.time}
+                  </p>
+                </>
               ) : evidence.evidenceType === 2 ? (
-                <p className="evidence-desc">
-                  <span style={{ color: "red" }}>Lý do hủy bỏ:</span>{" "}
-                  {evidence.description}
-                </p>
+                <>
+                  <p className="evidence-desc">
+                    <h6 style={{ color: "#000" }}>Lý do hủy bỏ:</h6>{" "}
+                    {evidence.description}
+                  </p>
+                  <p className="evidence-time" style={{ color: "red" }}>
+                    Đã gửi {evidence.time}
+                  </p>
+                </>
               ) : evidence.evidenceType === 3 ? (
-                <p className="evidence-desc">
-                  <span style={{ color: "#ffb703" }}>Lý do tạm hoãn:</span>{" "}
-                  {evidence.description}
-                </p>
+                <>
+                  <p className="evidence-desc">
+                    <h6 style={{ color: "#000" }}>Lý do tạm hoãn:</h6>{" "}
+                    {evidence.description}
+                  </p>
+                  <p className="evidence-time" style={{ color: "#fca311" }}>
+                    Đã gửi {evidence.time}
+                  </p>
+                </>
               ) : evidence.evidenceType === 4 ? (
-                <p className="evidence-desc">
-                  <span style={{ color: "#849b5c" }}>Mô tả:</span>{" "}
-                  {evidence.description}
-                </p>
+                <>
+                  <p className="evidence-desc">
+                    <h6 style={{ color: "#000" }}>Mô tả:</h6>{" "}
+                    {evidence.description}
+                  </p>
+                  <p className="evidence-time" style={{ color: "#38b000" }}>
+                    Đã gửi {evidence.time}
+                  </p>
+                </>
               ) : evidence.evidenceType === 5 ? (
-                <p className="evidence-desc">
-                  <span style={{ color: "red" }}>Lý do từ chối:</span>{" "}
-                  {evidence.description}
-                </p>
+                <>
+                  <p className="evidence-desc">
+                    <h6 style={{ color: "#000" }}>Lý do từ chối:</h6>{" "}
+                    {evidence.description}
+                  </p>
+                  <p className="evidence-time" style={{ color: "red" }}>
+                    Đã gửi {evidence.time}
+                  </p>
+                </>
               ) : (
-                <p className="evidence-desc">
-                  <span style={{ color: "#849b5c" }}>Mô tả:</span>{" "}
-                  {evidence.description}
-                </p>
+                <>
+                  <p className="evidence-desc">
+                    <h6 style={{ color: "#000" }}>Mô tả:</h6>{" "}
+                    {evidence.description}
+                  </p>
+                  <p className="evidence-time" style={{ color: "#38b000" }}>
+                    Đã gửi {evidence.time}
+                  </p>
+                </>
               )}
-              {evidence.evidenceType === 0 ? (
-                <p className="evidence-time" style={{color: "#849b5c"}}>Bình thường</p>
-              ) : evidence.evidenceType === 1 ? (
-                <p  className="evidence-time" style={{color: "#f77f00"}}>Không đồng ý</p>
-              ) : evidence.evidenceType === 2 ? (
-                <p className="evidence-time" style={{ color: "red" }}>Hủy bỏ</p>
-              ) : evidence.evidenceType === 3 ? (
-                <p className="evidence-time" style={{color: "#ffb703"}}>Tạm hoãn</p>
-              ) : evidence.evidenceType === 4 ? (
-                <p className="evidence-time" style={{color: "#849b5c"}}>Đang thực hiện</p>
-              ) : evidence.evidenceType === 5 ? (
-                <p className="evidence-time" style={{color: "red"}}>Từ chối người giám sát</p>
-              ) : null}
 
               {evidence.urlImage && evidence.urlImage.length > 0 ? (
                 <Collapse accordion className="collapse-evidence">
@@ -188,7 +230,33 @@ function Evidence({
         <Space direction="horizontal">
           <Timeline mode="left">
             {timelineItems.map((item, index) => (
-              <Timeline.Item color="green" key={index} label={item.date}>
+              <Timeline.Item
+                color={
+                  item.status.props.children === "Bình thường"
+                    ? "#38b000"
+                    : item.status.props.children === "Từ chối"
+                    ? "#f77f00"
+                    : item.status.props.children === "Hủy bỏ"
+                    ? "red"
+                    : item.status.props.children === "Tạm hoãn"
+                    ? "#fca311"
+                    : item.status.props.children === "Làm lại"
+                    ? "#38b000"
+                    : item.status.props.children === "Từ chối người giám sát"
+                    ? "red"
+                    : null
+                }
+                key={index}
+                label={
+                  <div
+                    style={{ display: "flex", justifyContent: "space-around" }}
+                  >
+                    <p style={{ width: "70%" }}>- {item.date}</p>
+                    <p style={{ width: "30%" }}>{item.status}</p>
+                    {console.log(item.status)}
+                  </div>
+                }
+              >
                 {item.content}
               </Timeline.Item>
             ))}
@@ -204,7 +272,9 @@ function Evidence({
       <h6 style={{ fontSize: "24px", fontWeight: "500" }}>Báo cáo công việc</h6>
       {renderImages()}
       {taskData && taskData.status === "Từ chối" ? (
-        <div>
+        <div
+          style={{ width: "90%", display: "flex", justifyContent: "flex-end" }}
+        >
           <Button
             form="refuseTask"
             type="primary"
