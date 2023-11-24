@@ -12,7 +12,7 @@ const DetailEmployee = ({
 
   return (
     <Modal
-      title="Chi tiết khu vực"
+      title="Chi tiết nhân viên"
       open={isModalDetailOpen}
       closeIcon
       onCancel={closeModalDetail}
