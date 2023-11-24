@@ -22,7 +22,6 @@ const ViewTimeKeeping = ({
       employeeId: selectedDataDetail.id,
       code: selectedDataDetail.code,
     }
-    console.log(finalValues)
     getAnyEmployeeEffort(finalValues)
   }
 
