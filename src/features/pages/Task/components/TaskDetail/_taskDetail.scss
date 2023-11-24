@@ -307,9 +307,10 @@
         position: relative;
         .ant-image {
           position: absolute;
+          z-index: 3000;
           .ant-image-mask {
             border-radius: 8px;
-            z-index: 1000;
+            z-index: 3000;
           }
           img {
             border-radius: 8px;
@@ -339,4 +340,15 @@
       }
     }
   }
+}
+
+.ant-image-preview-root {
+  .ant-image-preview-mask,
+  .ant-image-preview-wrap {
+    z-index: 2500;
+  }
+}
+
+.ant-image-preview-operations-wrapper{
+  z-index: 2500;
 }

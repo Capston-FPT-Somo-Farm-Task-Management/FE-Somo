@@ -139,64 +139,6 @@ const SideMenu = () => {
               <Link to="/schedule"></Link>
             </Menu.Item>
 
-            {countNew?.data !== 0 ? (
-              <>
-                <Menu.Item onClick={showDrawerNotify}>
-                  <Badge.Ribbon text={countNew?.data} color="red">
-                    <BellOutlined />
-                    <span>Thông báo</span>
-                  </Badge.Ribbon>
-                </Menu.Item>
-              </>
-            ) : (
-              <>
-                <Menu.Item onClick={showDrawer}>
-                  <BellOutlined />
-                  <span>Thông báo</span>
-                </Menu.Item>
-              </>
-            )}
-
-            <Drawer
-              title="Thông báo"
-              placement="right"
-              onClose={onClose}
-              open={open}
-            >
-              {countNew?.data !== 0 ? (
-                <>
-                  <Popconfirm
-                    title="Đánh dấu tất cả đã đọc"
-                    description="Bạn có chắc đánh dấu tất cả đã đọc ?"
-                    onConfirm={() => changeReadAll()}
-                    // onCancel={cancel}
-                    okText="Có"
-                    cancelText="Không"
-                  >
-                    <BellOutlined
-                      style={{
-                        fontSize: "20px",
-                        marginLeft: "90%",
-                        color: "red",
-                      }}
-                      // onClick={() => console.log('ss')}
-                    />
-                  </Popconfirm>
-                </>
-              ) : (
-                <>
-                  <BellOutlined
-                    style={{
-                      fontSize: "20px",
-                      marginLeft: "90%",
-                    }}
-                    disabled
-                  />
-                </>
-              )}
-              <Notification />
-            </Drawer>
-
             <SubMenu key="tasks" icon={<AimOutlined />} title="Công việc">
               <Menu.Item key="/task">
                 <AimOutlined />
@@ -305,37 +247,6 @@ const SideMenu = () => {
                     <span>Lịch trình</span>
                     <Link to="/schedule"></Link>
                   </Menu.Item>
-
-                  {countNew?.data?.length !== 0 ? (
-                    <>
-                      <Menu.Item onClick={showDrawerNotifyOnTablet}>
-                        <Badge.Ribbon text={countNew?.data} color="red">
-                          <BellOutlined />
-                          <span>Thông báo</span>
-                        </Badge.Ribbon>
-                      </Menu.Item>
-                    </>
-                  ) : (
-                    <>
-                      <Menu.Item onClick={showDrawerOnTablet}>
-                        <BellOutlined />
-                        <span>Thông báo</span>
-                      </Menu.Item>
-                    </>
-                  )}
-
-                  <Drawer
-                    title="Thông báo"
-                    placement="right"
-                    onClose={onCloseOnTablet}
-                    open={openOnTablet}
-                  >
-                    <BellOutlined
-                      style={{ fontSize: "20px", marginLeft: "90%" }}
-                      onClick={() => console.log("ss")}
-                    />
-                    <Notification />
-                  </Drawer>
 
                   <Menu.Item key="/task">
                     <AimOutlined />

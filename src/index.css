@@ -1103,10 +1103,11 @@ html {
 }
 .evidence .evidence-content .img-contain .overlay .ant-image {
   position: absolute;
+  z-index: 3000;
 }
 .evidence .evidence-content .img-contain .overlay .ant-image .ant-image-mask {
   border-radius: 8px;
-  z-index: 1000;
+  z-index: 3000;
 }
 .evidence .evidence-content .img-contain .overlay .ant-image img {
   border-radius: 8px;
@@ -1131,6 +1132,15 @@ html {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 30px;
+}
+
+.ant-image-preview-root .ant-image-preview-mask,
+.ant-image-preview-root .ant-image-preview-wrap {
+  z-index: 2500;
+}
+
+.ant-image-preview-operations-wrapper {
+  z-index: 2500;
 }
 
 .plant-content h3 {

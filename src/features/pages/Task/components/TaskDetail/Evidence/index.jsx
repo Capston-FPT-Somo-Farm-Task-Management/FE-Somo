@@ -269,7 +269,7 @@ function Evidence({
   };
   return (
     <div className="evidence">
-      <h6 style={{ fontSize: "24px", fontWeight: "500" }}>Báo cáo công việc</h6>
+      <h6 style={{ fontSize: "24px", fontWeight: "500", paddingBottom: "20px" }}>Báo cáo công việc</h6>
       {renderImages()}
       {taskData && taskData.status === "Từ chối" ? (
         <div
