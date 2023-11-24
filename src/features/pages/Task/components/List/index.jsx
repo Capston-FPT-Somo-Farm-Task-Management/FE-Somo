@@ -104,7 +104,6 @@ const List = () => {
 
   const onChange = (pagination) => {
     setPageIndex(pagination.current);
-    console.log("pageIndex: ", pagination.current);
   };
 
   const handleDescription = (e) => {
