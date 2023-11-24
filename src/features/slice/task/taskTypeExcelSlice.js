@@ -82,6 +82,19 @@ const taskTypeExcelSlice = createSlice({
         state.error = action.payload
         state.data = []
       })
+
+      .addCase(createTaskTypeByExcel.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(createTaskTypeByExcel.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = action.payload
+      })
+      .addCase(createTaskTypeByExcel.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+        state.data = []
+      })
   },
 })
 

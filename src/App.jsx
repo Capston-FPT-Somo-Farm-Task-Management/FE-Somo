@@ -5,7 +5,8 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import AppRoute from 'router/AppRoute'
 import { ConfigProvider } from 'antd'
-import vietnamese from 'antd/locale/vi_VN';
+import vietnamese from 'antd/locale/vi_VN'
+import 'dayjs/locale/vi'
 
 function App() {
   return (
