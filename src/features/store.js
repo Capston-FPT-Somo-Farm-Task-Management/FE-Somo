@@ -24,11 +24,13 @@ import taskTypeActiveOtherReducer from './slice/task/taskTypeOtherSlice'
 import taskTypeByIdReducer from './slice/task/taskTypeByIdSlice'
 import taskTypeTemplateReducer from './slice/task/taskTypeTemplate'
 import taskTypeExcelReducer from './slice/task/taskTypeExcelSlice'
+import taskDoneReducer from './slice/task/taskDoneSlice'
 import supervisorReducer from './slice/supervisor/supervisorSlice'
 import employeeReducer from './slice/employee/employeeSlice'
 import employeeByTaskReducer from './slice/employee/employeeByTask'
 import employeeExcelReducer from './slice/employee/employeeExcelSlice'
 import employeeEffortReducer from './slice/employee/employeeEffortSlice'
+import employeeEffortTotalReducer from './slice/employee/employeeEffortTotalSlice'
 import materialReducer from './slice/material/materialSlice'
 import materialByIdReducer from './slice/material/materialById'
 import materialActiveReducer from './slice/material/materialActiveByFarmSlice'
@@ -100,6 +102,7 @@ export const store = configureStore({
     taskTypePlant: taskTypePlantReducer,
     taskTypeLivestock: taskTypeLivestockReducer,
     taskTypeActiveOther: taskTypeActiveOtherReducer,
+    taskDone: taskDoneReducer,
     evidence: evidenceReducer,
     subTask: subTaskReducer,
     effort: effortReducer,
@@ -115,6 +118,7 @@ export const store = configureStore({
     employeeByFarm: employeeByFarmReducer,
     employeeExcel: employeeExcelReducer,
     employeeEffort: employeeEffortReducer,
+    employeeEffortTotal: employeeEffortTotalReducer,
     location: locationReducer,
   },
 })

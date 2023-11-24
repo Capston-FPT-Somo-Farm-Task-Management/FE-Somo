@@ -21,10 +21,43 @@ export const getEmployeeEffortExcel = createAsyncThunk(
 
       const link = document.createElement('a')
       link.href = url
-      // Đặt tên file cho đường link tải xuống
       link.setAttribute(
         'download',
         `BangChamCongThang${data.month}Nam${data.year}.xlsx`
+      )
+      document.body.appendChild(link)
+      link.click()
+      link.parentNode.removeChild(link)
+      window.URL.revokeObjectURL(url)
+
+      return response.data
+    } catch (error) {
+      rejectWithValue(error)
+    }
+  }
+)
+
+export const getEmployeeEffortByEmployeeId = createAsyncThunk(
+  'employeeEffort/getEmployeeEffortByEmployeeId',
+  async (data, { rejectWithValue }) => {
+    try {
+      axiosInstance.defaults.headers.common['Accept'] =
+        'application/vnd.ms-excel'
+
+      const response = await axiosInstance.get(
+        `/Employee/Effort/Employee(${data.employeeId})?month=${data.month}&year=${data.year}`,
+        {
+          responseType: 'blob',
+        }
+      )
+
+      const url = window.URL.createObjectURL(new Blob([response.data]))
+
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute(
+        'download',
+        `BangChamCong - ${data.month}|${data.year} - ${data.code}.xlsx`
       )
       document.body.appendChild(link)
       link.click()
@@ -56,6 +89,19 @@ const employeeEffortSlice = createSlice({
         state.data = action.payload
       })
       .addCase(getEmployeeEffortExcel.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+        state.data = []
+      })
+
+      .addCase(getEmployeeEffortByEmployeeId.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(getEmployeeEffortByEmployeeId.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = action.payload
+      })
+      .addCase(getEmployeeEffortByEmployeeId.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
         state.data = []
