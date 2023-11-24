@@ -27,6 +27,8 @@ import taskTypeExcelReducer from './slice/task/taskTypeExcelSlice'
 import supervisorReducer from './slice/supervisor/supervisorSlice'
 import employeeReducer from './slice/employee/employeeSlice'
 import employeeByTaskReducer from './slice/employee/employeeByTask'
+import employeeExcelReducer from './slice/employee/employeeExcelSlice'
+import employeeEffortReducer from './slice/employee/employeeEffortSlice'
 import materialReducer from './slice/material/materialSlice'
 import materialByIdReducer from './slice/material/materialById'
 import materialActiveReducer from './slice/material/materialActiveByFarmSlice'
@@ -111,6 +113,8 @@ export const store = configureStore({
     notificationIsNew: notificationIsNewReducer,
     notificationRead: notificationReadReducer,
     employeeByFarm: employeeByFarmReducer,
+    employeeExcel: employeeExcelReducer,
+    employeeEffort: employeeEffortReducer,
     location: locationReducer,
   },
 })

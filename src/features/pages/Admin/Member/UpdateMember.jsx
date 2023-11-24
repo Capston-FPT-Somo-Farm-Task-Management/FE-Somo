@@ -23,18 +23,19 @@ import {
 } from 'features/slice/location/locationSlice'
 import { useDispatch } from 'react-redux'
 import { Option } from 'antd/es/mentions'
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 
-const UpdateEmployee = ({
-  isModalOpen,
-  closeModal,
-  selectedData,
+const UpdateMember = ({
+  isModalOpenUpdate,
+  closeModalUpdate,
+  selectedMember,
   onFinishUpdate,
-  employeeById,
-  taskTypeActive,
-  farmId,
+  memberById,
 }) => {
   const [fileList, setFileList] = useState([])
   const [form] = Form.useForm()
+
+  console.log(selectedMember)
 
   const dispatch = useDispatch()
   // --Location
@@ -51,26 +52,26 @@ const UpdateEmployee = ({
   const [selectedWardName, setSelectedWardName] = useState('')
 
   useEffect(() => {
-    if (employeeById?.data?.avatar) {
+    if (memberById?.avatar) {
       setFileList([
         {
           uid: '-1',
           name: 'image.png',
           status: 'done',
-          url: employeeById?.data?.avatar,
+          url: memberById?.avatar,
         },
       ])
     }
-  }, [employeeById])
+  }, [memberById])
 
   const onFileChange = ({ fileList: newFileList }) => {
     setFileList(newFileList)
   }
 
   useEffect(() => {
-    if (selectedData) {
+    if (selectedMember) {
       // Phân tích địa chỉ
-      const addressParts = selectedData.address.split(', ')
+      const addressParts = selectedMember.address.split(', ')
 
       const selectedCityName = addressParts[2]
       const selectedDistrictName = addressParts[1]
@@ -104,21 +105,20 @@ const UpdateEmployee = ({
         })
       }
     }
-  }, [selectedData, cities, dispatch, form])
+  }, [selectedMember, cities, dispatch, form])
 
   const onFinish = (values) => {
     const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`
     const finalValues = {
       ...values,
-      gender: values.gender === 'Male' ? false : true,
-      id: selectedData.id,
+      // gender: values.gender === 'Male' ? false : true,
+      id: selectedMember.id,
       imageFile: fileList[0].originFileObj,
       address: address,
-      farmId: farmId,
+      // farmId: farmId,
     }
-    console.log(finalValues)
-    // onFinishUpdate(finalValues)
-    closeModal()
+    onFinishUpdate(finalValues)
+    closeModalUpdate()
     form.resetFields()
   }
 
@@ -150,20 +150,20 @@ const UpdateEmployee = ({
     <>
       <Modal
         title="Cập nhật thông tin nhân viên"
-        open={isModalOpen}
+        open={isModalOpenUpdate}
         closeIcon
-        onCancel={closeModal}
+        onCancel={closeModalUpdate}
         footer={[
           <Button
-            form="updateEmployee"
+            form="updateMember"
             type="primary"
             htmlType="reset"
             danger
-            onClick={closeModal}
+            onClick={closeModalUpdate}
           >
             Huỷ
           </Button>,
-          <Button form="updateEmployee" type="primary" htmlType="submit">
+          <Button form="updateMember" type="primary" htmlType="submit">
             Cập nhật
           </Button>,
         ]}
@@ -171,7 +171,7 @@ const UpdateEmployee = ({
         <Form
           layout="vertical"
           className="first-step-animal"
-          id="updateEmployee"
+          id="updateMember"
           onFinish={onFinish}
         >
           <div className="form-left">
@@ -184,23 +184,34 @@ const UpdateEmployee = ({
                 },
               ]}
               name="name"
-              initialValue={selectedData ? selectedData.name : ''}
+              initialValue={selectedMember ? selectedMember.name : ''}
             >
               <Input placeholder="Nhập tên nhân viên" />
             </Form.Item>
 
             <Form.Item
-              label="Mã nhân viên"
+              label="Ngày sinh"
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng nhập mã nhân viên',
+                  message: 'Vui lòng chọn ngày sinh',
                 },
               ]}
-              name="code"
-              initialValue={selectedData ? selectedData.code : ''}
+              name="dateOfBirth"
+              // initialValue={
+              //   selectedData && selectedData.dateOfBirth
+              //     ? dayjs(selectedData.dateOfBirth).format('YYYY-MM-DD')
+              //     : null
+              // }
             >
-              <Input placeholder="Nhập mã khu vực" />
+              <DatePicker
+                format="YYYY-MM-DD"
+                disabledDate={disabledDate}
+                placeholder="Chọn ngày sinh"
+                style={{
+                  width: '100%',
+                }}
+              />
             </Form.Item>
 
             <Form.Item
@@ -222,27 +233,28 @@ const UpdateEmployee = ({
                   },
                 }),
               ]}
-              initialValue={selectedData ? selectedData.phoneNumber : ''}
+              initialValue={selectedMember ? selectedMember.phoneNumber : ''}
               name="phoneNumber"
             >
               <Input />
             </Form.Item>
 
             <Form.Item
-              label="Giới tính"
+              label="Email"
               rules={[
                 {
+                  type: 'email',
+                  message: 'Không phải email!!',
+                },
+                {
                   required: true,
-                  message: 'Vui lòng chọn giới tính',
+                  message: 'Vui lòng nhập vào email',
                 },
               ]}
-              name="gender"
-              initialValue={selectedData ? selectedData.gender : ''}
+              initialValue={selectedMember ? selectedMember.email : ''}
+              name="email"
             >
-              <Radio.Group>
-                <Radio value="Male">Nam</Radio>
-                <Radio value="Female">Nữ</Radio>
-              </Radio.Group>
+              <Input placeholder="Nhập Email" />
             </Form.Item>
 
             <Form.Item
@@ -313,7 +325,56 @@ const UpdateEmployee = ({
           </div>
 
           <div className="form-right">
-            <Form.Item label="Hình ảnh công cụ" name="imageFile">
+            <Form.Item
+              label="Mã nhân viên"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập mã nhân viên',
+                },
+              ]}
+              name="code"
+              initialValue={selectedMember ? selectedMember.code : ''}
+            >
+              <Input placeholder="Nhập mã khu vực" />
+            </Form.Item>
+
+            {/* Mã */}
+            {/* <Form.Item
+              label="Tên người dùng"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập tên người dùng',
+                },
+              ]}
+              name="userName"
+              initialValue={selectedMember ? selectedMember.userName : ''}
+            >
+              <Input placeholder="Nhập tên người dùng" />
+            </Form.Item> */}
+
+            {/* Mã */}
+            {/* <Form.Item
+              label="Mật khẩu"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập mật khẩu',
+                },
+              ]}
+              name="password"
+              initialValue={selectedMember ? selectedMember.password : ''}
+            >
+              <Input.Password
+                placeholder="Nhập mật khẩu"
+                iconRender={(visible) =>
+                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                }
+              />
+            </Form.Item> */}
+
+            <Form.Item label="Hình ảnh công cụ" name="avatar">
               <ImgCrop rotationSlider>
                 <Upload
                   listType="picture-card"
@@ -327,59 +388,26 @@ const UpdateEmployee = ({
               </ImgCrop>
             </Form.Item>
 
-            <Form.Item
-              label="Ngày sinh"
+            {/* <Form.Item
+              label="Chức vụ"
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng chọn ngày sinh',
+                  message: 'Vui lòng chọn chức vụ',
                 },
               ]}
-              name="dateOfBirth"
-              // initialValue={
-              //   selectedData && selectedData.dateOfBirth
-              //     ? dayjs(selectedData.dateOfBirth).format('YYYY-MM-DD')
-              //     : null
-              // }
+              name="roleId"
+              initialValue={selectedMember ? selectedMember.roleName : ''}
             >
-              <DatePicker
-                format="YYYY-MM-DD"
-                disabledDate={disabledDate}
-                placeholder="Chọn ngày sinh"
-                style={{
-                  width: '100%',
-                }}
-              />
-            </Form.Item>
-
-            <Form.Item
-              label="Loại nhiệm vụ"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng chọn loại nhiệm vụ',
-                },
-              ]}
-              name="taskTypeIds"
-              initialValue={selectedData ? selectedData.taskTypeId : null}
-            >
-              <Select
-                mode="multiple"
-                allowClear
-                style={{
-                  width: '100%',
-                }}
-                placeholder="Chọn loại nhiệm vụ"
-                options={taskTypeActive?.data?.map((taskType) => ({
-                  label: taskType.name,
-                  value: taskType.id,
-                }))}
-              />
-            </Form.Item>
+              <Radio.Group>
+                <Radio value="Manager">Ngưởi quản lý</Radio>
+                <Radio value="Supervisor">Ngưởi giám sát</Radio>
+              </Radio.Group>
+            </Form.Item> */}
           </div>
         </Form>
       </Modal>
     </>
   )
 }
-export default UpdateEmployee
+export default UpdateMember

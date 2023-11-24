@@ -7,12 +7,7 @@ const UpdatePlantType = ({
   closeModal,
   selectedData,
   onFinishUpdatePlantType,
-  loadDataPlantType,
 }) => {
-  useEffect(() => {
-    loadDataPlantType()
-  }, [])
-
   const onFinish = (values) => {
     const finalValues = {
       id: selectedData.id,

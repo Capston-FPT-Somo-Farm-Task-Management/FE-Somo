@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import UpdateTaskType from './UpdateTaskType'
-import { Badge, Button, Popconfirm, Table } from 'antd'
+import { Badge, Button, Popconfirm, Skeleton, Table } from 'antd'
 import Column from 'antd/es/table/Column'
 import { useSelector } from 'react-redux'
 import { getTaskTypeById } from 'features/slice/task/taskTypeByIdSlice'
@@ -10,9 +10,10 @@ import DetailTaskType from './DetailTaskType'
 const DisplayTaskType = ({
   taskType,
   onFinishUpdateTaskType,
-  loadData,
+  // loadData,
   onFinishDeleteTaskType,
   searchTerm,
+  loading,
 }) => {
   const dispatch = useDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -27,16 +28,15 @@ const DisplayTaskType = ({
     async function fetchData() {
       if (selectedData) {
         await dispatch(getTaskTypeById(selectedData.id))
-        loadData()
+        // loadData()
       }
     }
 
     fetchData()
-  }, [selectedData, dispatch, loadData])
+  }, [selectedData, dispatch])
 
   const openModal = async (record) => {
     await dispatch(getTaskTypeById(record.id))
-    loadData()
     setSelectedData(record)
     setIsModalOpen(true)
   }
@@ -64,73 +64,77 @@ const DisplayTaskType = ({
 
   return (
     <>
-      <>
-        <Table dataSource={searchTaskType} rowKey="id">
-          <Column
-            title="Tên công việc"
-            dataIndex="name"
-            key="1"
-            render={(text, record) => (
-              <h4
-                onClick={() => openModalDetail(record)}
-                style={{ cursor: 'pointer' }}
-              >
-                {text}
-              </h4>
-            )}
-          />
-          <Column title="Loại công việc" dataIndex="status" key="2" />
+      {loading ? (
+        <Skeleton active />
+      ) : (
+        <>
+          <Table dataSource={searchTaskType} rowKey="id">
+            <Column
+              title="Tên công việc"
+              dataIndex="name"
+              key="1"
+              render={(text, record) => (
+                <h4
+                  onClick={() => openModalDetail(record)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {text}
+                </h4>
+              )}
+            />
+            <Column title="Loại công việc" dataIndex="status" key="2" />
 
-          <Column
-            title="Xoá"
-            key="4"
-            dataIndex="id"
-            render={(_, record) => (
-              <Popconfirm
-                title="Xoá loại công việc"
-                description="Bạn có chắc muốn xoá loại công việc này?"
-                onConfirm={() => onFinishDeleteTaskType(record.id)}
-                okText="Xoá"
-                cancelText="Huỷ"
-              >
-                <Button size="middle" danger>
-                  Xoá
+            <Column
+              title="Xoá"
+              key="4"
+              dataIndex="id"
+              render={(_, record) => (
+                <Popconfirm
+                  title="Xoá loại công việc"
+                  description="Bạn có chắc muốn xoá loại công việc này?"
+                  onConfirm={() => onFinishDeleteTaskType(record.id)}
+                  okText="Xoá"
+                  cancelText="Huỷ"
+                >
+                  <Button size="middle" danger>
+                    Xoá
+                  </Button>
+                </Popconfirm>
+              )}
+            />
+
+            <Column
+              title="Cập nhật"
+              key="5"
+              dataIndex="id"
+              render={(_, record) => (
+                <Button
+                  type="primary"
+                  size="middle"
+                  onClick={() => openModal(record)}
+                >
+                  Cập nhật
                 </Button>
-              </Popconfirm>
-            )}
-          />
+              )}
+            />
+          </Table>
 
-          <Column
-            title="Cập nhật"
-            key="5"
-            dataIndex="id"
-            render={(_, record) => (
-              <Button
-                type="primary"
-                size="middle"
-                onClick={() => openModal(record)}
-              >
-                Cập nhật
-              </Button>
-            )}
+          <DetailTaskType
+            key={selectedDataDetail ? selectedDataDetail.id : null}
+            isModalDetailOpen={isModalDetailOpen}
+            closeModalDetail={closeModalDetail}
+            selectedDataDetail={selectedDataDetail}
           />
-        </Table>
-
-        <DetailTaskType
-          key={selectedDataDetail ? selectedDataDetail.id : null}
-          isModalDetailOpen={isModalDetailOpen}
-          closeModalDetail={closeModalDetail}
-          selectedDataDetail={selectedDataDetail}
-        />
-        <UpdateTaskType
-          key={selectedData ? selectedData.id : null}
-          isModalOpen={isModalOpen}
-          closeModal={closeModal}
-          selectedData={selectedData}
-          taskTypeById={taskTypeById}
-          onFinishUpdateTaskType={onFinishUpdateTaskType}
-        />
-      </>
+          <UpdateTaskType
+            key={selectedData ? selectedData.id : null}
+            isModalOpen={isModalOpen}
+            closeModal={closeModal}
+            selectedData={selectedData}
+            taskTypeById={taskTypeById}
+            onFinishUpdateTaskType={onFinishUpdateTaskType}
+          />
+        </>
+      )}
     </>
   )
 }

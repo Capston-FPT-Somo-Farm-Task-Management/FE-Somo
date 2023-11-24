@@ -12,15 +12,18 @@ import {
   deleteEmployee,
   updateEmployee,
 } from 'features/slice/employee/employeeSlice'
+import { getEmployeeExcel } from 'features/slice/employee/employeeExcelSlice'
+import { getEmployeeEffortExcel } from 'features/slice/employee/employeeEffortSlice'
 
 const Employee = () => {
   const dispatch = useDispatch()
   const member = useSelector((state) => state.member.data)
   const employeeByFarm = useSelector((state) => state.employeeByFarm.data)
+  const loading = useSelector((state) => state.employeeByFarm.loading)
+
   const taskTypeActive = useSelector((state) => state.taskTypeActive.data)
 
   const farmId = member.farmId
-  console.log(farmId)
   const [searchTerm, setSearchTerm] = useState('')
 
   const handleSearch = (value) => {
@@ -51,6 +54,16 @@ const Employee = () => {
     })
   }
 
+  // Excel
+  const getEmployeeByExcel = () => {
+    dispatch(getEmployeeExcel(farmId))
+  }
+
+  const getEmployeeEffort = (value) => {
+    dispatch(getEmployeeEffortExcel(value))
+  }
+
+  // LoadData
   const loadData = () => {
     dispatch(getEmployeeByFarmId(farmId))
   }
@@ -62,8 +75,11 @@ const Employee = () => {
         farmId={farmId}
         taskTypeActive={taskTypeActive}
         onFinishCreate={onFinishCreate}
+        getEmployeeByExcel={getEmployeeByExcel}
+        getEmployeeEffort={getEmployeeEffort}
       />
       <DisplayEmployee
+        loading={loading}
         farmId={farmId}
         taskTypeActive={taskTypeActive}
         onFinishDelete={onFinishDelete}

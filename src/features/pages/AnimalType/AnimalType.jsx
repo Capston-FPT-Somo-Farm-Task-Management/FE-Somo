@@ -15,6 +15,7 @@ import { getMemberById } from 'features/slice/user/memberSlice'
 const AnimalType = () => {
   const dispatch = useDispatch()
   const animalType = useSelector((state) => state.animalType.data)
+  const loading = useSelector((state) => state.animalType.loading)
   const member = useSelector((state) => state.member.data)
   const farmId = member.farmId
 
@@ -59,7 +60,7 @@ const AnimalType = () => {
         handleSearch={handleSearch}
       />
       <DisplayAnimalType
-        farmId={farmId}
+        loading={loading}
         animalType={animalType}
         onFinishDeleteAnimalType={onFinishDeleteAnimalType}
         onFinishUpdateAnimalType={onFinishUpdateAnimalType}

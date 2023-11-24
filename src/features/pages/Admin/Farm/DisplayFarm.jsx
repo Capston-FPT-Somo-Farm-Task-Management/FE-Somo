@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { Card } from 'antd'
+import { Button, Card, Space } from 'antd'
 import FarmDetail from './FarmDetail'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import { ArrowLeftOutlined } from '@ant-design/icons'
 
 const DisplayFarm = ({ farm }) => {
   const navigate = useNavigate()
@@ -45,8 +46,55 @@ const DisplayFarm = ({ farm }) => {
     fontFamily: 'Arial, sans-serif',
   }
 
+  const backToFarm = () => {
+    navigate('/dashboard')
+  }
+
   return (
     <>
+      {localStorage.getItem('farmId') ? (
+        <Space
+          style={{
+            width: '100%',
+            justifyContent: 'space-between',
+            marginTop: '20px',
+          }}
+        >
+          <Button style={{ marginLeft: '20px' }} onClick={backToFarm}>
+            <ArrowLeftOutlined />
+            Trang chủ
+          </Button>
+          <Button
+            style={{
+              marginRight: '20px',
+              backgroundColor: '#849b5c',
+              color: 'white',
+            }}
+          >
+            Tạo trang trại
+          </Button>
+        </Space>
+      ) : (
+        <Space
+          style={{
+            width: '100%',
+            justifyContent: 'space-between',
+            marginTop: '20px',
+          }}
+        >
+          <div></div>
+          <Button
+            style={{
+              marginRight: '20px',
+              backgroundColor: '#849b5c',
+              color: 'white',
+            }}
+          >
+            Tạo trang trại
+          </Button>
+        </Space>
+      )}
+
       <h2 style={headerStyle}>Lựa chọn nông trại để quản lý</h2>
       <div
         style={{
@@ -86,7 +134,6 @@ const DisplayFarm = ({ farm }) => {
           </Card>
         ))}
       </div>
-
       <FarmDetail
         farm={selectedFarm}
         closeModal={closeModal}

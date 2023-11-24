@@ -84,7 +84,7 @@ const AdminSideMenu = () => {
 
             <Menu.Item key="/statistic-farm">
               <BorderOutlined />
-              <span>Trang trại</span>
+              <span>Chọn trang trại</span>
               <Link to="/statistic-farm"></Link>
             </Menu.Item>
 
@@ -166,7 +166,7 @@ const AdminSideMenu = () => {
 
                   <Menu.Item key="/statistic-farm">
                     <BorderOutlined />
-                    <span>Trang trại</span>
+                    <span>Chọn trang trại</span>
                     <Link to="/statistic-farm"></Link>
                   </Menu.Item>
 

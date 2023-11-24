@@ -36,6 +36,7 @@ export const getTaskTypeExcel = createAsyncThunk(
 export const createTaskTypeByExcel = createAsyncThunk(
   'taskTypeExcel/createTaskTypeByExcel',
   async (data, { rejectWithValue }) => {
+    console.log(data)
     try {
       const config = {
         headers: {
@@ -77,6 +78,19 @@ const taskTypeExcelSlice = createSlice({
         state.data = action.payload
       })
       .addCase(getTaskTypeExcel.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+        state.data = []
+      })
+
+      .addCase(createTaskTypeByExcel.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(createTaskTypeByExcel.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = action.payload
+      })
+      .addCase(createTaskTypeByExcel.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
         state.data = []

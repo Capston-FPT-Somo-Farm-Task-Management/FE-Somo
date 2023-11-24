@@ -1,13 +1,13 @@
-import { Button, Descriptions, Image, Modal } from 'antd'
+import { Button, Descriptions, Modal } from 'antd'
 
-const DetailMaterial = ({
+const DetailZone = ({
   isModalDetailOpen,
   closeModalDetail,
   selectedDataDetail,
 }) => {
   return (
     <Modal
-      title="Chi tiết công cụ"
+      title="Chi tiết vùng"
       open={isModalDetailOpen}
       closeIcon
       onCancel={closeModalDetail}
@@ -24,15 +24,17 @@ const DetailMaterial = ({
               width: '125px',
             }}
           >
-            <Descriptions.Item label="Hình ảnh">
-              <Image
-                src={selectedDataDetail.urlImage}
-                style={{
-                  maxWidth: '300px',
-                  maxHeight: '150px',
-                  objectFit: 'cover',
-                }}
-              />
+            <Descriptions.Item label="Mã vùng">
+              {selectedDataDetail.code}
+            </Descriptions.Item>
+            <Descriptions.Item label="Loại vùng">
+              {selectedDataDetail.zoneTypeName}
+            </Descriptions.Item>
+            <Descriptions.Item label="Thuộc">
+              {selectedDataDetail.areaName}
+            </Descriptions.Item>
+            <Descriptions.Item label="Diện tích">
+              {selectedDataDetail.farmArea}
             </Descriptions.Item>
             <Descriptions.Item label="Trạng thái">
               {selectedDataDetail.status}
@@ -43,4 +45,4 @@ const DetailMaterial = ({
     </Modal>
   )
 }
-export default DetailMaterial
+export default DetailZone

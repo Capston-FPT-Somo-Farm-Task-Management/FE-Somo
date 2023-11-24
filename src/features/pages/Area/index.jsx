@@ -16,6 +16,7 @@ const Area = () => {
   const dispatch = useDispatch()
   const member = useSelector((state) => state.member.data)
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
+  const loading = useSelector((state) => state.areaByFarm.loading)
   const farmId = member.farmId
 
   const [searchTerm, setSearchTerm] = useState('')
@@ -63,6 +64,7 @@ const Area = () => {
     <>
       <AddArea onFinishCreate={onFinishCreate} handleSearch={handleSearch} />
       <DisplayArea
+        loading={loading}
         areaByFarm={areaByFarm}
         onFinishDelete={onFinishDelete}
         onFinishUpdate={onFinishUpdate}
