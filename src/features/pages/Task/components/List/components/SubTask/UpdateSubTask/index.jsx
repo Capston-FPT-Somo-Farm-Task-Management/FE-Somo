@@ -32,7 +32,7 @@ function UpdateSubTask({
       {editSubTaskModalVisible && (
         <Modal
           title="Sửa công việc con"
-          visible={editSubTaskModalVisible}
+          open={editSubTaskModalVisible}
           onCancel={closeEditSubTaskModal}
           footer={[
             <Button form="updateSubTask" type="primary" htmlType="submit">

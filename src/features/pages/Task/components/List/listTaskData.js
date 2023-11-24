@@ -1,4 +1,4 @@
-import { Badge } from "antd";
+import { Avatar, Badge, Tooltip } from "antd";
 import dayjs from "dayjs";
 
 export const taskTitle = [
@@ -7,7 +7,7 @@ export const taskTitle = [
     dataIndex: "code",
     key: "code",
     render: (code, record) => (
-      <h4 className="task-name" data-name-clicked="true">
+      <p data-name-clicked="true">
         <div>
           {record && record.isHaveEvidence ? (
             <Badge.Ribbon
@@ -16,9 +16,15 @@ export const taskTitle = [
               text={<p style={{ fontSize: "10px" }}>Có báo cáo</p>}
             />
           ) : null}
-          <h4>#{code}</h4>
+          <Tooltip placement="bottomLeft" title={code}>
+            <>
+              {code ? (
+                <p>#{code.slice(0, 8) + (code.length > 8 ? "..." : "")}</p>
+              ) : null}
+            </>
+          </Tooltip>
         </div>
-      </h4>
+      </p>
     ),
   },
   {
@@ -26,50 +32,113 @@ export const taskTitle = [
     dataIndex: "name",
     key: "name",
     render: (text) => (
-      <h4 className="task-name" data-name-clicked="true">
-        {text}
-      </h4>
+      <Tooltip placement="bottomLeft" title="Xem chi tiết">
+        <h4 className="task-name" data-name-clicked="true">
+          {text ? (
+            <>{text.slice(0, 15) + (text.length > 15 ? "..." : "")}</>
+          ) : null}
+        </h4>
+      </Tooltip>
     ),
   },
   {
     title: <p>Ngày bắt đầu</p>,
     dataIndex: "startDate",
     key: "startDate",
-    render: (date) => { return date ? dayjs(date).format("DD/MM/YYYY HH:mm") : "Chưa có"},
+    render: (date) => {
+      return date ? dayjs(date).format("DD/MM/YYYY HH:mm") : "Chưa có";
+    },
   },
   {
     title: <p>Ngày kết thúc</p>,
     dataIndex: "endDate",
     key: "endDate",
-    render: (date) => { return date ? dayjs(date).format("DD/MM/YYYY HH:mm") : "Chưa có"},
+    render: (date) => {
+      return date ? dayjs(date).format("DD/MM/YYYY HH:mm") : "Chưa có";
+    },
   },
   {
     title: <p>Ưu tiên</p>,
     dataIndex: "priority",
     key: "priority",
     render: (text) => {
-      let color = "";
+      let colorCircle = "";
       switch (text) {
         case "Cao":
-          color = "#f94144";
+          colorCircle = "#f94144";
           break;
         case "Trung bình":
-          color = "#e09f3e";
+          colorCircle = "#e09f3e";
           break;
         case "Thấp":
-          color = "#90be6d";
+          colorCircle = "#90be6d";
           break;
         default:
-          color = "";
+          colorCircle = "";
       }
-      return <span style={{ color }}>{text}</span>;
+      return (
+        <span
+          style={{
+            color: "black",
+            border: "1px solid #f5f5f5",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            padding: "5px 0px",
+            borderRadius: "8px",
+            boxShadow: "1px 1px #f5f5f5",
+          }}
+        >
+          <div
+            style={{
+              display: "inline-block",
+              width: "16px",
+              height: "16px",
+              borderRadius: "50%",
+              backgroundColor: colorCircle,
+              marginLeft: "5px",
+              marginRight: "10px",
+            }}
+          ></div>
+          {text}
+        </span>
+      );
     },
   },
   {
     title: <p>Người giám sát</p>,
     dataIndex: "supervisorName",
     key: "supervisorName",
-    render: (text) => {return text ? text : "Chưa có"}
+    render: (data) => {
+      return data ? (
+        <Tooltip placement="bottom" title={data}>
+          <span
+            style={{
+              border: "1px solid #f5f5f5",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              padding: "5px 0px",
+              borderRadius: "8px",
+              boxShadow: "1px 1px #f5f5f5",
+            }}
+          >
+            <Avatar
+              src={data.avatarSupervisor}
+              style={{
+                width: "16px",
+                height: "16px",
+                marginLeft: "5px",
+                marginRight: "10px",
+              }}
+            />
+            {data.slice(0, 10) + (data.length > 10 ? "..." : "")}
+          </span>
+        </Tooltip>
+      ) : (
+        "Chưa có"
+      );
+    },
   },
   {
     title: <p>Được tạo bởi</p>,

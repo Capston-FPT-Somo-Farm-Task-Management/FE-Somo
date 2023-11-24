@@ -13,7 +13,7 @@ function UpdateEffort({
       {editEffortVisible && (
         <Modal
           title="Sửa chấm công"
-          visible={editEffortVisible}
+          open={editEffortVisible}
           onCancel={closeEditEffortModal}
           footer={[
             <Button form="updateEffort" type="primary" htmlType="submit">

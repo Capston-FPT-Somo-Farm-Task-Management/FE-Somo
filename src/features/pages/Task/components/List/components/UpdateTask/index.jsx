@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, Modal, Space } from "antd";
 import dayjs from "dayjs";
 import { getAnimalActive } from "features/slice/animal/animalSlice";
-import { getAreaActive } from "features/slice/area/areaSlice";
-import { getEmployeeByTaskTypeAndFarmId } from "features/slice/employee/employeeSlice";
 import { getFieldByZone } from "features/slice/field/fieldByZoneSlice";
 import { getMaterialActiveByFarmId } from "features/slice/material/materialActiveByFarmSlice";
 import { getPlantActive } from "features/slice/plant/plantSlice";
@@ -34,9 +32,8 @@ import {
   EditOutlined,
   FileDoneOutlined,
   CheckCircleOutlined,
-  FileOutlined
+  FileOutlined,
 } from "@ant-design/icons";
-
 
 function UpdateTask({
   editTaskModalVisible,
@@ -82,22 +79,6 @@ function UpdateTask({
   const [draftToPrepare, setDraftToPrepare] = useState(false);
   const [prepareToDraft, setPrepareToDraft] = useState(false);
 
-  const handleUpdateDraft = () => {
-    setIsDraft(true);
-  };
-
-  const handleUpdateTaskToDo = () => {
-    setIsDraft(false);
-  };
-
-  const handleUpdateDraftToPrepareButton = () => {
-    setDraftToPrepare(true);
-  };
-
-  const handleChangePrepareToDraft = () => {
-    setPrepareToDraft(true);
-  };
-
   const [form] = Form.useForm();
 
   const dispatch = useDispatch();
@@ -141,8 +122,6 @@ function UpdateTask({
 
   const material = useSelector((state) => state.materialActive.data);
 
-  console.log("currentTaskId: ", currentTaskId);
-
   useEffect(() => {
     dispatch(getAreaActiveByFarmId(farmId));
     dispatch(getAreaWithZoneTypeLivestock(farmId));
@@ -155,7 +134,7 @@ function UpdateTask({
     dispatch(getSupervisor(farmId));
     dispatch(getMaterialActiveByFarmId(farmId));
     dispatch(getMemberById(authServices.getUserId()));
-  }, [farmId, selectedFieldId]);
+  }, [dispatch, farmId, selectedFieldId]);
 
   useEffect(() => {
     if (selectedAreaId) {
@@ -163,13 +142,13 @@ function UpdateTask({
       dispatch(getZoneByAreaAnimal(selectedAreaId));
       dispatch(getZoneByAreaPlant(selectedAreaId));
     }
-  }, [selectedAreaId, editTaskModalVisible]);
+  }, [dispatch, selectedAreaId, editTaskModalVisible]);
 
   useEffect(() => {
     if (selectedZoneId) {
       dispatch(getFieldByZone(selectedZoneId));
     }
-  }, [selectedZoneId, editTaskModalVisible]);
+  }, [dispatch, selectedZoneId, editTaskModalVisible]);
 
   useEffect(() => {
     if (endDate && startDate && startDate.isAfter(endDate)) {
@@ -178,13 +157,12 @@ function UpdateTask({
         dates: null,
       });
     }
-  }, [startDate, endDate]);
+  }, [dispatch, startDate, endDate, form]);
 
   const handleSelectAreaChange = (value) => {
     setSelectedAreaId(value);
     setSelectedZoneId(value);
     setSelectedFieldId(value);
-    console.log(value);
     form.setFieldsValue({
       zoneId: null,
       fieldId: null,
@@ -321,9 +299,6 @@ function UpdateTask({
   const handleSelectRepeat = (value) => {
     setRepeatValue(value);
     setShouldCheckRepeat(value === "true");
-    console.log("repeatValue: ", repeatValue);
-    console.log("shouldCheckRepeat: ", shouldCheckRepeat);
-    console.log("value: ", value);
   };
 
   const disabledDate = (current) => {
@@ -385,8 +360,6 @@ function UpdateTask({
               .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
           : dayjs(endDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
 
-        const descriptionToSend = description || "";
-
         if (
           shouldCheckRepeat &&
           editingTask.isRepeat &&
@@ -416,20 +389,17 @@ function UpdateTask({
         const fieldName = field ? field.nameCode : null;
 
         const formattedAddress = `${
-          areaName ? areaName + (zoneName || fieldName || addressDetail ? ", " : "") : ""
+          areaName
+            ? areaName + (zoneName || fieldName || addressDetail ? ", " : "")
+            : ""
         }${
           zoneName ? zoneName + (fieldName || addressDetail ? ", " : "") : ""
-        }${
-          fieldName ? fieldName + (addressDetail ? ", " : "") : ""
-        }${
+        }${fieldName ? fieldName + (addressDetail ? ", " : "") : ""}${
           addressDetail ? addressDetail.trim() : ""
         }`;
 
         const addressDetailToSend =
           formattedAddress.trim() !== "" ? formattedAddress : "";
-
-        console.log(isRepeat);
-        console.log("repeatValue: ", repeatValue);
 
         const finalValues = {
           name: nameValue ? nameValue : editingTask.name,
@@ -439,9 +409,6 @@ function UpdateTask({
           supervisorId: supervisorValue
             ? supervisorValue
             : editingTask.suppervisorId,
-          supervisorId: editingTask.suppervisorId
-            ? editingTask.suppervisorId
-            : supervisorValue,
           managerId: member.id,
           fieldId: selectedFieldId ? selectedFieldId : 0,
           isRepeat: typeof isRepeat === "object" ? isRepeat.value : repeatValue,
@@ -466,17 +433,15 @@ function UpdateTask({
           loadDataTask();
           handleDateChange();
           handleTaskAdded();
-          closeEditTaskModal();
         });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
       });
+      closeEditTaskModal();
   };
 
-  const handleUpdateTaskDraft = (
-    currentTaskId,
-  ) => {
+  const handleUpdateTaskDraft = (currentTaskId) => {
     form
       .validateFields()
       .then(() => {
@@ -495,9 +460,6 @@ function UpdateTask({
               .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
           : null;
 
-        console.log("startDate:", startDate);
-        console.log("endDate:", endDate);
-
         const area = areaByFarm.data
           ? areaByFarm.data.find((area) => area.id === selectedAreaId)
           : null;
@@ -513,12 +475,12 @@ function UpdateTask({
         const fieldName = field ? field.nameCode : null;
 
         const formattedAddress = `${
-          areaName ? areaName + (zoneName || fieldName || addressDetail ? ", " : "") : ""
+          areaName
+            ? areaName + (zoneName || fieldName || addressDetail ? ", " : "")
+            : ""
         }${
           zoneName ? zoneName + (fieldName || addressDetail ? ", " : "") : ""
-        }${
-          fieldName ? fieldName + (addressDetail ? ", " : "") : ""
-        }${
+        }${fieldName ? fieldName + (addressDetail ? ", " : "") : ""}${
           addressDetail ? addressDetail.trim() : ""
         }`;
 
@@ -560,12 +522,12 @@ function UpdateTask({
           loadDataTask();
           handleDateChange();
           handleTaskAdded();
-          closeEditTaskModal();
         });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
       });
+      closeEditTaskModal();
   };
 
   const handleUpdateTaskDraftToPrepare = (
@@ -598,8 +560,6 @@ function UpdateTask({
               .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
           : dayjs(endDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
 
-        const descriptionToSend = description || "";
-
         if (
           shouldCheckRepeat &&
           editingTask.isRepeat &&
@@ -629,20 +589,17 @@ function UpdateTask({
         const fieldName = field ? field.nameCode : null;
 
         const formattedAddress = `${
-          areaName ? areaName + (zoneName || fieldName || addressDetail ? ", " : "") : ""
+          areaName
+            ? areaName + (zoneName || fieldName || addressDetail ? ", " : "")
+            : ""
         }${
           zoneName ? zoneName + (fieldName || addressDetail ? ", " : "") : ""
-        }${
-          fieldName ? fieldName + (addressDetail ? ", " : "") : ""
-        }${
+        }${fieldName ? fieldName + (addressDetail ? ", " : "") : ""}${
           addressDetail ? addressDetail.trim() : ""
         }`;
 
         const addressDetailToSend =
           formattedAddress.trim() !== "" ? formattedAddress : "";
-
-        console.log(isRepeat);
-        console.log("repeatValue: ", repeatValue);
 
         const finalValues = {
           name: nameValue ? nameValue : editingTask.name,
@@ -680,12 +637,12 @@ function UpdateTask({
           loadDataTask();
           handleDateChange();
           handleTaskAdded();
-          closeEditTaskModal();
         });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
       });
+      closeEditTaskModal();
   };
 
   const handleChangeStatusToDoToDraft = (currentTaskId) => {
@@ -703,10 +660,29 @@ function UpdateTask({
     }
   };
 
+  const handleUpdateDraft = () => {
+    setIsDraft(true);
+  };
+
+  const handleUpdateTaskToDo = () => {
+    setIsDraft(false);
+  };
+
+  const handleUpdateDraftToPrepareButton = () => {
+    setDraftToPrepare(true);
+  };
+
+  const handleChangePrepareToDraft = () => {
+    setPrepareToDraft(true);
+  };
+
   const handleShowButton = () => {
     if (editingTask.status === "Bản nháp") {
       return (
-        <Space nowrap style={{width: "100%", justifyContent: "space-between"}}>
+        <Space
+          nowrap
+          style={{ width: "100%", justifyContent: "space-between" }}
+        >
           <Button
             form="updateTask"
             htmlType="submit"
@@ -728,7 +704,10 @@ function UpdateTask({
       );
     } else {
       return (
-        <Space nowrap style={{width: "100%", justifyContent: "space-between"}}>
+        <Space
+          nowrap
+          style={{ width: "100%", justifyContent: "space-between" }}
+        >
           <Button
             onClick={handleChangePrepareToDraft}
             form="updateTask"
@@ -757,7 +736,7 @@ function UpdateTask({
       {editTaskModalVisible && (
         <Modal
           title="Cập nhật công việc"
-          visible={editTaskModalVisible}
+          open={editTaskModalVisible}
           onCancel={closeEditTaskModal}
           width={900}
           footer={handleShowButton}

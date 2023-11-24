@@ -194,7 +194,9 @@ function RepeatUpdate({
         color: red;
       }
     `;
-    const setRepeat = repeatValue ? editingTask.isRepeat === false : editingTask.isRepeat === true
+    const setRepeat = repeatValue === true ? editingTask.isRepeat === repeatValue : editingTask.isRepeat
+    console.log("setRepeat: ", setRepeat);
+    console.log("repeatValue: ", repeatValue);
   return (
     <>
       <Form.Item
@@ -218,7 +220,7 @@ function RepeatUpdate({
           <Select.Option value={true}>Có</Select.Option>
         </Select>
       </Form.Item>
-      {setRepeat || repeatValue ? (
+      {setRepeat || repeatValue === true ? (
         <Form.Item
           label="Lặp những ngày"
           name="dateRepeate"

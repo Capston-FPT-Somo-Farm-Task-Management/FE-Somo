@@ -6,31 +6,44 @@ import {
   DownOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import { Dropdown, Avatar, Space, Modal, Button, Form, Input } from "antd";
+import {
+  Dropdown,
+  Avatar,
+  Space,
+  Modal,
+  Button,
+  Form,
+  Input,
+  Spin,
+  Popover,
+} from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteHubConnection } from "features/slice/hub/hubSlice";
 import { authServices } from "services/authServices";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import { updateMember } from "features/slice/user/memberSlice";
+import Notification from "features/pages/Notification";
 
 function HeaderComp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalEditVisible, setIsModalEditVisible] = useState(false);
+  const [isNotificationVisible, setIsNotificationVisible] = useState(false);
+
   const member = useSelector((state) => state.member.data);
-  console.log(member);
+  const loading = useSelector((state) => state.member.loading);
 
   const handleOpenEditProfile = () => {
     setIsModalEditVisible(true);
     setIsModalVisible(false);
-  }
+  };
 
   const closeEditProfile = () => {
     setIsModalEditVisible(false);
     setIsModalVisible(true);
-  }
+  };
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -83,16 +96,18 @@ function HeaderComp() {
         email: email,
         phoneNumber: phoneNumber,
         birthday: birthday,
-        address: address
+        address: address,
       },
     ];
 
-    dispatch(updateMember({ memberId: memberId, body: updatedEffort })).then(() => {
-      // dispatch(getEffort(currentTaskId)).then((data) => {
-      //   setEffort(data.payload.data.subtasks);
-      //   setEditEffortVisible(false);
-      // });
-    });
+    dispatch(updateMember({ memberId: memberId, body: updatedEffort })).then(
+      () => {
+        // dispatch(getEffort(currentTaskId)).then((data) => {
+        //   setEffort(data.payload.data.subtasks);
+        //   setEditEffortVisible(false);
+        // });
+      }
+    );
   };
 
   return (
@@ -100,16 +115,28 @@ function HeaderComp() {
       <nav className="navBar">
         <div className="navRight">
           <div className="header-notification">
-            <Dropdown
-              menu={{
-                items,
-              }}
-              trigger={["hover"]}
-              placement="bottom"
-              arrow
-            >
-              <BellOutlined />
-            </Dropdown>
+            {!loading ? (
+              <Popover
+                placement="bottomRight"
+                title={<h3>Thông báo</h3>}
+                content={
+                  <div
+                    style={{
+                      height: "500px",
+                      overflowY: "auto",
+                      padding: "10px"
+                    }}
+                  >
+                    <Notification />
+                  </div>
+                } // Thay thế bằng nội dung của thông báo
+                trigger="hover"
+                open={isNotificationVisible}
+                onVisibleChange={(visible) => setIsNotificationVisible(visible)}
+              >
+                <BellOutlined />
+              </Popover>
+            ) : null}
           </div>
           <div className="header-profile">
             <Dropdown
@@ -121,15 +148,17 @@ function HeaderComp() {
               arrow
             >
               <a onClick={(e) => e.preventDefault()}>
-                <Space>
-                  <Avatar
-                    src={member.avatar}
-                    size="large"
-                    icon={<UserOutlined />}
-                  />
-                  {member.name}
-                  <DownOutlined />
-                </Space>
+                {!loading ? (
+                  <Space>
+                    <Avatar
+                      src={member.avatar}
+                      size="large"
+                      icon={<UserOutlined />}
+                    />
+                    {member.name}
+                    <DownOutlined />
+                  </Space>
+                ) : null}
               </a>
             </Dropdown>
           </div>
@@ -183,87 +212,86 @@ function HeaderComp() {
             </div>
           </Modal>
           {isModalEditVisible && (
-        <Modal
-          title="Sửa thông tin"
-          visible={isModalEditVisible}
-          onCancel={closeEditProfile}
-          footer={[
-            <Button form="updateEffort" type="primary" htmlType="submit">
-              Lưu thay đổi
-            </Button>,
-            <Button type="primary" onClick={closeEditProfile}>
-              Đóng
-            </Button>,
-          ]}
-        >
-          <Form
-            layout="vertical"
-            onFinish={(values) => {
-              handleEditProfile(
-                member.id,
-                values.name,
-                values.code,
-                values.email,
-                values.phoneNumber,
-                values.birthday,
-                values.address,
-                values.imageFile
-              );
-            }}
-            id="updateEffort"
-          >
-            <Form.Item
-              label="Tên"
-              name="name"
-              required
-              initialValue={member ? member.name : null}
+            <Modal
+              title="Sửa thông tin"
+              visible={isModalEditVisible}
+              onCancel={closeEditProfile}
+              footer={[
+                <Button form="updateEffort" type="primary" htmlType="submit">
+                  Lưu thay đổi
+                </Button>,
+                <Button type="primary" onClick={closeEditProfile}>
+                  Đóng
+                </Button>,
+              ]}
             >
-              <Input placeholder="Nhập tên" />
-            </Form.Item>
-            <Form.Item
-              label="Tên"
-              name="code"
-              required
-              initialValue={member ? member.code : null}
-              
-            >
-              <Input placeholder="Nhập tên" disabled />
-            </Form.Item>
-            <Form.Item
-              label="Email"
-              name="email"
-              required
-              initialValue={member ? member.email : null}
-            >
-              <Input placeholder="Nhập email" />
-            </Form.Item>
-            <Form.Item
-              label="Số điện thoại"
-              name="phoneNumber"
-              required
-              initialValue={member ? member.phoneNumber : null}
-            >
-              <Input placeholder="Nhập số điện thoại" />
-            </Form.Item>
-            <Form.Item
-              label="Ngày sinh"
-              name="birthday"
-              required
-              initialValue={member ? member.birthday : null}
-            >
-              <Input placeholder="Nhập ngày tháng năm sinh" />
-            </Form.Item>
-            <Form.Item
-              label="Địa chỉ thường trú"
-              name="address"
-              required
-              initialValue={member ? member.address : null}
-            >
-              <Input placeholder="Nhập địa chỉ thường trú" />
-            </Form.Item>
-          </Form>
-        </Modal>
-      )}
+              <Form
+                layout="vertical"
+                onFinish={(values) => {
+                  handleEditProfile(
+                    member.id,
+                    values.name,
+                    values.code,
+                    values.email,
+                    values.phoneNumber,
+                    values.birthday,
+                    values.address,
+                    values.imageFile
+                  );
+                }}
+                id="updateEffort"
+              >
+                <Form.Item
+                  label="Tên"
+                  name="name"
+                  required
+                  initialValue={member ? member.name : null}
+                >
+                  <Input placeholder="Nhập tên" />
+                </Form.Item>
+                <Form.Item
+                  label="Tên"
+                  name="code"
+                  required
+                  initialValue={member ? member.code : null}
+                >
+                  <Input placeholder="Nhập tên" disabled />
+                </Form.Item>
+                <Form.Item
+                  label="Email"
+                  name="email"
+                  required
+                  initialValue={member ? member.email : null}
+                >
+                  <Input placeholder="Nhập email" />
+                </Form.Item>
+                <Form.Item
+                  label="Số điện thoại"
+                  name="phoneNumber"
+                  required
+                  initialValue={member ? member.phoneNumber : null}
+                >
+                  <Input placeholder="Nhập số điện thoại" />
+                </Form.Item>
+                <Form.Item
+                  label="Ngày sinh"
+                  name="birthday"
+                  required
+                  initialValue={member ? member.birthday : null}
+                >
+                  <Input placeholder="Nhập ngày tháng năm sinh" />
+                </Form.Item>
+                <Form.Item
+                  label="Địa chỉ thường trú"
+                  name="address"
+                  required
+                  initialValue={member ? member.address : null}
+                >
+                  <Input placeholder="Nhập địa chỉ thường trú" />
+                </Form.Item>
+              </Form>
+            </Modal>
+          )}
         </div>
       </nav>
     </>

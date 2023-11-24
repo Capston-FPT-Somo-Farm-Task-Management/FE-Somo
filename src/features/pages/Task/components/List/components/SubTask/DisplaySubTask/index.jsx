@@ -14,7 +14,7 @@ function DisplaySubTask({
   return (
     <Modal
       title={editingTask ? `#${editingTask.code} - ${editingTask.name}` : null}
-      visible={subTaskModalVisible}
+      open={subTaskModalVisible}
       onCancel={handleSubTaskModalVisible}
       width={1000}
       footer={[
