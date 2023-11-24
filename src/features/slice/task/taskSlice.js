@@ -201,12 +201,12 @@ export const changeStatusToPendingAndCancel = createAsyncThunk(
   }
 );
 
-export const updateTaskDisagreeAndChangeToDo = createAsyncThunk(
-  "task/updateTaskDisagreeAndChangeToDo",
-  async (taskId, { rejectWithValue }) => {
+export const updateTaskDisagreeAndChangeToToDo = createAsyncThunk(
+  "task/updateTaskDisagreeAndChangeToToDo",
+  async (data, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(
-        `/FarmTask/(${taskId})/UpdateTaskDisagreeAndChangeToDo`
+        `/FarmTask/(${data.taskId})/updateTaskDisagreeAndChangeToToDo`, data.body
       );
       if (response.status === 200) {
         toast.success("Cập nhật thành công");
@@ -405,10 +405,10 @@ const taskSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(updateTaskDisagreeAndChangeToDo.pending, (state) => {
+      .addCase(updateTaskDisagreeAndChangeToToDo.pending, (state) => {
         state.loading = true;
       })
-      .addCase(updateTaskDisagreeAndChangeToDo.fulfilled, (state, action) => {
+      .addCase(updateTaskDisagreeAndChangeToToDo.fulfilled, (state, action) => {
         if (Array.isArray(state.data)) {
           state.data.push(action.payload.task);
         } else {
@@ -417,7 +417,7 @@ const taskSlice = createSlice({
 
         state.loading = false;
       })
-      .addCase(updateTaskDisagreeAndChangeToDo.rejected, (state, action) => {
+      .addCase(updateTaskDisagreeAndChangeToToDo.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

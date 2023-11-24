@@ -10,15 +10,10 @@ import {
   changeStatusToPendingAndCancel,
   changeStatusToDoing,
 } from "features/slice/task/taskSlice";
-import { getEmployeeByTask } from "features/slice/employee/employeeByTask";
 import {
   getSubTasksByTaskId,
-  createSubTask,
-  deleteSubTask,
-  updateSubTask,
-  updateEffortBySubTask,
 } from "features/slice/subTask/subTaskSlice";
-import { getEffort, updateEffort } from "features/slice/subTask/effortSlice";
+import { getEffort } from "features/slice/subTask/effortSlice";
 import { taskTitle } from "./listTaskData";
 import TaskDetail from "../TaskDetail";
 import ModalTask from "../ModalTask";
@@ -27,7 +22,6 @@ import SearchComp from "./components/SearchComp";
 import DateSelectionComp from "./components/DateSelection";
 import Effort from "./components/Effort";
 import TableTask from "./components/TableTask";
-import dayjs from "dayjs";
 import CheckParent from "./components/CheckParent";
 import UpdateTask from "./components/UpdateTask";
 import ChangeDoneToDoing from "./components/ChangeDoneToDoing";
@@ -53,6 +47,7 @@ const List = () => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [status, setStatus] = useState(0);
+  const [activeKey, setActiveKey] = useState("0");
   const [selectedDate, setSelectedDate] = useState(null);
   const [taskNameSearch, setTaskNameSearch] = useState("");
   const [statusForEdit, setStatusForEdit] = useState(null);
@@ -72,11 +67,11 @@ const List = () => {
 
   const dispatch = useDispatch();
 
-  const loadDataTask = () => {
+  const loadDataTask = (newStatus) => {
     dispatch(
       getTasks({
         pageIndex,
-        status,
+        status: newStatus,
         date: selectedDate,
         taskName: taskNameSearch,
         checkTaskParent: checkTaskParent,
@@ -85,8 +80,7 @@ const List = () => {
   };
 
   useEffect(() => {
-    loadDataTask();
-    console.log(pageIndex);
+    loadDataTask(status);
   }, [
     dispatch,
     pageIndex,
@@ -173,6 +167,7 @@ const List = () => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
+      handleTabChange("1")
     });
     setModalVisible(false);
   };
@@ -204,6 +199,7 @@ const List = () => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
+      handleTabChange("5")
     });
     setTaskDoingToPendingModalVisible(false);
   };
@@ -223,6 +219,7 @@ const List = () => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
+      handleTabChange("7")
     });
     setTaskDoingToCancelModalVisible(false);
   };
@@ -232,6 +229,7 @@ const List = () => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
+      handleTabChange("3")
     });
   };
 
@@ -240,6 +238,7 @@ const List = () => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
+      handleTabChange("8")
     });
   };
 
@@ -295,6 +294,8 @@ const List = () => {
   const handleTabChange = (key) => {
     setPageIndex(1);
     setStatus(Number(key));
+    setActiveKey(key)
+    console.log(key);
   };
 
   const handleTaskAdded = () => {
@@ -331,7 +332,7 @@ const List = () => {
         </div>
       </div>
       <div className="list-checkTask">
-        <StatusTabs onTabChange={handleTabChange} />
+        <StatusTabs handleTabChange={handleTabChange} activeKey={activeKey} />
         <CheckParent onCheckChange={handleCheckChange} />
       </div>
       {loading === true ? (
@@ -378,6 +379,8 @@ const List = () => {
         handleDateChange={handleDateChange}
         loadDataTask={loadDataTask}
         currentTaskId={currentTaskId}
+        closeModal={closeModal}
+        handleTabChange={handleTabChange}
       />
       <SubTask
         subTaskModalVisible={subTaskModalVisible}

@@ -203,13 +203,13 @@ function Evidence({
     <div className="evidence">
       <h6 style={{ fontSize: "24px", fontWeight: "500" }}>Báo cáo công việc</h6>
       {renderImages()}
-      {taskData.status === "Từ chối" ? (
+      {taskData && taskData.status === "Từ chối" ? (
         <div>
           <Button
             form="refuseTask"
             type="primary"
             danger
-            onClick={openEditTaskModal}
+            onClick={() => openEditTaskModal(taskData)}
           >
             Chỉnh sửa
             <UpdateTask />
