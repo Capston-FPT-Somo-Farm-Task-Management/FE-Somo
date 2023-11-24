@@ -9,6 +9,7 @@ import { getSupervisor } from "features/slice/supervisor/supervisorSlice";
 import {
   updateStatusFromToDoToDraft,
   updateTask,
+  updateTaskDisagreeAndChangeToToDo,
   updateTaskDraftToPrepare,
 } from "features/slice/task/taskSlice";
 import { getTaskTypeLivestock } from "features/slice/task/taskTypeAnimalSlice";
@@ -43,6 +44,8 @@ function UpdateTask({
   handleDateChange,
   loadDataTask,
   currentTaskId,
+  closeModal,
+  handleTabChange
 }) {
   const [selectedAreaId, setSelectedAreaId] = useState(
     editingTask ? editingTask.areaId : null
@@ -76,8 +79,10 @@ function UpdateTask({
   const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
   const [initialSelectedDays, setInitialSelectedDays] = useState([]);
   const [isDraft, setIsDraft] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   const [draftToPrepare, setDraftToPrepare] = useState(false);
   const [prepareToDraft, setPrepareToDraft] = useState(false);
+  const [reAssignTask, setReAssignTask] = useState(false);
 
   const [form] = Form.useForm();
 
@@ -121,6 +126,8 @@ function UpdateTask({
   const supervisor = useSelector((state) => state.supervisor.data);
 
   const material = useSelector((state) => state.materialActive.data);
+
+  console.log(editingTask);
 
   useEffect(() => {
     dispatch(getAreaActiveByFarmId(farmId));
@@ -406,6 +413,7 @@ function UpdateTask({
           startDate: startDateFormatted,
           endDate: endDateFormatted,
           description: description ? description : editingTask.description,
+          priority: priorityValue ? priorityValue : editingTask.priority,
           supervisorId: supervisorValue
             ? supervisorValue
             : editingTask.suppervisorId,
@@ -438,7 +446,124 @@ function UpdateTask({
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
       });
-      closeEditTaskModal();
+    closeEditTaskModal();
+  };
+
+  const handleReAssignTask = (
+    currentTaskId,
+    name,
+    startDate,
+    endDate,
+    description,
+    priority,
+    supervisorId,
+    fieldId,
+    taskTypeId,
+    plantId,
+    liveStockId,
+    remind,
+    materialId,
+    isRepeat
+  ) => {
+    form
+      .validateFields()
+      .then(() => {
+        const startDateFormatted = editingTask.startDate
+          ? dayjs(editingTask.startDate)
+              .second(0)
+              .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
+          : dayjs(startDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+        const endDateFormatted = editingTask.endDate
+          ? dayjs(editingTask.endDate)
+              .second(0)
+              .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
+          : dayjs(endDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+
+        if (
+          shouldCheckRepeat &&
+          editingTask.isRepeat &&
+          (!initialSelectedDays || initialSelectedDays.length === 0)
+        ) {
+          form.setFields([
+            {
+              name: "dateRepeate",
+              errors: ["Vui lòng chọn ngày lặp lại"],
+            },
+          ]);
+          return;
+        }
+
+        const area = areaByFarm.data
+          ? areaByFarm.data.find((area) => area.id === selectedAreaId)
+          : null;
+        const zone = zoneByArea.data
+          ? zoneByArea.data.find((zone) => zone.id === selectedZoneId)
+          : null;
+        const field = fieldByZone.data
+          ? fieldByZone.data.find((field) => field.id === selectedFieldId)
+          : null;
+
+        const areaName = area ? area.name : null;
+        const zoneName = zone ? zone.name : null;
+        const fieldName = field ? field.nameCode : null;
+
+        const formattedAddress = `${
+          areaName
+            ? areaName + (zoneName || fieldName || addressDetail ? ", " : "")
+            : ""
+        }${
+          zoneName ? zoneName + (fieldName || addressDetail ? ", " : "") : ""
+        }${fieldName ? fieldName + (addressDetail ? ", " : "") : ""}${
+          addressDetail ? addressDetail.trim() : ""
+        }`;
+
+        const addressDetailToSend =
+          formattedAddress.trim() !== "" ? formattedAddress : "";
+
+        const finalValues = {
+          name: nameValue ? nameValue : editingTask.name,
+          startDate: startDateFormatted,
+          endDate: endDateFormatted,
+          description: description ? description : editingTask.description,
+          priority: priorityValue ? priorityValue : editingTask.priority,
+          supervisorId: supervisorValue
+            ? supervisorValue
+            : editingTask.suppervisorId,
+          managerId: member.id,
+          fieldId: selectedFieldId ? selectedFieldId : 0,
+          isRepeat: typeof isRepeat === "object" ? isRepeat.value : repeatValue,
+          taskTypeId: selectedTaskTypeId ? selectedTaskTypeId : 0,
+          plantId: typeof plantId === "object" ? plantId.value : 0,
+          liveStockId: typeof liveStockId === "object" ? liveStockId.value : 0,
+          addressDetail: addressDetailToSend,
+          remind: typeof remind === "object" ? remind.value : 0,
+          materialIds: materialsValue ? materialsValue : editingTask.materialId,
+          dates: initialSelectedDays
+            ? initialSelectedDays.map((date) =>
+                dayjs(date).format("YYYY-MM-DDTHH:mm:ss.SSS")
+              )
+            : [],
+        };
+
+        const transformedValues = transformData(finalValues);
+
+        dispatch(
+          updateTaskDisagreeAndChangeToToDo({
+            taskId: currentTaskId,
+            body: transformedValues,
+          })  
+        ).then(() => {
+          loadDataTask(1);
+          handleDateChange();
+          handleTaskAdded();
+        });
+      })
+      .catch((errorInfo) => {
+        console.log("Validation failed:", errorInfo);
+      });
+    closeEditTaskModal();
+    closeModal();
+    handleTabChange("1")
   };
 
   const handleUpdateTaskDraft = (currentTaskId) => {
@@ -527,7 +652,7 @@ function UpdateTask({
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
       });
-      closeEditTaskModal();
+    closeEditTaskModal();
   };
 
   const handleUpdateTaskDraftToPrepare = (
@@ -590,12 +715,12 @@ function UpdateTask({
 
         const formattedAddress = `${
           areaName
-            ? areaName + (zoneName || fieldName || addressDetail ? ", " : "")
+            ? areaName + (zoneName || fieldName || editingTask.addressDetail || addressDetail ? ", " : "")
             : ""
         }${
-          zoneName ? zoneName + (fieldName || addressDetail ? ", " : "") : ""
-        }${fieldName ? fieldName + (addressDetail ? ", " : "") : ""}${
-          addressDetail ? addressDetail.trim() : ""
+          zoneName ? zoneName + (fieldName || editingTask.addressDetail || addressDetail ? ", " : "") : ""
+        }${fieldName ? fieldName + (editingTask.addressDetail || addressDetail ? ", " : "") : ""}${
+          addressDetail ? editingTask.addressDetail.trim() || addressDetail.trim() : ""
         }`;
 
         const addressDetailToSend =
@@ -616,7 +741,7 @@ function UpdateTask({
           taskTypeId: selectedTaskTypeId ? selectedTaskTypeId : 0,
           plantId: typeof plantId === "object" ? plantId.value : 0,
           liveStockId: typeof liveStockId === "object" ? liveStockId.value : 0,
-          addressDetail: addressDetailToSend,
+          addressDetail: addressDetailToSend ? addressDetailToSend : editingTask.addressDetail,
           remind: typeof remind === "object" ? remind.value : 0,
           materialIds: materialsValue ? materialsValue : editingTask.materialId,
           dates: initialSelectedDays
@@ -637,35 +762,53 @@ function UpdateTask({
           loadDataTask();
           handleDateChange();
           handleTaskAdded();
+          handleTabChange("1")
         });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
       });
-      closeEditTaskModal();
+    closeEditTaskModal();
+    
   };
 
   const handleChangeStatusToDoToDraft = (currentTaskId) => {
-    dispatch(updateStatusFromToDoToDraft(currentTaskId));
+    dispatch(updateStatusFromToDoToDraft(currentTaskId)).then(() => {
+      handleTabChange("0")
+      closeEditTaskModal();
+    })
   };
 
   const handleUpdateSubmit = (currentTaskId) => {
-    isDraft
-      ? handleUpdateTaskDraft(currentTaskId)
-      : handleUpdateTask(currentTaskId);
+    if(isEdit){
+      if(isDraft){
+        handleUpdateTaskDraft(currentTaskId)
+      }else{
+        handleUpdateTask(currentTaskId);
+      }
+      return;
+    }
     if (draftToPrepare) {
       handleUpdateTaskDraftToPrepare(currentTaskId);
     } else if (prepareToDraft) {
       handleChangeStatusToDoToDraft(currentTaskId);
+    } else if (reAssignTask) {
+      handleReAssignTask(currentTaskId);
     }
+  };
+
+  const handleReAssign = () => {
+    setReAssignTask(true);
   };
 
   const handleUpdateDraft = () => {
     setIsDraft(true);
+    setIsEdit(true)
   };
 
   const handleUpdateTaskToDo = () => {
     setIsDraft(false);
+    setIsEdit(true)
   };
 
   const handleUpdateDraftToPrepareButton = () => {
@@ -674,10 +817,11 @@ function UpdateTask({
 
   const handleChangePrepareToDraft = () => {
     setPrepareToDraft(true);
+    setIsDraft(true);
   };
 
   const handleShowButton = () => {
-    if (editingTask.status === "Bản nháp") {
+    if (editingTask && editingTask.status === "Bản nháp") {
       return (
         <Space
           nowrap
@@ -702,7 +846,19 @@ function UpdateTask({
           </Button>
         </Space>
       );
-    } else {
+    } else if (editingTask && editingTask.status === "Từ chối") {
+      return (
+        <Button
+          form="updateTask"
+          type="primary"
+          htmlType="submit"
+          onClick={handleReAssign}
+        >
+          Giao lại
+          <EditOutlined />
+        </Button>
+      );
+    } else if (editingTask && editingTask.status === "Chuẩn bị") {
       return (
         <Space
           nowrap
@@ -930,7 +1086,7 @@ function UpdateTask({
                 setInitialSelectedDays={setInitialSelectedDays}
                 isDraft={isDraft}
               />
-            ) : editingTask.isPlant === null ? (
+            ) : editingTask && editingTask.isPlant === null ? (
               <UpdateTaskTypeOther
                 // handleCreateTaskOther={handleCreateTaskOther}
                 editingTask={editingTask}

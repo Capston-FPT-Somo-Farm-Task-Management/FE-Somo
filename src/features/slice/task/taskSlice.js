@@ -201,12 +201,30 @@ export const changeStatusToPendingAndCancel = createAsyncThunk(
   }
 );
 
-export const updateTaskDisagreeAndChangeToDo = createAsyncThunk(
-  "task/updateTaskDisagreeAndChangeToDo",
+export const updateTaskDisagreeAndChangeToToDo = createAsyncThunk(
+  "task/updateTaskDisagreeAndChangeToToDo",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(
+        `/FarmTask/(${data.taskId})/updateTaskDisagreeAndChangeToToDo`, data.body
+      );
+      if (response.status === 200) {
+        toast.success("Cập nhật thành công");
+      }
+      return response.data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const changeStatusToDoing = createAsyncThunk(
+  "task/changeStatusToDoing",
   async (taskId, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(
-        `/FarmTask/(${taskId})/UpdateTaskDisagreeAndChangeToDo`
+        `/FarmTask/(${taskId})/ChangeStatusToDoing`
       );
       if (response.status === 200) {
         toast.success("Cập nhật thành công");
@@ -387,10 +405,10 @@ const taskSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(updateTaskDisagreeAndChangeToDo.pending, (state) => {
+      .addCase(updateTaskDisagreeAndChangeToToDo.pending, (state) => {
         state.loading = true;
       })
-      .addCase(updateTaskDisagreeAndChangeToDo.fulfilled, (state, action) => {
+      .addCase(updateTaskDisagreeAndChangeToToDo.fulfilled, (state, action) => {
         if (Array.isArray(state.data)) {
           state.data.push(action.payload.task);
         } else {
@@ -399,7 +417,7 @@ const taskSlice = createSlice({
 
         state.loading = false;
       })
-      .addCase(updateTaskDisagreeAndChangeToDo.rejected, (state, action) => {
+      .addCase(updateTaskDisagreeAndChangeToToDo.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
@@ -416,6 +434,22 @@ const taskSlice = createSlice({
         state.loading = false;
       })
       .addCase(changeStatusToPendingAndCancel.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(changeStatusToDoing.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(changeStatusToDoing.fulfilled, (state, action) => {
+        if (Array.isArray(state.data)) {
+          state.data.push(action.payload.task);
+        } else {
+          state.data = [action.payload.task];
+        }
+
+        state.loading = false;
+      })
+      .addCase(changeStatusToDoing.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

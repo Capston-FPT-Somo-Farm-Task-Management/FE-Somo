@@ -1,14 +1,10 @@
-import { Button, Dropdown, Empty, Menu, Modal } from "antd";
+import { Button, Empty, Modal } from "antd";
 import React from "react";
-import { MoreOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import dayjs from "dayjs";
 
 function DisplaySubTask({
   subTaskModalVisible,
   handleSubTaskModalVisible,
   subTasks,
-  handleMenuSubTaskClick,
-  statusForEdit,
   editingTask,
 }) {
   return (
@@ -36,52 +32,6 @@ function DisplaySubTask({
                       #{subTaskItem.code}
                     </span>{" "}
                   </div>
-                  <div className="subTask-dropdown">
-                    <Dropdown
-                      placement="bottomRight"
-                      overlay={
-                        <Menu
-                          onClick={(e) =>
-                            handleMenuSubTaskClick(e, subTaskItem)
-                          }
-                        >
-                          {statusForEdit ? (
-                            <>
-                              <Menu.Item key="editEffort">
-                                <EditOutlined
-                                  style={{
-                                    color: "gold",
-                                    marginRight: "8px",
-                                  }}
-                                />
-                                Sửa chấm công
-                              </Menu.Item>
-                            </>
-                          ) : (
-                            <>
-                              <Menu.Item key="edit">
-                                <EditOutlined
-                                  style={{
-                                    color: "gold",
-                                    marginRight: "8px",
-                                  }}
-                                />
-                                Sửa công việc con
-                              </Menu.Item>
-                              <Menu.Item key="delete">
-                                <DeleteOutlined
-                                  style={{ color: "red", marginRight: "8px" }}
-                                />
-                                Xóa công việc con
-                              </Menu.Item>
-                            </>
-                          )}
-                        </Menu>
-                      }
-                    >
-                      <Button icon={<MoreOutlined />} />
-                    </Dropdown>
-                  </div>
                 </div>
                 <div className="subTask-container" key={subTaskItem.employeeId}>
                   <div className="subTask-item">
@@ -91,14 +41,6 @@ function DisplaySubTask({
                     {console.log(subTaskItem)}
                     <p>
                       <span>Người thực hiện:</span> {subTaskItem.employeeName}
-                    </p>
-                    <p>
-                      <span>Ngày bắt đầu:</span>{" "}
-                      {dayjs(subTaskItem.startDay).format("DD-MM-YYYY / HH:mm")}
-                    </p>
-                    <p>
-                      <span>Ngày kết thúc:</span>{" "}
-                      {dayjs(subTaskItem.endDay).format("DD-MM-YYYY / HH:mm")}
                     </p>
                     <p>
                       <span>Thời gian làm việc:</span>{" "}

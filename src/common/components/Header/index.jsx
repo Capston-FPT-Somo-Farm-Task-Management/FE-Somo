@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   UserOutlined,
   BellOutlined,
   DownOutlined,
   EditOutlined,
+  UploadOutlined,
 } from "@ant-design/icons";
 import {
   Dropdown,
@@ -16,6 +17,7 @@ import {
   Input,
   Spin,
   Popover,
+  Upload,
 } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteHubConnection } from "features/slice/hub/hubSlice";
@@ -24,6 +26,7 @@ import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import { updateMember } from "features/slice/user/memberSlice";
 import Notification from "features/pages/Notification";
+import ImgCrop from "antd-img-crop";
 
 function HeaderComp() {
   const navigate = useNavigate();
@@ -31,9 +34,27 @@ function HeaderComp() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalEditVisible, setIsModalEditVisible] = useState(false);
   const [isNotificationVisible, setIsNotificationVisible] = useState(false);
+  const [fileList, setFileList] = useState([]);
 
   const member = useSelector((state) => state.member.data);
   const loading = useSelector((state) => state.member.loading);
+
+  useEffect(() => {
+    if (member?.avatar) {
+      setFileList([
+        {
+          uid: "-1",
+          name: "image.png",
+          status: "done",
+          url: member.avatar,
+        },
+      ]);
+    }
+  }, [member]);
+
+  const onFileChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
 
   const handleOpenEditProfile = () => {
     setIsModalEditVisible(true);
@@ -79,35 +100,18 @@ function HeaderComp() {
     },
   ];
 
-  const handleEditProfile = (
-    memberId,
-    name,
-    code,
-    email,
-    phoneNumber,
-    birthday,
-    address,
-    imageFile
-  ) => {
-    const updatedEffort = [
+  const handleEditProfile = (values) => {
+    const updatedEffort = 
       {
-        name: name,
-        code: code,
-        email: email,
-        phoneNumber: phoneNumber,
-        birthday: birthday,
-        address: address,
-      },
-    ];
-
-    dispatch(updateMember({ memberId: memberId, body: updatedEffort })).then(
-      () => {
-        // dispatch(getEffort(currentTaskId)).then((data) => {
-        //   setEffort(data.payload.data.subtasks);
-        //   setEditEffortVisible(false);
-        // });
+        ...values,
+        id: member.id,
+        imageFile: fileList[0].originFileObj,
       }
-    );
+
+    dispatch(updateMember(updatedEffort)).then(() => {
+      setIsModalEditVisible(false);
+      setIsModalVisible(true)
+    });
   };
 
   return (
@@ -124,7 +128,7 @@ function HeaderComp() {
                     style={{
                       height: "500px",
                       overflowY: "auto",
-                      padding: "10px"
+                      padding: "10px",
                     }}
                   >
                     <Notification />
@@ -227,24 +231,25 @@ function HeaderComp() {
             >
               <Form
                 layout="vertical"
-                onFinish={(values) => {
-                  handleEditProfile(
-                    member.id,
-                    values.name,
-                    values.code,
-                    values.email,
-                    values.phoneNumber,
-                    values.birthday,
-                    values.address,
-                    values.imageFile
-                  );
-                }}
+                onFinish={handleEditProfile}
                 id="updateEffort"
               >
+                <Form.Item label="Hình ảnh" name="imageFile">
+                  <ImgCrop rotationSlider>
+                    <Upload
+                      listType="picture-card"
+                      maxCount={1}
+                      beforeUpload={() => false}
+                      fileList={fileList}
+                      onChange={onFileChange}
+                    >
+                      <UploadOutlined />
+                    </Upload>
+                  </ImgCrop>
+                </Form.Item>
                 <Form.Item
                   label="Tên"
                   name="name"
-                  required
                   initialValue={member ? member.name : null}
                 >
                   <Input placeholder="Nhập tên" />
@@ -252,7 +257,6 @@ function HeaderComp() {
                 <Form.Item
                   label="Tên"
                   name="code"
-                  required
                   initialValue={member ? member.code : null}
                 >
                   <Input placeholder="Nhập tên" disabled />
@@ -260,7 +264,6 @@ function HeaderComp() {
                 <Form.Item
                   label="Email"
                   name="email"
-                  required
                   initialValue={member ? member.email : null}
                 >
                   <Input placeholder="Nhập email" />
@@ -268,7 +271,6 @@ function HeaderComp() {
                 <Form.Item
                   label="Số điện thoại"
                   name="phoneNumber"
-                  required
                   initialValue={member ? member.phoneNumber : null}
                 >
                   <Input placeholder="Nhập số điện thoại" />
@@ -276,7 +278,6 @@ function HeaderComp() {
                 <Form.Item
                   label="Ngày sinh"
                   name="birthday"
-                  required
                   initialValue={member ? member.birthday : null}
                 >
                   <Input placeholder="Nhập ngày tháng năm sinh" />
@@ -284,7 +285,6 @@ function HeaderComp() {
                 <Form.Item
                   label="Địa chỉ thường trú"
                   name="address"
-                  required
                   initialValue={member ? member.address : null}
                 >
                   <Input placeholder="Nhập địa chỉ thường trú" />

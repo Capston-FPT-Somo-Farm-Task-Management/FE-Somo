@@ -19,7 +19,7 @@ const TaskDetailOther = ({
         <GrMap /> Nơi thực hiện
       </h2>
       <div className="task-detail-item">
-        <div className="task-detail-text">
+        <div className="task-detail-address">
           <h5>Địa điểm cụ thể</h5>
           {taskData.addressDetail === "" ? (
             <p>Chưa có địa điểm cụ thể</p>

@@ -23,7 +23,7 @@ function OtherTaskType({
   handleSelectFieldChange,
   addressDetail,
   handleNameChange,
-  setAddressDetail,
+  handleAddressDetail,
   handlePriorityChange,
   handleSupervisorValue,
   handleSelectStartDate,
@@ -83,7 +83,7 @@ function OtherTaskType({
         />
         <AddressDetailInput
           addressDetail={addressDetail}
-          setAddressDetail={setAddressDetail}
+          handleAddressDetail={handleAddressDetail}
           isDraft={isDraft}
         />
         <PrioritySelect

@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useState } from "react";
 import { Tabs } from "antd";
 
 const { TabPane } = Tabs;
 
-
-function StatusTabs ({ onTabChange }) {
+function StatusTabs({ handleTabChange, activeKey }) {
+  console.log(activeKey);
   return (
-    <Tabs defaultActiveKey="0" onChange={onTabChange}>
+    <Tabs defaultActiveKey="0" activeKey={activeKey} onChange={handleTabChange}>
       <TabPane tab="Bản nháp" key="0"></TabPane>
       <TabPane tab="Chuẩn bị" key="1"></TabPane>
       <TabPane tab="Đã giao" key="2"></TabPane>
@@ -17,7 +17,7 @@ function StatusTabs ({ onTabChange }) {
       <TabPane tab="Hủy bỏ" key="7"></TabPane>
       <TabPane tab="Đã đóng" key="8"></TabPane>
     </Tabs>
-  )
+  );
 }
 
-export default StatusTabs 
+export default StatusTabs;
