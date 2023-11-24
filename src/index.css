@@ -856,6 +856,9 @@ html {
 .task-detail .task-detail-content .task-detail-item .task-detail-text {
   width: 33%;
 }
+.task-detail .task-detail-content .task-detail-item .task-detail-address {
+  width: 100%;
+}
 .task-detail .task-detail-content .task-detail-item h5 {
   font-weight: 600;
   font-size: 18px;

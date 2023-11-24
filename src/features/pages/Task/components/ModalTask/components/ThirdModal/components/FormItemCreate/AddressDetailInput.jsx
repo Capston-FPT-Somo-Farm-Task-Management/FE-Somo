@@ -1,14 +1,8 @@
 import { Form, Input } from "antd";
 import React from "react";
 
-function AddressDetailInput({ addressDetail, setAddressDetail, isDraft }) {
-  const handleAddressDetail = (e) => {
-    if(addressDetail){
-      setAddressDetail(e.target.value);
-    }else{
-      setAddressDetail(null)
-    }
-  }
+function AddressDetailInput({ addressDetail, handleAddressDetail, isDraft }) {
+
   return (
     <Form.Item
       label="Vị trí cụ thể"

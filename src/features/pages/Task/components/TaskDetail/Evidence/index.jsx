@@ -29,7 +29,7 @@ function Evidence({
             <div key={evidence.id} className="evidence-content">
               {evidence.evidenceType === 1 ? (
                 <p className="evidence-desc">
-                  <span style={{ color: "red" }}>Lý do không đồng ý:</span>{" "}
+                  <span style={{ color: "#f77f00" }}>Lý do không đồng ý:</span>{" "}
                   {evidence.description}
                 </p>
               ) : evidence.evidenceType === 2 ? (
@@ -39,12 +39,12 @@ function Evidence({
                 </p>
               ) : evidence.evidenceType === 3 ? (
                 <p className="evidence-desc">
-                  <span style={{ color: "red" }}>Lý do tạm hoãn:</span>{" "}
+                  <span style={{ color: "#ffb703" }}>Lý do tạm hoãn:</span>{" "}
                   {evidence.description}
                 </p>
               ) : evidence.evidenceType === 4 ? (
                 <p className="evidence-desc">
-                  <span style={{ color: "red" }}>Mô tả:</span>{" "}
+                  <span style={{ color: "#849b5c" }}>Mô tả:</span>{" "}
                   {evidence.description}
                 </p>
               ) : evidence.evidenceType === 5 ? (
@@ -54,22 +54,22 @@ function Evidence({
                 </p>
               ) : (
                 <p className="evidence-desc">
-                  <span style={{ color: "red" }}>Mô tả:</span>{" "}
+                  <span style={{ color: "#849b5c" }}>Mô tả:</span>{" "}
                   {evidence.description}
                 </p>
               )}
               {evidence.evidenceType === 0 ? (
-                <p className="evidence-time">Bình thường</p>
+                <p className="evidence-time" style={{color: "#849b5c"}}>Bình thường</p>
               ) : evidence.evidenceType === 1 ? (
-                <p className="evidence-time">Không đồng ý</p>
+                <p  className="evidence-time" style={{color: "#f77f00"}}>Không đồng ý</p>
               ) : evidence.evidenceType === 2 ? (
-                <p className="evidence-time">Hủy bỏ</p>
+                <p className="evidence-time" style={{ color: "red" }}>Hủy bỏ</p>
               ) : evidence.evidenceType === 3 ? (
-                <p className="evidence-time">Tạm hoãn</p>
+                <p className="evidence-time" style={{color: "#ffb703"}}>Tạm hoãn</p>
               ) : evidence.evidenceType === 4 ? (
-                <p className="evidence-time">Đang thực hiện</p>
+                <p className="evidence-time" style={{color: "#849b5c"}}>Đang thực hiện</p>
               ) : evidence.evidenceType === 5 ? (
-                <p className="evidence-time">Từ chối người giám sát</p>
+                <p className="evidence-time" style={{color: "red"}}>Từ chối người giám sát</p>
               ) : null}
 
               {evidence.urlImage && evidence.urlImage.length > 0 ? (

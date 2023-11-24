@@ -5,7 +5,6 @@ function SubTask({
   subTaskModalVisible,
   handleSubTaskModalVisible,
   subTasks,
-  handleMenuSubTaskClick,
   editingTask,
   statusForEdit,
 }) {
@@ -15,7 +14,6 @@ function SubTask({
         subTaskModalVisible={subTaskModalVisible}
         handleSubTaskModalVisible={handleSubTaskModalVisible}
         subTasks={subTasks}
-        handleMenuSubTaskClick={handleMenuSubTaskClick}
         statusForEdit={statusForEdit}
         editingTask={editingTask}
       />
