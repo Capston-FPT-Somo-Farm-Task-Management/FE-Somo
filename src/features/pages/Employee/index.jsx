@@ -85,7 +85,7 @@ const Employee = () => {
         getEmployeeByExcel={getEmployeeByExcel}
         getEmployeeEffort={getEmployeeEffort}
       />
-      <DisplayEmployee
+      <DisplayEmployee  
         loading={loading}
         farmId={farmId}
         taskTypeActive={taskTypeActive}
