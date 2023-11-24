@@ -1,6 +1,5 @@
 import { Button, Dropdown, Form, Input, Menu, Modal } from "antd";
 import React from "react";
-import UpdateEffort from "./UpdateEffort";
 import DisplayEffort from "./DisplayEffort";
 
 function Effort({
@@ -9,12 +8,6 @@ function Effort({
   effort,
   handleMenuEffortClick,
   handleMenuSubTaskClick,
-  editEffortVisible,
-  closeEditEffortModal,
-  handleUpdateEffort,
-  currentTaskId,
-  editingEffort,
-  editingSubTask,
   isHaveSubTask,
   openSubtaskModal
 }) {
@@ -28,14 +21,6 @@ function Effort({
         handleMenuSubTaskClick={handleMenuSubTaskClick}
         isHaveSubTask={isHaveSubTask}
         openSubtaskModal={openSubtaskModal}
-      />
-      <UpdateEffort
-        editEffortVisible={editEffortVisible}
-        closeEditEffortModal={closeEditEffortModal}
-        handleUpdateEffort={handleUpdateEffort}
-        currentTaskId={currentTaskId}
-        editingEffort={editingEffort}
-        editingSubTask={editingSubTask}
       />
     </>
   );

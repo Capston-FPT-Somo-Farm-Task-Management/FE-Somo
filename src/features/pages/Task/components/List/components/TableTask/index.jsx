@@ -8,6 +8,7 @@ import {
   FileTextOutlined,
   CloseCircleOutlined,
   PauseCircleOutlined,
+  UndoOutlined
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
@@ -28,6 +29,7 @@ function TableTask({
   openModal,
 }) {
   const dispatch = useDispatch();
+
   return (
     <>
       {task && (
@@ -51,36 +53,61 @@ function TableTask({
                   (record.status === "Bản nháp" ||
                     record.status === "Chuẩn bị" ||
                     record.status === "Đang thực hiện");
-                const isStatusEffort =
+                const isStatusSubTask =
+                  record &&
+                  (record.status === "Bản nháp" ||
+                    record.status === "Chuẩn bị" ||
+                    record.status === "Từ chối");
+                const isStatusEffortTime =
                   record &&
                   (record.status === "Hoàn thành" ||
-                    record.status === "Không hoàn thành");
+                    record.status === "Đã đóng");
+                const isStatusChangeToDoing =
+                  record &&
+                  (record.status === "Tạm hoãn" || record.status === "Hủy bỏ");
                 if (isManager) {
                   return (
                     <Dropdown
                       placement="bottomRight"
                       overlay={
                         <Menu onClick={(e) => handleMenuClick(e, record)}>
-                          {!isStatusEffort ? (
-                            <Menu.Item key="subTask">
-                              <span onClick={() => openAddSubtaskModal(record)}>
-                                <PlusCircleOutlined
+                          {!isStatusSubTask ? (
+                            <Menu.Item key="viewSubTask">
+                              <span onClick={() => openSubtaskModal(record)}>
+                                <FileTextOutlined
                                   style={{ color: "green", marginRight: "8px" }}
                                 />
-                                Thêm công việc con
+                                Xem công việc con
                               </span>
                             </Menu.Item>
                           ) : null}
 
-                          {isStatusEffort && isStatusEffort ? (
-                            <Menu.Item key="viewEffort">
-                              <span onClick={() => openEffortModal(record)}>
-                                <FileTextOutlined
-                                  style={{ color: "green", marginRight: "8px" }}
-                                />
-                                Xem chấm công
-                              </span>
-                            </Menu.Item>
+                          {isStatusEffortTime && isStatusEffortTime ? (
+                            record.isHaveSubtask ? (
+                              <Menu.Item key="viewEffort">
+                                <span onClick={() => openSubtaskModal(record)}>
+                                  <FileTextOutlined
+                                    style={{
+                                      color: "green",
+                                      marginRight: "8px",
+                                    }}
+                                  />
+                                  Xem giờ làm
+                                </span>
+                              </Menu.Item>
+                            ) : (
+                              <Menu.Item key="viewEffort">
+                                <span onClick={() => openEffortModal(record)}>
+                                  <FileTextOutlined
+                                    style={{
+                                      color: "green",
+                                      marginRight: "8px",
+                                    }}
+                                  />
+                                  Xem giờ làm
+                                </span>
+                              </Menu.Item>
+                            )
                           ) : null}
 
                           {isStatus && isStatus ? (
@@ -93,10 +120,27 @@ function TableTask({
                               </span>
                             </Menu.Item>
                           ) : null}
+                          {isStatusChangeToDoing && isStatusChangeToDoing ? (
+                            <Menu.Item key="changeToDoing">
+                              <span>
+                                <UndoOutlined
+                                  style={{
+                                    color: "blue",
+                                    marginRight: "8px",
+                                  }}
+                                />
+                                Chuyển sang thực hiện
+                              </span>
+                            </Menu.Item>
+                          ) : null}
                           {record.status === "Đang thực hiện" ? (
                             <>
                               <Menu.Item key="pending">
-                                <span onClick={() => openChangeDoingToPendingModal(record)}>
+                                <span
+                                  onClick={() =>
+                                    openChangeDoingToPendingModal(record)
+                                  }
+                                >
                                   <PauseCircleOutlined
                                     style={{
                                       color: "blue",
@@ -107,7 +151,11 @@ function TableTask({
                                 </span>
                               </Menu.Item>
                               <Menu.Item key="cancel">
-                                <span onClick={() => openChangeDoingToCancelModal(record)}>
+                                <span
+                                  onClick={() =>
+                                    openChangeDoingToCancelModal(record)
+                                  }
+                                >
                                   <CloseCircleOutlined
                                     style={{
                                       color: "red",

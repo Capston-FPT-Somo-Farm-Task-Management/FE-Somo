@@ -8,6 +8,7 @@ import {
   changeStatusDoneToClose,
   changeStatusFromDoneToDoing,
   changeStatusToPendingAndCancel,
+  changeStatusToDoing,
 } from "features/slice/task/taskSlice";
 import { getEmployeeByTask } from "features/slice/employee/employeeByTask";
 import {
@@ -24,7 +25,6 @@ import ModalTask from "../ModalTask";
 import StatusTabs from "./components/StatusTabs";
 import SearchComp from "./components/SearchComp";
 import DateSelectionComp from "./components/DateSelection";
-import SubTask from "./components/SubTask/subTask";
 import Effort from "./components/Effort";
 import TableTask from "./components/TableTask";
 import dayjs from "dayjs";
@@ -33,6 +33,7 @@ import UpdateTask from "./components/UpdateTask";
 import ChangeDoneToDoing from "./components/ChangeDoneToDoing";
 import ChangeDoingToPending from "./components/ChangeDoingToPendingAndCancel/ChangeDoingToPending";
 import ChangeDoingToCancel from "./components/ChangeDoingToPendingAndCancel/ChangeDoingToCancel";
+import SubTask from "./components/SubTask";
 
 const List = () => {
   const [subTasks, setSubTasks] = useState([]);
@@ -141,6 +142,9 @@ const List = () => {
     } else if (e.key === "cancel") {
       openChangeDoingToCancelModal(record);
     } else if (e.key === "close") {
+    } else if (e.key === "changeToDoing") {
+      handleChangePendingAndCancelToDoing(record.id);
+    } else if (e.key === "close") {
       handleChangeDoneToCloseTask(record.id);
     }
   };
@@ -235,6 +239,14 @@ const List = () => {
       handleTaskAdded();
     });
     setTaskDoingToCancelModalVisible(false);
+  };
+
+  const handleChangePendingAndCancelToDoing = (id) => {
+    dispatch(changeStatusToDoing(id)).then(() => {
+      loadDataTask();
+      handleDateChange();
+      handleTaskAdded();
+    });
   };
 
   const handleChangeDoneToCloseTask = (id) => {
@@ -560,41 +572,18 @@ const List = () => {
         currentTaskId={currentTaskId}
       />
       <SubTask
-        addSubtaskVisible={addSubtaskVisible}
-        closeAddSubtaskModal={closeAddSubtaskModal}
-        form={form}
-        availableEmployees={availableEmployees}
-        description={description}
-        handleDescription={handleDescription}
         subTaskModalVisible={subTaskModalVisible}
         handleSubTaskModalVisible={handleSubTaskModalVisible}
         subTasks={subTasks}
-        handleAddSubTask={handleAddSubTask}
         handleMenuSubTaskClick={handleMenuSubTaskClick}
-        handleUpdateSubTaskEffort={handleUpdateSubTaskEffort}
-        editSubTaskModalVisible={editSubTaskModalVisible}
-        editSubTaskEffortModalVisible={editSubTaskEffortModalVisible}
-        closeEditSubTaskModal={closeEditSubTaskModal}
-        handleUpdateSubTask={handleUpdateSubTask}
-        editingSubTask={editingSubTask}
         editingTask={editingTask}
-        openEditSubTaskEffortModal={openEditSubTaskEffortModal}
-        closeEditSubTaskEffortModal={closeEditSubTaskEffortModal}
         statusForEdit={statusForEdit}
-        currentTaskId={currentTaskId}
-        handleSelectStartDay={handleSelectStartDay}
-        handleSelectEndDay={handleSelectEndDay}
       />
       <Effort
         effortVisible={effortVisible}
         handleEffortVisible={handleEffortVisible}
         effort={effort}
         handleMenuEffortClick={handleMenuEffortClick}
-        editEffortVisible={editEffortVisible}
-        closeEditEffortModal={closeEditEffortModal}
-        handleUpdateEffort={handleUpdateEffort}
-        currentTaskId={currentTaskId}
-        editingEffort={editingEffort}
         isHaveSubTask={isHaveSubTask}
         handleMenuSubTaskClick={handleMenuSubTaskClick}
         openSubtaskModal={openSubtaskModal}

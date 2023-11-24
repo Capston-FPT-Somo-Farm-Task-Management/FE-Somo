@@ -298,8 +298,7 @@ html {
   width: 48%;
 }
 .subTask-modal .ant-modal-content .subTask .subTask-content .subTask-header {
-  display: flex;
-  justify-content: space-around;
+  margin-left: 10px;
 }
 .subTask-modal .ant-modal-content .subTask .subTask-content .subTask-header .subTask-count {
   width: 45%;
@@ -339,8 +338,7 @@ html {
   border-radius: 10px;
 }
 .effort-modal .ant-modal-content .effort .effort-content .effort-header {
-  display: flex;
-  justify-content: space-around;
+  margin-left: 10px;
 }
 .effort-modal .ant-modal-content .effort .effort-content .effort-header .effort-count {
   width: 80%;
