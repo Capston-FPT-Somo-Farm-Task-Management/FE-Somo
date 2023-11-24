@@ -12,7 +12,6 @@ function DisplayEffort({
   isHaveSubTask,
   openSubtaskModal,
 }) {
-  let totalEffortCount = 0;
   const [api, contextHolder] = notification.useNotification();
   const openNotification = () => {
     api.open({
@@ -24,7 +23,7 @@ function DisplayEffort({
   return (
     <Modal
       title="Xem chấm công tổng"
-      visible={effortVisible}
+      open={effortVisible}
       onCancel={handleEffortVisible}
       footer={[
         <Button type="primary" onClick={handleEffortVisible}>
@@ -36,8 +35,6 @@ function DisplayEffort({
       <div className="effort">
         {effort ? (
           effort.map((effortItem) => {
-            totalEffortCount++;
-            const EffortCount = totalEffortCount;
             return (
               <div className="effort-content">
                 <div className="effort-header">

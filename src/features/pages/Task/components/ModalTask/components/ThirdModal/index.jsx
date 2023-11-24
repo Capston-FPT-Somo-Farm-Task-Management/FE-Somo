@@ -89,7 +89,9 @@ function ThirdModal({
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
 
-  const taskTypeActiveOther = useSelector((state) => state.taskTypeActiveOther.data);
+  const taskTypeActiveOther = useSelector(
+    (state) => state.taskTypeActiveOther.data
+  );
   console.log(taskTypeActiveOther);
 
   const taskTypeLivestock = useSelector(
@@ -291,7 +293,7 @@ function ThirdModal({
         remind: originalData.remind,
         addressDetail: originalData.addressDetail,
         isPlant: originalData.isPlant,
-        isSpecific: originalData.isSpecific
+        isSpecific: originalData.isSpecific,
       },
     };
 
@@ -347,8 +349,14 @@ function ThirdModal({
           remind: remindValueToSend,
           dates: selectedDays,
           materialIds: materialToSend,
-          isPlant: option === "specificPlant" || option === "wholeGarden" ? true : false,
-          isSpecific: option === "specificAnimal" || option === "specificPlant" ? true : false
+          isPlant:
+            option === "specificPlant" || option === "wholeGarden"
+              ? true
+              : false,
+          isSpecific:
+            option === "specificAnimal" || option === "specificPlant"
+              ? true
+              : false,
         };
 
         const transformedValues = transformData(finalValues);
@@ -357,12 +365,12 @@ function ThirdModal({
           loadDataTask();
           onDateChange();
           onTaskAdded();
-          handleCloseModal();
         });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
       });
+    handleCloseModal();
   };
 
   const handleCreateDraft = (values) => {
@@ -417,8 +425,14 @@ function ThirdModal({
           remind: remindValueToSend,
           dates: selectedDays,
           materialIds: materialToSend,
-          isPlant: option === "specificPlant" || option === "wholeGarden" ? true : false,
-          isSpecific: option === "specificAnimal" || option === "specificPlant" ? true : false
+          isPlant:
+            option === "specificPlant" || option === "wholeGarden"
+              ? true
+              : false,
+          isSpecific:
+            option === "specificAnimal" || option === "specificPlant"
+              ? true
+              : false,
         };
 
         const transformedValues = transformData(finalValues);
@@ -509,7 +523,7 @@ function ThirdModal({
           materialIds: materialToSend,
           addressDetail: formattedAddress,
           isPlant: null,
-          isSpecific: false
+          isSpecific: false,
         };
 
         const transformedValues = transformData(finalValues);
@@ -608,7 +622,7 @@ function ThirdModal({
           materialIds: materialToSend,
           addressDetail: addressToSend,
           isPlant: null,
-          isSpecific: false
+          isSpecific: false,
         };
 
         const transformedValues = transformData(finalValues);

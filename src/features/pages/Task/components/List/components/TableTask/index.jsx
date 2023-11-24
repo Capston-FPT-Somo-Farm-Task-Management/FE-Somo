@@ -6,10 +6,11 @@ import {
   DeleteOutlined,
   PlusCircleOutlined,
   FileTextOutlined,
+  CloseCircleOutlined,
+  PauseCircleOutlined,
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
-import UpdateTask from "../UpdateTask";
 
 function TableTask({
   task,
@@ -17,22 +18,16 @@ function TableTask({
   dataTotalPages,
   taskTitle,
   handleMenuClick,
-  editingTask,
-  editTaskModalVisible,
   openEditTaskModal,
-  closeEditTaskModal,
   openAddSubtaskModal,
   openSubtaskModal,
   openEffortModal,
+  openChangeDoingToPendingModal,
+  openChangeDoingToCancelModal,
   onChange,
   openModal,
-  handleTaskAdded,
-  handleDateChange,
-  loadDataTask,
-  currentTaskId,
 }) {
   const dispatch = useDispatch();
-
   return (
     <>
       {task && (
@@ -53,7 +48,8 @@ function TableTask({
                 const isManager = record && record.managerName;
                 const isStatus =
                   record &&
-                  (record.status === "Bản nháp" || record.status === "Chuẩn bị" ||
+                  (record.status === "Bản nháp" ||
+                    record.status === "Chuẩn bị" ||
                     record.status === "Đang thực hiện");
                 const isStatusEffort =
                   record &&
@@ -76,14 +72,6 @@ function TableTask({
                             </Menu.Item>
                           ) : null}
 
-                          <Menu.Item key="viewSubTask">
-                            <span onClick={() => openSubtaskModal(record)}>
-                              <FileTextOutlined
-                                style={{ color: "green", marginRight: "8px" }}
-                              />
-                              Xem công việc con
-                            </span>
-                          </Menu.Item>
                           {isStatusEffort && isStatusEffort ? (
                             <Menu.Item key="viewEffort">
                               <span onClick={() => openEffortModal(record)}>
@@ -102,6 +90,43 @@ function TableTask({
                                   style={{ color: "gold", marginRight: "8px" }}
                                 />
                                 Cập nhật công việc
+                              </span>
+                            </Menu.Item>
+                          ) : null}
+                          {record.status === "Đang thực hiện" ? (
+                            <>
+                              <Menu.Item key="pending">
+                                <span onClick={() => openChangeDoingToPendingModal(record)}>
+                                  <PauseCircleOutlined
+                                    style={{
+                                      color: "blue",
+                                      marginRight: "8px",
+                                    }}
+                                  />
+                                  Tạm hoãn
+                                </span>
+                              </Menu.Item>
+                              <Menu.Item key="cancel">
+                                <span onClick={() => openChangeDoingToCancelModal(record)}>
+                                  <CloseCircleOutlined
+                                    style={{
+                                      color: "red",
+                                      marginRight: "8px",
+                                    }}
+                                  />
+                                  Hủy bỏ
+                                </span>
+                              </Menu.Item>
+                            </>
+                          ) : null}
+
+                          {record.status === "Hoàn thành" ? (
+                            <Menu.Item key="close">
+                              <span>
+                                <CloseCircleOutlined
+                                  style={{ color: "gold", marginRight: "8px" }}
+                                />
+                                Đóng công việc
                               </span>
                             </Menu.Item>
                           ) : null}
@@ -160,7 +185,6 @@ function TableTask({
                   );
                 }
               },
-              
             },
           ]}
           dataSource={task}
@@ -182,17 +206,6 @@ function TableTask({
           }}
         />
       )}
-
-      <UpdateTask
-        editTaskModalVisible={editTaskModalVisible}
-        closeEditTaskModal={closeEditTaskModal}
-        key={editingTask ? editingTask.id : null}
-        editingTask={editingTask}
-        handleTaskAdded={handleTaskAdded}
-        handleDateChange={handleDateChange}
-        loadDataTask={loadDataTask}
-        currentTaskId={currentTaskId}
-      />
     </>
   );
 }

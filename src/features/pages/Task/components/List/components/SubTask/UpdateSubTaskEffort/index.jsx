@@ -12,7 +12,7 @@ function UpdateSubTaskEffort({
       {editSubTaskEffortModalVisible && (
         <Modal
           title="Sửa chấm công"
-          visible={editSubTaskEffortModalVisible}
+          open={editSubTaskEffortModalVisible}
           onCancel={closeEditSubTaskEffortModal}
           footer={[
             <Button form="updateSubTaskEffort" type="primary" htmlType="submit">

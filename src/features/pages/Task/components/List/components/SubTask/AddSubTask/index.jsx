@@ -34,7 +34,7 @@ function AddSubTask({
   return (
     <Modal
       title="Thêm công việc con"
-      visible={addSubtaskVisible}
+      open={addSubtaskVisible}
       onCancel={closeAddSubtaskModal}
       footer={[
         <Button form="createSubTask" type="dashed" htmlType="reset">
