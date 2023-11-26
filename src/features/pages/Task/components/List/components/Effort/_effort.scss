@@ -1,3 +1,5 @@
+@import "../../../../../../../styles/Helper/mixin";
+
 .effort-modal {
     .ant-modal-content {
       .ant-modal-title {
@@ -24,14 +26,12 @@
             }
             .effort-dropdown{
               width: 20%;
-              display: flex;
-              justify-content: flex-end;
+              @include flex(row, flex-end, null, null);
             }
           }
           
           .effort-container {
-            display: flex;
-            justify-content: space-between;
+            @include flex(row, space-between, null, null);
             padding: 10px 25px;
             border-radius: 10px;
             .effort-item {

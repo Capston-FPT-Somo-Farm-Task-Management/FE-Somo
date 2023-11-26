@@ -8,7 +8,7 @@ import {
   FileTextOutlined,
   CloseCircleOutlined,
   PauseCircleOutlined,
-  UndoOutlined
+  UndoOutlined,
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
@@ -63,8 +63,11 @@ function TableTask({
                   (record.status === "Hoàn thành" ||
                     record.status === "Đã đóng");
                 const isStatusChangeToDoing =
+                  record && record.status === "Tạm hoãn";
+                const isStatusDelete =
                   record &&
-                  (record.status === "Tạm hoãn" || record.status === "Hủy bỏ");
+                  (record.status === "Bản nháp" ||
+                    record.status === "Chuẩn bị");
                 if (isManager) {
                   return (
                     <Dropdown
@@ -167,6 +170,32 @@ function TableTask({
                               </Menu.Item>
                             </>
                           ) : null}
+                          {record.status === "Từ chối" ? (
+                            <>
+                              <Menu.Item key="reAssign">
+                                <span onClick={() => openEditTaskModal(record)}>
+                                  <PauseCircleOutlined
+                                    style={{
+                                      color: "blue",
+                                      marginRight: "8px",
+                                    }}
+                                  />
+                                  Chỉnh sửa
+                                </span>
+                              </Menu.Item>
+                              <Menu.Item key="reject">
+                                <span>
+                                  <CloseCircleOutlined
+                                    style={{
+                                      color: "red",
+                                      marginRight: "8px",
+                                    }}
+                                  />
+                                  Không chấp nhận
+                                </span>
+                              </Menu.Item>
+                            </>
+                          ) : null}
 
                           {record.status === "Hoàn thành" ? (
                             <Menu.Item key="close">
@@ -178,15 +207,16 @@ function TableTask({
                               </span>
                             </Menu.Item>
                           ) : null}
-
-                          <Menu.Item key="delete">
-                            <span>
-                              <DeleteOutlined
-                                style={{ color: "red", marginRight: "8px" }}
-                              />
-                              Xóa công việc
-                            </span>
-                          </Menu.Item>
+                          {isStatusDelete && isStatusDelete ? (
+                            <Menu.Item key="delete">
+                              <span>
+                                <DeleteOutlined
+                                  style={{ color: "red", marginRight: "8px" }}
+                                />
+                                Xóa công việc
+                              </span>
+                            </Menu.Item>
+                          ) : null}
                         </Menu>
                       }
                     >

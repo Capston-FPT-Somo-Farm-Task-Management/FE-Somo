@@ -33,7 +33,7 @@ const ChangeDoingToPending = ({
             id="doingToPending"
           >
             <Form.Item
-              label="Đổi sang tạm hoãn"
+              label="Lý do tạm hoãn"
               name="description"
               required
               rules={[
@@ -49,7 +49,7 @@ const ChangeDoingToPending = ({
                 onChange={handleDescription}
               />
             </Form.Item>
-            <Form.Item label="Hình ảnh tạm hoãn" name="imageFile">
+            <Form.Item label="Hình ảnh" name="imageFile">
             <ImgCrop rotationSlider>
               <Upload
                 listType="picture-card"

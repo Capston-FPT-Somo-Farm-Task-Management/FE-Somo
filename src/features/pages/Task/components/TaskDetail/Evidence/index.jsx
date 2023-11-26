@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import NoImage from "../../../../../../assets/no-image.png";
-import { Button, Collapse, Empty, Image, Space, Timeline } from "antd";
+import { Avatar, Button, Collapse, Empty, Image, Space, Timeline } from "antd";
 import { GrDocumentImage } from "react-icons/gr";
 import dayjs from "dayjs";
 import UpdateTask from "../../List/components/UpdateTask";
@@ -15,6 +15,7 @@ function Evidence({
   closeEditTaskModal,
 }) {
   const evidenceData = useSelector((state) => state.evidence.data);
+  console.log(taskData);
 
   const renderImages = () => {
     if (evidenceData && evidenceData.data && evidenceData.data.length > 0) {
@@ -25,201 +26,183 @@ function Evidence({
         return {
           status:
             evidence.evidenceType === 0 ? (
-              <p className="evidence-time" style={{ color: "#38b000" }}>
+              <p className="evidence-status" style={{ color: "#38b000" }}>
                 Bình thường
               </p>
             ) : evidence.evidenceType === 1 ? (
-              <p className="evidence-time" style={{ color: "#f77f00" }}>
+              <p className="evidence-status" style={{ color: "#f77f00" }}>
                 Từ chối
               </p>
             ) : evidence.evidenceType === 2 ? (
-              <p className="evidence-time" style={{ color: "red" }}>
+              <p className="evidence-status" style={{ color: "red" }}>
                 Hủy bỏ
               </p>
             ) : evidence.evidenceType === 3 ? (
-              <p className="evidence-time" style={{ color: "#fca311" }}>
+              <p className="evidence-status" style={{ color: "#fca311" }}>
                 Tạm hoãn
               </p>
             ) : evidence.evidenceType === 4 ? (
-              <p className="evidence-time" style={{ color: "#38b000" }}>
+              <p className="evidence-status" style={{ color: "#124e78" }}>
                 Làm lại
               </p>
             ) : evidence.evidenceType === 5 ? (
-              <p className="evidence-time" style={{ color: "red" }}>
+              <p className="evidence-status" style={{ color: "red" }}>
                 Từ chối người giám sát
               </p>
             ) : null,
           date: formattedUpdateDate,
           content: (
             <div key={evidence.id} className="evidence-content">
-              {evidence.evidenceType === 1 ? (
-                <>
-                  <p className="evidence-desc">
-                    <h6 style={{ color: "#000" }}>Lý do từ chối:</h6>{" "}
-                    {evidence.description}
-                  </p>
-                  <p className="evidence-time" style={{ color: "#f77f00" }}>
-                    Đã gửi {evidence.time}
-                  </p>
-                </>
-              ) : evidence.evidenceType === 2 ? (
-                <>
-                  <p className="evidence-desc">
-                    <h6 style={{ color: "#000" }}>Lý do hủy bỏ:</h6>{" "}
-                    {evidence.description}
-                  </p>
-                  <p className="evidence-time" style={{ color: "red" }}>
-                    Đã gửi {evidence.time}
-                  </p>
-                </>
-              ) : evidence.evidenceType === 3 ? (
-                <>
-                  <p className="evidence-desc">
-                    <h6 style={{ color: "#000" }}>Lý do tạm hoãn:</h6>{" "}
-                    {evidence.description}
-                  </p>
-                  <p className="evidence-time" style={{ color: "#fca311" }}>
-                    Đã gửi {evidence.time}
-                  </p>
-                </>
-              ) : evidence.evidenceType === 4 ? (
-                <>
-                  <p className="evidence-desc">
-                    <h6 style={{ color: "#000" }}>Mô tả:</h6>{" "}
-                    {evidence.description}
-                  </p>
-                  <p className="evidence-time" style={{ color: "#38b000" }}>
-                    Đã gửi {evidence.time}
-                  </p>
-                </>
-              ) : evidence.evidenceType === 5 ? (
-                <>
-                  <p className="evidence-desc">
-                    <h6 style={{ color: "#000" }}>Lý do từ chối:</h6>{" "}
-                    {evidence.description}
-                  </p>
-                  <p className="evidence-time" style={{ color: "red" }}>
-                    Đã gửi {evidence.time}
-                  </p>
-                </>
+              {evidence.managerName ? (
+                <div className="evidence-item-header">
+                  <div className="evidence-name">
+                    <Avatar src={taskData.avatarManager} />
+                    <h3>{taskData.managerName}</h3>
+                  </div>
+                  <p className="evidence-time">{evidence.time}</p>
+                </div>
               ) : (
-                <>
-                  <p className="evidence-desc">
-                    <h6 style={{ color: "#000" }}>Mô tả:</h6>{" "}
-                    {evidence.description}
-                  </p>
-                  <p className="evidence-time" style={{ color: "#38b000" }}>
-                    Đã gửi {evidence.time}
-                  </p>
-                </>
+                <div className="evidence-item-header">
+                  <div className="evidence-name">
+                    <Avatar src={taskData.avatarSupervisor} size="large" />
+                    <h3>{taskData.supervisorName}</h3>
+                  </div>
+                  <p className="evidence-time">{evidence.time}</p>
+                </div>
               )}
 
+              <div className="evidence-item">
+                {evidence.evidenceType === 1 ? (
+                  <div className="evidence-desc">
+                    <h6 style={{ color: "#000" }}>Lý do từ chối:</h6>{" "}
+                    {evidence.description}
+                  </div>
+                ) : evidence.evidenceType === 2 ? (
+                  <div className="evidence-desc">
+                    <h6 style={{ color: "#000" }}>Lý do hủy bỏ:</h6>{" "}
+                    {evidence.description}
+                  </div>
+                ) : evidence.evidenceType === 3 ? (
+                  <div className="evidence-desc">
+                    <h6 style={{ color: "#000" }}>Lý do tạm hoãn:</h6>{" "}
+                    {evidence.description}
+                  </div>
+                ) : evidence.evidenceType === 4 ? (
+                  <div className="evidence-desc">{evidence.description}</div>
+                ) : evidence.evidenceType === 5 ? (
+                  <div className="evidence-desc">
+                    <h6 style={{ color: "#000" }}>Lý do từ chối:</h6>{" "}
+                    {evidence.description}
+                  </div>
+                ) : (
+                  <div className="evidence-desc">{evidence.description}</div>
+                )}
+              </div>
+
               {evidence.urlImage && evidence.urlImage.length > 0 ? (
-                <Collapse accordion className="collapse-evidence">
-                  <Panel
-                    header={
-                      <div className="evidence-panel">
-                        <div className="evidence-panel-title">
-                          <GrDocumentImage
-                            style={{
-                              marginRight: "8px",
-                              transform: "translateY(10%)",
-                            }}
-                          />
-                          Xem hình ảnh báo cáo
+                <div className="evidence-img">
+                  <Collapse accordion className="collapse-evidence">
+                    <Panel
+                      header={
+                        <div className="evidence-panel">
+                          <div className="evidence-panel-title">
+                            <GrDocumentImage
+                              style={{
+                                marginRight: "8px",
+                                transform: "translateY(10%)",
+                              }}
+                            />
+                            Xem {evidence.urlImage.length} hình ảnh báo cáo
+                          </div>
                         </div>
-                        <div className="evidence-panel-img">
-                          {evidence.urlImage ? (
-                            <span>{evidence.urlImage.length} hình ảnh</span>
-                          ) : (
-                            <span>Không có ảnh nào</span>
-                          )}
-                        </div>
-                      </div>
-                    }
-                  >
-                    <div className="img-contain">
-                      <Image.PreviewGroup>
-                        {evidence.urlImage && evidence.urlImage ? (
-                          evidence.urlImage.map((url, imageIndex) => (
-                            <>
-                              {evidence.urlImage.length === 1 ? (
-                                <div className="img-evidence" key={imageIndex}>
-                                  <Image
-                                    src={url}
-                                    alt={`evidence-${imageIndex}`}
-                                  />
-                                </div>
-                              ) : evidence.urlImage.length === 2 ? (
-                                <div
-                                  className="img-evidence-2"
-                                  key={imageIndex}
-                                >
-                                  <Image
-                                    src={url}
-                                    alt={`evidence-${imageIndex}`}
-                                  />
-                                </div>
-                              ) : evidence.urlImage.length === 3 ? (
-                                <div
-                                  className="img-evidence-3"
-                                  key={imageIndex}
-                                >
-                                  <Image
-                                    src={url}
-                                    alt={`evidence-${imageIndex}`}
-                                  />
-                                </div>
-                              ) : evidence.urlImage.length === 4 ? (
-                                <div
-                                  className="img-evidence-4"
-                                  key={imageIndex}
-                                >
-                                  <Image
-                                    src={url}
-                                    alt={`evidence-${imageIndex}`}
-                                  />
-                                </div>
-                              ) : evidence.urlImage.length > 4 ? (
-                                <div
-                                  style={{
-                                    display:
-                                      imageIndex >= 4 &&
+                      }
+                    >
+                      <div className="img-contain">
+                        <Image.PreviewGroup>
+                          {evidence.urlImage && evidence.urlImage ? (
+                            evidence.urlImage.map((url, imageIndex) => (
+                              <>
+                                {evidence.urlImage.length === 1 ? (
+                                  <div
+                                    className="img-evidence"
+                                    key={imageIndex}
+                                  >
+                                    <Image
+                                      src={url}
+                                      alt={`evidence-${imageIndex}`}
+                                    />
+                                  </div>
+                                ) : evidence.urlImage.length === 2 ? (
+                                  <div
+                                    className="img-evidence-2"
+                                    key={imageIndex}
+                                  >
+                                    <Image
+                                      src={url}
+                                      alt={`evidence-${imageIndex}`}
+                                    />
+                                  </div>
+                                ) : evidence.urlImage.length === 3 ? (
+                                  <div
+                                    className="img-evidence-3"
+                                    key={imageIndex}
+                                  >
+                                    <Image
+                                      src={url}
+                                      alt={`evidence-${imageIndex}`}
+                                    />
+                                  </div>
+                                ) : evidence.urlImage.length === 4 ? (
+                                  <div
+                                    className="img-evidence-4"
+                                    key={imageIndex}
+                                  >
+                                    <Image
+                                      src={url}
+                                      alt={`evidence-${imageIndex}`}
+                                    />
+                                  </div>
+                                ) : evidence.urlImage.length > 4 ? (
+                                  <div
+                                    style={{
+                                      display:
+                                        imageIndex >= 4 &&
+                                        evidence.urlImage.length > 4
+                                          ? "none"
+                                          : "block",
+                                    }}
+                                    className={`img-evidence-more-4 ${
+                                      imageIndex === 3 &&
                                       evidence.urlImage.length > 4
-                                        ? "none"
-                                        : "block",
-                                  }}
-                                  className={`img-evidence-more-4 ${
-                                    imageIndex === 3 &&
-                                    evidence.urlImage.length > 4
-                                      ? "overlay"
-                                      : ""
-                                  }`}
-                                  key={imageIndex}
-                                >
-                                  <Image
-                                    src={url}
-                                    alt={`evidence-${imageIndex}`}
-                                  />
-                                  {imageIndex === 3 &&
-                                    evidence.urlImage.length > 4 && (
-                                      <div className="overlay-background">
-                                        <div className="overlay-text">
-                                          +{evidence.urlImage.length - 4}
+                                        ? "overlay"
+                                        : ""
+                                    }`}
+                                    key={imageIndex}
+                                  >
+                                    <Image
+                                      src={url}
+                                      alt={`evidence-${imageIndex}`}
+                                    />
+                                    {imageIndex === 3 &&
+                                      evidence.urlImage.length > 4 && (
+                                        <div className="overlay-background">
+                                          <div className="overlay-text">
+                                            +{evidence.urlImage.length - 4}
+                                          </div>
                                         </div>
-                                      </div>
-                                    )}
-                                </div>
-                              ) : null}
-                            </>
-                          ))
-                        ) : (
-                          <img src={NoImage} alt="Không có ảnh" />
-                        )}
-                      </Image.PreviewGroup>
-                    </div>
-                  </Panel>
-                </Collapse>
+                                      )}
+                                  </div>
+                                ) : null}
+                              </>
+                            ))
+                          ) : (
+                            <img src={NoImage} alt="Không có ảnh" />
+                          )}
+                        </Image.PreviewGroup>
+                      </div>
+                    </Panel>
+                  </Collapse>
+                </div>
               ) : null}
             </div>
           ),
@@ -241,20 +224,24 @@ function Evidence({
                     : item.status.props.children === "Tạm hoãn"
                     ? "#fca311"
                     : item.status.props.children === "Làm lại"
-                    ? "#38b000"
+                    ? "#124e78"
                     : item.status.props.children === "Từ chối người giám sát"
                     ? "red"
                     : null
                 }
                 key={index}
                 label={
-                  <div
-                    style={{ display: "flex", justifyContent: "space-around" }}
-                  >
-                    <p style={{ width: "70%" }}>- {item.date}</p>
-                    <p style={{ width: "30%" }}>{item.status}</p>
-                    {console.log(item.status)}
-                  </div>
+                  <>
+                    {item.status.props.children === "Bình thường" ? (
+                      <p >{item.date}</p>
+                    ) : (
+                      <>
+                        {" "}
+                        <p >{item.date}</p>
+                        <p >{item.status}</p>
+                      </>
+                    )}
+                  </>
                 }
               >
                 {item.content}
@@ -269,7 +256,11 @@ function Evidence({
   };
   return (
     <div className="evidence">
-      <h6 style={{ fontSize: "24px", fontWeight: "500", paddingBottom: "20px" }}>Báo cáo công việc</h6>
+      <h6
+        style={{ fontSize: "24px", fontWeight: "500", paddingBottom: "20px" }}
+      >
+        Báo cáo công việc
+      </h6>
       {renderImages()}
       {taskData && taskData.status === "Từ chối" ? (
         <div

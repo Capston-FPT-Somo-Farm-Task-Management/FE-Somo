@@ -45,7 +45,6 @@ function UpdateTask({
   loadDataTask,
   currentTaskId,
   closeModal,
-  handleTabChange
 }) {
   const [selectedAreaId, setSelectedAreaId] = useState(
     editingTask ? editingTask.areaId : null
@@ -563,7 +562,6 @@ function UpdateTask({
       });
     closeEditTaskModal();
     closeModal();
-    handleTabChange("1")
   };
 
   const handleUpdateTaskDraft = (currentTaskId) => {
@@ -762,7 +760,6 @@ function UpdateTask({
           loadDataTask();
           handleDateChange();
           handleTaskAdded();
-          handleTabChange("1")
         });
       })
       .catch((errorInfo) => {
@@ -774,8 +771,8 @@ function UpdateTask({
 
   const handleChangeStatusToDoToDraft = (currentTaskId) => {
     dispatch(updateStatusFromToDoToDraft(currentTaskId)).then(() => {
-      handleTabChange("0")
       closeEditTaskModal();
+      loadDataTask();
     })
   };
 

@@ -19,12 +19,11 @@ function ModalTask({
   onDateChange,
   loadDataTask,
   handleBackOtherTask,
-  task,
+  handleTabChange,
 }) {
   const [selectedType, setSelectedType] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isDraft, setIsDraft] = useState(false);
-  console.log(isDraft);
 
   const handleIsDraft = () => {
     setIsDraft(true);
@@ -79,6 +78,7 @@ function ModalTask({
             option={selectedOption}
             onTaskAdded={onTaskAdded}
             onDateChange={onDateChange}
+            handleTabChange={handleTabChange}
             handleCloseModal={handleCloseModal}
             handleIsDraft={handleIsDraft}
             handleIsTaskToDo={handleIsTaskToDo}
