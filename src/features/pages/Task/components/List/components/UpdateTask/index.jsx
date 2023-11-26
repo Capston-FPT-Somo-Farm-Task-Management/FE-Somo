@@ -766,7 +766,6 @@ function UpdateTask({
         console.log("Validation failed:", errorInfo);
       });
     closeEditTaskModal();
-    
   };
 
   const handleChangeStatusToDoToDraft = (currentTaskId) => {
