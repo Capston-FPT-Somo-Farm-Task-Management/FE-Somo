@@ -6,16 +6,7 @@ import DetailEmployee from './DetailEmployee'
 import { getEmployeeById } from 'features/slice/employee/employeeSlice'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-
-import {
-  MoreOutlined,
-  EditOutlined,
-  DeleteOutlined,
-  PlusCircleOutlined,
-  FileTextOutlined,
-  CloseCircleOutlined,
-  PauseCircleOutlined,
-} from '@ant-design/icons'
+import { MoreOutlined, EditOutlined, FileTextOutlined } from '@ant-design/icons'
 import ViewTimeKeeping from './ViewTimeKeeping'
 import { getEmployeeEffortTotal } from 'features/slice/employee/employeeEffortTotalSlice'
 
@@ -24,9 +15,7 @@ const DisplayEmployee = ({
   onFinishDelete,
   onFinishUpdate,
   searchTerm,
-  loadData,
   taskTypeActive,
-  farmId,
   loading,
   getAnyEmployeeEffort,
 }) => {
@@ -43,9 +32,7 @@ const DisplayEmployee = ({
 
   useEffect(() => {
     if (selectedData) {
-      dispatch(getEmployeeById(selectedData.id)).then(() => {
-        // loadData()
-      })
+      dispatch(getEmployeeById(selectedData.id))
     }
   }, [selectedData, dispatch])
 
@@ -111,7 +98,6 @@ const DisplayEmployee = ({
               )}
             />
             <Column title="Mã nhân viên" dataIndex="code" key="2" />
-            {/* <Column title="Loại nhiệm vụ" dataIndex="taskTypeName" key="3" /> */}
             <Column
               title="Trạng thái"
               dataIndex="status"
@@ -143,20 +129,6 @@ const DisplayEmployee = ({
                 </Button>
               )}
             />
-            {/* <Column
-              title="Cập nhật"
-              key="7"
-              dataIndex="id"
-              render={(_, record) => (
-                <Button
-                  type="primary"
-                  size="middle"
-                  onClick={() => openModal(record)}
-                >
-                  Cập nhật
-                </Button>
-              )}
-            /> */}
 
             <Column
               title="Tuỳ chọn"
@@ -167,9 +139,7 @@ const DisplayEmployee = ({
                   <Dropdown
                     placement="bottomRight"
                     overlay={
-                      <Menu
-                      // onClick={(e) => handleMenuClick(e, record)}
-                      >
+                      <Menu>
                         <Menu.Item key="updateEmployee">
                           <span onClick={() => openModal(record)}>
                             <EditOutlined
@@ -203,7 +173,9 @@ const DisplayEmployee = ({
           </Table>
 
           <DetailEmployee
-            key={selectedDataDetail ? selectedDataDetail.id : null}
+            key={
+              'detail-' + (selectedDataDetail ? selectedDataDetail.id : null)
+            }
             isModalDetailOpen={isModalDetailOpen}
             closeModalDetail={closeModalDetail}
             selectedDataDetail={selectedDataDetail}
@@ -220,13 +192,12 @@ const DisplayEmployee = ({
           />
 
           <ViewTimeKeeping
-            key={selectedDataDetail ? selectedDataDetail.id : null}
-            // isModalOpen={isModalOpen}
-            // closeModal={closeModal}
+            key={
+              'timekeeping-' +
+              (selectedDataDetail ? selectedDataDetail.id : null)
+            }
             employeeById={employeeById}
-            // taskTypeActive={taskTypeActive}
             selectedDataDetail={selectedDataDetail}
-            // onFinishUpdate={onFinishUpdate}
             onClose={onClose}
             openDrawer={openDrawer}
             getAnyEmployeeEffort={getAnyEmployeeEffort}

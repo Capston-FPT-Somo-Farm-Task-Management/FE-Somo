@@ -27,14 +27,14 @@ const TableMember = ({
   const [isModalOpenDetail, setIsModalOpenDetail] = useState(false)
   const [selectedMember, setSelectedMember] = useState(null)
 
-  const showModal = (memberByFarm) => {
-    setSelectedMember(memberByFarm)
+  const showModal = (record) => {
+    setSelectedMember(record)
     setIsModalOpenDetail(true)
   }
 
   const closeModalDetail = () => {
+    setSelectedMember(null)
     setIsModalOpenDetail(false)
-    // setSelectedMember(null)
   }
 
   // --------------------------------------------
@@ -42,19 +42,16 @@ const TableMember = ({
   const dispatch = useDispatch()
   useEffect(() => {
     if (selectedMember) {
-      dispatch(getMemberById(selectedMember.id)).then(() => {
-        loadData()
-      })
+      dispatch(getMemberById(selectedMember.id))
     }
   }, [selectedMember, dispatch])
 
   const memberById = useSelector((state) => state.member.data)
 
   const [isModalOpenUpdate, setIsModalOpenUpdate] = useState(false)
+
   const openModalUpdate = async (record) => {
-    await dispatch(getMemberById(record.id)).then(() => {
-      loadData()
-    })
+    await dispatch(getMemberById(record.id))
     setSelectedMember(record)
     setIsModalOpenUpdate(true)
   }
@@ -79,7 +76,7 @@ const TableMember = ({
   return (
     <>
       {loading ? (
-        <Skeleton active/>
+        <Skeleton active />
       ) : (
         <>
           <Space style={{ justifyContent: 'flex-end', width: '98%' }}>
@@ -160,7 +157,7 @@ const TableMember = ({
             />
           </Table>
           <DetailMember
-            key={selectedMember ? selectedMember.id : null}
+            key={'detail-' + (selectedMember ? selectedMember.id : null)}
             isModalOpenDetail={isModalOpenDetail}
             closeModalDetail={closeModalDetail}
             selectedMember={selectedMember}
