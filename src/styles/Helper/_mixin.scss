@@ -12,7 +12,7 @@ $desktop-width: 992px;
  } 
 }
 
-@mixin tablet { @media (max-width: #{$desktop-width - 1px}) {       
+@mixin tablet { @media (max-width: #{$desktop-width}) {       
    @content;   
  } 
 }  
@@ -27,10 +27,10 @@ $desktop-width: 992px;
 $green-color-400: #8EAD48;
 $green-box-shadow-400: rgba(142, 173, 72,0.4);
 $green-color-500: #bfffc7;
-$green-color-600: #2c6e49;
+$green-color-600: #004b23;
 $green-color-700: #38b000;
 
-$white-color-300: #fefee3;
+$white-color-300: #f4f0bb;
 
 // ---------------------------------------------------------------------------
 

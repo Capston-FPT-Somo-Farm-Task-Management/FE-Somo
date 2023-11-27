@@ -4,7 +4,7 @@ import {
   MoreOutlined,
   EditOutlined,
   DeleteOutlined,
-  PlusCircleOutlined,
+  ArrowRightOutlined,
   FileTextOutlined,
   CloseCircleOutlined,
   PauseCircleOutlined,
@@ -117,6 +117,17 @@ function TableTask({
                                   style={{ color: "gold", marginRight: "8px" }}
                                 />
                                 Cập nhật công việc
+                              </span>
+                            </Menu.Item>
+                          ) : null}
+
+                          {record.status === "Bản nháp" ? (
+                            <Menu.Item key="changeToToDo">
+                              <span onClick={() => openEditTaskModal(record)}>
+                                <ArrowRightOutlined
+                                  style={{ color: "green", marginRight: "8px" }}
+                                />
+                                Chuyển sang chuẩn bị
                               </span>
                             </Menu.Item>
                           ) : null}

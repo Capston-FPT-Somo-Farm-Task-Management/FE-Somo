@@ -44,6 +44,8 @@ import { useSelector } from "react-redux";
 import { changeNotifyIsReadAll } from "features/slice/notification/notificationReadSlice";
 import { countNewNotify } from "features/slice/notification/notificationCountSlice";
 import SubMenu from "antd/es/menu/SubMenu";
+import HeaderOption from "../Header/components/HeaderOption";
+import HeaderComp from "../Header";
 
 const { Sider } = Layout;
 
