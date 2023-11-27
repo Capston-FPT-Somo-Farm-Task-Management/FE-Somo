@@ -11,8 +11,6 @@ const ViewTimeKeeping = ({
 }) => {
   const [showForm, setShowForm] = useState(false)
 
-  console.log(selectedDataDetail)
-
   const onFinish = (values) => {
     const dateString = values?.date?.format('MM-YYYY')
     const [month, year] = dateString.split('-')
@@ -45,9 +43,6 @@ const ViewTimeKeeping = ({
       extra={
         <Space>
           <Button onClick={onClose}>Đóng</Button>
-          {/* <Button type="primary" onClick={onClose}>
-            OK
-          </Button> */}
         </Space>
       }
     >
@@ -72,13 +67,10 @@ const ViewTimeKeeping = ({
               {employeeEffortTotal?.data?.actualEffortHour} giờ{' '}
               {employeeEffortTotal?.data?.actualEfforMinutes} phút
             </Descriptions.Item>
-            <Descriptions.Item
-              label="Tổng số công việc đã làm"
-              // onClick={toggleTaskList}
-            >
+            <Descriptions.Item label="Tổng số công việc đã làm">
               <div
                 onClick={toggleTaskList}
-                style={{ cursor: 'pointer', color: '#1890ff' }} // Ant Design primary color
+                style={{ cursor: 'pointer', color: '#1890ff' }}
                 onMouseOver={({ target }) =>
                   (target.style.textDecoration = 'underline')
                 }

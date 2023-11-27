@@ -47,7 +47,6 @@ const FormDownloadEffort = ({
           className="first-step-animal"
           id="downloadEffort"
           onFinish={onFinish}
-          //   form={form}
         >
           <Form.Item
             name="date"

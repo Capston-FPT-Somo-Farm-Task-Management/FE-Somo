@@ -35,8 +35,6 @@ const UpdateMember = ({
   const [fileList, setFileList] = useState([])
   const [form] = Form.useForm()
 
-  console.log(selectedMember)
-
   const dispatch = useDispatch()
   // --Location
   const cities = useSelector(selectCities)
