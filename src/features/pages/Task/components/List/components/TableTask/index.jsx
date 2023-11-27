@@ -1,4 +1,4 @@
-import { Dropdown, Menu, Table } from "antd";
+import { Dropdown, Menu, Popconfirm, Table } from "antd";
 import React, { useState } from "react";
 import {
   MoreOutlined,
@@ -25,6 +25,7 @@ function TableTask({
   openEffortModal,
   openChangeDoingToPendingModal,
   openChangeDoingToCancelModal,
+  handleChangeDoneToCloseTask,
   onChange,
   openModal,
 }) {
@@ -47,7 +48,7 @@ function TableTask({
               title: <p>Tùy chọn</p>,
               key: "action",
               render: (_, record) => {
-                const isManager = record && record.managerName;
+                console.log(record)
                 const isStatus =
                   record &&
                   (record.status === "Bản nháp" ||
@@ -62,13 +63,13 @@ function TableTask({
                   record &&
                   (record.status === "Hoàn thành" ||
                     record.status === "Đã đóng");
+                    console.log(isStatusEffortTime)
                 const isStatusChangeToDoing =
                   record && record.status === "Tạm hoãn";
                 const isStatusDelete =
                   record &&
                   (record.status === "Bản nháp" ||
                     record.status === "Chuẩn bị");
-                if (isManager) {
                   return (
                     <Dropdown
                       placement="bottomRight"
@@ -123,7 +124,7 @@ function TableTask({
                               </span>
                             </Menu.Item>
                           ) : null}
-                          {isStatusChangeToDoing && isStatusChangeToDoing ? (
+                          {record && isStatusChangeToDoing ? (
                             <Menu.Item key="changeToDoing">
                               <span>
                                 <UndoOutlined
@@ -198,14 +199,25 @@ function TableTask({
                           ) : null}
 
                           {record.status === "Hoàn thành" ? (
-                            <Menu.Item key="close">
-                              <span>
-                                <CloseCircleOutlined
-                                  style={{ color: "gold", marginRight: "8px" }}
-                                />
-                                Đóng công việc
-                              </span>
-                            </Menu.Item>
+                            <Popconfirm
+                              title="Delete the task"
+                              description="Are you sure to delete this task?"
+                              onConfirm={handleChangeDoneToCloseTask(record.id)}
+                              okText="Đô"
+                              cancelText="No"
+                            >
+                              <Menu.Item key="close">
+                                <span>
+                                  <CloseCircleOutlined
+                                    style={{
+                                      color: "gold",
+                                      marginRight: "8px",
+                                    }}
+                                  />
+                                  Đóng công việc
+                                </span>
+                              </Menu.Item>
+                            </Popconfirm>
                           ) : null}
                           {isStatusDelete && isStatusDelete ? (
                             <Menu.Item key="delete">
@@ -228,40 +240,7 @@ function TableTask({
                       </div>
                     </Dropdown>
                   );
-                } else {
-                  return (
-                    <Dropdown
-                      placement="bottomRight"
-                      overlay={
-                        <Menu onClick={(e) => handleMenuClick(e, record)}>
-                          <Menu.Item key="subTask">
-                            <span onClick={() => openAddSubtaskModal(record)}>
-                              <PlusCircleOutlined
-                                style={{ color: "green", marginRight: "8px" }}
-                              />
-                              Thêm công việc con
-                            </span>
-                          </Menu.Item>
-                          <Menu.Item key="viewSubTask">
-                            <span onClick={() => openSubtaskModal(record)}>
-                              <FileTextOutlined
-                                style={{ color: "green", marginRight: "8px" }}
-                              />
-                              Xem công việc con
-                            </span>
-                          </Menu.Item>
-                        </Menu>
-                      }
-                    >
-                      <div
-                        className="ant-dropdown-link"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        <MoreOutlined className="menu-icon" />
-                      </div>
-                    </Dropdown>
-                  );
-                }
+                
               },
             },
           ]}

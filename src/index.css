@@ -110,7 +110,6 @@ html {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  align-items: center;
 }
 .navBar .navRight .header-notification {
   font-size: 16px;

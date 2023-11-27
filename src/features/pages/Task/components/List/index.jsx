@@ -91,6 +91,8 @@ const List = () => {
     setFileList(newFileList);
   };
 
+  
+
   const handleBackOtherTask = () => {
     setCurrentStep(currentStep - 2);
   };
@@ -116,8 +118,6 @@ const List = () => {
       openChangeDoingToCancelModal(record);
     } else if (e.key === "changeToDoing") {
       handleChangePendingAndCancelToDoing(record.id);
-    } else if (e.key === "close") {
-      handleChangeDoneToCloseTask(record.id);
     } else if (e.key === "reAssign") {
       openEditTaskModal(record);
     } else if (e.key === "reject") {

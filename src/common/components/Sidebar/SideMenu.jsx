@@ -35,21 +35,24 @@ import { toast } from "react-toastify";
 import {
   useDesktopMediaQuery,
   useTabletMediaQuery,
-} from 'common/hooks/responsive'
-import Notification from 'features/pages/Notification'
-import { useDispatch } from 'react-redux'
-import { deleteHubConnection } from 'features/slice/hub/hubSlice'
-import { changeAllNotifyNewToRead } from 'features/slice/notification/notificationIsNewSlice'
-import { useSelector } from 'react-redux'
-import { changeNotifyIsReadAll } from 'features/slice/notification/notificationReadSlice'
-import { countNewNotify } from 'features/slice/notification/notificationCountSlice'
-import SubMenu from 'antd/es/menu/SubMenu'
+} from "common/hooks/responsive";
+import Notification from "features/pages/Notification";
+import { useDispatch } from "react-redux";
+import { deleteHubConnection } from "features/slice/hub/hubSlice";
+import { changeAllNotifyNewToRead } from "features/slice/notification/notificationIsNewSlice";
+import { useSelector } from "react-redux";
+import { changeNotifyIsReadAll } from "features/slice/notification/notificationReadSlice";
+import { countNewNotify } from "features/slice/notification/notificationCountSlice";
+import SubMenu from "antd/es/menu/SubMenu";
 
 const { Sider } = Layout;
+
+const rootSubmenuKeys = ["tasks", "location", "animal", "plant"];
 
 const SideMenu = () => {
   const [userName, setUserName] = useState();
   const [userRole, setUserRole] = useState();
+  const [openKeys, setOpenKeys] = useState(["sub1"]);
   const location = useLocation();
   const dispatch = useDispatch();
   const isDesktop = useDesktopMediaQuery();
@@ -60,6 +63,15 @@ const SideMenu = () => {
   useEffect(() => {
     dispatch(countNewNotify(authServices.getUserId()));
   }, [dispatch]);
+
+  const onOpenChange = (keys) => {
+    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+    if (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+      setOpenKeys(keys);
+    } else {
+      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+    }
+  };
 
   const changeReadAll = () => {
     dispatch(changeNotifyIsReadAll(authServices.getUserId()));
@@ -119,13 +131,15 @@ const SideMenu = () => {
             bottom: 0,
           }}
         >
-            <Link to="/" className="logoSomo">
-              <img src={logoSomo} alt="logo" />
-            </Link>
+          <Link to="/" className="logoSomo">
+            <img src={logoSomo} alt="logo" />
+          </Link>
           <Menu
             theme="light"
             mode="inline"
             defaultSelectedKeys={[location.pathname]}
+            openKeys={openKeys}
+            onOpenChange={onOpenChange}
           >
             <Menu.Item key="/home">
               <CalendarOutlined />
@@ -170,13 +184,13 @@ const SideMenu = () => {
             <SubMenu key="animal" icon={<GiCow />} title="Động vật">
               <Menu.Item key="/animals">
                 <GiCow />
-                <span style={{ marginLeft: '10px' }}>Vật nuôi</span>
+                <span style={{ marginLeft: "10px" }}>Vật nuôi</span>
                 <Link to="/animals"></Link>
               </Menu.Item>
 
               <Menu.Item key="/animal-type">
                 <GiCow />
-                <span style={{ marginLeft: '10px' }}>Loại vật nuôi</span>
+                <span style={{ marginLeft: "10px" }}>Loại vật nuôi</span>
                 <Link to="/animal-type"></Link>
               </Menu.Item>
 
@@ -191,13 +205,13 @@ const SideMenu = () => {
             <SubMenu key="plant" icon={<GiPlantRoots />} title="Thực vật">
               <Menu.Item key="/plants">
                 <GiPlantRoots />
-                <span style={{ marginLeft: '10px' }}>Cây trồng</span>
+                <span style={{ marginLeft: "10px" }}>Cây trồng</span>
                 <Link to="/plants"></Link>
               </Menu.Item>
 
               <Menu.Item key="/plant-type">
                 <GiPlantRoots />
-                <span style={{ marginLeft: '10px' }}>Loại cây trồng</span>
+                <span style={{ marginLeft: "10px" }}>Loại cây trồng</span>
                 <Link to="/plant-type"></Link>
               </Menu.Item>
 
@@ -224,9 +238,9 @@ const SideMenu = () => {
       )}
       {isTablet && (
         <div className="header-tablet">
-            <Link to="/" className="logoSomo">
-              <img src={logoSomo} alt="logo" />
-            </Link>
+          <Link to="/" className="logoSomo">
+            <img src={logoSomo} alt="logo" />
+          </Link>
           <div className="menu-popover">
             <Popover
               placement="bottomRight"

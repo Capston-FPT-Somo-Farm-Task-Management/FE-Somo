@@ -145,9 +145,33 @@ export const taskTitle = [
     dataIndex: "managerName",
     key: "managerName",
     render: (text, record) => (
+      
       <span>
         {text && record ? (
-          <p>Tôi</p>
+          <Tooltip placement="bottom" title={ text ? text : null}>
+            <span
+              style={{
+                border: "1px solid #f5f5f5",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                padding: "5px 0px",
+                borderRadius: "8px",
+                boxShadow: "1px 1px #f5f5f5",
+              }}
+            >
+              <Avatar
+                src={record && record.avatarManager ? record.avatarManager : null}
+                style={{
+                  width: "16px",
+                  height: "16px",
+                  marginLeft: "5px",
+                  marginRight: "10px",
+                }}
+              />
+              {text && text.slice(0, 6) + (text.length > 6 ? "..." : "")}
+            </span>
+          </Tooltip>
         ) : (
           <Tooltip placement="bottom" title={record && record.supervisorName ? record.supervisorName : null}>
             <span
@@ -170,7 +194,7 @@ export const taskTitle = [
                   marginRight: "10px",
                 }}
               />
-              {record && record.supervisorName && record.supervisorName.slice(0, 8) + (record.supervisorName.length > 8 ? "..." : "")}
+              {record && record.supervisorName && record.supervisorName.slice(0, 6) + (record.supervisorName.length > 6 ? "..." : "")}
             </span>
           </Tooltip>
         )}

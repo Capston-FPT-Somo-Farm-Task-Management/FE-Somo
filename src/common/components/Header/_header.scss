@@ -6,7 +6,7 @@
   justify-content: flex-end;
   align-items: center;
   .navRight {
-    @include flex(row, space-around, center, null);
+    @include flex(row, space-around, null, null);
     .header-notification{
       font-size: 16px;
       .notification-icon{
