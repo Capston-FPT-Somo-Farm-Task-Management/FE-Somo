@@ -51,7 +51,10 @@ const notificationIsNewSlice = createSlice({
       })
       .addCase(getNotifyIsNewById.fulfilled, (state, action) => {
         state.loading = false
-        state.data = action.payload.data.notifications || []
+        state.data = [
+          ...state.data,
+          ...(action.payload.data.notifications || []),
+        ]
         state.totalPages = action.payload.data.totalPages
       })
       .addCase(getNotifyIsNewById.rejected, (state, action) => {

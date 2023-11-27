@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { List, Popover } from 'antd'
+import { List } from 'antd'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -14,24 +14,30 @@ const NotificationIsNew = ({ changeStatusNotify }) => {
 
   // Load notify
   const notifyNew = useSelector((state) => state.notificationIsNew.data)
-  // const [pageNumber, setPageNumber] = useState(1)
+  const [hasMore, setHasMore] = useState(true)
 
-  console.log(notifyNew)
+  const [pageNumber, setPageNumber] = useState(1)
 
   useEffect(() => {
-    dispatch(
-      getNotifyIsNewById({
-        pageNumber: 1,
-        pageSize: 10,
-        id: authServices.getUserId(),
-      })
-    )
-  }, [dispatch])
+    const loadNotifications = async () => {
+      try {
+        const response = await dispatch(
+          getNotifyIsNewById({
+            pageNumber: pageNumber,
+            pageSize: 10,
+            id: authServices.getUserId(),
+          })
+        ).unwrap()
+        if (response && response.length === 0) {
+          setHasMore(false)
+        }
+      } catch (error) {
+        console.error('Failed to load notifications:', error)
+      }
+    }
 
-  // const getMoreNotifyIsNew = () => {
-  //   setPageNumber(pageNumber + 1)
-  //   dispatch(getNotifyIsNewById(pageNumber))
-  // }
+    loadNotifications()
+  }, [dispatch, pageNumber])
 
   // Task detail
   useEffect(() => {
@@ -58,31 +64,37 @@ const NotificationIsNew = ({ changeStatusNotify }) => {
     </div>
   )
 
+  const fetchMoreData = () => {
+    setPageNumber((prevPageNumber) => prevPageNumber + 1)
+  }
+
   return (
     <>
-      <List
-        itemLayout="horizontal"
-        locale={{ emptyText: 'Không có thông báo chưa đọc' }}
-        dataSource={notifyNew ? notifyNew : []}
-        renderItem={(item) => (
-          <List.Item>
-            <List.Item.Meta
-              title={
-                <Popover
-                  title={item.message}
-                  trigger="click"
-                  content={content}
-                  placement="topLeft"
-                  onClick={() => getDetailNotify(item)}
-                >
-                  <a>{item.message}</a>
-                </Popover>
-              }
-              description={item.time}
-            />
-          </List.Item>
-        )}
-      />
+      <InfiniteScroll
+        dataLength={notifyNew.length}
+        next={fetchMoreData}
+        hasMore={hasMore}
+        loader={<h4 style={{ textAlign: 'center' }}>...</h4>}
+        endMessage={
+          <p style={{ textAlign: 'center' }}>
+            Bạn đã xem hết tất cả thông báo.
+          </p>
+        }
+      >
+        <List
+          itemLayout="horizontal"
+          locale={{ emptyText: 'Không có thông báo chưa đọc' }}
+          dataSource={notifyNew ? notifyNew : []}
+          renderItem={(item) => (
+            <List.Item>
+              <List.Item.Meta
+                title={<a>{item.message}</a>}
+                description={item.time}
+              />
+            </List.Item>
+          )}
+        />
+      </InfiniteScroll>
     </>
   )
 }

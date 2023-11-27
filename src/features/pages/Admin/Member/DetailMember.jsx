@@ -10,12 +10,9 @@ const DetailMember = ({
     <Modal
       title="Thông tin nhân viên"
       open={isModalOpenDetail}
+      closeIcon
       onCancel={closeModalDetail}
-      footer={[
-        <Button key="back" onClick={closeModalDetail}>
-          Đóng
-        </Button>,
-      ]}
+      footer={[<Button onClick={closeModalDetail}>Đóng</Button>]}
     >
       {selectedMember && (
         <Descriptions bordered column={1}>
