@@ -10,9 +10,7 @@ import {
   changeStatusToPendingAndCancel,
   changeStatusToDoing,
 } from "features/slice/task/taskSlice";
-import {
-  getSubTasksByTaskId,
-} from "features/slice/subTask/subTaskSlice";
+import { getSubTasksByTaskId } from "features/slice/subTask/subTaskSlice";
 import { getEffort } from "features/slice/subTask/effortSlice";
 import { taskTitle } from "./listTaskData";
 import TaskDetail from "../TaskDetail";
@@ -47,13 +45,12 @@ const List = () => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [status, setStatus] = useState(0);
-  const [activeKey, setActiveKey] = useState("0");
   const [selectedDate, setSelectedDate] = useState(null);
   const [taskNameSearch, setTaskNameSearch] = useState("");
   const [statusForEdit, setStatusForEdit] = useState(null);
   const [checkTaskParent, setCheckTaskParent] = useState(1);
   const [currentStep, setCurrentStep] = useState(-1);
-  const [fileList, setFileList] = useState([])
+  const [fileList, setFileList] = useState([]);
 
   const [form] = Form.useForm();
 
@@ -67,11 +64,11 @@ const List = () => {
 
   const dispatch = useDispatch();
 
-  const loadDataTask = (newStatus) => {
+  const loadDataTask = () => {
     dispatch(
       getTasks({
         pageIndex,
-        status: newStatus,
+        status,
         date: selectedDate,
         taskName: taskNameSearch,
         checkTaskParent: checkTaskParent,
@@ -80,7 +77,7 @@ const List = () => {
   };
 
   useEffect(() => {
-    loadDataTask(status);
+    loadDataTask();
   }, [
     dispatch,
     pageIndex,
@@ -91,8 +88,8 @@ const List = () => {
   ]);
 
   const onFileChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList)
-  }
+    setFileList(newFileList);
+  };
 
   const handleBackOtherTask = () => {
     setCurrentStep(currentStep - 2);
@@ -113,16 +110,20 @@ const List = () => {
   const handleMenuClick = (e, record) => {
     if (e.key === "edit") {
       openEditTaskModal(record);
-    } else if (e.key === "delete") {
-      handleDelete(record.id);
     } else if (e.key === "pending") {
       openChangeDoingToPendingModal(record);
     } else if (e.key === "cancel") {
       openChangeDoingToCancelModal(record);
     } else if (e.key === "changeToDoing") {
       handleChangePendingAndCancelToDoing(record.id);
+    } else if (e.key === "reAssign") {
+      openEditTaskModal(record);
+    } else if (e.key === "reject") {
+      handleRefuseTask(record.id);
     } else if (e.key === "close") {
       handleChangeDoneToCloseTask(record.id);
+    } else if (e.key === "delete") {
+      handleDelete(record.id);
     }
   };
 
@@ -166,7 +167,6 @@ const List = () => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
-      handleTabChange("1")
     });
     setModalVisible(false);
   };
@@ -198,7 +198,6 @@ const List = () => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
-      handleTabChange("5")
     });
     setTaskDoingToPendingModalVisible(false);
   };
@@ -218,7 +217,6 @@ const List = () => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
-      handleTabChange("7")
     });
     setTaskDoingToCancelModalVisible(false);
   };
@@ -228,7 +226,6 @@ const List = () => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
-      handleTabChange("3")
     });
   };
 
@@ -237,7 +234,6 @@ const List = () => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
-      handleTabChange("8")
     });
   };
 
@@ -293,8 +289,6 @@ const List = () => {
   const handleTabChange = (key) => {
     setPageIndex(1);
     setStatus(Number(key));
-    setActiveKey(key)
-    console.log(key);
   };
 
   const handleTaskAdded = () => {
@@ -331,7 +325,7 @@ const List = () => {
         </div>
       </div>
       <div className="list-checkTask">
-        <StatusTabs handleTabChange={handleTabChange} activeKey={activeKey} />
+        <StatusTabs onTabChange={handleTabChange} />
         <CheckParent onCheckChange={handleCheckChange} />
       </div>
       {loading === true ? (
@@ -379,7 +373,6 @@ const List = () => {
         loadDataTask={loadDataTask}
         currentTaskId={currentTaskId}
         closeModal={closeModal}
-        handleTabChange={handleTabChange}
       />
       <SubTask
         subTaskModalVisible={subTaskModalVisible}

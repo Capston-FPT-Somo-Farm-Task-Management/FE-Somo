@@ -109,8 +109,8 @@ export const taskTitle = [
     title: <p>Người giám sát</p>,
     dataIndex: "supervisorName",
     key: "supervisorName",
-    render: (data) => {
-      return data ? (
+    render: (data, record) => {
+      return data && record ? (
         <Tooltip placement="bottom" title={data}>
           <span
             style={{
@@ -124,7 +124,7 @@ export const taskTitle = [
             }}
           >
             <Avatar
-              src={data.avatarSupervisor}
+              src={record && record.avatarSupervisor ? record.avatarSupervisor : null}
               style={{
                 width: "16px",
                 height: "16px",
@@ -132,7 +132,7 @@ export const taskTitle = [
                 marginRight: "10px",
               }}
             />
-            {data.slice(0, 10) + (data.length > 10 ? "..." : "")}
+            {data.slice(0, 8) + (data.length > 8 ? "..." : "")}
           </span>
         </Tooltip>
       ) : (
@@ -144,7 +144,62 @@ export const taskTitle = [
     title: <p>Được tạo bởi</p>,
     dataIndex: "managerName",
     key: "managerName",
-    render: (text) => <span>{text ? <p>Tôi</p> : <p>Người giám sát</p>}</span>,
+    render: (text, record) => (
+      
+      <span>
+        {text && record ? (
+          <Tooltip placement="bottom" title={ text ? text : null}>
+            <span
+              style={{
+                border: "1px solid #f5f5f5",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                padding: "5px 0px",
+                borderRadius: "8px",
+                boxShadow: "1px 1px #f5f5f5",
+              }}
+            >
+              <Avatar
+                src={record && record.avatarManager ? record.avatarManager : null}
+                style={{
+                  width: "16px",
+                  height: "16px",
+                  marginLeft: "5px",
+                  marginRight: "10px",
+                }}
+              />
+              {text && text.slice(0, 6) + (text.length > 6 ? "..." : "")}
+            </span>
+          </Tooltip>
+        ) : (
+          <Tooltip placement="bottom" title={record && record.supervisorName ? record.supervisorName : null}>
+            <span
+              style={{
+                border: "1px solid #f5f5f5",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                padding: "5px 0px",
+                borderRadius: "8px",
+                boxShadow: "1px 1px #f5f5f5",
+              }}
+            >
+              <Avatar
+                src={record && record.avatarSupervisor ? record.avatarSupervisor : null}
+                style={{
+                  width: "16px",
+                  height: "16px",
+                  marginLeft: "5px",
+                  marginRight: "10px",
+                }}
+              />
+              {record && record.supervisorName && record.supervisorName.slice(0, 6) + (record.supervisorName.length > 6 ? "..." : "")}
+            </span>
+          </Tooltip>
+        )}
+      </span>
+    ),
   },
 ];
 

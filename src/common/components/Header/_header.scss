@@ -1,21 +1,21 @@
+@import "../../../styles/Helper/mixin";
+// flex($direction: row, $content: null, $items: null, $wrap: null)
+
 .navBar {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   .navRight {
-    display: flex;
-    justify-content: space-around;
+    @include flex(row, space-around, null, null);
     .header-notification{
       font-size: 16px;
       .notification-icon{
-        font-size: 20px;
-        padding: 8px;
-        border: 2px solid #f5f5f5;
+        font-size: 24px;
         border-radius: 50%;
       }
       .notification-icon:hover{
         cursor: pointer;
-        opacity: 0.8;
+        opacity: 0.6;
       }
     }
     .header-profile {
@@ -24,8 +24,7 @@
       .ant-space{
         .ant-space-item{
           color: black;
-          display: flex;
-          align-items: center;
+          @include flex(row, null, center, null);
           svg{
             font-size: 14px;
           }
@@ -52,10 +51,7 @@
       display: flex;
       .user-profile-left{
         width: 35%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        @include flex(column, center, center, null);
         background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
         padding: 20px;
         color: white;
@@ -87,9 +83,7 @@
           }
         }
         .user-information{
-          display: flex;
-          justify-content: space-between;
-          flex-wrap: wrap;
+          @include flex(row, space-between, null, wrap);
           padding-top: 30px;
           .user-information-text{
             width: 45%;

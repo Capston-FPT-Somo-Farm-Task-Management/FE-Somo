@@ -1,21 +1,18 @@
+@import "../../../../../../../styles/Helper/mixin";
 .subTask-modal {
   .ant-modal-content {
     .ant-modal-title {
       font-size: 28px;
       margin-bottom: 30px;
     }
-
     .subTask {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-
+      @include flex(row, space-around, null, wrap);
       .subTask-content {
+        width: 48%;
         background-color: #f5f5f5;
         padding: 10px 0px;
         margin-bottom: 20px;
         border-radius: 10px;
-        width: 48%;
         .subTask-header {
           margin-left: 10px;
           .subTask-count {
@@ -29,18 +26,16 @@
           }
           .subTask-dropdown {
             width: 45%;
-            display: flex;
-            justify-content: flex-end;
+            @include flex(row, flex-end, null, null);
           }
         }
-
         .subTask-container {
           padding: 10px 25px;
           border-radius: 10px;
         }
         p {
-          margin-bottom: 5px;
           font-size: 18px;
+          margin-bottom: 5px;
         }
         span {
           font-size: 18px;

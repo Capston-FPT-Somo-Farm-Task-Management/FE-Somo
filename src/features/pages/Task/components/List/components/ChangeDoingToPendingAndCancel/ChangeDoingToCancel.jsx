@@ -33,7 +33,7 @@ const ChangeDoingToCancel = ({
             id="doingToCancel"
           >
             <Form.Item
-              label="Huỷ bỏ công việc"
+              label="Lý do hủy bỏ"
               name="description"
               required
               rules={[
@@ -49,7 +49,7 @@ const ChangeDoingToCancel = ({
                 onChange={handleDescription}
               />
             </Form.Item>
-            <Form.Item label="Hình ảnh hủy bỏ" name="imageFile">
+            <Form.Item label="Hình ảnh" name="imageFile">
             <ImgCrop rotationSlider>
               <Upload
                 listType="picture-card"

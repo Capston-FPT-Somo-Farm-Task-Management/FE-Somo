@@ -1,43 +1,38 @@
+@import "../../../../../../../styles/Helper/mixin";
+@import "../../../../../../../styles/Helper/extend";
 .second-modal-livestock {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
+  @include flex(column, center, center, null);
   .specific-animal {
     overflow: hidden;
     border-radius: 10px;
     button {
       padding: 20px 20px;
-      background-color: #2c6e49;
+      background-color: $green-color-600;
       transition: 0.4s ease-in-out;
-      border: 1px solid #2c6e49;
+      border: 1px solid $green-color-600;
       cursor: pointer;
       .button-item {
         display: flex;
         .button-icon {
           width: 30%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          @include flex(row, center, center, null);
           svg {
             font-size: 50px;
-            color: #fefee3;
+            color: $white-color-300;
           }
         }
         .button-text {
           width: 70%;
           display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          color: #fefee3;
+          @include flex(column, null, flex-start, null);
+          color: $white-color-300;
           h6 {
             font-size: 24px;
           }
           span {
-            color: #e6e8e6;
-            font-size: 14px;
             text-align: left;
+            font-size: 14px;
+            color: #e6e8e6;
           }
         }
       }
@@ -54,36 +49,33 @@
     margin-top: 10px;
     button {
       padding: 20px 20px;
-      background-color: #2c6e49;
+      background-color: $green-color-600;
       transition: 0.4s ease-in-out;
-      border: 1px solid #2c6e49;
+      border: 1px solid $green-color-600;
       cursor: pointer;
       .button-item {
         display: flex;
         .button-icon {
           width: 30%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          @include flex(row, center, center, null);
           svg {
             font-size: 50px;
-            color: #fefee3;
+            color: $white-color-300;
             margin-right: 13px;
           }
         }
         .button-text {
           width: 70%;
           display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          color: #fefee3;
+          @include flex(column, null, flex-start, null);
+          color: $white-color-300;
           h6 {
             font-size: 24px;
           }
           span {
-            color: #e6e8e6;
-            font-size: 14px;
             text-align: left;
+            font-size: 14px;
+            color: #e6e8e6;
           }
         }
       }
@@ -97,20 +89,16 @@
 }
 
 .second-modal-planting {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
+  @include flex(column, center, center, null);
   .specific-plant {
     overflow: hidden;
     border-radius: 10px;
     margin-top: 10px;
-    border: 1px solid #2c6e49;
+    border: 1px solid $green-color-600;
     button {
       padding: 20px 15px;
       border-radius: 10px;
-      background-color: #fefee3;
+      background-color: $white-color-300;
       transition: 0.4s ease-in-out;
       border: 0;
       cursor: pointer;
@@ -118,27 +106,24 @@
         display: flex;
         .button-icon {
           width: 30%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          @include flex(row, center, center, null);
           svg {
             font-size: 50px;
-            color: #2c6e49;
+            color: $green-color-600;
           }
         }
         .button-text {
           width: 70%;
           display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          color: #2c6e49;
+          @include flex(column, null, flex-start, null);
+          color: $green-color-600;
           h6 {
             font-size: 24px;
           }
           span {
-            color: #4c956c;
-            font-size: 14px;
             text-align: left;
+            font-size: 14px;
+            color: #4c956c;
           }
         }
       }
@@ -153,11 +138,11 @@
     overflow: hidden;
     border-radius: 10px;
     margin-top: 10px;
-    border: 1px solid #2c6e49;
+    border: 1px solid $green-color-600;
     button {
       padding: 20px 30px;
       border-radius: 10px;
-      background-color: #fefee3;
+      background-color: $white-color-300;
       transition: 0.4s ease-in-out;
       border: 0;
       cursor: pointer;
@@ -165,28 +150,25 @@
         display: flex;
         .button-icon {
           width: 30%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          @include flex(row, center, center, null);
           svg {
             font-size: 50px;
-            color: #2c6e49;
+            color: $green-color-600;
             margin-right: 13px;
           }
         }
         .button-text {
           width: 70%;
           display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          color: #2c6e49;
+          @include flex(column, null, flex-start, null);
+          color: $green-color-600;
           h6 {
             font-size: 24px;
           }
           span {
-            color: #4c956c;
-            font-size: 14px;
             text-align: left;
+            font-size: 14px;
+            color: #4c956c;
           }
         }
       }
