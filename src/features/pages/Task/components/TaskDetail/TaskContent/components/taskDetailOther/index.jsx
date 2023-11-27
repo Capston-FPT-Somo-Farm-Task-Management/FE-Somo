@@ -49,13 +49,16 @@ const TaskDetailOther = ({
               <p>Chưa có ngày kết thúc</p>
             )}
           </div>
-          <div className="task-detail-text">
-            <h5>Thời gian dự kiến phải bỏ ra</h5>
-            <p>
-              {taskData.overallEffortHour} giờ {taskData.overallEfforMinutes}{" "}
-              phút
-            </p>
-          </div>
+          {taskData.status === "Bản nháp" ||
+          taskData.status === "Chuẩn bị" ? null : (
+            <div className="task-detail-text">
+              <h5>Thời gian dự kiến phải bỏ ra</h5>
+              <p>
+                {taskData.overallEffortHour} giờ {taskData.overallEfforMinutes}{" "}
+                phút
+              </p>
+            </div>
+          )}
         </div>
       </>
       <>

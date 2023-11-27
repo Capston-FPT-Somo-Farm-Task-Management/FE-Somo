@@ -1,15 +1,14 @@
+@import "../../../../../styles/Helper/mixin";
+
 .list {
   width: 100%;
   .list-header {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    @include flex(row, space-between, null, wrap);
     margin-bottom: 20px;
   }
   .list-checkTask {
-    display: flex;
-    justify-content: space-between;
+    @include flex(row, space-between, null, null);
     .checkParent {
       display: inline-block;
       padding: 12px 0px;
@@ -28,7 +27,6 @@
     opacity: 0.75;
   }
 }
-
 .task-name {
   cursor: pointer;
 }
@@ -37,7 +35,6 @@
   color: #007bff;
   opacity: 0.8;
 }
-
 .ant-ribbon.ant-ribbon-placement-end {
   border-radius: 4px;
   border-end-start-radius: 0;

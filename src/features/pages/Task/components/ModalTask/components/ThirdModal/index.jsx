@@ -452,7 +452,7 @@ function ThirdModal({
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
       });
-  };
+    };
 
   const handleFormSubmit = () => {
     if (isDraft) {

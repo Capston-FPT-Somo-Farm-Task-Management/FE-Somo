@@ -8,7 +8,7 @@ import {
   FileTextOutlined,
   CloseCircleOutlined,
   PauseCircleOutlined,
-  UndoOutlined
+  UndoOutlined,
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
@@ -29,7 +29,7 @@ function TableTask({
   openModal,
 }) {
   const dispatch = useDispatch();
-
+  console.log(task);
   return (
     <>
       {task && (
@@ -47,7 +47,8 @@ function TableTask({
               title: <p>Tùy chọn</p>,
               key: "action",
               render: (_, record) => {
-                const isManager = record && record.managerName;
+                const isManager =
+                  record && (record.managerName || record.supervisorName);
                 const isStatus =
                   record &&
                   (record.status === "Bản nháp" ||
@@ -63,8 +64,7 @@ function TableTask({
                   (record.status === "Hoàn thành" ||
                     record.status === "Đã đóng");
                 const isStatusChangeToDoing =
-                  record &&
-                  (record.status === "Tạm hoãn" || record.status === "Hủy bỏ");
+                  record && record.status === "Tạm hoãn";
                 if (isManager) {
                   return (
                     <Dropdown
@@ -120,19 +120,7 @@ function TableTask({
                               </span>
                             </Menu.Item>
                           ) : null}
-                          {isStatusChangeToDoing && isStatusChangeToDoing ? (
-                            <Menu.Item key="changeToDoing">
-                              <span>
-                                <UndoOutlined
-                                  style={{
-                                    color: "blue",
-                                    marginRight: "8px",
-                                  }}
-                                />
-                                Chuyển sang thực hiện
-                              </span>
-                            </Menu.Item>
-                          ) : null}
+
                           {record.status === "Đang thực hiện" ? (
                             <>
                               <Menu.Item key="pending">
@@ -168,6 +156,47 @@ function TableTask({
                             </>
                           ) : null}
 
+                          {isStatusChangeToDoing && isStatusChangeToDoing ? (
+                            <Menu.Item key="changeToDoing">
+                              <span>
+                                <UndoOutlined
+                                  style={{
+                                    color: "blue",
+                                    marginRight: "8px",
+                                  }}
+                                />
+                                Chuyển sang thực hiện
+                              </span>
+                            </Menu.Item>
+                          ) : null}
+
+                          {record.status === "Từ chối" ? (
+                            <>
+                              <Menu.Item key="reAssign">
+                                <span onClick={() => openEditTaskModal(record)}>
+                                  <PauseCircleOutlined
+                                    style={{
+                                      color: "blue",
+                                      marginRight: "8px",
+                                    }}
+                                  />
+                                  Chỉnh sửa
+                                </span>
+                              </Menu.Item>
+                              <Menu.Item key="reject">
+                                <span>
+                                  <CloseCircleOutlined
+                                    style={{
+                                      color: "red",
+                                      marginRight: "8px",
+                                    }}
+                                  />
+                                  Không chấp nhận
+                                </span>
+                              </Menu.Item>
+                            </>
+                          ) : null}
+
                           {record.status === "Hoàn thành" ? (
                             <Menu.Item key="close">
                               <span>
@@ -178,15 +207,17 @@ function TableTask({
                               </span>
                             </Menu.Item>
                           ) : null}
-
-                          <Menu.Item key="delete">
-                            <span>
-                              <DeleteOutlined
-                                style={{ color: "red", marginRight: "8px" }}
-                              />
-                              Xóa công việc
-                            </span>
-                          </Menu.Item>
+                          {record.status === "Bản nháp" ||
+                          record.status === "Chuẩn bị" ? (
+                            <Menu.Item key="delete">
+                              <span>
+                                <DeleteOutlined
+                                  style={{ color: "red", marginRight: "8px" }}
+                                />
+                                Xóa công việc
+                              </span>
+                            </Menu.Item>
+                          ) : null}
                         </Menu>
                       }
                     >
@@ -204,14 +235,6 @@ function TableTask({
                       placement="bottomRight"
                       overlay={
                         <Menu onClick={(e) => handleMenuClick(e, record)}>
-                          <Menu.Item key="subTask">
-                            <span onClick={() => openAddSubtaskModal(record)}>
-                              <PlusCircleOutlined
-                                style={{ color: "green", marginRight: "8px" }}
-                              />
-                              Thêm công việc con
-                            </span>
-                          </Menu.Item>
                           <Menu.Item key="viewSubTask">
                             <span onClick={() => openSubtaskModal(record)}>
                               <FileTextOutlined

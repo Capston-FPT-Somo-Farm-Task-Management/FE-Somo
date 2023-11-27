@@ -1,11 +1,10 @@
-
+@import "../../../styles/Helper/mixin";
+@import "../../../styles/Helper/extend";
 .wrapper{
-  background-image: linear-gradient(to bottom right, #849b5c, #bfffc7) !important;
+  background-image: linear-gradient(to bottom right, $green-color-400, #bfffc7) !important;
   height: 100vh;
   .fadeInDown {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+    @include flex(column, null, center, null);
     width: 100%;
     min-height: 100%;
     padding: 20px;
@@ -14,27 +13,26 @@
       -webkit-border-radius: 10px 10px 10px 10px;
       border-radius: 10px 10px 10px 10px;
       background: #fff;
-      padding: 30px;
       width: 90%;
       max-width: 450px;
       position: relative;
-      padding: 0px;
       -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
       box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
       text-align: center;
+      padding: 0px;
       h2 {
+        display: inline-block;
         text-align: center;
+        text-transform: uppercase;
         font-size: 16px;
         font-weight: 600;
-        text-transform: uppercase;
-        display: inline-block;
-        margin: 40px 8px 10px 8px;
         color: #cccccc;
+        margin: 40px 8px 10px 8px;
       }
   
       .active {
         color: #0d0d0d;
-        border-bottom: 2px solid #8EAD48;
+        border-bottom: 2px solid $green-color-400;
       }
         .fadeIn {
           opacity: 0;
@@ -112,8 +110,8 @@
           display: inline-block;
           text-transform: uppercase;
           font-size: 20px;
-          -webkit-box-shadow: 0 10px 30px 0 rgba(142, 173, 72,0.4);
-          box-shadow: 0 10px 30px 0 rgba(142, 173, 72,0.4);
+          -webkit-box-shadow: 0 10px 30px 0 $green-box-shadow-400;
+          box-shadow: 0 10px 30px 0 $green-box-shadow-400;
           -webkit-border-radius: 5px 5px 5px 5px;
           border-radius: 5px 5px 5px 5px;
           margin: 5px 20px 40px 20px;
@@ -125,7 +123,7 @@
         }
         
         .btn-login:hover  {
-          background-color: #8EAD48;
+          background-color: $green-color-400;
         }
         
         .btn-login:active  {
@@ -159,11 +157,11 @@
         
         input[type=text]:focus {
           background-color: #fff;
-          border-bottom: 2px solid #8EAD48;
+          border-bottom: 2px solid $green-color-400;
         }
         input[type=password]:focus {
           background-color: #fff;
-          border-bottom: 2px solid #8EAD48;
+          border-bottom: 2px solid $green-color-400;
         }
         
         input[type=text]:placeholder {
@@ -181,7 +179,7 @@
         border-radius: 0 0 10px 10px;
         font-size: 20px;
         a {
-          color: #8EAD48;
+          color: $green-color-400;
           display:inline-block;
           text-decoration: none;
           font-weight: 400;
@@ -192,7 +190,7 @@
           bottom: -10px;
           width: 0;
           height: 2px;
-          background-color: #8EAD48;
+          background-color: $green-color-400;
           content: "";
           transition: width 0.2s;
         }

@@ -15,9 +15,9 @@ import {
   Button,
   Form,
   Input,
-  Spin,
   Popover,
   Upload,
+  Badge,
 } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteHubConnection } from "features/slice/hub/hubSlice";
@@ -26,7 +26,6 @@ import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import { updateMember } from "features/slice/user/memberSlice";
 import Notification from "features/pages/Notification";
-import ImgCrop from "antd-img-crop";
 
 function HeaderComp() {
   const navigate = useNavigate();
@@ -37,6 +36,8 @@ function HeaderComp() {
   const [fileList, setFileList] = useState([]);
 
   const member = useSelector((state) => state.member.data);
+  const countNew = useSelector((state) => state.notificationCount.data);
+  console.log(countNew);
   const loading = useSelector((state) => state.member.loading);
 
   useEffect(() => {
@@ -101,16 +102,15 @@ function HeaderComp() {
   ];
 
   const handleEditProfile = (values) => {
-    const updatedEffort = 
-      {
-        ...values,
-        id: member.id,
-        imageFile: fileList[0].originFileObj,
-      }
+    const updatedEffort = {
+      ...values,
+      id: member.id,
+      imageFile: fileList[0].originFileObj,
+    };
 
     dispatch(updateMember(updatedEffort)).then(() => {
       setIsModalEditVisible(false);
-      setIsModalVisible(true)
+      setIsModalVisible(true);
     });
   };
 
@@ -138,7 +138,11 @@ function HeaderComp() {
                 open={isNotificationVisible}
                 onVisibleChange={(visible) => setIsNotificationVisible(visible)}
               >
-                <BellOutlined />
+                <Badge count={countNew?.data !== 0 ? countNew.data : 0}>
+                  <BellOutlined
+                    className="notification-icon"
+                  />
+                </Badge>
               </Popover>
             ) : null}
           </div>
@@ -235,17 +239,16 @@ function HeaderComp() {
                 id="updateEffort"
               >
                 <Form.Item label="Hình ảnh" name="imageFile">
-                  <ImgCrop rotationSlider>
                     <Upload
-                      listType="picture-card"
+                      listType="picture-circle"
                       maxCount={1}
                       beforeUpload={() => false}
                       fileList={fileList}
                       onChange={onFileChange}
+                      onRemove="false"
                     >
-                      <UploadOutlined />
+                      <UploadOutlined  />
                     </Upload>
-                  </ImgCrop>
                 </Form.Item>
                 <Form.Item
                   label="Tên"
@@ -255,7 +258,7 @@ function HeaderComp() {
                   <Input placeholder="Nhập tên" />
                 </Form.Item>
                 <Form.Item
-                  label="Tên"
+                  label="Mã"
                   name="code"
                   initialValue={member ? member.code : null}
                 >
