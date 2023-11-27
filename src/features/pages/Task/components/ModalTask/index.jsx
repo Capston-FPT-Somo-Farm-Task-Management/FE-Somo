@@ -99,7 +99,7 @@ function ModalTask({
       </Button>
       <Modal
         title="Thêm công việc"
-        visible={currentStep > -1}
+        open={currentStep > -1}
         onCancel={() => setCurrentStep(-1)}
         footer={null}
         width={900}

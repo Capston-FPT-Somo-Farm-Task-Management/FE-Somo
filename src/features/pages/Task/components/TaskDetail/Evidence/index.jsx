@@ -53,11 +53,12 @@ function Evidence({
           date: formattedUpdateDate,
           content: (
             <div key={evidence.id} className="evidence-content">
+            {console.log(evidence)}
               {evidence.managerName ? (
                 <div className="evidence-item-header">
                   <div className="evidence-name">
-                    <Avatar src={taskData.avatarManager} />
-                    <h3>{taskData.managerName}</h3>
+                    <Avatar src={evidence.avatarManager} size="large"/>
+                    <h3>{evidence.managerName}</h3>
                   </div>
                   <p className="evidence-time">{evidence.time}</p>
                 </div>
@@ -237,8 +238,8 @@ function Evidence({
                     ) : (
                       <>
                         {" "}
-                        <p >{item.date}</p>
                         <p >{item.status}</p>
+                        <p >{item.date}</p>
                       </>
                     )}
                   </>

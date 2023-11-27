@@ -73,13 +73,16 @@ const TaskDetailHabitant = ({
               <p>Chưa có ngày kết thúc</p>
             )}
           </div>
-          <div className="task-detail-text">
-            <h5>Thời gian dự kiến phải bỏ ra</h5>
-            <p>
-              {taskData.overallEffortHour} giờ {taskData.overallEfforMinutes}{" "}
-              phút
-            </p>
-          </div>
+          {taskData.status === "Bản nháp" ||
+          taskData.status === "Chuẩn bị" ? null : (
+            <div className="task-detail-text">
+              <h5>Thời gian dự kiến phải bỏ ra</h5>
+              <p>
+                {taskData.overallEffortHour} giờ {taskData.overallEfforMinutes}{" "}
+                phút
+              </p>
+            </div>
+          )}
         </div>
       </>
       <>
@@ -140,7 +143,7 @@ const TaskDetailHabitant = ({
       {taskData.isSpecific && taskData.isPlant ? (
         <>
           <h2>
-          <GiFruitTree />
+            <GiFruitTree />
             Đối tượng
           </h2>
           <div className="task-detail-item">

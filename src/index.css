@@ -917,18 +917,18 @@ html {
   inset-inline-start: 0%;
   inset-block-start: -9px;
   font-size: 16px;
-  width: 30%;
+  width: 20%;
 }
 .evidence .ant-space .ant-timeline.ant-timeline-label .ant-timeline-item .ant-timeline-item-tail {
-  inset-inline-start: 31%;
+  inset-inline-start: 21%;
   height: 110%;
 }
 .evidence .ant-space .ant-timeline.ant-timeline-label .ant-timeline-item .ant-timeline-item-head {
-  inset-inline-start: 31%;
+  inset-inline-start: 21%;
 }
 .evidence .ant-space .ant-timeline.ant-timeline-label .ant-timeline-item .ant-timeline-item-content {
-  inset-inline-start: 30%;
-  width: 60%;
+  inset-inline-start: 21%;
+  width: 70%;
 }
 .evidence .evidence-content {
   width: 100%;
@@ -952,7 +952,7 @@ html {
   width: 40%;
 }
 .evidence .evidence-content .evidence-item-header .evidence-name h3 {
-  margin-left: 15px;
+  margin-left: 10px;
 }
 .evidence .evidence-content .evidence-item-header .evidence-time {
   display: flex;
