@@ -72,8 +72,8 @@ function Evidence({
               ) : (
                 <div className="evidence-item-header">
                   <div className="evidence-name">
-                    <Avatar src={taskData.avatarSupervisor} size="large" />
-                    <h3>{taskData.supervisorName}</h3>
+                    <Avatar src={taskData ? taskData.avatarSupervisor : null} size="large" />
+                    <h3>{taskData ? taskData.supervisorName : null}</h3>
                   </div>
                   <p className="evidence-time">{evidence.time}</p>
                 </div>
