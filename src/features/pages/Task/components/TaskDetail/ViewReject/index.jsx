@@ -19,17 +19,17 @@ const ViewReject = ({
       footer={null}
       title="Lý do từ chối"
     >
-      {evidenceData.map((evidence) => {
+      {evidenceData?.map((evidence) => {
         return (
-          <div className="evidence-item-header" key={evidence.id}>
-            <div className="evidence-name">
+          <div className="reject-item-header" key={evidence.id}>
+            <div className="reject-name">
               <Avatar
                 src={taskData ? taskData.avatarSupervisor : null}
                 size="large"
               />
               <h3>{taskData ? taskData.supervisorName : null}</h3>
             </div>
-            <p className="evidence-time">{evidence.time}</p>
+            <p className="reject-time">{evidence.time}</p>
           </div>
         );
       })}
