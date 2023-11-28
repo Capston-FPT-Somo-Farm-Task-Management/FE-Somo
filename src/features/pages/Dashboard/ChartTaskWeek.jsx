@@ -38,18 +38,18 @@ const ChartTaskWeek = ({ taskByWeek, onBarClick }) => {
       style={{
         display: 'flex',
         justifyContent: 'center',
-        alignItems: "center",
+        alignItems: 'center',
         width: '100%',
         height: '400px',
-        minWidth: '300px', // Đặt chiều rộng tối thiểu
+        minWidth: '300px',
       }}
     >
       <ResponsiveContainer height="80%">
         <BarChart
           data={data}
           margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-          barCategoryGap="5%" // Giảm xuống từ mặc định 10% nếu bạn muốn các cột gần nhau hơn
-          barGap={2} //
+          barCategoryGap="5%"
+          barGap={2}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
