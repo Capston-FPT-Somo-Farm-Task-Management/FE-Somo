@@ -54,33 +54,33 @@ const PieChartTaskWeek = ({ taskByWeek, selectedDay }) => {
   }
 
   const RADIAN = Math.PI / 180
-  const renderCustomizedLabel = ({
-    cx,
-    cy,
-    midAngle,
-    innerRadius,
-    outerRadius,
-    value,
-    index,
-  }) => {
-    if (value === 0) return null // Không hiển thị nhãn nếu giá trị bằng 0
+  // const renderCustomizedLabel = ({
+  //   cx,
+  //   cy,
+  //   midAngle,
+  //   innerRadius,
+  //   outerRadius,
+  //   value,
+  //   index,
+  // }) => {
+  //   if (value === 0) return null
 
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5
-    const x = cx + radius * Math.cos(-midAngle * RADIAN)
-    const y = cy + radius * Math.sin(-midAngle * RADIAN)
+  //   const radius = innerRadius + (outerRadius - innerRadius) * 0.5
+  //   const x = cx + radius * Math.cos(-midAngle * RADIAN)
+  //   const y = cy + radius * Math.sin(-midAngle * RADIAN)
 
-    return (
-      <text
-        x={x}
-        y={y}
-        fill="white"
-        textAnchor={x > cx ? 'start' : 'end'}
-        dominantBaseline="central"
-      >
-        {value}
-      </text>
-    )
-  }
+  //   return (
+  //     <text
+  //       x={x}
+  //       y={y}
+  //       fill="white"
+  //       textAnchor={x > cx ? 'start' : 'end'}
+  //       dominantBaseline="central"
+  //     >
+  //       {/* {value} */}
+  //     </text>
+  //   )
+  // }
 
   const styles = {
     container: {
@@ -116,9 +116,12 @@ const PieChartTaskWeek = ({ taskByWeek, selectedDay }) => {
             cx="50%"
             cy="50%"
             outerRadius={80}
+            startAngle={360}
+            endAngle={0}
+            innerRadius={60}
             fill="#8884d8"
             dataKey="value"
-            label={renderCustomizedLabel}
+            // label={renderCustomizedLabel}
             labelLine={false}
           >
             {filteredData.map((entry, index) => (
