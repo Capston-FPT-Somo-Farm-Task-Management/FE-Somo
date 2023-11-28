@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Card, Col, Row, Space } from 'antd'
+import { Button, Card, Col, Popconfirm, Row, Space } from 'antd'
 import FarmDetail from './FarmDetail'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
@@ -67,7 +67,6 @@ const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
   }
 
   const deleteFarm = (id) => {
-    console.log(id)
     onFinishDelete(id)
   }
 
@@ -152,9 +151,17 @@ const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
                   <span style={{ color: '#52c41a', fontSize: '18px' }}>
                     <EditOutlined />
                   </span>,
-                  <span style={{ color: '#f5222d', fontSize: '18px' }}>
-                    <DeleteOutlined onClick={() => deleteFarm(item.id)} />
-                  </span>,
+
+                  <Popconfirm
+                    title="Bạn có chắc chắn muốn xóa trang trại này không?"
+                    onConfirm={() => deleteFarm(item.id)}
+                    okText="Có"
+                    cancelText="Không"
+                  >
+                    <span style={{ color: '#f5222d', fontSize: '18px' }}>
+                      <DeleteOutlined />
+                    </span>
+                  </Popconfirm>,
                 ]}
               >
                 <Card.Meta

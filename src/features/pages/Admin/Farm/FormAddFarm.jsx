@@ -207,7 +207,16 @@ const FormAddFarm = ({ closeModalAdd, isModalOpenAdd, onFinishCreate }) => {
           </div>
 
           <div className="form-right">
-            <Form.Item label="Mô tả" name="description">
+            <Form.Item
+              label="Mô tả"
+              name="description"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng nhập mô tả',
+                },
+              ]}
+            >
               <TextArea placeholder="Nhập mô tả" showCount maxLength={200} />
             </Form.Item>
 
