@@ -30,6 +30,7 @@ import StatisticMaterial from 'features/pages/Admin/Material/StatisticMaterial'
 import AnimalType from 'features/pages/AnimalType/AnimalType'
 import PlantType from 'features/pages/PlantType/PlantType'
 import TaskType from 'features/pages/TaskType/TaskType'
+import FarmDash from 'features/pages/Admin/FarmDash/FarmDash'
 
 const AppRoute = () => {
   return (
@@ -249,6 +250,17 @@ const AppRoute = () => {
             {/* <AdminLayoutWithRoute> */}
             <StatisticFarm />
             {/* </AdminLayoutWithRoute> */}
+          </AdminPrivateRoute>
+        }
+      />
+
+      <Route
+        path="/farm-dash"
+        element={
+          <AdminPrivateRoute>
+            <AdminLayoutWithRoute>
+              <FarmDash />
+            </AdminLayoutWithRoute>
           </AdminPrivateRoute>
         }
       />
