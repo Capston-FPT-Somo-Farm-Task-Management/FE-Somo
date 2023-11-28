@@ -447,17 +447,6 @@ html {
   opacity: 0.8;
 }
 
-.ant-ribbon.ant-ribbon-placement-end.ribbon-evidence {
-  border-radius: 4px;
-  border-end-start-radius: 0;
-}
-.ant-ribbon.ant-ribbon-placement-end.ribbon-evidence .ant-ribbon-corner {
-  inset-inline-start: 0;
-  border-inline-start-color: transparent;
-  border-inline-end-color: unset;
-  border-block-end-color: transparent;
-}
-
 .first-modal {
   display: flex;
   flex-direction: column;
