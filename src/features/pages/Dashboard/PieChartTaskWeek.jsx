@@ -81,14 +81,14 @@ const PieChartTaskWeek = ({ taskByWeek, selectedDay }) => {
 
   return (
     <div style={styles.container}>
-      <h1>Tổng nhiệm vụ: {totalTaskCount} </h1>
-      <ResponsiveContainer width="100%" height={200}>
-        <PieChart width={400} height={400}>
+      {/* <h1>Tổng nhiệm vụ: {totalTaskCount} </h1> */}
+      <ResponsiveContainer height={400}>
+        <PieChart width={400} height={200}>
           <Pie
             data={filteredData}
             cx="50%"
             cy="50%"
-            outerRadius={90}
+            outerRadius={100}
             startAngle={360}
             endAngle={0}
             innerRadius={60}
