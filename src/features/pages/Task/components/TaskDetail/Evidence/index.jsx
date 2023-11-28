@@ -4,15 +4,11 @@ import NoImage from "../../../../../../assets/no-image.png";
 import { Avatar, Button, Collapse, Empty, Image, Space, Timeline } from "antd";
 import { GrDocumentImage } from "react-icons/gr";
 import dayjs from "dayjs";
-import UpdateTask from "../../List/components/UpdateTask";
 
 const { Panel } = Collapse;
 
 function Evidence({
   taskData,
-  handleRefuseTask,
-  openEditTaskModal,
-  closeEditTaskModal,
 }) {
   const evidenceData = useSelector((state) => state.evidence.data);
   console.log(taskData);
@@ -458,32 +454,7 @@ function Evidence({
         Báo cáo công việc
       </h6>
       {renderImages()}
-      {taskData && taskData.status === "Từ chối" ? (
-        <div
-          style={{ width: "90%", display: "flex", justifyContent: "flex-end" }}
-        >
-          <Button
-            form="refuseTask"
-            type="primary"
-            danger
-            onClick={() => openEditTaskModal(taskData)}
-          >
-            Chỉnh sửa
-            <UpdateTask />
-          </Button>
-          ,
-          <Button
-            form="refuseTask"
-            type="primary"
-            htmlType="submit"
-            onClick={() => {
-              handleRefuseTask(taskData.id);
-            }}
-          >
-            Không chấp nhận
-          </Button>
-        </div>
-      ) : null}
+      
     </div>
   );
 }

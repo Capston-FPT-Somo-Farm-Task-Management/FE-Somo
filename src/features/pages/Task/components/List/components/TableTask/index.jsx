@@ -20,7 +20,7 @@ function TableTask({
   taskTitle,
   handleMenuClick,
   openEditTaskModal,
-  openAddSubtaskModal,
+  openViewRejectModal,
   openSubtaskModal,
   openEffortModal,
   openChangeDoingToPendingModal,
@@ -29,7 +29,6 @@ function TableTask({
   openModal,
 }) {
   const dispatch = useDispatch();
-  console.log(task);
   return (
     <>
       {task && (
@@ -183,6 +182,17 @@ function TableTask({
 
                           {record.status === "Từ chối" ? (
                             <>
+                            <Menu.Item key="viewReject">
+                                <span onClick={() => dispatch(getEvidenceByTaskId(record.id))}>
+                                  <PauseCircleOutlined
+                                    style={{
+                                      color: "blue",
+                                      marginRight: "8px",
+                                    }}
+                                  />
+                                  Xem lý do từ chối
+                                </span>
+                              </Menu.Item>
                               <Menu.Item key="reAssign">
                                 <span onClick={() => openEditTaskModal(record)}>
                                   <PauseCircleOutlined

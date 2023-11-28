@@ -1,7 +1,7 @@
-import React from 'react'
-import { Button, Modal } from 'antd'
-import TaskContent from './TaskContent'
-import Evidence from './Evidence'
+import React from "react";
+import { Button, Modal } from "antd";
+import TaskContent from "./TaskContent";
+import Evidence from "./Evidence";
 
 const TaskDetail = ({
   visible,
@@ -15,24 +15,24 @@ const TaskDetail = ({
   return (
     <Modal
       title={
-        taskData && taskData.status === 'Hoàn thành' ? (
+        taskData && taskData.status === "Hoàn thành" ? (
           <div
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
             <p>Chi tiết công việc</p>
             <Button
-              style={{ marginRight: '30px' }}
+              style={{ marginRight: "30px" }}
               onClick={openChangeDoneToDoingModal}
             >
               Chuyển sang thực hiện
             </Button>
           </div>
         ) : (
-          'Chi tiết công việc'
+          "Chi tiết công việc"
         )
       }
       open={visible}
@@ -40,17 +40,19 @@ const TaskDetail = ({
       footer={null}
       width={1200}
       className="modal-detail"
-      style={{ maxWidth: '90%', margin: '0 auto' }}
+      style={{ maxWidth: "90%", margin: "0 auto" }}
     >
       <TaskContent taskData={taskData} />
-      <Evidence
-        taskData={taskData}
-        handleRefuseTask={handleRefuseTask}
-        openEditTaskModal={openEditTaskModal}
-        closeEditTaskModal={closeEditTaskModal}
-      />
+      {taskData && taskData.status !== "Từ chối" ? (
+        <Evidence
+          taskData={taskData}
+          handleRefuseTask={handleRefuseTask}
+          openEditTaskModal={openEditTaskModal}
+          closeEditTaskModal={closeEditTaskModal}
+        />
+      ) : null}
     </Modal>
-  )
-}
+  );
+};
 
-export default TaskDetail
+export default TaskDetail;
