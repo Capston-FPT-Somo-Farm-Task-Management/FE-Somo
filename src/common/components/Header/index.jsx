@@ -176,7 +176,7 @@ function HeaderComp() {
             </Dropdown>
           </div>
           <Modal
-            visible={isModalVisible}
+            open={isModalVisible}
             onCancel={handleCancel}
             width={800}
             footer={null}
@@ -227,7 +227,7 @@ function HeaderComp() {
           {isModalEditVisible && (
             <Modal
               title="Sửa thông tin"
-              visible={isModalEditVisible}
+              open={isModalEditVisible}
               onCancel={closeEditProfile}
               footer={[
                 <Button form="updateEffort" type="primary" htmlType="submit">
