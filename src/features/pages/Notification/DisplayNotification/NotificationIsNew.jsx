@@ -45,10 +45,10 @@ const NotificationIsNew = ({ changeStatusNotify }) => {
   const [selectedData, setSelectedData] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const showModal = (id) => {
-    setSelectedData(id)
+  const showModal = (item) => {
+    setSelectedData(item.taskId)
     setIsModalOpen(true)
-    changeStatusNotify(id)
+    changeStatusNotify(item.id)
   }
 
   const closeModal = () => {
@@ -82,22 +82,22 @@ const NotificationIsNew = ({ changeStatusNotify }) => {
                       status="processing"
                       text={item.message}
                       style={{ cursor: 'pointer' }}
-                      onClick={() => showModal(item.taskId)}
+                      onClick={() => showModal(item)}
                     />
                   </Space>
                 }
                 description={item.time}
               />
-              <TaskDetailModal
-                key={selectedData ? selectedData : null}
-                isModalOpen={isModalOpen}
-                closeModal={closeModal}
-                selectedData={selectedData}
-              />
             </List.Item>
           )}
         />
       </InfiniteScroll>
+      <TaskDetailModal
+        key={selectedData ? selectedData : null}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        selectedData={selectedData}
+      />
     </>
   )
 }

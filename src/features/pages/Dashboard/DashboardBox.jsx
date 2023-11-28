@@ -1,5 +1,5 @@
 import React from "react";
-import { GrBarChart } from "react-icons/gr";
+import { GrDocumentSound, GrInProgress, GrPauseFill, GrClose  } from "react-icons/gr";
 
 const DashboardBox = ({ taskByWeek, selectedDay }) => {
   const calculateTotalTasks = () => {
@@ -52,7 +52,7 @@ const DashboardBox = ({ taskByWeek, selectedDay }) => {
           <h5>Tổng: {filteredData?.totalTaskToDo}</h5>
         </div>
         <div className="dashboard-logo" style={{ backgroundColor: "#1a659e" }}>
-          <GrBarChart />
+        <GrDocumentSound />
         </div>
       </div>
       <div className="dashboard-content">
@@ -64,7 +64,7 @@ const DashboardBox = ({ taskByWeek, selectedDay }) => {
           className="dashboard-logo"
           style={{ backgroundColor: "#52b788" }}
         >
-          <GrBarChart />
+          <GrInProgress />
         </div>
       </div>
       <div className="dashboard-content">
@@ -73,7 +73,7 @@ const DashboardBox = ({ taskByWeek, selectedDay }) => {
           <h5>Tổng: {filteredData?.totalTaskPending}</h5>
         </div>
         <div className="dashboard-logo" style={{ backgroundColor: "#fbb02d" }}>
-          <GrBarChart />
+        <GrPauseFill />
         </div>
       </div>
       <div className="dashboard-content">
@@ -82,7 +82,7 @@ const DashboardBox = ({ taskByWeek, selectedDay }) => {
           <h5>Tổng: {filteredData?.totalTaskClose}</h5>
         </div>
         <div className="dashboard-logo" style={{ backgroundColor: "#ef233c" }}>
-          <GrBarChart />
+        <GrClose />
         </div>
       </div>
     </>

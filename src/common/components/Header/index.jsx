@@ -193,7 +193,7 @@ function HeaderComp() {
               </div>
               <div className="user-profile-right">
                 <h5>
-                  Thông tin cá nhân{' '}
+                  Thông tin cá nhân
                   <span onClick={handleOpenEditProfile}>
                     <EditOutlined />
                   </span>

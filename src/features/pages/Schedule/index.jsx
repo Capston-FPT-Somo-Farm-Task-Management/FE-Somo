@@ -207,10 +207,10 @@ function Schedule() {
         <>
           <h3>Lịch trình</h3>
           <div>
-            <span >
+            <span>
               <Badge status="processing" text="Chuẩn bị" />
             </span>
-            <span style={{marginLeft: "10px"}}>
+            <span style={{ marginLeft: "10px" }}>
               {" "}
               <Badge status="success" text="Đang thực hiện" />
             </span>
@@ -233,6 +233,7 @@ function Schedule() {
               <Collapse accordion>
                 {selectedDateData.map((item) => (
                   <Panel header={item.content} key={item.id}>
+                    {console.log(item)}
                     <Descriptions bordered column={1}>
                       <Descriptions.Item label="Loại công việc" key={item.id}>
                         {item.taskType}
@@ -252,9 +253,6 @@ function Schedule() {
                       <Descriptions.Item label="Người giám sát" key={item.id}>
                         {item.supervisor}
                       </Descriptions.Item>
-                      <Descriptions.Item label="Người thực hiện" key={item.id}>
-                        {item.employee}
-                      </Descriptions.Item>
                       {item.material ? (
                         <Descriptions.Item label="Dụng cụ" key={item.id}>
                           {item.material}
@@ -264,15 +262,24 @@ function Schedule() {
                           <p>Chưa có dụng cụ</p>
                         </Descriptions.Item>
                       )}
-                      <Descriptions.Item label="Khu vực" key={item.id}>
-                        {item.area}
-                      </Descriptions.Item>
-                      <Descriptions.Item label="Vùng" key={item.id}>
-                        {item.zone}
-                      </Descriptions.Item>
-                      <Descriptions.Item label="Vị trí" key={item.id}>
-                        {item.field}
-                      </Descriptions.Item>
+                      {item.isPlant === null ? (
+                        <Descriptions.Item label="Địa điểm cụ thể" key={item.id}>
+                          {item.addressDetail}
+                        </Descriptions.Item>
+                      ) : (
+                        <>
+                          <Descriptions.Item label="Khu vực" key={item.id}>
+                            {item.area}
+                          </Descriptions.Item>
+                          <Descriptions.Item label="Vùng" key={item.id}>
+                            {item.zone}
+                          </Descriptions.Item>
+                          <Descriptions.Item label="Vị trí" key={item.id}>
+                            {item.field}
+                          </Descriptions.Item>
+                        </>
+                      )}
+
                       {item.description ? (
                         <Descriptions.Item label="Mô tả" key={item.id}>
                           {item.description}

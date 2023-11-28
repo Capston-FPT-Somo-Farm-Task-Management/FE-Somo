@@ -13,13 +13,16 @@ const TaskDetailModal = ({ selectedData, isModalOpen, closeModal }) => {
   const taskById = useSelector((state) => state.taskById.data)
 
   const taskData = taskById?.data
+  
+  console.log(taskById);
 
+  console.log(taskData)
   useEffect(() => {
     if (selectedData) {
       dispatch(getEvidenceByTaskId(selectedData))
       dispatch(getTaskById(selectedData))
     }
-  }, [dispatch])
+  }, [dispatch, selectedData])
 
   return (
     <Modal
@@ -27,6 +30,7 @@ const TaskDetailModal = ({ selectedData, isModalOpen, closeModal }) => {
       open={isModalOpen}
       onOk={closeModal}
       onCancel={closeModal}
+      footer={null}
       width={1200}
       className="modal-detail"
       style={{ maxWidth: '90%', margin: '0 auto' }}
