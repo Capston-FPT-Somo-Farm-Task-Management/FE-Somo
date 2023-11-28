@@ -52,7 +52,7 @@ const AdminSideMenu = () => {
     <div className="sider">
       {isDesktop && (
         <Sider
-          theme="dark"
+          theme="light"
           style={{
             overflow: 'auto',
             height: '100vh',
@@ -66,7 +66,7 @@ const AdminSideMenu = () => {
             <img src={logoSomo} alt="logo" />
           </div>
           <Menu
-            theme="dark"
+            theme="light"
             mode="inline"
             defaultSelectedKeys={[location.pathname]}
           >
@@ -76,11 +76,11 @@ const AdminSideMenu = () => {
               <Link to="/dashboard"></Link>
             </Menu.Item>
 
-            <Menu.Item key="/statistic-task">
+            {/* <Menu.Item key="/statistic-task">
               <AimOutlined />
               <span>Công việc</span>
               <Link to="/statistic-task"></Link>
-            </Menu.Item>
+            </Menu.Item> */}
 
             {/* <Menu.Item key="/statistic-farm">
               <BorderOutlined />
