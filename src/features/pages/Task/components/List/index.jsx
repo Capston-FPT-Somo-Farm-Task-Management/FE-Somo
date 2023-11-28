@@ -26,11 +26,13 @@ import ChangeDoneToDoing from "./components/ChangeDoneToDoing";
 import ChangeDoingToPending from "./components/ChangeDoingToPendingAndCancel/ChangeDoingToPending";
 import ChangeDoingToCancel from "./components/ChangeDoingToPendingAndCancel/ChangeDoingToCancel";
 import SubTask from "./components/SubTask";
+import ViewReject from "../TaskDetail/ViewReject";
 
 const List = () => {
   const [subTasks, setSubTasks] = useState([]);
   const [effort, setEffort] = useState([]);
   const [editingTask, setEditingTask] = useState(null);
+  const [viewRejectModalVisible, setViewRejectModalVisible] = useState(false);
   const [editTaskModalVisible, setEditTaskModalVisible] = useState(false);
   const [subTaskModalVisible, setSubTaskModalVisible] = useState(false);
   const [effortVisible, setEffortVisible] = useState(false);
@@ -111,16 +113,18 @@ const List = () => {
   const handleMenuClick = (e, record) => {
     if (e.key === "edit") {
       openEditTaskModal(record);
-      setCheckChangeToToDo(false)
+      setCheckChangeToToDo(false);
     } else if (e.key === "pending") {
       openChangeDoingToPendingModal(record);
     } else if (e.key === "changeToToDo") {
       openEditTaskModal(record);
-      setCheckChangeToToDo(true)
+      setCheckChangeToToDo(true);
     } else if (e.key === "cancel") {
       openChangeDoingToCancelModal(record);
     } else if (e.key === "changeToDoing") {
       handleChangePendingAndCancelToDoing(record.id);
+    } else if (e.key === "viewReject") {
+      openViewRejectModal(record);
     } else if (e.key === "reAssign") {
       openEditTaskModal(record);
     } else if (e.key === "reject") {
@@ -251,6 +255,17 @@ const List = () => {
     setTaskDoneToDoingVisible(false);
   };
 
+  const openViewRejectModal = (record) => {
+    setSelectedTask(record);
+    setViewRejectModalVisible(true);
+    setCurrentTaskId(record.id);
+  };
+
+  const closeViewRejectModal = () => {
+    setSelectedTask(null);
+    setViewRejectModalVisible(false);
+  };
+
   const openEditTaskModal = (record) => {
     setEditingTask(record);
     setEditTaskModalVisible(true);
@@ -346,6 +361,7 @@ const List = () => {
           handleMenuClick={handleMenuClick}
           editingTask={editingTask}
           editTaskModalVisible={editTaskModalVisible}
+          openViewRejectModal={openViewRejectModal}
           openEditTaskModal={openEditTaskModal}
           closeEditTaskModal={closeEditTaskModal}
           openSubtaskModal={openSubtaskModal}
@@ -367,6 +383,11 @@ const List = () => {
         openEditTaskModal={openEditTaskModal}
         closeEditTaskModal={closeEditTaskModal}
         openChangeDoneToDoingModal={openChangeDoneToDoingModal}
+      />
+      <ViewReject
+        viewRejectModalVisible={viewRejectModalVisible}
+        closeViewRejectModal={closeViewRejectModal}
+        taskData={selectedTask}
       />
       <UpdateTask
         editTaskModalVisible={editTaskModalVisible}

@@ -130,8 +130,6 @@ function UpdateTask({
 
   const material = useSelector((state) => state.materialActive.data);
 
-  console.log(editingTask);
-
   useEffect(() => {
     dispatch(getAreaActiveByFarmId(farmId));
     dispatch(getAreaWithZoneTypeLivestock(farmId));
@@ -343,8 +341,6 @@ function UpdateTask({
   const handleUpdateTask = (
     currentTaskId,
     name,
-    startDate,
-    endDate,
     description,
     priority,
     supervisorId,
@@ -359,16 +355,16 @@ function UpdateTask({
     form
       .validateFields()
       .then(() => {
-        const startDateFormatted = editingTask.startDate
-          ? dayjs(editingTask.startDate)
+        const startDateFormatted = startDate
+          ? dayjs(startDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss")
+          : dayjs(editingTask.startDate)
               .second(0)
-              .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
-          : dayjs(startDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
-        const endDateFormatted = editingTask.endDate
-          ? dayjs(editingTask.endDate)
+              .format("YYYY-MM-DD[T]HH:mm:ss");
+        const endDateFormatted = endDate
+          ? dayjs(endDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss")
+          : dayjs(editingTask.endDate)
               .second(0)
-              .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
-          : dayjs(endDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+              .format("YYYY-MM-DD[T]HH:mm:ss");
 
         if (
           shouldCheckRepeat &&
@@ -427,7 +423,7 @@ function UpdateTask({
           taskTypeId: selectedTaskTypeId ? selectedTaskTypeId : 0,
           plantId: typeof plantId === "object" ? plantId.value : 0,
           liveStockId: typeof liveStockId === "object" ? liveStockId.value : 0,
-          addressDetail: addressDetailToSend,
+          addressDetail: addressDetailToSend ? addressDetailToSend : editingTask.addressDetail,
           remind: typeof remind === "object" ? remind.value : 0,
           materialIds: materialsValue ? materialsValue : editingTask.materialId,
           dates: initialSelectedDays
@@ -456,8 +452,6 @@ function UpdateTask({
   const handleReAssignTask = (
     currentTaskId,
     name,
-    startDate,
-    endDate,
     description,
     priority,
     supervisorId,
@@ -472,16 +466,16 @@ function UpdateTask({
     form
       .validateFields()
       .then(() => {
-        const startDateFormatted = editingTask.startDate
-          ? dayjs(editingTask.startDate)
+        const startDateFormatted = startDate
+          ? dayjs(startDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss")
+          : dayjs(editingTask.startDate)
               .second(0)
-              .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
-          : dayjs(startDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
-        const endDateFormatted = editingTask.endDate
-          ? dayjs(editingTask.endDate)
+              .format("YYYY-MM-DD[T]HH:mm:ss");
+        const endDateFormatted = endDate
+          ? dayjs(endDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss")
+          : dayjs(editingTask.endDate)
               .second(0)
-              .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
-          : dayjs(endDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+              .format("YYYY-MM-DD[T]HH:mm:ss");
 
         if (
           shouldCheckRepeat &&
@@ -539,7 +533,7 @@ function UpdateTask({
           taskTypeId: selectedTaskTypeId ? selectedTaskTypeId : 0,
           plantId: typeof plantId === "object" ? plantId.value : 0,
           liveStockId: typeof liveStockId === "object" ? liveStockId.value : 0,
-          addressDetail: addressDetailToSend,
+          addressDetail: addressDetailToSend ? addressDetailToSend : editingTask.addressDetail,
           remind: typeof remind === "object" ? remind.value : 0,
           materialIds: materialsValue ? materialsValue : editingTask.materialId,
           dates: initialSelectedDays
@@ -574,19 +568,15 @@ function UpdateTask({
       .validateFields()
       .then(() => {
         const startDateFormatted = startDate
-          ? dayjs(startDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS")
-          : editingTask.startDate
-          ? dayjs(editingTask.startDate)
+          ? dayjs(startDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss")
+          : dayjs(editingTask.startDate)
               .second(0)
-              .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
-          : null;
+              .format("YYYY-MM-DD[T]HH:mm:ss");
         const endDateFormatted = endDate
-          ? dayjs(endDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS")
-          : editingTask.endDate
-          ? dayjs(editingTask.endDate)
+          ? dayjs(endDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss")
+          : dayjs(editingTask.endDate)
               .second(0)
-              .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
-          : null;
+              .format("YYYY-MM-DD[T]HH:mm:ss");
 
         const area = areaByFarm.data
           ? areaByFarm.data.find((area) => area.id === selectedAreaId)
@@ -632,7 +622,7 @@ function UpdateTask({
           liveStockId: selectedLivestockId
             ? selectedLivestockId
             : editingTask.livestockId,
-          addressDetail: addressDetailToSend,
+            addressDetail: addressDetailToSend ? addressDetailToSend : editingTask.addressDetail,
           remind: editingTask.remind ? remindValue : remindValue,
           materialIds: materialsValue ? materialsValue : editingTask.materialId,
           dates: initialSelectedDays
@@ -661,8 +651,6 @@ function UpdateTask({
   const handleUpdateTaskDraftToPrepare = (
     currentTaskId,
     name,
-    startDate,
-    endDate,
     description,
     priority,
     supervisorId,
@@ -677,17 +665,16 @@ function UpdateTask({
     form
       .validateFields()
       .then(() => {
-        const startDateFormatted = editingTask.startDate
-          ? dayjs(editingTask.startDate)
+        const startDateFormatted = startDate
+          ? dayjs(startDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss")
+          : dayjs(editingTask.startDate)
               .second(0)
-              .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
-          : dayjs(startDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
-        const endDateFormatted = editingTask.endDate
-          ? dayjs(editingTask.endDate)
+              .format("YYYY-MM-DD[T]HH:mm:ss");
+        const endDateFormatted = endDate
+          ? dayjs(endDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss")
+          : dayjs(editingTask.endDate)
               .second(0)
-              .format("YYYY-MM-DD[T]HH:mm:ss.SSS")
-          : dayjs(endDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss.SSS");
-
+              .format("YYYY-MM-DD[T]HH:mm:ss");
         if (
           shouldCheckRepeat &&
           editingTask.isRepeat &&
