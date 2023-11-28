@@ -15,6 +15,7 @@ const NotificationAll = ({ changeStatusNotify }) => {
   const taskById = useSelector((state) => state.taskById.data)
   const [hasMore, setHasMore] = useState(true)
 
+
   // Load notify
   const notifyAll = useSelector((state) => state.notification.data)
   const totalPages = useSelector((state) => state.notification.totalPages)
@@ -23,6 +24,7 @@ const NotificationAll = ({ changeStatusNotify }) => {
 
   const showModal = (id) => {
     setIsModalOpen(true)
+    setSelectedTaskId(id)
     changeStatusNotify(id)
   }
   const closeModal = () => {
@@ -100,7 +102,7 @@ const NotificationAll = ({ changeStatusNotify }) => {
                       <Badge
                         status="processing"
                         text={item.message}
-                        onClick={() => showModal(item.id)}
+                        onClick={() => showModal(selectedTaskId)}
                         style={{ cursor: 'pointer' }}
                       />
                     </Space>
@@ -113,6 +115,8 @@ const NotificationAll = ({ changeStatusNotify }) => {
               <TaskDetailModal
                 isModalOpen={isModalOpen}
                 closeModal={closeModal}
+                taskById={taskById}
+                content={content}
               />
             </List.Item>
           )}

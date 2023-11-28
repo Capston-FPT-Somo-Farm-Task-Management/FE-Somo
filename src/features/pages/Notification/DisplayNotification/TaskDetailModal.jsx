@@ -1,15 +1,16 @@
 const { Modal } = require('antd')
 
-const TaskDetailModal = ({ taskById, isModalOpen, closeModal }) => {
+const TaskDetailModal = ({ taskById, isModalOpen, closeModal, content }) => {
+  console.log(taskById);
+
   return (
     <Modal
       title="Chi tiết công việc"
       open={isModalOpen}
       onOk={closeModal}
       onCancel={closeModal}
-      style={{ zIndex: 3050 }} // CSS inline để đặt z-index
     >
-      <p>content</p>
+      <div>{content}</div>
     </Modal>
   )
 }
