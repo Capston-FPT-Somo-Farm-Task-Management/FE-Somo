@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { List } from 'antd'
+import { Badge, List, Space } from 'antd'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -44,11 +44,6 @@ const NotificationIsNew = ({ changeStatusNotify }) => {
     dispatch(getTaskById(selectedTaskId))
   }, [dispatch, selectedTaskId])
 
-  // const getDetailNotify = (item) => {
-  //   setSelectedTaskId(item.taskId)
-  //   changeStatusNotify(item.id)
-  // }
-
   const content = (
     <div>
       <p>Tên công việc: {taskById ? taskById.data?.name : null}</p>
@@ -88,7 +83,15 @@ const NotificationIsNew = ({ changeStatusNotify }) => {
           renderItem={(item) => (
             <List.Item>
               <List.Item.Meta
-                title={<a>{item.message}</a>}
+                title={
+                  <Space>
+                    <Badge
+                      status="processing"
+                      text={item.message}
+                      style={{ cursor: 'pointer' }}
+                    />
+                  </Space>
+                }
                 description={item.time}
               />
             </List.Item>

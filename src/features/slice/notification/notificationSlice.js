@@ -6,7 +6,6 @@ const axiosInstance = createAxiosInstance()
 export const getAllNotify = createAsyncThunk(
   'notification/getAllNotify',
   async ({ pageNumber, pageSize, id }, { rejectWithValue }) => {
-    console.log(pageNumber, pageSize, id)
     try {
       const { data } = await axiosInstance.get(
         `/Notification/PageIndex(${pageNumber})/PageSize(${pageSize})/Member(${id})`

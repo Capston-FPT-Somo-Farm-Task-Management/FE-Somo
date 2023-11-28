@@ -2,7 +2,7 @@ import { Badge, Tabs } from 'antd'
 import NotificationIsNew from './NotificationIsNew'
 import NotificationAll from './NotificationAll'
 
-const DisplayNotification = ({ changeStatusNotify }) => {
+const DisplayNotification = ({ changeStatusNotify, closePopover }) => {
   return (
     <>
       <Tabs
@@ -13,7 +13,10 @@ const DisplayNotification = ({ changeStatusNotify }) => {
             key: '1',
             label: 'Tất cả',
             children: (
-              <NotificationAll changeStatusNotify={changeStatusNotify} />
+              <NotificationAll
+                changeStatusNotify={changeStatusNotify}
+                closePopover={closePopover}
+              />
             ),
           },
           {

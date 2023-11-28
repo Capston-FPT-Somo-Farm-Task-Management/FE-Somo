@@ -1,4 +1,4 @@
-import { List, Modal } from 'antd'
+import { Badge, List, Modal, Space } from 'antd'
 import { getAllNotify } from 'features/slice/notification/notificationSlice'
 import { getTaskById } from 'features/slice/task/taskByIdSlice'
 import { useEffect, useState } from 'react'
@@ -6,6 +6,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { authServices } from 'services/authServices'
+import TaskDetailModal from './TaskDetailModal'
 
 const NotificationAll = ({ changeStatusNotify }) => {
   const dispatch = useDispatch()
@@ -20,18 +21,15 @@ const NotificationAll = ({ changeStatusNotify }) => {
 
   const [pageNumber, setPageNumber] = useState(1)
 
-  const showModal = () => {
+  const showModal = (id) => {
     setIsModalOpen(true)
+    changeStatusNotify(id)
   }
-  const handleOk = () => {
-    setIsModalOpen(false)
-  }
-  const handleCancel = () => {
+  const closeModal = () => {
     setIsModalOpen(false)
   }
 
   useEffect(() => {
-    // Hàm này gửi yêu cầu tới API và xử lý phản hồi
     const loadNotifications = async () => {
       try {
         const response = await dispatch(
@@ -97,25 +95,25 @@ const NotificationAll = ({ changeStatusNotify }) => {
             <List.Item>
               <List.Item.Meta
                 title={
-                  item.isNew === true ? (
-                    <a style={{ color: 'red' }} onClick={showModal}>
-                      {item.message}
-                    </a>
+                  item.isRead === false ? (
+                    <Space>
+                      <Badge
+                        status="processing"
+                        text={item.message}
+                        onClick={() => showModal(item.id)}
+                        style={{ cursor: 'pointer' }}
+                      />
+                    </Space>
                   ) : (
                     <a onClick={showModal}>{item.message}</a>
                   )
                 }
                 description={item.time}
               />
-              <Modal
-                title="Basic Modal"
-                open={isModalOpen}
-                onOk={handleOk}
-                onCancel={handleCancel}
-                maskClosable={false}
-              >
-                {content}
-              </Modal>
+              <TaskDetailModal
+                isModalOpen={isModalOpen}
+                closeModal={closeModal}
+              />
             </List.Item>
           )}
         />
