@@ -311,10 +311,10 @@ function ThirdModal({
       .then(() => {
         const startDateFormatted = dayjs(startDate)
           .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+          .format("YYYY-MM-DD[T]HH:mm:ss");
         const endDateFormatted = dayjs(endDate)
           .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+          .format("YYYY-MM-DD[T]HH:mm:ss");
 
         const remindValueToSend = remindValue || 0;
 
@@ -370,6 +370,7 @@ function ThirdModal({
           loadDataTask();
           onDateChange();
           onTaskAdded();
+          handleCloseModal();
         });
       })
       .catch((errorInfo) => {
@@ -384,10 +385,10 @@ function ThirdModal({
       .then(() => {
         const startDateFormatted = dayjs(startDate)
           .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+          .format("YYYY-MM-DD[T]HH:mm:ss");
         const endDateFormatted = dayjs(endDate)
           .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+          .format("YYYY-MM-DD[T]HH:mm:ss");
 
         const startDateToSend = startDate ? startDateFormatted : null;
         const endDateToSend = endDate ? endDateFormatted : null;
@@ -497,10 +498,10 @@ function ThirdModal({
       .then(() => {
         const startDateFormatted = dayjs(startDate)
           .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+          .format("YYYY-MM-DD[T]HH:mm:ss");
         const endDateFormatted = dayjs(endDate)
           .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+          .format("YYYY-MM-DD[T]HH:mm:ss");
 
         const remindValueToSend = remindValue || 0;
 
@@ -546,12 +547,6 @@ function ThirdModal({
           addressDetail ? addressDetail : ""
         }`;
 
-        console.log("areaName: ", areaName);
-        console.log("zoneName: ", zoneName);
-        console.log("fieldName: ", fieldName);
-        console.log("addressDetail: ", addressDetail);
-        console.log("formattedAddress: ", formattedAddress);
-
         const finalValues = {
           ...values,
           name: name,
@@ -596,10 +591,10 @@ function ThirdModal({
       .then(() => {
         const startDateFormatted = dayjs(startDate)
           .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+          .format("YYYY-MM-DD[T]HH:mm:ss");
         const endDateFormatted = dayjs(endDate)
           .second(0)
-          .format("YYYY-MM-DD[T]HH:mm:ss.SSS");
+          .format("YYYY-MM-DD[T]HH:mm:ss");
 
         const startDateToSend = startDate ? startDateFormatted : null;
         const endDateToSend = endDate ? endDateFormatted : null;

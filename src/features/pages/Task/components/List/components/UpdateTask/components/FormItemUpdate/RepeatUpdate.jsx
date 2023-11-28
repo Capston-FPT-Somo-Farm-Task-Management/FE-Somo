@@ -15,11 +15,12 @@ function RepeatUpdate({
   setSelectedDays,
   initialSelectedDays,
   setInitialSelectedDays,
-  shouldCheckRepeat
+  shouldCheckRepeat,
+  form
 }) {
   
   const disableRepeat = endDate ? !endDate.isValid() : null;
-  const dateRepeateArray =
+  let dateRepeateArray =
     editingTask && editingTask.dateRepeate
       ? editingTask.dateRepeate.map((date) => dayjs(date).format("YYYY-MM-DD"))
       : [];
@@ -31,6 +32,13 @@ function RepeatUpdate({
       setInitialSelectedDays(formattedDays);
     }
   }, [editingTask]);
+
+  useEffect(() => {
+    // Xóa tất cả các ngày khi repeatValue chuyển sang false
+    if (!repeatValue) {
+      setInitialSelectedDays([]);
+    }
+  }, [repeatValue]);
 
   const modifiers = {
     selected: initialSelectedDays.map((day) => new Date(day)),
@@ -73,8 +81,6 @@ function RepeatUpdate({
       // setInitialSelectedDays([...initialSelectedDays, formattedDay]);
     }
   };
-
-  console.log(selectedDays);
 
   const disabledDate = (current) => {
     const currentDayjs = dayjs(current);
@@ -197,6 +203,7 @@ function RepeatUpdate({
     const setRepeat = repeatValue === true ? editingTask.isRepeat === repeatValue : editingTask.isRepeat
     console.log("setRepeat: ", setRepeat);
     console.log("repeatValue: ", repeatValue);
+    console.log("initialSelectedDays: ", initialSelectedDays);
   return (
     <>
       <Form.Item
@@ -220,7 +227,7 @@ function RepeatUpdate({
           <Select.Option value={true}>Có</Select.Option>
         </Select>
       </Form.Item>
-      {setRepeat || repeatValue === true ? (
+      {repeatValue === true ? (
         <Form.Item
           label="Lặp những ngày"
           name="dateRepeate"

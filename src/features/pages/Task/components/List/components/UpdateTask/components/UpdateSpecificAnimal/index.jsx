@@ -52,6 +52,7 @@ function UpdateSpecificAnimal({
   initialSelectedDays,
   setInitialSelectedDays,
   isDraft,
+  form
 }) {
   return (
     <>
@@ -141,6 +142,7 @@ function UpdateSpecificAnimal({
           setSelectedDays={setSelectedDays}
           initialSelectedDays={initialSelectedDays}
           setInitialSelectedDays={setInitialSelectedDays}
+          form={form}
         />
       </div>
     </>
