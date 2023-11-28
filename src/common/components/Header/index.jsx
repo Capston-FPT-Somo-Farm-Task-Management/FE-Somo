@@ -197,17 +197,13 @@ function HeaderComp() {
                 </h5>
 
                 <div className="user-information">
-                  <div className="user-information-text">
+                  <div className="user-information-text" style={{width: "100%"}}>
                     <h6>Email</h6>
                     <p>{member.email}</p>
                   </div>
                   <div className="user-information-text">
                     <h6>Số điện thoại</h6>
                     <p>{member.phoneNumber}</p>
-                  </div>
-                  <div className="user-information-text">
-                    <h6>Trang trại</h6>
-                    <p>{member.farmName}</p>
                   </div>
                   <div className="user-information-text">
                     <h6>Ngày sinh</h6>
