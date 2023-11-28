@@ -1514,4 +1514,74 @@ html {
 .page-not-fount-container .error-content {
   font-size: 90px;
   text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.dashboard {
+  background-color: #f5f5f5;
+  height: 100%;
+}
+.dashboard .dashboard-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.dashboard .dashboard-header .dashboard-content {
+  width: 22%;
+  height: 150px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1019607843), 0 1px 2px rgba(0, 0, 0, 0.0588235294);
+  background-color: white;
+  border-radius: 8px;
+  padding: 30px 20px;
+}
+.dashboard .dashboard-header .dashboard-content .dashboard-text p {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #6E7682;
+}
+.dashboard .dashboard-header .dashboard-content .dashboard-text h5 {
+  font-size: 30px;
+  font-weight: 600;
+}
+.dashboard .dashboard-header .dashboard-content .dashboard-logo {
+  width: 55px;
+  height: 55px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  border-radius: 50%;
+}
+.dashboard .dashboard-header .dashboard-content .dashboard-logo svg {
+  width: 1.5em;
+  height: 1.5em;
+}
+.dashboard .dashboard-header .dashboard-content .dashboard-logo svg path {
+  fill: white;
+  stroke: white;
+}
+.dashboard .dashboard-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 20px;
+}
+.dashboard .dashboard-footer .dashboard-chart {
+  width: 59%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1019607843), 0 1px 2px rgba(0, 0, 0, 0.0588235294);
+}
+.dashboard .dashboard-footer .dashboard-piechart {
+  width: 35%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1019607843), 0 1px 2px rgba(0, 0, 0, 0.0588235294);
 }/*# sourceMappingURL=index.css.map */

@@ -38,12 +38,13 @@ const ChartTaskWeek = ({ taskByWeek, onBarClick }) => {
       style={{
         display: 'flex',
         justifyContent: 'center',
+        alignItems: "center",
         width: '100%',
         height: '400px',
         minWidth: '300px', // Đặt chiều rộng tối thiểu
       }}
     >
-      <ResponsiveContainer width="70%" height="80%">
+      <ResponsiveContainer height="80%">
         <BarChart
           data={data}
           margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
