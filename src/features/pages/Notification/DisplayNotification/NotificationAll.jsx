@@ -1,6 +1,5 @@
 import { Badge, List, Modal, Space } from 'antd'
 import { getAllNotify } from 'features/slice/notification/notificationSlice'
-import { getTaskById } from 'features/slice/task/taskByIdSlice'
 import { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useSelector } from 'react-redux'
@@ -10,23 +9,29 @@ import TaskDetailModal from './TaskDetailModal'
 
 const NotificationAll = ({ changeStatusNotify }) => {
   const dispatch = useDispatch()
-  const [selectedTaskId, setSelectedTaskId] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const taskById = useSelector((state) => state.taskById.data)
   const [hasMore, setHasMore] = useState(true)
 
   // Load notify
   const notifyAll = useSelector((state) => state.notification.data)
-  const totalPages = useSelector((state) => state.notification.totalPages)
 
   const [pageNumber, setPageNumber] = useState(1)
+  const [selectedData, setSelectedData] = useState(null)
 
   const showModal = (id) => {
+    setSelectedData(id)
     setIsModalOpen(true)
     changeStatusNotify(id)
   }
+
+  const showModalDetail = (id) => {
+    setSelectedData(id)
+    setIsModalOpen(true)
+  }
+
   const closeModal = () => {
     setIsModalOpen(false)
+    setSelectedData(null)
   }
 
   useEffect(() => {
@@ -49,26 +54,6 @@ const NotificationAll = ({ changeStatusNotify }) => {
 
     loadNotifications()
   }, [dispatch, pageNumber])
-
-  // Task detail
-  useEffect(() => {
-    dispatch(getTaskById(selectedTaskId))
-  }, [dispatch, selectedTaskId])
-
-  const content = (
-    <div>
-      <p>Tên công việc: {taskById ? taskById.data?.name : null}</p>
-      <p>Trạng thái: {taskById ? taskById.data?.status : null}</p>
-      <p>Mô tả: {taskById ? taskById.data?.description : null}</p>
-      <p>Công cụ: {taskById ? taskById.data?.materialName : null}</p>
-      <p>Độ ưu tiên: {taskById ? taskById.data?.priority : null}</p>
-      <p>Người quản lý: {taskById ? taskById.data?.managerName : null}</p>
-      <p>Nhân viên: {taskById ? taskById.data?.employeeName : null}</p>
-      <p>Khu vực: {taskById ? taskById.data?.areaName : null}</p>
-      <p>Vùng: {taskById ? taskById.data?.zoneName : null}</p>
-      <p>Cụ thể: {taskById ? taskById.data?.fieldName : null}</p>
-    </div>
-  )
 
   const fetchMoreData = () => {
     setPageNumber((prevPageNumber) => prevPageNumber + 1)
@@ -100,19 +85,23 @@ const NotificationAll = ({ changeStatusNotify }) => {
                       <Badge
                         status="processing"
                         text={item.message}
-                        onClick={() => showModal(item.id)}
+                        onClick={() => showModal(item.taskId)}
                         style={{ cursor: 'pointer' }}
                       />
                     </Space>
                   ) : (
-                    <a onClick={showModal}>{item.message}</a>
+                    <a onClick={() => showModalDetail(item.taskId)}>
+                      {item.message}
+                    </a>
                   )
                 }
                 description={item.time}
               />
               <TaskDetailModal
+                key={selectedData ? selectedData : null}
                 isModalOpen={isModalOpen}
                 closeModal={closeModal}
+                selectedData={selectedData}
               />
             </List.Item>
           )}
