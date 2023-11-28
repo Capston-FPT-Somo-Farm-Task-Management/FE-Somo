@@ -18,6 +18,7 @@ import {
   Popover,
   Upload,
   Badge,
+  Menu,
 } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 import { deleteHubConnection } from 'features/slice/hub/hubSlice'
@@ -33,7 +34,7 @@ function HeaderComp() {
   const dispatch = useDispatch()
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [isModalEditVisible, setIsModalEditVisible] = useState(false)
-  const [isNotificationVisible, setIsNotificationVisible] = useState(false)
+  // const [isNotificationVisible, setIsNotificationVisible] = useState(false)
   const [fileList, setFileList] = useState([])
 
   const member = useSelector((state) => state.member.data)
@@ -75,7 +76,9 @@ function HeaderComp() {
     setIsModalVisible(false)
   }
 
-  const formattedBirthDay = member ? dayjs(member.birthday).format('DD-MM-YYYY') : null
+  const formattedBirthDay = member
+    ? dayjs(member.birthday).format('DD-MM-YYYY')
+    : null
 
   const logout = () => {
     const data = { token: localStorage.getItem('connectionId') }
@@ -115,7 +118,7 @@ function HeaderComp() {
   }
 
   const changeNewToRead = () => {
-    dispatch(changeAllNotifyNewToRead(authServices.getUserId()))
+    // dispatch(changeAllNotifyNewToRead(authServices.getUserId()))
   }
 
   return (
@@ -137,10 +140,10 @@ function HeaderComp() {
                   >
                     <Notification />
                   </div>
-                } // Thay thế bằng nội dung của thông báo
+                }
                 trigger="click"
-                open={isNotificationVisible}
-                onVisibleChange={(visible) => setIsNotificationVisible(visible)}
+                // onVisibleChange={(visible) => setIsNotificationVisible(visible)}
+                // open={isNotificationVisible}
               >
                 <Badge count={countNew?.data !== 0 ? countNew.data : 0}>
                   <BellOutlined
@@ -197,7 +200,10 @@ function HeaderComp() {
                 </h5>
 
                 <div className="user-information">
-                  <div className="user-information-text" style={{width: "100%"}}>
+                  <div
+                    className="user-information-text"
+                    style={{ width: '100%' }}
+                  >
                     <h6>Email</h6>
                     <p>{member.email}</p>
                   </div>
