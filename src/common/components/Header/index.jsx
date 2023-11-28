@@ -75,7 +75,7 @@ function HeaderComp() {
     setIsModalVisible(false)
   }
 
-  const formattedBirthDay = dayjs(member.birthday).format('DD-MM-YYYY')
+  const formattedBirthDay = member ? dayjs(member.birthday).format('DD-MM-YYYY') : null
 
   const logout = () => {
     const data = { token: localStorage.getItem('connectionId') }
