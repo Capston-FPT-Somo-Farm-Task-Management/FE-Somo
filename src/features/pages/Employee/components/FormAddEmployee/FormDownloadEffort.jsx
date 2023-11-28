@@ -22,7 +22,7 @@ const FormDownloadEffort = ({
   return (
     <>
       <Modal
-        title="Tải xuống bảng chấm công"
+        title="Tải xuống bảng giờ làm"
         open={isModalOpenEffort}
         onCancel={closeModalEffort}
         footer={[

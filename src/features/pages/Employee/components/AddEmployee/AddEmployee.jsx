@@ -1,8 +1,15 @@
-import { Button } from 'antd'
+import { Button, Dropdown, Menu } from 'antd'
 import Search from 'antd/es/input/Search'
 import { useState } from 'react'
 import FormAddEmployee from '../FormAddEmployee/FormAddEmployee'
 import FormDownloadEffort from '../FormAddEmployee/FormDownloadEffort'
+import FormUploadExcel from '../DisplayEmployee/FormUploadExcel'
+import {
+  DashOutlined,
+  DownloadOutlined,
+  ClockCircleOutlined,
+  FileExcelOutlined,
+} from '@ant-design/icons'
 
 const AddEmployee = ({
   onFinishCreate,
@@ -11,6 +18,7 @@ const AddEmployee = ({
   taskTypeActive,
   getEmployeeByExcel,
   getEmployeeEffort,
+  onFinishCreateEmployeeExcel,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -39,6 +47,50 @@ const AddEmployee = ({
     getEmployeeByExcel()
   }
 
+  // modal upload
+  const [isModalOpenExcel, setIsModalOpenExcel] = useState(false)
+
+  const openModalExcel = () => {
+    setIsModalOpenExcel(true)
+  }
+
+  const closeModalExcel = () => {
+    setIsModalOpenExcel(false)
+  }
+
+  const menu = (
+    <Menu>
+      <Menu.Item
+        key="1"
+        onClick={downloadEmployee}
+        icon={<DownloadOutlined style={{ color: 'green', fontSize: '14px' }} />}
+        style={{ fontSize: '14px' }}
+      >
+        Tải danh sách
+      </Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={openModalEffort}
+        icon={
+          <ClockCircleOutlined style={{ color: 'blue', fontSize: '14px' }} />
+        }
+        style={{ fontSize: '14px' }}
+      >
+        Tải giờ làm
+      </Menu.Item>
+      <Menu.Item
+        key="3"
+        onClick={openModalExcel}
+        icon={
+          <FileExcelOutlined style={{ color: 'orange', fontSize: '14px' }} />
+        }
+        style={{ fontSize: '14px' }}
+      >
+        Thêm nhân viên bằng Excel
+      </Menu.Item>
+    </Menu>
+  )
+
   return (
     <>
       <div className="animal-group-content content">
@@ -56,19 +108,25 @@ const AddEmployee = ({
               farmId={farmId}
               taskTypeActive={taskTypeActive}
             />
-            <Button type="dashed" onClick={downloadEmployee}>
-              Tải danh sách
-            </Button>
 
-            <Button type="dashed" onClick={openModalEffort}>
-              Tải bảng chấm công
-            </Button>
             <FormDownloadEffort
               isModalOpenEffort={isModalOpenEffort}
               closeModalEffort={closeModalEffort}
               farmId={farmId}
               getEmployeeEffort={getEmployeeEffort}
             />
+
+            <FormUploadExcel
+              isModalOpenExcel={isModalOpenExcel}
+              closeModalExcel={closeModalExcel}
+              onFinishCreateEmployeeExcel={onFinishCreateEmployeeExcel}
+            />
+
+            <Dropdown overlay={menu}>
+              <Button type="dashed">
+                <DashOutlined />
+              </Button>
+            </Dropdown>
           </div>
 
           <div className="animal-group-operate-right">

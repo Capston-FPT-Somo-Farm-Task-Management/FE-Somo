@@ -44,10 +44,10 @@ const NotificationIsNew = ({ changeStatusNotify }) => {
     dispatch(getTaskById(selectedTaskId))
   }, [dispatch, selectedTaskId])
 
-  const getDetailNotify = (item) => {
-    setSelectedTaskId(item.taskId)
-    changeStatusNotify(item.id)
-  }
+  // const getDetailNotify = (item) => {
+  //   setSelectedTaskId(item.taskId)
+  //   changeStatusNotify(item.id)
+  // }
 
   const content = (
     <div>
@@ -71,7 +71,7 @@ const NotificationIsNew = ({ changeStatusNotify }) => {
   return (
     <>
       <InfiniteScroll
-        dataLength={notifyNew.length}
+        dataLength={notifyNew ? notifyNew.length : null}
         next={fetchMoreData}
         hasMore={hasMore}
         loader={<h4 style={{ textAlign: 'center' }}>...</h4>}

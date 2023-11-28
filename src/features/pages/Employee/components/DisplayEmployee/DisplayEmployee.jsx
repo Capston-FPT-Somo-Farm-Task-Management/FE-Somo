@@ -153,7 +153,7 @@ const DisplayEmployee = ({
                             <FileTextOutlined
                               style={{ color: 'green', marginRight: '8px' }}
                             />
-                            Xem chấm công
+                            Xem giờ làm
                           </span>
                         </Menu.Item>
                       </Menu>

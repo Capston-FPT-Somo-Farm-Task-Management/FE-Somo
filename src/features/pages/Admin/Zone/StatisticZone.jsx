@@ -13,6 +13,7 @@ const StatisticZone = () => {
   const zoneByFarm = useSelector((state) => state.zoneByFarm.data)
   const loading = useSelector((state) => state.zoneByFarm.loading)
 
+  console.log(zoneByFarm)
   const farmId = localStorage.getItem('farmId')
 
   useEffect(() => {
@@ -127,25 +128,47 @@ const StatisticZone = () => {
         activeOtherZoneCount={activeOtherZoneCount}
         inActiveOtherZoneCount={inActiveOtherZoneCount}
       /> */}
-        <PieChartZone
-          activeAnimalZoneCount={activeAnimalZoneCount}
-          activePlantZoneCount={activePlantZoneCount}
-          activeOtherZoneCount={activeOtherZoneCount}
-        />
-        <DisplayCard
-          zoneByFarm={zoneByFarm}
-          activeZoneCount={activeZoneCount}
-          inActiveZoneCount={inActiveZoneCount}
-          animalZoneCount={animalZoneCount}
-          plantZoneCount={plantZoneCount}
-          otherZoneCount={otherZoneCount}
-        />
-        <Divider dashed />
-        <TableZone
-          zoneByFarm={zoneByFarm}
-          onFinishDelete={onFinishDelete}
-          loading={loading}
-        />
+
+        {zoneByFarm?.data.length === 0 ? (
+          <>
+            <DisplayCard
+              zoneByFarm={zoneByFarm}
+              activeZoneCount={activeZoneCount}
+              inActiveZoneCount={inActiveZoneCount}
+              animalZoneCount={animalZoneCount}
+              plantZoneCount={plantZoneCount}
+              otherZoneCount={otherZoneCount}
+            />
+            <Divider dashed />
+            <TableZone
+              zoneByFarm={zoneByFarm}
+              onFinishDelete={onFinishDelete}
+              loading={loading}
+            />
+          </>
+        ) : (
+          <>
+            <PieChartZone
+              activeAnimalZoneCount={activeAnimalZoneCount}
+              activePlantZoneCount={activePlantZoneCount}
+              activeOtherZoneCount={activeOtherZoneCount}
+            />
+            <DisplayCard
+              zoneByFarm={zoneByFarm}
+              activeZoneCount={activeZoneCount}
+              inActiveZoneCount={inActiveZoneCount}
+              animalZoneCount={animalZoneCount}
+              plantZoneCount={plantZoneCount}
+              otherZoneCount={otherZoneCount}
+            />
+            <Divider dashed />
+            <TableZone
+              zoneByFarm={zoneByFarm}
+              onFinishDelete={onFinishDelete}
+              loading={loading}
+            />
+          </>
+        )}
       </div>
     </>
   )

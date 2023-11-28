@@ -12,7 +12,10 @@ import {
   deleteEmployee,
   updateEmployee,
 } from 'features/slice/employee/employeeSlice'
-import { getEmployeeExcel } from 'features/slice/employee/employeeExcelSlice'
+import {
+  createEmployeeByExcel,
+  getEmployeeExcel,
+} from 'features/slice/employee/employeeExcelSlice'
 import {
   getEmployeeEffortByEmployeeId,
   getEmployeeEffortExcel,
@@ -70,6 +73,12 @@ const Employee = () => {
     dispatch(getEmployeeEffortByEmployeeId(value))
   }
 
+  const onFinishCreateEmployeeExcel = (value) => {
+    dispatch(createEmployeeByExcel(value)).then(() => {
+      loadData()
+    })
+  }
+
   // LoadData
   const loadData = () => {
     dispatch(getEmployeeByFarmId(farmId))
@@ -84,6 +93,7 @@ const Employee = () => {
         onFinishCreate={onFinishCreate}
         getEmployeeByExcel={getEmployeeByExcel}
         getEmployeeEffort={getEmployeeEffort}
+        onFinishCreateEmployeeExcel={onFinishCreateEmployeeExcel}
       />
       <DisplayEmployee
         loading={loading}

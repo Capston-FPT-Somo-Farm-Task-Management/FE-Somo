@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { createAxiosInstance } from 'features/api/axiosInstance'
+import { toast } from 'react-toastify'
 
 const axiosInstance = createAxiosInstance()
 
@@ -32,6 +33,32 @@ export const getEmployeeExcel = createAsyncThunk(
   }
 )
 
+export const createEmployeeByExcel = createAsyncThunk(
+  'employeeExcel/createEmployeeByExcel',
+  async (data, { rejectWithValue }) => {
+    console.log(data)
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+      const response = await axiosInstance.post(
+        '/Employee/ImortExcel',
+        data,
+        config
+      )
+      if (response.status === 200) {
+        toast.success(response.data.message)
+        return response.data.data
+      }
+    } catch (error) {
+      toast.error(error.response.data.message)
+      rejectWithValue(error)
+    }
+  }
+)
+
 const employeeExcelSlice = createSlice({
   name: 'employeeExcel',
   initialState: {
@@ -50,6 +77,19 @@ const employeeExcelSlice = createSlice({
         state.data = action.payload
       })
       .addCase(getEmployeeExcel.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+        state.data = []
+      })
+
+      .addCase(createEmployeeByExcel.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(createEmployeeByExcel.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = action.payload
+      })
+      .addCase(createEmployeeByExcel.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
         state.data = []

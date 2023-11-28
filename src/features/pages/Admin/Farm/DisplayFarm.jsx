@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Card, Space } from 'antd'
+import { Button, Card, Col, Row, Space } from 'antd'
 import FarmDetail from './FarmDetail'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
@@ -30,12 +30,12 @@ const DisplayFarm = ({ farm }) => {
     setIsModalOpen(false)
   }
 
-  const cardStyle = {
-    width: 240,
-    margin: '16px',
+  const getCardStyle = (numberOfFarms) => ({
+    width: numberOfFarms === 1 ? '60%' : 370, // If only one farm, increase the width
+    margin: '16px auto', // Auto margins for horizontal centering in their Col container
     boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
     borderRadius: '10px',
-  }
+  })
 
   const headerStyle = {
     textAlign: 'center',
@@ -96,44 +96,49 @@ const DisplayFarm = ({ farm }) => {
       )}
 
       <h2 style={headerStyle}>Lựa chọn nông trại để quản lý</h2>
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'space-around',
-        }}
-      >
+      <Row gutter={[16, 16]} justify="center">
+        {' '}
+        {/* gutter for spacing, justify to control alignment */}
         {farm?.map((item) => (
-          <Card
-            key={item.key}
-            hoverable
-            style={cardStyle}
-            cover={
-              <img
-                alt="Nông trại"
-                src={item.urlImage}
-                style={{
-                  height: 140,
-                  objectFit: 'cover',
-                  borderTopLeftRadius: '10px',
-                  borderTopRightRadius: '10px',
-                }}
-              />
-            }
-            onClick={() => showModal(item)}
+          <Col
+            xs={24}
+            sm={farm.length === 1 ? 16 : 12}
+            lg={farm.length === 1 ? 16 : 12}
+            xl={farm.length === 1 ? 16 : 12}
           >
-            <Card.Meta
-              title={<div style={{ fontWeight: 'bold' }}>{item.name}</div>}
-              description={
-                item.description.length > 30
-                  ? item.description.substring(0, 30) + '...'
-                  : item.description
+            {' '}
+            {/* Breakpoints for responsiveness */}
+            <Card
+              key={item.key}
+              hoverable
+              style={getCardStyle(farm.length)}
+              cover={
+                <img
+                  alt="Nông trại"
+                  src={item.urlImage}
+                  style={{
+                    height: farm.length === 1 ? 300 : 190,
+                    objectFit: 'cover',
+                    borderTopLeftRadius: '10px',
+                    borderTopRightRadius: '10px',
+                  }}
+                />
               }
-              style={{ padding: '0 12px 12px' }}
-            />
-          </Card>
+              onClick={() => showModal(item)}
+            >
+              <Card.Meta
+                title={<div style={{ fontWeight: 'bold' }}>{item.name}</div>}
+                description={
+                  item.description.length > 30
+                    ? item.description.substring(0, 30) + '...'
+                    : item.description
+                }
+                style={{ padding: '0 12px 12px' }}
+              />
+            </Card>
+          </Col>
         ))}
-      </div>
+      </Row>
       <FarmDetail
         farm={selectedFarm}
         closeModal={closeModal}
