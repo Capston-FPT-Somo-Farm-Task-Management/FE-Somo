@@ -3,11 +3,7 @@ import { Button, Card, Col, Popconfirm, Row, Space } from 'antd'
 import FarmDetail from './FarmDetail'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
-import {
-  ArrowLeftOutlined,
-  DeleteOutlined,
-  EditOutlined,
-} from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import FormAddFarm from './FormAddFarm'
 
 const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
@@ -24,7 +20,7 @@ const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
     localStorage.setItem('farmId', farmId)
     toast.success('Đổi trang trại thành công')
     closeModal()
-    navigate('/dashboard')
+    // navigate('/dashboard')
   }
 
   const closeModal = () => {
@@ -72,55 +68,31 @@ const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
 
   return (
     <>
-      {localStorage.getItem('farmId') ? (
-        <Space
+      <Space
+        style={{
+          width: '100%',
+          justifyContent: 'space-between',
+          marginTop: '20px',
+        }}
+      >
+        <div></div>
+        <Button
           style={{
-            width: '100%',
-            justifyContent: 'space-between',
-            marginTop: '20px',
+            marginRight: '20px',
           }}
+          type="primary"
+          onClick={openModalAdd}
         >
-          <Button style={{ marginLeft: '20px' }} onClick={backToFarm}>
-            <ArrowLeftOutlined />
-            Trang chủ
-          </Button>
-          <Button
-            style={{
-              marginRight: '20px',
-            }}
-            onClick={openModalAdd}
-            type="primary"
-          >
-            Tạo trang trại
-          </Button>
-        </Space>
-      ) : (
-        <Space
-          style={{
-            width: '100%',
-            justifyContent: 'space-between',
-            marginTop: '20px',
-          }}
-        >
-          <div></div>
-          <Button
-            style={{
-              marginRight: '20px',
-            }}
-            type="primary"
-            onClick={openModalAdd}
-          >
-            Tạo trang trại
-          </Button>
-        </Space>
-      )}
+          Tạo trang trại
+        </Button>
+      </Space>
 
       <FormAddFarm
         isModalOpenAdd={isModalOpenAdd}
         closeModalAdd={closeModalAdd}
         onFinishCreate={onFinishCreate}
       />
-      
+
       <h2 style={headerStyle}>Lựa chọn nông trại để quản lý</h2>
       <Row gutter={[16, 16]} justify="center">
         {Array.isArray(farm) &&
