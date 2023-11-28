@@ -1,0 +1,14 @@
+.reject-item-header {
+    @include flex(row, space-between, center, null);
+    margin: 0px 20px 10px 20px;
+    .reject-name {
+      @include flex(row, flex-start, center, null);
+      width: 40%;
+      h3 {
+        margin-left: 10px;
+      }
+    }
+    .reject-time {
+      @include flex(row, flex-end, center, null);
+    }
+  }
