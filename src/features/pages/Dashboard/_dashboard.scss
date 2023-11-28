@@ -1,0 +1,61 @@
+@import "../../../styles/Helper/mixin";
+.dashboard {
+  background-color: #f5f5f5;
+  height: 100%;
+  .dashboard-header {
+    width: 100%;
+    @include flex(row, space-around, center, null);
+    .dashboard-content {
+      width: 22%;
+      height: 150px;
+      @include flex(row, space-between, null, null);
+      box-shadow: 0 1px 3px #0000001a, 0 1px 2px #0000000f;
+      background-color: white;
+      border-radius: 8px;
+      padding: 30px 20px;
+      .dashboard-text {
+        p {
+          font-size: 18px;
+          margin-bottom: 10px;
+          font-weight: 500;
+          color: #6E7682;
+        }
+        h5 {
+          font-size: 30px;
+          font-weight: 600;
+        }
+      }
+      .dashboard-logo {
+        width: 55px;
+        height: 55px;
+        @include flex(row, center, center, null);
+        padding: 5px;
+        border-radius: 50%;
+        svg {
+          width: 1.5em;
+          height: 1.5em;
+          path {
+            fill: white;
+            stroke: white;
+          }
+        }
+      }
+    }
+  }
+  .dashboard-footer {
+    @include flex(row, space-around, center, null);
+    padding-top: 20px;
+    .dashboard-chart {
+      width: 59%;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px #0000001a, 0 1px 2px #0000000f;
+    }
+    .dashboard-piechart {
+      width: 35%;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px #0000001a, 0 1px 2px #0000000f;
+    }
+  }
+}
