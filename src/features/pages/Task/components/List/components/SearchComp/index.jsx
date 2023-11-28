@@ -9,7 +9,7 @@ function SearchComp({handleSearchChange}) {
               onChange={(e) => handleSearchChange(e.target.value)}
               style={{
                 marginLeft: "15px",
-                width: 500,
+                width: 300,
               }}
             />
   )

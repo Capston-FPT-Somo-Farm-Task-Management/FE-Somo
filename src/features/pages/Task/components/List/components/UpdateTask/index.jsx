@@ -34,7 +34,7 @@ import {
   FileDoneOutlined,
   CheckCircleOutlined,
   FileOutlined,
-  ArrowRightOutlined
+  ArrowRightOutlined,
 } from "@ant-design/icons";
 
 function UpdateTask({
@@ -72,7 +72,9 @@ function UpdateTask({
   const [nameValue, setNameValue] = useState("");
   const [supervisorValue, setSupervisorValue] = useState(0);
   const [remindValue, setRemindValue] = useState(0);
-  const [repeatValue, setRepeatValue] = useState(false);
+  const [repeatValue, setRepeatValue] = useState(
+    editingTask ? editingTask.isRepeat : false
+  );
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [description, setDescription] = useState("");
@@ -371,6 +373,7 @@ function UpdateTask({
         if (
           shouldCheckRepeat &&
           editingTask.isRepeat &&
+          repeatValue &&
           (!initialSelectedDays || initialSelectedDays.length === 0)
         ) {
           form.setFields([
@@ -993,6 +996,7 @@ function UpdateTask({
                 initialSelectedDays={initialSelectedDays}
                 setInitialSelectedDays={setInitialSelectedDays}
                 isDraft={isDraft}
+                form={form}
               />
             ) : editingTask &&
               editingTask.isPlant === false &&

@@ -117,7 +117,7 @@ function RepeatSelect({ repeatValue, handleSelectRepeat, startDate, endDate, sel
       </Form.Item>
       {repeatValue && (
         <>
-          <Form.Item label="Lặp những ngày" name="dates">
+          <Form.Item label="Lặp những ngày" name="dates" >
             <style>{css}</style>
             <DayPicker
               mode="multiple"
