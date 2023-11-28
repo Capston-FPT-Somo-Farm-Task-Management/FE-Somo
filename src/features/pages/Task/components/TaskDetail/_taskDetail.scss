@@ -69,6 +69,7 @@
       padding: 15px 20px;
       margin-bottom: 25px;
       box-shadow: 0 1px 3px #0000001a, 0 1px 2px #0000000f;
+      border: 0.5px solid #ced4da;
       @include flex(row, flex-start, null, null);
       .task-detail-text {
         width: 33%;
@@ -122,6 +123,7 @@
     padding: 20px 0px;
     border-radius: 8px;
     box-shadow: 0 1px 3px #0000001a, 0 1px 2px #0000000f;
+    border: 0.5px solid #ced4da;
     .evidence-item-header {
       @include flex(row, space-between, center, null);
       margin: 0px 20px 10px 20px;

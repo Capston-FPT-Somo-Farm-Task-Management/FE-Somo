@@ -1,6 +1,6 @@
 // ChartTaskWeek.js
 
-import React from 'react'
+import React from "react";
 import {
   BarChart,
   Bar,
@@ -10,64 +10,69 @@ import {
   Tooltip,
   ResponsiveContainer,
   Legend,
-} from 'recharts'
+} from "recharts";
 
 const ChartTaskWeek = ({ taskByWeek, onBarClick }) => {
   const dayNames = [
-    'Chủ nhật',
-    'Thứ hai',
-    'Thứ ba',
-    'Thứ tư',
-    'Thứ năm',
-    'Thứ sáu',
-    'Thứ bảy',
-  ]
+    "Chủ nhật",
+    "Thứ hai",
+    "Thứ ba",
+    "Thứ tư",
+    "Thứ năm",
+    "Thứ sáu",
+    "Thứ bảy",
+  ];
 
   const data = taskByWeek?.data?.map((task, index) => ({
     name: dayNames[index],
     uv: task.taskCount,
-  }))
+  }));
 
   const renderBarShape = (props) => {
-    const { fill, x, y, width, height } = props
-    return <rect x={x} y={y} width={width} height={height} rx={5} fill={fill} />
-  }
+    const { fill, x, y, width, height } = props;
+    return (
+      <rect x={x} y={y} width={width} height={height} rx={5} fill={fill} />
+    );
+  };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '400px',
-        minWidth: '300px',
-      }}
-    >
-      <ResponsiveContainer height="80%">
-        <BarChart
-          data={data}
-          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-          barCategoryGap="5%"
-          barGap={2}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Bar
-            dataKey="uv"
-            name="Tổng nhiệm vụ"
-            fill="#82ca9d"
-            shape={renderBarShape}
-            onClick={(entry, index) => onBarClick(index)}
-            barSize={70}
-          />
-          <Legend />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
-  )
-}
+    <>
+      <h3>Biểu đồ công việc theo tuần</h3>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          height: "400px",
+          minWidth: "300px",
+        }}
+      >
+        <ResponsiveContainer height="80%">
+          <BarChart
+            data={data}
+            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+            barCategoryGap="5%"
+            barGap={2}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Bar
+              dataKey="uv"
+              name="Tổng nhiệm vụ"
+              fill="#82ca9d"
+              shape={renderBarShape}
+              onClick={(entry, index) => onBarClick(index)}
+              barSize={70}
+            />
+            <Legend />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </>
+  );
+};
 
-export default ChartTaskWeek
+export default ChartTaskWeek;
