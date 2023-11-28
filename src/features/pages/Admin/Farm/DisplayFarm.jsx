@@ -93,12 +93,6 @@ const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
           >
             Tạo trang trại
           </Button>
-
-          <FormAddFarm
-            isModalOpenAdd={isModalOpenAdd}
-            closeModalAdd={closeModalAdd}
-            onFinishCreate={onFinishCreate}
-          />
         </Space>
       ) : (
         <Space
@@ -112,15 +106,21 @@ const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
           <Button
             style={{
               marginRight: '20px',
-              backgroundColor: '#849b5c',
-              color: 'white',
             }}
+            type="primary"
+            onClick={openModalAdd}
           >
             Tạo trang trại
           </Button>
         </Space>
       )}
 
+      <FormAddFarm
+        isModalOpenAdd={isModalOpenAdd}
+        closeModalAdd={closeModalAdd}
+        onFinishCreate={onFinishCreate}
+      />
+      
       <h2 style={headerStyle}>Lựa chọn nông trại để quản lý</h2>
       <Row gutter={[16, 16]} justify="center">
         {Array.isArray(farm) &&
