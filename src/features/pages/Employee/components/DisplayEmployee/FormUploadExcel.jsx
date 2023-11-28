@@ -6,7 +6,7 @@ const { Dragger } = Upload
 const FormUploadExcel = ({
   isModalOpenExcel,
   closeModalExcel,
-  onFinishCreateTaskTypeExcel,
+  onFinishCreateEmployeeExcel,
 }) => {
   const [form] = Form.useForm()
   const [fileList, setFileList] = useState([])
@@ -20,8 +20,7 @@ const FormUploadExcel = ({
 
   const onFinish = (values) => {
     const fileValue = fileList.length > 0 ? fileList[0] : null
-    onFinishCreateTaskTypeExcel({ ...values, excelFile: fileValue })
-    console.log({ ...values, excelFile: fileValue })
+    onFinishCreateEmployeeExcel({ ...values, excelFile: fileValue })
     closeModalExcel()
     form.resetFields()
   }
@@ -56,25 +55,22 @@ const FormUploadExcel = ({
         open={isModalOpenExcel}
         onCancel={closeModalExcel}
         footer={[
-          <Button form="uploadExcel" type="dashed" htmlType="reset">
-            Làm mới
-          </Button>,
           <Button
-            form="uploadExcel"
+            form="uploadExcelEmployee"
             type="primary"
             danger
             onClick={closeModalExcel}
           >
             Huỷ
           </Button>,
-          <Button form="uploadExcel" type="primary" htmlType="submit">
+          <Button form="uploadExcelEmployee" type="primary" htmlType="submit">
             Hoàn thành
           </Button>,
         ]}
       >
         <Form
           layout="vertical"
-          id="uploadExcel"
+          id="uploadExcelEmployee"
           className="first-step-plant"
           onFinish={onFinish}
           form={form}

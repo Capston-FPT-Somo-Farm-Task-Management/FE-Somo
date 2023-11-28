@@ -49,7 +49,6 @@ export const createTaskTypeByExcel = createAsyncThunk(
         config
       )
       if (response.status === 200) {
-        console.log('abc')
         toast.success(response.data.message)
         return response.data.data
       }

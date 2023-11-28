@@ -32,6 +32,11 @@ const taskDoneSlice = createSlice({
     error: '',
     totalPages: 0,
   },
+  reducers: {
+    clearTaskDone: (state) => {
+      state.data = []
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getTaskDoneByEmployeeId.pending, (state) => {
@@ -55,3 +60,4 @@ const taskDoneSlice = createSlice({
 })
 
 export default taskDoneSlice.reducer
+export const { clearTaskDone } = taskDoneSlice.actions

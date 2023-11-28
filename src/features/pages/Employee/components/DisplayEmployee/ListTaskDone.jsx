@@ -1,12 +1,16 @@
-import { Button, List } from 'antd'
+import { Button, Card, List } from 'antd'
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { getTaskDoneByEmployeeId } from 'features/slice/task/taskDoneSlice'
+import {
+  clearTaskDone,
+  getTaskDoneByEmployeeId,
+} from 'features/slice/task/taskDoneSlice'
 import { useSelector } from 'react-redux'
 import TaskDetail from './TaskDetail'
 import { getTaskById } from 'features/slice/task/taskByIdSlice'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import dayjs from 'dayjs'
 
 const ListTaskDone = ({ toggleTaskList, selectedDataDetail }) => {
   const [hasMore, setHasMore] = useState(true)
@@ -37,6 +41,7 @@ const ListTaskDone = ({ toggleTaskList, selectedDataDetail }) => {
   useEffect(() => {
     const loadListTaskDone = async () => {
       try {
+        await dispatch(clearTaskDone())
         const response = await dispatch(
           getTaskDoneByEmployeeId({
             startDay: '',
@@ -57,6 +62,27 @@ const ListTaskDone = ({ toggleTaskList, selectedDataDetail }) => {
 
   const fetchMoreData = () => {
     setPageNumber((prevPageNumber) => prevPageNumber + 1)
+  }
+
+  const getPriorityColor = (priority) => {
+    if (priority === 'Cao') {
+      return '#f5222d'
+    } else if (priority === 'Trung bình') {
+      return '#faad14'
+    } else if (priority === 'Thấp') {
+      return '#52c41a'
+    }
+  }
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString)
+    const day = date.getDate().toString().padStart(2, '0')
+    const month = (date.getMonth() + 1).toString().padStart(2, '0')
+    const year = date.getFullYear()
+    const hours = date.getHours().toString().padStart(2, '0')
+    const minutes = date.getMinutes().toString().padStart(2, '0')
+
+    return `${day}/${month}/${year} - ${hours}:${minutes}`
   }
 
   return (
@@ -80,12 +106,53 @@ const ListTaskDone = ({ toggleTaskList, selectedDataDetail }) => {
           dataSource={taskDone}
           renderItem={(item, index) => (
             <List.Item>
-              <List.Item.Meta
+              <Card
+                style={{
+                  width: '100%',
+                  margin: '0 auto',
+                  backgroundColor: '#ffffff',
+                  boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                  borderRadius: '8px',
+                  border: '1px solid #f0f0f0',
+                  cursor: 'pointer',
+                }}
                 title={
-                  <a onClick={() => openModalDetail(item)}>{item?.name}</a>
+                  <div
+                    style={{
+                      borderRadius: '8px 8px 0 0',
+                    }}
+                  >
+                    <a style={{ fontSize: '18px', color: '#333' }}>
+                      {item?.name}
+                    </a>
+                    {/* <p>#{item.codeTask}</p> */}
+                  </div>
                 }
-                description={item?.statusTaskType}
-              />
+                onClick={() => openModalDetail(item)}
+                actions={[
+                  <span style={{ color: '#52c41a' }}>{item.taskTypeName}</span>,
+                  <span style={{ color: getPriorityColor(item.priority) }}>
+                    {item.priority}
+                  </span>,
+                ]}
+              >
+                <p style={{ marginBottom: '10px' }}>
+                  <strong>Bắt đầu:</strong> {formatDate(item.startDate)}
+                </p>
+                <p style={{ marginBottom: '10px' }}>
+                  <strong>Kết thúc:</strong> {formatDate(item.endDate)}
+                </p>
+                <p style={{ marginBottom: '10px' }}>
+                  <strong>Giờ làm dự kiến:</strong> {item.effortOfTask}
+                </p>
+                <p style={{ marginBottom: '10px' }}>
+                  <strong>Giờ làm thực tế (cá nhân):</strong>{' '}
+                  {item.actualEffortHour} giờ {item.actualEfforMinutes} phút
+                </p>
+                <p>
+                  <strong>Người làm:</strong> {item.totaslEmployee}
+                </p>
+              </Card>
             </List.Item>
           )}
         />

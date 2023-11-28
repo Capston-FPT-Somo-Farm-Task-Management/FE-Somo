@@ -35,7 +35,7 @@ const ViewTimeKeeping = ({
 
   return (
     <Drawer
-      title="Xem chi tiết chấm công"
+      title="Xem chi tiết giờ làm"
       placement="right"
       width={400}
       onClose={onClose}
@@ -52,7 +52,7 @@ const ViewTimeKeeping = ({
             layout="horizontal"
             bordered
             column={1}
-            title="Chi tiết chấm công"
+            title="Chi tiết giờ làm"
             labelStyle={{
               width: '150px',
             }}
@@ -87,7 +87,7 @@ const ViewTimeKeeping = ({
             style={{ marginTop: '15px' }}
             onClick={handleDownloadClick}
           >
-            Tải chi tiết chấm công
+            Tải chi tiết giờ làm
           </Button>
           {showForm && (
             <Form onFinish={onFinish} style={{ marginTop: '10px' }}>
