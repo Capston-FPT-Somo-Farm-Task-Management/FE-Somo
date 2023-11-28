@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react'
 import {
   GrMap,
   GrAlarm,
   GrUserManager,
   GrHostMaintenance,
-} from "react-icons/gr";
-import { GiCow, GiFruitTree, GiRingingBell } from "react-icons/gi";
+} from 'react-icons/gr'
+import { GiCow, GiFruitTree, GiRingingBell } from 'react-icons/gi'
 
 const TaskDetailHabitant = ({
   taskData,
@@ -13,7 +13,6 @@ const TaskDetailHabitant = ({
   formattedEndDate,
   formattedRepeatDate,
 }) => {
-  console.log(taskData);
   return (
     <>
       <h2>
@@ -73,12 +72,12 @@ const TaskDetailHabitant = ({
               <p>Chưa có ngày kết thúc</p>
             )}
           </div>
-          {taskData.status === "Bản nháp" ||
-          taskData.status === "Chuẩn bị" ? null : (
+          {taskData.status === 'Bản nháp' ||
+          taskData.status === 'Chuẩn bị' ? null : (
             <div className="task-detail-text">
               <h5>Thời gian dự kiến phải bỏ ra</h5>
               <p>
-                {taskData.overallEffortHour} giờ {taskData.overallEfforMinutes}{" "}
+                {taskData.overallEffortHour} giờ {taskData.overallEfforMinutes}{' '}
                 phút
               </p>
             </div>
@@ -229,7 +228,7 @@ const TaskDetailHabitant = ({
           {taskData.dateRepeate && taskData.dateRepeate.length > 0 ? (
             <div className="task-detail-text">
               <h5>Ngày lặp lại</h5>
-              <p>{formattedRepeatDate.join(", ")}</p>
+              <p>{formattedRepeatDate.join(', ')}</p>
             </div>
           ) : (
             <div className="task-detail-text">
@@ -240,7 +239,7 @@ const TaskDetailHabitant = ({
         </div>
       </>
     </>
-  );
-};
+  )
+}
 
-export default TaskDetailHabitant;
+export default TaskDetailHabitant
