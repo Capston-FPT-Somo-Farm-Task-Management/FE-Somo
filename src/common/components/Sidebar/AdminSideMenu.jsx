@@ -82,10 +82,16 @@ const AdminSideMenu = () => {
               <Link to="/statistic-task"></Link>
             </Menu.Item>
 
-            <Menu.Item key="/statistic-farm">
+            {/* <Menu.Item key="/statistic-farm">
               <BorderOutlined />
               <span>Chọn trang trại</span>
               <Link to="/statistic-farm"></Link>
+            </Menu.Item> */}
+
+            <Menu.Item key="/farm-dash">
+              <BorderOutlined />
+              <span>Chọn trang trại</span>
+              <Link to="/farm-dash"></Link>
             </Menu.Item>
 
             <Menu.Item key="/statistic-area">
