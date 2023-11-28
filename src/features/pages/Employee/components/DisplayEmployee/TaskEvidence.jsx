@@ -53,8 +53,8 @@ const TaskEvidence = ({ evidenceData, taskData }) => {
               ) : (
                 <div className="evidence-item-header">
                   <div className="evidence-name">
-                    <Avatar src={taskData.avatarSupervisor} size="large" />
-                    <h3>{taskData.supervisorName}</h3>
+                    <Avatar src={taskData?.avatarSupervisor} size="large" />
+                    <h3>{taskData?.supervisorName}</h3>
                   </div>
                   <p className="evidence-time">{evidence.time}</p>
                 </div>

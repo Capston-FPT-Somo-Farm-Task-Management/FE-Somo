@@ -14,6 +14,7 @@ const TaskDetailModal = ({ selectedData, isModalOpen, closeModal }) => {
 
   const taskData = taskById?.data
   
+  console.log(taskById);
 
   useEffect(() => {
     if (selectedData) {
