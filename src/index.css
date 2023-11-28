@@ -55,7 +55,7 @@ html {
 .ant-layout .ant-layout-content {
   background-color: #fff;
 }
-@media (max-width: 991px) {
+@media (max-width: 992px) {
   .ant-layout {
     display: block;
   }
@@ -65,7 +65,7 @@ html {
   margin-left: 200px;
   background-color: #f5f5f5;
 }
-@media (max-width: 991px) {
+@media (max-width: 992px) {
   .site-layout {
     margin: 0;
   }
@@ -106,36 +106,36 @@ html {
   justify-content: flex-end;
   align-items: center;
 }
-.navBar .navRight {
+.navBar .nav-item {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
-.navBar .navRight .header-notification {
+.navBar .nav-item .header-notification {
   font-size: 16px;
 }
-.navBar .navRight .header-notification .notification-icon {
+.navBar .nav-item .header-notification .notification-icon {
   font-size: 24px;
   border-radius: 50%;
 }
-.navBar .navRight .header-notification .notification-icon:hover {
+.navBar .nav-item .header-notification .notification-icon:hover {
   cursor: pointer;
   opacity: 0.6;
 }
-.navBar .navRight .header-profile {
+.navBar .nav-item .header-profile {
   font-size: 16px;
   margin: 0px 40px;
 }
-.navBar .navRight .header-profile .ant-space .ant-space-item {
+.navBar .nav-item .header-profile .ant-space .ant-space-item {
   color: black;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-.navBar .navRight .header-profile .ant-space .ant-space-item svg {
+.navBar .nav-item .header-profile .ant-space .ant-space-item svg {
   font-size: 14px;
 }
-.navBar .navRight .header-profile .ant-space .ant-space-item:hover {
+.navBar .nav-item .header-profile .ant-space .ant-space-item:hover {
   color: #1677ff;
 }
 
@@ -252,7 +252,7 @@ html {
 .sider .header-tablet .logoSomo img {
   width: 40%;
 }
-@media (max-width: 991px) {
+@media (max-width: 992px) {
   .sider .header-tablet .logoSomo img {
     width: 50%;
   }
@@ -268,7 +268,7 @@ html {
   }
 }
 .sider .header-tablet .menu-popover {
-  width: 45%;
+  width: 20%;
   display: flex;
   justify-content: flex-end;
 }
@@ -468,9 +468,9 @@ html {
 }
 .first-modal .livestock button {
   padding: 20px 10px;
-  background-color: #2c6e49;
+  background-color: #004b23;
   transition: 0.4s ease-in-out;
-  border: 1px solid #2c6e49;
+  border: 1px solid #004b23;
   cursor: pointer;
 }
 .first-modal .livestock button .button-item {
@@ -485,14 +485,14 @@ html {
 }
 .first-modal .livestock button .button-item .button-icon svg {
   font-size: 50px;
-  color: #fefee3;
+  color: #f4f0bb;
 }
 .first-modal .livestock button .button-item .button-text {
   width: 50%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  color: #fefee3;
+  color: #f4f0bb;
 }
 .first-modal .livestock button .button-item .button-text h6 {
   font-size: 24px;
@@ -511,10 +511,10 @@ html {
   overflow: hidden;
   border-radius: 10px;
   margin-top: 10px;
-  border: 1px solid #2c6e49;
+  border: 1px solid #004b23;
 }
 .first-modal .planting button {
-  background-color: #fefee3;
+  background-color: #f4f0bb;
   transition: 0.4s ease-in-out;
   border: 0;
   border-radius: 10px;
@@ -533,7 +533,7 @@ html {
 }
 .first-modal .planting button .button-item .button-icon svg {
   font-size: 50px;
-  color: #2c6e49;
+  color: #004b23;
 }
 .first-modal .planting button .button-item .button-text {
   width: 50%;
@@ -543,12 +543,12 @@ html {
 }
 .first-modal .planting button .button-item .button-text h6 {
   font-size: 24px;
-  color: #2c6e49;
+  color: #004b23;
 }
 .first-modal .planting button .button-item .button-text span {
   text-align: left;
   font-size: 14px;
-  color: #4c956c;
+  color: #226f54;
 }
 .first-modal .planting button:hover {
   transform: scale(1.1);
@@ -561,32 +561,34 @@ html {
   margin-top: 10px;
 }
 .first-modal .other button {
-  background-color: #2c6e49;
+  background-color: #004b23;
   transition: 0.4s ease-in-out;
-  border: 1px solid #2c6e49;
-  padding: 20px 65px;
+  border: 1px solid #004b23;
+  padding: 28px 45px;
   cursor: pointer;
 }
 .first-modal .other button .button-item {
   display: flex;
 }
 .first-modal .other button .button-item .button-icon {
-  width: 40%;
+  width: 20%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-right: 20px;
 }
 .first-modal .other button .button-item .button-icon svg {
   font-size: 50px;
-  color: #fefee3;
+  color: #f4f0bb;
 }
 .first-modal .other button .button-item .button-text {
-  width: 60%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  color: #fefee3;
+  margin-left: 20px;
+  color: #f4f0bb;
 }
 .first-modal .other button .button-item .button-text h6 {
   font-size: 24px;
@@ -614,9 +616,9 @@ html {
 }
 .second-modal-livestock .specific-animal button {
   padding: 20px 20px;
-  background-color: #2c6e49;
+  background-color: #004b23;
   transition: 0.4s ease-in-out;
-  border: 1px solid #2c6e49;
+  border: 1px solid #004b23;
   cursor: pointer;
 }
 .second-modal-livestock .specific-animal button .button-item {
@@ -631,7 +633,7 @@ html {
 }
 .second-modal-livestock .specific-animal button .button-item .button-icon svg {
   font-size: 50px;
-  color: #fefee3;
+  color: #f4f0bb;
 }
 .second-modal-livestock .specific-animal button .button-item .button-text {
   width: 70%;
@@ -639,7 +641,7 @@ html {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  color: #fefee3;
+  color: #f4f0bb;
 }
 .second-modal-livestock .specific-animal button .button-item .button-text h6 {
   font-size: 24px;
@@ -661,9 +663,9 @@ html {
 }
 .second-modal-livestock .whole-barn button {
   padding: 20px 20px;
-  background-color: #2c6e49;
+  background-color: #004b23;
   transition: 0.4s ease-in-out;
-  border: 1px solid #2c6e49;
+  border: 1px solid #004b23;
   cursor: pointer;
 }
 .second-modal-livestock .whole-barn button .button-item {
@@ -678,7 +680,7 @@ html {
 }
 .second-modal-livestock .whole-barn button .button-item .button-icon svg {
   font-size: 50px;
-  color: #fefee3;
+  color: #f4f0bb;
   margin-right: 13px;
 }
 .second-modal-livestock .whole-barn button .button-item .button-text {
@@ -687,7 +689,7 @@ html {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  color: #fefee3;
+  color: #f4f0bb;
 }
 .second-modal-livestock .whole-barn button .button-item .button-text h6 {
   font-size: 24px;
@@ -713,12 +715,12 @@ html {
   overflow: hidden;
   border-radius: 10px;
   margin-top: 10px;
-  border: 1px solid #2c6e49;
+  border: 1px solid #004b23;
 }
 .second-modal-planting .specific-plant button {
   padding: 20px 15px;
   border-radius: 10px;
-  background-color: #fefee3;
+  background-color: #f4f0bb;
   transition: 0.4s ease-in-out;
   border: 0;
   cursor: pointer;
@@ -735,7 +737,7 @@ html {
 }
 .second-modal-planting .specific-plant button .button-item .button-icon svg {
   font-size: 50px;
-  color: #2c6e49;
+  color: #004b23;
 }
 .second-modal-planting .specific-plant button .button-item .button-text {
   width: 70%;
@@ -743,7 +745,7 @@ html {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  color: #2c6e49;
+  color: #004b23;
 }
 .second-modal-planting .specific-plant button .button-item .button-text h6 {
   font-size: 24px;
@@ -762,12 +764,12 @@ html {
   overflow: hidden;
   border-radius: 10px;
   margin-top: 10px;
-  border: 1px solid #2c6e49;
+  border: 1px solid #004b23;
 }
 .second-modal-planting .whole-garden button {
   padding: 20px 30px;
   border-radius: 10px;
-  background-color: #fefee3;
+  background-color: #f4f0bb;
   transition: 0.4s ease-in-out;
   border: 0;
   cursor: pointer;
@@ -784,7 +786,7 @@ html {
 }
 .second-modal-planting .whole-garden button .button-item .button-icon svg {
   font-size: 50px;
-  color: #2c6e49;
+  color: #004b23;
   margin-right: 13px;
 }
 .second-modal-planting .whole-garden button .button-item .button-text {
@@ -793,7 +795,7 @@ html {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  color: #2c6e49;
+  color: #004b23;
 }
 .second-modal-planting .whole-garden button .button-item .button-text h6 {
   font-size: 24px;
@@ -887,6 +889,7 @@ html {
   border-radius: 8px;
   padding: 15px 20px;
   margin-bottom: 25px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1019607843), 0 1px 2px rgba(0, 0, 0, 0.0588235294);
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -936,6 +939,7 @@ html {
   margin: 20px 0px;
   padding: 20px 0px;
   border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1019607843), 0 1px 2px rgba(0, 0, 0, 0.0588235294);
 }
 .evidence .evidence-content .evidence-item-header {
   display: flex;
@@ -969,6 +973,16 @@ html {
 .evidence .evidence-content .evidence-item .evidence-desc h6 {
   display: inline-block;
   font-size: 16px;
+}
+.evidence .evidence-content .evidence-item .evidence-desc span {
+  margin-left: 5px;
+  color: #1677ff;
+  cursor: pointer;
+  transition: 0.3s all;
+}
+.evidence .evidence-content .evidence-item .evidence-desc span:hover {
+  opacity: 0.75;
+  transition: 0.3s all;
 }
 .evidence .evidence-content .evidence-img {
   display: flex;

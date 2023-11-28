@@ -34,6 +34,7 @@ import {
   FileDoneOutlined,
   CheckCircleOutlined,
   FileOutlined,
+  ArrowRightOutlined
 } from "@ant-design/icons";
 
 function UpdateTask({
@@ -45,6 +46,7 @@ function UpdateTask({
   loadDataTask,
   currentTaskId,
   closeModal,
+  checkChangeToToDo,
 }) {
   const [selectedAreaId, setSelectedAreaId] = useState(
     editingTask ? editingTask.areaId : null
@@ -550,7 +552,7 @@ function UpdateTask({
           updateTaskDisagreeAndChangeToToDo({
             taskId: currentTaskId,
             body: transformedValues,
-          })  
+          })
         ).then(() => {
           loadDataTask(1);
           handleDateChange();
@@ -713,12 +715,30 @@ function UpdateTask({
 
         const formattedAddress = `${
           areaName
-            ? areaName + (zoneName || fieldName || editingTask.addressDetail || addressDetail ? ", " : "")
+            ? areaName +
+              (zoneName ||
+              fieldName ||
+              editingTask.addressDetail ||
+              addressDetail
+                ? ", "
+                : "")
             : ""
         }${
-          zoneName ? zoneName + (fieldName || editingTask.addressDetail || addressDetail ? ", " : "") : ""
-        }${fieldName ? fieldName + (editingTask.addressDetail || addressDetail ? ", " : "") : ""}${
-          addressDetail ? editingTask.addressDetail.trim() || addressDetail.trim() : ""
+          zoneName
+            ? zoneName +
+              (fieldName || editingTask.addressDetail || addressDetail
+                ? ", "
+                : "")
+            : ""
+        }${
+          fieldName
+            ? fieldName +
+              (editingTask.addressDetail || addressDetail ? ", " : "")
+            : ""
+        }${
+          addressDetail
+            ? editingTask.addressDetail.trim() || addressDetail.trim()
+            : ""
         }`;
 
         const addressDetailToSend =
@@ -739,7 +759,9 @@ function UpdateTask({
           taskTypeId: selectedTaskTypeId ? selectedTaskTypeId : 0,
           plantId: typeof plantId === "object" ? plantId.value : 0,
           liveStockId: typeof liveStockId === "object" ? liveStockId.value : 0,
-          addressDetail: addressDetailToSend ? addressDetailToSend : editingTask.addressDetail,
+          addressDetail: addressDetailToSend
+            ? addressDetailToSend
+            : editingTask.addressDetail,
           remind: typeof remind === "object" ? remind.value : 0,
           materialIds: materialsValue ? materialsValue : editingTask.materialId,
           dates: initialSelectedDays
@@ -772,14 +794,14 @@ function UpdateTask({
     dispatch(updateStatusFromToDoToDraft(currentTaskId)).then(() => {
       closeEditTaskModal();
       loadDataTask();
-    })
+    });
   };
 
   const handleUpdateSubmit = (currentTaskId) => {
-    if(isEdit){
-      if(isDraft){
-        handleUpdateTaskDraft(currentTaskId)
-      }else{
+    if (isEdit) {
+      if (isDraft) {
+        handleUpdateTaskDraft(currentTaskId);
+      } else {
         handleUpdateTask(currentTaskId);
       }
       return;
@@ -799,12 +821,12 @@ function UpdateTask({
 
   const handleUpdateDraft = () => {
     setIsDraft(true);
-    setIsEdit(true)
+    setIsEdit(true);
   };
 
   const handleUpdateTaskToDo = () => {
     setIsDraft(false);
-    setIsEdit(true)
+    setIsEdit(true);
   };
 
   const handleUpdateDraftToPrepareButton = () => {
@@ -818,30 +840,43 @@ function UpdateTask({
 
   const handleShowButton = () => {
     if (editingTask && editingTask.status === "Bản nháp") {
-      return (
-        <Space
-          nowrap
-          style={{ width: "100%", justifyContent: "space-between" }}
-        >
+      if (checkChangeToToDo) {
+        return (
           <Button
             form="updateTask"
             htmlType="submit"
+            type="primary"
             onClick={handleUpdateDraftToPrepareButton}
           >
-            Chuyển sang chuẩn bị <FileDoneOutlined />
+            Chuyển sang chuẩn bị <ArrowRightOutlined />
           </Button>
-          ,
-          <Button
-            form="updateTask"
-            type="primary"
-            htmlType="submit"
-            onClick={handleUpdateDraft}
+        );
+      } else {
+        return (
+          <Space
+            nowrap
+            style={{ width: "100%", justifyContent: "space-between" }}
           >
-            Cập nhật
-            <EditOutlined />
-          </Button>
-        </Space>
-      );
+            <Button
+              form="updateTask"
+              htmlType="submit"
+              onClick={handleUpdateDraftToPrepareButton}
+            >
+              Chuyển sang chuẩn bị <FileDoneOutlined />
+            </Button>
+            ,
+            <Button
+              form="updateTask"
+              type="primary"
+              htmlType="submit"
+              onClick={handleUpdateDraft}
+            >
+              Cập nhật
+              <EditOutlined />
+            </Button>
+          </Space>
+        );
+      }
     } else if (editingTask && editingTask.status === "Từ chối") {
       return (
         <Button

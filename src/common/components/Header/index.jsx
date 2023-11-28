@@ -121,7 +121,7 @@ function HeaderComp() {
   return (
     <>
       <nav className="navBar">
-        <div className="navRight">
+        <div className="nav-item">
           <div className="header-notification">
             {!loading ? (
               <Popover

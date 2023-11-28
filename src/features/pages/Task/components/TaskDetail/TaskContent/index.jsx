@@ -53,10 +53,10 @@ function TaskContent({ taskData }) {
                 Ngày tạo: {formattedCreateDate}
               </p>
               {taskData.updateDate && taskData.updateDate.length > 0 ? (
-                <span>
+                <p>
                   <GrDocumentTime />
                   Ngày cập nhật: {formattedUpdateDate}
-                </span>
+                </p>
               ) : (
                 <p>
                   <GrDocumentTime />

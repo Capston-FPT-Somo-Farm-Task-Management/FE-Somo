@@ -49,6 +49,7 @@ const List = () => {
   const [taskNameSearch, setTaskNameSearch] = useState("");
   const [statusForEdit, setStatusForEdit] = useState(null);
   const [checkTaskParent, setCheckTaskParent] = useState(1);
+  const [checkChangeToToDo, setCheckChangeToToDo] = useState(1);
   const [currentStep, setCurrentStep] = useState(-1);
   const [fileList, setFileList] = useState([]);
 
@@ -110,8 +111,12 @@ const List = () => {
   const handleMenuClick = (e, record) => {
     if (e.key === "edit") {
       openEditTaskModal(record);
+      setCheckChangeToToDo(false)
     } else if (e.key === "pending") {
       openChangeDoingToPendingModal(record);
+    } else if (e.key === "changeToToDo") {
+      openEditTaskModal(record);
+      setCheckChangeToToDo(true)
     } else if (e.key === "cancel") {
       openChangeDoingToCancelModal(record);
     } else if (e.key === "changeToDoing") {
@@ -373,6 +378,7 @@ const List = () => {
         loadDataTask={loadDataTask}
         currentTaskId={currentTaskId}
         closeModal={closeModal}
+        checkChangeToToDo={checkChangeToToDo}
       />
       <SubTask
         subTaskModalVisible={subTaskModalVisible}

@@ -75,7 +75,7 @@
           span {
             text-align: left;
             font-size: 14px;
-            color: #4c956c;
+            color: #226f54;
           }
         }
       }
@@ -94,21 +94,23 @@
       background-color: $green-color-600;
       transition: 0.4s ease-in-out;
       border: 1px solid $green-color-600;
-      padding: 20px 65px;
+      padding: 28px 45px;
       cursor: pointer;
       .button-item {
         display: flex;
         .button-icon {
-          width: 40%;
+          width: 20%;
           @include flex(column, center, center, null);
+          margin-right: 20px;
           svg {
             font-size: 50px;
             color: $white-color-300;
           }
         }
         .button-text {
-          width: 60%;
+          width: 80%;
           @include flex(column, null, flex-start, null);
+          margin-left: 20px;
           color: $white-color-300;
           h6 {
             font-size: 24px;

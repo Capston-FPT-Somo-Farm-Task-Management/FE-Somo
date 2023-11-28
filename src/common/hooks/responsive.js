@@ -4,7 +4,7 @@ export const useDesktopXXLMediaQuery = () => {
   return useMediaQuery({ query: '(min-width: 1280px)' })
 }
 export const useDesktopMediaQuery = () => {
-  return useMediaQuery({ query: '(min-width: 992px)' })
+  return useMediaQuery({ query: '(min-width: 993px)' })
 }
 
 export const useTabletMediaQuery = () => {
