@@ -18,10 +18,10 @@ const NotificationAll = ({ changeStatusNotify }) => {
   const [pageNumber, setPageNumber] = useState(1)
   const [selectedData, setSelectedData] = useState(null)
 
-  const showModal = (id) => {
-    setSelectedData(id)
+  const showModal = (item) => {
+    setSelectedData(item.taskId)
     setIsModalOpen(true)
-    changeStatusNotify(id)
+    changeStatusNotify(item.id)
   }
 
   const showModalDetail = (id) => {
@@ -85,7 +85,7 @@ const NotificationAll = ({ changeStatusNotify }) => {
                       <Badge
                         status="processing"
                         text={item.message}
-                        onClick={() => showModal(item.taskId)}
+                        onClick={() => showModal(item)}
                         style={{ cursor: 'pointer' }}
                       />
                     </Space>
@@ -97,16 +97,16 @@ const NotificationAll = ({ changeStatusNotify }) => {
                 }
                 description={item.time}
               />
-              <TaskDetailModal
-                key={selectedData ? selectedData : null}
-                isModalOpen={isModalOpen}
-                closeModal={closeModal}
-                selectedData={selectedData}
-              />
             </List.Item>
           )}
         />
       </InfiniteScroll>
+      <TaskDetailModal
+        key={selectedData ? selectedData : null}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        selectedData={selectedData}
+      />
     </>
   )
 }
