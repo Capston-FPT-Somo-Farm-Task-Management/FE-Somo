@@ -1,17 +1,5 @@
-import React, { useEffect, useState } from "react";
-
-import {
-  Avatar,
-  Badge,
-  Button,
-  Card,
-  Drawer,
-  Layout,
-  Menu,
-  Popconfirm,
-  Popover,
-  Space,
-} from "antd";
+import React, { useEffect, useState } from 'react'
+import { Button, Layout, Menu, Popover } from 'antd'
 import {
   DashboardOutlined,
   TeamOutlined,
@@ -20,104 +8,50 @@ import {
   BorderOutlined,
   BlockOutlined,
   TableOutlined,
-  BellOutlined,
   MenuOutlined,
   AppstoreOutlined,
-  LogoutOutlined,
   FormatPainterOutlined,
-} from "@ant-design/icons";
-import { GiCow, GiPlantRoots } from "react-icons/gi";
-import { GrUserWorker } from "react-icons/gr";
-import logoSomo from "../../../assets/logo_Somo.png";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { authServices } from "services/authServices";
-import { toast } from "react-toastify";
+} from '@ant-design/icons'
+import { GiCow, GiPlantRoots } from 'react-icons/gi'
+import { GrUserWorker } from 'react-icons/gr'
+import logoSomo from '../../../assets/logo_Somo.png'
+import { Link, useLocation } from 'react-router-dom'
+import { authServices } from 'services/authServices'
 import {
   useDesktopMediaQuery,
   useTabletMediaQuery,
-} from "common/hooks/responsive";
-import Notification from "features/pages/Notification";
-import { useDispatch } from "react-redux";
-import { deleteHubConnection } from "features/slice/hub/hubSlice";
-import { changeAllNotifyNewToRead } from "features/slice/notification/notificationIsNewSlice";
-import { useSelector } from "react-redux";
-import { changeNotifyIsReadAll } from "features/slice/notification/notificationReadSlice";
-import { countNewNotify } from "features/slice/notification/notificationCountSlice";
-import SubMenu from "antd/es/menu/SubMenu";
-import HeaderOption from "../Header/components/HeaderOption";
-import HeaderComp from "../Header";
+} from 'common/hooks/responsive'
+import { useDispatch } from 'react-redux'
+import SubMenu from 'antd/es/menu/SubMenu'
 
-const { Sider } = Layout;
+const { Sider } = Layout
 
-const rootSubmenuKeys = ["tasks", "location", "animal", "plant"];
+const rootSubmenuKeys = ['tasks', 'location', 'animal', 'plant']
 
 const SideMenu = () => {
-  const [userName, setUserName] = useState();
-  const [userRole, setUserRole] = useState();
-  const [openKeys, setOpenKeys] = useState(["sub1"]);
-  const location = useLocation();
-  const dispatch = useDispatch();
-  const isDesktop = useDesktopMediaQuery();
-  const isTablet = useTabletMediaQuery();
-
-  const countNew = useSelector((state) => state.notificationCount.data);
-
-  useEffect(() => {
-    dispatch(countNewNotify(authServices.getUserId()));
-  }, [dispatch]);
+  const [userName, setUserName] = useState()
+  const [userRole, setUserRole] = useState()
+  const [openKeys, setOpenKeys] = useState(['sub1'])
+  const location = useLocation()
+  const dispatch = useDispatch()
+  const isDesktop = useDesktopMediaQuery()
+  const isTablet = useTabletMediaQuery()
 
   const onOpenChange = (keys) => {
-    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1)
     if (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-      setOpenKeys(keys);
+      setOpenKeys(keys)
     } else {
-      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+      setOpenKeys(latestOpenKey ? [latestOpenKey] : [])
     }
-  };
-
-  const changeReadAll = () => {
-    dispatch(changeNotifyIsReadAll(authServices.getUserId()));
-    console.log("SideMenu");
-  };
-
-  // Lớn
-  const [open, setOpen] = useState(false);
-
-  const showDrawer = () => {
-    setOpen(true);
-  };
-
-  const showDrawerNotify = () => {
-    dispatch(changeAllNotifyNewToRead(authServices.getUserId()));
-    setOpen(true);
-  };
-
-  const onClose = () => {
-    setOpen(false);
-  };
-
-  // Nhỏ
-  const [openOnTablet, setOpenOnTablet] = useState(false);
-
-  const showDrawerOnTablet = () => {
-    setOpenOnTablet(true);
-  };
-
-  const showDrawerNotifyOnTablet = () => {
-    dispatch(changeAllNotifyNewToRead(authServices.getUserId()));
-    setOpenOnTablet(true);
-  };
-
-  const onCloseOnTablet = () => {
-    setOpenOnTablet(false);
-  };
+  }
 
   useEffect(() => {
-    const role = authServices.getRole();
-    setUserRole(role);
-    const userName = authServices.getUserName();
-    setUserName(userName);
-  }, []);
+    const role = authServices.getRole()
+    setUserRole(role)
+    const userName = authServices.getUserName()
+    setUserName(userName)
+  }, [])
 
   return (
     <div className="sider">
@@ -125,9 +59,9 @@ const SideMenu = () => {
         <Sider
           theme="light"
           style={{
-            overflow: "auto",
-            height: "100vh",
-            position: "fixed",
+            overflow: 'auto',
+            height: '100vh',
+            position: 'fixed',
             left: 0,
             top: 0,
             bottom: 0,
@@ -186,13 +120,13 @@ const SideMenu = () => {
             <SubMenu key="animal" icon={<GiCow />} title="Động vật">
               <Menu.Item key="/animals">
                 <GiCow />
-                <span style={{ marginLeft: "10px" }}>Vật nuôi</span>
+                <span style={{ marginLeft: '10px' }}>Vật nuôi</span>
                 <Link to="/animals"></Link>
               </Menu.Item>
 
               <Menu.Item key="/animal-type">
                 <GiCow />
-                <span style={{ marginLeft: "10px" }}>Loại vật nuôi</span>
+                <span style={{ marginLeft: '10px' }}>Loại vật nuôi</span>
                 <Link to="/animal-type"></Link>
               </Menu.Item>
 
@@ -207,13 +141,13 @@ const SideMenu = () => {
             <SubMenu key="plant" icon={<GiPlantRoots />} title="Thực vật">
               <Menu.Item key="/plants">
                 <GiPlantRoots />
-                <span style={{ marginLeft: "10px" }}>Cây trồng</span>
+                <span style={{ marginLeft: '10px' }}>Cây trồng</span>
                 <Link to="/plants"></Link>
               </Menu.Item>
 
               <Menu.Item key="/plant-type">
                 <GiPlantRoots />
-                <span style={{ marginLeft: "10px" }}>Loại cây trồng</span>
+                <span style={{ marginLeft: '10px' }}>Loại cây trồng</span>
                 <Link to="/plant-type"></Link>
               </Menu.Item>
 
@@ -232,7 +166,7 @@ const SideMenu = () => {
 
             <Menu.Item key="/employee">
               <GrUserWorker />
-              <span style={{ marginLeft: "10px" }}>Nhân viên</span>
+              <span style={{ marginLeft: '10px' }}>Nhân viên</span>
               <Link to="/employee"></Link>
             </Menu.Item>
           </Menu>
@@ -284,13 +218,13 @@ const SideMenu = () => {
 
                   <Menu.Item key="/animals">
                     <GiCow />
-                    <span style={{ marginLeft: "10px" }}>Vật nuôi</span>
+                    <span style={{ marginLeft: '10px' }}>Vật nuôi</span>
                     <Link to="/animals"></Link>
                   </Menu.Item>
 
                   <Menu.Item key="/animal-type">
                     <GiCow />
-                    <span style={{ marginLeft: "10px" }}>Loại vật nuôi</span>
+                    <span style={{ marginLeft: '10px' }}>Loại vật nuôi</span>
                     <Link to="/animal-type"></Link>
                   </Menu.Item>
 
@@ -302,13 +236,13 @@ const SideMenu = () => {
 
                   <Menu.Item key="/plants">
                     <GiPlantRoots />
-                    <span style={{ marginLeft: "10px" }}>Cây trồng</span>
+                    <span style={{ marginLeft: '10px' }}>Cây trồng</span>
                     <Link to="/plants"></Link>
                   </Menu.Item>
 
                   <Menu.Item key="/plant-type">
                     <GiPlantRoots />
-                    <span style={{ marginLeft: "10px" }}>Loại cây trồng</span>
+                    <span style={{ marginLeft: '10px' }}>Loại cây trồng</span>
                     <Link to="/plant-type"></Link>
                   </Menu.Item>
 
@@ -326,7 +260,7 @@ const SideMenu = () => {
 
                   <Menu.Item key="/employee">
                     <GrUserWorker />
-                    <span style={{ marginLeft: "10px" }}>Nhân viên</span>
+                    <span style={{ marginLeft: '10px' }}>Nhân viên</span>
                     <Link to="/employee"></Link>
                   </Menu.Item>
                 </Menu>
@@ -341,7 +275,7 @@ const SideMenu = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default SideMenu;
+export default SideMenu

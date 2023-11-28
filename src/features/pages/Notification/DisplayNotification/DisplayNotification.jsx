@@ -2,7 +2,7 @@ import { Badge, Tabs } from 'antd'
 import NotificationIsNew from './NotificationIsNew'
 import NotificationAll from './NotificationAll'
 
-const DisplayNotification = ({ countNew, changeStatusNotify }) => {
+const DisplayNotification = ({ changeStatusNotify }) => {
   return (
     <>
       <Tabs

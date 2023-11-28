@@ -9,8 +9,7 @@ export const getNotifyIsNewById = createAsyncThunk(
   async ({ pageNumber, pageSize, id }, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get(
-        baseUrl +
-          `/Notification/PageIndex(${pageNumber})/PageSize(${pageSize})/NotSeen/Member${id}`
+        `/Notification/PageIndex(${pageNumber})/PageSize(${pageSize})/NotSeen/Member${id}`
       )
       return data
     } catch (error) {

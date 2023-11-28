@@ -79,7 +79,7 @@ const NotificationAll = ({ changeStatusNotify }) => {
   return (
     <>
       <InfiniteScroll
-        dataLength={notifyAll.length}
+        dataLength={notifyAll ? notifyAll.length : null}
         next={fetchMoreData}
         hasMore={hasMore}
         loader={<h4 style={{ textAlign: 'center' }}>...</h4>}

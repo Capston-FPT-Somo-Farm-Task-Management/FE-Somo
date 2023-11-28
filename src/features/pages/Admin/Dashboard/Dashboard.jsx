@@ -36,7 +36,7 @@ const Dashboard = () => {
         fieldPlant={fieldPlant}
       />
       <Divider dashed />
-      <DisplayChartTask />
+      {/* <DisplayChartTask /> */}
     </>
   )
 }

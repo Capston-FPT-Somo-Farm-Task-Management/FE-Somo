@@ -28,7 +28,7 @@ const TaskDetail = ({ selectedTask, isModalDetailOpen, closeModalDetail }) => {
       style={{ maxWidth: '90%', margin: '0 auto' }}
     >
       <TaskContent taskData={taskData} />
-      <TaskEvidence evidenceData={evidenceData} />
+      <TaskEvidence evidenceData={evidenceData} taskData={taskData} />
     </Modal>
   )
 }
