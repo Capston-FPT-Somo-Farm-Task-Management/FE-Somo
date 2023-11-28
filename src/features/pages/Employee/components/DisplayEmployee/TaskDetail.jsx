@@ -16,6 +16,7 @@ const TaskDetail = ({ selectedTask, isModalDetailOpen, closeModalDetail }) => {
       dispatch(getEvidenceByTaskId(taskData.id))
     }
   }, [dispatch, taskData])
+
   return (
     <Modal
       title="Chi tiết công việc"

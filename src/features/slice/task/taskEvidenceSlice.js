@@ -1,43 +1,43 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createAxiosInstance } from "features/api/axiosInstance";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAxiosInstance } from 'features/api/axiosInstance'
 
-const axiosInstance = createAxiosInstance();
+const axiosInstance = createAxiosInstance()
 
 export const getEvidenceByTaskId = createAsyncThunk(
-  "evidenceByTaskId/getEvidenceByTaskId",
+  'evidenceByTaskId/getEvidenceByTaskId',
   async (taskId) => {
     try {
-      const { data } = await axiosInstance.get(`/TaskEvidence/Task(${taskId})`);
-      return data;
+      const { data } = await axiosInstance.get(`/TaskEvidence/Task(${taskId})`)
+      return data
     } catch (error) {
-      console.log(error);
+      console.log(error.data.message)
     }
   }
-);
+)
 
 const evidenceByTaskIdSlice = createSlice({
-  name: "evidence",
+  name: 'evidence',
   initialState: {
     data: [],
     loading: false,
-    error: "",
+    error: '',
   },
   extraReducers(builder) {
     builder
       .addCase(getEvidenceByTaskId.pending, (state) => {
-        state.loading = true;
+        state.loading = true
       })
       .addCase(getEvidenceByTaskId.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = "";
-        state.data = action.payload;
+        state.loading = false
+        state.error = ''
+        state.data = action.payload
       })
       .addCase(getEvidenceByTaskId.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-        state.data = [];
-      });
+        state.loading = false
+        state.error = action.payload
+        state.data = []
+      })
   },
-});
+})
 
-export default evidenceByTaskIdSlice.reducer;
+export default evidenceByTaskIdSlice.reducer
