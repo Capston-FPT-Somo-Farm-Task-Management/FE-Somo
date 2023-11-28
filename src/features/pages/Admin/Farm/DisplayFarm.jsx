@@ -3,9 +3,14 @@ import { Button, Card, Col, Row, Space } from 'antd'
 import FarmDetail from './FarmDetail'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeftOutlined } from '@ant-design/icons'
+import {
+  ArrowLeftOutlined,
+  DeleteOutlined,
+  EditOutlined,
+} from '@ant-design/icons'
+import FormAddFarm from './FormAddFarm'
 
-const DisplayFarm = ({ farm }) => {
+const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
   const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedFarm, setSelectedFarm] = useState(null)
@@ -31,8 +36,8 @@ const DisplayFarm = ({ farm }) => {
   }
 
   const getCardStyle = (numberOfFarms) => ({
-    width: numberOfFarms === 1 ? '60%' : 370, // If only one farm, increase the width
-    margin: '16px auto', // Auto margins for horizontal centering in their Col container
+    width: numberOfFarms === 1 ? '60%' : 370,
+    margin: '16px auto',
     boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
     borderRadius: '10px',
   })
@@ -48,6 +53,22 @@ const DisplayFarm = ({ farm }) => {
 
   const backToFarm = () => {
     navigate('/dashboard')
+  }
+
+  // Add
+  const [isModalOpenAdd, setIsModalOpenAdd] = useState(false)
+
+  const openModalAdd = () => {
+    setIsModalOpenAdd(true)
+  }
+
+  const closeModalAdd = () => {
+    setIsModalOpenAdd(false)
+  }
+
+  const deleteFarm = (id) => {
+    console.log(id)
+    onFinishDelete(id)
   }
 
   return (
@@ -67,12 +88,18 @@ const DisplayFarm = ({ farm }) => {
           <Button
             style={{
               marginRight: '20px',
-              backgroundColor: '#849b5c',
-              color: 'white',
             }}
+            onClick={openModalAdd}
+            type="primary"
           >
             Tạo trang trại
           </Button>
+
+          <FormAddFarm
+            isModalOpenAdd={isModalOpenAdd}
+            closeModalAdd={closeModalAdd}
+            onFinishCreate={onFinishCreate}
+          />
         </Space>
       ) : (
         <Space
@@ -97,47 +124,52 @@ const DisplayFarm = ({ farm }) => {
 
       <h2 style={headerStyle}>Lựa chọn nông trại để quản lý</h2>
       <Row gutter={[16, 16]} justify="center">
-        {' '}
-        {/* gutter for spacing, justify to control alignment */}
-        {farm?.map((item) => (
-          <Col
-            xs={24}
-            sm={farm.length === 1 ? 16 : 12}
-            lg={farm.length === 1 ? 16 : 12}
-            xl={farm.length === 1 ? 16 : 12}
-          >
-            {' '}
-            {/* Breakpoints for responsiveness */}
-            <Card
-              key={item.key}
-              hoverable
-              style={getCardStyle(farm.length)}
-              cover={
-                <img
-                  alt="Nông trại"
-                  src={item.urlImage}
-                  style={{
-                    height: farm.length === 1 ? 300 : 190,
-                    objectFit: 'cover',
-                    borderTopLeftRadius: '10px',
-                    borderTopRightRadius: '10px',
-                  }}
-                />
-              }
-              onClick={() => showModal(item)}
+        {Array.isArray(farm) &&
+          farm?.map((item) => (
+            <Col
+              xs={24}
+              sm={farm.length === 1 ? 16 : 12}
+              lg={farm.length === 1 ? 16 : 12}
+              xl={farm.length === 1 ? 16 : 12}
             >
-              <Card.Meta
-                title={<div style={{ fontWeight: 'bold' }}>{item.name}</div>}
-                description={
-                  item.description.length > 30
-                    ? item.description.substring(0, 30) + '...'
-                    : item.description
+              <Card
+                key={item.key}
+                hoverable
+                style={getCardStyle(farm.length)}
+                cover={
+                  <img
+                    alt="Nông trại"
+                    src={item.urlImage}
+                    style={{
+                      height: farm.length === 1 ? 300 : 190,
+                      objectFit: 'cover',
+                      borderTopLeftRadius: '10px',
+                      borderTopRightRadius: '10px',
+                    }}
+                  />
                 }
-                style={{ padding: '0 12px 12px' }}
-              />
-            </Card>
-          </Col>
-        ))}
+                actions={[
+                  <span style={{ color: '#52c41a', fontSize: '18px' }}>
+                    <EditOutlined />
+                  </span>,
+                  <span style={{ color: '#f5222d', fontSize: '18px' }}>
+                    <DeleteOutlined onClick={() => deleteFarm(item.id)} />
+                  </span>,
+                ]}
+              >
+                <Card.Meta
+                  onClick={() => showModal(item)}
+                  title={<div style={{ fontWeight: 'bold' }}>{item.name}</div>}
+                  description={
+                    item.description.length > 30
+                      ? item.description.substring(0, 30) + '...'
+                      : item.description
+                  }
+                  style={{ padding: '0 12px 12px' }}
+                />
+              </Card>
+            </Col>
+          ))}
       </Row>
       <FarmDetail
         farm={selectedFarm}

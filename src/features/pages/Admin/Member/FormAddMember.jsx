@@ -75,7 +75,6 @@ const FormAddMember = ({ isModalOpen, closeModal, onFinishCreate, farmId }) => {
       farmId: parsedFarmId,
       address: address,
     }
-    console.log(finalValues)
     onFinishCreate(finalValues)
     closeModal()
     handleFormReset()
@@ -99,10 +98,6 @@ const FormAddMember = ({ isModalOpen, closeModal, onFinishCreate, farmId }) => {
     form.setFieldsValue({ ward: null })
     dispatch(getWard(value))
   }
-
-  // const handleWardChange = (value) => {
-  //   setSelectedWard(value)
-  // }
 
   const handleWardChange = (value, option) => {
     setSelectedWardName(option.children)
