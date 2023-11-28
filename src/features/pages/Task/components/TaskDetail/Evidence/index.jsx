@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import NoImage from "../../../../../../assets/no-image.png";
 import { Avatar, Button, Collapse, Empty, Image, Space, Timeline } from "antd";
@@ -16,6 +16,17 @@ function Evidence({
 }) {
   const evidenceData = useSelector((state) => state.evidence.data);
   console.log(taskData);
+  const [expandedDescriptions, setExpandedDescriptions] = useState([]);
+
+  const handleToggleDescription = (evidenceId) => {
+    setExpandedDescriptions((prevExpanded) => {
+      if (prevExpanded.includes(evidenceId)) {
+        return prevExpanded.filter((id) => id !== evidenceId);
+      } else {
+        return [...prevExpanded, evidenceId];
+      }
+    });
+  };
 
   const renderImages = () => {
     if (evidenceData && evidenceData.data && evidenceData.data.length > 0) {
@@ -53,11 +64,11 @@ function Evidence({
           date: formattedUpdateDate,
           content: (
             <div key={evidence.id} className="evidence-content">
-            {console.log(evidence)}
+              {console.log(evidence)}
               {evidence.managerName ? (
                 <div className="evidence-item-header">
                   <div className="evidence-name">
-                    <Avatar src={evidence.avatarManager} size="large"/>
+                    <Avatar src={evidence.avatarManager} size="large" />
                     <h3>{evidence.managerName}</h3>
                   </div>
                   <p className="evidence-time">{evidence.time}</p>
@@ -76,27 +87,211 @@ function Evidence({
                 {evidence.evidenceType === 1 ? (
                   <div className="evidence-desc">
                     <h6 style={{ color: "#000" }}>Lý do từ chối:</h6>{" "}
-                    {evidence.description}
+                    {evidence.description.length > 200 ? (
+                      <>
+                        {expandedDescriptions.includes(evidence.id) ? (
+                          <>
+                            {evidence.description}.
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              thu gọn
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            {evidence.description.substring(0, 200)}...
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              xem thêm
+                            </span>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      evidence.description
+                    )}
                   </div>
                 ) : evidence.evidenceType === 2 ? (
                   <div className="evidence-desc">
                     <h6 style={{ color: "#000" }}>Lý do hủy bỏ:</h6>{" "}
-                    {evidence.description}
+                    {evidence.description.length > 200 ? (
+                      <>
+                        {expandedDescriptions.includes(evidence.id) ? (
+                          <>
+                            {evidence.description}.
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              thu gọn
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            {evidence.description.substring(0, 200)}...
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              xem thêm
+                            </span>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      evidence.description
+                    )}
                   </div>
                 ) : evidence.evidenceType === 3 ? (
                   <div className="evidence-desc">
                     <h6 style={{ color: "#000" }}>Lý do tạm hoãn:</h6>{" "}
-                    {evidence.description}
+                    {evidence.description.length > 200 ? (
+                      <>
+                        {expandedDescriptions.includes(evidence.id) ? (
+                          <>
+                            {evidence.description}.
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              thu gọn
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            {evidence.description.substring(0, 200)}...
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              xem thêm
+                            </span>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      evidence.description
+                    )}
                   </div>
                 ) : evidence.evidenceType === 4 ? (
-                  <div className="evidence-desc">{evidence.description}</div>
+                  <div className="evidence-desc">
+                    {evidence.description.length > 200 ? (
+                      <>
+                        {expandedDescriptions.includes(evidence.id) ? (
+                          <>
+                            {evidence.description}.
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              thu gọn
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            {evidence.description.substring(0, 200)}...
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              xem thêm
+                            </span>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      evidence.description
+                    )}
+                  </div>
                 ) : evidence.evidenceType === 5 ? (
                   <div className="evidence-desc">
                     <h6 style={{ color: "#000" }}>Lý do từ chối:</h6>{" "}
-                    {evidence.description}
+                    {evidence.description.length > 200 ? (
+                      <>
+                        {expandedDescriptions.includes(evidence.id) ? (
+                          <>
+                            {evidence.description}.
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              thu gọn
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            {evidence.description.substring(0, 200)}...
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              xem thêm
+                            </span>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      evidence.description
+                    )}
                   </div>
                 ) : (
-                  <div className="evidence-desc">{evidence.description}</div>
+                  <div className="evidence-desc">
+                    {evidence.description.length > 200 ? (
+                      <>
+                        {expandedDescriptions.includes(evidence.id) ? (
+                          <>
+                            {evidence.description}.
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              thu gọn
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            {evidence.description.substring(0, 200)}...
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              xem thêm
+                            </span>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      evidence.description
+                    )}
+                  </div>
                 )}
               </div>
 
@@ -234,12 +429,12 @@ function Evidence({
                 label={
                   <>
                     {item.status.props.children === "Bình thường" ? (
-                      <p >{item.date}</p>
+                      <p>{item.date}</p>
                     ) : (
                       <>
                         {" "}
-                        <p >{item.status}</p>
-                        <p >{item.date}</p>
+                        <p>{item.status}</p>
+                        <p>{item.date}</p>
                       </>
                     )}
                   </>
@@ -258,7 +453,7 @@ function Evidence({
   return (
     <div className="evidence">
       <h6
-        style={{ fontSize: "24px", fontWeight: "500", paddingBottom: "20px" }}
+        style={{ fontSize: "24px", fontWeight: "2000", paddingBottom: "20px" }}
       >
         Báo cáo công việc
       </h6>
