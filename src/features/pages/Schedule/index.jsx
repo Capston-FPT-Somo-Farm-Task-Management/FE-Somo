@@ -83,6 +83,7 @@ function Schedule() {
             zone: task.zoneName,
             field: task.fieldName,
             description: task.description,
+            addressDetail: task.addressDetail,
           };
         })
       : null;
@@ -210,10 +211,10 @@ function Schedule() {
             <span>
               <Badge status="processing" text="Chuẩn bị" />
             </span>
-            <span style={{ marginLeft: "10px" }}>
+            {/* <span style={{ marginLeft: "10px" }}>
               {" "}
               <Badge status="success" text="Đang thực hiện" />
-            </span>
+            </span> */}
           </div>
           {isMobile ? (
             <Calendar cellRender={dateRender} onSelect={handleDateClick} />
@@ -262,11 +263,7 @@ function Schedule() {
                           <p>Chưa có dụng cụ</p>
                         </Descriptions.Item>
                       )}
-                      {item.isPlant === null ? (
-                        <Descriptions.Item label="Địa điểm cụ thể" key={item.id}>
-                          {item.addressDetail}
-                        </Descriptions.Item>
-                      ) : (
+                      {item.areaName && item.zoneName ? (
                         <>
                           <Descriptions.Item label="Khu vực" key={item.id}>
                             {item.area}
@@ -278,6 +275,13 @@ function Schedule() {
                             {item.field}
                           </Descriptions.Item>
                         </>
+                      ) : (
+                        <Descriptions.Item
+                          label="Địa điểm cụ thể"
+                          key={item.id}
+                        >
+                          {item.addressDetail}
+                        </Descriptions.Item>
                       )}
 
                       {item.description ? (
