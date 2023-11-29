@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import {
   PieChart,
   Pie,
@@ -6,112 +6,67 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from "recharts";
+} from 'recharts'
 
 const PieChartTaskWeek = ({ taskByWeek, selectedDay }) => {
-  const COLORS = ["#1a659e", "#52b788", "#fbb02d", "#ef233c"];
+  const COLORS = ['#1a659e', '#00C49F', '#FFBB28']
 
   const calculateTotalTasks = () => {
     if (selectedDay !== null) {
-      const dayTask = taskByWeek?.data[selectedDay];
+      const dayTask = taskByWeek?.data[selectedDay]
       return [
-        { name: "Chuẩn bị", value: dayTask.totalTaskToDo },
-        { name: "Đang làm", value: dayTask.totalTaskDoing },
-        { name: "Tạm hoãn", value: dayTask.totalTaskPending },
-        { name: "Đã đóng", value: dayTask.totalTaskClose },
-      ];
+        { name: 'Nhiệm vụ vật nuôi', value: dayTask.totalTaskOfLivestock },
+        { name: 'Nhiệm vụ cây trồng', value: dayTask.totalTaskOfPlant },
+        { name: 'Nhiệm vụ khác', value: dayTask.totalTaskOfOther },
+      ]
     } else {
-      let totalTaskToDo = 0;
-      let totalTaskDoing = 0;
-      let totalTaskClose = 0;
-      let totalTaskPending = 0;
+      let totalLivestock = 0
+      let totalPlant = 0
+      let totalOther = 0
 
       taskByWeek?.data?.forEach((task) => {
-        totalTaskToDo += task.totalTaskToDo;
-        totalTaskDoing += task.totalTaskDoing;
-        totalTaskClose += task.totalTaskClose;
-        totalTaskPending += task.totalTaskPending;
-      });
+        totalLivestock += task.totalTaskOfLivestock
+        totalPlant += task.totalTaskOfPlant
+        totalOther += task.totalTaskOfOther
+      })
 
       return [
-        { name: "Chuẩn bị", value: totalTaskToDo },
-        { name: "Đang làm", value: totalTaskDoing },
-        { name: "Tạm hoãn", value: totalTaskPending },
-        { name: "Đã đóng", value: totalTaskClose },
-      ];
+        { name: 'Nhiệm vụ vật nuôi', value: totalLivestock },
+        { name: 'Nhiệm vụ cây trồng', value: totalPlant },
+        { name: 'Nhiệm vụ khác', value: totalOther },
+      ]
     }
-  };
-
-  // const totalTaskCount =
-  //   selectedDay !== null
-  //     ? taskByWeek?.data[selectedDay].taskCount
-  //     : taskByWeek?.data?.reduce((acc, task) => acc + task.taskCount, 0)
-
-  let filteredData = taskByWeek?.data
-    ? calculateTotalTasks(taskByWeek.data)
-    : [];
-
-  if (selectedDay !== null && taskByWeek?.data) {
-    const selectedTasks = taskByWeek.data[selectedDay];
-    filteredData = calculateTotalTasks([selectedTasks]);
   }
 
-  // const calculateTotalTasks = () => {
-  //   if (selectedDay !== null) {
-  //     const dayTask = taskByWeek?.data[selectedDay]
-  //     return [
-  //       { name: 'Chuẩn bị', value: dayTask.totalTaskToDo },
-  //       { name: 'Nhiệm vụ cây trồng', value: dayTask.totalTaskOfPlant },
-  //       { name: 'Nhiệm vụ khác', value: dayTask.totalTaskOfOther },
-  //     ]
-  //   } else {
-  //     let totalLivestock = 0
-  //     let totalPlant = 0
-  //     let totalOther = 0
+  const totalTaskCount =
+    selectedDay !== null
+      ? taskByWeek?.data[selectedDay].taskCount
+      : taskByWeek?.data?.reduce((acc, task) => acc + task.taskCount, 0)
 
-  //     taskByWeek?.data?.forEach((task) => {
-  //       totalLivestock += task.totalTaskOfLivestock
-  //       totalPlant += task.totalTaskOfPlant
-  //       totalOther += task.totalTaskOfOther
-  //     })
+  // Lọc hoặc điều chỉnh dữ liệu dựa vào selectedDay
+  let filteredData = taskByWeek?.data
+    ? calculateTotalTasks(taskByWeek.data)
+    : []
 
-  //     return [
-  //       { name: 'Nhiệm vụ vật nuôi', value: totalLivestock },
-  //       { name: 'Nhiệm vụ cây trồng', value: totalPlant },
-  //       { name: 'Nhiệm vụ khác', value: totalOther },
-  //     ]
-  //   }
-  // }
+  if (selectedDay !== null && taskByWeek?.data) {
+    const selectedTasks = taskByWeek.data[selectedDay]
+    filteredData = calculateTotalTasks([selectedTasks])
+  }
 
-  // const totalTaskCount =
-  //   selectedDay !== null
-  //     ? taskByWeek?.data[selectedDay].taskCount
-  //     : taskByWeek?.data?.reduce((acc, task) => acc + task.taskCount, 0)
-
-  // // Lọc hoặc điều chỉnh dữ liệu dựa vào selectedDay
-  // let filteredData = taskByWeek?.data
-  //   ? calculateTotalTasks(taskByWeek.data)
-  //   : []
-
-  // if (selectedDay !== null && taskByWeek?.data) {
-  //   const selectedTasks = taskByWeek.data[selectedDay]
-  //   filteredData = calculateTotalTasks([selectedTasks])
-  // }
-
-  const RADIAN = Math.PI / 180;
+  const RADIAN = Math.PI / 180
 
   const styles = {
     container: {
-      width: "100%",
+      width: '100%',
     },
     tooltip: {
-      backgroundColor: "white",
-      border: "1px solid #dddddd",
-      padding: "10px",
-      borderRadius: "5px",
-      boxShadow: "0px 0px 5px #aaaaaa",
+      backgroundColor: 'white',
+      border: '1px solid #dddddd',
+      padding: '10px',
+      borderRadius: '5px',
+      boxShadow: '0px 0px 5px #aaaaaa',
     },
-  };
+  }
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -119,14 +74,14 @@ const PieChartTaskWeek = ({ taskByWeek, selectedDay }) => {
         <div className="custom-tooltip" style={styles.tooltip}>
           <p className="label">{`${payload[0].name} : ${payload[0].value}`}</p>
         </div>
-      );
+      )
     }
-    return null;
-  };
+    return null
+  }
 
   return (
     <div style={styles.container}>
-      <h3 style={{marginBottom: 0}}>Biểu đồ tròn</h3>
+      {/* <h1>Tổng nhiệm vụ: {totalTaskCount} </h1> */}
       <ResponsiveContainer height={400}>
         <PieChart width={400} height={200}>
           <Pie
@@ -154,7 +109,7 @@ const PieChartTaskWeek = ({ taskByWeek, selectedDay }) => {
         </PieChart>
       </ResponsiveContainer>
     </div>
-  );
-};
+  )
+}
 
-export default PieChartTaskWeek;
+export default PieChartTaskWeek
