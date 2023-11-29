@@ -15,9 +15,9 @@ const PieChartTaskWeek = ({ taskByWeek, selectedDay }) => {
     if (selectedDay !== null) {
       const dayTask = taskByWeek?.data[selectedDay]
       return [
-        { name: 'Nhiệm vụ vật nuôi', value: dayTask.totalTaskOfLivestock },
-        { name: 'Nhiệm vụ cây trồng', value: dayTask.totalTaskOfPlant },
-        { name: 'Nhiệm vụ khác', value: dayTask.totalTaskOfOther },
+        { name: 'Công việc chăn nuôi', value: dayTask.totalTaskOfLivestock },
+        { name: 'Công việc trồng trọt', value: dayTask.totalTaskOfPlant },
+        { name: 'Công việc khác', value: dayTask.totalTaskOfOther },
       ]
     } else {
       let totalLivestock = 0
@@ -31,9 +31,9 @@ const PieChartTaskWeek = ({ taskByWeek, selectedDay }) => {
       })
 
       return [
-        { name: 'Nhiệm vụ vật nuôi', value: totalLivestock },
-        { name: 'Nhiệm vụ cây trồng', value: totalPlant },
-        { name: 'Nhiệm vụ khác', value: totalOther },
+        { name: 'Công việc chăn nuôi', value: totalLivestock },
+        { name: 'Công việc trồng trọt', value: totalPlant },
+        { name: 'Công việc khác', value: totalOther },
       ]
     }
   }

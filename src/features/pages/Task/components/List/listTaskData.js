@@ -81,8 +81,6 @@ export const taskTitle = [
     dataIndex: "endDate",
     key: "endDate",
     render: (date, record) => {
-      console.log(record.isExpired);
-
       return date ? (
         record && record.isExpired ? (
           <Badge.Ribbon

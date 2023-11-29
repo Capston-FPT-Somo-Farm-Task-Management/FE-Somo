@@ -39,6 +39,7 @@ function ThirdModal({
   handleIsDraftOther,
   handleIsTaskOtherToDo,
   isDraft,
+  setIsCreatingTask,
 }) {
   const [selectedAreaId, setSelectedAreaId] = useState(null);
   const [selectedZoneId, setSelectedZoneId] = useState(null);
@@ -270,9 +271,9 @@ function ThirdModal({
   };
 
   const handleAddressDetail = (e) => {
-    setAddressDetail(e.target.value)
+    setAddressDetail(e.target.value);
     console.log(e.target.value);
-  }
+  };
 
   const disabledDate = (current) => {
     return current && current < dayjs().startOf("day");
@@ -309,6 +310,7 @@ function ThirdModal({
     form
       .validateFields()
       .then(() => {
+        setIsCreatingTask(true);
         const startDateFormatted = dayjs(startDate)
           .second(0)
           .format("YYYY-MM-DD[T]HH:mm:ss");
@@ -371,10 +373,12 @@ function ThirdModal({
           onDateChange();
           onTaskAdded();
           handleCloseModal();
+          setIsCreatingTask(false);
         });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
+        setIsCreatingTask(false);
       });
     handleCloseModal();
   };
@@ -383,6 +387,7 @@ function ThirdModal({
     form
       .validateFields()
       .then(() => {
+        setIsCreatingTask(true);
         const startDateFormatted = dayjs(startDate)
           .second(0)
           .format("YYYY-MM-DD[T]HH:mm:ss");
@@ -448,12 +453,14 @@ function ThirdModal({
           onDateChange();
           onTaskAdded();
           handleCloseModal();
+          setIsCreatingTask(false);
         });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
+        setIsCreatingTask(false);
       });
-    };
+  };
 
   const handleFormSubmit = () => {
     if (isDraft) {
@@ -496,6 +503,7 @@ function ThirdModal({
     form
       .validateFields()
       .then(() => {
+        setIsCreatingTask(true);
         const startDateFormatted = dayjs(startDate)
           .second(0)
           .format("YYYY-MM-DD[T]HH:mm:ss");
@@ -578,10 +586,12 @@ function ThirdModal({
           onDateChange();
           onTaskAdded();
           handleCloseModal();
+          setIsCreatingTask(false);
         });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
+        setIsCreatingTask(false);
       });
   };
 
@@ -589,6 +599,7 @@ function ThirdModal({
     form
       .validateFields()
       .then(() => {
+        setIsCreatingTask(true);
         const startDateFormatted = dayjs(startDate)
           .second(0)
           .format("YYYY-MM-DD[T]HH:mm:ss");
@@ -673,10 +684,12 @@ function ThirdModal({
           onDateChange();
           onTaskAdded();
           handleCloseModal();
+          setIsCreatingTask(false);
         });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
+        setIsCreatingTask(false);
       });
   };
 

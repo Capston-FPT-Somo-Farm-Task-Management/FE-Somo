@@ -24,6 +24,7 @@ function ModalTask({
   const [selectedType, setSelectedType] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isDraft, setIsDraft] = useState(false);
+  const [isCreatingTask, setIsCreatingTask] = useState(false);
 
   const handleIsDraft = () => {
     setIsDraft(true);
@@ -85,6 +86,7 @@ function ModalTask({
             handleIsDraftOther={handleIsDraftOther}
             handleIsTaskOtherToDo={handleIsTaskOtherToDo}
             isDraft={isDraft}
+            setIsCreatingTask={setIsCreatingTask}
           />
         );
       default:
@@ -153,6 +155,7 @@ function ModalTask({
                   form="createTask"
                   htmlType="submit"
                   onClick={handleIsDraftOther}
+                  disabled={isCreatingTask}
                 >
                   Lưu bản nháp
                   <ProfileOutlined />
@@ -162,6 +165,7 @@ function ModalTask({
                   form="createTask"
                   htmlType="submit"
                   onClick={handleIsTaskOtherToDo}
+                  disabled={isCreatingTask}
                 >
                   Tạo công việc
                   <CheckCircleOutlined />
@@ -174,6 +178,7 @@ function ModalTask({
                   form="createTask"
                   htmlType="submit"
                   onClick={handleIsDraft}
+                  disabled={isCreatingTask}
                 >
                   Lưu bản nháp
                   <ProfileOutlined />
@@ -183,6 +188,7 @@ function ModalTask({
                   form="createTask"
                   htmlType="submit"
                   onClick={handleIsTaskToDo}
+                  disabled={isCreatingTask}
                 >
                   Tạo công việc
                   <CheckCircleOutlined />
