@@ -1,5 +1,6 @@
 import { Avatar, Badge, Tooltip } from "antd";
 import dayjs from "dayjs";
+import { FileTextOutlined } from "@ant-design/icons";
 
 export const taskTitle = [
   {
@@ -8,14 +9,36 @@ export const taskTitle = [
     key: "code",
     render: (code, record) => (
       <p data-name-clicked="true">
-        <div>
-          {record && record.isHaveEvidence ? (
-            <Badge.Ribbon
-              color="#8EAD48"
-              style={{ top: -20, right: "64%" }}
-              text={<p style={{ fontSize: "10px" }}>Có báo cáo</p>}
-            />
-          ) : null}
+        {record && record.isHaveEvidence ? (
+          <Badge.Ribbon
+            className="ribbon-evidence"
+            color="#8EAD48"
+            style={{ top: 0, insetInlineEnd: "-8px" }}
+            text={<FileTextOutlined />}
+          >
+            <Tooltip placement="bottomLeft" title={code}>
+              <>
+                {code ? (
+                  <p
+                    style={{
+                      border: "1px solid #f5f5f5",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      padding: "5px 0px",
+                      borderRadius: "8px",
+                      boxShadow: "1px 1px #f5f5f5",
+                    }}
+                  >
+                    <span style={{ marginLeft: "5px" }}>
+                      #{code.slice(0, 8) + (code.length > 8 ? "..." : "")}
+                    </span>
+                  </p>
+                ) : null}
+              </>
+            </Tooltip>
+          </Badge.Ribbon>
+        ) : (
           <Tooltip placement="bottomLeft" title={code}>
             <>
               {code ? (
@@ -23,7 +46,7 @@ export const taskTitle = [
               ) : null}
             </>
           </Tooltip>
-        </div>
+        )}
       </p>
     ),
   },
@@ -46,15 +69,54 @@ export const taskTitle = [
     dataIndex: "startDate",
     key: "startDate",
     render: (date) => {
-      return date ? dayjs(date).format("DD/MM/YYYY HH:mm") : "Chưa có";
+      return date ? (
+        <span> {dayjs(date).format("DD/MM/YYYY HH:mm")}</span>
+      ) : (
+        "Chưa có"
+      );
     },
   },
   {
     title: <p>Ngày kết thúc</p>,
     dataIndex: "endDate",
     key: "endDate",
-    render: (date) => {
-      return date ? dayjs(date).format("DD/MM/YYYY HH:mm") : "Chưa có";
+    render: (date, record) => {
+      console.log(record.isExpired);
+
+      return date ? (
+        record && record.isExpired ? (
+          <Badge.Ribbon
+            className="ribbon-expired"
+            style={{ top: 0, insetInlineEnd: "-8px" }}
+            text="Trễ"
+            color="volcano"
+          >
+            <p
+              style={{
+                border: "1px solid #f5f5f5",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                padding: "5px 0px",
+                borderRadius: "8px",
+                boxShadow: "1px 1px #f5f5f5",
+              }}
+            >
+              <span style={{ marginLeft: "5px" }}>
+                {" "}
+                {dayjs(date).format("DD/MM/YYYY HH:mm")}
+              </span>
+            </p>
+          </Badge.Ribbon>
+        ) : (
+          <span style={{ marginLeft: "5px" }}>
+            {" "}
+            {dayjs(date).format("DD/MM/YYYY HH:mm")}
+          </span>
+        )
+      ) : (
+        "Chưa có"
+      );
     },
   },
   {
@@ -124,7 +186,11 @@ export const taskTitle = [
             }}
           >
             <Avatar
-              src={record && record.avatarSupervisor ? record.avatarSupervisor : null}
+              src={
+                record && record.avatarSupervisor
+                  ? record.avatarSupervisor
+                  : null
+              }
               style={{
                 width: "16px",
                 height: "16px",
@@ -145,10 +211,9 @@ export const taskTitle = [
     dataIndex: "managerName",
     key: "managerName",
     render: (text, record) => (
-      
       <span>
         {text && record ? (
-          <Tooltip placement="bottom" title={ text ? text : null}>
+          <Tooltip placement="bottom" title={text ? text : null}>
             <span
               style={{
                 border: "1px solid #f5f5f5",
@@ -161,7 +226,9 @@ export const taskTitle = [
               }}
             >
               <Avatar
-                src={record && record.avatarManager ? record.avatarManager : null}
+                src={
+                  record && record.avatarManager ? record.avatarManager : null
+                }
                 style={{
                   width: "16px",
                   height: "16px",
@@ -173,7 +240,12 @@ export const taskTitle = [
             </span>
           </Tooltip>
         ) : (
-          <Tooltip placement="bottom" title={record && record.supervisorName ? record.supervisorName : null}>
+          <Tooltip
+            placement="bottom"
+            title={
+              record && record.supervisorName ? record.supervisorName : null
+            }
+          >
             <span
               style={{
                 border: "1px solid #f5f5f5",
@@ -186,7 +258,11 @@ export const taskTitle = [
               }}
             >
               <Avatar
-                src={record && record.avatarSupervisor ? record.avatarSupervisor : null}
+                src={
+                  record && record.avatarSupervisor
+                    ? record.avatarSupervisor
+                    : null
+                }
                 style={{
                   width: "16px",
                   height: "16px",
@@ -194,7 +270,10 @@ export const taskTitle = [
                   marginRight: "10px",
                 }}
               />
-              {record && record.supervisorName && record.supervisorName.slice(0, 6) + (record.supervisorName.length > 6 ? "..." : "")}
+              {record &&
+                record.supervisorName &&
+                record.supervisorName.slice(0, 6) +
+                  (record.supervisorName.length > 6 ? "..." : "")}
             </span>
           </Tooltip>
         )}

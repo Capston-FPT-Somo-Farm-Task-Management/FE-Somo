@@ -1,6 +1,7 @@
 @import "../../../styles/Helper/mixin";
 .dashboard {
-  background-color: #f5f5f5;
+  background-color: #fcfffc;
+  padding: 20px;
   height: 100%;
   .dashboard-header {
     width: 100%;
@@ -9,7 +10,7 @@
       width: 22%;
       height: 150px;
       @include flex(row, space-between, null, null);
-      box-shadow: 0 1px 3px #0000001a, 0 1px 2px #0000000f;
+      box-shadow: 1px 1px 3px #0000001a, 1px 2px 3px #0000000f;
       background-color: white;
       border-radius: 8px;
       padding: 30px 20px;
@@ -44,18 +45,27 @@
   }
   .dashboard-footer {
     @include flex(row, space-around, center, null);
+    h3{
+      margin: 15px;
+      font-size: 20px;
+    }
     padding-top: 20px;
     .dashboard-chart {
       width: 59%;
       background-color: #fff;
       border-radius: 8px;
-      box-shadow: 0 1px 3px #0000001a, 0 1px 2px #0000000f;
+      box-shadow: 1px 1px 3px #0000001a, 1px 2px 3px #0000000f;
     }
     .dashboard-piechart {
       width: 35%;
       background-color: #fff;
       border-radius: 8px;
-      box-shadow: 0 1px 3px #0000001a, 0 1px 2px #0000000f;
+      box-shadow: 1px 1px 3px #0000001a, 1px 2px 3px #0000000f;
+      height: 456px;
+      .recharts-legend-wrapper{
+        bottom: 40px !important;
+
+      }
     }
   }
 }

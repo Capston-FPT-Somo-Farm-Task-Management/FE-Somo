@@ -12,6 +12,7 @@ const NotificationAll = ({ changeStatusNotify }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [hasMore, setHasMore] = useState(true)
 
+
   // Load notify
   const notifyAll = useSelector((state) => state.notification.data)
 

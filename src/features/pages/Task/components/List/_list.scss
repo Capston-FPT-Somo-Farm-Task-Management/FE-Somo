@@ -35,13 +35,4 @@
   color: #007bff;
   opacity: 0.8;
 }
-.ant-ribbon.ant-ribbon-placement-end {
-  border-radius: 4px;
-  border-end-start-radius: 0;
-  .ant-ribbon-corner {
-    inset-inline-start: 0;
-    border-inline-start-color: transparent;
-    border-inline-end-color: unset;
-    border-block-end-color: transparent;
-  }
-}
+

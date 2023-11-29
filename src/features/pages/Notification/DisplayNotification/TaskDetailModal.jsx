@@ -13,6 +13,8 @@ const TaskDetailModal = ({ selectedData, isModalOpen, closeModal }) => {
   const taskById = useSelector((state) => state.taskById.data)
 
   const taskData = taskById?.data
+  
+  console.log(taskById);
 
   console.log(taskData)
   useEffect(() => {

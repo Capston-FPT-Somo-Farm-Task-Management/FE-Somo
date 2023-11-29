@@ -9,6 +9,8 @@ import {
   CloseCircleOutlined,
   PauseCircleOutlined,
   UndoOutlined,
+  SolutionOutlined,
+  FormOutlined
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
@@ -184,7 +186,7 @@ function TableTask({
                             <>
                             <Menu.Item key="viewReject">
                                 <span onClick={() => dispatch(getEvidenceByTaskId(record.id))}>
-                                  <PauseCircleOutlined
+                                  <SolutionOutlined
                                     style={{
                                       color: "blue",
                                       marginRight: "8px",
@@ -195,13 +197,13 @@ function TableTask({
                               </Menu.Item>
                               <Menu.Item key="reAssign">
                                 <span onClick={() => openEditTaskModal(record)}>
-                                  <PauseCircleOutlined
+                                  <FormOutlined 
                                     style={{
-                                      color: "blue",
+                                      color: "gold",
                                       marginRight: "8px",
                                     }}
                                   />
-                                  Chỉnh sửa
+                                  Giao lại
                                 </span>
                               </Menu.Item>
                               <Menu.Item key="reject">

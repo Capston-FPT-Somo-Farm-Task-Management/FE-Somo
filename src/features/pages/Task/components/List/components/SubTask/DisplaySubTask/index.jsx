@@ -12,7 +12,7 @@ function DisplaySubTask({
       title={editingTask ? `#${editingTask.code} - ${editingTask.name}` : null}
       open={subTaskModalVisible}
       onCancel={handleSubTaskModalVisible}
-      width={1000}
+      width={900}
       footer={[
         <Button type="primary" onClick={handleSubTaskModalVisible}>
           Đóng
@@ -60,7 +60,10 @@ function DisplaySubTask({
             );
           })
         ) : (
-          <Empty description="Chưa có công việc con" />
+          <div style={{width: "100%", display: "flex", justifyContent: "center" }}>
+          <Empty  description="Chưa có công việc con" />
+          </div>
+          
         )}
       </div>
     </Modal>

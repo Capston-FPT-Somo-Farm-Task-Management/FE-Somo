@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Layout, Menu, Popover } from 'antd'
+import React, { useEffect, useState } from "react";
+import { Button, Layout, Menu, Popover } from "antd";
 import {
   DashboardOutlined,
   TeamOutlined,
@@ -11,47 +11,50 @@ import {
   MenuOutlined,
   AppstoreOutlined,
   FormatPainterOutlined,
-} from '@ant-design/icons'
-import { GiCow, GiPlantRoots } from 'react-icons/gi'
-import { GrUserWorker } from 'react-icons/gr'
-import logoSomo from '../../../assets/logo_Somo.png'
-import { Link, useLocation } from 'react-router-dom'
-import { authServices } from 'services/authServices'
+  BarChartOutlined,
+  AuditOutlined,
+  FileTextOutlined,
+} from "@ant-design/icons";
+import { GiCow, GiPlantRoots, GiPig, GiPlantWatering   } from "react-icons/gi";
+import { GrUserWorker, GrObjectGroup } from "react-icons/gr";
+import logoSomo from "../../../assets/logo_Somo.png";
+import { Link, useLocation } from "react-router-dom";
+import { authServices } from "services/authServices";
 import {
   useDesktopMediaQuery,
   useTabletMediaQuery,
-} from 'common/hooks/responsive'
-import { useDispatch } from 'react-redux'
-import SubMenu from 'antd/es/menu/SubMenu'
+} from "common/hooks/responsive";
+import { useDispatch } from "react-redux";
+import SubMenu from "antd/es/menu/SubMenu";
 
-const { Sider } = Layout
+const { Sider } = Layout;
 
-const rootSubmenuKeys = ['tasks', 'location', 'animal', 'plant']
+const rootSubmenuKeys = ["tasks", "location", "animal", "plant"];
 
 const SideMenu = () => {
-  const [userName, setUserName] = useState()
-  const [userRole, setUserRole] = useState()
-  const [openKeys, setOpenKeys] = useState(['sub1'])
-  const location = useLocation()
-  const dispatch = useDispatch()
-  const isDesktop = useDesktopMediaQuery()
-  const isTablet = useTabletMediaQuery()
+  const [userName, setUserName] = useState();
+  const [userRole, setUserRole] = useState();
+  const [openKeys, setOpenKeys] = useState(["sub1"]);
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const isDesktop = useDesktopMediaQuery();
+  const isTablet = useTabletMediaQuery();
 
   const onOpenChange = (keys) => {
-    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1)
+    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
     if (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-      setOpenKeys(keys)
+      setOpenKeys(keys);
     } else {
-      setOpenKeys(latestOpenKey ? [latestOpenKey] : [])
+      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
     }
-  }
+  };
 
   useEffect(() => {
-    const role = authServices.getRole()
-    setUserRole(role)
-    const userName = authServices.getUserName()
-    setUserName(userName)
-  }, [])
+    const role = authServices.getRole();
+    setUserRole(role);
+    const userName = authServices.getUserName();
+    setUserName(userName);
+  }, []);
 
   return (
     <div className="sider">
@@ -59,9 +62,9 @@ const SideMenu = () => {
         <Sider
           theme="light"
           style={{
-            overflow: 'auto',
-            height: '100vh',
-            position: 'fixed',
+            overflow: "auto",
+            height: "100vh",
+            position: "fixed",
             left: 0,
             top: 0,
             bottom: 0,
@@ -78,7 +81,7 @@ const SideMenu = () => {
             onOpenChange={onOpenChange}
           >
             <Menu.Item key="/home">
-              <CalendarOutlined />
+              <BarChartOutlined />
               <span>Trang chủ</span>
               <Link to="/home"></Link>
             </Menu.Item>
@@ -89,14 +92,14 @@ const SideMenu = () => {
               <Link to="/schedule"></Link>
             </Menu.Item>
 
-            <SubMenu key="tasks" icon={<AimOutlined />} title="Công việc">
+            <SubMenu key="tasks" icon={<FileTextOutlined />} title="Công việc">
               <Menu.Item key="/task">
                 <AimOutlined />
                 <span>Công việc</span>
                 <Link to="/task"></Link>
               </Menu.Item>
               <Menu.Item key="/task-type">
-                <AimOutlined />
+                <AuditOutlined />
                 <span>Loại công việc</span>
                 <Link to="/task-type"></Link>
               </Menu.Item>
@@ -120,19 +123,19 @@ const SideMenu = () => {
             <SubMenu key="animal" icon={<GiCow />} title="Động vật">
               <Menu.Item key="/animals">
                 <GiCow />
-                <span style={{ marginLeft: '10px' }}>Vật nuôi</span>
+                <span style={{ marginLeft: "10px" }}>Vật nuôi</span>
                 <Link to="/animals"></Link>
               </Menu.Item>
 
               <Menu.Item key="/animal-type">
-                <GiCow />
-                <span style={{ marginLeft: '10px' }}>Loại vật nuôi</span>
+                <GiPig />
+                <span style={{ marginLeft: "10px" }}>Loại vật nuôi</span>
                 <Link to="/animal-type"></Link>
               </Menu.Item>
 
               <Menu.Item key="/animal-group">
-                <AppstoreOutlined />
-                <span>Chuồng</span>
+                <GrObjectGroup  />
+                <span style={{ marginLeft: "10px" }}>Chuồng</span>
                 <Link to="/animal-group"></Link>
               </Menu.Item>
             </SubMenu>
@@ -141,19 +144,19 @@ const SideMenu = () => {
             <SubMenu key="plant" icon={<GiPlantRoots />} title="Thực vật">
               <Menu.Item key="/plants">
                 <GiPlantRoots />
-                <span style={{ marginLeft: '10px' }}>Cây trồng</span>
+                <span style={{ marginLeft: "10px" }}>Cây trồng</span>
                 <Link to="/plants"></Link>
               </Menu.Item>
 
               <Menu.Item key="/plant-type">
-                <GiPlantRoots />
-                <span style={{ marginLeft: '10px' }}>Loại cây trồng</span>
+                <GiPlantWatering />
+                <span style={{ marginLeft: "10px" }}>Loại cây trồng</span>
                 <Link to="/plant-type"></Link>
               </Menu.Item>
 
               <Menu.Item key="/crop-group">
                 <AppstoreOutlined />
-                <span>Vườn</span>
+                <span style={{ marginLeft: "10px" }}>Vườn</span>
                 <Link to="/crop-group"></Link>
               </Menu.Item>
             </SubMenu>
@@ -166,7 +169,7 @@ const SideMenu = () => {
 
             <Menu.Item key="/employee">
               <GrUserWorker />
-              <span style={{ marginLeft: '10px' }}>Nhân viên</span>
+              <span style={{ marginLeft: "10px" }}>Nhân viên</span>
               <Link to="/employee"></Link>
             </Menu.Item>
           </Menu>
@@ -187,7 +190,7 @@ const SideMenu = () => {
                   defaultSelectedKeys={[location.pathname]}
                 >
                   <Menu.Item key="/home">
-                    <CalendarOutlined />
+                    <BarChartOutlined />
                     <span>Trang chủ</span>
                     <Link to="/home"></Link>
                   </Menu.Item>
@@ -218,13 +221,13 @@ const SideMenu = () => {
 
                   <Menu.Item key="/animals">
                     <GiCow />
-                    <span style={{ marginLeft: '10px' }}>Vật nuôi</span>
+                    <span style={{ marginLeft: "10px" }}>Vật nuôi</span>
                     <Link to="/animals"></Link>
                   </Menu.Item>
 
                   <Menu.Item key="/animal-type">
                     <GiCow />
-                    <span style={{ marginLeft: '10px' }}>Loại vật nuôi</span>
+                    <span style={{ marginLeft: "10px" }}>Loại vật nuôi</span>
                     <Link to="/animal-type"></Link>
                   </Menu.Item>
 
@@ -236,13 +239,13 @@ const SideMenu = () => {
 
                   <Menu.Item key="/plants">
                     <GiPlantRoots />
-                    <span style={{ marginLeft: '10px' }}>Cây trồng</span>
+                    <span style={{ marginLeft: "10px" }}>Cây trồng</span>
                     <Link to="/plants"></Link>
                   </Menu.Item>
 
                   <Menu.Item key="/plant-type">
                     <GiPlantRoots />
-                    <span style={{ marginLeft: '10px' }}>Loại cây trồng</span>
+                    <span style={{ marginLeft: "10px" }}>Loại cây trồng</span>
                     <Link to="/plant-type"></Link>
                   </Menu.Item>
 
@@ -260,7 +263,7 @@ const SideMenu = () => {
 
                   <Menu.Item key="/employee">
                     <GrUserWorker />
-                    <span style={{ marginLeft: '10px' }}>Nhân viên</span>
+                    <span style={{ marginLeft: "10px" }}>Nhân viên</span>
                     <Link to="/employee"></Link>
                   </Menu.Item>
                 </Menu>
@@ -275,7 +278,7 @@ const SideMenu = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default SideMenu
+export default SideMenu;
