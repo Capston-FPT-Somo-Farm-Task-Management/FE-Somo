@@ -63,9 +63,6 @@ const TableCropGroup = ({ fieldPlant, onFinishDelete, loading }) => {
               )}
             />
             <Column title="Mã vườn" dataIndex="code" key="2" />
-            {/* <Column title="Diện tích" dataIndex="area" key="3" /> */}
-            {/* <Column title="Vùng" dataIndex="zoneName" key="4" /> */}
-            {/* <Column title="Khu vực" dataIndex="areaName" key="5" /> */}
 
             <Column
               title="Trạng thái"

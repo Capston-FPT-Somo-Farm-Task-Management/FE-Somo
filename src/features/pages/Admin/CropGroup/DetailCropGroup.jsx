@@ -1,10 +1,24 @@
-import { Button, Descriptions, Modal } from 'antd'
+import { Button, Collapse, Descriptions, Modal } from 'antd'
+import { getListPlantInField } from 'features/slice/field/fieldListPlant'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+const { Panel } = Collapse
 
 const DetailCropGroup = ({
   isModalDetailOpen,
   closeModalDetail,
   selectedDataDetail,
 }) => {
+  const fieldListPlant = useSelector((state) => state.fieldListPlant.data)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (selectedDataDetail) {
+      dispatch(getListPlantInField(selectedDataDetail.id))
+    }
+  }, [dispatch])
+  console.log(fieldListPlant)
+
   return (
     <Modal
       title="Chi tiết vườn"
@@ -44,6 +58,29 @@ const DetailCropGroup = ({
                 : 'Không tồn tai'}
             </Descriptions.Item>
           </Descriptions>
+          <Collapse accordion style={{ marginTop: '15px' }}>
+            {fieldListPlant?.data?.map((plant, index) => (
+              <Panel header={`${plant.name}`} key={index}>
+                <Descriptions layout="horizontal" bordered column={1}>
+                  <Descriptions.Item label="Mã vật nuôi">
+                    {plant.externalId}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Giới tính">
+                    {plant.gender}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Loại vật nuôi">
+                    {plant.habitantTypeName}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Trạng thái">
+                    {plant.status}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Cân nặng">
+                    {plant.weight} kg
+                  </Descriptions.Item>
+                </Descriptions>
+              </Panel>
+            ))}
+          </Collapse>
         </>
       )}
     </Modal>

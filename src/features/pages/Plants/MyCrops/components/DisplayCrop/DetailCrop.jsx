@@ -39,7 +39,7 @@ const DetailCrop = ({
             <Descriptions.Item label="Vùng">
               {selectedDataDetail.zoneName}
             </Descriptions.Item>
-            <Descriptions.Item label="Chuồng">
+            <Descriptions.Item label="Vườn">
               {selectedDataDetail.fieldName}
             </Descriptions.Item>
             <Descriptions.Item label="Trạng thái">
