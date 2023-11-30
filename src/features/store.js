@@ -33,6 +33,7 @@ import employeeEffortReducer from './slice/employee/employeeEffortSlice'
 import employeeEffortTotalReducer from './slice/employee/employeeEffortTotalSlice'
 import materialReducer from './slice/material/materialSlice'
 import materialByIdReducer from './slice/material/materialById'
+import materialExcelReducer from './slice/material/materialExcelSlice'
 import materialActiveReducer from './slice/material/materialActiveByFarmSlice'
 import fieldReducer from './slice/field/fieldSlice'
 import fieldPlantReducer from './slice/field/fieldPlantSlice'
@@ -82,6 +83,7 @@ export const store = configureStore({
     material: materialReducer,
     materialActive: materialActiveReducer,
     materialById: materialByIdReducer,
+    materialExcel: materialExcelReducer,
     field: fieldReducer,
     fieldPlant: fieldPlantReducer,
     fieldAnimal: fieldAnimalReducer,
