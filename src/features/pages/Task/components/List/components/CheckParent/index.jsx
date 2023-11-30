@@ -13,7 +13,7 @@ const CheckParent = ({ onCheckChange }) => {
   return (
     <div className="checkParent">
       <Checkbox checked={checked} onChange={handleChange}>
-        Có ngày lặp lại
+        Những công việc có ngày lặp lại
       </Checkbox>
     </div>
   );

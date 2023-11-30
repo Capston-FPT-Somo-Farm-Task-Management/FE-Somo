@@ -87,7 +87,7 @@ export const taskTitle = [
             className="ribbon-expired"
             style={{ top: 0, insetInlineEnd: "-8px" }}
             text="Trễ"
-            color="volcano"
+            color="#ff7b00"
           >
             <p
               style={{

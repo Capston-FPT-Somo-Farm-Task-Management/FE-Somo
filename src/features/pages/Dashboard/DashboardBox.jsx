@@ -1,5 +1,12 @@
 import React from "react";
-import { GrDocumentSound, GrInProgress, GrPauseFill, GrClose  } from "react-icons/gr";
+import {
+  GrDocumentSound,
+  GrInProgress,
+  GrPauseFill,
+  GrClose,
+} from "react-icons/gr";
+import { BsHourglassSplit } from "react-icons/bs";
+import { GoMegaphone } from "react-icons/go";
 
 const DashboardBox = ({ taskByWeek, selectedDay }) => {
   const calculateTotalTasks = () => {
@@ -49,40 +56,45 @@ const DashboardBox = ({ taskByWeek, selectedDay }) => {
       <div className="dashboard-content">
         <div className="dashboard-text">
           <p>Chuẩn bị</p>
-          <h5>Tổng: {filteredData?.totalTaskToDo}</h5>
+          <h5> {filteredData?.totalTaskToDo}</h5>
         </div>
-        <div className="dashboard-logo" style={{ backgroundColor: "#1a659e" }}>
-        <GrDocumentSound />
+        <div className="dashboard-logo">
+          <div className="dashboard-todo">
+            <GoMegaphone />
+          </div>
         </div>
       </div>
       <div className="dashboard-content">
         <div className="dashboard-text">
           <p>Đang làm</p>
-          <h5>Tổng: {filteredData?.totalTaskDoing}</h5>
+          <h5> {filteredData?.totalTaskDoing}</h5>
         </div>
-        <div
-          className="dashboard-logo"
-          style={{ backgroundColor: "#52b788" }}
-        >
-          <GrInProgress />
+        <div className="dashboard-logo">
+          <div className="dashboard-doing">
+            <BsHourglassSplit />
+          </div>
         </div>
       </div>
       <div className="dashboard-content">
         <div className="dashboard-text">
           <p>Tạm hoãn</p>
-          <h5>Tổng: {filteredData?.totalTaskPending}</h5>
+          <h5> {filteredData?.totalTaskPending}</h5>
         </div>
-        <div className="dashboard-logo" style={{ backgroundColor: "#fbb02d" }}>
+        <div className="dashboard-logo">
+        <div className="dashboard-pending">
         <GrPauseFill />
+        </div>
         </div>
       </div>
       <div className="dashboard-content">
         <div className="dashboard-text">
           <p>Đã đóng</p>
-          <h5>Tổng: {filteredData?.totalTaskClose}</h5>
+          <h5> {filteredData?.totalTaskClose}</h5>
         </div>
-        <div className="dashboard-logo" style={{ backgroundColor: "#ef233c" }}>
+        <div className="dashboard-logo">
+        <div className="dashboard-close">
         <GrClose />
+        </div>
         </div>
       </div>
     </>

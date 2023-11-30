@@ -34,19 +34,19 @@ const TaskDetailOther = ({
         </h2>
         <div className="task-detail-item">
           <div className="task-detail-text">
-            <h5>Ngày bắt đầu</h5>
+            <h5>Thời gian bắt đầu</h5>
             {taskData.startDate ? (
               <p>{formattedStartDate}</p>
             ) : (
-              <p>Chưa có ngày bắt đầu</p>
+              <p>Chưa có thời gian bắt đầu</p>
             )}
           </div>
           <div className="task-detail-text">
-            <h5>Ngày kết thúc</h5>
+            <h5>Thời gian kết thúc</h5>
             {taskData.startDate ? (
               <p>{formattedEndDate}</p>
             ) : (
-              <p>Chưa có ngày kết thúc</p>
+              <p>Chưa có thời gian kết thúc</p>
             )}
           </div>
           {taskData.status === "Bản nháp" ||

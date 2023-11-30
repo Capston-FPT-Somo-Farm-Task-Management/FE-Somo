@@ -1,23 +1,30 @@
 $mobile-sm-width: 480px; 
-$tablet-width: 768px; 
-$desktop-width: 992px; 
+$mobile-width: 792px;
+$tablet-width: 992px; 
+$desktop-width: 1024px;
+$desktop-xl-width: 1200px;
 
 @mixin mobile-sm { @media (max-width: #{$mobile-sm-width - 1px}) {     
   @content;   
  } 
 } 
 
-@mixin mobile { @media (min-width: #{$mobile-sm-width}) and (max-width: #{$tablet-width - 1}) {     
+@mixin mobile { @media (max-width: #{$mobile-width}) {     
   @content;   
  } 
 }
 
-@mixin tablet { @media (max-width: #{$desktop-width}) {       
+
+@mixin tablet { @media (max-width: #{$tablet-width}) {       
    @content;   
  } 
 }  
 
-@mixin desktop {   @media (min-width: #{$desktop-width}) {     
+@mixin desktop {   @media (max-width: #{$desktop-width}) {     
+  @content;  
+ } 
+}
+@mixin desktop-xl {   @media (max-width: #{$desktop-xl-width}) {     
   @content;  
  } 
 }
@@ -42,4 +49,27 @@ $white-color-300: #f4f0bb;
   justify-content: $content;
   align-items: $items;
   flex-wrap: $wrap;
+}
+
+@mixin dashboard-circle-box {
+  width: 55px;
+  height: 55px;
+  @include flex(row, center, center, null);
+  border-radius: 50%;
+  @include desktop-xl{
+    width: 45px;
+    height: 45px;
+  }
+}
+
+@mixin svg-dashboard{
+  svg {
+    width: 21px;
+    height: 21px;
+    
+    path {
+      fill: white;
+      stroke: white;
+    }
+  }
 }

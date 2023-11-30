@@ -81,7 +81,7 @@ const PieChartTaskWeek = ({ taskByWeek, selectedDay }) => {
 
   return (
     <div style={styles.container}>
-      {/* <h1>Tổng nhiệm vụ: {totalTaskCount} </h1> */}
+      <h3>Tổng số công việc theo loại </h3>
       <ResponsiveContainer height={400}>
         <PieChart width={400} height={200}>
           <Pie

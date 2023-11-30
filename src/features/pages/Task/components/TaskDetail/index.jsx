@@ -25,10 +25,11 @@ const TaskDetail = ({
           >
             <p>Chi tiết công việc</p>
             <Button
-              style={{ marginRight: "30px" }}
+              danger
               onClick={openChangeDoneToDoingModal}
+              style={{marginRight: "30px"}}
             >
-              Chuyển sang thực hiện
+              Yêu cầu làm lại
             </Button>
           </div>
         ) : (
