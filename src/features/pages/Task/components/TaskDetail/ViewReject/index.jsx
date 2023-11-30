@@ -13,8 +13,6 @@ const ViewReject = ({
 }) => {
   const evidence = useSelector((state) => state.evidence.data);
   const evidenceData = evidence.data;
-  console.log("evidenceData: ", evidenceData);
-  console.log("taskData: ", taskData);
   const [expandedDescriptions, setExpandedDescriptions] = useState([]);
 
   const handleToggleDescription = (evidenceId) => {

@@ -1625,12 +1625,12 @@ html {
 }
 .dashboard .dashboard-header .dashboard-content .dashboard-todo {
   background-color: #1a659e;
-  width: 55px;
-  height: 55px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
 }
 @media (max-width: 1200px) {
@@ -1648,13 +1648,13 @@ html {
   stroke: white;
 }
 .dashboard .dashboard-header .dashboard-content .dashboard-doing {
-  background-color: #52b788;
-  width: 55px;
-  height: 55px;
+  background-color: #25a18e;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
 }
 @media (max-width: 1200px) {
@@ -1673,12 +1673,12 @@ html {
 }
 .dashboard .dashboard-header .dashboard-content .dashboard-pending {
   background-color: #fbb02d;
-  width: 55px;
-  height: 55px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
 }
 @media (max-width: 1200px) {
@@ -1697,12 +1697,12 @@ html {
 }
 .dashboard .dashboard-header .dashboard-content .dashboard-close {
   background-color: #ef233c;
-  width: 55px;
-  height: 55px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
 }
 @media (max-width: 1200px) {
@@ -2289,4 +2289,36 @@ html {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 30px;
+}
+
+@media (max-width: 1200px) {
+  .ant-tabs {
+    width: 80%;
+  }
+}
+@media (max-width: 479px) {
+  .ant-tabs {
+    width: 50%;
+  }
+}
+.ant-tabs .ant-tabs-nav {
+  flex-wrap: nowrap;
+}
+@media (max-width: 792px) {
+  .ant-tabs .ant-tabs-nav {
+    width: 70%;
+    margin: 0 auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}
+@media (max-width: 992px) {
+  .ant-tabs .ant-tabs-nav {
+    width: 100%;
+  }
+}
+
+.custom-tabs .ant-tabs-nav .ant-tabs-tab {
+  width: auto;
+  white-space: nowrap;
 }/*# sourceMappingURL=index.css.map */

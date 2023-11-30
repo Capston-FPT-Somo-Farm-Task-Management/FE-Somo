@@ -9,7 +9,7 @@ import {
 } from 'recharts'
 
 const PieChartTaskWeek = ({ taskByWeek, selectedDay }) => {
-  const COLORS = ['#1a659e', '#00C49F', '#FFBB28']
+  const COLORS = ['#1a659e', '#25a18e', '#FFBB28']
 
   const calculateTotalTasks = () => {
     if (selectedDay !== null) {
@@ -81,7 +81,7 @@ const PieChartTaskWeek = ({ taskByWeek, selectedDay }) => {
 
   return (
     <div style={styles.container}>
-      <h3>Tổng số công việc theo loại </h3>
+      <h3 style={{marginBottom: 0}}>Tổng số công việc theo loại </h3>
       <ResponsiveContainer height={400}>
         <PieChart width={400} height={200}>
           <Pie

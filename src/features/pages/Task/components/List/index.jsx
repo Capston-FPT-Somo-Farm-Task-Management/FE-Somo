@@ -28,6 +28,8 @@ import ChangeDoingToPending from "./components/ChangeDoingToPendingAndCancel/Cha
 import ChangeDoingToCancel from "./components/ChangeDoingToPendingAndCancel/ChangeDoingToCancel";
 import SubTask from "./components/SubTask";
 import ViewReject from "../TaskDetail/ViewReject";
+import ModalDelete from "./components/ModalDelete";
+import ModalClose from "./components/ModalClose";
 
 const List = () => {
   const [subTasks, setSubTasks] = useState([]);
@@ -37,6 +39,8 @@ const List = () => {
   const [editTaskModalVisible, setEditTaskModalVisible] = useState(false);
   const [subTaskModalVisible, setSubTaskModalVisible] = useState(false);
   const [effortVisible, setEffortVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [closeModalVisible, setCloseModalVisible] = useState(false);
   const [taskDoneToDoingVisible, setTaskDoneToDoingVisible] = useState(false);
   const [taskDoingToPendingModalVisible, setTaskDoingToPendingModalVisible] =
     useState(false);
@@ -131,17 +135,30 @@ const List = () => {
     } else if (e.key === "reject") {
       handleRefuseTask(record.id);
     } else if (e.key === "close") {
-      handleChangeDoneToCloseTask(record.id);
+      openCloseModal(record.id);
     } else if (e.key === "delete") {
-      handleDelete(record.id);
+      openDeleteModal(record.id);
     }
   };
 
-  const handleDelete = (id) => {
-    dispatch(deleteTask(id)).then(() => {
-      loadDataTask();
-      setPageIndex(1);
-    });
+  const openCloseModal = (record) => {
+    setSelectedTask(record);
+    setCloseModalVisible(true);
+  };
+
+  const closeCloseModal = () => {
+    setSelectedTask(null);
+    setCloseModalVisible(false);
+  };
+
+  const openDeleteModal = (record) => {
+    setSelectedTask(record);
+    setDeleteModalVisible(true);
+  };
+
+  const closeDeleteModal = () => {
+    setSelectedTask(null);
+    setDeleteModalVisible(false);
   };
 
   const openModal = (record) => {
@@ -239,11 +256,20 @@ const List = () => {
     });
   };
 
+  const handleDelete = (id) => {
+    dispatch(deleteTask(id)).then(() => {
+      loadDataTask();
+      setPageIndex(1);
+      setDeleteModalVisible(false);
+    });
+  };
+
   const handleChangeDoneToCloseTask = (id) => {
     dispatch(changeStatusDoneToClose(id)).then(() => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
+      setCloseModalVisible(false);
     });
   };
 
@@ -327,7 +353,7 @@ const List = () => {
   };
 
   const menu = (
-    <div style={{margin: "10px"}}>
+    <div style={{ margin: "10px" }}>
       <DateSelectionComp
         selectedDate={selectedDate}
         handleDateChange={handleDateChange}
@@ -349,7 +375,9 @@ const List = () => {
         />
         <div className="list-header-item-right">
           <Popover content={menu} trigger="click" arrow placement="bottom">
-            <Button type="primary" className="button-filter"><FilterOutlined /> Lọc </Button>
+            <Button type="primary" className="button-filter">
+              <FilterOutlined /> Lọc{" "}
+            </Button>
           </Popover>
           <SearchComp handleSearchChange={handleSearchChange} />
         </div>
@@ -375,9 +403,10 @@ const List = () => {
           closeEditTaskModal={closeEditTaskModal}
           openSubtaskModal={openSubtaskModal}
           openEffortModal={openEffortModal}
+          openDeleteModal={openDeleteModal}
+          openCloseModal={openCloseModal}
           openChangeDoingToPendingModal={openChangeDoingToPendingModal}
           openChangeDoingToCancelModal={openChangeDoingToCancelModal}
-          handleChangeDoneToCloseTask={handleChangeDoneToCloseTask}
           handleTaskAdded={handleTaskAdded}
           handleDateChange={handleDateChange}
           loadDataTask={loadDataTask}
@@ -392,6 +421,18 @@ const List = () => {
         openEditTaskModal={openEditTaskModal}
         closeEditTaskModal={closeEditTaskModal}
         openChangeDoneToDoingModal={openChangeDoneToDoingModal}
+      />
+      <ModalDelete
+        selectedTaskId={selectedTask}
+        deleteModalVisible={deleteModalVisible}
+        closeDeleteModal={closeDeleteModal}
+        handleDelete={handleDelete}
+      />
+      <ModalClose
+        selectedTaskId={selectedTask}
+        closeModalVisible={closeModalVisible}
+        closeCloseModal={closeCloseModal}
+        handleChangeDoneToCloseTask={handleChangeDoneToCloseTask}
       />
       <ViewReject
         viewRejectModalVisible={viewRejectModalVisible}

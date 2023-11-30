@@ -196,7 +196,7 @@ export const taskTitle = [
                 marginRight: "10px",
               }}
             />
-            {data.slice(0, 8) + (data.length > 8 ? "..." : "")}
+            {data.slice(0, 5) + (data.length > 5 ? "..." : "")}
           </span>
         </Tooltip>
       ) : (
@@ -234,7 +234,7 @@ export const taskTitle = [
                   marginRight: "10px",
                 }}
               />
-              {text && text.slice(0, 6) + (text.length > 6 ? "..." : "")}
+              {text && text.slice(0, 5) + (text.length > 5 ? "..." : "")}
             </span>
           </Tooltip>
         ) : (

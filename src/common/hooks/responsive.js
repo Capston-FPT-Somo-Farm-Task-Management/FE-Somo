@@ -3,6 +3,11 @@ import { useMediaQuery } from 'react-responsive'
 export const useDesktopXXLMediaQuery = () => {
   return useMediaQuery({ query: '(min-width: 1280px)' })
 }
+
+export const useDesktopXLMediaQuery = () => {
+  return useMediaQuery({ query: '(max-width: 1200px)' })
+}
+
 export const useDesktopMediaQuery = () => {
   return useMediaQuery({ query: '(min-width: 993px)' })
 }

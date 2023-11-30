@@ -52,9 +52,9 @@ $white-color-300: #f4f0bb;
 }
 
 @mixin dashboard-circle-box {
+  @include flex(row, center, center, null);
   width: 55px;
   height: 55px;
-  @include flex(row, center, center, null);
   border-radius: 50%;
   @include desktop-xl{
     width: 45px;

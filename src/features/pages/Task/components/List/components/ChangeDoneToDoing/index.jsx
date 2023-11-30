@@ -1,6 +1,8 @@
 import { Button, Form, Input, Modal } from "antd";
 import React from "react";
 
+const { TextArea } = Input;
+
 const ChangeDoneToDoing = ({
   selectedTask,
   taskDoneToDoingVisible,
@@ -33,9 +35,10 @@ const ChangeDoneToDoing = ({
             id="doneToDoing"
           >
             <Form.Item label="Lý do phải làm lại" name="description">
-              <Input
+              <TextArea
                 placeholder="Nhập lý do"
                 value={description}
+                rows={5}
                 onChange={handleDescription}
               />
             </Form.Item>
