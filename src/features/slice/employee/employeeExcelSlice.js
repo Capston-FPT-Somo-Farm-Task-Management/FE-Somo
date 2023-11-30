@@ -44,7 +44,7 @@ export const createEmployeeByExcel = createAsyncThunk(
         },
       }
       const response = await axiosInstance.post(
-        '/Employee/ImortExcel',
+        '/Employee/ImportExcel',
         data,
         config
       )
