@@ -38,6 +38,8 @@ import fieldReducer from './slice/field/fieldSlice'
 import fieldPlantReducer from './slice/field/fieldPlantSlice'
 import fieldAnimalReducer from './slice/field/fieldAnimalSlice'
 import fieldByZoneReducer from './slice/field/fieldByZoneSlice'
+import fieldListAnimalReducer from './slice/field/fieldListAnimal'
+import fieldListPlantReducer from './slice/field/fieldListPlant'
 import plantTypeReducer from './slice/plant/plantTypeSlice'
 import plantTypeActiveReducer from './slice/plant/plantTypeActiveSlice'
 import plantByFarmReducer from './slice/plant/plantByFarmSlice'
@@ -83,6 +85,8 @@ export const store = configureStore({
     field: fieldReducer,
     fieldPlant: fieldPlantReducer,
     fieldAnimal: fieldAnimalReducer,
+    fieldListAnimal: fieldListAnimalReducer,
+    fieldListPlant: fieldListPlantReducer,
     fieldByZone: fieldByZoneReducer,
     plantType: plantTypeReducer,
     plantTypeActive: plantTypeActiveReducer,
