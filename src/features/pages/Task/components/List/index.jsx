@@ -25,11 +25,11 @@ import CheckParent from "./components/CheckParent";
 import UpdateTask from "./components/UpdateTask";
 import ChangeDoneToDoing from "./components/ChangeDoneToDoing";
 import ChangeDoingToPending from "./components/ChangeDoingToPendingAndCancel/ChangeDoingToPending";
-import ChangeDoingToCancel from "./components/ChangeDoingToPendingAndCancel/ChangeDoingToCancel";
 import SubTask from "./components/SubTask";
 import ViewReject from "../TaskDetail/ViewReject";
 import ModalDelete from "./components/ModalDelete";
 import ModalClose from "./components/ModalClose";
+import ChangeStatusToCancel from "./components/ChangeStatusToCancel";
 
 const List = () => {
   const [subTasks, setSubTasks] = useState([]);
@@ -44,7 +44,7 @@ const List = () => {
   const [taskDoneToDoingVisible, setTaskDoneToDoingVisible] = useState(false);
   const [taskDoingToPendingModalVisible, setTaskDoingToPendingModalVisible] =
     useState(false);
-  const [taskDoingToCancelModalVisible, setTaskDoingToCancelModalVisible] =
+  const [taskToCancelModalVisible, setTaskToCancelModalVisible] =
     useState(false);
   const [description, setDescription] = useState("");
   const [pageIndex, setPageIndex] = useState(1);
@@ -70,7 +70,7 @@ const List = () => {
 
   const loading = useSelector((state) => state.task.loading);
 
-  console.log(task);
+  console.log(viewRejectModalVisible);
 
   const dispatch = useDispatch();
 
@@ -127,7 +127,7 @@ const List = () => {
       openEditTaskModal(record);
       setCheckChangeToToDo(true);
     } else if (e.key === "cancel") {
-      openChangeDoingToCancelModal(record);
+      openChangeStatusToCancelModal(record);
     } else if (e.key === "changeToDoing") {
       handleChangePendingAndCancelToDoing(record.id);
     } else if (e.key === "viewReject") {
@@ -182,13 +182,13 @@ const List = () => {
     setTaskDoingToPendingModalVisible(false);
   };
 
-  const openChangeDoingToCancelModal = (record) => {
-    setTaskDoingToCancelModalVisible(true);
+  const openChangeStatusToCancelModal = (record) => {
+    setTaskToCancelModalVisible(true);
     setCurrentTaskId(record.id);
   };
 
-  const closeChangeDoingToCancelModal = () => {
-    setTaskDoingToCancelModalVisible(false);
+  const closeChangeStatusToCancelModal = () => {
+    setTaskToCancelModalVisible(false);
   };
 
   const handleRefuseTask = (id) => {
@@ -198,6 +198,7 @@ const List = () => {
       handleTaskAdded();
     });
     setModalVisible(false);
+    setViewRejectModalVisible(false);
   };
 
   const handleChangeDoneToDoing = (id) => {
@@ -231,7 +232,7 @@ const List = () => {
     setTaskDoingToPendingModalVisible(false);
   };
 
-  const handleChangeDoingToCancelTask = (id) => {
+  const handleChangeStatusToCancelTask = (id) => {
     const descriptionValue = {
       description: description,
       imageFile: fileList[0],
@@ -247,7 +248,7 @@ const List = () => {
       handleDateChange();
       handleTaskAdded();
     });
-    setTaskDoingToCancelModalVisible(false);
+    setTaskToCancelModalVisible(false);
   };
 
   const handleChangePendingAndCancelToDoing = (id) => {
@@ -299,11 +300,17 @@ const List = () => {
     setEditingTask(record);
     setEditTaskModalVisible(true);
     setCurrentTaskId(record.id);
+    setViewRejectModalVisible(false);
   };
 
   const closeEditTaskModal = () => {
     setEditingTask(null);
     setEditTaskModalVisible(false);
+    if (editingTask.status === "Từ chối" && selectedTask ) {
+      setViewRejectModalVisible(true);
+    } else {
+      return;
+    }
   };
 
   const handleSubTaskModalVisible = () => {
@@ -408,7 +415,7 @@ const List = () => {
           openDeleteModal={openDeleteModal}
           openCloseModal={openCloseModal}
           openChangeDoingToPendingModal={openChangeDoingToPendingModal}
-          openChangeDoingToCancelModal={openChangeDoingToCancelModal}
+          openChangeStatusToCancelModal={openChangeStatusToCancelModal}
           handleTaskAdded={handleTaskAdded}
           handleDateChange={handleDateChange}
           loadDataTask={loadDataTask}
@@ -420,7 +427,6 @@ const List = () => {
         onCancel={closeModal}
         taskData={selectedTask}
         handleRefuseTask={handleRefuseTask}
-        openEditTaskModal={openEditTaskModal}
         closeEditTaskModal={closeEditTaskModal}
         openChangeDoneToDoingModal={openChangeDoneToDoingModal}
       />
@@ -440,6 +446,9 @@ const List = () => {
         viewRejectModalVisible={viewRejectModalVisible}
         closeViewRejectModal={closeViewRejectModal}
         taskData={selectedTask}
+        handleRefuseTask={handleRefuseTask}
+        openEditTaskModal={openEditTaskModal}
+        selectedTask={selectedTask}
       />
       <UpdateTask
         editTaskModalVisible={editTaskModalVisible}
@@ -451,6 +460,7 @@ const List = () => {
         loadDataTask={loadDataTask}
         currentTaskId={currentTaskId}
         closeModal={closeModal}
+        closeViewRejectModal={closeViewRejectModal}
         checkChangeToToDo={checkChangeToToDo}
       />
       <SubTask
@@ -485,11 +495,11 @@ const List = () => {
         fileList={fileList}
         onFileChange={onFileChange}
       />
-      <ChangeDoingToCancel
+      <ChangeStatusToCancel
         currentTaskId={currentTaskId}
-        handleChangeDoingToCancelTask={handleChangeDoingToCancelTask}
-        closeChangeDoingToCancelModal={closeChangeDoingToCancelModal}
-        taskDoingToCancelModalVisible={taskDoingToCancelModalVisible}
+        handleChangeStatusToCancelTask={handleChangeStatusToCancelTask}
+        closeChangeStatusToCancelModal={closeChangeStatusToCancelModal}
+        taskToCancelModalVisible={taskToCancelModalVisible}
         description={description}
         handleDescription={handleDescription}
         fileList={fileList}
