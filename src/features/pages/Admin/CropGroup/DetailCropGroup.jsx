@@ -61,21 +61,25 @@ const DetailCropGroup = ({
           <Collapse accordion style={{ marginTop: '15px' }}>
             {fieldListPlant?.data?.map((plant, index) => (
               <Panel header={`${plant.name}`} key={index}>
-                <Descriptions layout="horizontal" bordered column={1}>
+                <Descriptions
+                  layout="horizontal"
+                  bordered
+                  column={1}
+                  labelStyle={{
+                    width: '140px',
+                  }}
+                >
                   <Descriptions.Item label="Mã vật nuôi">
                     {plant.externalId}
                   </Descriptions.Item>
-                  <Descriptions.Item label="Giới tính">
-                    {plant.gender}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="Loại vật nuôi">
+                  <Descriptions.Item label="Loại cây trồng">
                     {plant.habitantTypeName}
                   </Descriptions.Item>
                   <Descriptions.Item label="Trạng thái">
                     {plant.status}
                   </Descriptions.Item>
-                  <Descriptions.Item label="Cân nặng">
-                    {plant.weight} kg
+                  <Descriptions.Item label="Chiều cao">
+                    {plant.height} m
                   </Descriptions.Item>
                 </Descriptions>
               </Panel>
