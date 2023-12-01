@@ -81,15 +81,13 @@ export const taskTitle = [
     dataIndex: "endDate",
     key: "endDate",
     render: (date, record) => {
-      console.log(record.isExpired);
-
       return date ? (
         record && record.isExpired ? (
           <Badge.Ribbon
             className="ribbon-expired"
             style={{ top: 0, insetInlineEnd: "-8px" }}
             text="Trễ"
-            color="volcano"
+            color="#ff7b00"
           >
             <p
               style={{
@@ -198,7 +196,7 @@ export const taskTitle = [
                 marginRight: "10px",
               }}
             />
-            {data.slice(0, 8) + (data.length > 8 ? "..." : "")}
+            {data.slice(0, 5) + (data.length > 5 ? "..." : "")}
           </span>
         </Tooltip>
       ) : (
@@ -236,7 +234,7 @@ export const taskTitle = [
                   marginRight: "10px",
                 }}
               />
-              {text && text.slice(0, 6) + (text.length > 6 ? "..." : "")}
+              {text && text.slice(0, 5) + (text.length > 5 ? "..." : "")}
             </span>
           </Tooltip>
         ) : (

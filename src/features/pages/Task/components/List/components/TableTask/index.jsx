@@ -10,10 +10,17 @@ import {
   PauseCircleOutlined,
   UndoOutlined,
   SolutionOutlined,
-  FormOutlined
+  FormOutlined,
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
+import {
+  useDesktopMediaQuery,
+  useDesktopXLMediaQuery,
+  useMobileMediaQuery,
+  useMobileSMMediaQuery,
+  useTabletMediaQuery,
+} from "common/hooks/responsive";
 
 function TableTask({
   task,
@@ -25,12 +32,52 @@ function TableTask({
   openViewRejectModal,
   openSubtaskModal,
   openEffortModal,
+  openDeleteModal,
+  openCloseModal,
   openChangeDoingToPendingModal,
   openChangeDoingToCancelModal,
   onChange,
   openModal,
 }) {
   const dispatch = useDispatch();
+
+  const isMobileSM = useMobileSMMediaQuery();
+
+  const isMobile = useMobileMediaQuery();
+
+  const isTablet = useTabletMediaQuery();
+
+  const isDesktopXL = useDesktopXLMediaQuery();
+
+  const columns = taskTitle?.filter((column) => {
+    // Nếu là màn hình Mobile, ẩn cột ngày bắt đầu và ngày kết thúc
+    if (isMobileSM) {
+      return (
+        column.dataIndex !== "startDate" &&
+        column.dataIndex !== "endDate" &&
+        column.dataIndex !== "supervisorName" &&
+        column.dataIndex !== "managerName" &&
+        column.dataIndex !== "priority"
+      );
+    } else if (isMobile) {
+      return (
+        column.dataIndex !== "startDate" &&
+        column.dataIndex !== "endDate" &&
+        column.dataIndex !== "supervisorName" &&
+        column.dataIndex !== "managerName"
+      );
+    } else if (isTablet) {
+      return (
+        column.dataIndex !== "startDate" &&
+        column.dataIndex !== "endDate" &&
+        column.dataIndex !== "supervisorName"
+      );
+    } else if (isDesktopXL) {
+      return column.dataIndex !== "startDate" && column.dataIndex !== "endDate";
+    }
+    // Cho các màn hình khác, hiển thị tất cả các cột
+    return true;
+  });
   return (
     <>
       {task && (
@@ -43,7 +90,7 @@ function TableTask({
             showSizeChanger: false,
           }}
           columns={[
-            ...taskTitle,
+            ...columns,
             {
               title: <p>Tùy chọn</p>,
               key: "action",
@@ -69,6 +116,7 @@ function TableTask({
                 if (isManager) {
                   return (
                     <Dropdown
+                      trigger="click"
                       placement="bottomRight"
                       overlay={
                         <Menu onClick={(e) => handleMenuClick(e, record)}>
@@ -184,8 +232,12 @@ function TableTask({
 
                           {record.status === "Từ chối" ? (
                             <>
-                            <Menu.Item key="viewReject">
-                                <span onClick={() => dispatch(getEvidenceByTaskId(record.id))}>
+                              <Menu.Item key="viewReject">
+                                <span
+                                  onClick={() =>
+                                    dispatch(getEvidenceByTaskId(record.id))
+                                  }
+                                >
                                   <SolutionOutlined
                                     style={{
                                       color: "blue",
@@ -197,7 +249,7 @@ function TableTask({
                               </Menu.Item>
                               <Menu.Item key="reAssign">
                                 <span onClick={() => openEditTaskModal(record)}>
-                                  <FormOutlined 
+                                  <FormOutlined
                                     style={{
                                       color: "gold",
                                       marginRight: "8px",
@@ -222,7 +274,7 @@ function TableTask({
 
                           {record.status === "Hoàn thành" ? (
                             <Menu.Item key="close">
-                              <span>
+                              <span onClick={() => openCloseModal(record)}>
                                 <CloseCircleOutlined
                                   style={{ color: "gold", marginRight: "8px" }}
                                 />
@@ -233,7 +285,7 @@ function TableTask({
                           {record.status === "Bản nháp" ||
                           record.status === "Chuẩn bị" ? (
                             <Menu.Item key="delete">
-                              <span>
+                              <span onClick={() => openDeleteModal(record)}>
                                 <DeleteOutlined
                                   style={{ color: "red", marginRight: "8px" }}
                                 />

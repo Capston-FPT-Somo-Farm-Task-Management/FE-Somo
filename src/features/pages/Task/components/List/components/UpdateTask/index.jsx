@@ -86,6 +86,7 @@ function UpdateTask({
   const [draftToPrepare, setDraftToPrepare] = useState(false);
   const [prepareToDraft, setPrepareToDraft] = useState(false);
   const [reAssignTask, setReAssignTask] = useState(false);
+  const [isUpdateTask, setIsUpdateTask] = useState(false);
 
   const [form] = Form.useForm();
 
@@ -355,6 +356,7 @@ function UpdateTask({
     form
       .validateFields()
       .then(() => {
+        setIsUpdateTask(true)
         const startDateFormatted = startDate
           ? dayjs(startDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss")
           : dayjs(editingTask.startDate)
@@ -410,7 +412,7 @@ function UpdateTask({
 
         const finalValues = {
           name: nameValue ? nameValue : editingTask.name,
-          startDate: startDateFormatted,
+          startDate: startDateFormatted,  
           endDate: endDateFormatted,
           description: description ? description : editingTask.description,
           priority: priorityValue ? priorityValue : editingTask.priority,
@@ -441,10 +443,12 @@ function UpdateTask({
           loadDataTask();
           handleDateChange();
           handleTaskAdded();
+          setIsUpdateTask(false)
         });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
+        setIsUpdateTask(false)
       });
     closeEditTaskModal();
   };
@@ -466,6 +470,7 @@ function UpdateTask({
     form
       .validateFields()
       .then(() => {
+        setIsUpdateTask(true)
         const startDateFormatted = startDate
           ? dayjs(startDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss")
           : dayjs(editingTask.startDate)
@@ -554,10 +559,12 @@ function UpdateTask({
           loadDataTask(1);
           handleDateChange();
           handleTaskAdded();
+          setIsUpdateTask(false)
         });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
+        setIsUpdateTask(false)
       });
     closeEditTaskModal();
     closeModal();
@@ -567,6 +574,7 @@ function UpdateTask({
     form
       .validateFields()
       .then(() => {
+        setIsUpdateTask(true)
         const startDateFormatted = startDate
           ? dayjs(startDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss")
           : dayjs(editingTask.startDate)
@@ -640,10 +648,12 @@ function UpdateTask({
           loadDataTask();
           handleDateChange();
           handleTaskAdded();
+          setIsUpdateTask(false)
         });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
+        setIsUpdateTask(false)
       });
     closeEditTaskModal();
   };
@@ -665,6 +675,7 @@ function UpdateTask({
     form
       .validateFields()
       .then(() => {
+        setIsUpdateTask(true)
         const startDateFormatted = startDate
           ? dayjs(startDate).second(0).format("YYYY-MM-DD[T]HH:mm:ss")
           : dayjs(editingTask.startDate)
@@ -772,10 +783,12 @@ function UpdateTask({
           loadDataTask();
           handleDateChange();
           handleTaskAdded();
+          setIsUpdateTask(false)
         });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
+        setIsUpdateTask(false)
       });
     closeEditTaskModal();
   };
@@ -837,6 +850,7 @@ function UpdateTask({
             htmlType="submit"
             type="primary"
             onClick={handleUpdateDraftToPrepareButton}
+            disabled={isUpdateTask}
           >
             Chuyển sang chuẩn bị <ArrowRightOutlined />
           </Button>
@@ -851,6 +865,7 @@ function UpdateTask({
               form="updateTask"
               htmlType="submit"
               onClick={handleUpdateDraftToPrepareButton}
+              disabled={isUpdateTask}
             >
               Chuyển sang chuẩn bị <FileDoneOutlined />
             </Button>
@@ -860,6 +875,7 @@ function UpdateTask({
               type="primary"
               htmlType="submit"
               onClick={handleUpdateDraft}
+              disabled={isUpdateTask}
             >
               Cập nhật
               <EditOutlined />
@@ -874,6 +890,7 @@ function UpdateTask({
           type="primary"
           htmlType="submit"
           onClick={handleReAssign}
+          disabled={isUpdateTask}
         >
           Giao lại
           <EditOutlined />
@@ -886,9 +903,10 @@ function UpdateTask({
           style={{ width: "100%", justifyContent: "space-between" }}
         >
           <Button
-            onClick={handleChangePrepareToDraft}
             form="updateTask"
             htmlType="submit"
+            onClick={handleChangePrepareToDraft}
+            disabled={isUpdateTask}
           >
             Chuyển sang bản nháp
             <FileOutlined />
@@ -899,6 +917,7 @@ function UpdateTask({
             type="primary"
             htmlType="submit"
             onClick={handleUpdateTaskToDo}
+            disabled={isUpdateTask}
           >
             Lưu thay đổi
             <CheckCircleOutlined />

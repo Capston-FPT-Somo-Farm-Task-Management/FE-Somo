@@ -7,11 +7,15 @@
     @include flex(row, space-between, null, wrap);
     margin-bottom: 20px;
   }
-  .list-checkTask {
+  .list-header-item-right {
     @include flex(row, space-between, null, null);
     .checkParent {
       display: inline-block;
       padding: 12px 0px;
+    }
+    @include mobile{
+      width: 100%;
+      margin-top: 20px;
     }
   }
   .menu-icon {
@@ -23,7 +27,7 @@
     border-radius: 8px;
     cursor: pointer;
   }
-  .menu-icon:hover{
+  .menu-icon:hover {
     opacity: 0.75;
   }
 }
@@ -35,4 +39,19 @@
   color: #007bff;
   opacity: 0.8;
 }
+.button-filter {
+  background-color: #fff;
+  border-color: #d9d9d9;
+  color: rgba(0, 0, 0, 0.88);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
+}
+.button-filter:focus {
+  background-color: #007bff;
+  color: #fff
+}
 
+.ant-table-wrapper .ant-table-pagination-right{
+  @include mobile{
+    justify-content: center;
+  }
+}

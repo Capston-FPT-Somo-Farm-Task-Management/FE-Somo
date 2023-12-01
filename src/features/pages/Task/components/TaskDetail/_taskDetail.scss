@@ -13,10 +13,14 @@
   border-radius: 8px;
   .task-detail-title-row {
     @include flex(row, space-between, null, null);
-    @media screen and (max-width: 768px) {
+    @include mobile {
       @include flex(column, space-between, flex-start, null);
     }
     .task-detail-title {
+      width: 70%;
+      @include mobile {
+        width: 100%;
+      }
       h1 {
         color: #8ead48;
       }
@@ -37,6 +41,10 @@
     }
     .task-title-priority-status {
       margin-top: 10px;
+      width: 28%;
+      @include mobile {
+        width: 100%;
+      }
       span {
         font-weight: 600;
         color: black;
@@ -44,7 +52,7 @@
       p {
         text-align: right;
         font-size: 18px;
-        @media screen and (max-width: 768px) {
+        @include mobile {
           text-align: left;
         }
       }
@@ -71,8 +79,18 @@
       box-shadow: 0 1px 3px #0000001a, 0 1px 2px #0000000f;
       border: 0.5px solid #ced4da;
       @include flex(row, flex-start, null, null);
+      @include mobile {
+        @include flex(row, space-between, null, null);
+      }
+      @include mobile-sm{
+        @include flex(column, space-between, null, null);
+      }
       .task-detail-text {
         width: 33%;
+        @include mobile-sm{
+          width: 100%;
+          margin-bottom: 10px;
+        }
       }
       .task-detail-address {
         width: 100%;
@@ -95,23 +113,50 @@
     width: 100%;
     .ant-timeline.ant-timeline-label {
       .ant-timeline-item {
+        @include mobile {
+          padding-bottom: 40px;
+        }
         .ant-timeline-item-label {
           text-align: right;
           inset-inline-start: 0%;
           inset-block-start: -9px;
           font-size: 16px;
           width: 20%;
+          @include mobile {
+            inset-inline-start: 6%;
+            width: 90%;
+            text-align: left;
+            @include flex(row, space-between, null, null);
+          }
+          @include mobile-sm {
+            inset-inline-start: 8%;
+            display: block;
+          }
         }
         .ant-timeline-item-tail {
           inset-inline-start: 21%;
           height: 110%;
+          @include mobile {
+            inset-inline-start: 4%;
+          }
         }
         .ant-timeline-item-head {
           inset-inline-start: 21%;
+          @include mobile {
+            inset-inline-start: 4%;
+          }
         }
         .ant-timeline-item-content {
           inset-inline-start: 21%;
           width: 70%;
+          @include mobile {
+            inset-inline-start: 2%;
+            width: 90%;
+            transform: translateY(40px);
+          }
+          @include mobile-sm {
+            transform: translateY(60px);
+          }
         }
       }
     }
@@ -129,13 +174,17 @@
       margin: 0px 20px 10px 20px;
       .evidence-name {
         @include flex(row, flex-start, center, null);
-        width: 40%;
+        width: 70%;
         h3 {
           margin-left: 10px;
+        }
+        @include mobile {
+          width: 100%;
         }
       }
       .evidence-time {
         @include flex(row, flex-end, center, null);
+        width: 30%;
       }
     }
     .evidence-item {
@@ -148,13 +197,13 @@
           display: inline-block;
           font-size: 16px;
         }
-        span{
+        span {
           margin-left: 5px;
           color: $color-primary;
           cursor: pointer;
           transition: 0.3s all;
         }
-        span:hover{
+        span:hover {
           opacity: 0.75;
           transition: 0.3s all;
         }
