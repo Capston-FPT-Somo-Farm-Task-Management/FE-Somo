@@ -7,6 +7,7 @@ import {
 } from "react-icons/gr";
 import { BsHourglassSplit } from "react-icons/bs";
 import { GoMegaphone } from "react-icons/go";
+import { CheckOutlined } from '@ant-design/icons';
 
 const DashboardBox = ({ taskByWeek, selectedDay }) => {
   const calculateTotalTasks = () => {
@@ -81,9 +82,9 @@ const DashboardBox = ({ taskByWeek, selectedDay }) => {
           <h5> {filteredData?.totalTaskPending}</h5>
         </div>
         <div className="dashboard-logo">
-        <div className="dashboard-pending">
-        <GrPauseFill />
-        </div>
+          <div className="dashboard-pending">
+            <GrPauseFill />
+          </div>
         </div>
       </div>
       <div className="dashboard-content">
@@ -92,9 +93,9 @@ const DashboardBox = ({ taskByWeek, selectedDay }) => {
           <h5> {filteredData?.totalTaskClose}</h5>
         </div>
         <div className="dashboard-logo">
-        <div className="dashboard-close">
-        <GrClose />
-        </div>
+          <div className="dashboard-close">
+          <CheckOutlined />
+          </div>
         </div>
       </div>
     </>

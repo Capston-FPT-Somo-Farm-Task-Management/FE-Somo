@@ -9,10 +9,6 @@
   }
   .list-header-item-right {
     @include flex(row, space-between, null, null);
-    .checkParent {
-      display: inline-block;
-      padding: 12px 0px;
-    }
     @include mobile{
       width: 100%;
       margin-top: 20px;

@@ -59,6 +59,7 @@ function ThirdModal({
   const [materialsValue, setMaterialsValue] = useState(0);
   const [selectedDays, setSelectedDays] = useState([]);
   const [shouldCheckRepeat, setShouldCheckRepeat] = useState(true);
+  const [clearSelectedDays, setClearSelectedDays] = useState(false);
 
   const [form] = Form.useForm();
 
@@ -190,6 +191,7 @@ function ThirdModal({
   const handleSelectEndDate = (date) => {
     const selectedDate = dayjs(date).second(0);
     setEndDate(selectedDate);
+    setSelectedDays([])
 
     const startDate = form.getFieldValue("startDate");
     if (selectedDate.isAfter(startDate)) {

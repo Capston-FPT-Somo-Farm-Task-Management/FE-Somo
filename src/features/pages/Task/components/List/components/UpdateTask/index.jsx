@@ -46,6 +46,7 @@ function UpdateTask({
   loadDataTask,
   currentTaskId,
   closeModal,
+  closeViewRejectModal,
   checkChangeToToDo,
 }) {
   const [selectedAreaId, setSelectedAreaId] = useState(
@@ -130,6 +131,7 @@ function UpdateTask({
   const supervisor = useSelector((state) => state.supervisor.data);
 
   const material = useSelector((state) => state.materialActive.data);
+
 
   useEffect(() => {
     dispatch(getAreaActiveByFarmId(farmId));
@@ -238,6 +240,8 @@ function UpdateTask({
   const handleSelectEndDate = (date) => {
     const selectedDate = dayjs(date).second(0);
     setEndDate(selectedDate);
+    setSelectedDays([]);
+    setInitialSelectedDays([])
 
     const startDate = form.getFieldValue("startDate");
     if (selectedDate.isAfter(startDate)) {
@@ -568,6 +572,7 @@ function UpdateTask({
       });
     closeEditTaskModal();
     closeModal();
+    closeViewRejectModal()
   };
 
   const handleUpdateTaskDraft = (currentTaskId) => {
