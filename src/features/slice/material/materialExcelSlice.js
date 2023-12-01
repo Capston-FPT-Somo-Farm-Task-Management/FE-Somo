@@ -4,14 +4,14 @@ import { toast } from 'react-toastify'
 
 const axiosInstance = createAxiosInstance()
 
-export const getEmployeeExcel = createAsyncThunk(
-  'employeeExcel/getEmployeeExcel',
+export const getMaterialExcel = createAsyncThunk(
+  'materialExcel/getMaterialExcel',
   async (id, { rejectWithValue }) => {
     try {
       axiosInstance.defaults.headers.common['Accept'] =
         'application/vnd.ms-excel'
 
-      const response = await axiosInstance.get(`/Employee/Export/${id}`, {
+      const response = await axiosInstance.get(`/Material/Farm(${id})/Export`, {
         responseType: 'blob',
       })
 
@@ -19,8 +19,7 @@ export const getEmployeeExcel = createAsyncThunk(
 
       const link = document.createElement('a')
       link.href = url
-      // Đặt tên file cho đường link tải xuống
-      link.setAttribute('download', 'DanhSachNhanVien.xlsx')
+      link.setAttribute('download', 'DanhSachCongCu.xlsx')
       document.body.appendChild(link)
       link.click()
       link.parentNode.removeChild(link)
@@ -33,10 +32,9 @@ export const getEmployeeExcel = createAsyncThunk(
   }
 )
 
-export const createEmployeeByExcel = createAsyncThunk(
-  'employeeExcel/createEmployeeByExcel',
+export const createMaterialByExcel = createAsyncThunk(
+  'materialExcel/createMaterialByExcel',
   async (data, { rejectWithValue }) => {
-    console.log(data)
     try {
       const config = {
         headers: {
@@ -44,7 +42,7 @@ export const createEmployeeByExcel = createAsyncThunk(
         },
       }
       const response = await axiosInstance.post(
-        '/Employee/ImportExcel',
+        `/Material/${data.farmId}/ImportExcel`,
         data,
         config
       )
@@ -59,8 +57,8 @@ export const createEmployeeByExcel = createAsyncThunk(
   }
 )
 
-const employeeExcelSlice = createSlice({
-  name: 'employeeExcel',
+const materialExcelSlice = createSlice({
+  name: 'materialExcel',
   initialState: {
     data: [],
     loading: false,
@@ -69,27 +67,27 @@ const employeeExcelSlice = createSlice({
   extraReducers(builder) {
     builder
 
-      .addCase(getEmployeeExcel.pending, (state) => {
+      .addCase(getMaterialExcel.pending, (state) => {
         state.loading = true
       })
-      .addCase(getEmployeeExcel.fulfilled, (state, action) => {
+      .addCase(getMaterialExcel.fulfilled, (state, action) => {
         state.loading = false
         state.data = action.payload
       })
-      .addCase(getEmployeeExcel.rejected, (state, action) => {
+      .addCase(getMaterialExcel.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
         state.data = []
       })
 
-      .addCase(createEmployeeByExcel.pending, (state) => {
+      .addCase(createMaterialByExcel.pending, (state) => {
         state.loading = true
       })
-      .addCase(createEmployeeByExcel.fulfilled, (state, action) => {
+      .addCase(createMaterialByExcel.fulfilled, (state, action) => {
         state.loading = false
         state.data = action.payload
       })
-      .addCase(createEmployeeByExcel.rejected, (state, action) => {
+      .addCase(createMaterialByExcel.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
         state.data = []
@@ -97,4 +95,4 @@ const employeeExcelSlice = createSlice({
   },
 })
 
-export default employeeExcelSlice.reducer
+export default materialExcelSlice.reducer

@@ -33,11 +33,14 @@ import employeeEffortReducer from './slice/employee/employeeEffortSlice'
 import employeeEffortTotalReducer from './slice/employee/employeeEffortTotalSlice'
 import materialReducer from './slice/material/materialSlice'
 import materialByIdReducer from './slice/material/materialById'
+import materialExcelReducer from './slice/material/materialExcelSlice'
 import materialActiveReducer from './slice/material/materialActiveByFarmSlice'
 import fieldReducer from './slice/field/fieldSlice'
 import fieldPlantReducer from './slice/field/fieldPlantSlice'
 import fieldAnimalReducer from './slice/field/fieldAnimalSlice'
 import fieldByZoneReducer from './slice/field/fieldByZoneSlice'
+import fieldListAnimalReducer from './slice/field/fieldListAnimal'
+import fieldListPlantReducer from './slice/field/fieldListPlant'
 import plantTypeReducer from './slice/plant/plantTypeSlice'
 import plantTypeActiveReducer from './slice/plant/plantTypeActiveSlice'
 import plantByFarmReducer from './slice/plant/plantByFarmSlice'
@@ -56,6 +59,7 @@ import notificationReducer from './slice/notification/notificationSlice'
 import notificationCountReducer from './slice/notification/notificationCountSlice'
 import notificationIsNewReducer from './slice/notification/notificationIsNewSlice'
 import notificationReadReducer from './slice/notification/notificationReadSlice'
+import notifyChangeReducer from './slice/notification/notifyChangeSlice'
 import employeeByFarmReducer from './slice/employee/employeeByFarmSlice'
 import locationReducer from './slice/location/locationSlice'
 
@@ -80,9 +84,12 @@ export const store = configureStore({
     material: materialReducer,
     materialActive: materialActiveReducer,
     materialById: materialByIdReducer,
+    materialExcel: materialExcelReducer,
     field: fieldReducer,
     fieldPlant: fieldPlantReducer,
     fieldAnimal: fieldAnimalReducer,
+    fieldListAnimal: fieldListAnimalReducer,
+    fieldListPlant: fieldListPlantReducer,
     fieldByZone: fieldByZoneReducer,
     plantType: plantTypeReducer,
     plantTypeActive: plantTypeActiveReducer,
@@ -115,6 +122,7 @@ export const store = configureStore({
     notificationCount: notificationCountReducer,
     notificationIsNew: notificationIsNewReducer,
     notificationRead: notificationReadReducer,
+    notifyChange: notifyChangeReducer,
     employeeByFarm: employeeByFarmReducer,
     employeeExcel: employeeExcelReducer,
     employeeEffort: employeeEffortReducer,

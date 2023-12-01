@@ -66,7 +66,7 @@ const AddEmployee = ({
         icon={<DownloadOutlined style={{ color: 'green', fontSize: '14px' }} />}
         style={{ fontSize: '14px' }}
       >
-        Tải danh sách
+        Tải danh sách nhân viên
       </Menu.Item>
       <Menu.Item
         key="2"
@@ -76,7 +76,7 @@ const AddEmployee = ({
         }
         style={{ fontSize: '14px' }}
       >
-        Tải giờ làm
+        Tải giờ làm nhân viên
       </Menu.Item>
       <Menu.Item
         key="3"
@@ -86,7 +86,7 @@ const AddEmployee = ({
         }
         style={{ fontSize: '14px' }}
       >
-        Thêm nhân viên bằng Excel
+        Thêm nhân viên bằng tệp Excel
       </Menu.Item>
     </Menu>
   )

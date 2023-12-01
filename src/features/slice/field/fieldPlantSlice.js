@@ -5,12 +5,12 @@ const axiosInstance = createAxiosInstance()
 
 export const getFieldPlant = createAsyncThunk(
   'fieldPlant/getFieldPlant',
-  async () => {
+  async (_, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get('/Field/Plant/Active')
       return data
     } catch (error) {
-      console.log(error)
+      rejectWithValue(error)
     }
   }
 )

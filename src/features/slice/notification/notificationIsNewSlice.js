@@ -18,23 +18,6 @@ export const getNotifyIsNewById = createAsyncThunk(
   }
 )
 
-export const changeAllNotifyNewToRead = createAsyncThunk(
-  'notificationIsNew/changeAllNotifyNewToRead',
-  async (data, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.put(
-        `/Notification/IsNew/MemberId(${data})`
-      )
-      if (response.status === 200) {
-        console.log('Đổi thành công tất cả')
-      }
-      return response.json()
-    } catch (error) {
-      rejectWithValue(error)
-    }
-  }
-)
-
 const notificationIsNewSlice = createSlice({
   name: 'notificationIsNew',
   initialState: {
@@ -57,18 +40,6 @@ const notificationIsNewSlice = createSlice({
         state.totalPages = action.payload.data.totalPages
       })
       .addCase(getNotifyIsNewById.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload
-      })
-
-      .addCase(changeAllNotifyNewToRead.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(changeAllNotifyNewToRead.fulfilled, (state, action) => {
-        state.loading = false
-        state.data = action.payload
-      })
-      .addCase(changeAllNotifyNewToRead.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
       })
