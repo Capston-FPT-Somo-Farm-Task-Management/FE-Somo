@@ -4,11 +4,11 @@ import TextArea from "antd/es/input/TextArea";
 import ImgCrop from "antd-img-crop";
 import { UploadOutlined } from "@ant-design/icons";
 
-const ChangeDoingToCancel = ({
+const ChangeStatusToCancel = ({
   currentTaskId,
-  taskDoingToCancelModalVisible,
-  closeChangeDoingToCancelModal,
-  handleChangeDoingToCancelTask,
+  taskToCancelModalVisible,
+  closeChangeStatusToCancelModal,
+  handleChangeStatusToCancelTask,
   description,
   handleDescription,
   fileList,
@@ -16,11 +16,11 @@ const ChangeDoingToCancel = ({
 }) => {
   return (
     <>
-      {taskDoingToCancelModalVisible && (
+      {taskToCancelModalVisible && (
         <Modal
           title="Hủy bỏ"
-          open={taskDoingToCancelModalVisible}
-          onCancel={closeChangeDoingToCancelModal}
+          open={taskToCancelModalVisible}
+          onCancel={closeChangeStatusToCancelModal}
           footer={[
             <Button form="doingToCancel" type="primary" htmlType="submit">
               Đồng ý
@@ -29,7 +29,7 @@ const ChangeDoingToCancel = ({
         >
           <Form
             layout="vertical"
-            onFinish={() => handleChangeDoingToCancelTask(currentTaskId)}
+            onFinish={() => handleChangeStatusToCancelTask(currentTaskId)}
             id="doingToCancel"
           >
             <Form.Item
@@ -69,4 +69,4 @@ const ChangeDoingToCancel = ({
   );
 };
 
-export default ChangeDoingToCancel;
+export default ChangeStatusToCancel;

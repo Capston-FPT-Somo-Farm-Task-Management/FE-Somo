@@ -9,7 +9,7 @@ import {
 } from 'recharts'
 
 const PieChartTaskWeek = ({ taskByWeek, selectedDay }) => {
-  const COLORS = ['#1a659e', '#25a18e', '#FFBB28']
+  const COLORS = ['#1a659e', '#02c39a', '#FFBB28']
 
   const calculateTotalTasks = () => {
     if (selectedDay !== null) {

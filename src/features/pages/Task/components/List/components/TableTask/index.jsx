@@ -35,7 +35,7 @@ function TableTask({
   openDeleteModal,
   openCloseModal,
   openChangeDoingToPendingModal,
-  openChangeDoingToCancelModal,
+  openChangeStatusToCancelModal,
   onChange,
   openModal,
 }) {
@@ -100,7 +100,7 @@ function TableTask({
                 const isStatus =
                   record &&
                   (record.status === "Bản nháp" ||
-                    record.status === "Chuẩn bị")
+                    record.status === "Chuẩn bị");
                 const isStatusSubTask =
                   record &&
                   (record.status === "Bản nháp" ||
@@ -200,7 +200,7 @@ function TableTask({
                               <Menu.Item key="cancel">
                                 <span
                                   onClick={() =>
-                                    openChangeDoingToCancelModal(record)
+                                    openChangeStatusToCancelModal(record)
                                   }
                                 >
                                   <CloseCircleOutlined
@@ -216,17 +216,34 @@ function TableTask({
                           ) : null}
 
                           {isStatusChangeToDoing && isStatusChangeToDoing ? (
-                            <Menu.Item key="changeToDoing">
-                              <span>
-                                <UndoOutlined
-                                  style={{
-                                    color: "blue",
-                                    marginRight: "8px",
-                                  }}
-                                />
-                                Chuyển sang thực hiện
-                              </span>
-                            </Menu.Item>
+                            <>
+                              <Menu.Item key="changeToDoing">
+                                <span>
+                                  <UndoOutlined
+                                    style={{
+                                      color: "blue",
+                                      marginRight: "8px",
+                                    }}
+                                  />
+                                  Chuyển sang thực hiện
+                                </span>
+                              </Menu.Item>
+                              <Menu.Item key="cancel">
+                                <span
+                                  onClick={() =>
+                                    openChangeStatusToCancelModal(record)
+                                  }
+                                >
+                                  <CloseCircleOutlined
+                                    style={{
+                                      color: "red",
+                                      marginRight: "8px",
+                                    }}
+                                  />
+                                  Hủy bỏ
+                                </span>
+                              </Menu.Item>
+                            </>
                           ) : null}
 
                           {record.status === "Từ chối" ? (
