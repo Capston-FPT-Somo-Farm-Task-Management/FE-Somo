@@ -67,13 +67,19 @@ html {
 .task-form {
   display: flex;
   justify-content: space-around;
+  @include mobile-sm{
+    display: block;
+  }
   .form-left {
     width: 45%;
+    @include mobile-sm{
+      width: 100%;
+    }
   }
   .form-right {
     width: 45%;
-    .ql-editor {
-      min-height: 150px;
+    @include mobile-sm{
+      width: 100%;
     }
   }
   .form-task-button{

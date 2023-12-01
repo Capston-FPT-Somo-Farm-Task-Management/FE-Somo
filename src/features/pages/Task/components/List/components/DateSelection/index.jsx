@@ -7,11 +7,13 @@ function DateSelectionComp({
 }) {
   return (
     <>
+    <p>Xem theo ngày</p>
       <DatePicker
         value={selectedDate}
         onChange={handleDateChange}
-        placeholder="Xem theo ngày"
+        placeholder="Chọn ngày"
         format="DD-MM-YYYY"
+        style={{width: "80%", marginBottom: "20px"}}
       />
     </>
   );

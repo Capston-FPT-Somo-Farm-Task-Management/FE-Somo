@@ -37,7 +37,7 @@ const ChartTaskWeek = ({ taskByWeek, onBarClick }) => {
 
   return (
     <>
-      <h3>Biểu đồ công việc theo tuần</h3>
+      <h3>Tổng số công việc theo ngày</h3>
       <div
         style={{
           display: "flex",
@@ -45,10 +45,9 @@ const ChartTaskWeek = ({ taskByWeek, onBarClick }) => {
           alignItems: "center",
           width: "100%",
           height: "400px",
-          minWidth: "300px",
         }}
       >
-        <ResponsiveContainer height="80%">
+        <ResponsiveContainer height="85%">
           <BarChart
             data={data}
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
@@ -65,7 +64,7 @@ const ChartTaskWeek = ({ taskByWeek, onBarClick }) => {
               fill="#82ca9d"
               shape={renderBarShape}
               onClick={(entry, index) => onBarClick(index)}
-              barSize={70}
+              barSize={50}
             />
             <Legend />
           </BarChart>

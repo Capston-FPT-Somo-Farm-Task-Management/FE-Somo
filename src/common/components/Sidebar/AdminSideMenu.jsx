@@ -52,7 +52,7 @@ const AdminSideMenu = () => {
     <div className="sider">
       {isDesktop && (
         <Sider
-          theme="light"
+          theme="dark"
           style={{
             overflow: 'auto',
             height: '100vh',
@@ -66,7 +66,7 @@ const AdminSideMenu = () => {
             <img src={logoSomo} alt="logo" />
           </div>
           <Menu
-            theme="light"
+            theme="dark"
             mode="inline"
             defaultSelectedKeys={[location.pathname]}
           >

@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 import {
   GrMap,
   GrAlarm,
   GrUserManager,
   GrHostMaintenance,
-} from 'react-icons/gr'
-import { GiCow, GiFruitTree, GiRingingBell } from 'react-icons/gi'
+} from "react-icons/gr";
+import { GiCow, GiFruitTree, GiRingingBell } from "react-icons/gi";
 
 const TaskDetailHabitant = ({
   taskData,
@@ -57,27 +57,27 @@ const TaskDetailHabitant = ({
         </h2>
         <div className="task-detail-item">
           <div className="task-detail-text">
-            <h5>Ngày bắt đầu</h5>
+            <h5>Thời gian bắt đầu</h5>
             {taskData.startDate ? (
               <p>{formattedStartDate}</p>
             ) : (
-              <p>Chưa có ngày bắt đầu</p>
+              <p>Chưa có thời gian bắt đầu</p>
             )}
           </div>
           <div className="task-detail-text">
-            <h5>Ngày kết thúc</h5>
+            <h5>Thời gian kết thúc</h5>
             {taskData.startDate ? (
               <p>{formattedEndDate}</p>
             ) : (
-              <p>Chưa có ngày kết thúc</p>
+              <p>Chưa có thời gian kết thúc</p>
             )}
           </div>
-          {taskData.status === 'Bản nháp' ||
-          taskData.status === 'Chuẩn bị' ? null : (
+          {taskData.status === "Bản nháp" ||
+          taskData.status === "Chuẩn bị" ? null : (
             <div className="task-detail-text">
               <h5>Thời gian dự kiến phải bỏ ra</h5>
               <p>
-                {taskData.overallEffortHour} giờ {taskData.overallEfforMinutes}{' '}
+                {taskData.overallEffortHour} giờ {taskData.overallEfforMinutes}{" "}
                 phút
               </p>
             </div>
@@ -90,10 +90,13 @@ const TaskDetailHabitant = ({
           Phụ trách
         </h2>
         <div className="task-detail-item">
-          <div className="task-detail-text">
-            <h5>Người quản lý</h5>
-            <p>{taskData.managerName}</p>
-          </div>
+          {taskData.managerName ? (
+            <div className="task-detail-text">
+              <h5>Người quản lý</h5>
+              <p>{taskData.managerName}</p>
+            </div>
+          ) : null}
+
           <div className="task-detail-text">
             <h5>Người giám sát</h5>
             {taskData.supervisorName ? (
@@ -228,7 +231,7 @@ const TaskDetailHabitant = ({
           {taskData.dateRepeate && taskData.dateRepeate.length > 0 ? (
             <div className="task-detail-text">
               <h5>Ngày lặp lại</h5>
-              <p>{formattedRepeatDate.join(', ')}</p>
+              <p>{formattedRepeatDate.join(", ")}</p>
             </div>
           ) : (
             <div className="task-detail-text">
@@ -239,7 +242,7 @@ const TaskDetailHabitant = ({
         </div>
       </>
     </>
-  )
-}
+  );
+};
 
-export default TaskDetailHabitant
+export default TaskDetailHabitant;

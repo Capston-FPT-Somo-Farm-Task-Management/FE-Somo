@@ -1,6 +1,8 @@
 import { Button, Form, Input, Modal } from "antd";
 import React from "react";
 
+const { TextArea } = Input;
+
 const ChangeDoneToDoing = ({
   selectedTask,
   taskDoneToDoingVisible,
@@ -13,15 +15,15 @@ const ChangeDoneToDoing = ({
     <>
       {taskDoneToDoingVisible && (
         <Modal
-          title="Chuyển sang thực hiện"
+          title="Yêu cầu làm lại"
           open={taskDoneToDoingVisible}
           onCancel={closeChangeDoneToDoingModal}
           footer={[
-            <Button form="doneToDoing" type="primary" htmlType="submit">
-              Lưu thay đổi
-            </Button>,
-            <Button type="primary" onClick={closeChangeDoneToDoingModal}>
+            <Button onClick={closeChangeDoneToDoingModal}>
               Đóng
+            </Button>,
+            <Button form="doneToDoing" type="primary" danger htmlType="submit">
+              Xác nhận
             </Button>,
           ]}
         >
@@ -32,13 +34,11 @@ const ChangeDoneToDoing = ({
             }}
             id="doneToDoing"
           >
-            <Form.Item
-              label="Lý do chuyển sang thực hiện"
-              name="description"
-            >
-              <Input
-                placeholder="Nhập lý do chuyển"
+            <Form.Item label="Lý do phải làm lại" name="description">
+              <TextArea
+                placeholder="Nhập lý do"
                 value={description}
+                rows={5}
                 onChange={handleDescription}
               />
             </Form.Item>
