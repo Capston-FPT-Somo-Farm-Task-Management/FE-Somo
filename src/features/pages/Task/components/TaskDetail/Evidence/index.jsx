@@ -4,12 +4,15 @@ import NoImage from "../../../../../../assets/no-image.png";
 import { Avatar, Button, Collapse, Empty, Image, Space, Timeline } from "antd";
 import { GrDocumentImage } from "react-icons/gr";
 import dayjs from "dayjs";
+import {
+  useMobileMediaQuery,
+  useMobileSMMediaQuery,
+  useTabletMediaQuery,
+} from "common/hooks/responsive";
 
 const { Panel } = Collapse;
 
-function Evidence({
-  taskData,
-}) {
+function Evidence({ taskData }) {
   const evidenceData = useSelector((state) => state.evidence.data);
   console.log(taskData);
   const [expandedDescriptions, setExpandedDescriptions] = useState([]);
@@ -23,6 +26,8 @@ function Evidence({
       }
     });
   };
+
+  const isMobile = useMobileMediaQuery()
 
   const renderImages = () => {
     if (evidenceData && evidenceData.data && evidenceData.data.length > 0) {
@@ -67,15 +72,23 @@ function Evidence({
                     <Avatar src={evidence.avatarManager} size="large" />
                     <h3>{evidence.managerName}</h3>
                   </div>
-                  <p className="evidence-time">{evidence.time}</p>
+                  {!isMobile ? (
+                    <p className="evidence-time">{evidence.time}</p>
+                  ) : null}
                 </div>
               ) : (
                 <div className="evidence-item-header">
                   <div className="evidence-name">
-                    <Avatar src={taskData ? taskData.avatarSupervisor : null} size="large" />
+                    <Avatar
+                      src={taskData ? taskData.avatarSupervisor : null}
+                      size="large"
+                    />
                     <h3>{taskData ? taskData.supervisorName : null}</h3>
                   </div>
-                  <p className="evidence-time">{evidence.time}</p>
+
+                  {!isMobile ? (
+                    <p className="evidence-time">{evidence.time}</p>
+                  ) : null}
                 </div>
               )}
 
@@ -454,7 +467,6 @@ function Evidence({
         Báo cáo công việc
       </h6>
       {renderImages()}
-      
     </div>
   );
 }

@@ -67,10 +67,12 @@ const TaskDetailOther = ({
           Phụ trách
         </h2>
         <div className="task-detail-item">
-          <div className="task-detail-text">
-            <h5>Người quản lý</h5>
-            <p>{taskData.managerName}</p>
-          </div>
+          {taskData.managerName ? (
+            <div className="task-detail-text">
+              <h5>Người quản lý</h5>
+              <p>{taskData.managerName}</p>
+            </div>
+          ) : null}
           <div className="task-detail-text">
             <h5>Người giám sát</h5>
             {taskData.supervisorName ? (

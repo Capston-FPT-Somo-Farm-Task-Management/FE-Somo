@@ -17,9 +17,9 @@ export const useTabletMediaQuery = () => {
 }
 
 export const useMobileMediaQuery = () => {
-  return useMediaQuery({ query: '(max-width: 768px)' })
+  return useMediaQuery({ query: '(max-width: 792px)' })
 }
 
 export const useMobileSMMediaQuery = () => {
-  return useMediaQuery({ query: '(max-width: 576px)' })
+  return useMediaQuery({ query: '(max-width: 480px)' })
 }

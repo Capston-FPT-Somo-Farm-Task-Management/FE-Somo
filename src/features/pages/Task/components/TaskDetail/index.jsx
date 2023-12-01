@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Modal } from "antd";
 import TaskContent from "./TaskContent";
 import Evidence from "./Evidence";
+import { useMobileMediaQuery } from "common/hooks/responsive";
 
 const TaskDetail = ({
   visible,
@@ -12,6 +13,7 @@ const TaskDetail = ({
   closeEditTaskModal,
   openChangeDoneToDoingModal,
 }) => {
+  const isMobile = useMobileMediaQuery();
   return (
     <Modal
       title={
@@ -27,7 +29,7 @@ const TaskDetail = ({
             <Button
               danger
               onClick={openChangeDoneToDoingModal}
-              style={{marginRight: "30px"}}
+              style={{ marginRight: "30px" }}
             >
               Yêu cầu làm lại
             </Button>
@@ -38,7 +40,7 @@ const TaskDetail = ({
       }
       open={visible}
       onCancel={onCancel}
-      footer={null}
+      footer={isMobile ? <Button onClick={onCancel}>Đóng</Button> : null}
       width={1200}
       className="modal-detail"
       style={{ maxWidth: "90%", margin: "0 auto" }}

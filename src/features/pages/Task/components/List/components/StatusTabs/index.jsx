@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Tabs } from "antd";
 
 const { TabPane } = Tabs;
 
 function StatusTabs({ onTabChange }) {
+  
   return (
     <Tabs
       defaultActiveKey="0"

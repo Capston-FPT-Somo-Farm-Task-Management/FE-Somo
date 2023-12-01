@@ -70,6 +70,8 @@ const List = () => {
 
   const loading = useSelector((state) => state.task.loading);
 
+  console.log(task);
+
   const dispatch = useDispatch();
 
   const loadDataTask = () => {

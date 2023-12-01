@@ -7,11 +7,15 @@
     @include flex(row, space-between, null, wrap);
     margin-bottom: 20px;
   }
-  .list-checkTask {
+  .list-header-item-right {
     @include flex(row, space-between, null, null);
     .checkParent {
       display: inline-block;
       padding: 12px 0px;
+    }
+    @include mobile{
+      width: 100%;
+      margin-top: 20px;
     }
   }
   .menu-icon {
@@ -44,4 +48,10 @@
 .button-filter:focus {
   background-color: #007bff;
   color: #fff
+}
+
+.ant-table-wrapper .ant-table-pagination-right{
+  @include mobile{
+    justify-content: center;
+  }
 }

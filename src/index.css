@@ -417,14 +417,20 @@ html {
   flex-wrap: wrap;
   margin-bottom: 20px;
 }
-.list .list-checkTask {
+.list .list-header-item-right {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.list .list-checkTask .checkParent {
+.list .list-header-item-right .checkParent {
   display: inline-block;
   padding: 12px 0px;
+}
+@media (max-width: 792px) {
+  .list .list-header-item-right {
+    width: 100%;
+    margin-top: 20px;
+  }
 }
 .list .menu-icon {
   font-size: 20px;
@@ -459,6 +465,12 @@ html {
 .button-filter:focus {
   background-color: #007bff;
   color: #fff;
+}
+
+@media (max-width: 792px) {
+  .ant-table-wrapper .ant-table-pagination-right {
+    justify-content: center;
+  }
 }
 
 .first-modal {
@@ -831,12 +843,20 @@ html {
   flex-direction: row;
   justify-content: space-between;
 }
-@media screen and (max-width: 768px) {
+@media (max-width: 792px) {
   .task-detail .task-detail-title-row {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
+  }
+}
+.task-detail .task-detail-title-row .task-detail-title {
+  width: 70%;
+}
+@media (max-width: 792px) {
+  .task-detail .task-detail-title-row .task-detail-title {
+    width: 100%;
   }
 }
 .task-detail .task-detail-title-row .task-detail-title h1 {
@@ -859,6 +879,12 @@ html {
 }
 .task-detail .task-detail-title-row .task-title-priority-status {
   margin-top: 10px;
+  width: 28%;
+}
+@media (max-width: 792px) {
+  .task-detail .task-detail-title-row .task-title-priority-status {
+    width: 100%;
+  }
 }
 .task-detail .task-detail-title-row .task-title-priority-status span {
   font-weight: 600;
@@ -868,7 +894,7 @@ html {
   text-align: right;
   font-size: 18px;
 }
-@media screen and (max-width: 768px) {
+@media (max-width: 792px) {
   .task-detail .task-detail-title-row .task-title-priority-status p {
     text-align: left;
   }
@@ -900,8 +926,28 @@ html {
   flex-direction: row;
   justify-content: flex-start;
 }
+@media (max-width: 792px) {
+  .task-detail .task-detail-content .task-detail-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+@media (max-width: 479px) {
+  .task-detail .task-detail-content .task-detail-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
 .task-detail .task-detail-content .task-detail-item .task-detail-text {
   width: 33%;
+}
+@media (max-width: 479px) {
+  .task-detail .task-detail-content .task-detail-item .task-detail-text {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }
 .task-detail .task-detail-content .task-detail-item .task-detail-address {
   width: 100%;
@@ -921,6 +967,11 @@ html {
   display: block;
   width: 100%;
 }
+@media (max-width: 792px) {
+  .evidence .ant-space .ant-timeline.ant-timeline-label .ant-timeline-item {
+    padding-bottom: 40px;
+  }
+}
 .evidence .ant-space .ant-timeline.ant-timeline-label .ant-timeline-item .ant-timeline-item-label {
   text-align: right;
   inset-inline-start: 0%;
@@ -928,16 +979,54 @@ html {
   font-size: 16px;
   width: 20%;
 }
+@media (max-width: 792px) {
+  .evidence .ant-space .ant-timeline.ant-timeline-label .ant-timeline-item .ant-timeline-item-label {
+    inset-inline-start: 6%;
+    width: 90%;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+@media (max-width: 479px) {
+  .evidence .ant-space .ant-timeline.ant-timeline-label .ant-timeline-item .ant-timeline-item-label {
+    inset-inline-start: 8%;
+    display: block;
+  }
+}
 .evidence .ant-space .ant-timeline.ant-timeline-label .ant-timeline-item .ant-timeline-item-tail {
   inset-inline-start: 21%;
   height: 110%;
 }
+@media (max-width: 792px) {
+  .evidence .ant-space .ant-timeline.ant-timeline-label .ant-timeline-item .ant-timeline-item-tail {
+    inset-inline-start: 4%;
+  }
+}
 .evidence .ant-space .ant-timeline.ant-timeline-label .ant-timeline-item .ant-timeline-item-head {
   inset-inline-start: 21%;
+}
+@media (max-width: 792px) {
+  .evidence .ant-space .ant-timeline.ant-timeline-label .ant-timeline-item .ant-timeline-item-head {
+    inset-inline-start: 4%;
+  }
 }
 .evidence .ant-space .ant-timeline.ant-timeline-label .ant-timeline-item .ant-timeline-item-content {
   inset-inline-start: 21%;
   width: 70%;
+}
+@media (max-width: 792px) {
+  .evidence .ant-space .ant-timeline.ant-timeline-label .ant-timeline-item .ant-timeline-item-content {
+    inset-inline-start: 2%;
+    width: 90%;
+    transform: translateY(40px);
+  }
+}
+@media (max-width: 479px) {
+  .evidence .ant-space .ant-timeline.ant-timeline-label .ant-timeline-item .ant-timeline-item-content {
+    transform: translateY(60px);
+  }
 }
 .evidence .evidence-content {
   width: 100%;
@@ -960,16 +1049,22 @@ html {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  width: 40%;
+  width: 70%;
 }
 .evidence .evidence-content .evidence-item-header .evidence-name h3 {
   margin-left: 10px;
+}
+@media (max-width: 792px) {
+  .evidence .evidence-content .evidence-item-header .evidence-name {
+    width: 100%;
+  }
 }
 .evidence .evidence-content .evidence-item-header .evidence-time {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  width: 30%;
 }
 .evidence .evidence-content .evidence-item .evidence-desc {
   max-width: 80%;
@@ -2321,4 +2416,8 @@ html {
 .custom-tabs .ant-tabs-nav .ant-tabs-tab {
   width: auto;
   white-space: nowrap;
+}
+
+.ant-tabs-dropdown-menu-item:hover {
+  padding: 10px;
 }/*# sourceMappingURL=index.css.map */

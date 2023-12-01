@@ -10,11 +10,17 @@ import {
   PauseCircleOutlined,
   UndoOutlined,
   SolutionOutlined,
-  FormOutlined
+  FormOutlined,
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
-import { useDesktopMediaQuery, useDesktopXLMediaQuery, useMobileMediaQuery, useTabletMediaQuery } from "common/hooks/responsive";
+import {
+  useDesktopMediaQuery,
+  useDesktopXLMediaQuery,
+  useMobileMediaQuery,
+  useMobileSMMediaQuery,
+  useTabletMediaQuery,
+} from "common/hooks/responsive";
 
 function TableTask({
   task,
@@ -35,20 +41,39 @@ function TableTask({
 }) {
   const dispatch = useDispatch();
 
-  const isMobile = useMobileMediaQuery()
+  const isMobileSM = useMobileSMMediaQuery();
 
-  const isTablet = useTabletMediaQuery()
+  const isMobile = useMobileMediaQuery();
 
-  const isDesktopXL = useDesktopXLMediaQuery()
+  const isTablet = useTabletMediaQuery();
+
+  const isDesktopXL = useDesktopXLMediaQuery();
 
   const columns = taskTitle?.filter((column) => {
     // Nếu là màn hình Mobile, ẩn cột ngày bắt đầu và ngày kết thúc
-    if (isMobile) {
-      return column.dataIndex !== 'startDate' && column.dataIndex !== 'endDate' && column.dataIndex !== 'supervisorName' && column.dataIndex !== 'priority';
-    }else if (isTablet) {
-      return column.dataIndex !== 'startDate' && column.dataIndex !== 'endDate' && column.dataIndex !== 'supervisorName';
-    }else if(isDesktopXL){
-      return column.dataIndex !== 'startDate' && column.dataIndex !== 'endDate';
+    if (isMobileSM) {
+      return (
+        column.dataIndex !== "startDate" &&
+        column.dataIndex !== "endDate" &&
+        column.dataIndex !== "supervisorName" &&
+        column.dataIndex !== "managerName" &&
+        column.dataIndex !== "priority"
+      );
+    } else if (isMobile) {
+      return (
+        column.dataIndex !== "startDate" &&
+        column.dataIndex !== "endDate" &&
+        column.dataIndex !== "supervisorName" &&
+        column.dataIndex !== "managerName"
+      );
+    } else if (isTablet) {
+      return (
+        column.dataIndex !== "startDate" &&
+        column.dataIndex !== "endDate" &&
+        column.dataIndex !== "supervisorName"
+      );
+    } else if (isDesktopXL) {
+      return column.dataIndex !== "startDate" && column.dataIndex !== "endDate";
     }
     // Cho các màn hình khác, hiển thị tất cả các cột
     return true;
@@ -91,6 +116,7 @@ function TableTask({
                 if (isManager) {
                   return (
                     <Dropdown
+                      trigger="click"
                       placement="bottomRight"
                       overlay={
                         <Menu onClick={(e) => handleMenuClick(e, record)}>
@@ -206,8 +232,12 @@ function TableTask({
 
                           {record.status === "Từ chối" ? (
                             <>
-                            <Menu.Item key="viewReject">
-                                <span onClick={() => dispatch(getEvidenceByTaskId(record.id))}>
+                              <Menu.Item key="viewReject">
+                                <span
+                                  onClick={() =>
+                                    dispatch(getEvidenceByTaskId(record.id))
+                                  }
+                                >
                                   <SolutionOutlined
                                     style={{
                                       color: "blue",
@@ -219,7 +249,7 @@ function TableTask({
                               </Menu.Item>
                               <Menu.Item key="reAssign">
                                 <span onClick={() => openEditTaskModal(record)}>
-                                  <FormOutlined 
+                                  <FormOutlined
                                     style={{
                                       color: "gold",
                                       marginRight: "8px",
