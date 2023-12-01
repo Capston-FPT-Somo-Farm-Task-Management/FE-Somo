@@ -75,14 +75,26 @@ html {
   display: flex;
   justify-content: space-around;
 }
+@media (max-width: 479px) {
+  .task-form {
+    display: block;
+  }
+}
 .task-form .form-left {
   width: 45%;
+}
+@media (max-width: 479px) {
+  .task-form .form-left {
+    width: 100%;
+  }
 }
 .task-form .form-right {
   width: 45%;
 }
-.task-form .form-right .ql-editor {
-  min-height: 150px;
+@media (max-width: 479px) {
+  .task-form .form-right {
+    width: 100%;
+  }
 }
 .task-form .form-task-button {
   display: inline-block;

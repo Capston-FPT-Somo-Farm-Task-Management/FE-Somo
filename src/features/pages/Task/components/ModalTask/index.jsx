@@ -9,6 +9,7 @@ import {
   CheckCircleOutlined,
   ProfileOutlined,
 } from "@ant-design/icons";
+import { useMobileSMMediaQuery } from "common/hooks/responsive";
 
 const { Step } = Steps;
 
@@ -60,6 +61,8 @@ function ModalTask({
     setSelectedOption(option);
     setCurrentStep(currentStep + 1);
   };
+
+  const isMobileSM = useMobileSMMediaQuery();
 
   const renderStepContent = (step) => {
     switch (step) {
@@ -133,10 +136,20 @@ function ModalTask({
                 <ArrowLeftOutlined />
                 Trở lại
               </Button>
+            ) : isMobileSM ? (
+              <Button
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                }}
+                onClick={handleBack}
+              >
+                <ArrowLeftOutlined />
+              </Button>
             ) : (
               <Button
                 style={{
-                  margin: "0 8px",
                   display: "flex",
                   justifyContent: "flex-start",
                   alignItems: "center",
@@ -168,6 +181,29 @@ function ModalTask({
                   disabled={isCreatingTask}
                 >
                   Tạo công việc
+                  <CheckCircleOutlined />
+                </Button>
+              </div>
+            ) : isMobileSM ? (
+              <div className="button-create">
+                <Button
+                  type="dashed"
+                  form="createTask"
+                  htmlType="submit"
+                  onClick={handleIsDraft}
+                  disabled={isCreatingTask}
+                >
+                  Lưu nháp
+                  <ProfileOutlined />
+                </Button>
+                <Button
+                  type="primary"
+                  form="createTask"
+                  htmlType="submit"
+                  onClick={handleIsTaskToDo}
+                  disabled={isCreatingTask}
+                >
+                  Tạo
                   <CheckCircleOutlined />
                 </Button>
               </div>
