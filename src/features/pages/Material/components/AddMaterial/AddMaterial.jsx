@@ -1,9 +1,22 @@
-import { Button, Form } from 'antd'
+import { Button, Dropdown, Form, Menu } from 'antd'
 import { useState } from 'react'
 import FormAddMaterial from '../FormAddMaterial/FormAddMaterial'
 import Search from 'antd/es/input/Search'
+import {
+  DashOutlined,
+  DownloadOutlined,
+  ClockCircleOutlined,
+  FileExcelOutlined,
+} from '@ant-design/icons'
+import FormUploadExcel from '../DisplayMaterial/FormUploadExcel'
 
-const AddMaterial = ({ onFinishCreate, farmId, handleSearch }) => {
+const AddMaterial = ({
+  onFinishCreate,
+  farmId,
+  handleSearch,
+  getMaterialByExcel,
+  onFinishCreateMaterialExcel,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => {
@@ -13,6 +26,40 @@ const AddMaterial = ({ onFinishCreate, farmId, handleSearch }) => {
   const closeModal = () => {
     setIsModalOpen(false)
   }
+
+  // modal upload
+  const [isModalOpenExcel, setIsModalOpenExcel] = useState(false)
+
+  const openModalExcel = () => {
+    setIsModalOpenExcel(true)
+  }
+
+  const closeModalExcel = () => {
+    setIsModalOpenExcel(false)
+  }
+
+  const menu = (
+    <Menu>
+      <Menu.Item
+        key="downloadMaterial"
+        onClick={getMaterialByExcel}
+        icon={<DownloadOutlined style={{ color: 'green', fontSize: '14px' }} />}
+        style={{ fontSize: '14px' }}
+      >
+        Tải danh sách công cụ
+      </Menu.Item>
+      <Menu.Item
+        key="uploadMaterial"
+        onClick={openModalExcel}
+        icon={
+          <FileExcelOutlined style={{ color: 'orange', fontSize: '14px' }} />
+        }
+        style={{ fontSize: '14px' }}
+      >
+        Thêm công cụ bằng tệp Excel
+      </Menu.Item>
+    </Menu>
+  )
 
   return (
     <>
@@ -31,6 +78,18 @@ const AddMaterial = ({ onFinishCreate, farmId, handleSearch }) => {
                 isModalOpen={isModalOpen}
                 closeModal={closeModal}
                 onFinishCreate={onFinishCreate}
+              />
+
+              <Dropdown overlay={menu}>
+                <Button type="dashed">
+                  <DashOutlined />
+                </Button>
+              </Dropdown>
+
+              <FormUploadExcel
+                isModalOpenExcel={isModalOpenExcel}
+                closeModalExcel={closeModalExcel}
+                onFinishCreateMaterialExcel={onFinishCreateMaterialExcel}
               />
             </div>
 

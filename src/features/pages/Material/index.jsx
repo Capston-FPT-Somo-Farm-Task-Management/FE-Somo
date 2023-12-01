@@ -11,6 +11,10 @@ import {
 import { useEffect, useState } from 'react'
 import { authServices } from 'services/authServices'
 import { getMemberById } from 'features/slice/user/memberSlice'
+import {
+  createMaterialByExcel,
+  getMaterialExcel,
+} from 'features/slice/material/materialExcelSlice'
 
 const Material = () => {
   const dispatch = useDispatch()
@@ -48,6 +52,22 @@ const Material = () => {
     })
   }
 
+  // Excel
+  const getMaterialByExcel = () => {
+    dispatch(getMaterialExcel(farmId))
+  }
+
+  const onFinishCreateMaterialExcel = (value) => {
+    const finalValues = {
+      ...value,
+      farmId: farmId,
+    }
+
+    dispatch(createMaterialByExcel(finalValues)).then(() => {
+      loadData()
+    })
+  }
+
   const loadData = () => {
     dispatch(getMaterialByFarmId(farmId))
   }
@@ -58,6 +78,8 @@ const Material = () => {
         onFinishCreate={onFinishCreate}
         farmId={farmId}
         handleSearch={handleSearch}
+        getMaterialByExcel={getMaterialByExcel}
+        onFinishCreateMaterialExcel={onFinishCreateMaterialExcel}
       />
       <DisplayMaterial
         loading={loading}

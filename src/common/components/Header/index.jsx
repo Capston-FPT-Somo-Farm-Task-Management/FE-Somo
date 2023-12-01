@@ -25,21 +25,26 @@ import { deleteHubConnection } from 'features/slice/hub/hubSlice'
 import { authServices } from 'services/authServices'
 import { toast } from 'react-toastify'
 import dayjs from 'dayjs'
-import { updateMember } from 'features/slice/user/memberSlice'
+import { getMemberById, updateMember } from 'features/slice/user/memberSlice'
 import Notification from 'features/pages/Notification'
-import { changeAllNotifyNewToRead } from 'features/slice/notification/notificationIsNewSlice'
+import { countNewNotify } from 'features/slice/notification/notificationCountSlice'
+import { changeAllNotifyNewToRead } from 'features/slice/notification/notifyChangeSlice'
 
 function HeaderComp() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [isModalEditVisible, setIsModalEditVisible] = useState(false)
-  // const [isNotificationVisible, setIsNotificationVisible] = useState(false)
   const [fileList, setFileList] = useState([])
 
   const member = useSelector((state) => state.member.data)
   const countNew = useSelector((state) => state.notificationCount.data)
   const loading = useSelector((state) => state.member.loading)
+
+  useEffect(() => {
+    dispatch(countNewNotify(member?.id))
+    dispatch(getMemberById(authServices.getUserId()))
+  }, [dispatch])
 
   useEffect(() => {
     if (member?.avatar) {
@@ -118,7 +123,7 @@ function HeaderComp() {
   }
 
   const changeNewToRead = () => {
-    // dispatch(changeAllNotifyNewToRead(authServices.getUserId()))
+    dispatch(changeAllNotifyNewToRead(member?.id))
   }
 
   return (
@@ -142,10 +147,8 @@ function HeaderComp() {
                   </div>
                 }
                 trigger="click"
-                // onVisibleChange={(visible) => setIsNotificationVisible(visible)}
-                // open={isNotificationVisible}
               >
-                <Badge count={countNew?.data !== 0 ? countNew.data : 0}>
+                <Badge count={countNew ? countNew.data : 0}>
                   <BellOutlined
                     className="notification-icon"
                     onClick={changeNewToRead}

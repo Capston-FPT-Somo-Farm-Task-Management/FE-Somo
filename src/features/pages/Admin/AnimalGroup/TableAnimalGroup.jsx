@@ -63,9 +63,6 @@ export const TableAnimalGroup = ({ fieldAnimal, onFinishDelete, loading }) => {
               )}
             />
             <Column title="Mã chuồng" dataIndex="code" key="2" />
-            {/* <Column title="Diện tích" dataIndex="area" key="3" />
-      <Column title="Vùng" dataIndex="zoneName" key="4" />
-    <Column title="Khu vực" dataIndex="areaName" key="5" /> */}
 
             <Column
               title="Trạng thái"
