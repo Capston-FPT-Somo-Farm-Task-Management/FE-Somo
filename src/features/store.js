@@ -59,6 +59,7 @@ import notificationReducer from './slice/notification/notificationSlice'
 import notificationCountReducer from './slice/notification/notificationCountSlice'
 import notificationIsNewReducer from './slice/notification/notificationIsNewSlice'
 import notificationReadReducer from './slice/notification/notificationReadSlice'
+import notifyChangeReducer from './slice/notification/notifyChangeSlice'
 import employeeByFarmReducer from './slice/employee/employeeByFarmSlice'
 import locationReducer from './slice/location/locationSlice'
 
@@ -121,6 +122,7 @@ export const store = configureStore({
     notificationCount: notificationCountReducer,
     notificationIsNew: notificationIsNewReducer,
     notificationRead: notificationReadReducer,
+    notifyChange: notifyChangeReducer,
     employeeByFarm: employeeByFarmReducer,
     employeeExcel: employeeExcelReducer,
     employeeEffort: employeeEffortReducer,

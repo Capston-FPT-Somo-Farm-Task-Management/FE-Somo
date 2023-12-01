@@ -16,6 +16,7 @@ const NotificationIsNew = ({ changeStatusNotify }) => {
   const [hasMore, setHasMore] = useState(true)
 
   const [pageNumber, setPageNumber] = useState(1)
+  console.log(notifyNew)
 
   useEffect(() => {
     const loadNotifications = async () => {

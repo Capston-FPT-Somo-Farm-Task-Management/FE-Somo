@@ -27,15 +27,14 @@ import { toast } from 'react-toastify'
 import dayjs from 'dayjs'
 import { getMemberById, updateMember } from 'features/slice/user/memberSlice'
 import Notification from 'features/pages/Notification'
-import { changeAllNotifyNewToRead } from 'features/slice/notification/notificationIsNewSlice'
 import { countNewNotify } from 'features/slice/notification/notificationCountSlice'
+import { changeAllNotifyNewToRead } from 'features/slice/notification/notifyChangeSlice'
 
 function HeaderComp() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [isModalEditVisible, setIsModalEditVisible] = useState(false)
-  // const [isNotificationVisible, setIsNotificationVisible] = useState(false)
   const [fileList, setFileList] = useState([])
 
   const member = useSelector((state) => state.member.data)
@@ -124,7 +123,7 @@ function HeaderComp() {
   }
 
   const changeNewToRead = () => {
-    // dispatch(changeAllNotifyNewToRead(member?.id))
+    dispatch(changeAllNotifyNewToRead(member?.id))
   }
 
   return (
@@ -148,8 +147,6 @@ function HeaderComp() {
                   </div>
                 }
                 trigger="click"
-                // onVisibleChange={(visible) => setIsNotificationVisible(visible)}
-                // open={isNotificationVisible}
               >
                 <Badge count={countNew ? countNew.data : 0}>
                   <BellOutlined
