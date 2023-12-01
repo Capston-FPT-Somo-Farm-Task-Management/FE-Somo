@@ -39,9 +39,9 @@ const notificationReadSlice = createSlice({
     loading: false,
     error: '',
   },
+
   extraReducers(builder) {
     builder
-
       .addCase(changeNotifyIsRead.pending, (state) => {
         state.loading = true
       })

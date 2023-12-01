@@ -1,13 +1,17 @@
 import { Badge, List, Modal, Space } from 'antd'
-import { getAllNotify } from 'features/slice/notification/notificationSlice'
+import {
+  getAllNotify,
+  markAsRead,
+} from 'features/slice/notification/notificationSlice'
 import { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { authServices } from 'services/authServices'
 import TaskDetailModal from './TaskDetailModal'
+import { changeNotifyIsRead } from 'features/slice/notification/notificationReadSlice'
 
-const NotificationAll = ({ changeStatusNotify }) => {
+const NotificationAll = () => {
   const dispatch = useDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [hasMore, setHasMore] = useState(true)
@@ -23,6 +27,30 @@ const NotificationAll = ({ changeStatusNotify }) => {
     setIsModalOpen(true)
     changeStatusNotify(item.id)
   }
+
+  const changeStatusNotify = (notificationId) => {
+    const updatedNotifications = notifyAll.map((notification) =>
+      notification.id === notificationId
+        ? { ...notification, isRead: true }
+        : notification
+    )
+
+    dispatch(setNotifications(updatedNotifications))
+
+    // Make the API call
+    dispatch(changeNotifyIsRead(notificationId))
+      .unwrap()
+      .then((response) => {})
+      .catch((error) => {
+        dispatch(setNotifications(notifyAll))
+        console.error('Failed to mark notification as read:', error)
+      })
+  }
+
+  const setNotifications = (notifications) => ({
+    type: 'notification/setNotifications',
+    payload: notifications,
+  })
 
   const showModalDetail = (id) => {
     setSelectedData(id)
@@ -51,9 +79,8 @@ const NotificationAll = ({ changeStatusNotify }) => {
         console.error('Failed to load notifications:', error)
       }
     }
-
     loadNotifications()
-  }, [dispatch, pageNumber, selectedData])
+  }, [dispatch, pageNumber])
 
   const fetchMoreData = () => {
     setPageNumber((prevPageNumber) => prevPageNumber + 1)

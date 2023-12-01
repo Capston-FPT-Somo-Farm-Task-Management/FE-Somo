@@ -26,6 +26,11 @@ const notificationIsNewSlice = createSlice({
     error: '',
     totalPages: 0,
   },
+  reducers: {
+    setNotifications(state, action) {
+      state.data = action.payload
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getNotifyIsNewById.pending, (state) => {
@@ -46,4 +51,5 @@ const notificationIsNewSlice = createSlice({
   },
 })
 
+export const { setNotifications } = notificationIsNewSlice.actions
 export default notificationIsNewSlice.reducer
