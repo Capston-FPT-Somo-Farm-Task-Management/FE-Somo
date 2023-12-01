@@ -238,6 +238,8 @@ function UpdateTask({
   const handleSelectEndDate = (date) => {
     const selectedDate = dayjs(date).second(0);
     setEndDate(selectedDate);
+    setSelectedDays([]);
+    setInitialSelectedDays([])
 
     const startDate = form.getFieldValue("startDate");
     if (selectedDate.isAfter(startDate)) {

@@ -100,8 +100,7 @@ function TableTask({
                 const isStatus =
                   record &&
                   (record.status === "Bản nháp" ||
-                    record.status === "Chuẩn bị" ||
-                    record.status === "Đang thực hiện");
+                    record.status === "Chuẩn bị")
                 const isStatusSubTask =
                   record &&
                   (record.status === "Bản nháp" ||
