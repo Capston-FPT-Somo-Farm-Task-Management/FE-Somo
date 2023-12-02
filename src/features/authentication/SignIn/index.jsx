@@ -31,8 +31,6 @@ const SignIn = () => {
           }, 100)
         } else if (authServices.getRole() === 'Admin') {
           navigate('/statistic-farm')
-        } else if (authServices.getRole() === 'Supervisor') {
-          toast.warning('Tài khoản của bạn không được phép vào')
         }
       })
       .catch(() => {
