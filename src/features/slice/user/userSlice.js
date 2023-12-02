@@ -11,7 +11,21 @@ export const postLogin = createAsyncThunk(
     try {
       const response = await axiosInstance.post('/login', data)
       if (response.status === 200) {
+        // Lưu token trước khi lấy vai trò từ token
         localStorage.setItem('somoFarm', response.data.accessToken)
+
+        const userRole = authServices.getRole()
+
+        if (userRole === 'Supervisor') {
+          localStorage.removeItem('somoFarm')
+          toast.warning(
+            'Tài khoản của bạn không được phép đăng nhập trên trình duyệt này'
+          )
+          return rejectWithValue(
+            'Tài khoản của bạn không được phép đăng nhập trên trình duyệt này'
+          )
+        }
+
         toast.success('Đăng nhập thành công')
       }
       return response.data
