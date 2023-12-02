@@ -11,7 +11,6 @@ export const postLogin = createAsyncThunk(
     try {
       const response = await axiosInstance.post('/login', data)
       if (response.status === 200) {
-        // Lưu token trước khi lấy vai trò từ token
         localStorage.setItem('somoFarm', response.data.accessToken)
 
         const userRole = authServices.getRole()
