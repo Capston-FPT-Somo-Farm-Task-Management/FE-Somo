@@ -11,8 +11,8 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-
-const ChartTaskWeek = ({ taskByWeek, onBarClick }) => {
+import ScaleLoader from "react-spinners/ScaleLoader";
+const ChartTaskWeek = ({ taskByWeek, onBarClick, loading }) => {
   const dayNames = [
     "Chủ nhật",
     "Thứ hai",
@@ -47,28 +47,32 @@ const ChartTaskWeek = ({ taskByWeek, onBarClick }) => {
           height: "400px",
         }}
       >
-        <ResponsiveContainer height="85%">
-          <BarChart
-            data={data}
-            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-            barCategoryGap="5%"
-            barGap={2}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Bar
-              dataKey="uv"
-              name="Tổng nhiệm vụ"
-              fill="#82ca9d"
-              shape={renderBarShape}
-              onClick={(entry, index) => onBarClick(index)}
-              barSize={50}
-            />
-            <Legend />
-          </BarChart>
-        </ResponsiveContainer>
+        {loading ? (
+          <ScaleLoader color="#82ca9d" />
+        ) : (
+          <ResponsiveContainer height="85%">
+            <BarChart
+              data={data}
+              margin={{ top: 20, right: 50, bottom: 5 }}
+              barCategoryGap="5%"
+              barGap={2}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Bar
+                dataKey="uv"
+                name="Tổng nhiệm vụ"
+                fill="#82ca9d"
+                shape={renderBarShape}
+                onClick={(entry, index) => onBarClick(index)}
+                barSize={50}
+              />
+              <Legend />
+            </BarChart>
+          </ResponsiveContainer>
+        )}
       </div>
     </>
   );

@@ -21,6 +21,7 @@
     .header-profile {
       font-size: 16px;
       margin: 0px 40px 0px 20px;
+      @include flex(row, null, center, null);
       .ant-space{
         .ant-space-item{
           color: black;

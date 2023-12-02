@@ -137,6 +137,9 @@ html {
 .navBar .nav-item .header-profile {
   font-size: 16px;
   margin: 0px 40px 0px 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 .navBar .nav-item .header-profile .ant-space .ant-space-item {
   color: black;

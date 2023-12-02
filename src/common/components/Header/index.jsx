@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   UserOutlined,
   BellOutlined,
   DownOutlined,
   EditOutlined,
   UploadOutlined,
-} from '@ant-design/icons'
+  LoadingOutlined,
+} from "@ant-design/icons";
 import {
   Dropdown,
   Avatar,
@@ -19,87 +20,89 @@ import {
   Upload,
   Badge,
   Menu,
-} from 'antd'
-import { useSelector, useDispatch } from 'react-redux'
-import { deleteHubConnection } from 'features/slice/hub/hubSlice'
-import { authServices } from 'services/authServices'
-import { toast } from 'react-toastify'
-import dayjs from 'dayjs'
-import { getMemberById, updateMember } from 'features/slice/user/memberSlice'
-import Notification from 'features/pages/Notification'
-import { countNewNotify } from 'features/slice/notification/notificationCountSlice'
-import { changeAllNotifyNewToRead } from 'features/slice/notification/notifyChangeSlice'
+  Skeleton,
+  Spin,
+} from "antd";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteHubConnection } from "features/slice/hub/hubSlice";
+import { authServices } from "services/authServices";
+import { toast } from "react-toastify";
+import dayjs from "dayjs";
+import { getMemberById, updateMember } from "features/slice/user/memberSlice";
+import Notification from "features/pages/Notification";
+import { countNewNotify } from "features/slice/notification/notificationCountSlice";
+import { changeAllNotifyNewToRead } from "features/slice/notification/notifyChangeSlice";
 
 function HeaderComp() {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const [isModalVisible, setIsModalVisible] = useState(false)
-  const [isModalEditVisible, setIsModalEditVisible] = useState(false)
-  const [fileList, setFileList] = useState([])
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalEditVisible, setIsModalEditVisible] = useState(false);
+  const [fileList, setFileList] = useState([]);
 
-  const member = useSelector((state) => state.member.data)
-  const countNew = useSelector((state) => state.notificationCount.data)
-  const loading = useSelector((state) => state.member.loading)
+  const member = useSelector((state) => state.member.data);
+  const countNew = useSelector((state) => state.notificationCount.data);
+  const loading = useSelector((state) => state.member.loading);
 
   useEffect(() => {
-    dispatch(countNewNotify(member?.id))
-    dispatch(getMemberById(authServices.getUserId()))
-  }, [dispatch])
+    dispatch(countNewNotify(member?.id));
+    dispatch(getMemberById(authServices.getUserId()));
+  }, [dispatch]);
 
   useEffect(() => {
     if (member?.avatar) {
       setFileList([
         {
-          uid: '-1',
-          name: 'image.png',
-          status: 'done',
+          uid: "-1",
+          name: "image.png",
+          status: "done",
           url: member.avatar,
         },
-      ])
+      ]);
     }
-  }, [member])
+  }, [member]);
 
   const onFileChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList)
-  }
+    setFileList(newFileList);
+  };
 
   const handleOpenEditProfile = () => {
-    setIsModalEditVisible(true)
-    setIsModalVisible(false)
-  }
+    setIsModalEditVisible(true);
+    setIsModalVisible(false);
+  };
 
   const closeEditProfile = () => {
-    setIsModalEditVisible(false)
-    setIsModalVisible(true)
-  }
+    setIsModalEditVisible(false);
+    setIsModalVisible(true);
+  };
 
   const showModal = () => {
-    setIsModalVisible(true)
-  }
+    setIsModalVisible(true);
+  };
 
   const handleCancel = () => {
-    setIsModalVisible(false)
-  }
+    setIsModalVisible(false);
+  };
 
   const formattedBirthDay = member
-    ? dayjs(member.birthday).format('DD-MM-YYYY')
-    : null
+    ? dayjs(member.birthday).format("DD-MM-YYYY")
+    : null;
 
   const logout = () => {
-    const data = { token: localStorage.getItem('connectionId') }
-    dispatch(deleteHubConnection(data))
-    authServices.logOut()
-    toast.success('Đăng xuất thành công')
-    navigate('/login')
-  }
+    const data = { token: localStorage.getItem("connectionId") };
+    dispatch(deleteHubConnection(data));
+    authServices.logOut();
+    toast.success("Đăng xuất thành công");
+    navigate("/login");
+  };
 
   const items = [
     {
-      key: 'profile',
+      key: "profile",
       label: <div onClick={showModal}>Xem thông tin</div>,
     },
     {
-      key: 'logout',
+      key: "logout",
       label: (
         <div key="/login" onClick={logout}>
           <span>Đăng xuất</span>
@@ -107,24 +110,24 @@ function HeaderComp() {
         </div>
       ),
     },
-  ]
+  ];
 
   const handleEditProfile = (values) => {
     const updatedEffort = {
       ...values,
       id: member.id,
       imageFile: fileList[0].originFileObj,
-    }
+    };
 
     dispatch(updateMember(updatedEffort)).then(() => {
-      setIsModalEditVisible(false)
-      setIsModalVisible(true)
-    })
-  }
+      setIsModalEditVisible(false);
+      setIsModalVisible(true);
+    });
+  };
 
   const changeNewToRead = () => {
-    dispatch(changeAllNotifyNewToRead(member?.id))
-  }
+    dispatch(changeAllNotifyNewToRead(member?.id));
+  };
 
   return (
     <>
@@ -138,9 +141,9 @@ function HeaderComp() {
                 content={
                   <div
                     style={{
-                      height: '500px',
-                      overflowY: 'auto',
-                      padding: '10px',
+                      height: "500px",
+                      overflowY: "auto",
+                      padding: "10px",
                     }}
                   >
                     <Notification />
@@ -155,14 +158,26 @@ function HeaderComp() {
                   />
                 </Badge>
               </Popover>
-            ) : null}
+            ) : (
+              <Spin
+                indicator={
+                  <LoadingOutlined
+                    style={{
+                      fontSize: 24,
+                      color: "black",
+                    }}
+                    spin
+                  />
+                }
+              />
+            )}
           </div>
           <div className="header-profile">
             <Dropdown
               menu={{
                 items,
               }}
-              trigger={['hover']}
+              trigger={["hover"]}
               placement="bottom"
               arrow
             >
@@ -172,12 +187,22 @@ function HeaderComp() {
                     <Avatar
                       src={member.avatar ? member.avatar : null}
                       size="large"
-                      icon={<UserOutlined />}
                     />
                     {member.name ? member.name : null}
                     <DownOutlined />
                   </Space>
-                ) : null}
+                ) : (
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <Skeleton.Avatar active size="large" shape="circle" style={{ display: "flex", alignItems: "center", marginRight: "10px" }}/>
+
+                    <Skeleton.Input
+                      active
+                      style={{ display: "flex", alignItems: "center" }}
+                      size="small"
+                    />
+                    <DownOutlined />
+                  </div>
+                )}
               </a>
             </Dropdown>
           </div>
@@ -192,7 +217,7 @@ function HeaderComp() {
               <div className="user-profile-left">
                 <Avatar src={member.avatar ? member.avatar : null} size={150} />
                 <h4>{member.name ? member.name : null}</h4>
-                {member.roleName === 'Manager' ? <p>Chức vụ: Quản lý</p> : null}
+                {member.roleName === "Manager" ? <p>Chức vụ: Quản lý</p> : null}
               </div>
               <div className="user-profile-right">
                 <h5>
@@ -205,7 +230,7 @@ function HeaderComp() {
                 <div className="user-information">
                   <div
                     className="user-information-text"
-                    style={{ width: '100%' }}
+                    style={{ width: "100%" }}
                   >
                     <h6>Email</h6>
                     <p>{member.email ? member.email : "Chưa có"}</p>
@@ -308,7 +333,7 @@ function HeaderComp() {
         </div>
       </nav>
     </>
-  )
+  );
 }
 
-export default HeaderComp
+export default HeaderComp;
