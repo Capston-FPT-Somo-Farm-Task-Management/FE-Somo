@@ -170,11 +170,11 @@ function HeaderComp() {
                 {!loading ? (
                   <Space>
                     <Avatar
-                      src={member.avatar}
+                      src={member.avatar ? member.avatar : null}
                       size="large"
                       icon={<UserOutlined />}
                     />
-                    {member.name}
+                    {member.name ? member.name : null}
                     <DownOutlined />
                   </Space>
                 ) : null}
@@ -190,8 +190,8 @@ function HeaderComp() {
           >
             <div className="user-profile">
               <div className="user-profile-left">
-                <Avatar src={member.avatar} size={150} />
-                <h4>{member.name}</h4>
+                <Avatar src={member.avatar ? member.avatar : null} size={150} />
+                <h4>{member.name ? member.name : null}</h4>
                 {member.roleName === 'Manager' ? <p>Chức vụ: Quản lý</p> : null}
               </div>
               <div className="user-profile-right">
@@ -208,11 +208,11 @@ function HeaderComp() {
                     style={{ width: '100%' }}
                   >
                     <h6>Email</h6>
-                    <p>{member.email}</p>
+                    <p>{member.email ? member.email : "Chưa có"}</p>
                   </div>
                   <div className="user-information-text">
                     <h6>Số điện thoại</h6>
-                    <p>{member.phoneNumber}</p>
+                    <p>{member.phoneNumber ? member.phoneNumber : "Chưa có"}</p>
                   </div>
                   <div className="user-information-text">
                     <h6>Ngày sinh</h6>
@@ -223,7 +223,7 @@ function HeaderComp() {
                 <div className="user-address">
                   <div className="user-information-text">
                     <h6>Địa chỉ thường trú</h6>
-                    <p>{member.address}</p>
+                    <p>{member.address ? member.address : "Chưa có"}</p>
                   </div>
                 </div>
               </div>

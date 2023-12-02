@@ -1,4 +1,4 @@
-import { DatePicker } from "antd";
+import { DatePicker, Divider } from "antd";
 import React from "react";
 
 function DateSelectionComp({
@@ -7,7 +7,7 @@ function DateSelectionComp({
 }) {
   return (
     <>
-    <p>Xem theo ngày</p>
+    <h6 style={{marginBottom: "7px", fontSize: "16px"}}>Xem theo ngày</h6>
       <DatePicker
         value={selectedDate}
         onChange={handleDateChange}
@@ -15,6 +15,7 @@ function DateSelectionComp({
         format="DD-MM-YYYY"
         style={{width: "80%", marginBottom: "20px"}}
       />
+      <Divider style={{margin: 0}}/>
     </>
   );
 }

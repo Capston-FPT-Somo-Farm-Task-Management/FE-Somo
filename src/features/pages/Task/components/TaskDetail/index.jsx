@@ -50,7 +50,6 @@ const TaskDetail = ({
         <Evidence
           taskData={taskData}
           handleRefuseTask={handleRefuseTask}
-          openEditTaskModal={openEditTaskModal}
           closeEditTaskModal={closeEditTaskModal}
         />
       ) : null}

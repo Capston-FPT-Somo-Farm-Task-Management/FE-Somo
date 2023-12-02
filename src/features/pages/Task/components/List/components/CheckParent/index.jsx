@@ -11,7 +11,7 @@ const CheckParent = ({ onCheckChange }) => {
   };
 
   return (
-    <div className="checkParent">
+    <div className="checkParent" style={{marginTop: "15px"}}>
       <Checkbox checked={checked} onChange={handleChange}>
         Những công việc có ngày lặp lại
       </Checkbox>
