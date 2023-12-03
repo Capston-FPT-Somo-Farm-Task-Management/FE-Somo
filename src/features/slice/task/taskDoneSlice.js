@@ -5,7 +5,10 @@ const axiosInstance = createAxiosInstance()
 
 export const getTaskDoneByEmployeeId = createAsyncThunk(
   'taskDone/getTaskDoneByEmployeeId',
-  async ({ pageIndex, employeeId, startDay, endDay }, { rejectWithValue }) => {
+  async (
+    { pageIndex, employeeId, startDay, endDay, status },
+    { rejectWithValue }
+  ) => {
     console.log(pageIndex, employeeId, startDay, endDay)
     try {
       const url = new URL(
@@ -15,6 +18,8 @@ export const getTaskDoneByEmployeeId = createAsyncThunk(
 
       if (startDay != null) url.searchParams.append('startDay', startDay)
       if (endDay != null) url.searchParams.append('endDay', endDay)
+      if (status != null) url.searchParams.append('status', status)
+
       console.log(url)
       const { data } = await axiosInstance.get(url.href)
       return data

@@ -52,6 +52,7 @@ import subTaskReducer from './slice/subTask/subTaskSlice'
 import effortReducer from './slice/subTask/effortSlice'
 import habitantTypeReducer from './slice/habitant/habitantTypeSlice'
 import memberReducer from './slice/user/memberSlice'
+import passwordReducer from './slice/user/passwordSlice'
 import memberByFarmReducer from './slice/user/memberByFarm'
 import statusReducer from './slice/status/statusSlice'
 import hubReducer from './slice/hub/hubSlice'
@@ -128,5 +129,6 @@ export const store = configureStore({
     employeeEffort: employeeEffortReducer,
     employeeEffortTotal: employeeEffortTotalReducer,
     location: locationReducer,
+    password: passwordReducer,
   },
 })
