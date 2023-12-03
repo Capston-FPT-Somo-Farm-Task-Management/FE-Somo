@@ -7,9 +7,11 @@ import {
 } from "react-icons/gr";
 import { BsHourglassSplit } from "react-icons/bs";
 import { GoMegaphone } from "react-icons/go";
-import { CheckOutlined } from '@ant-design/icons';
+import { CheckOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
-const DashboardBox = ({ taskByWeek, selectedDay }) => {
+const DashboardBox = ({ taskByWeek, selectedDay, loading }) => {
   const calculateTotalTasks = () => {
     if (selectedDay !== null) {
       const dayTask = taskByWeek?.data[selectedDay];
@@ -57,7 +59,21 @@ const DashboardBox = ({ taskByWeek, selectedDay }) => {
       <div className="dashboard-content">
         <div className="dashboard-text">
           <p>Chuẩn bị</p>
-          <h5> {filteredData?.totalTaskToDo}</h5>
+          {loading ? (
+            <Spin
+              indicator={
+                <LoadingOutlined
+                  style={{
+                    fontSize: 24,
+                    color: "black"
+                  }}
+                  spin
+                />
+              }
+            />
+          ) : (
+            <h5> {filteredData?.totalTaskToDo}</h5>
+          )}
         </div>
         <div className="dashboard-logo">
           <div className="dashboard-todo">
@@ -68,7 +84,21 @@ const DashboardBox = ({ taskByWeek, selectedDay }) => {
       <div className="dashboard-content">
         <div className="dashboard-text">
           <p>Đang làm</p>
-          <h5> {filteredData?.totalTaskDoing}</h5>
+          {loading ? (
+            <Spin
+              indicator={
+                <LoadingOutlined
+                  style={{
+                    fontSize: 24,
+                    color: "black"
+                  }}
+                  spin
+                />
+              }
+            />
+          ) : (
+            <h5> {filteredData?.totalTaskDoing}</h5>
+          )}
         </div>
         <div className="dashboard-logo">
           <div className="dashboard-doing">
@@ -79,7 +109,21 @@ const DashboardBox = ({ taskByWeek, selectedDay }) => {
       <div className="dashboard-content">
         <div className="dashboard-text">
           <p>Tạm hoãn</p>
-          <h5> {filteredData?.totalTaskPending}</h5>
+          {loading ? (
+            <Spin
+              indicator={
+                <LoadingOutlined
+                  style={{
+                    fontSize: 24,
+                    color: "black"
+                  }}
+                  spin
+                />
+              }
+            />
+          ) : (
+            <h5> {filteredData?.totalTaskPending}</h5>
+          )}
         </div>
         <div className="dashboard-logo">
           <div className="dashboard-pending">
@@ -90,11 +134,25 @@ const DashboardBox = ({ taskByWeek, selectedDay }) => {
       <div className="dashboard-content">
         <div className="dashboard-text">
           <p>Đã đóng</p>
-          <h5> {filteredData?.totalTaskClose}</h5>
+          {loading ? (
+            <Spin
+              indicator={
+                <LoadingOutlined
+                  style={{
+                    fontSize: 24,
+                    color: "black"
+                  }}
+                  spin
+                />
+              }
+            />
+          ) : (
+            <h5> {filteredData?.totalTaskClose}</h5>
+          )}
         </div>
         <div className="dashboard-logo">
           <div className="dashboard-close">
-          <CheckOutlined />
+            <CheckOutlined />
           </div>
         </div>
       </div>

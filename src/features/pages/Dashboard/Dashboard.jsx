@@ -15,6 +15,9 @@ const Dashboard = () => {
   const taskByWeek = useSelector((state) => state.taskByWeek.data);
   const memberId = member?.id;
 
+  const loading = useSelector((state) => state.taskByWeek.loading);
+  console.log(loading);
+
   const [selectedDay, setSelectedDay] = useState(null);
 
   useEffect(() => {
@@ -44,14 +47,14 @@ const Dashboard = () => {
     <div className="dashboard">
       <h3>Tổng số công việc theo trạng thái</h3>
       <div className="dashboard-header">
-        <DashboardBox taskByWeek={taskByWeek} selectedDay={selectedDay} />
+        <DashboardBox taskByWeek={taskByWeek} selectedDay={selectedDay} loading={loading} />
       </div>
       <div className="dashboard-footer">
         <div className="dashboard-chart" ref={barChartRef}>
-          <ChartTaskWeek taskByWeek={taskByWeek} onBarClick={handleBarClick} />
+          <ChartTaskWeek taskByWeek={taskByWeek} onBarClick={handleBarClick} loading={loading} />
         </div>
         <div className="dashboard-piechart">
-          <PieChartTaskWeek taskByWeek={taskByWeek} selectedDay={selectedDay} />
+          <PieChartTaskWeek taskByWeek={taskByWeek} selectedDay={selectedDay} loading={loading} />
         </div>
       </div>
     </div>

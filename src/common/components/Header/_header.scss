@@ -5,8 +5,17 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  @include tablet{
+    width: 45%;
+  }
+  @include mobile{
+    width: 32%;
+  }
   .nav-item {
     @include flex(row, space-around, null, null);
+    @include tablet{
+      @include flex(row, space-around, center, null);
+    }
     .header-notification{
       font-size: 16px;
       .notification-icon{
@@ -21,6 +30,13 @@
     .header-profile {
       font-size: 16px;
       margin: 0px 40px 0px 20px;
+      @include flex(row, null, center, null);
+      @include mobile{
+        margin: 0px 20px 0px 20px;
+      }
+      @include mobile-sm{
+        margin: 0px 5px 0px 5px;
+      }
       .ant-space{
         .ant-space-item{
           color: black;

@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   UserOutlined,
   BellOutlined,
   DownOutlined,
   EditOutlined,
   UploadOutlined,
-} from '@ant-design/icons'
+  LoadingOutlined,
+} from "@ant-design/icons";
 import {
   Dropdown,
   Avatar,
@@ -19,87 +20,136 @@ import {
   Upload,
   Badge,
   Menu,
-} from 'antd'
-import { useSelector, useDispatch } from 'react-redux'
-import { deleteHubConnection } from 'features/slice/hub/hubSlice'
-import { authServices } from 'services/authServices'
-import { toast } from 'react-toastify'
-import dayjs from 'dayjs'
-import { getMemberById, updateMember } from 'features/slice/user/memberSlice'
-import Notification from 'features/pages/Notification'
-import { countNewNotify } from 'features/slice/notification/notificationCountSlice'
-import { changeAllNotifyNewToRead } from 'features/slice/notification/notifyChangeSlice'
+  Skeleton,
+  Spin,
+} from "antd";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteHubConnection } from "features/slice/hub/hubSlice";
+import { authServices } from "services/authServices";
+import { toast } from "react-toastify";
+import dayjs from "dayjs";
+import {
+  getMemberById,
+  updateMember,
+  updatePassword,
+} from "features/slice/user/memberSlice";
+import Notification from "features/pages/Notification";
+import { countNewNotify } from "features/slice/notification/notificationCountSlice";
+import { changeAllNotifyNewToRead } from "features/slice/notification/notifyChangeSlice";
+import UserProfile from "./components/HeaderOption/UserProfile";
+import EditProfile from "./components/HeaderOption/EditProfile";
+import ChangePassword from "./components/HeaderOption/ChangePassword";
+import { useMobileMediaQuery, useTabletMediaQuery } from "common/hooks/responsive";
+import SidebarOnHeader from "./components/HeaderOption/SidebarOnHeader";
 
 function HeaderComp() {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const [isModalVisible, setIsModalVisible] = useState(false)
-  const [isModalEditVisible, setIsModalEditVisible] = useState(false)
-  const [fileList, setFileList] = useState([])
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [changePasswordModalVisible, setChangePasswordModalVisible] =
+    useState(false);
+  const [oldPasswordVisible, setOldPasswordVisible] = useState(false);
+  const [newPasswordVisible, setNewPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [oldPasswordValue, setOldPasswordValue] = useState("");
+  const [newPasswordValue, setNewPasswordValue] = useState("");
+  const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isModalEditVisible, setIsModalEditVisible] = useState(false);
+  const [fileList, setFileList] = useState([]);
 
-  const member = useSelector((state) => state.member.data)
-  const countNew = useSelector((state) => state.notificationCount.data)
-  const loading = useSelector((state) => state.member.loading)
+  const [form] = Form.useForm();
+
+  const member = useSelector((state) => state.member.data);
+  const countNew = useSelector((state) => state.notificationCount.data);
+  const loading = useSelector((state) => state.member.loading);
 
   useEffect(() => {
-    dispatch(countNewNotify(member?.id))
-    dispatch(getMemberById(authServices.getUserId()))
-  }, [dispatch])
+    dispatch(countNewNotify(member?.id));
+    dispatch(getMemberById(authServices.getUserId()));
+  }, [dispatch]);
 
   useEffect(() => {
     if (member?.avatar) {
       setFileList([
         {
-          uid: '-1',
-          name: 'image.png',
-          status: 'done',
+          uid: "-1",
+          name: "image.png",
+          status: "done",
           url: member.avatar,
         },
-      ])
+      ]);
     }
-  }, [member])
+  }, [member]);
 
   const onFileChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList)
-  }
+    setFileList(newFileList);
+  };
+
+  const handleChangePassword = (e) => {
+    setOldPasswordValue(e.target.value);
+  };
+
+  const handleChangeNewPassword = (e) => {
+    setNewPasswordValue(e.target.value);
+  };
+
+  const handleConfirmPassword = (e) => {
+    setConfirmPasswordValue(e.target.value);
+  };
 
   const handleOpenEditProfile = () => {
-    setIsModalEditVisible(true)
-    setIsModalVisible(false)
-  }
+    setIsModalEditVisible(true);
+    setIsModalVisible(false);
+  };
 
   const closeEditProfile = () => {
-    setIsModalEditVisible(false)
-    setIsModalVisible(true)
-  }
+    setIsModalEditVisible(false);
+    setIsModalVisible(true);
+  };
 
   const showModal = () => {
-    setIsModalVisible(true)
-  }
+    setIsModalVisible(true);
+  };
 
   const handleCancel = () => {
-    setIsModalVisible(false)
-  }
+    setIsModalVisible(false);
+  };
+
+  const changePasswordModal = () => {
+    setChangePasswordModalVisible(true);
+  };
+
+  const changePasswordCancel = () => {
+    setOldPasswordValue("");
+    setNewPasswordValue("");
+    setConfirmPasswordValue("");
+    setChangePasswordModalVisible(false);
+  };
 
   const formattedBirthDay = member
-    ? dayjs(member.birthday).format('DD-MM-YYYY')
-    : null
+    ? dayjs(member.birthday).format("DD-MM-YYYY")
+    : null;
 
   const logout = () => {
-    const data = { token: localStorage.getItem('connectionId') }
-    dispatch(deleteHubConnection(data))
-    authServices.logOut()
-    toast.success('Đăng xuất thành công')
-    navigate('/login')
-  }
+    const data = { token: localStorage.getItem("connectionId") };
+    dispatch(deleteHubConnection(data));
+    authServices.logOut();
+    toast.success("Đăng xuất thành công");
+    navigate("/login");
+  };
 
   const items = [
     {
-      key: 'profile',
+      key: "profile",
       label: <div onClick={showModal}>Xem thông tin</div>,
     },
     {
-      key: 'logout',
+      key: "forgotPassword",
+      label: <div onClick={changePasswordModal}>Đổi mật khẩu</div>,
+    },
+    {
+      key: "logout",
       label: (
         <div key="/login" onClick={logout}>
           <span>Đăng xuất</span>
@@ -107,24 +157,42 @@ function HeaderComp() {
         </div>
       ),
     },
-  ]
+  ];
 
   const handleEditProfile = (values) => {
-    const updatedEffort = {
+    setIsSubmitting(true);
+    const editProfile = {
       ...values,
       id: member.id,
       imageFile: fileList[0].originFileObj,
-    }
+    };
+    dispatch(updateMember(editProfile)).then(() => {
+      setIsModalEditVisible(false);
+      setIsModalVisible(true);
+      setIsSubmitting(false);
+    });
+  };
 
-    dispatch(updateMember(updatedEffort)).then(() => {
-      setIsModalEditVisible(false)
-      setIsModalVisible(true)
-    })
-  }
+  const handleSubmitChangePassword = (values) => {
+    setIsSubmitting(true);
+    const updatedPassword = {
+      ...values,
+      id: member.id,
+      oldPassword: oldPasswordValue,
+      password: newPasswordValue,
+      confirmPassword: confirmPasswordValue,
+    };
+    dispatch(updatePassword(updatedPassword)).then(() => {
+      changePasswordCancel();
+      setIsSubmitting(false);
+    });
+  };
 
   const changeNewToRead = () => {
-    dispatch(changeAllNotifyNewToRead(member?.id))
-  }
+    dispatch(changeAllNotifyNewToRead(member?.id));
+  };
+  
+  const isMobile = useMobileMediaQuery()
 
   return (
     <>
@@ -138,9 +206,9 @@ function HeaderComp() {
                 content={
                   <div
                     style={{
-                      height: '500px',
-                      overflowY: 'auto',
-                      padding: '10px',
+                      height: "500px",
+                      overflowY: "auto",
+                      padding: "10px",
                     }}
                   >
                     <Notification />
@@ -155,160 +223,99 @@ function HeaderComp() {
                   />
                 </Badge>
               </Popover>
-            ) : null}
+            ) : (
+              <Spin
+                indicator={
+                  <LoadingOutlined
+                    style={{
+                      fontSize: 24,
+                      color: "black",
+                    }}
+                    spin
+                  />
+                }
+              />
+            )}
           </div>
           <div className="header-profile">
             <Dropdown
               menu={{
                 items,
               }}
-              trigger={['hover']}
+              trigger={["hover"]}
               placement="bottom"
               arrow
             >
               <a onClick={(e) => e.preventDefault()}>
                 {!loading ? (
                   <Space>
-                    <Avatar
-                      src={member.avatar ? member.avatar : null}
-                      size="large"
-                      icon={<UserOutlined />}
-                    />
-                    {member.name ? member.name : null}
+                    <Avatar src={member ? member.avatar : null} size="large" />
+                    {member && !isMobile ? member.name : null}
                     <DownOutlined />
                   </Space>
-                ) : null}
+                ) : (
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <Skeleton.Avatar
+                      active
+                      size="large"
+                      shape="circle"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        marginRight: "10px",
+                      }}
+                    />
+
+                    <Skeleton.Input
+                      active
+                      style={{ display: "flex", alignItems: "center" }}
+                      size="small"
+                    />
+                    <DownOutlined />
+                  </div>
+                )}
               </a>
             </Dropdown>
           </div>
-          <Modal
-            open={isModalVisible}
-            onCancel={handleCancel}
-            width={800}
-            footer={null}
-            className="modal-user-profile"
-          >
-            <div className="user-profile">
-              <div className="user-profile-left">
-                <Avatar src={member.avatar ? member.avatar : null} size={150} />
-                <h4>{member.name ? member.name : null}</h4>
-                {member.roleName === 'Manager' ? <p>Chức vụ: Quản lý</p> : null}
-              </div>
-              <div className="user-profile-right">
-                <h5>
-                  Thông tin cá nhân
-                  <span onClick={handleOpenEditProfile}>
-                    <EditOutlined />
-                  </span>
-                </h5>
-
-                <div className="user-information">
-                  <div
-                    className="user-information-text"
-                    style={{ width: '100%' }}
-                  >
-                    <h6>Email</h6>
-                    <p>{member.email ? member.email : "Chưa có"}</p>
-                  </div>
-                  <div className="user-information-text">
-                    <h6>Số điện thoại</h6>
-                    <p>{member.phoneNumber ? member.phoneNumber : "Chưa có"}</p>
-                  </div>
-                  <div className="user-information-text">
-                    <h6>Ngày sinh</h6>
-                    <p>{formattedBirthDay}</p>
-                  </div>
-                </div>
-                <h5>Địa chỉ</h5>
-                <div className="user-address">
-                  <div className="user-information-text">
-                    <h6>Địa chỉ thường trú</h6>
-                    <p>{member.address ? member.address : "Chưa có"}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Modal>
-          {isModalEditVisible && (
-            <Modal
-              title="Sửa thông tin"
-              open={isModalEditVisible}
-              onCancel={closeEditProfile}
-              footer={[
-                <Button form="updateEffort" type="primary" htmlType="submit">
-                  Lưu thay đổi
-                </Button>,
-                <Button type="primary" onClick={closeEditProfile}>
-                  Đóng
-                </Button>,
-              ]}
-            >
-              <Form
-                layout="vertical"
-                onFinish={handleEditProfile}
-                id="updateEffort"
-              >
-                <Form.Item label="Hình ảnh" name="imageFile">
-                  <Upload
-                    listType="picture-circle"
-                    maxCount={1}
-                    beforeUpload={() => false}
-                    fileList={fileList}
-                    onChange={onFileChange}
-                    onRemove="false"
-                  >
-                    <UploadOutlined />
-                  </Upload>
-                </Form.Item>
-                <Form.Item
-                  label="Tên"
-                  name="name"
-                  initialValue={member ? member.name : null}
-                >
-                  <Input placeholder="Nhập tên" />
-                </Form.Item>
-                <Form.Item
-                  label="Mã"
-                  name="code"
-                  initialValue={member ? member.code : null}
-                >
-                  <Input placeholder="Nhập tên" disabled />
-                </Form.Item>
-                <Form.Item
-                  label="Email"
-                  name="email"
-                  initialValue={member ? member.email : null}
-                >
-                  <Input placeholder="Nhập email" />
-                </Form.Item>
-                <Form.Item
-                  label="Số điện thoại"
-                  name="phoneNumber"
-                  initialValue={member ? member.phoneNumber : null}
-                >
-                  <Input placeholder="Nhập số điện thoại" />
-                </Form.Item>
-                <Form.Item
-                  label="Ngày sinh"
-                  name="birthday"
-                  initialValue={member ? member.birthday : null}
-                >
-                  <Input placeholder="Nhập ngày tháng năm sinh" />
-                </Form.Item>
-                <Form.Item
-                  label="Địa chỉ thường trú"
-                  name="address"
-                  initialValue={member ? member.address : null}
-                >
-                  <Input placeholder="Nhập địa chỉ thường trú" />
-                </Form.Item>
-              </Form>
-            </Modal>
-          )}
+          <UserProfile
+            isModalVisible={isModalVisible}
+            handleCancel={handleCancel}
+            member={member}
+            handleOpenEditProfile={handleOpenEditProfile}
+            formattedBirthDay={formattedBirthDay}
+          />
+          <EditProfile
+            isModalEditVisible={isModalEditVisible}
+            closeEditProfile={closeEditProfile}
+            handleEditProfile={handleEditProfile}
+            fileList={fileList}
+            onFileChange={onFileChange}
+            member={member}
+            isSubmitting={isSubmitting}
+          />
+          <ChangePassword
+            changePasswordModalVisible={changePasswordModalVisible}
+            changePasswordCancel={changePasswordCancel}
+            isSubmitting={isSubmitting}
+            handleSubmitChangePassword={handleSubmitChangePassword}
+            form={form}
+            oldPasswordValue={oldPasswordValue}
+            handleChangePassword={handleChangePassword}
+            oldPasswordVisible={oldPasswordVisible}
+            setOldPasswordVisible={setOldPasswordVisible}
+            newPasswordValue={newPasswordValue}
+            handleChangeNewPassword={handleChangeNewPassword}
+            newPasswordVisible={newPasswordVisible}
+            setNewPasswordVisible={setNewPasswordVisible}
+            confirmPasswordValue={confirmPasswordValue}
+            handleConfirmPassword={handleConfirmPassword}
+            confirmPasswordVisible={confirmPasswordVisible}
+            setConfirmPasswordVisible={setConfirmPasswordVisible}
+          />
         </div>
       </nav>
     </>
-  )
+  );
 }
 
-export default HeaderComp
+export default HeaderComp;
