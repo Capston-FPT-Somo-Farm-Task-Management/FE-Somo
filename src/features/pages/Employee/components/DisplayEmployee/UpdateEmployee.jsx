@@ -247,6 +247,12 @@ const UpdateEmployee = ({
             <Form.Item
               name="city"
               label="Tỉnh/Thành phố"
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn Tỉnh/Thành phố',
+                },
+              ]}
               initialValue={selectedCityCode}
             >
               <Select

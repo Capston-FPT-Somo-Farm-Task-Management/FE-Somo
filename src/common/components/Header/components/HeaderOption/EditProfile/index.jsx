@@ -1,6 +1,17 @@
-import React from "react";
-import { Button, Form, Input, Modal, Upload } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Form, Input, Modal, Select, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import dayjs from "dayjs";
+import {
+  getDistrict,
+  getWard,
+  selectCities,
+  selectDistricts,
+  selectWards,
+} from "features/slice/location/locationSlice";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Option } from "antd/es/mentions";
 
 const EditProfile = ({
   isModalEditVisible,
@@ -10,7 +21,82 @@ const EditProfile = ({
   onFileChange,
   member,
   isSubmitting,
+  setSelectedCityName,
+  setSelectedDistrictName,
+  setSelectedWardName
 }) => {
+  const [form] = Form.useForm();
+
+  const dispatch = useDispatch();
+
+  const cities = useSelector(selectCities);
+  const districts = useSelector(selectDistricts);
+  const wards = useSelector(selectWards);
+
+  const [selectedCityCode, setSelectedCityCode] = useState(null);
+  const [selectedDistrictCode, setSelectedDistrictCode] = useState(null);
+  const [selectedWardCode, setSelectedWardCode] = useState(null);
+
+  useEffect(() => {
+    if (member) {
+      // Phân tích địa chỉ
+      const addressParts = member.address ? member.address.split(", ") : null;
+      console.log(member);
+
+      const selectedCityName = addressParts ? addressParts[2] : null;
+      const selectedDistrictName = addressParts ? addressParts[1] : null;
+      const selectedWardName = addressParts ? addressParts[0] : null;
+
+      // Tìm kiếm và so sánh thành phố, quận/huyện
+      const cityMatch = cities.find((city) => city.name === selectedCityName);
+      if (cityMatch) {
+        setSelectedCityCode(cityMatch.code);
+        form.setFieldsValue({ city: cityMatch.code });
+        setSelectedCityName(selectedCityName);
+        dispatch(getDistrict(cityMatch.code)).then((newDistricts) => {
+          const districtMatch = newDistricts.find(
+            (district) => district.name === selectedDistrictName
+          );
+
+          if (districtMatch) {
+            setSelectedDistrictCode(districtMatch.code);
+            form.setFieldsValue({ district: districtMatch.code });
+
+            dispatch(getWard(districtMatch.code)).then((newWards) => {
+              const wardMatch = newWards.find(
+                (ward) => ward.name === selectedWardName
+              );
+              if (wardMatch) {
+                setSelectedWardCode(wardMatch.code);
+                form.setFieldsValue({ ward: wardMatch.code });
+              }
+            });
+          }
+        });
+      }
+    }
+  }, [member, cities, dispatch, form]);
+
+  const handleCityChange = async (value, option) => {
+    setSelectedCityName(option.children);
+    setSelectedCityCode(value);
+
+    form.resetFields(["district", "ward"]);
+    await dispatch(getDistrict(value));
+  };
+
+  const handleDistrictChange = async (value, option) => {
+    setSelectedDistrictName(option.children);
+    setSelectedDistrictCode(value);
+    form.resetFields(["ward"]);
+    await dispatch(getWard(value));
+  };
+
+  const handleWardChange = (value, option) => {
+    setSelectedWardName(option.children);
+    form.setFieldsValue({ ward: option.children });
+  };
+
   return (
     <>
       {isModalEditVisible && (
@@ -19,9 +105,7 @@ const EditProfile = ({
           open={isModalEditVisible}
           onCancel={closeEditProfile}
           footer={[
-            <Button onClick={closeEditProfile}>
-              Đóng
-            </Button>,
+            <Button onClick={closeEditProfile}>Đóng</Button>,
             <Button
               form="updateEffort"
               type="primary"
@@ -40,6 +124,12 @@ const EditProfile = ({
             <Form.Item
               label="Hình đại diện"
               name="imageFile"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng nchọn ảnh đại diện",
+                },
+              ]}
               className="edit-avatar"
             >
               <Upload
@@ -56,19 +146,24 @@ const EditProfile = ({
             <Form.Item
               label="Tên"
               name="name"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng nhập tên",
+                },
+              ]}
               initialValue={member ? member.name : null}
             >
               <Input placeholder="Nhập tên" />
             </Form.Item>
             <Form.Item
-              label="Mã"
-              name="code"
-              initialValue={member ? member.code : null}
-            >
-              <Input placeholder="Nhập tên" disabled />
-            </Form.Item>
-            <Form.Item
               label="Email"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng nhập email",
+                },
+              ]}
               name="email"
               initialValue={member ? member.email : null}
             >
@@ -76,24 +171,87 @@ const EditProfile = ({
             </Form.Item>
             <Form.Item
               label="Số điện thoại"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng nhập số điện thoại",
+                },
+              ]}
               name="phoneNumber"
               initialValue={member ? member.phoneNumber : null}
             >
               <Input placeholder="Nhập số điện thoại" />
             </Form.Item>
             <Form.Item
-              label="Ngày sinh"
-              name="birthday"
-              initialValue={member ? member.birthday : null}
+              name="city"
+              label="Tỉnh/Thành phố"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn Tỉnh/Thành phố",
+                },
+              ]}
+              initialValue={selectedCityCode}
             >
-              <Input placeholder="Nhập ngày tháng năm sinh" />
+              <Select
+                placeholder="Chọn Tỉnh/Thành phố"
+                onChange={handleCityChange}
+                allowClear
+              >
+                {cities.map((city) => (
+                  <Option key={city.code} value={city.code}>
+                    {city.name}
+                  </Option>
+                ))}
+              </Select>
             </Form.Item>
+
             <Form.Item
-              label="Địa chỉ thường trú"
-              name="address"
-              initialValue={member ? member.address : null}
+              label="Quận/Huyện/Thị xã"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn Quận/Huyện/Thị xã",
+                },
+              ]}
+              name="district"
+              initialValue={selectedDistrictCode}
             >
-              <Input placeholder="Nhập địa chỉ thường trú" />
+              <Select
+                placeholder="Chọn Quận/Huyện/Thị xã"
+                allowClear
+                onChange={handleDistrictChange}
+              >
+                {districts.map((district) => (
+                  <Option key={district.code} value={district.code}>
+                    {district.name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+
+            <Form.Item
+              label="Phường/Xã"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn Phường/Xã/Thị trấn",
+                },
+              ]}
+              name="ward"
+              initialValue={selectedWardCode}
+            >
+              <Select
+                placeholder="Chọn Phường/Xã/Thị trấn"
+                onChange={handleWardChange}
+                allowClear
+              >
+                {wards.map((ward) => (
+                  <Option key={ward.code} value={ward.code}>
+                    {ward.name}
+                  </Option>
+                ))}
+              </Select>
             </Form.Item>
           </Form>
         </Modal>

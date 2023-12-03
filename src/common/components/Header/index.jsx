@@ -57,6 +57,9 @@ function HeaderComp() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isModalEditVisible, setIsModalEditVisible] = useState(false);
   const [fileList, setFileList] = useState([]);
+  const [selectedCityName, setSelectedCityName] = useState("");
+  const [selectedDistrictName, setSelectedDistrictName] = useState("");
+  const [selectedWardName, setSelectedWardName] = useState("");
 
   const [form] = Form.useForm();
 
@@ -161,10 +164,12 @@ function HeaderComp() {
 
   const handleEditProfile = (values) => {
     setIsSubmitting(true);
+    const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`
     const editProfile = {
       ...values,
       id: member.id,
       imageFile: fileList[0].originFileObj,
+      address: address
     };
     dispatch(updateMember(editProfile)).then(() => {
       setIsModalEditVisible(false);
@@ -292,6 +297,9 @@ function HeaderComp() {
             onFileChange={onFileChange}
             member={member}
             isSubmitting={isSubmitting}
+            setSelectedCityName={setSelectedCityName}
+            setSelectedDistrictName={setSelectedDistrictName}
+            setSelectedWardName={setSelectedWardName}
           />
           <ChangePassword
             changePasswordModalVisible={changePasswordModalVisible}
