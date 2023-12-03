@@ -35,7 +35,7 @@ const SidebarOnHeader = () => {
     <div className="header-tablet">
       <div className="menu-popover">
         <Popover
-          placement="bottomRight"
+          placement="bottom"
           content={
             <Menu
               theme="light"

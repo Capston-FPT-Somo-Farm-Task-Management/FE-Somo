@@ -11,12 +11,14 @@ import {
   UndoOutlined,
   SolutionOutlined,
   FormOutlined,
+  CopyOutlined,
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
 import {
   useDesktopMediaQuery,
   useDesktopXLMediaQuery,
+  useDesktopXXLMediaQuery,
   useMobileMediaQuery,
   useMobileSMMediaQuery,
   useTabletMediaQuery,
@@ -29,9 +31,9 @@ function TableTask({
   taskTitle,
   handleMenuClick,
   openEditTaskModal,
-  openViewRejectModal,
   openSubtaskModal,
   openEffortModal,
+  openCloneTaskModal,
   openDeleteModal,
   openCloseModal,
   openChangeDoingToPendingModal,
@@ -49,8 +51,9 @@ function TableTask({
 
   const isDesktopXL = useDesktopXLMediaQuery();
 
+  const isDesktopXXL = useDesktopXXLMediaQuery()
+
   const columns = taskTitle?.filter((column) => {
-    // Nếu là màn hình Mobile, ẩn cột ngày bắt đầu và ngày kết thúc
     if (isMobileSM) {
       return (
         column.dataIndex !== "startDate" &&
@@ -75,9 +78,16 @@ function TableTask({
     } else if (isDesktopXL) {
       return column.dataIndex !== "startDate" && column.dataIndex !== "endDate";
     }
-    // Cho các màn hình khác, hiển thị tất cả các cột
     return true;
   });
+  const nameColumn = columns.find((column) => column.dataIndex === "name");
+
+  if (nameColumn && isDesktopXXL) {
+    nameColumn.width = "15%";
+  }else{
+    nameColumn.width = "40%";
+  }
+  
   return (
     <>
       {task && (
@@ -287,6 +297,15 @@ function TableTask({
                               </Menu.Item>
                             </>
                           ) : null}
+
+                          <Menu.Item key="clone">
+                            <span onClick={() => openCloneTaskModal(record)}>
+                              <CopyOutlined
+                                style={{ color: "black", marginRight: "8px" }}
+                              />
+                              Tạo bản sao
+                            </span>
+                          </Menu.Item>
 
                           {record.status === "Hoàn thành" ? (
                             <Menu.Item key="close">

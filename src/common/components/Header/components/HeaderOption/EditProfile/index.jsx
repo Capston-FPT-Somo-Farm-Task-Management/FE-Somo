@@ -9,91 +9,95 @@ const EditProfile = ({
   fileList,
   onFileChange,
   member,
-  isSubmitting
+  isSubmitting,
 }) => {
   return (
     <>
       {isModalEditVisible && (
-            <Modal
-              title="Sửa thông tin"
-              open={isModalEditVisible}
-              onCancel={closeEditProfile}
-              footer={[
-                <Button
-                  form="updateEffort"
-                  type="primary"
-                  htmlType="submit"
-                  disabled={isSubmitting}
-                >
-                  Lưu thay đổi
-                </Button>,
-                <Button type="primary" onClick={closeEditProfile}>
-                  Đóng
-                </Button>,
-              ]}
+        <Modal
+          title="Sửa thông tin"
+          open={isModalEditVisible}
+          onCancel={closeEditProfile}
+          footer={[
+            <Button onClick={closeEditProfile}>
+              Đóng
+            </Button>,
+            <Button
+              form="updateEffort"
+              type="primary"
+              htmlType="submit"
+              disabled={isSubmitting}
             >
-              <Form
-                layout="vertical"
-                onFinish={handleEditProfile}
-                id="updateEffort"
+              Lưu thay đổi
+            </Button>,
+          ]}
+        >
+          <Form
+            layout="vertical"
+            onFinish={handleEditProfile}
+            id="updateEffort"
+          >
+            <Form.Item
+              label="Hình đại diện"
+              name="imageFile"
+              className="edit-avatar"
+            >
+              <Upload
+                listType="picture-circle"
+                maxCount={1}
+                beforeUpload={() => false}
+                fileList={fileList}
+                onChange={onFileChange}
+                onRemove="false"
               >
-                <Form.Item label="Hình ảnh" name="imageFile">
-                  <Upload
-                    listType="picture-circle"
-                    maxCount={1}
-                    beforeUpload={() => false}
-                    fileList={fileList}
-                    onChange={onFileChange}
-                    onRemove="false"
-                  >
-                    <UploadOutlined />
-                  </Upload>
-                </Form.Item>
-                <Form.Item
-                  label="Tên"
-                  name="name"
-                  initialValue={member ? member.name : null}
-                >
-                  <Input placeholder="Nhập tên" />
-                </Form.Item>
-                <Form.Item
-                  label="Mã"
-                  name="code"
-                  initialValue={member ? member.code : null}
-                >
-                  <Input placeholder="Nhập tên" disabled />
-                </Form.Item>
-                <Form.Item
-                  label="Email"
-                  name="email"
-                  initialValue={member ? member.email : null}
-                >
-                  <Input placeholder="Nhập email" />
-                </Form.Item>
-                <Form.Item
-                  label="Số điện thoại"
-                  name="phoneNumber"
-                  initialValue={member ? member.phoneNumber : null}
-                >
-                  <Input placeholder="Nhập số điện thoại" />
-                </Form.Item>
-                <Form.Item
-                  label="Ngày sinh"
-                  name="birthday"
-                  initialValue={member ? member.birthday : null}
-                >
-                  <Input placeholder="Nhập ngày tháng năm sinh" />
-                </Form.Item>
-                <Form.Item
-                  label="Địa chỉ thường trú"
-                  name="address"
-                  initialValue={member ? member.address : null}
-                >
-                  <Input placeholder="Nhập địa chỉ thường trú" />
-                </Form.Item>
-              </Form>
-            </Modal>
-          )}
+                <UploadOutlined />
+              </Upload>
+            </Form.Item>
+            <Form.Item
+              label="Tên"
+              name="name"
+              initialValue={member ? member.name : null}
+            >
+              <Input placeholder="Nhập tên" />
+            </Form.Item>
+            <Form.Item
+              label="Mã"
+              name="code"
+              initialValue={member ? member.code : null}
+            >
+              <Input placeholder="Nhập tên" disabled />
+            </Form.Item>
+            <Form.Item
+              label="Email"
+              name="email"
+              initialValue={member ? member.email : null}
+            >
+              <Input placeholder="Nhập email" />
+            </Form.Item>
+            <Form.Item
+              label="Số điện thoại"
+              name="phoneNumber"
+              initialValue={member ? member.phoneNumber : null}
+            >
+              <Input placeholder="Nhập số điện thoại" />
+            </Form.Item>
+            <Form.Item
+              label="Ngày sinh"
+              name="birthday"
+              initialValue={member ? member.birthday : null}
+            >
+              <Input placeholder="Nhập ngày tháng năm sinh" />
+            </Form.Item>
+            <Form.Item
+              label="Địa chỉ thường trú"
+              name="address"
+              initialValue={member ? member.address : null}
+            >
+              <Input placeholder="Nhập địa chỉ thường trú" />
+            </Form.Item>
+          </Form>
+        </Modal>
+      )}
     </>
   );
 };

@@ -185,6 +185,11 @@ html {
 .ant-popover .ant-popover-content {
   width: 400px;
 }
+@media (max-width: 992px) {
+  .ant-popover .ant-popover-content {
+    width: 300px;
+  }
+}
 
 .modal-user-profile .ant-modal-content {
   padding: 0;
@@ -2427,20 +2432,20 @@ html {
 }
 
 @media (max-width: 1200px) {
-  .ant-tabs {
-    width: 80%;
+  .custom-tabs {
+    width: 90%;
   }
 }
 @media (max-width: 479px) {
-  .ant-tabs {
+  .custom-tabs {
     width: 50%;
   }
 }
-.ant-tabs .ant-tabs-nav {
+.custom-tabs .ant-tabs-nav {
   flex-wrap: nowrap;
 }
 @media (max-width: 792px) {
-  .ant-tabs .ant-tabs-nav {
+  .custom-tabs .ant-tabs-nav {
     width: 70%;
     margin: 0 auto;
     overflow-x: auto;
@@ -2448,7 +2453,7 @@ html {
   }
 }
 @media (max-width: 992px) {
-  .ant-tabs .ant-tabs-nav {
+  .custom-tabs .ant-tabs-nav {
     width: 100%;
   }
 }
@@ -2543,4 +2548,26 @@ html {
   width: 20%;
   display: flex;
   justify-content: flex-end;
+}
+
+.edit-avatar .ant-upload-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.edit-avatar .ant-upload-wrapper.ant-upload-picture-circle-wrapper .ant-upload-list.ant-upload-list-picture-circle .ant-upload-list-item-container {
+  width: 40% !important;
+  height: 40% !important;
+}
+.edit-avatar .ant-upload-wrapper.ant-upload-picture-circle-wrapper .ant-upload-list.ant-upload-list-picture-circle .ant-upload-list-item {
+  height: 189px;
+}
+.edit-avatar .ant-upload-wrapper.ant-upload-picture-circle-wrapper .ant-upload-list.ant-upload-list-picture-circle .ant-upload-list-item-thumbnail img {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.edit-avatar .ant-upload-wrapper.ant-upload-picture-circle-wrapper .ant-upload.ant-upload-select {
+  width: 50%;
+  height: 40px;
+  border-radius: 8px;
 }/*# sourceMappingURL=index.css.map */

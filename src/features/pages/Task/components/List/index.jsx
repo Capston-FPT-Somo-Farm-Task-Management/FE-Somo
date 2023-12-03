@@ -10,6 +10,7 @@ import {
   changeStatusFromDoneToDoing,
   changeStatusToPendingAndCancel,
   changeStatusToDoing,
+  createTaskClone,
 } from "features/slice/task/taskSlice";
 import { getSubTasksByTaskId } from "features/slice/subTask/subTaskSlice";
 import { getEffort } from "features/slice/subTask/effortSlice";
@@ -30,6 +31,8 @@ import ViewReject from "../TaskDetail/ViewReject";
 import ModalDelete from "./components/ModalDelete";
 import ModalClose from "./components/ModalClose";
 import ChangeStatusToCancel from "./components/ChangeStatusToCancel";
+import { FALSE } from "sass";
+import CloneTask from "./components/CloneTask";
 
 const List = () => {
   const [subTasks, setSubTasks] = useState([]);
@@ -39,6 +42,7 @@ const List = () => {
   const [editTaskModalVisible, setEditTaskModalVisible] = useState(false);
   const [subTaskModalVisible, setSubTaskModalVisible] = useState(false);
   const [effortVisible, setEffortVisible] = useState(false);
+  const [cloneTaskModalVisible, setCloneTaskModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [closeModalVisible, setCloseModalVisible] = useState(false);
   const [taskDoneToDoingVisible, setTaskDoneToDoingVisible] = useState(false);
@@ -138,6 +142,8 @@ const List = () => {
       handleRefuseTask(record.id);
     } else if (e.key === "close") {
       openCloseModal(record.id);
+    } else if (e.key === "clone") {
+      openCloneTaskModal(record.id);
     } else if (e.key === "delete") {
       openDeleteModal(record.id);
     }
@@ -151,6 +157,16 @@ const List = () => {
   const closeCloseModal = () => {
     setSelectedTask(null);
     setCloseModalVisible(false);
+  };
+
+  const openCloneTaskModal = (record) => {
+    setSelectedTask(record);
+    setCloneTaskModalVisible(true);
+  };
+
+  const closeCloneTaskModal = () => {
+    setSelectedTask(null);
+    setCloneTaskModalVisible(false);
   };
 
   const openDeleteModal = (record) => {
@@ -259,6 +275,14 @@ const List = () => {
     });
   };
 
+  const handleCloneTask = (id) => {
+    dispatch(createTaskClone(id)).then(() => {
+      loadDataTask();
+      setPageIndex(1);
+      setCloneTaskModalVisible(false);
+    });
+  };
+
   const handleDelete = (id) => {
     dispatch(deleteTask(id)).then(() => {
       loadDataTask();
@@ -306,7 +330,7 @@ const List = () => {
   const closeEditTaskModal = () => {
     setEditingTask(null);
     setEditTaskModalVisible(false);
-    if (editingTask.status === "Từ chối" && selectedTask ) {
+    if (editingTask.status === "Từ chối" && selectedTask) {
       setViewRejectModalVisible(true);
     } else {
       return;
@@ -412,6 +436,7 @@ const List = () => {
           closeEditTaskModal={closeEditTaskModal}
           openSubtaskModal={openSubtaskModal}
           openEffortModal={openEffortModal}
+          openCloneTaskModal={openCloneTaskModal}
           openDeleteModal={openDeleteModal}
           openCloseModal={openCloseModal}
           openChangeDoingToPendingModal={openChangeDoingToPendingModal}
@@ -429,6 +454,12 @@ const List = () => {
         handleRefuseTask={handleRefuseTask}
         closeEditTaskModal={closeEditTaskModal}
         openChangeDoneToDoingModal={openChangeDoneToDoingModal}
+      />
+      <CloneTask
+        selectedTaskId={selectedTask}
+        cloneTaskModalVisible={cloneTaskModalVisible}
+        closeCloneTaskModal={closeCloneTaskModal}
+        handleCloneTask={handleCloneTask}
       />
       <ModalDelete
         selectedTaskId={selectedTask}
