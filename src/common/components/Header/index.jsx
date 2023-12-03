@@ -39,7 +39,7 @@ import { changeAllNotifyNewToRead } from "features/slice/notification/notifyChan
 import UserProfile from "./components/HeaderOption/UserProfile";
 import EditProfile from "./components/HeaderOption/EditProfile";
 import ChangePassword from "./components/HeaderOption/ChangePassword";
-import { useTabletMediaQuery } from "common/hooks/responsive";
+import { useMobileMediaQuery, useTabletMediaQuery } from "common/hooks/responsive";
 import SidebarOnHeader from "./components/HeaderOption/SidebarOnHeader";
 
 function HeaderComp() {
@@ -191,13 +191,12 @@ function HeaderComp() {
   const changeNewToRead = () => {
     dispatch(changeAllNotifyNewToRead(member?.id));
   };
-
-  const isTablet = useTabletMediaQuery();
+  
+  const isMobile = useMobileMediaQuery()
 
   return (
     <>
       <nav className="navBar">
-        {isTablet ? <SidebarOnHeader /> : null}
         <div className="nav-item">
           <div className="header-notification">
             {!loading ? (
@@ -251,7 +250,7 @@ function HeaderComp() {
                 {!loading ? (
                   <Space>
                     <Avatar src={member ? member.avatar : null} size="large" />
-                    {member ? member.name : null}
+                    {member && !isMobile ? member.name : null}
                     <DownOutlined />
                   </Space>
                 ) : (

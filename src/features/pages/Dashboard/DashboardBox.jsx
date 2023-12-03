@@ -97,7 +97,7 @@ const DashboardBox = ({ taskByWeek, selectedDay, loading }) => {
               }
             />
           ) : (
-            <h5> {filteredData?.totalTaskToDo}</h5>
+            <h5> {filteredData?.totalTaskDoing}</h5>
           )}
         </div>
         <div className="dashboard-logo">
@@ -122,7 +122,7 @@ const DashboardBox = ({ taskByWeek, selectedDay, loading }) => {
               }
             />
           ) : (
-            <h5> {filteredData?.totalTaskToDo}</h5>
+            <h5> {filteredData?.totalTaskPending}</h5>
           )}
         </div>
         <div className="dashboard-logo">
@@ -147,7 +147,7 @@ const DashboardBox = ({ taskByWeek, selectedDay, loading }) => {
               }
             />
           ) : (
-            <h5> {filteredData?.totalTaskToDo}</h5>
+            <h5> {filteredData?.totalTaskClose}</h5>
           )}
         </div>
         <div className="dashboard-logo">

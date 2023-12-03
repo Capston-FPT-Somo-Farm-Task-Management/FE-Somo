@@ -5,8 +5,17 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  @include tablet{
+    width: 45%;
+  }
+  @include mobile{
+    width: 32%;
+  }
   .nav-item {
     @include flex(row, space-around, null, null);
+    @include tablet{
+      @include flex(row, space-around, center, null);
+    }
     .header-notification{
       font-size: 16px;
       .notification-icon{
@@ -22,6 +31,12 @@
       font-size: 16px;
       margin: 0px 40px 0px 20px;
       @include flex(row, null, center, null);
+      @include mobile{
+        margin: 0px 20px 0px 20px;
+      }
+      @include mobile-sm{
+        margin: 0px 5px 0px 5px;
+      }
       .ant-space{
         .ant-space-item{
           color: black;
@@ -36,35 +51,6 @@
       }
     }
       
-  }
-}
-
-.header-tablet {
-  width: 100%;
-  @include flex(row, space-around, center, null);
-  padding: 10px;
-  border-bottom: 1px solid #f5f5f5;
-  .logoSomo {
-    width: 45%;
-
-    img {
-      width: 40%;
-
-      @include tablet {
-        width: 50%;
-      }
-      @include mobile {
-        width: 60%;
-      }
-      @include mobile-sm {
-        width: 70%;
-      }
-    }
-  }
-  .menu-popover {
-    width: 20%;
-    display: flex;
-    justify-content: flex-end;
   }
 }
 
