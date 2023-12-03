@@ -18,10 +18,10 @@ export const postLogin = createAsyncThunk(
         if (userRole === 'Supervisor') {
           localStorage.removeItem('somoFarm')
           toast.warning(
-            'Tài khoản của bạn không được phép đăng nhập trên trình duyệt này'
+            'Tài khoản của bạn không được phép đăng nhập trên website'
           )
           return rejectWithValue(
-            'Tài khoản của bạn không được phép đăng nhập trên trình duyệt này'
+            'Tài khoản của bạn không được phép đăng nhập trên website'
           )
         }
 
