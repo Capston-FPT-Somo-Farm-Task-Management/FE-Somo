@@ -1,4 +1,4 @@
-import { Button, Card, List } from 'antd'
+import { Button, Card, List, Select } from 'antd'
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -21,6 +21,7 @@ const ListTaskDone = ({ toggleTaskList, selectedDataDetail }) => {
 
   const [isModalDetailOpen, setIsModalDetailOpen] = useState(false)
   const [selectedTask, setSelectedTask] = useState()
+  const [filterStatus, setFilterStatus] = useState('')
 
   const openModalDetail = async (record) => {
     const actionResult = await dispatch(getTaskById(record.id))
@@ -46,6 +47,7 @@ const ListTaskDone = ({ toggleTaskList, selectedDataDetail }) => {
           getTaskDoneByEmployeeId({
             startDay: '',
             endDay: '',
+            status: filterStatus,
             pageIndex: pageNumber,
             employeeId: selectedDataDetail.id,
           })
@@ -58,7 +60,7 @@ const ListTaskDone = ({ toggleTaskList, selectedDataDetail }) => {
       }
     }
     loadListTaskDone()
-  }, [dispatch])
+  }, [dispatch, filterStatus])
 
   const fetchMoreData = () => {
     setPageNumber((prevPageNumber) => prevPageNumber + 1)
@@ -85,11 +87,33 @@ const ListTaskDone = ({ toggleTaskList, selectedDataDetail }) => {
     return `${day}/${month}/${year} - ${hours}:${minutes}`
   }
 
+  const handleFilterChange = (value) => {
+    setFilterStatus(value)
+    setPageNumber(1)
+  }
+
   return (
-    <div>
-      <Button type="default" onClick={toggleTaskListBack}>
-        <ArrowLeftOutlined />
-      </Button>
+    <>
+      <div>
+        <Button
+          type="default"
+          onClick={toggleTaskListBack}
+          style={{ marginBottom: '10px' }}
+        >
+          <ArrowLeftOutlined />
+        </Button>
+      </div>
+
+      <Select
+        defaultValue=""
+        style={{ width: 120 }}
+        onChange={handleFilterChange}
+      >
+        <Select.Option value="">Tất cả</Select.Option>
+        <Select.Option value={7}>Đã hủy</Select.Option>
+        <Select.Option value={8}>Đã đóng</Select.Option>
+      </Select>
+
       <InfiniteScroll
         dataLength={taskDone.length}
         next={fetchMoreData}
@@ -163,7 +187,7 @@ const ListTaskDone = ({ toggleTaskList, selectedDataDetail }) => {
         isModalDetailOpen={isModalDetailOpen}
         closeModalDetail={closeModalDetail}
       />
-    </div>
+    </>
   )
 }
 export default ListTaskDone
