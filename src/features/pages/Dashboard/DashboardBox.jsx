@@ -4,10 +4,12 @@ import {
   GrInProgress,
   GrPauseFill,
   GrClose,
-} from 'react-icons/gr'
-import { BsHourglassSplit } from 'react-icons/bs'
-import { GoMegaphone } from 'react-icons/go'
-import { CheckOutlined } from '@ant-design/icons'
+} from "react-icons/gr";
+import { BsHourglassSplit } from "react-icons/bs";
+import { GoMegaphone } from "react-icons/go";
+import { CheckOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const DashboardBox = ({ taskByWeek, selectedDay, loading }) => {
   const calculateTotalTasks = () => {

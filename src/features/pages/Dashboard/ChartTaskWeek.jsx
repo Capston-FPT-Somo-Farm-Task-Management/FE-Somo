@@ -11,8 +11,8 @@ import {
   ResponsiveContainer,
   Legend,
 } from 'recharts'
-
-const ChartTaskWeek = ({ taskByWeek, onBarClick }) => {
+import ScaleLoader from 'react-spinners/ScaleLoader'
+const ChartTaskWeek = ({ taskByWeek, onBarClick, loading }) => {
   const dayNames = [
     'Chủ nhật',
     'Thứ hai',
