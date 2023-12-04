@@ -79,7 +79,7 @@ function HeaderComp() {
           uid: "-1",
           name: "image.png",
           status: "done",
-          url: member.avatar,
+          url: member ? member.avatar : null,
         },
       ]);
     }

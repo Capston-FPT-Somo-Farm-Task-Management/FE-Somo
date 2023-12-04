@@ -81,11 +81,11 @@ const AddTaskType = ({
 
   return (
     <>
-      <div className="plant-content content">
+      <div className="task-type-content content">
         <h3>Loại công việc</h3>
 
-        <div className="plant-operate">
-          <div className="plant-operate-left">
+        <div className="task-type-operate">
+          <div className="task-type-operate-left">
             {/* Add Task Type */}
             <Button type="primary" onClick={openModalType}>
               Tạo loại công việc
@@ -109,14 +109,10 @@ const AddTaskType = ({
             </Dropdown>
           </div>
 
-          <div className="plant-operate-right">
+          <div className="task-type-operate-right">
             <Search
               placeholder="Tìm kiếm"
               allowClear
-              style={{
-                marginLeft: '15px',
-                width: 300,
-              }}
               onChange={(e) => handleSearch(e.target.value)}
             />
           </div>

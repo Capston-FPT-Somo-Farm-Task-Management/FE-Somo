@@ -1,18 +1,33 @@
+@import "../../../../../../styles/Helper/mixin";
 .plant-content {
-  h3 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
   .plant-operate {
     display: flex;
     justify-content: space-between;
+    @include mobile {
+      flex-direction: column;
+    }
     .plant-operate-left {
       display: flex;
       gap: 15px;
     }
+
     .plant-operate-right {
       margin-left: auto;
-      width: 300px;
+      @include mobile {
+        margin: 0;
+      }
+      .ant-input-group-wrapper {
+        width: 300px;
+
+        @include mobile {
+          margin-left: 0;
+          width: 400px;
+          margin-top: 15px;
+        }
+        @include mobile-sm {
+          width: 300px;
+        }
+      }
     }
   }
 }

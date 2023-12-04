@@ -21,11 +21,11 @@ const AddZone = ({
 
   return (
     <>
-      <div className="animal-group-content content">
+      <div className="zone-content content">
         <h3>Vùng</h3>
 
-        <div className="animal-group-operate">
-          <div className="animal-group-operate-left">
+        <div className="zone-operate">
+          <div className="zone-operate-left">
             <Button type="primary" onClick={openModal}>
               Thêm vùng
             </Button>
@@ -39,14 +39,10 @@ const AddZone = ({
             />
           </div>
 
-          <div className="animal-group-operate-right">
+          <div className="zone-operate-right">
             <Search
               placeholder="Tìm kiếm"
               allowClear
-              style={{
-                marginLeft: '15px',
-                width: 300,
-              }}
               onChange={(e) => handleSearch(e.target.value)}
             />
           </div>

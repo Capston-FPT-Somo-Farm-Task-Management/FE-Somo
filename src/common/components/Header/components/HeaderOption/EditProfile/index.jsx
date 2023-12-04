@@ -8,7 +8,7 @@ import {
   selectCities,
   selectDistricts,
   selectWards,
-} from "features/slice/location/locationSlice";
+} from "../../../../../../features/slice/location/locationSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Option } from "antd/es/mentions";
@@ -41,7 +41,7 @@ const EditProfile = ({
     if (member) {
       // Phân tích địa chỉ
       const addressParts = member.address ? member.address.split(", ") : null;
-      console.log(member);
+      console.log(member.address);
 
       const selectedCityName = addressParts ? addressParts[2] : null;
       const selectedDistrictName = addressParts ? addressParts[1] : null;

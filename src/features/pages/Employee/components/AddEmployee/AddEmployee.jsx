@@ -93,11 +93,11 @@ const AddEmployee = ({
 
   return (
     <>
-      <div className="animal-group-content content">
+      <div className="employee-content content">
         <h3>Nhân viên</h3>
 
-        <div className="animal-group-operate">
-          <div className="animal-group-operate-left">
+        <div className="employee-operate">
+          <div className="employee-operate-left">
             <Button type="primary" onClick={openModal}>
               Thêm nhân viên
             </Button>
@@ -129,14 +129,10 @@ const AddEmployee = ({
             </Dropdown>
           </div>
 
-          <div className="animal-group-operate-right">
+          <div className="employee-operate-right">
             <Search
               placeholder="Tìm kiếm"
               allowClear
-              style={{
-                marginLeft: '15px',
-                width: 300,
-              }}
               onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
