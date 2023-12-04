@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getZoneByFarmId } from 'features/slice/zone/zoneByFarmSlice'
 import { useEffect } from 'react'
 import { adminDeleteZone } from 'features/slice/zone/zoneSlice'
-import ChartZone from './ChartZone'
 import PieChartZone from './PieChartZone'
 
 const StatisticZone = () => {
@@ -83,7 +82,6 @@ const StatisticZone = () => {
     return 0
   }
   const activeAnimalZoneCount = filterActiveAnimalZones(zoneByFarm) //Mở
-  const inActiveAnimalZoneCount = animalZoneCount - activeAnimalZoneCount //Đóng
 
   // Vùng trồng trọt
   const filterActivePlantZones = (zoneByFarm) => {
@@ -97,7 +95,6 @@ const StatisticZone = () => {
     return 0
   }
   const activePlantZoneCount = filterActivePlantZones(zoneByFarm) //Mở
-  const inActivePlantZoneCount = plantZoneCount - activePlantZoneCount //Đóng
 
   // Khác
   const filterActiveOtherZones = (zoneByFarm) => {
@@ -110,65 +107,58 @@ const StatisticZone = () => {
     return 0
   }
   const activeOtherZoneCount = filterActiveOtherZones(zoneByFarm) //Mở
-  const inActiveOtherZoneCount = otherZoneCount - activeOtherZoneCount //Đóng
 
   return (
     <>
-      <div
-        style={{
-          backgroundColor: '#f5f6ff',
-          borderRadius: '15px',
-        }}
-      >
-        {/* <ChartZone
-        activeAnimalZoneCount={activeAnimalZoneCount}
-        inActiveAnimalZoneCount={inActiveAnimalZoneCount}
-        activePlantZoneCount={activePlantZoneCount}
-        inActivePlantZoneCount={inActivePlantZoneCount}
-        activeOtherZoneCount={activeOtherZoneCount}
-        inActiveOtherZoneCount={inActiveOtherZoneCount}
-      /> */}
-
-        {zoneByFarm?.data.length === 0 ? (
-          <>
-            <DisplayCard
-              zoneByFarm={zoneByFarm}
-              activeZoneCount={activeZoneCount}
-              inActiveZoneCount={inActiveZoneCount}
-              animalZoneCount={animalZoneCount}
-              plantZoneCount={plantZoneCount}
-              otherZoneCount={otherZoneCount}
-            />
-            <Divider dashed />
-            <TableZone
-              zoneByFarm={zoneByFarm}
-              onFinishDelete={onFinishDelete}
-              loading={loading}
-            />
-          </>
-        ) : (
-          <>
-            <PieChartZone
-              activeAnimalZoneCount={activeAnimalZoneCount}
-              activePlantZoneCount={activePlantZoneCount}
-              activeOtherZoneCount={activeOtherZoneCount}
-            />
-            <DisplayCard
-              zoneByFarm={zoneByFarm}
-              activeZoneCount={activeZoneCount}
-              inActiveZoneCount={inActiveZoneCount}
-              animalZoneCount={animalZoneCount}
-              plantZoneCount={plantZoneCount}
-              otherZoneCount={otherZoneCount}
-            />
-            <Divider dashed />
-            <TableZone
-              zoneByFarm={zoneByFarm}
-              onFinishDelete={onFinishDelete}
-              loading={loading}
-            />
-          </>
-        )}
+      <div className="animal-group-content content">
+        <h3>Vùng</h3>
+        <div
+          style={{
+            backgroundColor: '#f5f6ff',
+            borderRadius: '15px',
+          }}
+        >
+          {zoneByFarm?.data.length === 0 ? (
+            <>
+              <DisplayCard
+                zoneByFarm={zoneByFarm}
+                activeZoneCount={activeZoneCount}
+                inActiveZoneCount={inActiveZoneCount}
+                animalZoneCount={animalZoneCount}
+                plantZoneCount={plantZoneCount}
+                otherZoneCount={otherZoneCount}
+              />
+              <Divider dashed />
+              <TableZone
+                zoneByFarm={zoneByFarm}
+                onFinishDelete={onFinishDelete}
+                loading={loading}
+              />
+            </>
+          ) : (
+            <>
+              <PieChartZone
+                activeAnimalZoneCount={activeAnimalZoneCount}
+                activePlantZoneCount={activePlantZoneCount}
+                activeOtherZoneCount={activeOtherZoneCount}
+              />
+              <DisplayCard
+                zoneByFarm={zoneByFarm}
+                activeZoneCount={activeZoneCount}
+                inActiveZoneCount={inActiveZoneCount}
+                animalZoneCount={animalZoneCount}
+                plantZoneCount={plantZoneCount}
+                otherZoneCount={otherZoneCount}
+              />
+              <Divider dashed />
+              <TableZone
+                zoneByFarm={zoneByFarm}
+                onFinishDelete={onFinishDelete}
+                loading={loading}
+              />
+            </>
+          )}
+        </div>
       </div>
     </>
   )

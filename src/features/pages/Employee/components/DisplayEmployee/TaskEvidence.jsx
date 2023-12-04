@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import NoImage from '../../../../../assets/no-image.png'
 import { Avatar, Collapse, Empty, Image, Space, Timeline } from 'antd'
 import { GrDocumentImage } from 'react-icons/gr'
 import dayjs from 'dayjs'
+import { useMobileMediaQuery } from 'common/hooks/responsive'
 const { Panel } = Collapse
 
 const TaskEvidence = ({ evidenceData, taskData }) => {
+  const [expandedDescriptions, setExpandedDescriptions] = useState([])
+
+  const handleToggleDescription = (evidenceId) => {
+    setExpandedDescriptions((prevExpanded) => {
+      if (prevExpanded.includes(evidenceId)) {
+        return prevExpanded.filter((id) => id !== evidenceId)
+      } else {
+        return [...prevExpanded, evidenceId]
+      }
+    })
+  }
+
+  const isMobile = useMobileMediaQuery()
+
   const renderImages = () => {
     if (evidenceData && evidenceData.data && evidenceData.data.length > 0) {
       const timelineItems = evidenceData.data.map((evidence) => {
@@ -42,21 +57,30 @@ const TaskEvidence = ({ evidenceData, taskData }) => {
           date: formattedUpdateDate,
           content: (
             <div key={evidence.id} className="evidence-content">
+              {console.log(evidence)}
               {evidence.managerName ? (
                 <div className="evidence-item-header">
                   <div className="evidence-name">
                     <Avatar src={evidence.avatarManager} size="large" />
                     <h3>{evidence.managerName}</h3>
                   </div>
-                  <p className="evidence-time">{evidence.time}</p>
+                  {!isMobile ? (
+                    <p className="evidence-time">{evidence.time}</p>
+                  ) : null}
                 </div>
               ) : (
                 <div className="evidence-item-header">
                   <div className="evidence-name">
-                    <Avatar src={taskData?.avatarSupervisor} size="large" />
-                    <h3>{taskData?.supervisorName}</h3>
+                    <Avatar
+                      src={taskData ? taskData.avatarSupervisor : null}
+                      size="large"
+                    />
+                    <h3>{taskData ? taskData.supervisorName : null}</h3>
                   </div>
-                  <p className="evidence-time">{evidence.time}</p>
+
+                  {!isMobile ? (
+                    <p className="evidence-time">{evidence.time}</p>
+                  ) : null}
                 </div>
               )}
 
@@ -64,27 +88,211 @@ const TaskEvidence = ({ evidenceData, taskData }) => {
                 {evidence.evidenceType === 1 ? (
                   <div className="evidence-desc">
                     <h6 style={{ color: '#000' }}>Lý do từ chối:</h6>{' '}
-                    {evidence.description}
+                    {evidence.description.length > 200 ? (
+                      <>
+                        {expandedDescriptions.includes(evidence.id) ? (
+                          <>
+                            {evidence.description}.
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              thu gọn
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            {evidence.description.substring(0, 200)}...
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              xem thêm
+                            </span>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      evidence.description
+                    )}
                   </div>
                 ) : evidence.evidenceType === 2 ? (
                   <div className="evidence-desc">
                     <h6 style={{ color: '#000' }}>Lý do hủy bỏ:</h6>{' '}
-                    {evidence.description}
+                    {evidence.description.length > 200 ? (
+                      <>
+                        {expandedDescriptions.includes(evidence.id) ? (
+                          <>
+                            {evidence.description}.
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              thu gọn
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            {evidence.description.substring(0, 200)}...
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              xem thêm
+                            </span>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      evidence.description
+                    )}
                   </div>
                 ) : evidence.evidenceType === 3 ? (
                   <div className="evidence-desc">
                     <h6 style={{ color: '#000' }}>Lý do tạm hoãn:</h6>{' '}
-                    {evidence.description}
+                    {evidence.description.length > 200 ? (
+                      <>
+                        {expandedDescriptions.includes(evidence.id) ? (
+                          <>
+                            {evidence.description}.
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              thu gọn
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            {evidence.description.substring(0, 200)}...
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              xem thêm
+                            </span>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      evidence.description
+                    )}
                   </div>
                 ) : evidence.evidenceType === 4 ? (
-                  <div className="evidence-desc">{evidence.description}</div>
+                  <div className="evidence-desc">
+                    {evidence.description.length > 200 ? (
+                      <>
+                        {expandedDescriptions.includes(evidence.id) ? (
+                          <>
+                            {evidence.description}.
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              thu gọn
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            {evidence.description.substring(0, 200)}...
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              xem thêm
+                            </span>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      evidence.description
+                    )}
+                  </div>
                 ) : evidence.evidenceType === 5 ? (
                   <div className="evidence-desc">
                     <h6 style={{ color: '#000' }}>Lý do từ chối:</h6>{' '}
-                    {evidence.description}
+                    {evidence.description.length > 200 ? (
+                      <>
+                        {expandedDescriptions.includes(evidence.id) ? (
+                          <>
+                            {evidence.description}.
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              thu gọn
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            {evidence.description.substring(0, 200)}...
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              xem thêm
+                            </span>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      evidence.description
+                    )}
                   </div>
                 ) : (
-                  <div className="evidence-desc">{evidence.description}</div>
+                  <div className="evidence-desc">
+                    {evidence.description.length > 200 ? (
+                      <>
+                        {expandedDescriptions.includes(evidence.id) ? (
+                          <>
+                            {evidence.description}.
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              thu gọn
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            {evidence.description.substring(0, 200)}...
+                            <span
+                              className="toggle-description"
+                              onClick={() =>
+                                handleToggleDescription(evidence.id)
+                              }
+                            >
+                              xem thêm
+                            </span>
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      evidence.description
+                    )}
+                  </div>
                 )}
               </div>
 
@@ -245,32 +453,12 @@ const TaskEvidence = ({ evidenceData, taskData }) => {
   }
   return (
     <div className="evidence">
-      <h6 style={{ fontSize: '24px', fontWeight: '500' }}>Báo cáo công việc</h6>
+      <h6
+        style={{ fontSize: '24px', fontWeight: '2000', paddingBottom: '20px' }}
+      >
+        Báo cáo công việc
+      </h6>
       {renderImages()}
-      {/* {taskData && taskData.status === 'Từ chối' ? (
-        <div>
-          <Button
-            form="refuseTask"
-            type="primary"
-            danger
-            onClick={() => openEditTaskModal(taskData)}
-          >
-            Chỉnh sửa
-            <UpdateTask />
-          </Button>
-          ,
-          <Button
-            form="refuseTask"
-            type="primary"
-            htmlType="submit"
-            onClick={() => {
-              handleRefuseTask(taskData.id)
-            }}
-          >
-            Không chấp nhận
-          </Button>
-        </div>
-      ) : null} */}
     </div>
   )
 }

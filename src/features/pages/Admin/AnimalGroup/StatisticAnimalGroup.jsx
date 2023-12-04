@@ -34,13 +34,16 @@ const StatisticAnimalGroup = () => {
 
   return (
     <>
-      <DisplayCard fieldAnimal={fieldAnimal} animalByFarm={animalByFarm} />
-      <Divider dashed />
-      <TableAnimalGroup
-        loading={loading}
-        fieldAnimal={fieldAnimal}
-        onFinishDelete={onFinishDelete}
-      />
+      <div className="animal-group-content content">
+        <h3>Động vật</h3>
+        <DisplayCard fieldAnimal={fieldAnimal} animalByFarm={animalByFarm} />
+        <Divider dashed />
+        <TableAnimalGroup
+          loading={loading}
+          fieldAnimal={fieldAnimal}
+          onFinishDelete={onFinishDelete}
+        />
+      </div>
     </>
   )
 }

@@ -1,6 +1,6 @@
 // ChartTaskWeek.js
 
-import React from "react";
+import React from 'react'
 import {
   BarChart,
   Bar,
@@ -10,41 +10,39 @@ import {
   Tooltip,
   ResponsiveContainer,
   Legend,
-} from "recharts";
-import ScaleLoader from "react-spinners/ScaleLoader";
+} from 'recharts'
+import ScaleLoader from 'react-spinners/ScaleLoader'
 const ChartTaskWeek = ({ taskByWeek, onBarClick, loading }) => {
   const dayNames = [
-    "Chủ nhật",
-    "Thứ hai",
-    "Thứ ba",
-    "Thứ tư",
-    "Thứ năm",
-    "Thứ sáu",
-    "Thứ bảy",
-  ];
+    'Chủ nhật',
+    'Thứ hai',
+    'Thứ ba',
+    'Thứ tư',
+    'Thứ năm',
+    'Thứ sáu',
+    'Thứ bảy',
+  ]
 
   const data = taskByWeek?.data?.map((task, index) => ({
     name: dayNames[index],
     uv: task.taskCount,
-  }));
+  }))
 
   const renderBarShape = (props) => {
-    const { fill, x, y, width, height } = props;
-    return (
-      <rect x={x} y={y} width={width} height={height} rx={5} fill={fill} />
-    );
-  };
+    const { fill, x, y, width, height } = props
+    return <rect x={x} y={y} width={width} height={height} rx={5} fill={fill} />
+  }
 
   return (
     <>
       <h3>Tổng số công việc theo ngày</h3>
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-          height: "400px",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height: '400px',
         }}
       >
         {loading ? (
@@ -75,7 +73,7 @@ const ChartTaskWeek = ({ taskByWeek, onBarClick, loading }) => {
         )}
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ChartTaskWeek;
+export default ChartTaskWeek

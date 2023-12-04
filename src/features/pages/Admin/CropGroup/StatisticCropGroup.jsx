@@ -33,13 +33,16 @@ const StatisticCropGroup = () => {
   }
   return (
     <>
-      <DisplayCard fieldPlant={fieldPlant} plantByFarm={plantByFarm} />
-      <Divider dashed />
-      <TableCropGroup
-        fieldPlant={fieldPlant}
-        onFinishDelete={onFinishDelete}
-        loading={loading}
-      />
+      <div className="animal-group-content content">
+        <h3>Thực vật</h3>
+        <DisplayCard fieldPlant={fieldPlant} plantByFarm={plantByFarm} />
+        <Divider dashed />
+        <TableCropGroup
+          fieldPlant={fieldPlant}
+          onFinishDelete={onFinishDelete}
+          loading={loading}
+        />
+      </div>
     </>
   )
 }

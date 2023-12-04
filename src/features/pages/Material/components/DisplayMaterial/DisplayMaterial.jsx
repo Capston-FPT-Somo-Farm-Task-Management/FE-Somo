@@ -44,16 +44,12 @@ const DisplayMaterial = ({
 
   useEffect(() => {
     if (selectedData) {
-      dispatch(getMaterialById(selectedData.id)).then(() => {
-        loadData()
-      })
+      dispatch(getMaterialById(selectedData.id))
     }
   }, [selectedData, dispatch])
 
   const openModal = async (record) => {
-    await dispatch(getMaterialById(record.id)).then(() => {
-      loadData()
-    })
+    await dispatch(getMaterialById(record.id))
     setSelectedData(record)
     setIsModalOpen(true)
   }
@@ -153,45 +149,6 @@ const DisplayMaterial = ({
               )}
             />
           </Table>
-
-          {/* <Row gutter={[16, 16]} style={{ justifyContent: 'space-around' }}>
-        {searchMaterial?.map((mate) => (
-          <Col
-          xs={14}
-          sm={10}
-          md={7}
-          key={mate.id}
-          style={{ marginTop: '10px' }}
-          >
-          <Card
-          key={mate.id}
-          cover={
-            <img
-            alt={mate.name}
-            src={mate.urlImage}
-            style={{
-              width: '100%',
-              height: '150px',
-              display: 'block',
-              objectFit: 'cover',
-            }}
-                />
-              }
-              actions={[
-                <SettingOutlined key="setting" />,
-                <EditOutlined key="edit" />,
-                <EllipsisOutlined key="ellipsis" />,
-              ]}
-            >
-            <Card.Meta
-            // avatar={<Avatar src={mate.avatar} />}
-            title={mate.name}
-            description={mate.description}
-            />
-            </Card>
-            </Col>
-            ))}
-          </Row> */}
 
           <DetailMaterial
             key={selectedDataDetail ? selectedDataDetail.id : null}
