@@ -232,7 +232,7 @@ const AppRoute = () => {
         }
       />
 
-      <Route
+      {/* <Route
         path="/statistic-task"
         element={
           <AdminPrivateRoute>
@@ -241,7 +241,7 @@ const AppRoute = () => {
             </AdminLayoutWithRoute>
           </AdminPrivateRoute>
         }
-      />
+      /> */}
 
       <Route
         path="/statistic-farm"

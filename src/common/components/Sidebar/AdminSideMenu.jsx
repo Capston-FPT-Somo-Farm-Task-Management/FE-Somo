@@ -114,7 +114,7 @@ const AdminSideMenu = () => {
 
             <Menu.Item key="/statistic-animal-group">
               <AppstoreOutlined />
-              <span>Chuồng</span>
+              <span>Động vật</span>
               <Link to="/statistic-animal-group"></Link>
             </Menu.Item>
 
@@ -126,7 +126,7 @@ const AdminSideMenu = () => {
 
             <Menu.Item key="/statistic-crop-group">
               <AppstoreOutlined />
-              <span>Vườn</span>
+              <span>Thực vật</span>
               <Link to="/statistic-crop-group"></Link>
             </Menu.Item>
 
@@ -160,7 +160,7 @@ const AdminSideMenu = () => {
               placement="bottomRight"
               content={
                 <Menu
-                  theme="dark"
+                  theme="light"
                   mode="inline"
                   defaultSelectedKeys={[location.pathname]}
                 >
@@ -176,11 +176,11 @@ const AdminSideMenu = () => {
                     <Link to="/statistic-farm"></Link>
                   </Menu.Item>
 
-                  <Menu.Item key="/statistic-task">
+                  {/* <Menu.Item key="/statistic-task">
                     <AimOutlined />
                     <span>Công việc</span>
                     <Link to="/statistic-task"></Link>
-                  </Menu.Item>
+                  </Menu.Item> */}
 
                   <Menu.Item key="/statistic-area">
                     <BorderOutlined />
@@ -194,27 +194,27 @@ const AdminSideMenu = () => {
                     <Link to="/statistic-zone"></Link>
                   </Menu.Item>
 
-                  <Menu.Item key="/statistic-animal">
+                  {/* <Menu.Item key="/statistic-animal">
                     <TeamOutlined />
                     <span>Vật nuôi</span>
                     <Link to="/statistic-animal"></Link>
-                  </Menu.Item>
+                  </Menu.Item> */}
 
                   <Menu.Item key="/statistic-animal-group">
                     <AppstoreOutlined />
-                    <span>Chuồng</span>
+                    <span>Động vật</span>
                     <Link to="/statistic-animal-group"></Link>
                   </Menu.Item>
 
-                  <Menu.Item key="/statistic-plant">
+                  {/* <Menu.Item key="/statistic-plant">
                     <DashboardOutlined />
                     <span>Cây trồng</span>
                     <Link to="/statistic-plant"></Link>
-                  </Menu.Item>
+                  </Menu.Item> */}
 
                   <Menu.Item key="/statistic-crop-group">
                     <AppstoreOutlined />
-                    <span>Vườn</span>
+                    <span>Thực vật</span>
                     <Link to="/statistic-crop-group"></Link>
                   </Menu.Item>
 

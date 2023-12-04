@@ -29,13 +29,16 @@ const StatisticArea = () => {
 
   return (
     <>
-      <DisplayCard areaByFarm={areaByFarm} />
-      <Divider dashed />
-      <TableArea
-        areaByFarm={areaByFarm}
-        onFinishDelete={onFinishDelete}
-        loading={loading}
-      />
+      <div className="animal-group-content content">
+        <h3>Khu vực</h3>
+        <DisplayCard areaByFarm={areaByFarm} />
+        <Divider dashed />
+        <TableArea
+          areaByFarm={areaByFarm}
+          onFinishDelete={onFinishDelete}
+          loading={loading}
+        />
+      </div>
     </>
   )
 }

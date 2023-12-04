@@ -26,15 +26,19 @@ const Dashboard = () => {
 
   return (
     <>
-      {/* <h6>Tổng quan</h6> */}
-      <DisplayCard
-        areaByFarm={areaByFarm}
-        zoneByFarm={zoneByFarm}
-        fieldAnimal={fieldAnimal}
-        fieldPlant={fieldPlant}
-      />
-      <Divider dashed />
-      <DisplayTask farmId={farmId} />
+      <div className="animal-group-content content">
+        <h3>Tổng quan</h3>
+
+        {/* <h6>Tổng quan</h6> */}
+        <DisplayCard
+          areaByFarm={areaByFarm}
+          zoneByFarm={zoneByFarm}
+          fieldAnimal={fieldAnimal}
+          fieldPlant={fieldPlant}
+        />
+        <Divider dashed />
+        <DisplayTask farmId={farmId} />
+      </div>
     </>
   )
 }
