@@ -175,7 +175,7 @@ function Schedule() {
       {loading === true ? (
         <>
           <div className="clock-loading">
-            <ClockLoader color="#36d7b7" size={150} />
+            <ClockLoader color="#02c39a" size={150} />
           </div>
           <div style={{ opacity: "0.3" }}>
             <h3>Lịch trình</h3>

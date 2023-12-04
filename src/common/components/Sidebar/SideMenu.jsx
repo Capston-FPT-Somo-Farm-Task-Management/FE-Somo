@@ -15,7 +15,7 @@ import {
   AuditOutlined,
   FileTextOutlined,
 } from "@ant-design/icons";
-import { GiCow, GiPlantRoots, GiPig, GiPlantWatering   } from "react-icons/gi";
+import { GiCow, GiPlantRoots, GiPig, GiPlantWatering } from "react-icons/gi";
 import { GrUserWorker, GrObjectGroup } from "react-icons/gr";
 import logoSomo from "../../../assets/logo_Somo.png";
 import { Link, useLocation } from "react-router-dom";
@@ -58,7 +58,7 @@ const SideMenu = () => {
 
   return (
     <div className="sider">
-      {isDesktop && (
+      {isDesktop ? (
         <Sider
           theme="light"
           style={{
@@ -134,7 +134,7 @@ const SideMenu = () => {
               </Menu.Item>
 
               <Menu.Item key="/animal-group">
-                <GrObjectGroup  />
+                <GrObjectGroup />
                 <span style={{ marginLeft: "10px" }}>Chuồng</span>
                 <Link to="/animal-group"></Link>
               </Menu.Item>
@@ -174,109 +174,8 @@ const SideMenu = () => {
             </Menu.Item>
           </Menu>
         </Sider>
-      )}
-      {isTablet && (
-        <div className="header-tablet">
-          <Link to="/" className="logoSomo">
-            <img src={logoSomo} alt="logo" />
-          </Link>
-          <div className="menu-popover">
-            <Popover
-              placement="bottomRight"
-              content={
-                <Menu
-                  theme="light"
-                  mode="inline"
-                  defaultSelectedKeys={[location.pathname]}
-                >
-                  <Menu.Item key="/home">
-                    <BarChartOutlined />
-                    <span>Trang chủ</span>
-                    <Link to="/home"></Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="/schedule">
-                    <CalendarOutlined />
-                    <span>Lịch trình</span>
-                    <Link to="/schedule"></Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="/task">
-                    <AimOutlined />
-                    <span>Công việc</span>
-                    <Link to="/task"></Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="/area">
-                    <BorderOutlined />
-                    <span>Khu vực</span>
-                    <Link to="/area"></Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="/zone">
-                    <BlockOutlined />
-                    <span>Vùng</span>
-                    <Link to="/zone"></Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="/animals">
-                    <GiCow />
-                    <span style={{ marginLeft: "10px" }}>Vật nuôi</span>
-                    <Link to="/animals"></Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="/animal-type">
-                    <GiCow />
-                    <span style={{ marginLeft: "10px" }}>Loại vật nuôi</span>
-                    <Link to="/animal-type"></Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="/animal-group">
-                    <TeamOutlined />
-                    <span>Chuồng</span>
-                    <Link to="/animal-group"></Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="/plants">
-                    <GiPlantRoots />
-                    <span style={{ marginLeft: "10px" }}>Cây trồng</span>
-                    <Link to="/plants"></Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="/plant-type">
-                    <GiPlantRoots />
-                    <span style={{ marginLeft: "10px" }}>Loại cây trồng</span>
-                    <Link to="/plant-type"></Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="/crop-group">
-                    <DashboardOutlined />
-                    <span>Vườn</span>
-                    <Link to="/crop-group"></Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="/material">
-                    <FormatPainterOutlined />
-                    <span>Công cụ</span>
-                    <Link to="/material"></Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="/employee">
-                    <GrUserWorker />
-                    <span style={{ marginLeft: "10px" }}>Nhân viên</span>
-                    <Link to="/employee"></Link>
-                  </Menu.Item>
-                </Menu>
-              }
-              trigger="click"
-            >
-              <Button>
-                <MenuOutlined />
-              </Button>
-            </Popover>
-          </div>
-        </div>
-      )}
+      ) : null}
+      
     </div>
   );
 };

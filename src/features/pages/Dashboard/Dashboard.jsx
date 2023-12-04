@@ -43,14 +43,14 @@ const Dashboard = () => {
     <div className="dashboard">
       <h3>Tổng số công việc theo trạng thái</h3>
       <div className="dashboard-header">
-        <DashboardBox taskByWeek={taskByWeek} selectedDay={selectedDay} />
+        <DashboardBox taskByWeek={taskByWeek} selectedDay={selectedDay} loading={loading} />
       </div>
       <div className="dashboard-footer">
         <div className="dashboard-chart" ref={barChartRef}>
-          <ChartTaskWeek taskByWeek={taskByWeek} onBarClick={handleBarClick} />
+          <ChartTaskWeek taskByWeek={taskByWeek} onBarClick={handleBarClick} loading={loading} />
         </div>
         <div className="dashboard-piechart">
-          <PieChartTaskWeek taskByWeek={taskByWeek} selectedDay={selectedDay} />
+          <PieChartTaskWeek taskByWeek={taskByWeek} selectedDay={selectedDay} loading={loading} />
         </div>
       </div>
     </div>
