@@ -2464,4 +2464,247 @@ html {
 
 .ant-tabs-dropdown-menu-item:hover {
   padding: 10px;
+}
+
+.admin-dashboard {
+  background-color: #fcfffc;
+  padding: 20px;
+  height: 100%;
+}
+.admin-dashboard h3 {
+  margin: 15px;
+  font-size: 20px;
+}
+.admin-dashboard .admin-dashboard-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+@media (max-width: 792px) {
+  .admin-dashboard .admin-dashboard-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
+.admin-dashboard .admin-dashboard-header .admin-dashboard-content {
+  width: 22%;
+  height: 150px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1019607843), 1px 2px 3px rgba(0, 0, 0, 0.0588235294), 1px 2px 3px rgba(0, 0, 0, 0.1019607843), 1px 2px 3px rgba(0, 0, 0, 0.0588235294);
+  background-color: white;
+  border-radius: 8px;
+  padding: 30px 20px;
+}
+@media (max-width: 1200px) {
+  .admin-dashboard .admin-dashboard-header .admin-dashboard-content {
+    padding: 30px 10px;
+  }
+}
+@media (max-width: 792px) {
+  .admin-dashboard .admin-dashboard-header .admin-dashboard-content {
+    width: 40%;
+    margin-bottom: 20px;
+  }
+}
+@media (max-width: 1200px) {
+  .admin-dashboard .admin-dashboard-header .admin-dashboard-content {
+    height: 120px;
+  }
+}
+@media (max-width: 1200px) {
+  .admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-text {
+    width: 50%;
+  }
+}
+.admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-text p {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #6e7682;
+}
+@media (max-width: 1200px) {
+  .admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-text p {
+    font-size: 15px;
+  }
+}
+@media (max-width: 479px) {
+  .admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-text p {
+    font-size: 12px;
+  }
+}
+.admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-text h5 {
+  font-size: 34px;
+  font-weight: 700;
+}
+@media (max-width: 1200px) {
+  .admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-text h5 {
+    font-size: 30px;
+  }
+}
+@media (max-width: 479px) {
+  .admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-text h5 {
+    font-size: 24px;
+  }
+}
+.admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-logo {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 5px;
+  border-radius: 50%;
+}
+@media (max-width: 1200px) {
+  .admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-logo {
+    width: 50%;
+  }
+}
+.admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-todo {
+  background-color: #1a659e;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+}
+@media (max-width: 1200px) {
+  .admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-todo {
+    width: 45px;
+    height: 45px;
+  }
+}
+.admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-todo svg {
+  width: 21px;
+  height: 21px;
+}
+.admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-todo svg path {
+  fill: white;
+  stroke: white;
+}
+.admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-doing {
+  background-color: #f49cbb;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+}
+@media (max-width: 1200px) {
+  .admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-doing {
+    width: 45px;
+    height: 45px;
+  }
+}
+.admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-doing svg {
+  width: 21px;
+  height: 21px;
+}
+.admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-doing svg path {
+  fill: white;
+  stroke: white;
+}
+.admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-pending {
+  background-color: #fbb02d;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+}
+@media (max-width: 1200px) {
+  .admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-pending {
+    width: 45px;
+    height: 45px;
+  }
+}
+.admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-pending svg {
+  width: 21px;
+  height: 21px;
+}
+.admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-pending svg path {
+  fill: white;
+  stroke: white;
+}
+.admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-close {
+  background-color: #02c39a;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+}
+@media (max-width: 1200px) {
+  .admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-close {
+    width: 45px;
+    height: 45px;
+  }
+}
+.admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-close svg {
+  width: 21px;
+  height: 21px;
+}
+.admin-dashboard .admin-dashboard-header .admin-dashboard-content .admin-dashboard-close svg path {
+  fill: white;
+  stroke: white;
+}
+.admin-dashboard .admin-dashboard-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 20px;
+}
+@media (max-width: 792px) {
+  .admin-dashboard .admin-dashboard-footer {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
+.admin-dashboard .admin-dashboard-footer h3 {
+  margin: 15px;
+  font-size: 20px;
+}
+.admin-dashboard .admin-dashboard-footer .admin-dashboard-chart {
+  width: 59%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1019607843), 1px 2px 3px rgba(0, 0, 0, 0.0588235294), 1px 2px 3px rgba(0, 0, 0, 0.1019607843), 1px 2px 3px rgba(0, 0, 0, 0.0588235294);
+}
+@media (max-width: 792px) {
+  .admin-dashboard .admin-dashboard-footer .admin-dashboard-chart {
+    width: 90%;
+  }
+}
+.admin-dashboard .admin-dashboard-footer .admin-dashboard-piechart {
+  width: 35%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1019607843), 1px 2px 3px rgba(0, 0, 0, 0.0588235294), 1px 2px 3px rgba(0, 0, 0, 0.1019607843), 1px 2px 3px rgba(0, 0, 0, 0.0588235294);
+  height: 456px;
+}
+@media (max-width: 792px) {
+  .admin-dashboard .admin-dashboard-footer .admin-dashboard-piechart {
+    width: 90%;
+    margin-bottom: 20px;
+  }
+}
+.admin-dashboard .admin-dashboard-footer .admin-dashboard-piechart .admin-recharts-legend-wrapper {
+  bottom: 40px !important;
 }/*# sourceMappingURL=index.css.map */

@@ -1,25 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useEffect, useRef, useState } from 'react'
 import ChartTaskWeek from './ChartTaskWeek'
-import PieChartTaskWeek from './PieChartTaskWeek'
-import { getMemberById } from 'features/slice/user/memberSlice'
-import { getTaskByWeek } from 'features/slice/task/taskByWeekSlice'
-import { authServices } from 'services/authServices'
 import DashboardBox from './DashboardBox'
+import PieChartTaskWeek from './PieChartTaskWeek'
+import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { getTaskFarm } from 'features/slice/task/taskFarmSlice'
 
-const Dashboard = () => {
+const DisplayTask = ({ farmId }) => {
   const barChartRef = useRef(null)
   const dispatch = useDispatch()
-  const member = useSelector((state) => state.member.data)
-  const taskByWeek = useSelector((state) => state.taskByWeek.data)
-  const memberId = member?.id
+  const taskByWeek = useSelector((state) => state.taskFarm.data)
 
   const [selectedDay, setSelectedDay] = useState(null)
 
   useEffect(() => {
-    dispatch(getMemberById(authServices.getUserId()))
-    dispatch(getTaskByWeek(memberId))
-  }, [dispatch, memberId])
+    dispatch(getTaskFarm(farmId))
+  }, [dispatch])
 
   const handleBarClick = (index) => {
     setSelectedDay(index)
@@ -38,23 +34,21 @@ const Dashboard = () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [barChartRef])
-
   return (
-    <div className="dashboard">
+    <div className="admin-dashboard">
       <h3>Tổng số công việc theo trạng thái</h3>
-      <div className="dashboard-header">
+      <div className="admin-dashboard-header">
         <DashboardBox taskByWeek={taskByWeek} selectedDay={selectedDay} />
       </div>
-      <div className="dashboard-footer">
-        <div className="dashboard-chart" ref={barChartRef}>
+      <div className="admin-dashboard-footer">
+        <div className="admin-dashboard-chart" ref={barChartRef}>
           <ChartTaskWeek taskByWeek={taskByWeek} onBarClick={handleBarClick} />
         </div>
-        <div className="dashboard-piechart">
+        <div className="admin-dashboard-piechart">
           <PieChartTaskWeek taskByWeek={taskByWeek} selectedDay={selectedDay} />
         </div>
       </div>
     </div>
   )
 }
-
-export default Dashboard
+export default DisplayTask

@@ -54,46 +54,46 @@ const DashboardBox = ({ taskByWeek, selectedDay }) => {
 
   return (
     <>
-      <div className="dashboard-content">
-        <div className="dashboard-text">
+      <div className="admin-dashboard-content">
+        <div className="admin-dashboard-text">
           <p>Chuẩn bị</p>
           <h5> {filteredData?.totalTaskToDo}</h5>
         </div>
-        <div className="dashboard-logo">
-          <div className="dashboard-todo">
+        <div className="admin-dashboard-logo">
+          <div className="admin-dashboard-todo">
             <GoMegaphone />
           </div>
         </div>
       </div>
-      <div className="dashboard-content">
-        <div className="dashboard-text">
+      <div className="admin-dashboard-content">
+        <div className="admin-dashboard-text">
           <p>Đang làm</p>
           <h5> {filteredData?.totalTaskDoing}</h5>
         </div>
-        <div className="dashboard-logo">
-          <div className="dashboard-doing">
+        <div className="admin-dashboard-logo">
+          <div className="admin-dashboard-doing">
             <BsHourglassSplit />
           </div>
         </div>
       </div>
-      <div className="dashboard-content">
-        <div className="dashboard-text">
+      <div className="admin-dashboard-content">
+        <div className="admin-dashboard-text">
           <p>Tạm hoãn</p>
           <h5> {filteredData?.totalTaskPending}</h5>
         </div>
-        <div className="dashboard-logo">
-          <div className="dashboard-pending">
+        <div className="admin-dashboard-logo">
+          <div className="admin-dashboard-pending">
             <GrPauseFill />
           </div>
         </div>
       </div>
-      <div className="dashboard-content">
-        <div className="dashboard-text">
+      <div className="admin-dashboard-content">
+        <div className="admin-dashboard-text">
           <p>Đã đóng</p>
           <h5> {filteredData?.totalTaskClose}</h5>
         </div>
-        <div className="dashboard-logo">
-          <div className="dashboard-close">
+        <div className="admin-dashboard-logo">
+          <div className="admin-dashboard-close">
             <CheckOutlined />
           </div>
         </div>

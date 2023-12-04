@@ -1,5 +1,3 @@
-// ChartTaskWeek.js
-
 import React from 'react'
 import {
   BarChart,

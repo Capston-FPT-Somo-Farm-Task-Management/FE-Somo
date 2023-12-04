@@ -1,6 +1,6 @@
-@import '../../../styles/Helper/mixin';
+@import '../../../../styles/Helper/mixin';
 
-.dashboard {
+.admin-dashboard {
   background-color: #fcfffc;
   padding: 20px;
   height: 100%;
@@ -8,13 +8,13 @@
     margin: 15px;
     font-size: 20px;
   }
-  .dashboard-header {
+  .admin-dashboard-header {
     width: 100%;
     @include flex(row, space-around, center, null);
     @include mobile {
       @include flex(row, space-around, center, wrap);
     }
-    .dashboard-content {
+    .admin-dashboard-content {
       width: 22%;
       height: 150px;
       @include flex(row, space-between, null, null);
@@ -33,7 +33,7 @@
       @include desktop-xl {
         height: 120px;
       }
-      .dashboard-text {
+      .admin-dashboard-text {
         @include desktop-xl {
           width: 50%;
         }
@@ -60,7 +60,7 @@
           }
         }
       }
-      .dashboard-logo {
+      .admin-dashboard-logo {
         width: 50%;
         @include flex(row, flex-end, null, null);
         padding: 5px;
@@ -69,29 +69,29 @@
           width: 50%;
         }
       }
-      .dashboard-todo {
+      .admin-dashboard-todo {
         background-color: #1a659e;
         @include dashboard-circle-box;
         @include svg-dashboard;
       }
-      .dashboard-doing {
+      .admin-dashboard-doing {
         background-color: #f49cbb;
         @include dashboard-circle-box;
         @include svg-dashboard;
       }
-      .dashboard-pending {
+      .admin-dashboard-pending {
         background-color: #fbb02d;
         @include dashboard-circle-box;
         @include svg-dashboard;
       }
-      .dashboard-close {
+      .admin-dashboard-close {
         background-color: #02c39a;
         @include dashboard-circle-box;
         @include svg-dashboard;
       }
     }
   }
-  .dashboard-footer {
+  .admin-dashboard-footer {
     @include flex(row, space-around, center, null);
     @include mobile {
       @include flex(column-reverse, space-around, center, null);
@@ -101,7 +101,7 @@
       font-size: 20px;
     }
     padding-top: 20px;
-    .dashboard-chart {
+    .admin-dashboard-chart {
       width: 59%;
       background-color: #fff;
       border-radius: 8px;
@@ -111,7 +111,7 @@
         width: 90%;
       }
     }
-    .dashboard-piechart {
+    .admin-dashboard-piechart {
       width: 35%;
       background-color: #fff;
       border-radius: 8px;
@@ -122,7 +122,7 @@
         width: 90%;
         margin-bottom: 20px;
       }
-      .recharts-legend-wrapper {
+      .admin-recharts-legend-wrapper {
         bottom: 40px !important;
       }
     }

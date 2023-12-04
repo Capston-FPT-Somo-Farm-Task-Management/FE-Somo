@@ -25,6 +25,7 @@
 @import './features/pages/Plants/MyCrops/components/FirstStepAddPlant/firstStepAddPlant';
 @import './features/authentication/SignIn/signin';
 @import './features/pages/PageNotFound/pageNotFound';
-@import "features/pages/Dashboard/dashboard";
+@import 'features/pages/Dashboard/dashboard';
 @import './features/pages/Task/components/TaskDetail/ViewReject/viewReject';
 @import './features/pages/Task/components/List/components/StatusTabs/statusTabs';
+@import './features/pages/Admin/Dashboard/dashboardAdmin';
