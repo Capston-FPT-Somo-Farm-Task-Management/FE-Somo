@@ -17,13 +17,6 @@ import { getMaterialById } from 'features/slice/material/materialById'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import DetailMaterial from './DetailMaterial'
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-} from '@ant-design/icons'
-import Meta from 'antd/es/card/Meta'
-import { style } from '@mui/system'
 
 const DisplayMaterial = ({
   material,
@@ -100,7 +93,7 @@ const DisplayMaterial = ({
               dataIndex="urlImage"
               key="2"
               render={(text, record) => (
-                <Image width={50} src={record.urlImage} />
+                <Image width={50} height={40} src={record.urlImage} style={{objectFit: "cover", borderRadius: "8px"}}/>
               )}
             />
             <Column

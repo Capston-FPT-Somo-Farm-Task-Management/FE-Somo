@@ -1,7 +1,7 @@
 @import "../../../../../../../styles/Helper/mixin";
-.ant-tabs{
+.custom-tabs{
     @include desktop-xl {
-        width: 80%;
+        width: 90%;
       }
       @include mobile-sm{
         width: 50%;

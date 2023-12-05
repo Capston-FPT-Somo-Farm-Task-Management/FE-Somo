@@ -59,6 +59,23 @@ export const createTaskDraft = createAsyncThunk(
   }
 );
 
+export const createTaskClone = createAsyncThunk(
+  "tasks/createTaskClone",
+  async (id) => {
+    try {
+      const response = await axiosInstance.post(
+        `/FarmTask/(${id})/CreateTaskClone`
+      );
+      if (response.status === 200) {
+        toast.success("Tạo bản sao thành công");
+      }
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
 export const updateTask = createAsyncThunk(
   "task/updateTask",
   async (data, { rejectWithValue }) => {
@@ -206,7 +223,8 @@ export const updateTaskDisagreeAndChangeToToDo = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(
-        `/FarmTask/(${data.taskId})/updateTaskDisagreeAndChangeToToDo`, data.body
+        `/FarmTask/(${data.taskId})/updateTaskDisagreeAndChangeToToDo`,
+        data.body
       );
       if (response.status === 200) {
         toast.success("Cập nhật thành công");
@@ -306,6 +324,22 @@ const taskSlice = createSlice({
         state.loading = false;
       })
       .addCase(createTaskDraft.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(createTaskClone.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createTaskClone.fulfilled, (state, action) => {
+        if (Array.isArray(state.data)) {
+          state.data.push(action.payload.task);
+        } else {
+          state.data = [action.payload.task];
+        }
+
+        state.loading = false;
+      })
+      .addCase(createTaskClone.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

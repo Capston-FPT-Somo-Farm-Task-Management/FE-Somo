@@ -8,21 +8,21 @@ import {
   Radio,
   Select,
   Upload,
-} from 'antd'
-import ImgCrop from 'antd-img-crop'
-import { useEffect, useState } from 'react'
-import { UploadOutlined } from '@ant-design/icons'
-import dayjs from 'dayjs'
-import { useSelector } from 'react-redux'
+} from "antd";
+import ImgCrop from "antd-img-crop";
+import { useEffect, useState } from "react";
+import { UploadOutlined } from "@ant-design/icons";
+import dayjs from "dayjs";
+import { useSelector } from "react-redux";
 import {
   getDistrict,
   getWard,
   selectCities,
   selectDistricts,
   selectWards,
-} from 'features/slice/location/locationSlice'
-import { useDispatch } from 'react-redux'
-import { Option } from 'antd/es/mentions'
+} from "features/slice/location/locationSlice";
+import { useDispatch } from "react-redux";
+import { Option } from "antd/es/mentions";
 
 const UpdateEmployee = ({
   isModalOpen,
@@ -33,117 +33,117 @@ const UpdateEmployee = ({
   taskTypeActive,
   farmId,
 }) => {
-  const [fileList, setFileList] = useState([])
-  const [form] = Form.useForm()
+  const [fileList, setFileList] = useState([]);
+  const [form] = Form.useForm();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   // --Location
-  const cities = useSelector(selectCities)
-  const districts = useSelector(selectDistricts)
-  const wards = useSelector(selectWards)
+  const cities = useSelector(selectCities);
+  const districts = useSelector(selectDistricts);
+  const wards = useSelector(selectWards);
 
-  const [selectedCityCode, setSelectedCityCode] = useState(null)
-  const [selectedDistrictCode, setSelectedDistrictCode] = useState(null)
-  const [selectedWardCode, setSelectedWardCode] = useState(null)
+  const [selectedCityCode, setSelectedCityCode] = useState(null);
+  const [selectedDistrictCode, setSelectedDistrictCode] = useState(null);
+  const [selectedWardCode, setSelectedWardCode] = useState(null);
 
-  const [selectedCityName, setSelectedCityName] = useState('')
-  const [selectedDistrictName, setSelectedDistrictName] = useState('')
-  const [selectedWardName, setSelectedWardName] = useState('')
+  const [selectedCityName, setSelectedCityName] = useState("");
+  const [selectedDistrictName, setSelectedDistrictName] = useState("");
+  const [selectedWardName, setSelectedWardName] = useState("");
 
   useEffect(() => {
     if (employeeById?.data?.avatar) {
       setFileList([
         {
-          uid: '-1',
-          name: 'image.png',
-          status: 'done',
+          uid: "-1",
+          name: "image.png",
+          status: "done",
           url: employeeById?.data?.avatar,
         },
-      ])
+      ]);
     }
-  }, [employeeById])
+  }, [employeeById]);
 
   const onFileChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList)
-  }
+    setFileList(newFileList);
+  };
 
   useEffect(() => {
     if (selectedData) {
       // Phân tích địa chỉ
-      const addressParts = selectedData.address.split(', ')
+      const addressParts = selectedData.address.split(", ");
 
-      const selectedCityName = addressParts[2]
-      const selectedDistrictName = addressParts[1]
-      const selectedWardName = addressParts[0]
+      const selectedCityName = addressParts[2];
+      const selectedDistrictName = addressParts[1];
+      const selectedWardName = addressParts[0];
 
       // Tìm kiếm và so sánh thành phố, quận/huyện
-      const cityMatch = cities.find((city) => city.name === selectedCityName)
+      const cityMatch = cities.find((city) => city.name === selectedCityName);
       if (cityMatch) {
-        setSelectedCityCode(cityMatch.code)
-        form.setFieldsValue({ city: cityMatch.code })
-        setSelectedCityName(selectedCityName)
+        setSelectedCityCode(cityMatch.code);
+        form.setFieldsValue({ city: cityMatch.code });
+        setSelectedCityName(selectedCityName);
         dispatch(getDistrict(cityMatch.code)).then((newDistricts) => {
           const districtMatch = newDistricts.find(
             (district) => district.name === selectedDistrictName
-          )
+          );
 
           if (districtMatch) {
-            setSelectedDistrictCode(districtMatch.code)
-            form.setFieldsValue({ district: districtMatch.code })
+            setSelectedDistrictCode(districtMatch.code);
+            form.setFieldsValue({ district: districtMatch.code });
 
             dispatch(getWard(districtMatch.code)).then((newWards) => {
               const wardMatch = newWards.find(
                 (ward) => ward.name === selectedWardName
-              )
+              );
               if (wardMatch) {
-                setSelectedWardCode(wardMatch.code)
-                form.setFieldsValue({ ward: wardMatch.code })
+                setSelectedWardCode(wardMatch.code);
+                form.setFieldsValue({ ward: wardMatch.code });
               }
-            })
+            });
           }
-        })
+        });
       }
     }
-  }, [selectedData, cities, dispatch, form])
+  }, [selectedData, cities, dispatch, form]);
 
   const onFinish = (values) => {
-    const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`
+    const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`;
     const finalValues = {
       ...values,
-      gender: values.gender === 'Male' ? false : true,
+      gender: values.gender === "Male" ? false : true,
       id: selectedData.id,
       imageFile: fileList[0].originFileObj,
       address: address,
       farmId: farmId,
-    }
-    onFinishUpdate(finalValues)
-    closeModal()
-    form.resetFields()
-  }
+    };
+    onFinishUpdate(finalValues);
+    closeModal();
+    form.resetFields();
+  };
 
   const disabledDate = (current) => {
-    return current && current > dayjs().endOf('day')
-  }
+    return current && current > dayjs().endOf("day");
+  };
 
   const handleCityChange = async (value, option) => {
-    setSelectedCityName(option.children)
-    setSelectedCityCode(value)
+    setSelectedCityName(option.children);
+    setSelectedCityCode(value);
 
-    form.resetFields(['district', 'ward'])
-    await dispatch(getDistrict(value))
-  }
+    form.resetFields(["district", "ward"]);
+    await dispatch(getDistrict(value));
+  };
 
   const handleDistrictChange = async (value, option) => {
-    setSelectedDistrictName(option.children)
-    setSelectedDistrictCode(value)
-    form.resetFields(['ward'])
-    await dispatch(getWard(value))
-  }
+    setSelectedDistrictName(option.children);
+    setSelectedDistrictCode(value);
+    form.resetFields(["ward"]);
+    await dispatch(getWard(value));
+  };
 
   const handleWardChange = (value, option) => {
-    setSelectedWardName(option.children)
-    form.setFieldsValue({ ward: option.children })
-  }
+    setSelectedWardName(option.children);
+    form.setFieldsValue({ ward: option.children });
+  };
 
   return (
     <>
@@ -179,11 +179,11 @@ const UpdateEmployee = ({
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng nhập tên nhân viên',
+                  message: "Vui lòng nhập tên nhân viên",
                 },
               ]}
               name="name"
-              initialValue={selectedData ? selectedData.name : ''}
+              initialValue={selectedData ? selectedData.name : ""}
             >
               <Input placeholder="Nhập tên nhân viên" />
             </Form.Item>
@@ -193,11 +193,11 @@ const UpdateEmployee = ({
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng nhập mã nhân viên',
+                  message: "Vui lòng nhập mã nhân viên",
                 },
               ]}
               name="code"
-              initialValue={selectedData ? selectedData.code : ''}
+              initialValue={selectedData ? selectedData.code : ""}
             >
               <Input placeholder="Nhập mã khu vực" />
             </Form.Item>
@@ -207,21 +207,21 @@ const UpdateEmployee = ({
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng nhập số điện thoại nhân viên',
+                  message: "Vui lòng nhập số điện thoại nhân viên",
                 },
                 () => ({
                   validator(_, value) {
-                    const phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})\b/
+                    const phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})\b/;
                     if (!value || phoneRegex.test(value)) {
-                      return Promise.resolve()
+                      return Promise.resolve();
                     }
                     return Promise.reject(
-                      new Error('Số điện thoại không hợp lệ')
-                    )
+                      new Error("Số điện thoại không hợp lệ")
+                    );
                   },
                 }),
               ]}
-              initialValue={selectedData ? selectedData.phoneNumber : ''}
+              initialValue={selectedData ? selectedData.phoneNumber : ""}
               name="phoneNumber"
             >
               <Input />
@@ -232,11 +232,11 @@ const UpdateEmployee = ({
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng chọn giới tính',
+                  message: "Vui lòng chọn giới tính",
                 },
               ]}
               name="gender"
-              initialValue={selectedData ? selectedData.gender : ''}
+              initialValue={selectedData ? selectedData.gender : ""}
             >
               <Radio.Group>
                 <Radio value="Male">Nam</Radio>
@@ -247,6 +247,12 @@ const UpdateEmployee = ({
             <Form.Item
               name="city"
               label="Tỉnh/Thành phố"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn Tỉnh/Thành phố",
+                },
+              ]}
               initialValue={selectedCityCode}
             >
               <Select
@@ -267,7 +273,7 @@ const UpdateEmployee = ({
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng chọn Quận/Huyện/Thị xã',
+                  message: "Vui lòng chọn Quận/Huyện/Thị xã",
                 },
               ]}
               name="district"
@@ -291,7 +297,7 @@ const UpdateEmployee = ({
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng chọn Phường/Xã/Thị trấn',
+                  message: "Vui lòng chọn Phường/Xã/Thị trấn",
                 },
               ]}
               name="ward"
@@ -312,7 +318,11 @@ const UpdateEmployee = ({
           </div>
 
           <div className="form-right">
-            <Form.Item label="Hình ảnh công cụ" name="imageFile">
+            <Form.Item
+              label="Hình ảnh công cụ"
+              name="imageFile"
+              className="material-image"
+            >
               <ImgCrop rotationSlider>
                 <Upload
                   listType="picture-card"
@@ -331,7 +341,7 @@ const UpdateEmployee = ({
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng chọn ngày sinh',
+                  message: "Vui lòng chọn ngày sinh",
                 },
               ]}
               name="dateOfBirth"
@@ -346,7 +356,7 @@ const UpdateEmployee = ({
                 disabledDate={disabledDate}
                 placeholder="Chọn ngày sinh"
                 style={{
-                  width: '100%',
+                  width: "100%",
                 }}
               />
             </Form.Item>
@@ -356,7 +366,7 @@ const UpdateEmployee = ({
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng chọn loại nhiệm vụ',
+                  message: "Vui lòng chọn loại nhiệm vụ",
                 },
               ]}
               name="taskTypeIds"
@@ -366,7 +376,7 @@ const UpdateEmployee = ({
                 mode="multiple"
                 allowClear
                 style={{
-                  width: '100%',
+                  width: "100%",
                 }}
                 placeholder="Chọn loại nhiệm vụ"
                 options={taskTypeActive?.data?.map((taskType) => ({
@@ -379,6 +389,6 @@ const UpdateEmployee = ({
         </Form>
       </Modal>
     </>
-  )
-}
-export default UpdateEmployee
+  );
+};
+export default UpdateEmployee;

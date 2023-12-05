@@ -1,17 +1,17 @@
-@import "../../../../../../styles/Helper/mixin";
-.crop-group-content {
-  .crop-group-operate {
+@import "../../../../../styles/Helper/mixin";
+.material-content {
+  .material-operate {
     display: flex;
     justify-content: space-between;
     @include mobile {
       flex-direction: column;
     }
-    .crop-group-operate-left {
+    .material-operate-left {
       display: flex;
       gap: 15px;
     }
 
-    .crop-group-operate-right {
+    .material-operate-right {
       margin-left: auto;
       @include mobile {
         margin: 0;

@@ -119,7 +119,7 @@ const SignIn = () => {
           className="btn-login"
           disabled={isSubmitting}
         >
-          Làm mới
+          Gửi yêu cầu
         </Button>
       </Form.Item>
     </Form>
