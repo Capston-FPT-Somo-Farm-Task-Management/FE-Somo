@@ -16,11 +16,11 @@ const AddArea = ({ onFinishCreate, handleSearch }) => {
 
   return (
     <>
-      <div className="animal-group-content content">
+      <div className="area-content content">
         <h3>Khu vực</h3>
 
-        <div className="animal-group-operate">
-          <div className="animal-group-operate-left">
+        <div className="area-operate">
+          <div className="area-operate-left">
             <Button type="primary" onClick={openModal}>
               Thêm khu vực
             </Button>
@@ -32,14 +32,10 @@ const AddArea = ({ onFinishCreate, handleSearch }) => {
             />
           </div>
 
-          <div className="animal-group-operate-right">
+          <div className="area-operate-right">
             <Search
               placeholder="Tìm kiếm"
               allowClear
-              style={{
-                marginLeft: '15px',
-                width: 300,
-              }}
               onChange={(e) => handleSearch(e.target.value)}
             />
           </div>

@@ -16,11 +16,11 @@ const AddPlantType = ({ farmId, onFinishCreatePlantType, handleSearch }) => {
 
   return (
     <>
-      <div className="plant-content content">
+      <div className="plant-type-content content">
         <h3>Loại cây trồng</h3>
 
-        <div className="plant-operate">
-          <div className="plant-operate-left">
+        <div className="plant-type-operate">
+          <div className="plant-type-operate-left">
             {/* Add Plant Type */}
             <Button type="primary" onClick={openModalType}>
               Tạo mới loại cây
@@ -33,14 +33,10 @@ const AddPlantType = ({ farmId, onFinishCreatePlantType, handleSearch }) => {
             />
           </div>
 
-          <div className="plant-operate-right">
+          <div className="plant-type-operate-right">
             <Search
               placeholder="Tìm kiếm"
               allowClear
-              style={{
-                marginLeft: '15px',
-                width: 300,
-              }}
               onChange={(e) => handleSearch(e.target.value)}
             />
           </div>

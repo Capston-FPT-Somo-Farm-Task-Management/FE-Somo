@@ -4,7 +4,7 @@ import { FileTextOutlined } from "@ant-design/icons";
 
 export const taskTitle = [
   {
-    title: <p>Mã công việc</p>,
+    title: <p>Mã</p>,
     dataIndex: "code",
     key: "code",
     render: (code, record) => (
@@ -31,7 +31,7 @@ export const taskTitle = [
                     }}
                   >
                     <span style={{ marginLeft: "5px" }}>
-                      #{code.slice(0, 8) + (code.length > 8 ? "..." : "")}
+                      #{code.slice(0, 5) + (code.length > 5 ? "..." : "")}
                     </span>
                   </p>
                 ) : null}
@@ -42,7 +42,7 @@ export const taskTitle = [
           <Tooltip placement="bottomLeft" title={code}>
             <>
               {code ? (
-                <p>#{code.slice(0, 8) + (code.length > 8 ? "..." : "")}</p>
+                <p>#{code.slice(0, 5) + (code.length > 5 ? "..." : "")}</p>
               ) : null}
             </>
           </Tooltip>
@@ -58,7 +58,7 @@ export const taskTitle = [
       <Tooltip placement="bottomLeft" title="Xem chi tiết">
         <h4 className="task-name" data-name-clicked="true">
           {text ? (
-            <>{text.slice(0, 15) + (text.length > 15 ? "..." : "")}</>
+            <>{text}</>
           ) : null}
         </h4>
       </Tooltip>

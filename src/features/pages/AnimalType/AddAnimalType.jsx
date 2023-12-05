@@ -16,11 +16,11 @@ const AddAnimalType = ({ farmId, onFinishCreateAnimalType, handleSearch }) => {
 
   return (
     <>
-      <div className="animal-content content">
+      <div className="animal-type-content content">
         <h3>Chăn nuôi</h3>
 
-        <div className="animal-operate">
-          <div className="animal-operate-left">
+        <div className="animal-type-operate">
+          <div className="animal-type-operate-left">
             {/* Add Animal Type */}
             <Button type="primary" onClick={openModalType}>
               Tạo mới loại vật nuôi
@@ -33,14 +33,10 @@ const AddAnimalType = ({ farmId, onFinishCreateAnimalType, handleSearch }) => {
             />
           </div>
 
-          <div className="animal-operate-right">
+          <div className="animal-type-operate-right">
             <Search
               placeholder="Tìm kiếm"
               allowClear
-              style={{
-                marginLeft: '15px',
-                width: 300,
-              }}
               onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
