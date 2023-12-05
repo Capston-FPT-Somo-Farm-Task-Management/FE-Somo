@@ -45,16 +45,19 @@ const StatisticMaterial = () => {
 
   return (
     <>
-      <DisplayCard
-        activeMaterialCount={activeMaterialCount}
-        inActiveMaterialCount={inActiveMaterialCount}
-      />
-      <Divider dashed />
-      <TableMaterial
-        material={material}
-        onFinishDelete={onFinishDelete}
-        loading={loading}
-      />
+      <div className="animal-group-content content">
+        <h3>Công cụ</h3>
+        <DisplayCard
+          activeMaterialCount={activeMaterialCount}
+          inActiveMaterialCount={inActiveMaterialCount}
+        />
+        <Divider dashed />
+        <TableMaterial
+          material={material}
+          onFinishDelete={onFinishDelete}
+          loading={loading}
+        />
+      </div>
     </>
   )
 }

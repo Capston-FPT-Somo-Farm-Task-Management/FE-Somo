@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import {
   GrDocumentSound,
   GrInProgress,
@@ -14,45 +14,45 @@ import { LoadingOutlined } from "@ant-design/icons";
 const DashboardBox = ({ taskByWeek, selectedDay, loading }) => {
   const calculateTotalTasks = () => {
     if (selectedDay !== null) {
-      const dayTask = taskByWeek?.data[selectedDay];
+      const dayTask = taskByWeek?.data[selectedDay]
       return {
         totalTaskToDo: dayTask.totalTaskToDo,
         totalTaskDoing: dayTask.totalTaskDoing,
         totalTaskClose: dayTask.totalTaskClose,
         totalTaskPending: dayTask.totalTaskPending,
-      };
+      }
     } else {
-      let totalTaskToDo = 0;
-      let totalTaskDoing = 0;
-      let totalTaskClose = 0;
-      let totalTaskPending = 0;
+      let totalTaskToDo = 0
+      let totalTaskDoing = 0
+      let totalTaskClose = 0
+      let totalTaskPending = 0
 
       taskByWeek?.data?.forEach((task) => {
-        totalTaskToDo += task.totalTaskToDo;
-        totalTaskDoing += task.totalTaskDoing;
-        totalTaskClose += task.totalTaskClose;
-        totalTaskPending += task.totalTaskPending;
-      });
+        totalTaskToDo += task.totalTaskToDo
+        totalTaskDoing += task.totalTaskDoing
+        totalTaskClose += task.totalTaskClose
+        totalTaskPending += task.totalTaskPending
+      })
 
       return {
         totalTaskToDo,
         totalTaskDoing,
         totalTaskClose,
         totalTaskPending,
-      };
+      }
     }
-  };
+  }
 
   let filteredData = taskByWeek?.data
     ? calculateTotalTasks(taskByWeek.data)
-    : [];
+    : []
 
   if (selectedDay !== null && taskByWeek?.data) {
-    const selectedTasks = taskByWeek.data[selectedDay];
-    filteredData = calculateTotalTasks([selectedTasks]);
+    const selectedTasks = taskByWeek.data[selectedDay]
+    filteredData = calculateTotalTasks([selectedTasks])
   }
 
-  console.log(filteredData);
+  console.log(filteredData)
 
   return (
     <>
@@ -157,7 +157,7 @@ const DashboardBox = ({ taskByWeek, selectedDay, loading }) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default DashboardBox;
+export default DashboardBox
