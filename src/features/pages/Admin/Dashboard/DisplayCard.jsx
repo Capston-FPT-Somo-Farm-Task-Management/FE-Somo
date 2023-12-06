@@ -6,9 +6,9 @@ const DisplayCard = ({ areaByFarm, zoneByFarm, fieldAnimal, fieldPlant }) => {
 
   return (
     <>
-      <Row gutter={10}>
-        <Col span={6}>
-          <Card>
+      <Row gutter={10} style={{justifyContent: "space-around"}}>
+        <Col span={5} className='dashboard-card'>
+          <Card className='card-area'>
             <Statistic
               title="Số lượng khu vực"
               value={areaByFarm ? areaByFarm?.data?.length : ''}
@@ -18,8 +18,8 @@ const DisplayCard = ({ areaByFarm, zoneByFarm, fieldAnimal, fieldPlant }) => {
           </Card>
         </Col>
 
-        <Col span={6}>
-          <Card>
+        <Col span={5} className='dashboard-card'>
+          <Card className='card-zone'>
             <Statistic
               title="Số lượng vùng"
               value={zoneByFarm ? zoneByFarm?.data?.length : ''}
@@ -29,8 +29,8 @@ const DisplayCard = ({ areaByFarm, zoneByFarm, fieldAnimal, fieldPlant }) => {
           </Card>
         </Col>
 
-        <Col span={6}>
-          <Card>
+        <Col span={5} className='dashboard-card'>
+          <Card className='card-barn'>
             <Statistic
               title="Số lượng chuồng"
               value={fieldAnimal ? fieldAnimal?.data?.length : ''}
@@ -40,8 +40,8 @@ const DisplayCard = ({ areaByFarm, zoneByFarm, fieldAnimal, fieldPlant }) => {
           </Card>
         </Col>
 
-        <Col span={6}>
-          <Card>
+        <Col span={5} className='dashboard-card'>
+          <Card className='card-garden'>
             <Statistic
               title="Số lượng vườn"
               value={fieldPlant ? fieldPlant?.data?.length : ''}

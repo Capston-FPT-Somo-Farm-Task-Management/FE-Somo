@@ -6,12 +6,12 @@ const DisplayCard = ({ activeMaterialCount, inActiveMaterialCount }) => {
 
   return (
     <>
-      <Row gutter={16}>
+      <Row gutter={10} style={{ justifyContent: "center" }}>
         {/* Active */}
-        <Col span={12}>
-          <Card>
+        <Col span={6} className='dashboard-card'>
+          <Card className='card-material'>
             <Statistic
-              title="Số lượng công cụ có thể sử dụng"
+              title="Số công cụ có thể sử dụng"
               value={activeMaterialCount}
               precision={2}
               formatter={formatter}
@@ -20,10 +20,10 @@ const DisplayCard = ({ activeMaterialCount, inActiveMaterialCount }) => {
         </Col>
 
         {/* Inactive */}
-        <Col span={12}>
-          <Card>
+        <Col span={6} className='dashboard-card'>
+          <Card className='card-material'>
             <Statistic
-              title="Số lượng công cụ chưa được sử dụng"
+              title="Số công cụ chưa được sử dụng"
               value={inActiveMaterialCount}
               precision={2}
               formatter={formatter}

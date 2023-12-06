@@ -18,11 +18,11 @@ const DisplayCard = ({ fieldPlant, plantByFarm }) => {
 
   return (
     <>
-      <Row gutter={16}>
-        <Col span={8}>
-          <Card>
+      <Row gutter={10} style={{ justifyContent: "center" }}>
+        <Col span={6} className='dashboard-card'>
+          <Card className='card-plant'>
             <Statistic
-              title="Số lượng vườn đang mở"
+              title="Số vườn đang mở"
               value={activeCropGroup}
               precision={2}
               formatter={formatter}
@@ -30,10 +30,10 @@ const DisplayCard = ({ fieldPlant, plantByFarm }) => {
           </Card>
         </Col>
 
-        <Col span={8}>
-          <Card>
+        <Col span={6} className='dashboard-card'>
+          <Card className='card-plant'>
             <Statistic
-              title="Số lượng vườn đang đóng"
+              title="Số vườn đang đóng"
               value={inActiveCropGroup}
               precision={2}
               formatter={formatter}
@@ -41,10 +41,10 @@ const DisplayCard = ({ fieldPlant, plantByFarm }) => {
           </Card>
         </Col>
 
-        <Col span={8}>
-          <Card>
+        <Col span={6} className='dashboard-card'>
+          <Card className='card-plant'>
             <Statistic
-              title="Số lượng cây trồng trong các vườn"
+              title="Cây trồng trong các vườn"
               value={plantByFarmCount}
               precision={2}
               formatter={formatter}
