@@ -58,8 +58,8 @@ function UpdateTask({
   const [selectedFieldId, setSelectedFieldId] = useState(
     editingTask ? editingTask.fieldId : null
   );
-  const [selectedLivestockId, setSelectedLivestockId] = useState(0);
-  const [selectedPlantId, setSelectedPlantId] = useState(0);
+  const [selectedLivestockId, setSelectedLivestockId] = useState(editingTask ? editingTask.livestockId : 0);
+  const [selectedPlantId, setSelectedPlantId] = useState(editingTask ? editingTask.plantId : 0);
   const [addressDetail, setAddressDetail] = useState("");
   const [selectedTaskTypeId, setSelectedTaskTypeId] = useState(
     editingTask ? editingTask.taskTypeId : null
@@ -131,6 +131,8 @@ function UpdateTask({
   const supervisor = useSelector((state) => state.supervisor.data);
 
   const material = useSelector((state) => state.materialActive.data);
+
+  console.log(editingTask);
 
 
   useEffect(() => {
@@ -427,10 +429,10 @@ function UpdateTask({
           fieldId: selectedFieldId ? selectedFieldId : 0,
           isRepeat: typeof isRepeat === "object" ? isRepeat.value : repeatValue,
           taskTypeId: selectedTaskTypeId ? selectedTaskTypeId : 0,
-          plantId: typeof plantId === "object" ? plantId.value : 0,
-          liveStockId: typeof liveStockId === "object" ? liveStockId.value : 0,
+          plantId: selectedPlantId ? selectedPlantId : 0,
+          liveStockId: selectedLivestockId ? selectedLivestockId : 0,
           addressDetail: addressDetailToSend ? addressDetailToSend : editingTask.addressDetail,
-          remind: typeof remind === "object" ? remind.value : 0,
+          remind: remindValue ? remindValue : editingTask.remind,
           materialIds: materialsValue ? materialsValue : editingTask.materialId,
           dates: initialSelectedDays
             ? initialSelectedDays.map((date) =>
@@ -540,10 +542,10 @@ function UpdateTask({
           fieldId: selectedFieldId ? selectedFieldId : 0,
           isRepeat: typeof isRepeat === "object" ? isRepeat.value : repeatValue,
           taskTypeId: selectedTaskTypeId ? selectedTaskTypeId : 0,
-          plantId: typeof plantId === "object" ? plantId.value : 0,
-          liveStockId: typeof liveStockId === "object" ? liveStockId.value : 0,
+          plantId: selectedPlantId ? selectedPlantId : 0,
+          liveStockId: selectedLivestockId ? selectedLivestockId : 0,
           addressDetail: addressDetailToSend ? addressDetailToSend : editingTask.addressDetail,
-          remind: typeof remind === "object" ? remind.value : 0,
+          remind: remindValue ? remindValue : editingTask.remind,
           materialIds: materialsValue ? materialsValue : editingTask.materialId,
           dates: initialSelectedDays
             ? initialSelectedDays.map((date) =>
@@ -631,12 +633,10 @@ function UpdateTask({
           fieldId: selectedFieldId ? selectedFieldId : 0,
           isRepeat: repeatValue ? repeatValue : editingTask.isRepeat,
           taskTypeId: selectedTaskTypeId ? selectedTaskTypeId : 0,
-          plantId: selectedPlantId ? selectedPlantId : editingTask.plantId,
-          liveStockId: selectedLivestockId
-            ? selectedLivestockId
-            : editingTask.livestockId,
+          plantId: selectedPlantId ? selectedPlantId : 0,
+          liveStockId: selectedLivestockId ? selectedLivestockId : 0,
             addressDetail: addressDetailToSend ? addressDetailToSend : editingTask.addressDetail,
-          remind: editingTask.remind ? remindValue : remindValue,
+            remind: remindValue ? remindValue : editingTask.remind,
           materialIds: materialsValue ? materialsValue : editingTask.materialId,
           dates: initialSelectedDays
             ? initialSelectedDays.map((date) =>
@@ -763,12 +763,12 @@ function UpdateTask({
           fieldId: selectedFieldId ? selectedFieldId : 0,
           isRepeat: typeof isRepeat === "object" ? isRepeat.value : repeatValue,
           taskTypeId: selectedTaskTypeId ? selectedTaskTypeId : 0,
-          plantId: typeof plantId === "object" ? plantId.value : 0,
-          liveStockId: typeof liveStockId === "object" ? liveStockId.value : 0,
+          plantId: selectedPlantId ? selectedPlantId : 0,
+          liveStockId: selectedLivestockId ? selectedLivestockId : 0,
           addressDetail: addressDetailToSend
             ? addressDetailToSend
             : editingTask.addressDetail,
-          remind: typeof remind === "object" ? remind.value : 0,
+            remind: remindValue ? remindValue : editingTask.remind,
           materialIds: materialsValue ? materialsValue : editingTask.materialId,
           dates: initialSelectedDays
             ? initialSelectedDays.map((date) =>

@@ -235,17 +235,17 @@ html {
   background-color: transparent;
 }
 
-.subTask-modal .ant-modal-content .ant-modal-title {
+.activity-modal .ant-modal-content .ant-modal-title {
   font-size: 28px;
   margin-bottom: 30px;
 }
-.subTask-modal .ant-modal-content .subTask {
+.activity-modal .ant-modal-content .activity {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: wrap;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-content {
+.activity-modal .ant-modal-content .activity .activity-content {
   width: 44%;
   background-color: #f5f5f5;
   padding: 10px 0px;
@@ -254,33 +254,33 @@ html {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1019607843), 0 1px 2px rgba(0, 0, 0, 0.0588235294);
   border: 1px solid #adb5bd;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-header {
+.activity-modal .ant-modal-content .activity .activity-content .activity-header {
   margin-left: 10px;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-header .subTask-count {
+.activity-modal .ant-modal-content .activity .activity-content .activity-header .activity-count {
   width: 45%;
   font-size: 20px;
   font-weight: 500;
   margin-bottom: 10px;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-header .subTask-count span {
+.activity-modal .ant-modal-content .activity .activity-content .activity-header .activity-count span {
   text-decoration: underline;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-header .subTask-dropdown {
+.activity-modal .ant-modal-content .activity .activity-content .activity-header .activity-dropdown {
   width: 45%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-container {
+.activity-modal .ant-modal-content .activity .activity-content .activity-container {
   padding: 10px 25px;
   border-radius: 10px;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-content p {
+.activity-modal .ant-modal-content .activity .activity-content p {
   font-size: 18px;
   margin-bottom: 5px;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-content span {
+.activity-modal .ant-modal-content .activity .activity-content span {
   font-size: 18px;
   font-weight: 500;
 }

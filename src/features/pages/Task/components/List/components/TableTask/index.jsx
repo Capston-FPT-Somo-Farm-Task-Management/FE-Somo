@@ -31,9 +31,10 @@ function TableTask({
   taskTitle,
   handleMenuClick,
   openEditTaskModal,
-  openSubtaskModal,
+  openActivityModal,
   openEffortModal,
   openCloneTaskModal,
+  openRejectModal,
   openDeleteModal,
   openCloseModal,
   openChangeDoingToPendingModal,
@@ -131,11 +132,11 @@ function TableTask({
                         <Menu onClick={(e) => handleMenuClick(e, record)}>
                           {!isStatusSubTask ? (
                             <Menu.Item key="viewSubTask">
-                              <span onClick={() => openSubtaskModal(record)}>
+                              <span onClick={() => openActivityModal(record)}>
                                 <FileTextOutlined
                                   style={{ color: "green", marginRight: "8px" }}
                                 />
-                                Xem công việc con
+                                Xem hoạt động
                               </span>
                             </Menu.Item>
                           ) : null}
@@ -143,7 +144,7 @@ function TableTask({
                           {isStatusEffortTime && isStatusEffortTime ? (
                             record.isHaveSubtask ? (
                               <Menu.Item key="viewEffort">
-                                <span onClick={() => openSubtaskModal(record)}>
+                                <span onClick={() => openActivityModal(record)}>
                                   <FileTextOutlined
                                     style={{
                                       color: "green",
@@ -285,7 +286,7 @@ function TableTask({
                                 </span>
                               </Menu.Item>
                               <Menu.Item key="reject">
-                                <span>
+                                <span onClick={() => openRejectModal(record)}>
                                   <CloseCircleOutlined
                                     style={{
                                       color: "red",
@@ -346,11 +347,11 @@ function TableTask({
                       overlay={
                         <Menu onClick={(e) => handleMenuClick(e, record)}>
                           <Menu.Item key="viewSubTask">
-                            <span onClick={() => openSubtaskModal(record)}>
+                            <span onClick={() => openActivityModal(record)}>
                               <FileTextOutlined
                                 style={{ color: "green", marginRight: "8px" }}
                               />
-                              Xem công việc con
+                              Xem hoạt động
                             </span>
                           </Menu.Item>
                         </Menu>

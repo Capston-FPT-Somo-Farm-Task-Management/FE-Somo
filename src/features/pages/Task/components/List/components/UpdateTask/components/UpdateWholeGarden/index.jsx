@@ -27,7 +27,7 @@ function UpdateWholeGarden({
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
-  area,
+  areaPlantByZone,
   zonePlant,
   fieldByZone,
   priorityValue,
@@ -54,7 +54,7 @@ function UpdateWholeGarden({
       <div className="form-left">
         <AreaPlantUpdate
           handleSelectAreaChange={handleSelectAreaChange}
-          area={area}
+          areaPlantByZone={areaPlantByZone}
           editingTask={editingTask}
           isDraft={isDraft}
         />
