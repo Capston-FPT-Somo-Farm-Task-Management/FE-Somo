@@ -26,6 +26,7 @@ import taskTypeTemplateReducer from './slice/task/taskTypeTemplate'
 import taskTypeExcelReducer from './slice/task/taskTypeExcelSlice'
 import taskDoneReducer from './slice/task/taskDoneSlice'
 import taskFarmReducer from './slice/task/taskFarmSlice'
+import taskMonthReducer from './slice/task/taskMonthSlice'
 import supervisorReducer from './slice/supervisor/supervisorSlice'
 import employeeReducer from './slice/employee/employeeSlice'
 import employeeByTaskReducer from './slice/employee/employeeByTask'
@@ -113,6 +114,7 @@ export const store = configureStore({
     taskTypeActiveOther: taskTypeActiveOtherReducer,
     taskDone: taskDoneReducer,
     taskFarm: taskFarmReducer,
+    taskMonth: taskMonthReducer,
     evidence: evidenceReducer,
     subTask: subTaskReducer,
     effort: effortReducer,
