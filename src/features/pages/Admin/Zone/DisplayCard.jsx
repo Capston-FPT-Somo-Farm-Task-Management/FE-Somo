@@ -1,5 +1,5 @@
-import { Card, Col, Divider, Progress, Row, Space, Statistic } from 'antd'
-import CountUp from 'react-countup'
+import { Card, Col, Divider, Progress, Row, Space, Statistic } from "antd";
+import CountUp from "react-countup";
 
 const DisplayCard = ({
   activeZoneCount,
@@ -8,16 +8,25 @@ const DisplayCard = ({
   plantZoneCount,
   otherZoneCount,
 }) => {
-  const formatter = (value) => <CountUp end={value} separator="," />
+  const formatter = (value) => <CountUp end={value} separator="," />;
 
   return (
     <>
-      <Space style={{ margin: '0 20px' }}>
-        <Row gutter={16}>
-          <Col span={12}>
+      <div
+        style={{
+          width: "58%",
+          padding: "20px",
+          boxShadow:
+            "1px 1px 3px #0000001a, 1px 2px 3px #0000000f,1px 2px 3px #0000001a, 1px 2px 3px #0000000f",
+          backgroundColor: "white",
+          borderRadius: "8px",
+        }}
+      >
+        <Row gutter={12} style={{ justifyContent: "center" }}>
+          <Col span={10}>
             <Card>
               <Statistic
-                title="Số lượng vùng đang mở"
+                title="Số vùng đang mở"
                 value={activeZoneCount}
                 precision={2}
                 formatter={formatter}
@@ -25,55 +34,55 @@ const DisplayCard = ({
               <Progress showInfo={false} percent={100} strokeColor="#2291f4" />
             </Card>
           </Col>
-          <Col span={12}>
+          <Col span={10}>
             <Card>
               <Statistic
-                title="Số lượng vùng đang đóng"
+                title="Số vùng đang đóng"
                 value={inActiveZoneCount}
                 precision={2}
                 formatter={formatter}
               />
-              <Progress showInfo={false} percent={100} strokeColor="#ff0000" />
+              <Progress showInfo={false} percent={100} strokeColor="#02c39a" />
             </Card>
           </Col>
           <Divider>Loại vùng</Divider>
           <Col span={8}>
             <Card>
               <Statistic
-                title="Số lượng vùng chăn nuôi"
+                title="Vùng chăn nuôi"
                 value={animalZoneCount}
                 precision={2}
                 formatter={formatter}
               />
-              <Progress showInfo={false} percent={100} strokeColor="#ffbc3d" />
+              <Progress showInfo={false} percent={100} strokeColor="#1a659e" />
             </Card>
           </Col>
 
           <Col span={8}>
             <Card>
               <Statistic
-                title="Số lượng vùng trồng trọt"
+                title="Vùng trồng trọt"
                 value={plantZoneCount}
                 precision={2}
                 formatter={formatter}
               />
-              <Progress showInfo={false} percent={100} strokeColor="#00e9a3" />
+              <Progress showInfo={false} percent={100} strokeColor="#02c39a" />
             </Card>
           </Col>
           <Col span={8}>
             <Card>
               <Statistic
-                title="Số lượng các loại vùng khác"
+                title="Vùng khác"
                 value={otherZoneCount}
                 precision={2}
                 formatter={formatter}
               />
-              <Progress showInfo={false} percent={100} strokeColor="#053e73" />
+              <Progress showInfo={false} percent={100} strokeColor="#FFBB28" />
             </Card>
           </Col>
         </Row>
-      </Space>
+      </div>
     </>
-  )
-}
-export default DisplayCard
+  );
+};
+export default DisplayCard;

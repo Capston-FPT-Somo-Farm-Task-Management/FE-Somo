@@ -28,7 +28,7 @@ const Dashboard = () => {
   return (
     <>
       <div className="animal-group-content content">
-        <h3>Tổng quan</h3>
+        <h3 style={{marginLeft: "25px"}}>Tổng quan</h3>
 
         <DisplayCard
           areaByFarm={areaByFarm}

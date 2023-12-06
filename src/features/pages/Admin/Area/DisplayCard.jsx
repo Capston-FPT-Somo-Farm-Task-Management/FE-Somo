@@ -19,12 +19,12 @@ const DisplayCard = ({ areaByFarm }) => {
 
   return (
     <>
-      <Row gutter={16}>
+      <Row gutter={10} style={{justifyContent: "center"}}>
         {/* Active */}
-        <Col span={12}>
-          <Card>
+        <Col span={6} className='dashboard-card'>
+          <Card className='card-area'>
             <Statistic
-              title="Số lượng khu vực đang mở"
+              title="Số khu vực đang mở"
               value={activeAreaCount}
               precision={2}
               formatter={formatter}
@@ -33,10 +33,10 @@ const DisplayCard = ({ areaByFarm }) => {
         </Col>
 
         {/* Inactive */}
-        <Col span={12}>
-          <Card>
+        <Col span={6} className='dashboard-card'>
+          <Card className='card-area'>
             <Statistic
-              title="Số lượng khu vực đang đóng"
+              title="Số khu vực đang đóng"
               value={inActiveAreaCount}
               precision={2}
               formatter={formatter}
