@@ -23,7 +23,7 @@ function AnimalUpdate({
         editingTask
           ? {
               label: editingTask.externalId,
-              value: editingTask.livestockId,
+              value: selectedLivestockId ? selectedLivestockId : editingTask.livestockId,
             }
           : ""
       }

@@ -49,8 +49,8 @@ import taskReducer from './slice/task/taskSlice'
 import taskByIdReducer from './slice/task/taskByIdSlice'
 import taskByWeekReducer from './slice/task/taskByWeekSlice'
 import evidenceReducer from './slice/task/taskEvidenceSlice'
-import subTaskReducer from './slice/subTask/subTaskSlice'
-import effortReducer from './slice/subTask/effortSlice'
+import activityReducer from "./slice/activity/activitySlice"
+import effortReducer from './slice/effort/effortSlice'
 import habitantTypeReducer from './slice/habitant/habitantTypeSlice'
 import memberReducer from './slice/user/memberSlice'
 import passwordReducer from './slice/user/passwordSlice'
@@ -114,7 +114,7 @@ export const store = configureStore({
     taskDone: taskDoneReducer,
     taskFarm: taskFarmReducer,
     evidence: evidenceReducer,
-    subTask: subTaskReducer,
+    activity: activityReducer,
     effort: effortReducer,
     habitantType: habitantTypeReducer,
     member: memberReducer,

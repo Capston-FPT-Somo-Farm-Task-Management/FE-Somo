@@ -31,7 +31,7 @@ function TableTask({
   taskTitle,
   handleMenuClick,
   openEditTaskModal,
-  openSubtaskModal,
+  openActivityModal,
   openEffortModal,
   openCloneTaskModal,
   openDeleteModal,
@@ -131,11 +131,11 @@ function TableTask({
                         <Menu onClick={(e) => handleMenuClick(e, record)}>
                           {!isStatusSubTask ? (
                             <Menu.Item key="viewSubTask">
-                              <span onClick={() => openSubtaskModal(record)}>
+                              <span onClick={() => openActivityModal(record)}>
                                 <FileTextOutlined
                                   style={{ color: "green", marginRight: "8px" }}
                                 />
-                                Xem công việc con
+                                Xem ghi nhận hoạt động
                               </span>
                             </Menu.Item>
                           ) : null}
@@ -143,7 +143,7 @@ function TableTask({
                           {isStatusEffortTime && isStatusEffortTime ? (
                             record.isHaveSubtask ? (
                               <Menu.Item key="viewEffort">
-                                <span onClick={() => openSubtaskModal(record)}>
+                                <span onClick={() => openActivityModal(record)}>
                                   <FileTextOutlined
                                     style={{
                                       color: "green",
@@ -346,11 +346,11 @@ function TableTask({
                       overlay={
                         <Menu onClick={(e) => handleMenuClick(e, record)}>
                           <Menu.Item key="viewSubTask">
-                            <span onClick={() => openSubtaskModal(record)}>
+                            <span onClick={() => openActivityModal(record)}>
                               <FileTextOutlined
                                 style={{ color: "green", marginRight: "8px" }}
                               />
-                              Xem công việc con
+                              Xem ghi nhận hoạt động
                             </span>
                           </Menu.Item>
                         </Menu>

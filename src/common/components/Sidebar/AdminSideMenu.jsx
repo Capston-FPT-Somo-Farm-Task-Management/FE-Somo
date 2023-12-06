@@ -22,6 +22,9 @@ import {
   useDesktopMediaQuery,
   useTabletMediaQuery,
 } from 'common/hooks/responsive'
+import { GiChicken, GiPlantSeed, GiDarkSquad, GiSpade   } from "react-icons/gi";
+
+
 
 const { Sider } = Layout
 
@@ -113,7 +116,7 @@ const AdminSideMenu = () => {
             </Menu.Item> */}
 
             <Menu.Item key="/statistic-animal-group">
-              <AppstoreOutlined />
+            <GiChicken />
               <span>Động vật</span>
               <Link to="/statistic-animal-group"></Link>
             </Menu.Item>
@@ -125,19 +128,19 @@ const AdminSideMenu = () => {
             </Menu.Item> */}
 
             <Menu.Item key="/statistic-crop-group">
-              <AppstoreOutlined />
+              <GiPlantSeed/>
               <span>Thực vật</span>
               <Link to="/statistic-crop-group"></Link>
             </Menu.Item>
 
             <Menu.Item key="/statistic-material">
-              <FormatPainterOutlined />
+              <GiSpade   />
               <span>Công cụ</span>
               <Link to="/statistic-material"></Link>
             </Menu.Item>
 
             <Menu.Item key="/statistic-member">
-              <BorderOutlined />
+            <GiDarkSquad  />
               <span>Nhân sự</span>
               <Link to="/statistic-member"></Link>
             </Menu.Item>

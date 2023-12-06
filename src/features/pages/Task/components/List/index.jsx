@@ -12,8 +12,7 @@ import {
   changeStatusToDoing,
   createTaskClone,
 } from "features/slice/task/taskSlice";
-import { getSubTasksByTaskId } from "features/slice/subTask/subTaskSlice";
-import { getEffort } from "features/slice/subTask/effortSlice";
+import { getEffort } from "features/slice/effort/effortSlice";
 import { taskTitle } from "./listTaskData";
 import TaskDetail from "../TaskDetail";
 import ModalTask from "../ModalTask";
@@ -26,21 +25,21 @@ import CheckParent from "./components/CheckParent";
 import UpdateTask from "./components/UpdateTask";
 import ChangeDoneToDoing from "./components/ChangeDoneToDoing";
 import ChangeDoingToPending from "./components/ChangeDoingToPendingAndCancel/ChangeDoingToPending";
-import SubTask from "./components/SubTask";
 import ViewReject from "../TaskDetail/ViewReject";
 import ModalDelete from "./components/ModalDelete";
 import ModalClose from "./components/ModalClose";
 import ChangeStatusToCancel from "./components/ChangeStatusToCancel";
-import { FALSE } from "sass";
 import CloneTask from "./components/CloneTask";
+import Activity from "./components/Activity";
+import { getActivityByTaskId } from "features/slice/activity/activitySlice";
 
 const List = () => {
-  const [subTasks, setSubTasks] = useState([]);
+  const [activity, setActivity] = useState([]);
   const [effort, setEffort] = useState([]);
   const [editingTask, setEditingTask] = useState(null);
   const [viewRejectModalVisible, setViewRejectModalVisible] = useState(false);
   const [editTaskModalVisible, setEditTaskModalVisible] = useState(false);
-  const [subTaskModalVisible, setSubTaskModalVisible] = useState(false);
+  const [activityModalVisible, setActivityModalVisible] = useState(false);
   const [effortVisible, setEffortVisible] = useState(false);
   const [cloneTaskModalVisible, setCloneTaskModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
@@ -337,16 +336,16 @@ const List = () => {
     }
   };
 
-  const handleSubTaskModalVisible = () => {
-    setSubTaskModalVisible(false);
+  const handleActivityModalVisible = () => {
+    setActivityModalVisible(false);
   };
 
-  const openSubtaskModal = (record) => {
+  const openActivityModal = (record) => {
     setCurrentTaskId(record.id);
-    setSubTaskModalVisible(true);
+    setActivityModalVisible(true);
     setEditingTask(record);
-    dispatch(getSubTasksByTaskId(record.id)).then((data) => {
-      setSubTasks(data.payload);
+    dispatch(getActivityByTaskId(record.id)).then((data) => {
+      setActivity(data.payload);
     });
     const isStatusEffort =
       record &&
@@ -434,7 +433,7 @@ const List = () => {
           openViewRejectModal={openViewRejectModal}
           openEditTaskModal={openEditTaskModal}
           closeEditTaskModal={closeEditTaskModal}
-          openSubtaskModal={openSubtaskModal}
+          openActivityModal={openActivityModal}
           openEffortModal={openEffortModal}
           openCloneTaskModal={openCloneTaskModal}
           openDeleteModal={openDeleteModal}
@@ -494,10 +493,10 @@ const List = () => {
         closeViewRejectModal={closeViewRejectModal}
         checkChangeToToDo={checkChangeToToDo}
       />
-      <SubTask
-        subTaskModalVisible={subTaskModalVisible}
-        handleSubTaskModalVisible={handleSubTaskModalVisible}
-        subTasks={subTasks}
+      <Activity
+        activityModalVisible={activityModalVisible}
+        handleActivityModalVisible={handleActivityModalVisible}
+        activity={activity}
         editingTask={editingTask}
         statusForEdit={statusForEdit}
       />
@@ -506,7 +505,7 @@ const List = () => {
         handleEffortVisible={handleEffortVisible}
         effort={effort}
         isHaveSubTask={isHaveSubTask}
-        openSubtaskModal={openSubtaskModal}
+        openActivityModal={openActivityModal}
       />
       <ChangeDoneToDoing
         selectedTask={selectedTask}

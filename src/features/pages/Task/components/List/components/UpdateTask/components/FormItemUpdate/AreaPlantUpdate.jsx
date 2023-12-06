@@ -7,6 +7,7 @@ function AreaPlantUpdate({
   editingTask,
   isDraft
 }) {
+  console.log(editingTask.areaName);
   return (
     <Form.Item
       label="Khu vực"
