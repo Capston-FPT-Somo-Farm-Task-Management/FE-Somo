@@ -49,7 +49,6 @@ const TaskDetail = ({
       {taskData && taskData.status !== "Từ chối" ? (
         <Evidence
           taskData={taskData}
-          handleRefuseTask={handleRefuseTask}
           closeEditTaskModal={closeEditTaskModal}
         />
       ) : null}

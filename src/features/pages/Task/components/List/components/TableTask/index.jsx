@@ -34,6 +34,7 @@ function TableTask({
   openActivityModal,
   openEffortModal,
   openCloneTaskModal,
+  openRejectModal,
   openDeleteModal,
   openCloseModal,
   openChangeDoingToPendingModal,
@@ -135,7 +136,7 @@ function TableTask({
                                 <FileTextOutlined
                                   style={{ color: "green", marginRight: "8px" }}
                                 />
-                                Xem ghi nhận hoạt động
+                                Xem hoạt động
                               </span>
                             </Menu.Item>
                           ) : null}
@@ -285,7 +286,7 @@ function TableTask({
                                 </span>
                               </Menu.Item>
                               <Menu.Item key="reject">
-                                <span>
+                                <span onClick={() => openRejectModal(record)}>
                                   <CloseCircleOutlined
                                     style={{
                                       color: "red",
@@ -350,7 +351,7 @@ function TableTask({
                               <FileTextOutlined
                                 style={{ color: "green", marginRight: "8px" }}
                               />
-                              Xem ghi nhận hoạt động
+                              Xem hoạt động
                             </span>
                           </Menu.Item>
                         </Menu>

@@ -32,6 +32,7 @@ import ChangeStatusToCancel from "./components/ChangeStatusToCancel";
 import CloneTask from "./components/CloneTask";
 import Activity from "./components/Activity";
 import { getActivityByTaskId } from "features/slice/activity/activitySlice";
+import ModalReject from "./components/ModalReject";
 
 const List = () => {
   const [activity, setActivity] = useState([]);
@@ -42,6 +43,7 @@ const List = () => {
   const [activityModalVisible, setActivityModalVisible] = useState(false);
   const [effortVisible, setEffortVisible] = useState(false);
   const [cloneTaskModalVisible, setCloneTaskModalVisible] = useState(false);
+  const [rejectModalVisible, setRejectModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [closeModalVisible, setCloseModalVisible] = useState(false);
   const [taskDoneToDoingVisible, setTaskDoneToDoingVisible] = useState(false);
@@ -138,7 +140,7 @@ const List = () => {
     } else if (e.key === "reAssign") {
       openEditTaskModal(record);
     } else if (e.key === "reject") {
-      handleRefuseTask(record.id);
+      openRejectModal(record.id);
     } else if (e.key === "close") {
       openCloseModal(record.id);
     } else if (e.key === "clone") {
@@ -166,6 +168,16 @@ const List = () => {
   const closeCloneTaskModal = () => {
     setSelectedTask(null);
     setCloneTaskModalVisible(false);
+  };
+
+  const openRejectModal = (record) => {
+    setSelectedTask(record);
+    setRejectModalVisible(true);
+  };
+
+  const closeRejectModal = () => {
+    setSelectedTask(null);
+    setRejectModalVisible(false);
   };
 
   const openDeleteModal = (record) => {
@@ -211,6 +223,7 @@ const List = () => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
+      setRejectModalVisible(false)
     });
     setModalVisible(false);
     setViewRejectModalVisible(false);
@@ -436,6 +449,7 @@ const List = () => {
           openActivityModal={openActivityModal}
           openEffortModal={openEffortModal}
           openCloneTaskModal={openCloneTaskModal}
+          openRejectModal={openRejectModal}
           openDeleteModal={openDeleteModal}
           openCloseModal={openCloseModal}
           openChangeDoingToPendingModal={openChangeDoingToPendingModal}
@@ -450,7 +464,6 @@ const List = () => {
         visible={modalVisible}
         onCancel={closeModal}
         taskData={selectedTask}
-        handleRefuseTask={handleRefuseTask}
         closeEditTaskModal={closeEditTaskModal}
         openChangeDoneToDoingModal={openChangeDoneToDoingModal}
       />
@@ -459,6 +472,12 @@ const List = () => {
         cloneTaskModalVisible={cloneTaskModalVisible}
         closeCloneTaskModal={closeCloneTaskModal}
         handleCloneTask={handleCloneTask}
+      />
+      <ModalReject
+        selectedTaskId={selectedTask}
+        rejectModalVisible={rejectModalVisible}
+        closeRejectModal={closeRejectModal}
+        handleRefuseTask={handleRefuseTask}
       />
       <ModalDelete
         selectedTaskId={selectedTask}
