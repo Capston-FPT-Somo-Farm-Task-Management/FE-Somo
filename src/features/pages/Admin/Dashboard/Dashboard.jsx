@@ -8,6 +8,7 @@ import { getZoneByFarmId } from 'features/slice/zone/zoneByFarmSlice'
 import { getFieldPlantByFarmId } from 'features/slice/field/fieldPlantSlice'
 import { getFieldAnimalByFarmId } from 'features/slice/field/fieldAnimalSlice'
 import DisplayTask from './DisplayTask'
+import DisplayByMonth from './DisplayByMonth'
 
 const Dashboard = () => {
   const dispatch = useDispatch()
@@ -29,13 +30,15 @@ const Dashboard = () => {
       <div className="animal-group-content content">
         <h3>Tổng quan</h3>
 
-        {/* <h6>Tổng quan</h6> */}
         <DisplayCard
           areaByFarm={areaByFarm}
           zoneByFarm={zoneByFarm}
           fieldAnimal={fieldAnimal}
           fieldPlant={fieldPlant}
         />
+        <Divider dashed />
+        <DisplayByMonth farmId={farmId} />
+
         <Divider dashed />
         <DisplayTask farmId={farmId} />
       </div>
