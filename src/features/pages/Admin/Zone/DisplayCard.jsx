@@ -23,8 +23,13 @@ const DisplayCard = ({
         }}
       >
         <Row gutter={12} style={{ justifyContent: "center" }}>
-          <Col span={10}>
-            <Card>
+          <Col span={10} className="dashboard-card">
+            <Card
+              style={{
+                boxShadow:
+                  "1px 1px 1px #0000001a, 1px 1px 1px #0000000f,1px 1px 1px #0000001a, 1px 1px 1px #0000000f",
+              }}
+            >
               <Statistic
                 title="Số vùng đang mở"
                 value={activeZoneCount}
@@ -34,8 +39,13 @@ const DisplayCard = ({
               <Progress showInfo={false} percent={100} strokeColor="#2291f4" />
             </Card>
           </Col>
-          <Col span={10}>
-            <Card>
+          <Col span={10} className="dashboard-card">
+            <Card
+              style={{
+                boxShadow:
+                  "1px 1px 1px #0000001a, 1px 1px 1px #0000000f,1px 1px 1px #0000001a, 1px 1px 1px #0000000f",
+              }}
+            >
               <Statistic
                 title="Số vùng đang đóng"
                 value={inActiveZoneCount}
@@ -46,8 +56,13 @@ const DisplayCard = ({
             </Card>
           </Col>
           <Divider>Loại vùng</Divider>
-          <Col span={8}>
-            <Card>
+          <Col span={8} className="dashboard-card">
+            <Card
+              style={{
+                boxShadow:
+                  "1px 1px 1px #0000001a, 1px 1px 1px #0000000f,1px 1px 1px #0000001a, 1px 1px 1px #0000000f",
+              }}
+            >
               <Statistic
                 title="Vùng chăn nuôi"
                 value={animalZoneCount}
@@ -58,8 +73,13 @@ const DisplayCard = ({
             </Card>
           </Col>
 
-          <Col span={8}>
-            <Card>
+          <Col span={8} className="dashboard-card">
+            <Card
+              style={{
+                boxShadow:
+                  "1px 1px 1px #0000001a, 1px 1px 1px #0000000f,1px 1px 1px #0000001a, 1px 1px 1px #0000000f",
+              }}
+            >
               <Statistic
                 title="Vùng trồng trọt"
                 value={plantZoneCount}
@@ -69,8 +89,13 @@ const DisplayCard = ({
               <Progress showInfo={false} percent={100} strokeColor="#02c39a" />
             </Card>
           </Col>
-          <Col span={8}>
-            <Card>
+          <Col span={8} className="dashboard-card">
+            <Card
+              style={{
+                boxShadow:
+                  "1px 1px 1px #0000001a, 1px 1px 1px #0000000f,1px 1px 1px #0000001a, 1px 1px 1px #0000000f",
+              }}
+            >
               <Statistic
                 title="Vùng khác"
                 value={otherZoneCount}

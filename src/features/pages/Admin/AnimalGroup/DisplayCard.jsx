@@ -18,8 +18,8 @@ const DisplayCard = ({ fieldAnimal, animalByFarm }) => {
   const animalByFarmCount = animalByFarm?.data?.length
   return (
     <>
-      <Row gutter={10} style={{ justifyContent: "center" }}>
-        <Col span={6} className='dashboard-card'>
+      <Row gutter={10} style={{ justifyContent: "space-around" }}>
+        <Col span={7} className='dashboard-card'>
           <Card className='card-animal' c>
             <Statistic
               title="Số chuồng đang mở"
@@ -31,7 +31,7 @@ const DisplayCard = ({ fieldAnimal, animalByFarm }) => {
           </Card>
         </Col>
 
-        <Col span={6} className='dashboard-card'>
+        <Col span={7} className='dashboard-card'>
           <Card className='card-animal'>
             <Statistic
               title="Số chuồng đang đóng"
@@ -42,7 +42,7 @@ const DisplayCard = ({ fieldAnimal, animalByFarm }) => {
           </Card>
         </Col>
 
-        <Col span={6} className='dashboard-card'>
+        <Col span={7} className='dashboard-card'>
           <Card className='card-animal'>
             <Statistic
               title="Vật nuôi trong các chuồng"

@@ -94,6 +94,22 @@ $white-color-300: #f4f0bb;
   }
 }
 
+@mixin statistic-title-black {
+  .ant-statistic-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #5c6b73;
+  }
+}
+
+@mixin statistic-content-black{
+  .ant-statistic-content{
+    font-size: 34px;
+    font-weight: 700;
+    color: black;
+  }
+}
+
 @mixin card-area{
   .card-area {
     background-color: #1a659e;
@@ -151,12 +167,12 @@ $white-color-300: #f4f0bb;
 
 @mixin card-plant{
   .card-plant {
-    background-color: #02c39a;
+    background-color: #2291f4;
     @include statistic-title;
     @include statistic-content;
-    box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a,
-      1px 2px 3px #02c39a;
-    border: 1px solid #02c39a;
+    box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4,
+      1px 2px 3px #2291f4;
+    border: 1px solid #2291f4;
   }
 }
 
@@ -173,12 +189,12 @@ $white-color-300: #f4f0bb;
 
 @mixin card-member{
   .card-member {
-    background-color: #2291f4;
+    background-color: #02c39a;
     @include statistic-title;
     @include statistic-content;
-    box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4,
-      1px 2px 3px #2291f4;
-    border: 1px solid #2291f4;
+    box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a,
+      1px 2px 3px #02c39a;
+    border: 1px solid #02c39a;
   }
 }
 
@@ -191,4 +207,6 @@ $white-color-300: #f4f0bb;
   @include card-plant;
   @include card-material;
   @include card-member;
+  @include statistic-title-black;
+  @include statistic-content-black;
 }

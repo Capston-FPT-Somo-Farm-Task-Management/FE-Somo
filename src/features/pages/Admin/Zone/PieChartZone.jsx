@@ -36,7 +36,7 @@ const PieChartZone = ({
   return (
     <ResponsiveContainer
       width="40%"
-      height={400}
+      height={450}
       style={{
         padding: "20px",
         boxShadow:
