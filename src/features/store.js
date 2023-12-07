@@ -27,6 +27,8 @@ import taskTypeExcelReducer from './slice/task/taskTypeExcelSlice'
 import taskDoneReducer from './slice/task/taskDoneSlice'
 import taskFarmReducer from './slice/task/taskFarmSlice'
 import taskMonthReducer from './slice/task/taskMonthSlice'
+import taskTopAreaReducer from './slice/task/taskTopAreaSlice'
+import taskCompleteRateReducer from './slice/task/taskCompleteRateSlice'
 import supervisorReducer from './slice/supervisor/supervisorSlice'
 import employeeReducer from './slice/employee/employeeSlice'
 import employeeByTaskReducer from './slice/employee/employeeByTask'
@@ -49,9 +51,11 @@ import plantByFarmReducer from './slice/plant/plantByFarmSlice'
 import taskReducer from './slice/task/taskSlice'
 import taskByIdReducer from './slice/task/taskByIdSlice'
 import taskByWeekReducer from './slice/task/taskByWeekSlice'
+import taskTopEmployeeReducer from './slice/task/taskTopEmployeeSlice'
 import evidenceReducer from './slice/task/taskEvidenceSlice'
-import activityReducer from "./slice/activity/activitySlice"
+import activityReducer from './slice/activity/activitySlice'
 import effortReducer from './slice/effort/effortSlice'
+import effortInWeekReducer from './slice/effort/effortInWeekSlice'
 import habitantTypeReducer from './slice/habitant/habitantTypeSlice'
 import memberReducer from './slice/user/memberSlice'
 import passwordReducer from './slice/user/passwordSlice'
@@ -115,9 +119,13 @@ export const store = configureStore({
     taskDone: taskDoneReducer,
     taskFarm: taskFarmReducer,
     taskMonth: taskMonthReducer,
+    taskTopArea: taskTopAreaReducer,
+    taskCompleteRate: taskCompleteRateReducer,
+    taskTopEmployee: taskTopEmployeeReducer,
     evidence: evidenceReducer,
     activity: activityReducer,
     effort: effortReducer,
+    effortInWeek: effortInWeekReducer,
     habitantType: habitantTypeReducer,
     member: memberReducer,
     memberByFarm: memberByFarmReducer,
