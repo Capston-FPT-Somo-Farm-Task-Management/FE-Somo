@@ -105,6 +105,12 @@ const SideMenu = () => {
               </Menu.Item>
             </SubMenu>
 
+            <Menu.Item key="/employee">
+              <GrUserWorker />
+              <span style={{ marginLeft: "10px" }}>Nhân viên</span>
+              <Link to="/employee"></Link>
+            </Menu.Item>
+
             <SubMenu key="location" icon={<BorderOutlined />} title="Vị trí">
               <Menu.Item key="area">
                 <BorderOutlined />
@@ -166,16 +172,9 @@ const SideMenu = () => {
               <span>Công cụ</span>
               <Link to="/material"></Link>
             </Menu.Item>
-
-            <Menu.Item key="/employee">
-              <GrUserWorker />
-              <span style={{ marginLeft: "10px" }}>Nhân viên</span>
-              <Link to="/employee"></Link>
-            </Menu.Item>
           </Menu>
         </Sider>
       ) : null}
-      
     </div>
   );
 };

@@ -18,7 +18,7 @@ function RepeatUpdate({
   shouldCheckRepeat,
   form
 }) {
-  
+  console.log(repeatValue);
   const disableRepeat = endDate ? !endDate.isValid() : null;
   let dateRepeateArray =
     editingTask && editingTask.dateRepeate
@@ -213,7 +213,7 @@ function RepeatUpdate({
           editingTask
             ? {
                 label: editingTask.isRepeat === true ? "Có" : "Không",
-                value: editingTask.isRepeat ? editingTask.isRepeat : repeatValue,
+                value: repeatValue ? repeatValue : editingTask.isRepeat,
               }
             : ""
         }

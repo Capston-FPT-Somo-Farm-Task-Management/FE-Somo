@@ -6,11 +6,11 @@ const DisplayCard = ({ areaByFarm, zoneByFarm, fieldAnimal, fieldPlant }) => {
 
   return (
     <>
-      <Row gutter={10} style={{justifyContent: "space-around"}}>
-        <Col span={5} className='dashboard-card'>
+      <Row gutter={10} className='admin-row-card'>
+        <Col lg={5} sm={11} xs={11} className='dashboard-card'>
           <Card className='card-area'>
             <Statistic
-              title="Số lượng khu vực"
+              title="Số khu vực"
               value={areaByFarm ? areaByFarm?.data?.length : ''}
               precision={2}
               formatter={formatter}
@@ -18,10 +18,10 @@ const DisplayCard = ({ areaByFarm, zoneByFarm, fieldAnimal, fieldPlant }) => {
           </Card>
         </Col>
 
-        <Col span={5} className='dashboard-card'>
+        <Col lg={5} sm={11} xs={11} className='dashboard-card'>
           <Card className='card-zone'>
             <Statistic
-              title="Số lượng vùng"
+              title="Số vùng"
               value={zoneByFarm ? zoneByFarm?.data?.length : ''}
               precision={2}
               formatter={formatter}
@@ -29,10 +29,10 @@ const DisplayCard = ({ areaByFarm, zoneByFarm, fieldAnimal, fieldPlant }) => {
           </Card>
         </Col>
 
-        <Col span={5} className='dashboard-card'>
+        <Col lg={5} sm={11} xs={11} className='dashboard-card'>
           <Card className='card-barn'>
             <Statistic
-              title="Số lượng chuồng"
+              title="Số chuồng"
               value={fieldAnimal ? fieldAnimal?.data?.length : ''}
               precision={2}
               formatter={formatter}
@@ -40,10 +40,10 @@ const DisplayCard = ({ areaByFarm, zoneByFarm, fieldAnimal, fieldPlant }) => {
           </Card>
         </Col>
 
-        <Col span={5} className='dashboard-card'>
+        <Col lg={5} sm={11} xs={11} className='dashboard-card'>
           <Card className='card-garden'>
             <Statistic
-              title="Số lượng vườn"
+              title="Số vườn"
               value={fieldPlant ? fieldPlant?.data?.length : ''}
               precision={2}
               formatter={formatter}
