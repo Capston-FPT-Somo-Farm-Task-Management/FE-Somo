@@ -68,7 +68,7 @@ const TableZone = ({ zoneByFarm, onFinishDelete, loading }) => {
             />
             <Column title="Mã vùng" dataIndex="code" key="2" />
             {/* <Column title="Diện tích" dataIndex="farmArea" key="3" /> */}
-            <Column title="Loại vùng" dataIndex="zoneTypeName" key="4" />
+            {/* <Column title="Loại vùng" dataIndex="zoneTypeName" key="4" /> */}
             {/* <Column title="Tên khu vực" dataIndex="areaName" key="5" /> */}
             <Column
               title="Trạng thái"

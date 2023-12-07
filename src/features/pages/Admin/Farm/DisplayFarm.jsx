@@ -22,7 +22,7 @@ const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
 
   const handleOk = (farmId) => {
     localStorage.setItem('farmId', farmId)
-    toast.success('Đổi trang trại thành công')
+    toast.success('Chọn trang trại thành công')
     closeModal()
     navigate('/dashboard')
   }
@@ -120,9 +120,9 @@ const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
         closeModalAdd={closeModalAdd}
         onFinishCreate={onFinishCreate}
       />
-      
+
       <h2 style={headerStyle}>Lựa chọn nông trại để quản lý</h2>
-      <Row gutter={[16, 16]} justify="center" wrap="wrap" style={{margin: 0}}>
+      <Row gutter={[16, 16]} justify="center" wrap="wrap" style={{ margin: 0 }}>
         {Array.isArray(farm) &&
           farm?.map((item) => (
             <Col
