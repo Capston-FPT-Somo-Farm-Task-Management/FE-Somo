@@ -1,4 +1,125 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap");
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+
 iframe#webpack-dev-server-client-overlay {
   display: none !important;
 }
@@ -113,6 +234,369 @@ html {
   box-shadow: 0 0 10px 2px #0074d9;
 }
 
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+
 .navBar {
   display: flex;
   justify-content: flex-end;
@@ -191,6 +675,127 @@ html {
   }
 }
 
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+
 .sider .ant-layout-sider {
   box-shadow: 3px 0px 2px 0 rgba(94, 98, 105, 0.2);
   overflow: auto;
@@ -235,17 +840,138 @@ html {
   background-color: transparent;
 }
 
-.subTask-modal .ant-modal-content .ant-modal-title {
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+
+.activity-modal .ant-modal-content .ant-modal-title {
   font-size: 28px;
   margin-bottom: 30px;
 }
-.subTask-modal .ant-modal-content .subTask {
+.activity-modal .ant-modal-content .activity {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: wrap;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-content {
+.activity-modal .ant-modal-content .activity .activity-content {
   width: 44%;
   background-color: #f5f5f5;
   padding: 10px 0px;
@@ -254,35 +980,156 @@ html {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1019607843), 0 1px 2px rgba(0, 0, 0, 0.0588235294);
   border: 1px solid #adb5bd;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-header {
+.activity-modal .ant-modal-content .activity .activity-content .activity-header {
   margin-left: 10px;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-header .subTask-count {
+.activity-modal .ant-modal-content .activity .activity-content .activity-header .activity-count {
   width: 45%;
   font-size: 20px;
   font-weight: 500;
   margin-bottom: 10px;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-header .subTask-count span {
+.activity-modal .ant-modal-content .activity .activity-content .activity-header .activity-count span {
   text-decoration: underline;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-header .subTask-dropdown {
+.activity-modal .ant-modal-content .activity .activity-content .activity-header .activity-dropdown {
   width: 45%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-content .subTask-container {
+.activity-modal .ant-modal-content .activity .activity-content .activity-container {
   padding: 10px 25px;
   border-radius: 10px;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-content p {
+.activity-modal .ant-modal-content .activity .activity-content p {
   font-size: 18px;
   margin-bottom: 5px;
 }
-.subTask-modal .ant-modal-content .subTask .subTask-content span {
+.activity-modal .ant-modal-content .activity .activity-content span {
   font-size: 18px;
   font-weight: 500;
+}
+
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
 }
 
 .effort-modal .ant-modal-content .ant-modal-title {
@@ -333,6 +1180,127 @@ html {
   font-size: 18px;
 }
 
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+
 .ant-modal {
   top: 20px;
 }
@@ -379,6 +1347,127 @@ html {
   .ant-modal .button-create {
     width: 68%;
   }
+}
+
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
 }
 
 .list {
@@ -442,6 +1531,127 @@ html {
   .ant-table-wrapper .ant-table-pagination-right {
     justify-content: center;
   }
+}
+
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
 }
 
 .first-modal {
@@ -590,6 +1800,127 @@ html {
   transform: scale(1.1);
   transition: 0.4s ease-in-out;
   opacity: 0.75;
+}
+
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
 }
 
 .second-modal-livestock {
@@ -797,6 +2128,127 @@ html {
   transform: scale(1.1);
   transition: 0.4s ease-in-out;
   opacity: 0.75;
+}
+
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
 }
 
 .ant-modal .ant-modal-header {
@@ -1292,6 +2744,127 @@ html {
   width: 45%;
 }
 
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+
 .animal-content .animal-operate {
   display: flex;
   justify-content: space-between;
@@ -1329,6 +2902,127 @@ html {
   }
 }
 
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+
 .animal-group-content .animal-group-operate {
   display: flex;
   justify-content: space-between;
@@ -1364,6 +3058,127 @@ html {
   .animal-group-content .animal-group-operate .animal-group-operate-right .ant-input-group-wrapper {
     width: 300px;
   }
+}
+
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
 }
 
 .plant-content .plant-operate {
@@ -1436,6 +3251,127 @@ html {
   width: 45%;
 }
 
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+
 .crop-group-content .crop-group-operate {
   display: flex;
   justify-content: space-between;
@@ -1495,8 +3431,129 @@ html {
   width: 45%;
 }
 
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+
 .wrapper {
-  background-image: linear-gradient(to bottom right, #8EAD48, #bfffc7) !important;
+  background-image: linear-gradient(to bottom right, #8ead48, #bfffc7) !important;
   height: 100vh;
 }
 .wrapper .fadeInDown {
@@ -1528,7 +3585,7 @@ html {
 }
 .wrapper .fadeInDown #formContent .active {
   color: #0d0d0d;
-  border-bottom: 2px solid #8EAD48;
+  border-bottom: 2px solid #8ead48;
 }
 .wrapper .fadeInDown #formContent .fadeIn {
   opacity: 0;
@@ -1576,7 +3633,7 @@ html {
   transition: all 0.3s ease-in-out;
 }
 .wrapper .fadeInDown #formContent .btn-login:hover {
-  background-color: #8EAD48;
+  background-color: #8ead48;
 }
 .wrapper .fadeInDown #formContent .btn-login:active {
   transform: scale(0.95);
@@ -1598,11 +3655,11 @@ html {
 }
 .wrapper .fadeInDown #formContent input[type=text]:focus {
   background-color: #fff;
-  border-bottom: 2px solid #8EAD48;
+  border-bottom: 2px solid #8ead48;
 }
 .wrapper .fadeInDown #formContent input[type=password]:focus {
   background-color: #fff;
-  border-bottom: 2px solid #8EAD48;
+  border-bottom: 2px solid #8ead48;
 }
 .wrapper .fadeInDown #formContent input[type=text]:placeholder {
   color: #cccccc;
@@ -1619,7 +3676,7 @@ html {
   font-size: 20px;
 }
 .wrapper .fadeInDown #formContent #formFooter a {
-  color: #8EAD48;
+  color: #8ead48;
   display: inline-block;
   text-decoration: none;
   font-weight: 400;
@@ -1630,7 +3687,7 @@ html {
   bottom: -10px;
   width: 0;
   height: 2px;
-  background-color: #8EAD48;
+  background-color: #8ead48;
   content: "";
   transition: width 0.2s;
 }
@@ -1672,6 +3729,127 @@ html {
   text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+
 .dashboard {
   background-color: #fcfffc;
   padding: 20px;
@@ -1679,7 +3857,6 @@ html {
 }
 .dashboard h3 {
   margin: 15px;
-  font-size: 20px;
 }
 .dashboard .dashboard-header {
   width: 100%;
@@ -1885,7 +4062,6 @@ html {
 }
 .dashboard .dashboard-footer h3 {
   margin: 15px;
-  font-size: 20px;
 }
 .dashboard .dashboard-footer .dashboard-chart {
   width: 59%;
@@ -2440,6 +4616,127 @@ html {
   font-size: 30px;
 }
 
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+
 @media (max-width: 1200px) {
   .custom-tabs {
     width: 90%;
@@ -2474,6 +4771,127 @@ html {
 
 .ant-tabs-dropdown-menu-item:hover {
   padding: 10px;
+}
+
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
 }
 
 @media (max-width: 992px) {
@@ -2581,6 +4999,127 @@ html {
   border-radius: 8px;
 }
 
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+
 .task-type-content .task-type-operate {
   display: flex;
   justify-content: space-between;
@@ -2617,6 +5156,127 @@ html {
   .task-type-content .task-type-operate .task-type-operate-right .ant-input-group-wrapper {
     width: 300px;
   }
+}
+
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
 }
 
 .area-content .area-operate {
@@ -2656,6 +5316,127 @@ html {
   }
 }
 
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+
 .animal-type-content .animal-type-operate {
   display: flex;
   justify-content: space-between;
@@ -2691,6 +5472,127 @@ html {
   .animal-type-content .animal-type-operate .animal-type-operate-right .ant-input-group-wrapper {
     width: 300px;
   }
+}
+
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
 }
 
 .zone-content .zone-operate {
@@ -2730,6 +5632,127 @@ html {
   }
 }
 
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+
 .material-content .material-operate {
   display: flex;
   justify-content: space-between;
@@ -2765,6 +5788,127 @@ html {
   .material-content .material-operate .material-operate-right .ant-input-group-wrapper {
     width: 300px;
   }
+}
+
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
 }
 
 .employee-content .employee-operate {
@@ -2804,6 +5948,127 @@ html {
   }
 }
 
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+
 .plant-type-content .plant-type-operate {
   display: flex;
   justify-content: space-between;
@@ -2839,6 +6104,127 @@ html {
   .plant-type-content .plant-type-operate .plant-type-operate-right .ant-input-group-wrapper {
     width: 300px;
   }
+}
+
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
 }
 
 .user-profile .ant-modal-content {
@@ -2957,6 +6343,127 @@ html {
   border-radius: 8px;
 }
 
+.dashboard-card .card-area {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-area .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-area .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-zone {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-zone .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-zone .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-barn {
+  background-color: #fbb02d;
+  box-shadow: 1px 1px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d, 1px 2px 3px #fbb02d;
+  border: 1px solid #fbb02d;
+}
+.dashboard-card .card-barn .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-barn .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-garden {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-garden .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-garden .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-animal {
+  background-color: #1a659e;
+  box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;
+  border: 1px solid #1a659e;
+}
+.dashboard-card .card-animal .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-animal .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-plant {
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
+}
+.dashboard-card .card-plant .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-plant .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-material {
+  background-color: #f49cbb;
+  box-shadow: 1px 1px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb, 1px 2px 3px #f49cbb;
+  border: 1px solid #f49cbb;
+}
+.dashboard-card .card-material .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-material .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+.dashboard-card .card-member {
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
+}
+.dashboard-card .card-member .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f0eff4;
+}
+.dashboard-card .card-member .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: white;
+}
+
 .admin-dashboard {
   background-color: #fcfffc;
   padding: 20px;
@@ -2964,7 +6471,6 @@ html {
 }
 .admin-dashboard h3 {
   margin: 15px;
-  font-size: 20px;
 }
 .admin-dashboard .admin-dashboard-header {
   width: 100%;
@@ -3170,7 +6676,6 @@ html {
 }
 .admin-dashboard .admin-dashboard-footer h3 {
   margin: 15px;
-  font-size: 20px;
 }
 .admin-dashboard .admin-dashboard-footer .admin-dashboard-chart {
   width: 59%;
@@ -3198,4 +6703,18 @@ html {
 }
 .admin-dashboard .admin-dashboard-footer .admin-dashboard-piechart .admin-recharts-legend-wrapper {
   bottom: 40px !important;
+}
+
+.admin-dashboardByMonth {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.admin-dashboardByMonth .dashboardByMonth-content {
+  width: 94%;
+  background-color: #fcfffc;
+  padding: 25px;
+  height: 100%;
+  border-radius: 8px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1019607843), 1px 2px 3px rgba(0, 0, 0, 0.0588235294), 1px 2px 3px rgba(0, 0, 0, 0.1019607843), 1px 2px 3px rgba(0, 0, 0, 0.0588235294);
 }/*# sourceMappingURL=index.css.map */

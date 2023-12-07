@@ -29,9 +29,9 @@ const CardMember = ({ memberByFarm }) => {
 
   return (
     <>
-      <Row gutter={16}>
-        <Col span={12}>
-          <Card>
+      <Row gutter={10} style={{ justifyContent: "center" }}>
+        <Col span={6} className='dashboard-card'>
+          <Card className='card-member'>
             <Statistic
               title="Số lượng người quản lý"
               value={managerCount}
@@ -41,8 +41,8 @@ const CardMember = ({ memberByFarm }) => {
           </Card>
         </Col>
 
-        <Col span={12}>
-          <Card>
+        <Col span={6} className='dashboard-card'>
+          <Card className='card-member'>
             <Statistic
               title="Số lượng người giám sát"
               value={supervisorCount}

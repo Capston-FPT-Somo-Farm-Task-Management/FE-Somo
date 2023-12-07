@@ -18,22 +18,23 @@ const DisplayCard = ({ fieldAnimal, animalByFarm }) => {
   const animalByFarmCount = animalByFarm?.data?.length
   return (
     <>
-      <Row gutter={16}>
-        <Col span={8}>
-          <Card>
+      <Row gutter={10} style={{ justifyContent: "center" }}>
+        <Col span={6} className='dashboard-card'>
+          <Card className='card-animal' c>
             <Statistic
-              title="Số lượng chuồng đang mở"
+              title="Số chuồng đang mở"
               value={activeAnimalGroup}
               precision={2}
               formatter={formatter}
+              
             />
           </Card>
         </Col>
 
-        <Col span={8}>
-          <Card>
+        <Col span={6} className='dashboard-card'>
+          <Card className='card-animal'>
             <Statistic
-              title="Số lượng chuồng đang đóng"
+              title="Số chuồng đang đóng"
               value={inActiveAnimalGroup}
               precision={2}
               formatter={formatter}
@@ -41,10 +42,10 @@ const DisplayCard = ({ fieldAnimal, animalByFarm }) => {
           </Card>
         </Col>
 
-        <Col span={8}>
-          <Card>
+        <Col span={6} className='dashboard-card'>
+          <Card className='card-animal'>
             <Statistic
-              title="Số lượng vật nuôi trong các chuồng"
+              title="Vật nuôi trong các chuồng"
               value={animalByFarmCount}
               precision={2}
               formatter={formatter}

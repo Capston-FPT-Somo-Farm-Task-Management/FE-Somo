@@ -81,35 +81,48 @@ const PieChartTaskWeek = ({ taskByWeek, selectedDay, loading }) => {
 
   return (
     <div style={styles.container}>
-      <h3 style={{marginBottom: 0}}>Tổng số công việc theo loại </h3>
-      <ResponsiveContainer height={400}>
-        <PieChart width={400} height={200}>
-          <Pie
-            data={filteredData}
-            cx="50%"
-            cy="50%"
-            outerRadius={110}
-            startAngle={360}
-            endAngle={0}
-            innerRadius={60}
-            fill="#8884d8"
-            dataKey="value"
-            // label={renderCustomizedLabel}
-            labelLine={false}
-          >
-            {filteredData.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-          <Tooltip content={<CustomTooltip />} />
-          <Legend />
-        </PieChart>
-      </ResponsiveContainer>
+      <h3 style={{ marginBottom: 0 }}>Tổng số công việc theo loại </h3>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          height: "400px",
+        }}
+      >
+        {loading ? (
+          <BounceLoader color="#82ca9d" />
+        ) : (
+          <ResponsiveContainer height={400}>
+            <PieChart width={400} height={200}>
+              <Pie
+                data={filteredData}
+                cx="50%"
+                cy="50%"
+                outerRadius={110}
+                startAngle={360}
+                endAngle={0}
+                innerRadius={60}
+                dataKey="value"
+                // label={renderCustomizedLabel}
+                labelLine={false}
+              >
+                {filteredData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip content={<CustomTooltip />} />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        )}
+      </div>
     </div>
   );
 };
 
-export default PieChartTaskWeek
+export default PieChartTaskWeek;

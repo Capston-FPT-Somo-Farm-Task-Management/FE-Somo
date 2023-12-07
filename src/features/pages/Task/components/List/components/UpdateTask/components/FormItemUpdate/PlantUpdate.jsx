@@ -8,6 +8,7 @@ function PlantUpdate({
   editingTask,
   isDraft,
 }) {
+  console.log(editingTask);
   return (
     <Form.Item
       label="Mã cây trồng"
@@ -23,7 +24,7 @@ function PlantUpdate({
         editingTask
           ? {
               label: editingTask.externalId,
-              value: editingTask.plantId,
+              value: selectedPlantId ? selectedPlantId : editingTask.plantId,
             }
           : ""
       }
