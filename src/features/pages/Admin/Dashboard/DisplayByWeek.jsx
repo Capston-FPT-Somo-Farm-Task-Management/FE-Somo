@@ -41,7 +41,9 @@ const DisplayByWeek = ({ farmId }) => {
           title={`Tỉ lệ hoàn thành`}
           style={{ marginTop: '25px' }}
         >
-          {taskCompleteRate ? taskCompleteRate?.data?.time : null}
+          {taskCompleteRate && taskCompleteRate?.data?.time !== 'NaN%'
+            ? taskCompleteRate?.data?.time
+            : 'Chưa có công việc nào được hoàn thành'}
         </Card>
         <Card
           title="Danh sách khu vực nhiều công việc nhất"
