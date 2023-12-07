@@ -8,7 +8,7 @@ const DisplayCard = ({ activeMaterialCount, inActiveMaterialCount }) => {
     <>
       <Row gutter={10} style={{ justifyContent: "center" }}>
         {/* Active */}
-        <Col span={6} className="dashboard-card">
+        <Col lg={6} sm={10} xs={15} className="dashboard-card" style={{marginBottom: "20px"}}>
           <Card
             style={{
               boxShadow:
@@ -26,7 +26,7 @@ const DisplayCard = ({ activeMaterialCount, inActiveMaterialCount }) => {
         </Col>
 
         {/* Inactive */}
-        <Col span={6} className="dashboard-card">
+        <Col lg={6} sm={10} xs={15} className="dashboard-card" style={{marginBottom: "20px"}}>
           <Card
             style={{
               boxShadow:

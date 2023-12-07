@@ -1,4 +1,5 @@
 import { Card } from "antd";
+import { useDesktopXLMediaQuery, useDesktopXXLMediaQuery, useMobileMediaQuery, useTabletMediaQuery } from "common/hooks/responsive";
 import React from "react";
 import {
   PieChart,
@@ -33,10 +34,14 @@ const PieChartZone = ({
   ];
   const colors = ["#1a659e", "#02c39a", "#FFBB28"];
 
+  const isDesktopXXL = useDesktopXXLMediaQuery();
+  const isMobile = useMobileMediaQuery()
+
   return (
     <ResponsiveContainer
-      width="40%"
-      height={450}
+    className="pie-chart-zone"
+      width={isDesktopXXL ? "90%" : "40%"}
+      height={470}
       style={{
         padding: "20px",
         boxShadow:
@@ -65,7 +70,7 @@ const PieChartZone = ({
           verticalAlign="middle"
           layout="vertical"
           iconSize={15}
-          wrapperStyle={{marginRight: "50px"}}
+          wrapperStyle={ isMobile ? {marginRight: "20px", top: "290px"} : isDesktopXXL ? {marginRight: "100px"} :  {marginRight: "50px"}}
         />
         <Tooltip content={<CustomTooltip />} />
       </PieChart>

@@ -122,14 +122,14 @@ const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
       />
       
       <h2 style={headerStyle}>Lựa chọn nông trại để quản lý</h2>
-      <Row gutter={[16, 16]} justify="center">
+      <Row gutter={[16, 16]} justify="center" wrap="wrap" style={{margin: 0}}>
         {Array.isArray(farm) &&
           farm?.map((item) => (
             <Col
               xs={24}
-              sm={farm.length === 1 ? 16 : 12}
-              lg={farm.length === 1 ? 16 : 12}
-              xl={farm.length === 1 ? 16 : 12}
+              sm={farm.length === 1 ? 16 : 8}
+              lg={farm.length === 1 ? 16 : 8}
+              xl={farm.length === 1 ? 16 : 8}
             >
               <Card
                 key={item.key}
@@ -168,8 +168,8 @@ const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
                   onClick={() => showModal(item)}
                   title={<div style={{ fontWeight: 'bold' }}>{item.name}</div>}
                   description={
-                    item.description.length > 30
-                      ? item.description.substring(0, 30) + '...'
+                    item.description.length > 120
+                      ? item.description.substring(0, 120) + '...'
                       : item.description
                   }
                   style={{ padding: '0 12px 12px' }}

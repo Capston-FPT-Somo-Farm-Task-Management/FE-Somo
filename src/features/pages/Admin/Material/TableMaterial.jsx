@@ -67,7 +67,7 @@ const TableMaterial = ({ material, onFinishDelete, loading }) => {
               dataIndex="urlImage"
               key="2"
               render={(text, record) => (
-                <Image width={50} src={record.urlImage} />
+                <Image width={50} height={40} src={record.urlImage} style={{objectFit: "cover", borderRadius: "8px"}}/>
               )}
             />
             <Column

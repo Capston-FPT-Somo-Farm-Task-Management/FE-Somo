@@ -19,6 +19,7 @@ import {
   useDesktopMediaQuery,
   useDesktopXLMediaQuery,
   useDesktopXXLMediaQuery,
+  useDesktopXXXLMediaQuery,
   useMobileMediaQuery,
   useMobileSMMediaQuery,
   useTabletMediaQuery,
@@ -52,7 +53,7 @@ function TableTask({
 
   const isDesktopXL = useDesktopXLMediaQuery();
 
-  const isDesktopXXL = useDesktopXXLMediaQuery()
+  const isDesktopXXXL = useDesktopXXXLMediaQuery()
 
   const columns = taskTitle?.filter((column) => {
     if (isMobileSM) {
@@ -83,7 +84,7 @@ function TableTask({
   });
   const nameColumn = columns.find((column) => column.dataIndex === "name");
 
-  if (nameColumn && isDesktopXXL) {
+  if (nameColumn && isDesktopXXXL) {
     nameColumn.width = "15%";
   }else{
     nameColumn.width = "40%";

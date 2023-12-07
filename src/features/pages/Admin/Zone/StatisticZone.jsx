@@ -137,7 +137,7 @@ const StatisticZone = () => {
             </>
           ) : (
             <>
-            <div style={{display: "flex", justifyContent: "space-between"}}>
+            <div className="admin-zone-header">
             <DisplayCard
                 zoneByFarm={zoneByFarm}
                 activeZoneCount={activeZoneCount}

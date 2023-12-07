@@ -120,7 +120,7 @@
         width: 90%;
         margin-bottom: 20px;
       }
-      .admin-recharts-legend-wrapper {
+      .recharts-legend-wrapper {
         bottom: 40px !important;
       }
     }
@@ -139,4 +139,13 @@
       1px 2px 3px #0000001a, 1px 2px 3px #0000000f;
   }
   
+}
+
+.admin-row-card{
+  justify-content: space-around;
+  .ant-col{
+    @include tablet{
+      margin-bottom: 20px;
+    }
+  }
 }
