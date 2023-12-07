@@ -372,7 +372,7 @@ const UpdateMember = ({
               />
             </Form.Item> */}
 
-            <Form.Item label="Hình ảnh công cụ" name="avatar">
+            <Form.Item label="Hình đại diện" name="avatar">
               <ImgCrop rotationSlider>
                 <Upload
                   listType="picture-card"

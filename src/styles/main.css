@@ -75,9 +75,9 @@
   color: white;
 }
 .dashboard-card .card-plant {
-  background-color: #02c39a;
-  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
-  border: 1px solid #02c39a;
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
 }
 .dashboard-card .card-plant .ant-statistic-title {
   font-size: 18px;
@@ -105,9 +105,9 @@
   color: white;
 }
 .dashboard-card .card-member {
-  background-color: #2291f4;
-  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
-  border: 1px solid #2291f4;
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
 }
 .dashboard-card .card-member .ant-statistic-title {
   font-size: 18px;
@@ -118,6 +118,16 @@
   font-size: 34px;
   font-weight: 700;
   color: white;
+}
+.dashboard-card .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #5c6b73;
+}
+.dashboard-card .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: black;
 }
 
 iframe#webpack-dev-server-client-overlay {
@@ -310,9 +320,9 @@ html {
   color: white;
 }
 .dashboard-card .card-plant {
-  background-color: #02c39a;
-  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
-  border: 1px solid #02c39a;
+  background-color: #2291f4;
+  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
+  border: 1px solid #2291f4;
 }
 .dashboard-card .card-plant .ant-statistic-title {
   font-size: 18px;
@@ -340,9 +350,9 @@ html {
   color: white;
 }
 .dashboard-card .card-member {
-  background-color: #2291f4;
-  box-shadow: 1px 1px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4, 1px 2px 3px #2291f4;
-  border: 1px solid #2291f4;
+  background-color: #02c39a;
+  box-shadow: 1px 1px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a, 1px 2px 3px #02c39a;
+  border: 1px solid #02c39a;
 }
 .dashboard-card .card-member .ant-statistic-title {
   font-size: 18px;
@@ -353,4 +363,14 @@ html {
   font-size: 34px;
   font-weight: 700;
   color: white;
+}
+.dashboard-card .ant-statistic-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #5c6b73;
+}
+.dashboard-card .ant-statistic-content {
+  font-size: 34px;
+  font-weight: 700;
+  color: black;
 }/*# sourceMappingURL=main.css.map */
