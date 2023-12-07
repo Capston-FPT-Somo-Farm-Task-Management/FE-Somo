@@ -30,7 +30,7 @@ const CardMember = ({ memberByFarm }) => {
   return (
     <>
       <Row gutter={10} style={{ justifyContent: "center" }}>
-        <Col span={6} className="dashboard-card">
+        <Col lg={6} sm={10} xs={15} className="dashboard-card" style={{marginBottom: "20px"}}>
           <Card
             style={{
               boxShadow:
@@ -47,7 +47,7 @@ const CardMember = ({ memberByFarm }) => {
           </Card>
         </Col>
 
-        <Col span={6} className="dashboard-card">
+        <Col lg={6} sm={10} xs={15} className="dashboard-card" style={{marginBottom: "20px"}}>
           <Card
             style={{
               boxShadow:

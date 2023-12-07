@@ -52,7 +52,7 @@ const AdminSideMenu = () => {
   }
 
   return (
-    <div className="sider">
+    <div className="sider-admin">
       {isDesktop && (
         <Sider
           theme="dark"
