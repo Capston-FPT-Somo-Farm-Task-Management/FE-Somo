@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 
-import { Button, Layout, Menu, Popover } from 'antd'
+import { Button, Layout, Menu, Popover } from "antd";
 import {
   DashboardOutlined,
   TeamOutlined,
@@ -13,46 +13,43 @@ import {
   AppstoreOutlined,
   LogoutOutlined,
   FormatPainterOutlined,
-} from '@ant-design/icons'
-import logoSomo from '../../../assets/logo_Somo.png'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { authServices } from 'services/authServices'
-import { toast } from 'react-toastify'
+} from "@ant-design/icons";
+import logoSomo from "../../../assets/logo_Somo.png";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { authServices } from "services/authServices";
+import { toast } from "react-toastify";
 import {
   useDesktopMediaQuery,
   useTabletMediaQuery,
-} from 'common/hooks/responsive'
-import { GiCow, GiPlantSeed, GiDarkSquad, GiSpade   } from "react-icons/gi";
+} from "common/hooks/responsive";
+import { GiCow, GiPlantSeed, GiDarkSquad, GiSpade } from "react-icons/gi";
 import { VscScreenFull } from "react-icons/vsc";
 import { FaMapLocationDot } from "react-icons/fa6";
 
-
-
-
-const { Sider } = Layout
+const { Sider } = Layout;
 
 const AdminSideMenu = () => {
-  const [userName, setUserName] = useState()
-  const [userRole, setUserRole] = useState()
-  const [collapsed, setCollapsed] = useState(false)
-  const location = useLocation()
-  const navigate = useNavigate()
+  const [userName, setUserName] = useState();
+  const [userRole, setUserRole] = useState();
+  const [collapsed, setCollapsed] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const isDesktop = useDesktopMediaQuery()
-  const isTablet = useTabletMediaQuery()
+  const isDesktop = useDesktopMediaQuery();
+  const isTablet = useTabletMediaQuery();
 
   useEffect(() => {
-    const role = authServices.getRole()
-    setUserRole(role)
-    const userName = authServices.getUserName()
-    setUserName(userName)
-  }, [])
+    const role = authServices.getRole();
+    setUserRole(role);
+    const userName = authServices.getUserName();
+    setUserName(userName);
+  }, []);
 
   const logout = () => {
-    authServices.logOut()
-    toast.success('Đăng xuất thành công')
-    navigate('/login')
-  }
+    authServices.logOut();
+    toast.success("Đăng xuất thành công");
+    navigate("/login");
+  };
 
   return (
     <div className="sider-admin">
@@ -60,9 +57,9 @@ const AdminSideMenu = () => {
         <Sider
           theme="dark"
           style={{
-            overflow: 'auto',
-            height: '100vh',
-            position: 'fixed',
+            overflow: "auto",
+            height: "100vh",
+            position: "fixed",
             left: 0,
             top: 0,
             bottom: 0,
@@ -76,7 +73,7 @@ const AdminSideMenu = () => {
             mode="inline"
             defaultSelectedKeys={[location.pathname]}
           >
-            <Menu.Item key="/dashboard" className='menu-admin'>
+            <Menu.Item key="/dashboard" className="menu-admin">
               <VscScreenFull />
               <span>Tổng quan</span>
               <Link to="/dashboard"></Link>
@@ -94,7 +91,7 @@ const AdminSideMenu = () => {
               <Link to="/statistic-farm"></Link>
             </Menu.Item> */}
 
-            <Menu.Item key="/farm-dash" className='menu-admin'>
+            <Menu.Item key="/farm-dash" className="menu-admin">
               <FaMapLocationDot />
               <span>Chọn trang trại</span>
               <Link to="/farm-dash"></Link>
@@ -118,8 +115,8 @@ const AdminSideMenu = () => {
               <Link to="/statistic-animal"></Link>
             </Menu.Item> */}
 
-            <Menu.Item key="/statistic-animal-group" className='menu-admin'>
-            <GiCow />
+            <Menu.Item key="/statistic-animal-group" className="menu-admin">
+              <GiCow />
               <span>Động vật</span>
               <Link to="/statistic-animal-group"></Link>
             </Menu.Item>
@@ -130,20 +127,20 @@ const AdminSideMenu = () => {
               <Link to="/statistic-plant"></Link>
             </Menu.Item> */}
 
-            <Menu.Item key="/statistic-crop-group" className='menu-admin'>
-              <GiPlantSeed/>
+            <Menu.Item key="/statistic-crop-group" className="menu-admin">
+              <GiPlantSeed />
               <span>Thực vật</span>
               <Link to="/statistic-crop-group"></Link>
             </Menu.Item>
 
-            <Menu.Item key="/statistic-material" className='menu-admin'>
-              <GiSpade   />
+            <Menu.Item key="/statistic-material" className="menu-admin">
+              <GiSpade />
               <span>Công cụ</span>
               <Link to="/statistic-material"></Link>
             </Menu.Item>
 
-            <Menu.Item key="/statistic-member" className='menu-admin'>
-            <GiDarkSquad  />
+            <Menu.Item key="/statistic-member" className="menu-admin">
+              <GiDarkSquad />
               <span>Nhân sự</span>
               <Link to="/statistic-member"></Link>
             </Menu.Item>
@@ -170,23 +167,29 @@ const AdminSideMenu = () => {
                   mode="inline"
                   defaultSelectedKeys={[location.pathname]}
                 >
-                  <Menu.Item key="/dashboard">
-                    <BorderOutlined />
+                  <Menu.Item key="/dashboard" className="menu-admin">
+                    <VscScreenFull />
                     <span>Tổng quan</span>
                     <Link to="/dashboard"></Link>
                   </Menu.Item>
 
-                  <Menu.Item key="/statistic-farm">
-                    <BorderOutlined />
-                    <span>Chọn trang trại</span>
-                    <Link to="/statistic-farm"></Link>
-                  </Menu.Item>
-
                   {/* <Menu.Item key="/statistic-task">
-                    <AimOutlined />
-                    <span>Công việc</span>
-                    <Link to="/statistic-task"></Link>
-                  </Menu.Item> */}
+              <AimOutlined />
+              <span>Công việc</span>
+              <Link to="/statistic-task"></Link>
+            </Menu.Item> */}
+
+                  {/* <Menu.Item key="/statistic-farm">
+              <BorderOutlined />
+              <span>Chọn trang trại</span>
+              <Link to="/statistic-farm"></Link>
+            </Menu.Item> */}
+
+                  <Menu.Item key="/farm-dash" className="menu-admin">
+                    <FaMapLocationDot />
+                    <span>Chọn trang trại</span>
+                    <Link to="/farm-dash"></Link>
+                  </Menu.Item>
 
                   <Menu.Item key="/statistic-area">
                     <BorderOutlined />
@@ -201,37 +204,40 @@ const AdminSideMenu = () => {
                   </Menu.Item>
 
                   {/* <Menu.Item key="/statistic-animal">
-                    <TeamOutlined />
-                    <span>Vật nuôi</span>
-                    <Link to="/statistic-animal"></Link>
-                  </Menu.Item> */}
+              <TeamOutlined />
+              <span>Vật nuôi</span>
+              <Link to="/statistic-animal"></Link>
+            </Menu.Item> */}
 
-                  <Menu.Item key="/statistic-animal-group">
-                    <AppstoreOutlined />
+                  <Menu.Item
+                    key="/statistic-animal-group"
+                    className="menu-admin"
+                  >
+                    <GiCow />
                     <span>Động vật</span>
                     <Link to="/statistic-animal-group"></Link>
                   </Menu.Item>
 
                   {/* <Menu.Item key="/statistic-plant">
-                    <DashboardOutlined />
-                    <span>Cây trồng</span>
-                    <Link to="/statistic-plant"></Link>
-                  </Menu.Item> */}
+              <DashboardOutlined />
+              <span>Cây trồng</span>
+              <Link to="/statistic-plant"></Link>
+            </Menu.Item> */}
 
-                  <Menu.Item key="/statistic-crop-group">
-                    <AppstoreOutlined />
+                  <Menu.Item key="/statistic-crop-group" className="menu-admin">
+                    <GiPlantSeed />
                     <span>Thực vật</span>
                     <Link to="/statistic-crop-group"></Link>
                   </Menu.Item>
 
-                  <Menu.Item key="/statistic-material">
-                    <FormatPainterOutlined />
+                  <Menu.Item key="/statistic-material" className="menu-admin">
+                    <GiSpade />
                     <span>Công cụ</span>
                     <Link to="/statistic-material"></Link>
                   </Menu.Item>
 
-                  <Menu.Item key="/statistic-member">
-                    <BorderOutlined />
+                  <Menu.Item key="/statistic-member" className="menu-admin">
+                    <GiDarkSquad />
                     <span>Nhân sự</span>
                     <Link to="/statistic-member"></Link>
                   </Menu.Item>
@@ -253,7 +259,7 @@ const AdminSideMenu = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default AdminSideMenu
+export default AdminSideMenu;

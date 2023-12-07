@@ -33,6 +33,12 @@ $desktop-xl-width: 1200px;
   }
 }
 
+@mixin desktop-xxl{
+  @media (max-width: #{1300px}) {
+    @content;
+  }
+}
+
 // ---------------------------------------------------------------------------
 
 $color-primary: #1677ff;
