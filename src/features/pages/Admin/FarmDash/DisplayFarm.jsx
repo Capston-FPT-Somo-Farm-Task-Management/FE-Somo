@@ -112,7 +112,7 @@ const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
                     alt="Nông trại"
                     src={item.urlImage}
                     style={{
-                      height: farm.length === 1 ? 300 : 190,
+                      height: farm.length === 1 ? 300 : 250,
                       objectFit: 'cover',
                       borderTopLeftRadius: '10px',
                       borderTopRightRadius: '10px',
@@ -138,10 +138,10 @@ const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
               >
                 <Card.Meta
                   onClick={() => showModal(item)}
-                  title={<div style={{ fontWeight: 'bold' }}>{item.name}</div>}
+                  title={<h3 style={{ fontWeight: 'bold' }}>{item.name}</h3>}
                   description={
-                    item.description.length > 30
-                      ? item.description.substring(0, 30) + '...'
+                    item.description.length > 120
+                      ? item.description.substring(0, 120) + '...'
                       : item.description
                   }
                   style={{ padding: '0 12px 12px' }}
