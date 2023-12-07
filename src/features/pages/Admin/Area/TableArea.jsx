@@ -63,7 +63,7 @@ const TableArea = ({ areaByFarm, onFinishDelete, loading }) => {
               )}
             />
             <Column title="Mã khu vực" dataIndex="code" key="2" />
-            <Column title="Diện tích" dataIndex="fArea" key="3" />
+            {/* <Column title="Diện tích" dataIndex="fArea" key="3" /> */}
             {/* <Column title="Tên trang trại" dataIndex="farmName" key="4" /> */}
             <Column
               title="Trạng thái"
