@@ -32,7 +32,7 @@ const DisplayByWeek = ({ farmId }) => {
   return (
     <div className="admin-dashboard">
       <h3>Công việc tuần này</h3>
-      <div>
+      <div className='admin-displayByWeek'>
         <Card title="Tổng thời gian làm việc" style={{ marginTop: '25px' }}>
           {effortInWeek ? effortInWeek?.data : 0}
         </Card>
@@ -46,6 +46,7 @@ const DisplayByWeek = ({ farmId }) => {
         <Card
           title="Danh sách khu vực nhiều công việc nhất"
           style={{ marginTop: '25px' }}
+          className='ant-card-bottom'
         >
           <List
             itemLayout="horizontal"
@@ -65,6 +66,7 @@ const DisplayByWeek = ({ farmId }) => {
         <Card
           title="Danh sách nhân viên làm việc nhiều nhất"
           style={{ marginTop: '25px' }}
+          className='ant-card-bottom'
         >
           <List
             itemLayout="horizontal"

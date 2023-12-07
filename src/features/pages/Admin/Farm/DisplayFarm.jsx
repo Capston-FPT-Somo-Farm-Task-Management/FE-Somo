@@ -127,8 +127,8 @@ const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
           farm?.map((item) => (
             <Col
               xs={24}
-              sm={farm.length === 1 ? 16 : 8}
-              lg={farm.length === 1 ? 16 : 8}
+              sm={farm.length === 1 ? 16 : 14}
+              lg={farm.length === 1 ? 16 : 12}
               xl={farm.length === 1 ? 16 : 8}
             >
               <Card
