@@ -94,14 +94,14 @@ const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
       />
 
       <h2 style={headerStyle}>Lựa chọn nông trại để quản lý</h2>
-      <Row gutter={[16, 16]} justify="center">
+      <Row gutter={[10, 10]} justify="center" wrap="wrap">
         {Array.isArray(farm) &&
           farm?.map((item) => (
             <Col
               xs={24}
-              sm={farm.length === 1 ? 16 : 12}
-              lg={farm.length === 1 ? 16 : 12}
-              xl={farm.length === 1 ? 16 : 12}
+              sm={farm.length === 1 ? 16 : 8}
+              lg={farm.length === 1 ? 16 : 8}
+              xl={farm.length === 1 ? 16 : 8}
             >
               <Card
                 key={item.key}

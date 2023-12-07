@@ -22,7 +22,10 @@ import {
   useDesktopMediaQuery,
   useTabletMediaQuery,
 } from 'common/hooks/responsive'
-import { GiChicken, GiPlantSeed, GiDarkSquad, GiSpade   } from "react-icons/gi";
+import { GiCow, GiPlantSeed, GiDarkSquad, GiSpade   } from "react-icons/gi";
+import { VscScreenFull } from "react-icons/vsc";
+import { FaMapLocationDot } from "react-icons/fa6";
+
 
 
 
@@ -73,8 +76,8 @@ const AdminSideMenu = () => {
             mode="inline"
             defaultSelectedKeys={[location.pathname]}
           >
-            <Menu.Item key="/dashboard">
-              <BorderOutlined />
+            <Menu.Item key="/dashboard" className='menu-admin'>
+              <VscScreenFull />
               <span>Tổng quan</span>
               <Link to="/dashboard"></Link>
             </Menu.Item>
@@ -91,8 +94,8 @@ const AdminSideMenu = () => {
               <Link to="/statistic-farm"></Link>
             </Menu.Item> */}
 
-            <Menu.Item key="/farm-dash">
-              <BorderOutlined />
+            <Menu.Item key="/farm-dash" className='menu-admin'>
+              <FaMapLocationDot />
               <span>Chọn trang trại</span>
               <Link to="/farm-dash"></Link>
             </Menu.Item>
@@ -115,8 +118,8 @@ const AdminSideMenu = () => {
               <Link to="/statistic-animal"></Link>
             </Menu.Item> */}
 
-            <Menu.Item key="/statistic-animal-group">
-            <GiChicken />
+            <Menu.Item key="/statistic-animal-group" className='menu-admin'>
+            <GiCow />
               <span>Động vật</span>
               <Link to="/statistic-animal-group"></Link>
             </Menu.Item>
@@ -127,19 +130,19 @@ const AdminSideMenu = () => {
               <Link to="/statistic-plant"></Link>
             </Menu.Item> */}
 
-            <Menu.Item key="/statistic-crop-group">
+            <Menu.Item key="/statistic-crop-group" className='menu-admin'>
               <GiPlantSeed/>
               <span>Thực vật</span>
               <Link to="/statistic-crop-group"></Link>
             </Menu.Item>
 
-            <Menu.Item key="/statistic-material">
+            <Menu.Item key="/statistic-material" className='menu-admin'>
               <GiSpade   />
               <span>Công cụ</span>
               <Link to="/statistic-material"></Link>
             </Menu.Item>
 
-            <Menu.Item key="/statistic-member">
+            <Menu.Item key="/statistic-member" className='menu-admin'>
             <GiDarkSquad  />
               <span>Nhân sự</span>
               <Link to="/statistic-member"></Link>

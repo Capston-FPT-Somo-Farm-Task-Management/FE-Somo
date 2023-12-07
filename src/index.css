@@ -244,6 +244,14 @@ html {
   box-shadow: 0 0 10px 2px #0074d9;
 }
 
+.menu-admin .ant-menu-title-content {
+  display: flex;
+  align-items: center;
+}
+.menu-admin .ant-menu-title-content span {
+  margin-left: 10px;
+}
+
 .dashboard-card .card-area {
   background-color: #1a659e;
   box-shadow: 1px 1px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e, 1px 2px 3px #1a659e;

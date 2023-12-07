@@ -99,3 +99,13 @@ html {
   border: 1px solid #0c8af8;
   box-shadow: 0 0 10px 2px #0074d9;
 }
+
+.menu-admin{
+  .ant-menu-title-content{
+    display: flex;
+    align-items: center;
+    span{
+      margin-left: 10px;
+    }
+  }
+}
