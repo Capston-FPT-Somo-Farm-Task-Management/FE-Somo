@@ -7,6 +7,8 @@ import {
   EditOutlined,
   UploadOutlined,
   LoadingOutlined,
+  InfoCircleOutlined,
+  LogoutOutlined
 } from "@ant-design/icons";
 import {
   Dropdown,
@@ -39,7 +41,10 @@ import { changeAllNotifyNewToRead } from "features/slice/notification/notifyChan
 import UserProfile from "./components/HeaderOption/UserProfile";
 import EditProfile from "./components/HeaderOption/EditProfile";
 import ChangePassword from "./components/HeaderOption/ChangePassword";
-import { useMobileMediaQuery, useTabletMediaQuery } from "common/hooks/responsive";
+import {
+  useMobileMediaQuery,
+  useTabletMediaQuery,
+} from "common/hooks/responsive";
 import SidebarOnHeader from "./components/HeaderOption/SidebarOnHeader";
 
 function HeaderComp() {
@@ -142,36 +147,27 @@ function HeaderComp() {
     navigate("/login");
   };
 
-  const items = [
-    {
-      key: "profile",
-      label: <div onClick={showModal}>Xem thông tin</div>,
-    },
-    {
-      key: "forgotPassword",
-      label: <div onClick={changePasswordModal}>Đổi mật khẩu</div>,
-    },
-    {
-      key: "logout",
-      label: (
-        <div key="/login" onClick={logout}>
-          <span>Đăng xuất</span>
-          <Link to="/login"></Link>
-        </div>
-      ),
-    },
-  ];
+  const items = (
+    <div className="menu-header">
+      <p onClick={showModal}><InfoCircleOutlined /> Xem thông tin</p>
+      <p onClick={changePasswordModal}><EditOutlined /> Đổi mật khẩu</p>
+      <p key="/login" onClick={logout}>
+        <span><LogoutOutlined /> Đăng xuất</span>
+        <Link to="/login"></Link>
+      </p>
+    </div>
+  );
 
   const handleEditProfile = (values) => {
+    console.log(values);
     setIsSubmitting(true);
-    const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`
+    // const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`
     const editProfile = {
       ...values,
-      id: member.id,
       imageFile: fileList[0].originFileObj,
-      address: address
+      address: member.address,
     };
-    dispatch(updateMember(editProfile)).then(() => {
+    dispatch(updateMember({ id: member.id, body: editProfile })).then(() => {
       setIsModalEditVisible(false);
       setIsModalVisible(true);
       setIsSubmitting(false);
@@ -196,8 +192,9 @@ function HeaderComp() {
   const changeNewToRead = () => {
     dispatch(changeAllNotifyNewToRead(member?.id));
   };
-  
-  const isMobile = useMobileMediaQuery()
+
+  const isMobile = useMobileMediaQuery();
+  const isTablet = useTabletMediaQuery()
 
   return (
     <>
@@ -214,6 +211,7 @@ function HeaderComp() {
                       height: "500px",
                       overflowY: "auto",
                       padding: "10px",
+                      width: "400px"
                     }}
                   >
                     <Notification />
@@ -243,11 +241,9 @@ function HeaderComp() {
             )}
           </div>
           <div className="header-profile">
-            <Dropdown
-              menu={{
-                items,
-              }}
-              trigger={["hover"]}
+            <Popover
+              content={items}
+              trigger={isTablet ? ["click"] : ["hover"]}
               placement="bottom"
               arrow
             >
@@ -280,7 +276,7 @@ function HeaderComp() {
                   </div>
                 )}
               </a>
-            </Dropdown>
+            </Popover>
           </div>
           <UserProfile
             isModalVisible={isModalVisible}

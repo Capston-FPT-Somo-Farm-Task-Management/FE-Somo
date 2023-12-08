@@ -22,7 +22,7 @@ const Animals = () => {
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const animalTypeActive = useSelector((state) => state.animalTypeActive.data)
   const member = useSelector((state) => state.member.data)
-  const farmId = member.farmId
+  const farmId = member?.farmId
 
   const [searchTerm, setSearchTerm] = useState('')
 

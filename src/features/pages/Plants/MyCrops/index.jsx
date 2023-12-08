@@ -21,7 +21,7 @@ const MyCrops = () => {
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const plantTypeActive = useSelector((state) => state.plantTypeActive.data)
   const member = useSelector((state) => state.member.data)
-  const farmId = member.farmId
+  const farmId = member?.farmId
 
   const [searchTerm, setSearchTerm] = useState('')
 

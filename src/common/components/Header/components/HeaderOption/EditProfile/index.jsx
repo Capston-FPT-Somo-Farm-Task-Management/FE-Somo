@@ -123,12 +123,6 @@ const EditProfile = ({
             <Form.Item
               label="Hình đại diện"
               name="imageFile"
-              rules={[
-                {
-                  required: true,
-                  message: "Vui lòng nchọn ảnh đại diện",
-                },
-              ]}
               className="edit-avatar"
             >
               <Upload
@@ -181,7 +175,7 @@ const EditProfile = ({
             >
               <Input placeholder="Nhập số điện thoại" />
             </Form.Item>
-            <Form.Item
+            {/* <Form.Item
               name="city"
               label="Tỉnh/Thành phố"
               rules={[
@@ -251,7 +245,7 @@ const EditProfile = ({
                   </Option>
                 ))}
               </Select>
-            </Form.Item>
+            </Form.Item> */}
           </Form>
         </Modal>
       )}

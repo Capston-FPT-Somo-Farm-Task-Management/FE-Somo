@@ -17,7 +17,7 @@ const PlantType = () => {
   const plantType = useSelector((state) => state.plantType.data)
   const loading = useSelector((state) => state.plantType.loading)
   const member = useSelector((state) => state.member.data)
-  const farmId = member.farmId
+  const farmId = member?.farmId
 
   const [searchTerm, setSearchTerm] = useState('')
 

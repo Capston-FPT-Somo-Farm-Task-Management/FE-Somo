@@ -29,7 +29,7 @@ const Employee = () => {
 
   const taskTypeActive = useSelector((state) => state.taskTypeActive.data)
 
-  const farmId = member.farmId
+  const farmId = member?.farmId
   const [searchTerm, setSearchTerm] = useState('')
 
   const handleSearch = (value) => {

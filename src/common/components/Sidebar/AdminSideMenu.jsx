@@ -145,6 +145,12 @@ const AdminSideMenu = () => {
               <Link to="/statistic-member"></Link>
             </Menu.Item>
 
+            <Menu.Item key="/admin-profile" className="menu-admin">
+              <GiDarkSquad />
+              <span>Thông tin</span>
+              <Link to="/admin-profile"></Link>
+            </Menu.Item>
+
             <Menu.Item key="/login" onClick={logout}>
               <LogoutOutlined />
               <span>Đăng xuất</span>
