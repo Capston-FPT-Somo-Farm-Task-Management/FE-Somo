@@ -1,4 +1,9 @@
-import { createFarm, deleteFarm, getFarm } from 'features/slice/farm/farmSlice'
+import {
+  createFarm,
+  deleteFarm,
+  getFarm,
+  updateFarm,
+} from 'features/slice/farm/farmSlice'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
@@ -14,6 +19,12 @@ const FarmDash = () => {
 
   const onFinishCreate = (values) => {
     dispatch(createFarm(values)).then(() => {
+      loadData()
+    })
+  }
+
+  const onFinishUpdate = (values) => {
+    dispatch(updateFarm(values)).then(() => {
       loadData()
     })
   }
@@ -34,6 +45,7 @@ const FarmDash = () => {
         farm={farm}
         onFinishCreate={onFinishCreate}
         onFinishDelete={onFinishDelete}
+        onFinishUpdate={onFinishUpdate}
       />
     </>
   )

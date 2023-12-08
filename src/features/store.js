@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import farmReducer from './slice/farm/farmSlice'
+import farmByIdReducer from './slice/farm/farmByIdSlice'
 import plantReducer from './slice/plant/plantSlice'
 import animalReducer from './slice/animal/animalSlice'
 import animalTypeReducer from './slice/animal/animalTypeSlice'
@@ -73,6 +74,7 @@ import locationReducer from './slice/location/locationSlice'
 export const store = configureStore({
   reducer: {
     farm: farmReducer,
+    farmById: farmByIdReducer,
     plant: plantReducer,
     animal: animalReducer,
     area: areaReducer,
