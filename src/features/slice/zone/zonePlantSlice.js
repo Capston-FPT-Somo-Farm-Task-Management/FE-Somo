@@ -10,7 +10,6 @@ export const getZoneByAreaPlant = createAsyncThunk(
       const { data } = await axiosInstance.get(`/Zone/AreaPlant(${areaId})`)
       return data
     } catch (error) {
-      console.log(error)
     }
   }
 )
@@ -31,7 +30,6 @@ const zonePlantSlice = createSlice({
         state.loading = false
         state.error = ''
         state.data = action.payload
-        console.log(action.payload)
       })
       .addCase(getZoneByAreaPlant.rejected, (state, action) => {
         state.loading = false

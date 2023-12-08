@@ -79,7 +79,6 @@ export const adminDeleteMember = createAsyncThunk(
   "member/adminDeleteMember",
   async (id, { rejectWithValue }) => {
     try {
-      console.log(id);
       const response = await axiosInstance.delete(`/Member/${id}`);
       if (response.status === 200) {
         toast.success("Xoá thành công");

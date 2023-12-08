@@ -75,8 +75,6 @@ const List = () => {
 
   const loading = useSelector((state) => state.task.loading);
 
-  console.log(viewRejectModalVisible);
-
   const dispatch = useDispatch();
 
   const loadDataTask = () => {

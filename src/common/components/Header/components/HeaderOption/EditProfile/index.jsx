@@ -41,7 +41,6 @@ const EditProfile = ({
     if (member) {
       // Phân tích địa chỉ
       const addressParts = member.address ? member.address.split(", ") : null;
-      console.log(member.address);
 
       const selectedCityName = addressParts ? addressParts[2] : null;
       const selectedDistrictName = addressParts ? addressParts[1] : null;

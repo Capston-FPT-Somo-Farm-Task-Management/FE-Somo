@@ -8,7 +8,6 @@ export const getSupervisor = createAsyncThunk('supervisor/getSupervisor', async 
       const { data } = await axiosInstance.get(`/Member/Active/Supervisor/Farm(${id})`)
       return data
     } catch (error) {
-      console.log(error)
     }
   })
 

@@ -28,8 +28,6 @@ const ViewReject = ({
     });
   };
 
-  console.log(taskData);
-
   const confirm = () => {
     handleRefuseTask(taskData.id);
   };

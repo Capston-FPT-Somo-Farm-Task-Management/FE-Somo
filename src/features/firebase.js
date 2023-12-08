@@ -24,7 +24,6 @@ export const requestForToken = () => {
       .then((currentToken) => {
         if (currentToken) {
           localStorage.setItem('connectionId', currentToken)
-          console.log(currentToken);
         } else {
           console.log(
             'No registration token available. Request permission to generate one.'

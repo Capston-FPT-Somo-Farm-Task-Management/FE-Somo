@@ -12,7 +12,6 @@ export const getZoneByAreaAnimal = createAsyncThunk(
       );
       return data;
     } catch (error) {
-      console.log(error);
     }
   }
 );
@@ -34,7 +33,6 @@ const zoneAnimalSlice = createSlice({
         state.loading = false;
         state.error = "";
         state.data = action.payload;
-        console.log(action.payload);
       })
       .addCase(getZoneByAreaAnimal.rejected, (state, action) => {
         state.loading = false;

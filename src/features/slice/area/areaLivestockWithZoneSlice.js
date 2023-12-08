@@ -8,7 +8,6 @@ export const getAreaWithZoneTypeLivestock = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get(`/Area/GetAreaWithZoneTypeLiveStock/Farm(${id})`)
-      // console.log(data)
       return data
     } catch (error) {
       rejectWithValue(error.message)

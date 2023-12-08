@@ -68,7 +68,6 @@ function ThirdModal({
   const member = useSelector((state) => state.member.data);
 
   const farmId = member.farmId;
-  console.log(farmId);
 
   const areaByFarm = useSelector((state) => state.areaByFarm.data);
 
@@ -94,7 +93,6 @@ function ThirdModal({
   const taskTypeActiveOther = useSelector(
     (state) => state.taskTypeActiveOther.data
   );
-  console.log(taskTypeActiveOther);
 
   const taskTypeLivestock = useSelector(
     (state) => state.taskTypeLivestock.data
@@ -274,7 +272,6 @@ function ThirdModal({
 
   const handleAddressDetail = (e) => {
     setAddressDetail(e.target.value);
-    console.log(e.target.value);
   };
 
   const disabledDate = (current) => {
@@ -379,7 +376,6 @@ function ThirdModal({
         });
       })
       .catch((errorInfo) => {
-        console.log("Validation failed:", errorInfo);
         setIsCreatingTask(false);
       });
     handleCloseModal();
@@ -459,7 +455,6 @@ function ThirdModal({
         });
       })
       .catch((errorInfo) => {
-        console.log("Validation failed:", errorInfo);
         setIsCreatingTask(false);
       });
   };
@@ -592,7 +587,6 @@ function ThirdModal({
         });
       })
       .catch((errorInfo) => {
-        console.log("Validation failed:", errorInfo);
         setIsCreatingTask(false);
       });
   };
@@ -690,7 +684,6 @@ function ThirdModal({
         });
       })
       .catch((errorInfo) => {
-        console.log("Validation failed:", errorInfo);
         setIsCreatingTask(false);
       });
   };
