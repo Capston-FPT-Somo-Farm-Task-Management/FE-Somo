@@ -11,7 +11,6 @@ export const getZoneActive = createAsyncThunk(
       const { data } = await axiosInstance.get('/Zone/Active')
       return data
     } catch (error) {
-      console.log(error)
     }
   }
 )
@@ -35,7 +34,6 @@ export const createZone = createAsyncThunk(
 export const updateZone = createAsyncThunk(
   'zones/updateZone',
   async (data, { rejectWithValue }) => {
-    console.log(data)
     try {
       const response = await axiosInstance.put(`/Zone/${data.id}`, data)
       if (response.status === 200) {
@@ -52,7 +50,6 @@ export const updateZone = createAsyncThunk(
 export const deleteZone = createAsyncThunk(
   'zones/deleteZone',
   async (id, { rejectWithValue }) => {
-    console.log(id)
     try {
       const response = await axiosInstance.put(`/Zone/Delete/${id}`)
       if (response.status === 200) {

@@ -18,7 +18,6 @@ function RepeatUpdate({
   shouldCheckRepeat,
   form
 }) {
-  console.log(repeatValue);
   const disableRepeat = endDate ? !endDate.isValid() : null;
   let dateRepeateArray =
     editingTask && editingTask.dateRepeate
@@ -201,9 +200,6 @@ function RepeatUpdate({
       }
     `;
     const setRepeat = repeatValue === true ? editingTask.isRepeat === repeatValue : editingTask.isRepeat
-    console.log("setRepeat: ", setRepeat);
-    console.log("repeatValue: ", repeatValue);
-    console.log("initialSelectedDays: ", initialSelectedDays);
   return (
     <>
       <Form.Item

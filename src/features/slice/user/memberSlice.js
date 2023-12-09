@@ -40,7 +40,7 @@ export const updateMember = createAsyncThunk(
   "member/updateMember",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(`/Member/${data.id}`, data, {
+      const response = await axiosInstance.put(`/Member/${data.id}`, data.body, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -79,7 +79,6 @@ export const adminDeleteMember = createAsyncThunk(
   "member/adminDeleteMember",
   async (id, { rejectWithValue }) => {
     try {
-      console.log(id);
       const response = await axiosInstance.delete(`/Member/${id}`);
       if (response.status === 200) {
         toast.success("Xoá thành công");

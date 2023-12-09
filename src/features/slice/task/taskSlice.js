@@ -192,10 +192,8 @@ export const changeStatusFromDoneToDoing = createAsyncThunk(
 export const changeStatusToPendingAndCancel = createAsyncThunk(
   "task/changeStatusToPendingAndCancel",
   async (data, { rejectWithValue }) => {
-    console.log(data);
     try {
-      console.log(data);
-      const response = await axiosInstance.put(
+        const response = await axiosInstance.put(
         `/FarmTask/(${data.taskId})/changeStatusToPendingAndCancel?status=${
           data.status
         }&managerId=${authServices.getUserId()}`,

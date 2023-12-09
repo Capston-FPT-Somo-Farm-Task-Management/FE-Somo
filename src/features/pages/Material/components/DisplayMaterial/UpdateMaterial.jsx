@@ -36,7 +36,6 @@ const UpdateMaterial = ({
       imageFile: fileList[0].originFileObj,
       farmId: farmId,
     }
-    console.log(formData)
     onFinishUpdate(formData)
     closeModal()
   }

@@ -15,7 +15,7 @@ import { getFieldAnimalByFarmId } from 'features/slice/field/fieldAnimalSlice'
 const AnimalGroup = () => {
   const dispatch = useDispatch()
   const member = useSelector((state) => state.member.data)
-  const farmId = member.farmId
+  const farmId = member?.farmId
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const fieldAnimal = useSelector((state) => state.fieldAnimal.data)
   const loading = useSelector((state) => state.fieldAnimal.loading)

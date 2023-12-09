@@ -17,7 +17,7 @@ const AnimalType = () => {
   const animalType = useSelector((state) => state.animalType.data)
   const loading = useSelector((state) => state.animalType.loading)
   const member = useSelector((state) => state.member.data)
-  const farmId = member.farmId
+  const farmId = member?.farmId
 
   const [searchTerm, setSearchTerm] = useState('')
 

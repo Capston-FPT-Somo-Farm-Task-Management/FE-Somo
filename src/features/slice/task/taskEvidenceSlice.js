@@ -10,7 +10,6 @@ export const getEvidenceByTaskId = createAsyncThunk(
       const { data } = await axiosInstance.get(`/TaskEvidence/Task(${taskId})`)
       return data
     } catch (error) {
-      console.log(error.data.message)
     }
   }
 )

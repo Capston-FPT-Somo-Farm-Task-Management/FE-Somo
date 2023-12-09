@@ -87,21 +87,18 @@ const FormAddMember = ({ isModalOpen, closeModal, onFinishCreate, farmId }) => {
 
   const handleCityChange = (value, option) => {
     setSelectedCityName(option.children)
-    console.log(selectedCityName)
     form.setFieldsValue({ district: null, ward: null })
     dispatch(getDistrict(value))
   }
 
   const handleDistrictChange = (value, option) => {
     setSelectedDistrictName(option.children)
-    console.log(selectedDistrictName)
     form.setFieldsValue({ ward: null })
     dispatch(getWard(value))
   }
 
   const handleWardChange = (value, option) => {
     setSelectedWardName(option.children)
-    console.log(selectedWardName)
     form.setFieldsValue({ ward: option.children })
   }
 

@@ -36,7 +36,6 @@ export const getEmployeeExcel = createAsyncThunk(
 export const createEmployeeByExcel = createAsyncThunk(
   'employeeExcel/createEmployeeByExcel',
   async (data, { rejectWithValue }) => {
-    console.log(data)
     try {
       const config = {
         headers: {

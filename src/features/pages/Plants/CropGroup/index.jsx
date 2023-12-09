@@ -16,7 +16,7 @@ import { getAreaActiveByFarmId } from 'features/slice/area/areaByFarmSlice'
 const CropGroup = () => {
   const dispatch = useDispatch()
   const member = useSelector((state) => state.member.data)
-  const farmId = member.farmId
+  const farmId = member?.farmId
   const areaByFarm = useSelector((state) => state.areaByFarm.data)
   const fieldPlant = useSelector((state) => state.fieldPlant.data)
   const loading = useSelector((state) => state.fieldPlant.loading)

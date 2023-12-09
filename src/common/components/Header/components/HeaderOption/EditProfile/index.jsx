@@ -41,7 +41,6 @@ const EditProfile = ({
     if (member) {
       // Phân tích địa chỉ
       const addressParts = member.address ? member.address.split(", ") : null;
-      console.log(member.address);
 
       const selectedCityName = addressParts ? addressParts[2] : null;
       const selectedDistrictName = addressParts ? addressParts[1] : null;
@@ -124,12 +123,6 @@ const EditProfile = ({
             <Form.Item
               label="Hình đại diện"
               name="imageFile"
-              rules={[
-                {
-                  required: true,
-                  message: "Vui lòng nchọn ảnh đại diện",
-                },
-              ]}
               className="edit-avatar"
             >
               <Upload
@@ -182,7 +175,7 @@ const EditProfile = ({
             >
               <Input placeholder="Nhập số điện thoại" />
             </Form.Item>
-            <Form.Item
+            {/* <Form.Item
               name="city"
               label="Tỉnh/Thành phố"
               rules={[
@@ -252,7 +245,7 @@ const EditProfile = ({
                   </Option>
                 ))}
               </Select>
-            </Form.Item>
+            </Form.Item> */}
           </Form>
         </Modal>
       )}

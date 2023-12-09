@@ -25,7 +25,6 @@ export const getFields = createAsyncThunk(
   async ({ rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get('/Field/Active')
-      console.log(data)
       return data
     } catch (error) {
       rejectWithValue(error)

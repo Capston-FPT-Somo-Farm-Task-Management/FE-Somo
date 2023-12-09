@@ -67,8 +67,7 @@ function ThirdModal({
 
   const member = useSelector((state) => state.member.data);
 
-  const farmId = member.farmId;
-  console.log(farmId);
+  const farmId = member?.farmId;
 
   const areaByFarm = useSelector((state) => state.areaByFarm.data);
 
@@ -84,25 +83,24 @@ function ThirdModal({
   const zonePlant = useSelector((state) => state.zonePlant.data);
 
   const animal = useSelector((state) => state.animal.data);
-  const dataAnimal = animal.data;
+  const dataAnimal = animal?.data;
 
   const plant = useSelector((state) => state.plant.data);
-  const dataPlant = plant.data;
+  const dataPlant = plant?.data;
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
 
   const taskTypeActiveOther = useSelector(
     (state) => state.taskTypeActiveOther.data
   );
-  console.log(taskTypeActiveOther);
 
   const taskTypeLivestock = useSelector(
     (state) => state.taskTypeLivestock.data
   );
-  const dataTaskTypeLivestock = taskTypeLivestock.data;
+  const dataTaskTypeLivestock = taskTypeLivestock?.data;
 
   const taskTypePlant = useSelector((state) => state.taskTypePlant.data);
-  const dataTaskTypePlant = taskTypePlant.data;
+  const dataTaskTypePlant = taskTypePlant?.data;
 
   const supervisor = useSelector((state) => state.supervisor.data);
 
@@ -274,7 +272,6 @@ function ThirdModal({
 
   const handleAddressDetail = (e) => {
     setAddressDetail(e.target.value);
-    console.log(e.target.value);
   };
 
   const disabledDate = (current) => {
@@ -379,7 +376,6 @@ function ThirdModal({
         });
       })
       .catch((errorInfo) => {
-        console.log("Validation failed:", errorInfo);
         setIsCreatingTask(false);
       });
     handleCloseModal();
@@ -459,7 +455,6 @@ function ThirdModal({
         });
       })
       .catch((errorInfo) => {
-        console.log("Validation failed:", errorInfo);
         setIsCreatingTask(false);
       });
   };
@@ -592,7 +587,6 @@ function ThirdModal({
         });
       })
       .catch((errorInfo) => {
-        console.log("Validation failed:", errorInfo);
         setIsCreatingTask(false);
       });
   };
@@ -690,7 +684,6 @@ function ThirdModal({
         });
       })
       .catch((errorInfo) => {
-        console.log("Validation failed:", errorInfo);
         setIsCreatingTask(false);
       });
   };

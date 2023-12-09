@@ -36,7 +36,6 @@ export const getTaskTypeExcel = createAsyncThunk(
 export const createTaskTypeByExcel = createAsyncThunk(
   'taskTypeExcel/createTaskTypeByExcel',
   async (data, { rejectWithValue }) => {
-    console.log(data)
     try {
       const config = {
         headers: {

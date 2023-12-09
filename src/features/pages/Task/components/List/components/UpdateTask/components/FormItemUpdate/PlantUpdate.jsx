@@ -8,7 +8,6 @@ function PlantUpdate({
   editingTask,
   isDraft,
 }) {
-  console.log(editingTask);
   return (
     <Form.Item
       label="Mã cây trồng"

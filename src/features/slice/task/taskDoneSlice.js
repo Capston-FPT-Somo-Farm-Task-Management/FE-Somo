@@ -9,7 +9,6 @@ export const getTaskDoneByEmployeeId = createAsyncThunk(
     { pageIndex, employeeId, startDay, endDay, status },
     { rejectWithValue }
   ) => {
-    console.log(pageIndex, employeeId, startDay, endDay)
     try {
       const url = new URL(
         `/api/FarmTask/PageIndex(${pageIndex})/PageSize(10)/Done/Employee(${employeeId})`,
@@ -20,7 +19,6 @@ export const getTaskDoneByEmployeeId = createAsyncThunk(
       if (endDay != null) url.searchParams.append('endDay', endDay)
       if (status != null) url.searchParams.append('status', status)
 
-      console.log(url)
       const { data } = await axiosInstance.get(url.href)
       return data
     } catch (error) {

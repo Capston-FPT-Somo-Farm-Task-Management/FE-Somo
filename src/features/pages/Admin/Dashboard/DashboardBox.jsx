@@ -50,7 +50,6 @@ const DashboardBox = ({ taskByWeek, selectedDay }) => {
     filteredData = calculateTotalTasks([selectedTasks])
   }
 
-  console.log(filteredData)
 
   return (
     <>

@@ -52,7 +52,6 @@ function Schedule() {
     //       );
     //     })
     //   : null;
-    console.log(tasksForDate);
     return tasksForDate
       ? tasksForDate.map((task) => {
           let type = "success";
@@ -234,7 +233,6 @@ function Schedule() {
               <Collapse accordion>
                 {selectedDateData.map((item) => (
                   <Panel header={item.content} key={item.id}>
-                    {console.log(item)}
                     <Descriptions bordered column={1}>
                       <Descriptions.Item label="Loại công việc" key={item.id}>
                         {item.taskType}

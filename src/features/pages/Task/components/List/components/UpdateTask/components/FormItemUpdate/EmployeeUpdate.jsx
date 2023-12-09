@@ -7,7 +7,6 @@ function EmployeeUpdate({
   dataEmployee,
   editingTask,
 }) {
-  console.log(editingTask);
   return (
     <Form.Item
       label="Người thực hiện"

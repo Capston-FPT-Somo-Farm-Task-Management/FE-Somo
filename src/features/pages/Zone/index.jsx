@@ -17,7 +17,7 @@ import TableDisplayZone from './components/DisplayZone/TableDisplayZone'
 const Zone = () => {
   const dispatch = useDispatch()
   const member = useSelector((state) => state.member.data)
-  const farmId = member.farmId
+  const farmId = member?.farmId
   const zoneByFarm = useSelector((state) => state.zoneByFarm.data)
   const loading = useSelector((state) => state.zoneByFarm.loading)
 

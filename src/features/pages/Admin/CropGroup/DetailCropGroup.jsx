@@ -17,7 +17,6 @@ const DetailCropGroup = ({
       dispatch(getListPlantInField(selectedDataDetail.id))
     }
   }, [dispatch])
-  console.log(fieldListPlant)
 
   return (
     <Modal

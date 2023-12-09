@@ -1,25 +1,11 @@
-import React from "react";
 import { Avatar, Modal } from "antd";
+import React from "react";
 import { EditOutlined } from "@ant-design/icons";
-import { useMobileMediaQuery } from "common/hooks/responsive";
 
-const UserProfile = ({
-  isModalVisible,
-  handleCancel,
-  member,
-  handleOpenEditProfile,
-  formattedBirthDay,
-}) => {
-  const isMobile = useMobileMediaQuery()
+const ViewProfile = ({ member, handleOpenEditProfile, formattedBirthDay }) => {
   console.log(member);
   return (
-    <Modal
-      open={isModalVisible}
-      onCancel={handleCancel}
-      width={isMobile ? "500px" : "800px"}
-      footer={null}
-      className="user-profile"
-    >
+    <div className="user-profile-admin">
       <div className="user-profile-content">
         <div className="user-profile-left">
           <Avatar src={member ? member.avatar : null} size={150} />
@@ -27,7 +13,9 @@ const UserProfile = ({
           {member ? (
             member.roleName === "Manager" ? (
               <p>Chức vụ: Quản lý</p>
-            ) : null
+            ) : (
+              <p>Chức vụ: Admin</p>
+            )
           ) : null}
         </div>
         <div className="user-profile-right">
@@ -61,8 +49,8 @@ const UserProfile = ({
           </div>
         </div>
       </div>
-    </Modal>
+    </div>
   );
 };
 
-export default UserProfile;
+export default ViewProfile;

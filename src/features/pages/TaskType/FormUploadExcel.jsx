@@ -21,7 +21,6 @@ const FormUploadExcel = ({
   const onFinish = (values) => {
     const fileValue = fileList.length > 0 ? fileList[0] : null
     onFinishCreateTaskTypeExcel({ ...values, excelFile: fileValue })
-    console.log({ ...values, excelFile: fileValue })
     closeModalExcel()
     form.resetFields()
   }

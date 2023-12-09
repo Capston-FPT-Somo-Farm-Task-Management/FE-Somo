@@ -132,9 +132,6 @@ function UpdateTask({
 
   const material = useSelector((state) => state.materialActive.data);
 
-  console.log(editingTask);
-
-
   useEffect(() => {
     dispatch(getAreaActiveByFarmId(farmId));
     dispatch(getAreaWithZoneTypeLivestock(farmId));
@@ -453,7 +450,6 @@ function UpdateTask({
         });
       })
       .catch((errorInfo) => {
-        console.log("Validation failed:", errorInfo);
         setIsUpdateTask(false)
       });
     closeEditTaskModal();
@@ -569,7 +565,6 @@ function UpdateTask({
         });
       })
       .catch((errorInfo) => {
-        console.log("Validation failed:", errorInfo);
         setIsUpdateTask(false)
       });
     closeEditTaskModal();
@@ -657,7 +652,6 @@ function UpdateTask({
         });
       })
       .catch((errorInfo) => {
-        console.log("Validation failed:", errorInfo);
         setIsUpdateTask(false)
       });
     closeEditTaskModal();
@@ -792,7 +786,6 @@ function UpdateTask({
         });
       })
       .catch((errorInfo) => {
-        console.log("Validation failed:", errorInfo);
         setIsUpdateTask(false)
       });
     closeEditTaskModal();

@@ -57,7 +57,6 @@ const TaskEvidence = ({ evidenceData, taskData }) => {
           date: formattedUpdateDate,
           content: (
             <div key={evidence.id} className="evidence-content">
-              {console.log(evidence)}
               {evidence.managerName ? (
                 <div className="evidence-item-header">
                   <div className="evidence-name">
