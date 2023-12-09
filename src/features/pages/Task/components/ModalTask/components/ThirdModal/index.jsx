@@ -83,10 +83,10 @@ function ThirdModal({
   const zonePlant = useSelector((state) => state.zonePlant.data);
 
   const animal = useSelector((state) => state.animal.data);
-  const dataAnimal = animal.data;
+  const dataAnimal = animal?.data;
 
   const plant = useSelector((state) => state.plant.data);
-  const dataPlant = plant.data;
+  const dataPlant = plant?.data;
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
 
@@ -97,10 +97,10 @@ function ThirdModal({
   const taskTypeLivestock = useSelector(
     (state) => state.taskTypeLivestock.data
   );
-  const dataTaskTypeLivestock = taskTypeLivestock.data;
+  const dataTaskTypeLivestock = taskTypeLivestock?.data;
 
   const taskTypePlant = useSelector((state) => state.taskTypePlant.data);
-  const dataTaskTypePlant = taskTypePlant.data;
+  const dataTaskTypePlant = taskTypePlant?.data;
 
   const supervisor = useSelector((state) => state.supervisor.data);
 

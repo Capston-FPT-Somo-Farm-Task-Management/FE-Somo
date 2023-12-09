@@ -22,6 +22,10 @@ const ProfileAdmin = () => {
   const member = useSelector((state) => state.member.data);
 
   useEffect(() => {
+    dispatch(getMemberById(authServices.getUserId()));
+  }, [dispatch]);
+
+  useEffect(() => {
     if (member?.avatar) {
       setFileList([
         {
@@ -38,11 +42,6 @@ const ProfileAdmin = () => {
     setFileList(newFileList);
   };
 
-  console.log(member);
-  useEffect(() => {
-    dispatch(getMemberById(authServices.getUserId()));
-  }, [dispatch]);
-
   const formattedBirthDay = member
     ? dayjs(member.birthday).format("DD-MM-YYYY")
     : null;
@@ -56,15 +55,18 @@ const ProfileAdmin = () => {
   };
 
   const handleEditProfile = (values) => {
+    console.log(values);
     setIsSubmitting(true);
-    // const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`;
+    // const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`
     const editProfile = {
       ...values,
-      id: member.id,
+      code: member.code,
       imageFile: fileList[0].originFileObj,
       address: member.address,
+      birthday: member.birthday,
     };
-    dispatch(updateMember(editProfile)).then(() => {
+    dispatch(updateMember({ id: member.id, body: editProfile })).then(() => {
+      dispatch(getMemberById(authServices.getUserId()));
       setIsModalEditVisible(false);
       setIsSubmitting(false);
     });

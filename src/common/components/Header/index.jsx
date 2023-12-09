@@ -164,8 +164,10 @@ function HeaderComp() {
     // const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`
     const editProfile = {
       ...values,
+      code: member.code,
       imageFile: fileList[0].originFileObj,
       address: member.address,
+      birthday: member.birthday,
     };
     dispatch(updateMember({ id: member.id, body: editProfile })).then(() => {
       setIsModalEditVisible(false);
@@ -186,6 +188,9 @@ function HeaderComp() {
     dispatch(updatePassword(updatedPassword)).then(() => {
       changePasswordCancel();
       setIsSubmitting(false);
+      setOldPasswordValue("")
+      setNewPasswordValue("")
+      setConfirmPasswordValue("")
     });
   };
 
