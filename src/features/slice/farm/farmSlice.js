@@ -36,6 +36,26 @@ export const createFarm = createAsyncThunk(
   }
 )
 
+export const updateFarm = createAsyncThunk(
+  'farm/updateFarm',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`/Farm/${data.id}`, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      if (response.status === 200) {
+        toast.success(response.data.message)
+        return response.data.data
+      }
+    } catch (error) {
+      toast.error(error.response.data.message)
+      rejectWithValue(error)
+    }
+  }
+)
+
 export const deleteFarm = createAsyncThunk(
   'farm/deleteFarm',
   async (id, { rejectWithValue }) => {
@@ -85,6 +105,19 @@ const farmSlice = createSlice({
       .addCase(createFarm.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
+      })
+
+      .addCase(updateFarm.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(updateFarm.fulfilled, (state, action) => {
+        state.loading = false
+        state.data = action.payload
+      })
+      .addCase(updateFarm.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+        state.data = []
       })
 
       .addCase(deleteFarm.pending, (state) => {

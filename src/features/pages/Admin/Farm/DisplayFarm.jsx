@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Popconfirm, Row, Space } from 'antd'
 import FarmDetail from './FarmDetail'
 import { toast } from 'react-toastify'
@@ -9,8 +9,18 @@ import {
   EditOutlined,
 } from '@ant-design/icons'
 import FormAddFarm from './FormAddFarm'
+import { getFarmById } from 'features/slice/farm/farmByIdSlice'
+import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { getFarm } from 'features/slice/farm/farmSlice'
+import FormUpdateFarm from './FormUpdateFarm'
 
-const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
+const DisplayFarm = ({
+  farm,
+  onFinishCreate,
+  onFinishDelete,
+  onFinishUpdate,
+}) => {
   const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedFarm, setSelectedFarm] = useState(null)
@@ -68,6 +78,31 @@ const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
 
   const deleteFarm = (id) => {
     onFinishDelete(id)
+  }
+
+  // Modal update
+  const [isModalOpenUpdate, setIsModalOpenUpdate] = useState(false)
+  const [selectedToUpdate, setSelectedToUpdate] = useState(null)
+
+  const dispatch = useDispatch()
+  const farmById = useSelector((state) => state.farmById.data)
+
+  useEffect(() => {
+    if (selectedToUpdate) {
+      dispatch(getFarmById(selectedToUpdate))
+    }
+  }, [dispatch, selectedToUpdate])
+
+  const openModalUpdate = async (id) => {
+    setSelectedToUpdate(id)
+    console.log(selectedToUpdate)
+    await dispatch(getFarmById(id))
+    setIsModalOpenUpdate(true)
+  }
+
+  const closeModalUpdate = () => {
+    setSelectedToUpdate(null)
+    setIsModalOpenUpdate(false)
   }
 
   return (
@@ -148,7 +183,10 @@ const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
                   />
                 }
                 actions={[
-                  <span style={{ color: '#52c41a', fontSize: '18px' }}>
+                  <span
+                    style={{ color: '#52c41a', fontSize: '18px' }}
+                    onClick={() => openModalUpdate(item.id)}
+                  >
                     <EditOutlined />
                   </span>,
 
@@ -184,6 +222,13 @@ const DisplayFarm = ({ farm, onFinishCreate, onFinishDelete }) => {
         isModalOpen={isModalOpen}
         handleOk={handleOk}
         handleCancel={handleCancel}
+      />
+      <FormUpdateFarm
+        key={selectedToUpdate}
+        isModalOpenUpdate={isModalOpenUpdate}
+        closeModalUpdate={closeModalUpdate}
+        farmById={farmById}
+        onFinishUpdate={onFinishUpdate}
       />
     </>
   )
