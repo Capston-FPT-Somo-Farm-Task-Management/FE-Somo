@@ -89,7 +89,6 @@ const DisplayFarm = ({
 
   const openModalUpdate = async (id) => {
     setSelectedToUpdate(id)
-    console.log(selectedToUpdate) // This will likely still log the old value
     await dispatch(getFarmById(id))
     setIsModalOpenUpdate(true)
   }
