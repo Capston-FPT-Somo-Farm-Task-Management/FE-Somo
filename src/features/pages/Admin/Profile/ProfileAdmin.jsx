@@ -55,7 +55,6 @@ const ProfileAdmin = () => {
   };
 
   const handleEditProfile = (values) => {
-    console.log(values);
     setIsSubmitting(true);
     // const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`
     const editProfile = {

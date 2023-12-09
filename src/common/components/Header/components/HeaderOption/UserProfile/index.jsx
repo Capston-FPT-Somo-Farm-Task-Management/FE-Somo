@@ -11,7 +11,6 @@ const UserProfile = ({
   formattedBirthDay,
 }) => {
   const isMobile = useMobileMediaQuery()
-  console.log(member);
   return (
     <Modal
       open={isModalVisible}

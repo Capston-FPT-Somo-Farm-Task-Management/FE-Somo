@@ -95,7 +95,6 @@ const DisplayFarm = ({
 
   const openModalUpdate = async (id) => {
     setSelectedToUpdate(id)
-    console.log(selectedToUpdate)
     await dispatch(getFarmById(id))
     setIsModalOpenUpdate(true)
   }

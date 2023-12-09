@@ -3,7 +3,6 @@ import React from "react";
 import { EditOutlined } from "@ant-design/icons";
 
 const ViewProfile = ({ member, handleOpenEditProfile, formattedBirthDay }) => {
-  console.log(member);
   return (
     <div className="user-profile-admin">
       <div className="user-profile-content">
