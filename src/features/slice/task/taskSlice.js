@@ -12,7 +12,7 @@ export const getTasks = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const formattedDate = date ? date.toISOString().split("T")[0] : "";
+      const formattedDate = date ? date.format("YYYY-MM-DD[T]HH:mm:ss") : "";
       const { data } = await axiosInstance.get(
         `/FarmTask/PageIndex(${pageIndex})/PageSize(10)/Manager(${authServices.getUserId()})/Status(${status})/Date?date=${formattedDate}&taskName=${taskName}&checkTaskParent=${checkTaskParent}`
       );
@@ -134,10 +134,10 @@ export const updateStatusFromToDoToDraft = createAsyncThunk(
 
 export const refuseTask = createAsyncThunk(
   "task/refuseTask",
-  async (taskId, { rejectWithValue }) => {
+  async ({taskId, important}, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(
-        `/FarmTask/Task(${taskId})/Refuse`
+        `/FarmTask/Task(${taskId})/Refuse?isImportant=${important}`
       );
       if (response.status === 200) {
         toast.success("Cập nhật thành công");
@@ -172,10 +172,11 @@ export const changeStatusFromDoneToDoing = createAsyncThunk(
   "task/changeStatusFromDoneToDoing",
   async (data, { rejectWithValue }) => {
     try {
+      const formattedDate = data.date ? data.date.format("YYYY-MM-DD[T]HH:mm:ss") : "";
       const response = await axiosInstance.put(
         `/FarmTask/(${
           data.taskId
-        })/ChangeStatusFromDoneToDoing?managerId=${authServices.getUserId()}`,
+        })/ChangeStatusFromDoneToDoing?managerId=${authServices.getUserId()}&endDay=${formattedDate}`,
         data.body
       );
       if (response.status === 200) {

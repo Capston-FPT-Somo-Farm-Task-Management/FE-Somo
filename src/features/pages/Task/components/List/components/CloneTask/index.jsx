@@ -23,7 +23,6 @@ const CloneTask = ({
               Tạo bản sao
             </Button>,
           ]}
-          className="subTask-modal"
         >
           <p>Bản sao của công việc này sẽ được tạo ở trạng thái "Bản nháp"</p>
         </Modal>

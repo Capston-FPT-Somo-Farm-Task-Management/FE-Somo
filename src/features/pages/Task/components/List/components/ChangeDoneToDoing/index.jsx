@@ -1,4 +1,5 @@
-import { Button, Form, Input, Modal } from "antd";
+import { Button, DatePicker, Form, Input, Modal } from "antd";
+import dayjs from "dayjs";
 import React from "react";
 
 const { TextArea } = Input;
@@ -10,6 +11,8 @@ const ChangeDoneToDoing = ({
   handleChangeDoneToDoing,
   description,
   handleDescription,
+  disabledDate,
+  handleSelectDeadlineForDone,
 }) => {
   return (
     <>
@@ -19,9 +22,7 @@ const ChangeDoneToDoing = ({
           open={taskDoneToDoingVisible}
           onCancel={closeChangeDoneToDoingModal}
           footer={[
-            <Button onClick={closeChangeDoneToDoingModal}>
-              Đóng
-            </Button>,
+            <Button onClick={closeChangeDoneToDoingModal}>Đóng</Button>,
             <Button form="doneToDoing" type="primary" danger htmlType="submit">
               Xác nhận
             </Button>,
@@ -40,6 +41,28 @@ const ChangeDoneToDoing = ({
                 value={description}
                 rows={5}
                 onChange={handleDescription}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Thời gian kết thúc mới"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn ngày bắt đầu",
+                },
+              ]}
+              name="startDate"
+            >
+              <DatePicker
+                placeholder="Chọn thời gian bắt đầu"
+                format="HH:mm DD-MM-YYYY"
+                disabledDate={disabledDate}
+                showTime={{
+                  defaultValue: dayjs("00:00", "HH:mm"),
+                  format: "HH:mm",
+                }}
+                showSecond="false"
+                onChange={handleSelectDeadlineForDone}
               />
             </Form.Item>
           </Form>

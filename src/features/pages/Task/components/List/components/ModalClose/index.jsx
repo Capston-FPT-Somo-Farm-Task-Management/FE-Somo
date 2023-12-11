@@ -19,7 +19,6 @@ const ModalClose = ({selectedTaskId, closeModalVisible, closeCloseModal, handleC
               Đóng công việc
             </Button>,
           ]}
-          className="subTask-modal"
         >
           <p>Nếu đóng thì công việc này sẽ không còn thao tác được nữa! </p>
           <p>Bạn chắc chắn sẽ đóng chứ?</p>

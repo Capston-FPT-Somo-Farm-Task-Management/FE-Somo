@@ -12,6 +12,7 @@ import AnimalUpdate from "../FormItemUpdate/AnimalUpdate";
 import DateUpdate from "../FormItemUpdate/DateUpdate";
 import DescriptionUpdate from "../FormItemUpdate/DescriptionUpdate";
 import RepeatUpdate from "../FormItemUpdate/RepeatUpdate";
+import IsImportantUpdate from "../FormItemUpdate/IsImportantUpdate";
 
 function UpdateSpecificAnimal({
   editingTask,
@@ -29,6 +30,7 @@ function UpdateSpecificAnimal({
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
+  handleSelectImportant,
   areaLivestockByZone,
   zoneAnimal,
   fieldByZone,
@@ -44,6 +46,7 @@ function UpdateSpecificAnimal({
   material,
   remindValue,
   repeatValue,
+  importantValue,
   disabledDate,
   startDate,
   endDate,
@@ -52,7 +55,7 @@ function UpdateSpecificAnimal({
   initialSelectedDays,
   setInitialSelectedDays,
   isDraft,
-  form
+  form,
 }) {
   return (
     <>
@@ -144,6 +147,13 @@ function UpdateSpecificAnimal({
           setInitialSelectedDays={setInitialSelectedDays}
           form={form}
         />
+        {editingTask?.status === "Từ chối" ? (
+          <IsImportantUpdate
+            editingTask={editingTask}
+            importantValue={importantValue}
+            handleSelectImportant={handleSelectImportant}
+          />
+        ) : null}
       </div>
     </>
   );

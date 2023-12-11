@@ -58,7 +58,6 @@ const AdminSideMenu = () => {
   const isTablet = useTabletMediaQuery();
 
   const member = useSelector((state) => state.member.data);
-  console.log(member);
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()));

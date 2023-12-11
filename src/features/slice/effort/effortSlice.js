@@ -9,7 +9,7 @@ export const getEffort = createAsyncThunk(
   async (taskId, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get(
-        `/FarmSubTask/Task(${taskId})/Effort`
+        `/Activities/Task(${taskId})/Effort`
       );
 
       return data;
@@ -24,7 +24,7 @@ export const updateEffort = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(
-        `/FarmSubTask/Task(${data.taskId})`,
+        `/Activities/Task(${data.taskId})`,
         data.body
       );
       if (response.status === 200) {

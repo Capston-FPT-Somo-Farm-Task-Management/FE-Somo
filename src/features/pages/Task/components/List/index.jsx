@@ -33,6 +33,7 @@ import CloneTask from "./components/CloneTask";
 import Activity from "./components/Activity";
 import { getActivityByTaskId } from "features/slice/activity/activitySlice";
 import ModalReject from "./components/ModalReject";
+import dayjs from "dayjs";
 
 const List = () => {
   const [activity, setActivity] = useState([]);
@@ -46,6 +47,7 @@ const List = () => {
   const [rejectModalVisible, setRejectModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [closeModalVisible, setCloseModalVisible] = useState(false);
+  const [isImportant, setIsImportant] = useState(false);
   const [taskDoneToDoingVisible, setTaskDoneToDoingVisible] = useState(false);
   const [taskDoingToPendingModalVisible, setTaskDoingToPendingModalVisible] =
     useState(false);
@@ -64,6 +66,7 @@ const List = () => {
   const [checkChangeToToDo, setCheckChangeToToDo] = useState(1);
   const [currentStep, setCurrentStep] = useState(-1);
   const [fileList, setFileList] = useState([]);
+  const [deadlineForDone, setDeadlineForDone] = useState([]);
 
   const [form] = Form.useForm();
 
@@ -108,6 +111,10 @@ const List = () => {
     setCurrentStep(currentStep - 2);
   };
 
+  const handleCheckImportant = (e) => {
+    setIsImportant(e.target.checked);
+  };
+
   const handleCheckChange = (value) => {
     setCheckTaskParent(value);
   };
@@ -119,6 +126,15 @@ const List = () => {
   const handleDescription = (e) => {
     setDescription(e.target.value);
   };
+
+  const disabledDate = (current) => {
+    const endDate = selectedTask.endDate;
+    return current && dayjs(current).startOf("day") < dayjs(endDate).startOf("day");
+  };
+
+  const handleSelectDeadlineForDone = (date) => {
+    setDeadlineForDone(date)
+  }
 
   const handleMenuClick = (e, record) => {
     if (e.key === "edit") {
@@ -217,7 +233,7 @@ const List = () => {
   };
 
   const handleRefuseTask = (id) => {
-    dispatch(refuseTask(id)).then(() => {
+    dispatch(refuseTask({taskId: id, important: isImportant})).then(() => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
@@ -229,7 +245,7 @@ const List = () => {
 
   const handleChangeDoneToDoing = (id) => {
     dispatch(
-      changeStatusFromDoneToDoing({ taskId: id, body: description })
+      changeStatusFromDoneToDoing({ taskId: id, date: deadlineForDone,  body: description })
     ).then(() => {
       loadDataTask();
       handleDateChange();
@@ -476,6 +492,8 @@ const List = () => {
         rejectModalVisible={rejectModalVisible}
         closeRejectModal={closeRejectModal}
         handleRefuseTask={handleRefuseTask}
+        isImportant={isImportant}
+        handleCheckImportant={handleCheckImportant}
       />
       <ModalDelete
         selectedTaskId={selectedTask}
@@ -496,6 +514,8 @@ const List = () => {
         handleRefuseTask={handleRefuseTask}
         openEditTaskModal={openEditTaskModal}
         selectedTask={selectedTask}
+        isImportant={isImportant}
+        handleCheckImportant={handleCheckImportant}
       />
       <UpdateTask
         editTaskModalVisible={editTaskModalVisible}
@@ -531,6 +551,8 @@ const List = () => {
         handleChangeDoneToDoing={handleChangeDoneToDoing}
         description={description}
         handleDescription={handleDescription}
+        disabledDate={disabledDate}
+        handleSelectDeadlineForDone={handleSelectDeadlineForDone}
       />
       <ChangeDoingToPending
         currentTaskId={currentTaskId}

@@ -12,6 +12,7 @@ import RemindUpdate from "../FormItemUpdate/RemindUpdate";
 import RepeatUpdate from "../FormItemUpdate/RepeatUpdate.jsx";
 import DateUpdate from "../FormItemUpdate/DateUpdate";
 import DescriptionUpdate from "../FormItemUpdate/DescriptionUpdate";
+import IsImportantUpdate from "../FormItemUpdate/IsImportantUpdate";
 
 function UpdateSpecificPlant({
   editingTask,
@@ -29,6 +30,7 @@ function UpdateSpecificPlant({
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
+  handleSelectImportant,
   areaPlantByZone,
   zonePlant,
   fieldByZone,
@@ -45,6 +47,7 @@ function UpdateSpecificPlant({
   remindValue,
   remindData,
   repeatValue,
+  importantValue,
   disabledDate,
   startDate,
   endDate,
@@ -144,6 +147,13 @@ function UpdateSpecificPlant({
           initialSelectedDays={initialSelectedDays}
           setInitialSelectedDays={setInitialSelectedDays}
         />
+        {editingTask?.status === "Từ chối" ? (
+          <IsImportantUpdate
+            editingTask={editingTask}
+            importantValue={importantValue}
+            handleSelectImportant={handleSelectImportant}
+          />
+        ) : null}
       </div>
     </>
   );
