@@ -8,7 +8,7 @@ export const getEmployeeEffortTotal = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get(
-        `/FarmSubTask/Employee(${id})/TotalEffort`
+        `/Activities/Employee(${id})/TotalEffort`
       )
       return data
     } catch (error) {
