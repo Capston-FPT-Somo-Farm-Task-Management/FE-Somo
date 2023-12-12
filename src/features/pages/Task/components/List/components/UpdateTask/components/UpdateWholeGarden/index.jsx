@@ -11,6 +11,7 @@ import RemindUpdate from "../FormItemUpdate/RemindUpdate";
 import RepeatUpdate from "../FormItemUpdate/RepeatUpdate.jsx";
 import DateUpdate from "../FormItemUpdate/DateUpdate";
 import DescriptionUpdate from "../FormItemUpdate/DescriptionUpdate";
+import IsImportantUpdate from "../FormItemUpdate/IsImportantUpdate";
 
 function UpdateWholeGarden({
   editingTask,
@@ -27,6 +28,7 @@ function UpdateWholeGarden({
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
+  handleSelectImportant,
   areaPlantByZone,
   zonePlant,
   fieldByZone,
@@ -40,6 +42,7 @@ function UpdateWholeGarden({
   material,
   remindValue,
   repeatValue,
+  importantValue,
   disabledDate,
   startDate,
   endDate,
@@ -47,7 +50,7 @@ function UpdateWholeGarden({
   setSelectedDays,
   initialSelectedDays,
   setInitialSelectedDays,
-  isDraft
+  isDraft,
 }) {
   return (
     <>
@@ -91,7 +94,7 @@ function UpdateWholeGarden({
         />
       </div>
       <div className="form-right">
-      <NameTaskUpdate
+        <NameTaskUpdate
           editingTask={editingTask}
           nameValue={nameValue}
           handleNameChange={handleNameChange}
@@ -131,6 +134,13 @@ function UpdateWholeGarden({
           initialSelectedDays={initialSelectedDays}
           setInitialSelectedDays={setInitialSelectedDays}
         />
+        {editingTask?.status === "Từ chối" ? (
+          <IsImportantUpdate
+            editingTask={editingTask}
+            importantValue={importantValue}
+            handleSelectImportant={handleSelectImportant}
+          />
+        ) : null}
       </div>
     </>
   );

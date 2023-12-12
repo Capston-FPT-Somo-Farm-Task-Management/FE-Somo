@@ -5,14 +5,14 @@ const axiosInstance = createAxiosInstance()
 
 export const getEmployeeByTask = createAsyncThunk('employeeByTask/getEmployeeByTask', async (taskId) => {
     try {
-      const { data } = await axiosInstance.get(`/FarmSubTask/EmployeeNoSubTask(${taskId})`)
+      const { data } = await axiosInstance.get(`/Activities/EmployeeNoActivities(${taskId})`)
       return data
     } catch (error) {
     }
   })
 
   const employeeByTaskSlice = createSlice({
-    name: "subTask",
+    name: "activity",
     initialState: {
       data: [],
       loading: false,

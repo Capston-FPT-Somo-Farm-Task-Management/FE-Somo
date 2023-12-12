@@ -11,6 +11,7 @@ import RemindUpdate from "../FormItemUpdate/RemindUpdate";
 import RepeatUpdate from "../FormItemUpdate/RepeatUpdate.jsx";
 import DateUpdate from "../FormItemUpdate/DateUpdate";
 import DescriptionUpdate from "../FormItemUpdate/DescriptionUpdate";
+import IsImportantUpdate from "../FormItemUpdate/IsImportantUpdate";
 
 function UpdateWholeBarn({
   editingTask,
@@ -27,6 +28,7 @@ function UpdateWholeBarn({
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
+  handleSelectImportant,
   areaLivestockByZone,
   zoneAnimal,
   fieldByZone,
@@ -40,6 +42,7 @@ function UpdateWholeBarn({
   material,
   remindValue,
   repeatValue,
+  importantValue,
   disabledDate,
   startDate,
   endDate,
@@ -131,6 +134,13 @@ function UpdateWholeBarn({
           initialSelectedDays={initialSelectedDays}
           setInitialSelectedDays={setInitialSelectedDays}
         />
+        {editingTask?.status === "Từ chối" ? (
+          <IsImportantUpdate
+            editingTask={editingTask}
+            importantValue={importantValue}
+            handleSelectImportant={handleSelectImportant}
+          />
+        ) : null}
       </div>
     </>
   );

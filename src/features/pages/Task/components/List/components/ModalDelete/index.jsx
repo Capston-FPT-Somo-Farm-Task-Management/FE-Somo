@@ -24,7 +24,6 @@ const ModalDelete = ({
               Xóa công việc
             </Button>,
           ]}
-          className="subTask-modal"
         >
           <p>Nếu xóa thì công việc này sẽ mất vĩnh viễn! </p>
           <p>Bạn có chắc chắn sẽ xóa không?</p>

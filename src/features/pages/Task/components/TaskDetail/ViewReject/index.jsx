@@ -1,4 +1,12 @@
-import { Avatar, Button, Collapse, Image, Modal, Popconfirm } from "antd";
+import {
+  Avatar,
+  Button,
+  Checkbox,
+  Collapse,
+  Image,
+  Modal,
+  Popconfirm,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { GrDocumentImage } from "react-icons/gr";
@@ -13,6 +21,8 @@ const ViewReject = ({
   handleRefuseTask,
   openEditTaskModal,
   selectedTask,
+  isImportant,
+  handleCheckImportant,
 }) => {
   const evidence = useSelector((state) => state.evidence.data);
   const evidenceData = evidence.data;
@@ -43,7 +53,17 @@ const ViewReject = ({
             <>
               <Popconfirm
                 title="Không chấp nhận?"
-                description="Bạn chắc chắn sẽ từ bỏ yêu cầu này chứ?"
+                description={
+                  <div>
+                    <p style={{marginBottom: "10px"}}>Bạn chắc chắn sẽ từ bỏ yêu cầu này chứ?</p>
+                    <Checkbox
+                      onChange={handleCheckImportant}
+                      checked={isImportant}
+                    >
+                      Công việc này không thể từ chối nữa
+                    </Checkbox>
+                  </div>
+                }
                 onConfirm={confirm}
                 okText="Đồng ý"
                 cancelText="Không"

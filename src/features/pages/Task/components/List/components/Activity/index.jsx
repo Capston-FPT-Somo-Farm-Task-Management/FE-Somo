@@ -50,7 +50,9 @@ function Activity({
                         <span>Mô tả:</span> {activityItem.description}
                       </p>
                     ) : (
-                      <p>Chưa có mô tả</p>
+                      <p>
+                        <span>Mô tả:</span> Chưa có mô tả
+                      </p>
                     )}
                   </div>
                 </div>

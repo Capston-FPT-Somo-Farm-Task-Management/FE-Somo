@@ -226,7 +226,13 @@ function RepeatUpdate({
       {repeatValue === true ? (
         <Form.Item
           label="Lặp những ngày"
-          name="dateRepeate"
+          name="dates"
+          rules={[
+              {
+                required: initialSelectedDays.length === 0,
+                message: "Vui lòng chọn ngày lặp",
+              },
+            ]}
           initialValue={dateRepeateArray}
         >
         <style>{css}</style>

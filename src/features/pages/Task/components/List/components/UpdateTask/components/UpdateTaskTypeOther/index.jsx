@@ -12,6 +12,7 @@ import RemindUpdate from "../FormItemUpdate/RemindUpdate";
 import RepeatUpdate from "../FormItemUpdate/RepeatUpdate.jsx";
 import DateUpdate from "../FormItemUpdate/DateUpdate";
 import DescriptionUpdate from "../FormItemUpdate/DescriptionUpdate";
+import IsImportantUpdate from "../FormItemUpdate/IsImportantUpdate";
 
 function UpdateTaskTypeOther({
   editingTask,
@@ -28,6 +29,7 @@ function UpdateTaskTypeOther({
   handleMaterialChange,
   handleSelectRemind,
   handleSelectRepeat,
+  handleSelectImportant,
   areaByFarm,
   zoneByArea,
   fieldByZone,
@@ -43,6 +45,7 @@ function UpdateTaskTypeOther({
   material,
   remindValue,
   repeatValue,
+  importantValue,
   disabledDate,
   startDate,
   endDate,
@@ -137,6 +140,13 @@ function UpdateTaskTypeOther({
           initialSelectedDays={initialSelectedDays}
           setInitialSelectedDays={setInitialSelectedDays}
         />
+        {editingTask?.status === "Từ chối" ? (
+          <IsImportantUpdate
+            editingTask={editingTask}
+            importantValue={importantValue}
+            handleSelectImportant={handleSelectImportant}
+          />
+        ) : null}
       </div>
     </>
   );

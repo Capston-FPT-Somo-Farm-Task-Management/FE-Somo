@@ -4,6 +4,7 @@ import {
   GrAlarm,
   GrUserManager,
   GrHostMaintenance,
+  GrDocumentText,
 } from "react-icons/gr";
 import { GiCow, GiFruitTree, GiRingingBell } from "react-icons/gi";
 
@@ -241,6 +242,20 @@ const TaskDetailHabitant = ({
           )}
         </div>
       </>
+      {taskData.description ? (
+        <>
+          <h2>
+            <GrDocumentText />
+            Mô tả
+          </h2>
+          <div className="task-detail-item">
+            <div className="task-detail-description">
+              <h5>Mô tả chi tiết</h5>
+              <p>{taskData.description}</p>
+            </div>
+          </div>
+        </>
+      ) : null}
     </>
   );
 };
