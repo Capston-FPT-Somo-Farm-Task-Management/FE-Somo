@@ -54,7 +54,6 @@ function ModalTask({
 
   const handleBack = () => {
     setCurrentStep(currentStep - 1);
-    console.log(currentStep);
   };
 
   const handleOptionSelect = (option) => {

@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from "react";
 
-import { Button, Layout, Menu, Popover } from "antd";
 import {
-  DashboardOutlined,
-  TeamOutlined,
-  CalendarOutlined,
-  AimOutlined,
+  Avatar,
+  Button,
+  Drawer,
+  Form,
+  Input,
+  Layout,
+  Menu,
+  Popover,
+  Space,
+} from "antd";
+import {
   BorderOutlined,
-  BlockOutlined,
   TableOutlined,
   MenuOutlined,
-  AppstoreOutlined,
   LogoutOutlined,
-  FormatPainterOutlined,
+  InfoCircleOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import logoSomo from "../../../assets/logo_Somo.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -25,6 +30,10 @@ import {
 import { GiCow, GiPlantSeed, GiDarkSquad, GiSpade } from "react-icons/gi";
 import { VscScreenFull } from "react-icons/vsc";
 import { FaMapLocationDot } from "react-icons/fa6";
+import SubMenu from "antd/es/menu/SubMenu";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { getMemberById, updatePassword } from "features/slice/user/memberSlice";
 
 const { Sider } = Layout;
 
@@ -32,11 +41,28 @@ const AdminSideMenu = () => {
   const [userName, setUserName] = useState();
   const [userRole, setUserRole] = useState();
   const [collapsed, setCollapsed] = useState(false);
+  const [changePasswordDrawer, setChangePasswordDrawer] = useState(false);
+  const [oldPasswordVisible, setOldPasswordVisible] = useState(false);
+  const [newPasswordVisible, setNewPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [oldPasswordValue, setOldPasswordValue] = useState("");
+  const [newPasswordValue, setNewPasswordValue] = useState("");
+  const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
 
   const isDesktop = useDesktopMediaQuery();
   const isTablet = useTabletMediaQuery();
+
+  const member = useSelector((state) => state.member.data);
+  console.log(member);
+
+  useEffect(() => {
+    dispatch(getMemberById(authServices.getUserId()));
+  }, [dispatch]);
 
   useEffect(() => {
     const role = authServices.getRole();
@@ -44,6 +70,35 @@ const AdminSideMenu = () => {
     const userName = authServices.getUserName();
     setUserName(userName);
   }, []);
+
+  const handleChangePassword = (e) => {
+    setOldPasswordValue(e.target.value);
+  };
+
+  const handleChangeNewPassword = (e) => {
+    setNewPasswordValue(e.target.value);
+  };
+
+  const handleConfirmPassword = (e) => {
+    setConfirmPasswordValue(e.target.value);
+  };
+
+  const handleSubmitChangePassword = (values) => {
+    const updatedPassword = {
+      ...values,
+      id: member.id,
+      oldPassword: oldPasswordValue,
+      password: newPasswordValue,
+      confirmPassword: confirmPasswordValue,
+    };
+    dispatch(updatePassword(updatedPassword)).then(() => {
+      setChangePasswordDrawer(false);
+      dispatch(getMemberById(authServices.getUserId()));
+      setOldPasswordValue("")
+      setNewPasswordValue("")
+      setConfirmPasswordValue("")
+    });
+  };
 
   const logout = () => {
     authServices.logOut();
@@ -145,11 +200,35 @@ const AdminSideMenu = () => {
               <Link to="/statistic-member"></Link>
             </Menu.Item>
 
-            <Menu.Item key="/login" onClick={logout}>
-              <LogoutOutlined />
-              <span>Đăng xuất</span>
-              <Link to="/login"></Link>
-            </Menu.Item>
+            <SubMenu
+              key="profile"
+              title={
+                <Space>
+                  <Avatar shape="circle" size="small" src={member?.avatar} />
+                  <p>{member?.name}</p>
+                </Space>
+              }
+            >
+              <Menu.Item key="/admin-profile">
+                <InfoCircleOutlined />
+                <span>Thông tin</span>
+                <Link to="/admin-profile"></Link>
+              </Menu.Item>
+
+              <Menu.Item
+                key="/changePassword"
+                onClick={() => setChangePasswordDrawer(true)}
+              >
+                <EditOutlined />
+                <span>Đổi mật khẩu</span>
+              </Menu.Item>
+
+              <Menu.Item key="/login" onClick={logout}>
+                <LogoutOutlined />
+                <span>Đăng xuất</span>
+                <Link to="/login"></Link>
+              </Menu.Item>
+            </SubMenu>
           </Menu>
         </Sider>
       )}
@@ -242,11 +321,39 @@ const AdminSideMenu = () => {
                     <Link to="/statistic-member"></Link>
                   </Menu.Item>
 
-                  <Menu.Item key="/login" onClick={logout}>
-                    <LogoutOutlined />
-                    <span>Đăng xuất</span>
-                    <Link to="/login"></Link>
-                  </Menu.Item>
+                  <SubMenu
+                    key="profile"
+                    title={
+                      <Space>
+                        <Avatar
+                          shape="circle"
+                          size="small"
+                          src={member?.avatar}
+                        />
+                        <p>{member?.name}</p>
+                      </Space>
+                    }
+                  >
+                    <Menu.Item key="/admin-profile">
+                      <InfoCircleOutlined />
+                      <span>Thông tin</span>
+                      <Link to="/admin-profile"></Link>
+                    </Menu.Item>
+
+                    <Menu.Item
+                      key="/changePassword"
+                      onClick={() => setChangePasswordDrawer(true)}
+                    >
+                      <EditOutlined />
+                      <span>Đổi mật khẩu</span>
+                    </Menu.Item>
+
+                    <Menu.Item key="/login" onClick={logout}>
+                      <LogoutOutlined />
+                      <span>Đăng xuất</span>
+                      <Link to="/login"></Link>
+                    </Menu.Item>
+                  </SubMenu>
                 </Menu>
               }
               trigger="click"
@@ -257,6 +364,132 @@ const AdminSideMenu = () => {
             </Popover>
           </div>
         </div>
+      )}
+      {changePasswordDrawer && (
+        <Drawer
+          title="Đổi mật khẩu"
+          placement="right"
+          width={400}
+          onClose={() => setChangePasswordDrawer(false)}
+          open={changePasswordDrawer}
+          extra={
+            <Space>
+              <Button type="primary" htmlType="submit" form="changePassword">
+                Đổi
+              </Button>
+            </Space>
+          }
+          zIndex={2000}
+        >
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Form
+              layout="vertical"
+              onFinish={handleSubmitChangePassword}
+              id="changePassword"
+              form={form}
+            >
+              <Form.Item
+                label="Mật khẩu hiện tại"
+                name="oldPassword"
+                required
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng nhập mật khẩu hiện tại",
+                  },
+                ]}
+              >
+                <Space direction="horizontal">
+                  <Input.Password
+                    placeholder="Nhập mật khẩu hiện tại"
+                    value={oldPasswordValue}
+                    onChange={handleChangePassword}
+                    visibilityToggle={{
+                      visible: oldPasswordVisible,
+                      onVisibleChange: setOldPasswordVisible,
+                    }}
+                  />
+                  <Button
+                    style={{
+                      width: 80,
+                    }}
+                    onClick={() =>
+                      setOldPasswordVisible((prevState) => !prevState)
+                    }
+                  >
+                    {oldPasswordVisible ? "Ẩn" : "Hiện"}
+                  </Button>
+                </Space>
+              </Form.Item>
+              <Form.Item
+                label="Mật khẩu mới"
+                name="password"
+                required
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng nhập mật khẩu mới",
+                  },
+                ]}
+              >
+                <Space direction="horizontal">
+                  <Input.Password
+                    placeholder="Nhập mật khẩu mới"
+                    value={newPasswordValue}
+                    onChange={handleChangeNewPassword}
+                    visibilityToggle={{
+                      visible: newPasswordVisible,
+                      onVisibleChange: setNewPasswordVisible,
+                    }}
+                  />
+                  <Button
+                    style={{
+                      width: 80,
+                    }}
+                    onClick={() =>
+                      setNewPasswordVisible((prevState) => !prevState)
+                    }
+                  >
+                    {newPasswordVisible ? "Ẩn" : "Hiện"}
+                  </Button>
+                </Space>
+              </Form.Item>
+              <Form.Item
+                label="Nhập lại mật khẩu mới"
+                name="confirmPassword"
+                required
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng xác nhận mật khẩu",
+                  },
+                ]}
+              >
+                <Space direction="horizontal">
+                  <Input.Password
+                    placeholder="Nhập lại mật khẩu mới"
+                    value={confirmPasswordValue}
+                    onChange={handleConfirmPassword}
+                    visibilityToggle={{
+                      visible: confirmPasswordVisible,
+                      onVisibleChange: setConfirmPasswordVisible,
+                    }}
+                  />
+                  <Button
+                    style={{
+                      width: 80,
+                    }}
+                    onClick={() =>
+                      setConfirmPasswordVisible((prevState) => !prevState)
+                    }
+                  >
+                    {confirmPasswordVisible ? "Ẩn" : "Hiện"}
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Form>
+          </div>
+        </Drawer>
       )}
     </div>
   );

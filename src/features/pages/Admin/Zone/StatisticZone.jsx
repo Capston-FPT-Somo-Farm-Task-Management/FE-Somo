@@ -12,7 +12,6 @@ const StatisticZone = () => {
   const zoneByFarm = useSelector((state) => state.zoneByFarm.data);
   const loading = useSelector((state) => state.zoneByFarm.loading);
 
-  console.log(zoneByFarm);
   const farmId = localStorage.getItem("farmId");
 
   useEffect(() => {

@@ -281,5 +281,4 @@ export const taskTitle = [
 ];
 
 export const onChange = (sorter) => {
-  console.log("params", sorter);
 };

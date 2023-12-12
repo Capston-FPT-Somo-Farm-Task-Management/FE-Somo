@@ -22,7 +22,6 @@ export const getAnimalActive = createAsyncThunk(
 export const createAnimal = createAsyncThunk(
   "animals/createAnimal",
   async (data, { rejectWithValue }) => {
-    console.log(data);
     try {
       const response = await axiosInstance.post("/Livestock", data);
       if (response.status === 200) {

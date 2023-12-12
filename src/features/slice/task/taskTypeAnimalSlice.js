@@ -8,7 +8,6 @@ export const getTaskTypeLivestock = createAsyncThunk('taskTypeLivestock/getTaskT
       const { data } = await axiosInstance.get('/TaskType/ListTaskTypeLivestock')
       return data
     } catch (error) {
-      console.log(error)
     }
   })
 

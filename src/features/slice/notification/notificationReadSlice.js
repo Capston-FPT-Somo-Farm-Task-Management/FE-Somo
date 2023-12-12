@@ -23,7 +23,6 @@ export const changeNotifyIsReadAll = createAsyncThunk(
         `/Notification/All/IsRead/Member(${data})`
       )
       if (response.status === 200) {
-        console.log('Đổi thành công tất cả')
       }
       return response.json()
     } catch (error) {

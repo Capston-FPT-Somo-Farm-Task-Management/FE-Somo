@@ -78,7 +78,6 @@ const FormAddEmployee = ({
       farmId: farmId,
       address: address,
     }
-    console.log(finalValues)
     onFinishCreate(finalValues)
     closeModal()
     handleFormReset()
@@ -91,14 +90,12 @@ const FormAddEmployee = ({
 
   const handleCityChange = (value, option) => {
     setSelectedCityName(option.children)
-    console.log(selectedCityName)
     form.setFieldsValue({ district: null, ward: null })
     dispatch(getDistrict(value))
   }
 
   const handleDistrictChange = (value, option) => {
     setSelectedDistrictName(option.children)
-    console.log(selectedDistrictName)
     form.setFieldsValue({ ward: null })
     dispatch(getWard(value))
   }
@@ -109,7 +106,6 @@ const FormAddEmployee = ({
 
   const handleWardChange = (value, option) => {
     setSelectedWardName(option.children)
-    console.log(selectedWardName)
     form.setFieldsValue({ ward: option.children })
   }
 

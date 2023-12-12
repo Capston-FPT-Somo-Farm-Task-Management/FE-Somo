@@ -58,7 +58,6 @@ const FormUpdateFarm = ({
     if (farmById?.data) {
       // Phân tích địa chỉ
       const addressParts = farmById?.data?.address.split(', ')
-      console.log(addressParts)
       const selectedCityName = addressParts[2]
       const selectedDistrictName = addressParts[1]
       const selectedWardName = addressParts[0]

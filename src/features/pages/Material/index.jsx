@@ -22,7 +22,7 @@ const Material = () => {
 
   const loading = useSelector((state) => state.material.loading)
   const member = useSelector((state) => state.member.data)
-  const farmId = member.farmId
+  const farmId = member?.farmId
 
   const [searchTerm, setSearchTerm] = useState('')
 

@@ -54,7 +54,6 @@ export const updatePlant = createAsyncThunk(
 export const deletePlant = createAsyncThunk(
   "plants/deletePlant",
   async (id, { rejectWithValue }) => {
-    console.log(id);
     try {
       const response = await axiosInstance.put(`/Plant/Delete/${id}`);
       return response.data;

@@ -10,7 +10,6 @@ export const getZoneType = createAsyncThunk(
       const { data } = await axiosInstance.get('/ZoneType')
       return data
     } catch (error) {
-      console.log(error)
     }
   }
 )

@@ -1,6 +1,7 @@
 @import "../../../styles/Helper/mixin";
 // flex($direction: row, $content: null, $items: null, $wrap: null)
 
+
 .navBar {
   display: flex;
   justify-content: flex-end;
@@ -49,15 +50,29 @@
           color: $color-primary;
         }
       }
+      
     }
   }
 }
 
-.ant-popover {
-  .ant-popover-content {
-    width: 400px;
-    @include tablet {
-      width: 300px;
+.menu-header{
+  width: 130px;
+  text-align: left;
+  p{
+    font-size: 14px;
+    cursor: pointer;
+    padding: 5px;
+    padding-left: 10px;
+    transition: 0.2s all;
+    border-radius: 8px;
+    svg{
+      margin-right: 5px;
     }
+  }
+  p:hover{
+    background-color: #1677ff;
+    color: white;
+    transition: 0.2s all;
+    border-radius: 8px;
   }
 }

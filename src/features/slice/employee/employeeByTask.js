@@ -8,7 +8,6 @@ export const getEmployeeByTask = createAsyncThunk('employeeByTask/getEmployeeByT
       const { data } = await axiosInstance.get(`/FarmSubTask/EmployeeNoSubTask(${taskId})`)
       return data
     } catch (error) {
-      console.log(error)
     }
   })
 

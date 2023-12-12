@@ -10,7 +10,6 @@ export const getTaskTypePlant = createAsyncThunk(
       const { data } = await axiosInstance.get("/TaskType/ListTaskTypePlant");
       return data;
     } catch (error) {
-      console.log(error);
     }
   }
 );

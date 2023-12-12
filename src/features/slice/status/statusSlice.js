@@ -8,7 +8,6 @@ export const getStatus = createAsyncThunk('status/getStatus', async () => {
       const { data } = await axiosInstance.get('/FarmTask/Status')
       return data
     } catch (error) {
-      console.log(error)
     }
   })
 

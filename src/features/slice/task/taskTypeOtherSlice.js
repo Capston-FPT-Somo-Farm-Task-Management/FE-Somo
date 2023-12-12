@@ -8,7 +8,6 @@ export const getTaskTypeActiveOther = createAsyncThunk('taskTypeActive/getTaskTy
       const { data } = await axiosInstance.get('/TaskType/ListTaskTypeOther')
       return data
     } catch (error) {
-      console.log(error)
     }
   })
 

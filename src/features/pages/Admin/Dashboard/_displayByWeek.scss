@@ -11,8 +11,8 @@
     @include mobile {
       width: 80%;
     }
-    @include mobile-sm{
-        width: 100%
+    @include mobile-sm {
+      width: 100%;
     }
   }
   .ant-card-bottom {
@@ -24,10 +24,10 @@
       height: 350px;
     }
     @media screen and (max-width: 650px) {
-        height: 400px;
+      height: 400px;
     }
-    @include mobile-sm{
-        height: 450px;
+    @include mobile-sm {
+      height: 450px;
     }
   }
 }

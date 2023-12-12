@@ -37,7 +37,6 @@ function Activity({
                     <p>
                       <span>Tên:</span> {activityItem.name}
                     </p>
-                    {console.log(activityItem)}
                     <p>
                       <span>Người thực hiện:</span> {activityItem.employeeName}
                     </p>

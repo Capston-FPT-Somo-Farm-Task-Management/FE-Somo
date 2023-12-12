@@ -31,6 +31,7 @@ import AnimalType from 'features/pages/AnimalType/AnimalType'
 import PlantType from 'features/pages/PlantType/PlantType'
 import TaskType from 'features/pages/TaskType/TaskType'
 import FarmDash from 'features/pages/Admin/FarmDash/FarmDash'
+import ProfileAdmin from 'features/pages/Admin/Profile/ProfileAdmin'
 
 const AppRoute = () => {
   return (
@@ -326,6 +327,17 @@ const AppRoute = () => {
           <AdminPrivateRoute>
             <AdminLayoutWithRoute>
               <StatisticMember />
+            </AdminLayoutWithRoute>
+          </AdminPrivateRoute>
+        }
+      />
+
+      <Route
+        path="/admin-profile"
+        element={
+          <AdminPrivateRoute>
+            <AdminLayoutWithRoute>
+              <ProfileAdmin />
             </AdminLayoutWithRoute>
           </AdminPrivateRoute>
         }

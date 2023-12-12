@@ -30,7 +30,6 @@ export const updateEffort = createAsyncThunk(
       if (response.status === 200) {
         toast.success("Cập nhật thành công");
       }
-      console.log(response.data);
       return response.data;
     } catch (error) {
       toast.error(error.response.data.message);
@@ -54,7 +53,6 @@ const effortSlice = createSlice({
         state.error = null;
       })
       .addCase(getEffort.fulfilled, (state, action) => {
-        console.log(action.payload.data);
         state.loading = false;
         state.data = action.payload.data.subtasks || [];
         state.isHaveSubTask = action.payload.data.isHaveSubtask;

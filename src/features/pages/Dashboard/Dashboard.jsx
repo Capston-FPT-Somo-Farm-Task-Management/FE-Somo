@@ -15,7 +15,6 @@ const Dashboard = () => {
   const memberId = member?.id
 
   const loading = useSelector((state) => state.taskByWeek.loading)
-  console.log(loading)
 
   const [selectedDay, setSelectedDay] = useState(null)
 
