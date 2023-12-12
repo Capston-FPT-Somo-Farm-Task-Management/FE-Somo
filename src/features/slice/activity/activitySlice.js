@@ -8,7 +8,7 @@ export const getActivityByTaskId = createAsyncThunk(
   "activity/getActivityByTaskId",
   async (taskId, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.get(`/FarmSubTask/Task(${taskId})`);
+      const { data } = await axiosInstance.get(`/Activities/Task(${taskId})`);
 
       return data;
     } catch (error) {

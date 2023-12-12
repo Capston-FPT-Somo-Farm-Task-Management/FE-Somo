@@ -1,4 +1,4 @@
-import { Button, Modal } from "antd";
+import { Button, Checkbox, Modal } from "antd";
 import React from "react";
 
 const ModalReject = ({
@@ -6,6 +6,8 @@ const ModalReject = ({
   rejectModalVisible,
   closeRejectModal,
   handleRefuseTask,
+  isImportant,
+  handleCheckImportant,
 }) => {
   return (
     <>
@@ -25,8 +27,13 @@ const ModalReject = ({
             </Button>,
           ]}
         >
-          <p>Nếu bạn từ chối thì công việc này sẽ quay lại trạng thái chuẩn bị </p>
+          <p>
+            Nếu bạn từ chối thì công việc này sẽ quay lại trạng thái chuẩn bị{" "}
+          </p>
           <p>Bạn sẽ không chấp nhận?</p>
+          <Checkbox onChange={handleCheckImportant} checked={isImportant} style={{marginTop: "15px"}}>
+            Công việc này không thể từ chối nữa
+          </Checkbox>
         </Modal>
       ) : null}
     </>

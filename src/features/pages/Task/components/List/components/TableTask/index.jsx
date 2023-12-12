@@ -113,7 +113,7 @@ function TableTask({
                   record &&
                   (record.status === "Bản nháp" ||
                     record.status === "Chuẩn bị");
-                const isStatusSubTask =
+                const isStatusActivities =
                   record &&
                   (record.status === "Bản nháp" ||
                     record.status === "Chuẩn bị" ||
@@ -131,7 +131,7 @@ function TableTask({
                       placement="bottomRight"
                       overlay={
                         <Menu onClick={(e) => handleMenuClick(e, record)}>
-                          {!isStatusSubTask ? (
+                          {!isStatusActivities ? (
                             <Menu.Item key="viewSubTask">
                               <span onClick={() => openActivityModal(record)}>
                                 <FileTextOutlined
