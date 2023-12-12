@@ -9,7 +9,7 @@ const Notification = () => {
   function ToastDisplay() {
     return (
       <div style={{display: "flex", alignItems: "center"}}>
-        <BellOutlined style={{color: "red", fontSize: "26px", marginRight: "10px"}} />
+        <BellOutlined style={{color: "green", fontSize: "26px", marginRight: "10px"}} />
         <div>
           <p>
             <b style={{ fontSize: "16px" }}>{notification?.title}</b>
