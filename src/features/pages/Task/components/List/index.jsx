@@ -542,7 +542,6 @@ const List = () => {
         handleEffortVisible={handleEffortVisible}
         effort={effort}
         isHaveSubTask={isHaveSubTask}
-        openActivityModal={openActivityModal}
       />
       <ChangeDoneToDoing
         selectedTask={selectedTask}

@@ -5,8 +5,7 @@ function Effort({
   effortVisible,
   handleEffortVisible,
   effort,
-  isHaveSubTask,
-  openSubtaskModal
+  isHaveSubTask
 }) {
   return (
     <>
@@ -15,7 +14,6 @@ function Effort({
         handleEffortVisible={handleEffortVisible}
         effort={effort}
         isHaveSubTask={isHaveSubTask}
-        openSubtaskModal={openSubtaskModal}
       />
     </>
   );
