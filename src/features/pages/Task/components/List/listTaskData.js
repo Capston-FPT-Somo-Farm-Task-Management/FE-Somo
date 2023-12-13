@@ -68,9 +68,38 @@ export const taskTitle = [
     title: <p>Ngày bắt đầu</p>,
     dataIndex: "startDate",
     key: "startDate",
-    render: (date) => {
+    render: (date, record) => {
       return date ? (
-        <span> {dayjs(date).format("DD/MM/YYYY HH:mm")}</span>
+        record && record.isStartLate ? (
+          <Badge.Ribbon
+            className="ribbon-expired"
+            style={{ top: 0, insetInlineEnd: "-8px" }}
+            text="Trễ"
+            color="#ff7b00"
+          >
+            <p
+              style={{
+                border: "1px solid #f5f5f5",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                padding: "5px 0px",
+                borderRadius: "8px",
+                boxShadow: "1px 1px #f5f5f5",
+              }}
+            >
+              <span style={{ marginLeft: "5px" }}>
+                {" "}
+                {dayjs(date).format("DD/MM/YYYY HH:mm")}
+              </span>
+            </p>
+          </Badge.Ribbon>
+        ) : (
+          <span style={{ marginLeft: "5px" }}>
+            {" "}
+            {dayjs(date).format("DD/MM/YYYY HH:mm")}
+          </span>
+        )
       ) : (
         "Chưa có"
       );
