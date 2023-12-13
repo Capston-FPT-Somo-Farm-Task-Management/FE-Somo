@@ -35,7 +35,12 @@ const TaskDetailOther = ({
         </h2>
         <div className="task-detail-item">
           <div className="task-detail-text">
-            <h5>Thời gian bắt đầu</h5>
+            <h5>
+              Thời gian bắt đầu{" "}
+              {taskData?.isStartLate ? (
+                <span style={{ color: "red" }}>(Đã trễ)</span>
+              ) : null}
+            </h5>
             {taskData.startDate ? (
               <p>{formattedStartDate}</p>
             ) : (
@@ -43,7 +48,12 @@ const TaskDetailOther = ({
             )}
           </div>
           <div className="task-detail-text">
-            <h5>Thời gian kết thúc</h5>
+            <h5>
+              Thời gian kết thúc{" "}
+              {taskData?.isExpired ? (
+                <span style={{ color: "red" }}>(Đã trễ)</span>
+              ) : null}
+            </h5>
             {taskData.startDate ? (
               <p>{formattedEndDate}</p>
             ) : (
