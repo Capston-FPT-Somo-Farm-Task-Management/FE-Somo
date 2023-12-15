@@ -94,11 +94,11 @@ function RepeatUpdate({
     if (
       endDate
         ? currentDayjs.isBefore(dayjs(), "day") ||
-        currentDayjs.isSame(dayjs(endDate), "day") ||
-        currentDayjs.isBefore(dayjs(endDate), "day") 
+          currentDayjs.isSame(dayjs(endDate), "day") ||
+          currentDayjs.isBefore(dayjs(endDate), "day")
         : currentDayjs.isBefore(dayjs(), "day") ||
-        currentDayjs.isSame(dayjs(editingTask.endDate), "day") ||
-        currentDayjs.isBefore(dayjs(editingTask.endDate), "day")
+          currentDayjs.isSame(dayjs(editingTask.endDate), "day") ||
+          currentDayjs.isBefore(dayjs(editingTask.endDate), "day")
     ) {
       return true;
     }
@@ -199,13 +199,9 @@ function RepeatUpdate({
         color: red;
       }
     `;
-  console.log(`initialSelectedDays: ${initialSelectedDays}`);
-  console.log(`repeatValue: ${repeatValue}`);
-  console.log(`editingTask.isRepeat: ${editingTask.isRepeat}`);
+
   const validateRequireRepeat =
-    (repeatValue === true || editingTask.isRepeat === true) &&
-    (initialSelectedDays.length === 0 || initialSelectedDays === null);
-  console.log(`validateRequireRepeat: ${validateRequireRepeat}`);
+    repeatValue === true && initialSelectedDays.length === 0;
 
   return (
     <>
