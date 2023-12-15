@@ -369,20 +369,20 @@ function UpdateTask({
               .second(0)
               .format("YYYY-MM-DD[T]HH:mm:ss");
 
-        if (
-          shouldCheckRepeat &&
-          editingTask.isRepeat &&
-          repeatValue &&
-          (!initialSelectedDays || initialSelectedDays.length === 0)
-        ) {
-          form.setFields([
-            {
-              name: "dateRepeate",
-              errors: ["Vui lòng chọn ngày lặp lại"],
-            },
-          ]);
-          return;
-        }
+        // if (
+        //   shouldCheckRepeat &&
+        //   editingTask.isRepeat &&
+        //   repeatValue &&
+        //   (!initialSelectedDays || initialSelectedDays.length === 0)
+        // ) {
+        //   form.setFields([
+        //     {
+        //       name: "dateRepeate",
+        //       errors: ["Vui lòng chọn ngày lặp lại"],
+        //     },
+        //   ]);
+        //   return;
+        // }
 
         const area = areaByFarm.data
           ? areaByFarm.data.find((area) => area.id === selectedAreaId)
@@ -497,19 +497,20 @@ function UpdateTask({
               .second(0)
               .format("YYYY-MM-DD[T]HH:mm:ss");
 
-        if (
-          shouldCheckRepeat &&
-          editingTask.isRepeat &&
-          (!initialSelectedDays || initialSelectedDays.length === 0)
-        ) {
-          form.setFields([
-            {
-              name: "dates",
-              errors: ["Vui lòng chọn ngày lặp lại"],
-            },
-          ]);
-          return;
-        }
+        // if (
+        //   shouldCheckRepeat &&
+        //   editingTask.isRepeat &&
+        //   repeatValue &&
+        //   (!initialSelectedDays || initialSelectedDays.length === 0)
+        // ) {
+        //   form.setFields([
+        //     {
+        //       name: "dates",
+        //       errors: ["Vui lòng chọn ngày lặp lại"],
+        //     },
+        //   ]);
+        //   return;
+        // }
 
         const area = areaByFarm.data
           ? areaByFarm.data.find((area) => area.id === selectedAreaId)
