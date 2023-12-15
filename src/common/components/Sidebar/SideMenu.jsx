@@ -86,11 +86,11 @@ const SideMenu = () => {
               <Link to="/home"></Link>
             </Menu.Item>
 
-            <Menu.Item key="/schedule">
+            {/* <Menu.Item key="/schedule">
               <CalendarOutlined />
               <span>Lịch trình</span>
               <Link to="/schedule"></Link>
-            </Menu.Item>
+            </Menu.Item> */}
 
             <SubMenu key="tasks" icon={<FileTextOutlined />} title="Công việc">
               <Menu.Item key="/task">

@@ -504,7 +504,7 @@ function UpdateTask({
         ) {
           form.setFields([
             {
-              name: "dateRepeate",
+              name: "dates",
               errors: ["Vui lòng chọn ngày lặp lại"],
             },
           ]);
