@@ -1,8 +1,8 @@
-import { Select, Space } from "antd";
-import { getTaskMonth } from "features/slice/task/taskMonthSlice";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { Select, Space } from 'antd'
+import { getTaskMonth } from 'features/slice/task/taskMonthSlice'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {
   Area,
   AreaChart,
@@ -11,13 +11,14 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts";
+} from 'recharts'
 
 const DisplayByMonth = ({ farmId }) => {
-  const dispatch = useDispatch();
-  const taskMonth = useSelector((state) => state.taskMonth.data);
-  const currentMonth = new Date().getMonth() + 1;
-  const [selectedMonth, setSelectedMonth] = useState(currentMonth);
+  const dispatch = useDispatch()
+  const taskMonth = useSelector((state) => state.taskMonth.data)
+  const currentMonth = new Date().getMonth() + 1
+  const currentYear = new Date().getFullYear()
+  const [selectedMonth, setSelectedMonth] = useState(currentMonth)
 
   useEffect(() => {
     dispatch(
@@ -25,40 +26,40 @@ const DisplayByMonth = ({ farmId }) => {
         farmId: farmId,
         month: selectedMonth,
       })
-    );
-  }, [dispatch, farmId, selectedMonth]);
+    )
+  }, [dispatch, farmId, selectedMonth])
 
   const data = [
     {
-      name: "Chuẩn bị",
+      name: 'Chuẩn bị',
       total: taskMonth?.data?.totalTaskToDo,
     },
     {
-      name: "Đang làm",
+      name: 'Đang làm',
       total: taskMonth?.data?.totalTaskDoing,
     },
     {
-      name: "Tạm hoãn",
+      name: 'Tạm hoãn',
       total: taskMonth?.data?.totalTaskPending,
     },
     {
-      name: "Đã đóng",
+      name: 'Đã đóng',
       total: taskMonth?.data?.totalTaskClose,
     },
-  ];
+  ]
 
   const handleChange = (value) => {
-    setSelectedMonth(value);
-  };
+    setSelectedMonth(value)
+  }
 
   const getMaxValue = (data) => {
-    const maxVal = Math.max(...data.map((item) => item.total || 0));
-    return maxVal + maxVal * 0.2; // Thêm 20%
-  };
+    const maxVal = Math.max(...data.map((item) => item.total || 0))
+    return maxVal + maxVal * 0.2 // Thêm 20%
+  }
 
   const yAxisTickFormatter = (value) => {
-    return Math.floor(value);
-  };
+    return Math.floor(value)
+  }
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -66,81 +67,81 @@ const DisplayByMonth = ({ farmId }) => {
         <div
           className="custom-tooltip"
           style={{
-            padding: "10px",
-            backgroundColor: "#fff",
-            border: "1px solid #ddd",
-            boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.2)",
-            borderRadius: "5px",
+            padding: '10px',
+            backgroundColor: '#fff',
+            border: '1px solid #ddd',
+            boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.2)',
+            borderRadius: '5px',
           }}
         >
-          <p style={{ color: "#666" }}>{`${label} : ${payload[0].value}`}</p>
+          <p style={{ color: '#666' }}>{`${label} : ${payload[0].value}`}</p>
         </div>
-      );
+      )
     }
 
-    return null;
-  };
+    return null
+  }
 
   return (
     <div className="admin-dashboardByMonth">
       <div className="dashboardByMonth-content">
-        <h3>Công việc theo tháng năm 2023</h3>
+        <h3>Công việc theo tháng của năm {currentYear}</h3>
         <Select
           defaultValue={currentMonth}
           style={{
             width: 100,
-            marginTop: "5px",
-            marginBottom: "25px",
+            marginTop: '5px',
+            marginBottom: '25px',
           }}
           onChange={handleChange}
           options={[
             {
               value: 1,
-              label: "Tháng 1",
+              label: 'Tháng 1',
             },
             {
               value: 2,
-              label: "Tháng 2",
+              label: 'Tháng 2',
             },
             {
               value: 3,
-              label: "Tháng 3",
+              label: 'Tháng 3',
             },
             {
               value: 4,
-              label: "Tháng 4",
+              label: 'Tháng 4',
             },
             {
               value: 5,
-              label: "Tháng 5",
+              label: 'Tháng 5',
             },
             {
               value: 6,
-              label: "Tháng 6",
+              label: 'Tháng 6',
             },
             {
               value: 7,
-              label: "Tháng 7",
+              label: 'Tháng 7',
             },
             {
               value: 8,
-              label: "Tháng 8",
+              label: 'Tháng 8',
             },
             {
               value: 9,
-              label: "Tháng 9",
+              label: 'Tháng 9',
             },
             {
               value: 10,
-              label: "Tháng 10",
+              label: 'Tháng 10',
             },
             {
               value: 11,
-              label: "Tháng 11",
+              label: 'Tháng 11',
             },
             {
               value: 12,
-              label: "Tháng 12",
+              label: 'Tháng 12',
             },
           ]}
         />
@@ -173,6 +174,6 @@ const DisplayByMonth = ({ farmId }) => {
         </ResponsiveContainer>
       </div>
     </div>
-  );
-};
-export default DisplayByMonth;
+  )
+}
+export default DisplayByMonth
