@@ -1,4 +1,4 @@
-import { Badge, Button, Dropdown, Menu, Skeleton, Table } from 'antd'
+import { Badge, Button, Dropdown, Image, Menu, Skeleton, Table } from 'antd'
 import Column from 'antd/es/table/Column'
 import { useEffect, useState } from 'react'
 import UpdateEmployee from './UpdateEmployee'
@@ -76,7 +76,7 @@ const DisplayEmployee = ({
         m.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : []
-
+  console.log(searchEmployee)
   return (
     <>
       {loading ? (
@@ -84,6 +84,19 @@ const DisplayEmployee = ({
       ) : (
         <>
           <Table rowKey="id" dataSource={searchEmployee}>
+            <Column
+              title="Hình ảnh"
+              dataIndex="avatar"
+              key="2"
+              render={(text, record) => (
+                <Image
+                  width={50}
+                  height={50}
+                  src={record.avatar}
+                  style={{ objectFit: 'cover', borderRadius: '50%' }}
+                />
+              )}
+            />
             <Column
               title="Tên nhân viên"
               dataIndex="name"
