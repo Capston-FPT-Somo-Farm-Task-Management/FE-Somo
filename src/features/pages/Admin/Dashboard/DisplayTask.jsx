@@ -36,7 +36,7 @@ const DisplayTask = ({ farmId }) => {
   }, [barChartRef])
   return (
     <div className="admin-dashboard">
-      <h3>Tổng số công việc theo trạng thái</h3>
+      <h3>Tổng số công việc theo trạng thái trong tuần</h3>
       <div className="admin-dashboard-header">
         <DashboardBox taskByWeek={taskByWeek} selectedDay={selectedDay} />
       </div>

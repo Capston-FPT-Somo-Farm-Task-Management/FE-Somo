@@ -2,6 +2,7 @@ import {
   Avatar,
   Badge,
   Button,
+  Image,
   Modal,
   Popconfirm,
   Skeleton,
@@ -68,11 +69,13 @@ const TableMember = ({
   }
 
   const searchMember = memberByFarm
-    ? memberByFarm?.data?.filter((m) =>
-        m.name.toLowerCase().includes(searchTerm.toLowerCase())
+    ? memberByFarm?.data?.filter(
+        (m) =>
+          m.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+          m.roleName !== 'Admin'
       )
     : []
-
+  console.log(searchMember)
   return (
     <>
       {loading ? (
@@ -93,6 +96,19 @@ const TableMember = ({
           </Space>
           <Table dataSource={searchMember} rowKey="id">
             <Column
+              title="Hình ảnh"
+              dataIndex="avatar"
+              key="avatar"
+              render={(text, record) => (
+                <Image
+                  width={50}
+                  height={50}
+                  src={record.avatar}
+                  style={{ objectFit: 'cover', borderRadius: '50%' }}
+                />
+              )}
+            />
+            <Column
               title="Tên nhân viên"
               dataIndex="name"
               key="1"
@@ -105,9 +121,25 @@ const TableMember = ({
                 </h4>
               )}
             />
-            <Column title="Chức vụ" dataIndex="roleName" key="2" />
-            {/* <Column title="Số điện thoại" dataIndex="phoneNumber" key="3" /> */}
-
+            <Column
+              title="Chức vụ"
+              dataIndex="roleName"
+              key="2"
+              render={(roleName) => {
+                let displayRole
+                switch (roleName) {
+                  case 'Manager':
+                    displayRole = 'Quản lý'
+                    break
+                  case 'Supervisor':
+                    displayRole = 'Giám sát'
+                    break
+                  default:
+                    displayRole = roleName
+                }
+                return <span>{displayRole}</span>
+              }}
+            />
             <Column
               title="Trạng thái"
               dataIndex="status"

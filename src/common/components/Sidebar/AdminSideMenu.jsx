@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 
 import {
   Avatar,
@@ -10,7 +10,7 @@ import {
   Menu,
   Popover,
   Space,
-} from "antd";
+} from 'antd'
 import {
   BorderOutlined,
   TableOutlined,
@@ -18,69 +18,69 @@ import {
   LogoutOutlined,
   InfoCircleOutlined,
   EditOutlined,
-} from "@ant-design/icons";
-import logoSomo from "../../../assets/logo_Somo.png";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { authServices } from "services/authServices";
-import { toast } from "react-toastify";
+} from '@ant-design/icons'
+import logoSomo from '../../../assets/logo_Somo.png'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { authServices } from 'services/authServices'
+import { toast } from 'react-toastify'
 import {
   useDesktopMediaQuery,
   useTabletMediaQuery,
-} from "common/hooks/responsive";
-import { GiCow, GiPlantSeed, GiDarkSquad, GiSpade } from "react-icons/gi";
-import { VscScreenFull } from "react-icons/vsc";
-import { FaMapLocationDot } from "react-icons/fa6";
-import SubMenu from "antd/es/menu/SubMenu";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { getMemberById, updatePassword } from "features/slice/user/memberSlice";
+} from 'common/hooks/responsive'
+import { GiCow, GiPlantSeed, GiDarkSquad, GiSpade } from 'react-icons/gi'
+import { VscScreenFull } from 'react-icons/vsc'
+import { FaMapLocationDot } from 'react-icons/fa6'
+import SubMenu from 'antd/es/menu/SubMenu'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { getMemberById, updatePassword } from 'features/slice/user/memberSlice'
 
-const { Sider } = Layout;
+const { Sider } = Layout
 
 const AdminSideMenu = () => {
-  const [userName, setUserName] = useState();
-  const [userRole, setUserRole] = useState();
-  const [collapsed, setCollapsed] = useState(false);
-  const [changePasswordDrawer, setChangePasswordDrawer] = useState(false);
-  const [oldPasswordVisible, setOldPasswordVisible] = useState(false);
-  const [newPasswordVisible, setNewPasswordVisible] = useState(false);
-  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-  const [oldPasswordValue, setOldPasswordValue] = useState("");
-  const [newPasswordValue, setNewPasswordValue] = useState("");
-  const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
-  const location = useLocation();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const [userName, setUserName] = useState()
+  const [userRole, setUserRole] = useState()
+  const [collapsed, setCollapsed] = useState(false)
+  const [changePasswordDrawer, setChangePasswordDrawer] = useState(false)
+  const [oldPasswordVisible, setOldPasswordVisible] = useState(false)
+  const [newPasswordVisible, setNewPasswordVisible] = useState(false)
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false)
+  const [oldPasswordValue, setOldPasswordValue] = useState('')
+  const [newPasswordValue, setNewPasswordValue] = useState('')
+  const [confirmPasswordValue, setConfirmPasswordValue] = useState('')
+  const location = useLocation()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  const [form] = Form.useForm();
+  const [form] = Form.useForm()
 
-  const isDesktop = useDesktopMediaQuery();
-  const isTablet = useTabletMediaQuery();
+  const isDesktop = useDesktopMediaQuery()
+  const isTablet = useTabletMediaQuery()
 
-  const member = useSelector((state) => state.member.data);
-
-  useEffect(() => {
-    dispatch(getMemberById(authServices.getUserId()));
-  }, [dispatch]);
+  const member = useSelector((state) => state.member.data)
 
   useEffect(() => {
-    const role = authServices.getRole();
-    setUserRole(role);
-    const userName = authServices.getUserName();
-    setUserName(userName);
-  }, []);
+    dispatch(getMemberById(authServices.getUserId()))
+  }, [dispatch])
+
+  useEffect(() => {
+    const role = authServices.getRole()
+    setUserRole(role)
+    const userName = authServices.getUserName()
+    setUserName(userName)
+  }, [])
 
   const handleChangePassword = (e) => {
-    setOldPasswordValue(e.target.value);
-  };
+    setOldPasswordValue(e.target.value)
+  }
 
   const handleChangeNewPassword = (e) => {
-    setNewPasswordValue(e.target.value);
-  };
+    setNewPasswordValue(e.target.value)
+  }
 
   const handleConfirmPassword = (e) => {
-    setConfirmPasswordValue(e.target.value);
-  };
+    setConfirmPasswordValue(e.target.value)
+  }
 
   const handleSubmitChangePassword = (values) => {
     const updatedPassword = {
@@ -89,31 +89,31 @@ const AdminSideMenu = () => {
       oldPassword: oldPasswordValue,
       password: newPasswordValue,
       confirmPassword: confirmPasswordValue,
-    };
+    }
     dispatch(updatePassword(updatedPassword)).then(() => {
-      setChangePasswordDrawer(false);
-      dispatch(getMemberById(authServices.getUserId()));
-      setOldPasswordValue("")
-      setNewPasswordValue("")
-      setConfirmPasswordValue("")
-    });
-  };
+      setChangePasswordDrawer(false)
+      dispatch(getMemberById(authServices.getUserId()))
+      setOldPasswordValue('')
+      setNewPasswordValue('')
+      setConfirmPasswordValue('')
+    })
+  }
 
   const logout = () => {
-    authServices.logOut();
-    toast.success("Đăng xuất thành công");
-    navigate("/login");
-  };
+    authServices.logOut()
+    toast.success('Đăng xuất thành công')
+    navigate('/login')
+  }
 
   return (
     <div className="sider-admin">
       {isDesktop && (
         <Sider
-          theme="dark"
+          theme="light"
           style={{
-            overflow: "auto",
-            height: "100vh",
-            position: "fixed",
+            overflow: 'auto',
+            height: '100vh',
+            position: 'fixed',
             left: 0,
             top: 0,
             bottom: 0,
@@ -123,7 +123,7 @@ const AdminSideMenu = () => {
             <img src={logoSomo} alt="logo" />
           </div>
           <Menu
-            theme="dark"
+            theme="light"
             mode="inline"
             defaultSelectedKeys={[location.pathname]}
           >
@@ -132,18 +132,6 @@ const AdminSideMenu = () => {
               <span>Tổng quan</span>
               <Link to="/dashboard"></Link>
             </Menu.Item>
-
-            {/* <Menu.Item key="/statistic-task">
-              <AimOutlined />
-              <span>Công việc</span>
-              <Link to="/statistic-task"></Link>
-            </Menu.Item> */}
-
-            {/* <Menu.Item key="/statistic-farm">
-              <BorderOutlined />
-              <span>Chọn trang trại</span>
-              <Link to="/statistic-farm"></Link>
-            </Menu.Item> */}
 
             <Menu.Item key="/farm-dash" className="menu-admin">
               <FaMapLocationDot />
@@ -163,23 +151,11 @@ const AdminSideMenu = () => {
               <Link to="/statistic-zone"></Link>
             </Menu.Item>
 
-            {/* <Menu.Item key="/statistic-animal">
-              <TeamOutlined />
-              <span>Vật nuôi</span>
-              <Link to="/statistic-animal"></Link>
-            </Menu.Item> */}
-
             <Menu.Item key="/statistic-animal-group" className="menu-admin">
               <GiCow />
               <span>Động vật</span>
               <Link to="/statistic-animal-group"></Link>
             </Menu.Item>
-
-            {/* <Menu.Item key="/statistic-plant">
-              <DashboardOutlined />
-              <span>Cây trồng</span>
-              <Link to="/statistic-plant"></Link>
-            </Menu.Item> */}
 
             <Menu.Item key="/statistic-crop-group" className="menu-admin">
               <GiPlantSeed />
@@ -380,7 +356,7 @@ const AdminSideMenu = () => {
           }
           zIndex={2000}
         >
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <Form
               layout="vertical"
               onFinish={handleSubmitChangePassword}
@@ -394,7 +370,7 @@ const AdminSideMenu = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Vui lòng nhập mật khẩu hiện tại",
+                    message: 'Vui lòng nhập mật khẩu hiện tại',
                   },
                 ]}
               >
@@ -416,7 +392,7 @@ const AdminSideMenu = () => {
                       setOldPasswordVisible((prevState) => !prevState)
                     }
                   >
-                    {oldPasswordVisible ? "Ẩn" : "Hiện"}
+                    {oldPasswordVisible ? 'Ẩn' : 'Hiện'}
                   </Button>
                 </Space>
               </Form.Item>
@@ -427,7 +403,7 @@ const AdminSideMenu = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Vui lòng nhập mật khẩu mới",
+                    message: 'Vui lòng nhập mật khẩu mới',
                   },
                 ]}
               >
@@ -449,7 +425,7 @@ const AdminSideMenu = () => {
                       setNewPasswordVisible((prevState) => !prevState)
                     }
                   >
-                    {newPasswordVisible ? "Ẩn" : "Hiện"}
+                    {newPasswordVisible ? 'Ẩn' : 'Hiện'}
                   </Button>
                 </Space>
               </Form.Item>
@@ -460,7 +436,7 @@ const AdminSideMenu = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Vui lòng xác nhận mật khẩu",
+                    message: 'Vui lòng xác nhận mật khẩu',
                   },
                 ]}
               >
@@ -482,7 +458,7 @@ const AdminSideMenu = () => {
                       setConfirmPasswordVisible((prevState) => !prevState)
                     }
                   >
-                    {confirmPasswordVisible ? "Ẩn" : "Hiện"}
+                    {confirmPasswordVisible ? 'Ẩn' : 'Hiện'}
                   </Button>
                 </Space>
               </Form.Item>
@@ -491,7 +467,7 @@ const AdminSideMenu = () => {
         </Drawer>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default AdminSideMenu;
+export default AdminSideMenu

@@ -33,7 +33,7 @@ const ChartTaskWeek = ({ taskByWeek, onBarClick }) => {
 
   return (
     <>
-      <h3>Tổng số công việc theo ngày</h3>
+      <h3>Tổng số công việc theo tuần</h3>
       <div
         style={{
           display: 'flex',
