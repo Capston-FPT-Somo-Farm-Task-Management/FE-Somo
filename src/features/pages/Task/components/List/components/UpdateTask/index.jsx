@@ -118,10 +118,10 @@ function UpdateTask({
   const zonePlant = useSelector((state) => state.zonePlant.data);
 
   const animal = useSelector((state) => state.animal.data);
-  const dataAnimal = animal.data;
+  const dataAnimal = animal?.data;
 
   const plant = useSelector((state) => state.plant.data);
-  const dataPlant = plant.data;
+  const dataPlant = plant?.data;
 
   const fieldByZone = useSelector((state) => state.fieldByZone.data);
 
@@ -130,10 +130,10 @@ function UpdateTask({
   const taskTypeLivestock = useSelector(
     (state) => state.taskTypeLivestock.data
   );
-  const dataTaskTypeLivestock = taskTypeLivestock.data;
+  const dataTaskTypeLivestock = taskTypeLivestock?.data;
 
   const taskTypePlant = useSelector((state) => state.taskTypePlant.data);
-  const dataTaskTypePlant = taskTypePlant.data;
+  const dataTaskTypePlant = taskTypePlant?.data;
 
   const supervisor = useSelector((state) => state.supervisor.data);
 
@@ -369,20 +369,20 @@ function UpdateTask({
               .second(0)
               .format("YYYY-MM-DD[T]HH:mm:ss");
 
-        if (
-          shouldCheckRepeat &&
-          editingTask.isRepeat &&
-          repeatValue &&
-          (!initialSelectedDays || initialSelectedDays.length === 0)
-        ) {
-          form.setFields([
-            {
-              name: "dateRepeate",
-              errors: ["Vui lòng chọn ngày lặp lại"],
-            },
-          ]);
-          return;
-        }
+        // if (
+        //   shouldCheckRepeat &&
+        //   editingTask.isRepeat &&
+        //   repeatValue &&
+        //   (!initialSelectedDays || initialSelectedDays.length === 0)
+        // ) {
+        //   form.setFields([
+        //     {
+        //       name: "dateRepeate",
+        //       errors: ["Vui lòng chọn ngày lặp lại"],
+        //     },
+        //   ]);
+        //   return;
+        // }
 
         const area = areaByFarm.data
           ? areaByFarm.data.find((area) => area.id === selectedAreaId)
@@ -497,19 +497,20 @@ function UpdateTask({
               .second(0)
               .format("YYYY-MM-DD[T]HH:mm:ss");
 
-        if (
-          shouldCheckRepeat &&
-          editingTask.isRepeat &&
-          (!initialSelectedDays || initialSelectedDays.length === 0)
-        ) {
-          form.setFields([
-            {
-              name: "dateRepeate",
-              errors: ["Vui lòng chọn ngày lặp lại"],
-            },
-          ]);
-          return;
-        }
+        // if (
+        //   shouldCheckRepeat &&
+        //   editingTask.isRepeat &&
+        //   repeatValue &&
+        //   (!initialSelectedDays || initialSelectedDays.length === 0)
+        // ) {
+        //   form.setFields([
+        //     {
+        //       name: "dates",
+        //       errors: ["Vui lòng chọn ngày lặp lại"],
+        //     },
+        //   ]);
+        //   return;
+        // }
 
         const area = areaByFarm.data
           ? areaByFarm.data.find((area) => area.id === selectedAreaId)

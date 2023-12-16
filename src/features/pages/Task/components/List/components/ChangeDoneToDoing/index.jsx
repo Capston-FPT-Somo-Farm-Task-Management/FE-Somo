@@ -51,10 +51,10 @@ const ChangeDoneToDoing = ({
                   message: "Vui lòng chọn ngày bắt đầu",
                 },
               ]}
-              name="startDate"
+              name="endDay"
             >
               <DatePicker
-                placeholder="Chọn thời gian bắt đầu"
+                placeholder="Cập nhật thời gian kết thúc"
                 format="HH:mm DD-MM-YYYY"
                 disabledDate={disabledDate}
                 showTime={{
