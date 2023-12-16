@@ -106,7 +106,6 @@ const TableMember = ({
               )}
             />
             <Column title="Chức vụ" dataIndex="roleName" key="2" />
-            {/* <Column title="Số điện thoại" dataIndex="phoneNumber" key="3" /> */}
 
             <Column
               title="Trạng thái"
