@@ -87,7 +87,7 @@ const DisplayEmployee = ({
             <Column
               title="Hình ảnh"
               dataIndex="avatar"
-              key="2"
+              key="avatar"
               render={(text, record) => (
                 <Image
                   width={50}
