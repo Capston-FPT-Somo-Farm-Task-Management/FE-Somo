@@ -11,7 +11,7 @@ const IsImportantUpdate = ({
       <Select
         value={importantValue}
         onChange={handleSelectImportant}
-        placeholder="Không"
+        placeholder="Được"
       >
         <Select.Option value={false}>Được</Select.Option>
         <Select.Option value={true}>Không</Select.Option>
