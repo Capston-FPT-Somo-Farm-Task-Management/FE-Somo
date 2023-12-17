@@ -32,26 +32,6 @@ export const getTaskTypeTemplate = createAsyncThunk(
   }
 )
 
-// export const createTaskType = createAsyncThunk(
-//   'taskType/createTaskType',
-//   async (data, { rejectWithValue }) => {
-//     try {
-//       const response = await axios.post(baseUrl + '/TaskType', data, {
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//       })
-//       if (response.status === 200) {
-//         toast.success(response.data.message)
-//         return response.data.data
-//       }
-//     } catch (error) {
-//       toast.error(error.response.data.message)
-//       rejectWithValue(error)
-//     }
-//   }
-// )
-
 const taskTypeTemplateSlice = createSlice({
   name: 'taskTypeTemplate',
   initialState: {

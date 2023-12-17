@@ -26,7 +26,7 @@ export const createEmployee = createAsyncThunk(
         },
       })
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Thêm nhân viên thành công')
         return response.data.data
       }
     } catch (error) {
@@ -46,7 +46,7 @@ export const updateEmployee = createAsyncThunk(
         },
       })
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Cập nhật thành công')
         return response.data.data
       }
     } catch (error) {

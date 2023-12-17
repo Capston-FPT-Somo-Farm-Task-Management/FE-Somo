@@ -10,7 +10,7 @@ export const createHabitantType = createAsyncThunk(
     try {
       const response = await axiosInstance.post('/HabitantType', data)
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Thêm mới thành công')
         return response.data
       }
     } catch (error) {
@@ -26,7 +26,7 @@ export const updateHabitantType = createAsyncThunk(
     try {
       const response = await axiosInstance.put(`/HabitantType/${data.id}`, data)
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Cập nhật thành công')
       }
       return response.json()
     } catch (error) {
@@ -42,7 +42,7 @@ export const deleteHabitantType = createAsyncThunk(
     try {
       const response = await axiosInstance.put(`/HabitantType/Delete/${id}`)
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Đổi trạng thái thành công')
         return response.data
       }
     } catch (error) {

@@ -22,7 +22,7 @@ export const createTaskType = createAsyncThunk(
     try {
       const response = await axiosInstance.post('/TaskType', data)
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Thêm mới thành công')
         return response.data.data
       }
     } catch (error) {
@@ -38,7 +38,7 @@ export const updateTaskType = createAsyncThunk(
     try {
       const response = await axiosInstance.put(`/TaskType/${data.id}`, data)
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Cập nhật thành công')
       }
       return response.json()
     } catch (error) {
@@ -54,7 +54,7 @@ export const deleteTaskType = createAsyncThunk(
     try {
       const response = await axiosInstance.delete(`/TaskType/${id}`)
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Xoá thành công')
       }
       return response.data
     } catch (error) {

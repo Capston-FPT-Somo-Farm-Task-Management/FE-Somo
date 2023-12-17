@@ -48,7 +48,7 @@ export const createTaskTypeByExcel = createAsyncThunk(
         config
       )
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Thêm mới thành công')
         return response.data.data
       }
     } catch (error) {

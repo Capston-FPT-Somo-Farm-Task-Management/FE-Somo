@@ -26,7 +26,7 @@ export const createFarm = createAsyncThunk(
         },
       })
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Tạo thành công trang trại')
         return response.data.data
       }
     } catch (error) {
@@ -46,7 +46,7 @@ export const updateFarm = createAsyncThunk(
         },
       })
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Cập nhật thành công')
         return response.data.data
       }
     } catch (error) {
