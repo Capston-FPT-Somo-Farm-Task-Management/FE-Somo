@@ -29,7 +29,8 @@ function RepeatSelect({
     const currentDayjs = dayjs(current);
 
     // Tính khoảng cách ngày
-    const daysDifference = dayjs(endDate).diff(startDate, "day") + 1;
+    const daysDifference = dayjs(endDate.format("YYYY-MM-DD")).diff(startDate.format("YYYY-MM-DD"), "day");
+
 
     // Disable ngày từ quá khứ đến endDate
     if (

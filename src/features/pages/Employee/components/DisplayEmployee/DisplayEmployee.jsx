@@ -76,7 +76,6 @@ const DisplayEmployee = ({
         m.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : []
-  console.log(searchEmployee)
   return (
     <>
       {loading ? (
