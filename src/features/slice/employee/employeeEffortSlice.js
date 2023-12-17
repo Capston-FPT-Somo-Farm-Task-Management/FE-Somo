@@ -23,7 +23,7 @@ export const getEmployeeEffortExcel = createAsyncThunk(
       link.href = url
       link.setAttribute(
         'download',
-        `BangChamCongThang${data.month}Nam${data.year}.xlsx`
+        `ChiTietGioLam${data.month}Nam${data.year}.xlsx`
       )
       document.body.appendChild(link)
       link.click()
@@ -57,7 +57,7 @@ export const getEmployeeEffortByEmployeeId = createAsyncThunk(
       link.href = url
       link.setAttribute(
         'download',
-        `BangChamCong - ${data.month}|${data.year} - ${data.code}.xlsx`
+        `ChiTietGioLam - ${data.month}|${data.year} - ${data.code}.xlsx`
       )
       document.body.appendChild(link)
       link.click()

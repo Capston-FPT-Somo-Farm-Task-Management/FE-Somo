@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   UserOutlined,
   BellOutlined,
@@ -8,8 +8,8 @@ import {
   UploadOutlined,
   LoadingOutlined,
   InfoCircleOutlined,
-  LogoutOutlined
-} from "@ant-design/icons";
+  LogoutOutlined,
+} from '@ant-design/icons'
 import {
   Dropdown,
   Avatar,
@@ -24,142 +24,157 @@ import {
   Menu,
   Skeleton,
   Spin,
-} from "antd";
-import { useSelector, useDispatch } from "react-redux";
-import { deleteHubConnection } from "features/slice/hub/hubSlice";
-import { authServices } from "services/authServices";
-import { toast } from "react-toastify";
-import dayjs from "dayjs";
+} from 'antd'
+import { useSelector, useDispatch } from 'react-redux'
+import { deleteHubConnection } from 'features/slice/hub/hubSlice'
+import { authServices } from 'services/authServices'
+import { toast } from 'react-toastify'
+import dayjs from 'dayjs'
 import {
   getMemberById,
   updateMember,
   updatePassword,
-} from "features/slice/user/memberSlice";
-import Notification from "features/pages/Notification";
-import { countNewNotify } from "features/slice/notification/notificationCountSlice";
-import { changeAllNotifyNewToRead } from "features/slice/notification/notifyChangeSlice";
-import UserProfile from "./components/HeaderOption/UserProfile";
-import EditProfile from "./components/HeaderOption/EditProfile";
-import ChangePassword from "./components/HeaderOption/ChangePassword";
+} from 'features/slice/user/memberSlice'
+import Notification from 'features/pages/Notification'
+import {
+  countNewNotify,
+  updateNotificationReceived,
+} from 'features/slice/notification/notificationCountSlice'
+import { changeAllNotifyNewToRead } from 'features/slice/notification/notifyChangeSlice'
+import UserProfile from './components/HeaderOption/UserProfile'
+import EditProfile from './components/HeaderOption/EditProfile'
+import ChangePassword from './components/HeaderOption/ChangePassword'
 import {
   useMobileMediaQuery,
   useTabletMediaQuery,
-} from "common/hooks/responsive";
-import SidebarOnHeader from "./components/HeaderOption/SidebarOnHeader";
+} from 'common/hooks/responsive'
+import SidebarOnHeader from './components/HeaderOption/SidebarOnHeader'
 
 function HeaderComp() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [isModalVisible, setIsModalVisible] = useState(false)
   const [changePasswordModalVisible, setChangePasswordModalVisible] =
-    useState(false);
-  const [oldPasswordVisible, setOldPasswordVisible] = useState(false);
-  const [newPasswordVisible, setNewPasswordVisible] = useState(false);
-  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-  const [oldPasswordValue, setOldPasswordValue] = useState("");
-  const [newPasswordValue, setNewPasswordValue] = useState("");
-  const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isModalEditVisible, setIsModalEditVisible] = useState(false);
-  const [fileList, setFileList] = useState([]);
-  const [selectedCityName, setSelectedCityName] = useState("");
-  const [selectedDistrictName, setSelectedDistrictName] = useState("");
-  const [selectedWardName, setSelectedWardName] = useState("");
+    useState(false)
+  const [oldPasswordVisible, setOldPasswordVisible] = useState(false)
+  const [newPasswordVisible, setNewPasswordVisible] = useState(false)
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false)
+  const [oldPasswordValue, setOldPasswordValue] = useState('')
+  const [newPasswordValue, setNewPasswordValue] = useState('')
+  const [confirmPasswordValue, setConfirmPasswordValue] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isModalEditVisible, setIsModalEditVisible] = useState(false)
+  const [fileList, setFileList] = useState([])
+  const [selectedCityName, setSelectedCityName] = useState('')
+  const [selectedDistrictName, setSelectedDistrictName] = useState('')
+  const [selectedWardName, setSelectedWardName] = useState('')
 
-  const [form] = Form.useForm();
+  const [form] = Form.useForm()
 
-  const member = useSelector((state) => state.member.data);
-  const countNew = useSelector((state) => state.notificationCount.data);
-  const loading = useSelector((state) => state.member.loading);
-
+  const member = useSelector((state) => state.member.data)
+  const countNew = useSelector((state) => state.notificationCount.data)
+  const loading = useSelector((state) => state.member.loading)
+  const receivedNotification = useSelector(
+    (state) => state.notificationCount.received
+  )
+  console.log(receivedNotification)
   useEffect(() => {
-    dispatch(countNewNotify(member?.id));
-    dispatch(getMemberById(authServices.getUserId()));
-  }, [dispatch]);
+    if (receivedNotification && member?.id) {
+      dispatch(countNewNotify(member.id))
+      dispatch(updateNotificationReceived(false))
+    }
+    dispatch(getMemberById(authServices.getUserId()))
+  }, [dispatch, receivedNotification])
 
   useEffect(() => {
     if (member?.avatar) {
       setFileList([
         {
-          uid: "-1",
-          name: "image.png",
-          status: "done",
+          uid: '-1',
+          name: 'image.png',
+          status: 'done',
           url: member ? member.avatar : null,
         },
-      ]);
+      ])
     }
-  }, [member]);
+  }, [member])
 
   const onFileChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-  };
+    setFileList(newFileList)
+  }
 
   const handleChangePassword = (e) => {
-    setOldPasswordValue(e.target.value);
-  };
+    setOldPasswordValue(e.target.value)
+  }
 
   const handleChangeNewPassword = (e) => {
-    setNewPasswordValue(e.target.value);
-  };
+    setNewPasswordValue(e.target.value)
+  }
 
   const handleConfirmPassword = (e) => {
-    setConfirmPasswordValue(e.target.value);
-  };
+    setConfirmPasswordValue(e.target.value)
+  }
 
   const handleOpenEditProfile = () => {
-    setIsModalEditVisible(true);
-    setIsModalVisible(false);
-  };
+    setIsModalEditVisible(true)
+    setIsModalVisible(false)
+  }
 
   const closeEditProfile = () => {
-    setIsModalEditVisible(false);
-    setIsModalVisible(true);
-  };
+    setIsModalEditVisible(false)
+    setIsModalVisible(true)
+  }
 
   const showModal = () => {
-    setIsModalVisible(true);
-  };
+    setIsModalVisible(true)
+  }
 
   const handleCancel = () => {
-    setIsModalVisible(false);
-  };
+    setIsModalVisible(false)
+  }
 
   const changePasswordModal = () => {
-    setChangePasswordModalVisible(true);
-  };
+    setChangePasswordModalVisible(true)
+  }
 
   const changePasswordCancel = () => {
-    setOldPasswordValue("");
-    setNewPasswordValue("");
-    setConfirmPasswordValue("");
-    setChangePasswordModalVisible(false);
-  };
+    setOldPasswordValue('')
+    setNewPasswordValue('')
+    setConfirmPasswordValue('')
+    setChangePasswordModalVisible(false)
+  }
 
   const formattedBirthDay = member
-    ? dayjs(member.birthday).format("DD-MM-YYYY")
-    : null;
+    ? dayjs(member.birthday).format('DD-MM-YYYY')
+    : null
 
   const logout = () => {
-    const data = { token: localStorage.getItem("connectionId") };
-    dispatch(deleteHubConnection(data));
-    authServices.logOut();
-    toast.success("Đăng xuất thành công");
-    navigate("/login");
-  };
+    const data = { token: localStorage.getItem('connectionId') }
+    dispatch(deleteHubConnection(data))
+    authServices.logOut()
+    toast.success('Đăng xuất thành công')
+    navigate('/login')
+  }
 
   const items = (
     <div className="menu-header">
-      <p onClick={showModal}><InfoCircleOutlined /> Xem thông tin</p>
-      <p onClick={changePasswordModal}><EditOutlined /> Đổi mật khẩu</p>
+      <p onClick={showModal}>
+        <InfoCircleOutlined /> Xem thông tin
+      </p>
+      <p onClick={changePasswordModal}>
+        <EditOutlined /> Đổi mật khẩu
+      </p>
       <p key="/login" onClick={logout}>
-        <span><LogoutOutlined /> Đăng xuất</span>
+        <span>
+          <LogoutOutlined /> Đăng xuất
+        </span>
         <Link to="/login"></Link>
       </p>
     </div>
-  );
+  )
 
   const handleEditProfile = (values) => {
-    setIsSubmitting(true);
+    setIsSubmitting(true)
     // const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`
     const editProfile = {
       ...values,
@@ -167,37 +182,45 @@ function HeaderComp() {
       imageFile: fileList[0].originFileObj,
       address: member.address,
       birthday: member.birthday,
-    };
+    }
     dispatch(updateMember({ id: member.id, body: editProfile })).then(() => {
-      setIsModalEditVisible(false);
-      setIsModalVisible(true);
-      setIsSubmitting(false);
-    });
-  };
+      setIsModalEditVisible(false)
+      setIsModalVisible(true)
+      setIsSubmitting(false)
+    })
+  }
 
   const handleSubmitChangePassword = (values) => {
-    setIsSubmitting(true);
+    setIsSubmitting(true)
     const updatedPassword = {
       ...values,
       id: member.id,
       oldPassword: oldPasswordValue,
       password: newPasswordValue,
       confirmPassword: confirmPasswordValue,
-    };
+    }
     dispatch(updatePassword(updatedPassword)).then(() => {
-      changePasswordCancel();
-      setIsSubmitting(false);
-      setOldPasswordValue("")
-      setNewPasswordValue("")
-      setConfirmPasswordValue("")
-    });
-  };
+      changePasswordCancel()
+      setIsSubmitting(false)
+      setOldPasswordValue('')
+      setNewPasswordValue('')
+      setConfirmPasswordValue('')
+    })
+  }
 
-  const changeNewToRead = () => {
-    dispatch(changeAllNotifyNewToRead(member?.id));
-  };
+  const changeNewToRead = async () => {
+    try {
+      await dispatch(changeAllNotifyNewToRead(member?.id))
+        .unwrap()
+        .then(() => {
+          dispatch(countNewNotify(member?.id))
+        })
+    } catch (error) {
+      console.error('Failed to change notifications to read:', error)
+    }
+  }
 
-  const isMobile = useMobileMediaQuery();
+  const isMobile = useMobileMediaQuery()
   const isTablet = useTabletMediaQuery()
 
   return (
@@ -212,10 +235,10 @@ function HeaderComp() {
                 content={
                   <div
                     style={{
-                      height: "500px",
-                      overflowY: "auto",
-                      padding: "10px",
-                      width: "400px"
+                      height: '500px',
+                      overflowY: 'auto',
+                      padding: '10px',
+                      width: '400px',
                     }}
                   >
                     <Notification />
@@ -236,7 +259,7 @@ function HeaderComp() {
                   <LoadingOutlined
                     style={{
                       fontSize: 24,
-                      color: "black",
+                      color: 'black',
                     }}
                     spin
                   />
@@ -247,7 +270,7 @@ function HeaderComp() {
           <div className="header-profile">
             <Popover
               content={items}
-              trigger={isTablet ? ["click"] : ["hover"]}
+              trigger={isTablet ? ['click'] : ['hover']}
               placement="bottom"
               arrow
             >
@@ -259,21 +282,21 @@ function HeaderComp() {
                     <DownOutlined />
                   </Space>
                 ) : (
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
                     <Skeleton.Avatar
                       active
                       size="large"
                       shape="circle"
                       style={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginRight: "10px",
+                        display: 'flex',
+                        alignItems: 'center',
+                        marginRight: '10px',
                       }}
                     />
 
                     <Skeleton.Input
                       active
-                      style={{ display: "flex", alignItems: "center" }}
+                      style={{ display: 'flex', alignItems: 'center' }}
                       size="small"
                     />
                     <DownOutlined />
@@ -323,7 +346,7 @@ function HeaderComp() {
         </div>
       </nav>
     </>
-  );
+  )
 }
 
-export default HeaderComp;
+export default HeaderComp

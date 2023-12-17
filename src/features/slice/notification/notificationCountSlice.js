@@ -23,6 +23,12 @@ const notificationCountSlice = createSlice({
     data: [],
     loading: false,
     error: '',
+    received: false,
+  },
+  reducers: {
+    updateNotificationReceived: (state, action) => {
+      state.received = action.payload
+    },
   },
   extraReducers(builder) {
     builder
@@ -40,4 +46,5 @@ const notificationCountSlice = createSlice({
   },
 })
 
+export const { updateNotificationReceived } = notificationCountSlice.actions
 export default notificationCountSlice.reducer
