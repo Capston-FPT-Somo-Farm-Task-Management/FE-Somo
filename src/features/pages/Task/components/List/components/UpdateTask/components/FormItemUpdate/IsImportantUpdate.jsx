@@ -7,14 +7,14 @@ const IsImportantUpdate = ({
   handleSelectImportant,
 }) => {
   return (
-    <Form.Item label="Được từ chối nữa không?" name="isImportant">
+    <Form.Item label="Cho phép tiếp tục từ chối" name="isImportant">
       <Select
         value={importantValue}
         onChange={handleSelectImportant}
-        placeholder="Được"
+        placeholder="Cho phép"
       >
-        <Select.Option value={false}>Được</Select.Option>
-        <Select.Option value={true}>Không</Select.Option>
+        <Select.Option value={false}>Cho phép</Select.Option>
+        <Select.Option value={true}>Không cho phép</Select.Option>
       </Select>
     </Form.Item>
   );

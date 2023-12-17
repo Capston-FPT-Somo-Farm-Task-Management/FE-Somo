@@ -7,6 +7,7 @@ import { authServices } from "services/authServices";
 import ViewProfile from "./ViewProfile";
 import dayjs from "dayjs";
 import EditProfileAdmin from "./EditProfileAdmin";
+import { getAdminById } from "features/slice/user/adminSlice";
 
 const ProfileAdmin = () => {
   const [isModalEditVisible, setIsModalEditVisible] = useState(false);
@@ -19,31 +20,31 @@ const ProfileAdmin = () => {
 
   const dispatch = useDispatch();
 
-  const member = useSelector((state) => state.member.data);
+  const admin = useSelector((state) => state.admin.data);
 
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()));
   }, [dispatch]);
 
   useEffect(() => {
-    if (member?.avatar) {
+    if (admin?.avatar) {
       setFileList([
         {
           uid: "-1",
           name: "image.png",
           status: "done",
-          url: member ? member.avatar : null,
+          url: admin ? admin.avatar : null,
         },
       ]);
     }
-  }, [member]);
+  }, [admin]);
 
   const onFileChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
 
-  const formattedBirthDay = member
-    ? dayjs(member.birthday).format("DD-MM-YYYY")
+  const formattedBirthDay = admin
+    ? dayjs(admin.birthday).format("DD-MM-YYYY")
     : null;
 
   const handleOpenEditProfile = () => {
@@ -59,13 +60,13 @@ const ProfileAdmin = () => {
     // const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`
     const editProfile = {
       ...values,
-      code: member.code,
+      code: admin.code,
       imageFile: fileList[0].originFileObj,
-      address: member.address,
-      birthday: member.birthday,
+      address: admin.address,
+      birthday: admin.birthday,
     };
-    dispatch(updateMember({ id: member.id, body: editProfile })).then(() => {
-      dispatch(getMemberById(authServices.getUserId()));
+    dispatch(updateMember({ id: admin.id, body: editProfile })).then(() => {
+      dispatch(getAdminById(authServices.getUserId()));
       setIsModalEditVisible(false);
       setIsSubmitting(false);
     });
@@ -74,7 +75,7 @@ const ProfileAdmin = () => {
   return (
     <>
       <ViewProfile
-        member={member}
+        admin={admin}
         handleOpenEditProfile={handleOpenEditProfile}
         formattedBirthDay={formattedBirthDay}
       />
@@ -84,7 +85,7 @@ const ProfileAdmin = () => {
         handleEditProfile={handleEditProfile}
         fileList={fileList}
         onFileChange={onFileChange}
-        member={member}
+        admin={admin}
         isSubmitting={isSubmitting}
         setSelectedCityName={setSelectedCityName}
         setSelectedDistrictName={setSelectedDistrictName}
