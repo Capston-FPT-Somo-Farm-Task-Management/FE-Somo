@@ -39,9 +39,7 @@ const DetailCropGroup = ({
               {selectedDataDetail.areaName}
             </Descriptions.Item>
             <Descriptions.Item label="Trạng thái">
-              {selectedDataDetail.isDelete === false
-                ? 'Tồn tại'
-                : 'Không tồn tai'}
+              {selectedDataDetail.isDelete === false ? 'Hiện' : 'Ẩn'}
             </Descriptions.Item>
           </Descriptions>
         </>
