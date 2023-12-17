@@ -26,13 +26,6 @@ const DisplayByWeek = ({ farmId }) => {
     dispatch(getTaskTopEmployee(farmId))
   }, [dispatch, farmId])
 
-  // const formattedStartDay = taskCompleteRate
-  //   ? format(new Date(taskCompleteRate?.data?.startDay), 'dd/MM/yyyy')
-  //   : null
-  // const formattedEndDay = taskCompleteRate
-  //   ? format(new Date(taskCompleteRate?.data?.endDay), 'dd/MM/yyyy')
-  //   : null
-
   return (
     <div className="admin-dashboard">
       <h3>Công việc tuần này</h3>
