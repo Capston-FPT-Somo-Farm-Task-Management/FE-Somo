@@ -18,7 +18,7 @@ const EditProfileAdmin = ({
     handleEditProfile,
     fileList,
     onFileChange,
-    member,
+    admin,
     isSubmitting,
     setSelectedCityName,
     setSelectedDistrictName,
@@ -37,9 +37,9 @@ const EditProfileAdmin = ({
     const [selectedWardCode, setSelectedWardCode] = useState(null);
   
     useEffect(() => {
-      if (member) {
+      if (admin) {
         // Phân tích địa chỉ
-        const addressParts = member.address ? member.address.split(", ") : null;
+        const addressParts = admin.address ? admin.address.split(", ") : null;
   
         const selectedCityName = addressParts ? addressParts[2] : null;
         const selectedDistrictName = addressParts ? addressParts[1] : null;
@@ -73,7 +73,7 @@ const EditProfileAdmin = ({
           });
         }
       }
-    }, [member, cities, dispatch, form]);
+    }, [admin, cities, dispatch, form]);
   
     const handleCityChange = async (value, option) => {
       setSelectedCityName(option.children);
@@ -144,7 +144,7 @@ const EditProfileAdmin = ({
                     message: "Vui lòng nhập tên",
                   },
                 ]}
-                initialValue={member ? member.name : null}
+                initialValue={admin ? admin.name : null}
               >
                 <Input placeholder="Nhập tên" />
               </Form.Item>
@@ -157,7 +157,7 @@ const EditProfileAdmin = ({
                   },
                 ]}
                 name="email"
-                initialValue={member ? member.email : null}
+                initialValue={admin ? admin.email : null}
               >
                 <Input placeholder="Nhập email" />
               </Form.Item>
@@ -170,7 +170,7 @@ const EditProfileAdmin = ({
                   },
                 ]}
                 name="phoneNumber"
-                initialValue={member ? member.phoneNumber : null}
+                initialValue={admin ? admin.phoneNumber : null}
               >
                 <Input placeholder="Nhập số điện thoại" />
               </Form.Item>

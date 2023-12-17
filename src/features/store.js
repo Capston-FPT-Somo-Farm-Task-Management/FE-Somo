@@ -59,6 +59,7 @@ import effortReducer from './slice/effort/effortSlice'
 import effortInWeekReducer from './slice/effort/effortInWeekSlice'
 import habitantTypeReducer from './slice/habitant/habitantTypeSlice'
 import memberReducer from './slice/user/memberSlice'
+import adminReducer from './slice/user/adminSlice'
 import passwordReducer from './slice/user/passwordSlice'
 import memberByFarmReducer from './slice/user/memberByFarm'
 import statusReducer from './slice/status/statusSlice'
@@ -131,6 +132,7 @@ export const store = configureStore({
     habitantType: habitantTypeReducer,
     member: memberReducer,
     memberByFarm: memberByFarmReducer,
+    admin: adminReducer,
     status: statusReducer,
     hub: hubReducer,
     notification: notificationReducer,

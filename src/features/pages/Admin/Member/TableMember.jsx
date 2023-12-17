@@ -8,15 +8,15 @@ import {
   Skeleton,
   Space,
   Table,
-} from 'antd'
-import Column from 'antd/es/table/Column'
-import { useEffect, useState } from 'react'
-import DetailMember from './DetailMember'
-import UpdateMember from './UpdateMember'
-import { getMemberById } from 'features/slice/user/memberSlice'
-import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
-import Search from 'antd/es/input/Search'
+} from "antd";
+import Column from "antd/es/table/Column";
+import { useEffect, useState } from "react";
+import DetailMember from "./DetailMember";
+import UpdateMember from "./UpdateMember";
+import { getMemberById } from "features/slice/user/memberSlice";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import Search from "antd/es/input/Search";
 
 const TableMember = ({
   memberByFarm,
@@ -25,71 +25,71 @@ const TableMember = ({
   onFinishUpdate,
   loading,
 }) => {
-  const [isModalOpenDetail, setIsModalOpenDetail] = useState(false)
-  const [selectedMember, setSelectedMember] = useState(null)
+  const [isModalOpenDetail, setIsModalOpenDetail] = useState(false);
+  const [selectedMember, setSelectedMember] = useState(null);
 
   const showModal = (record) => {
-    setSelectedMember(record)
-    setIsModalOpenDetail(true)
-  }
+    setSelectedMember(record);
+    setIsModalOpenDetail(true);
+  };
 
   const closeModalDetail = () => {
-    setSelectedMember(null)
-    setIsModalOpenDetail(false)
-  }
+    setSelectedMember(null);
+    setIsModalOpenDetail(false);
+  };
 
   // --------------------------------------------
   // Update
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
     if (selectedMember) {
-      dispatch(getMemberById(selectedMember.id))
+      dispatch(getMemberById(selectedMember.id));
     }
-  }, [selectedMember, dispatch])
+  }, [selectedMember, dispatch]);
 
-  const memberById = useSelector((state) => state.member.data)
+  const memberById = useSelector((state) => state.member.data);
 
-  const [isModalOpenUpdate, setIsModalOpenUpdate] = useState(false)
+  const [isModalOpenUpdate, setIsModalOpenUpdate] = useState(false);
 
   const openModalUpdate = async (record) => {
-    await dispatch(getMemberById(record.id))
-    setSelectedMember(record)
-    setIsModalOpenUpdate(true)
-  }
+    await dispatch(getMemberById(record.id));
+    setSelectedMember(record);
+    setIsModalOpenUpdate(true);
+  };
 
   const closeModalUpdate = () => {
-    setIsModalOpenUpdate(false)
-    setSelectedMember(null)
-  }
+    setIsModalOpenUpdate(false);
+    setSelectedMember(null);
+  };
 
-  const [searchTerm, setSearchTerm] = useState('')
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (value) => {
-    setSearchTerm(value)
-  }
+    setSearchTerm(value);
+  };
 
   const searchMember = memberByFarm
     ? memberByFarm?.data?.filter(
         (m) =>
           m.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-          m.roleName !== 'Admin'
+          m.roleName !== "Admin"
       )
-    : []
-  console.log(searchMember)
+    : [];
+    console.log(searchMember);
   return (
     <>
       {loading ? (
         <Skeleton active />
       ) : (
         <>
-          <Space style={{ justifyContent: 'flex-end', width: '98%' }}>
+          <Space style={{ justifyContent: "flex-end", width: "98%" }}>
             <Search
               placeholder="Tìm kiếm"
               allowClear
               style={{
-                marginLeft: '15px',
+                marginLeft: "15px",
                 width: 300,
-                marginBottom: '20px',
+                marginBottom: "20px",
               }}
               onChange={(e) => handleSearch(e.target.value)}
             />
@@ -99,14 +99,22 @@ const TableMember = ({
               title="Hình ảnh"
               dataIndex="avatar"
               key="avatar"
-              render={(text, record) => (
-                <Image
-                  width={50}
-                  height={50}
-                  src={record.avatar}
-                  style={{ objectFit: 'cover', borderRadius: '50%' }}
-                />
-              )}
+              render={(text, record) =>
+              
+                record.avatar ? (
+                  <Image
+                    width={50}
+                    height={50}
+                    src={record.avatar}
+                    style={{ objectFit: "cover", borderRadius: "50%" }}
+                  />
+                ) : <Image
+                    width={50}
+                    height={50}
+                    src="https://media.saodaily.com/storage/files/lethihong/2022/07/26/264-2647677_avatar-icon-human-user-avatar-svg-hd-png-024032.png"
+                    style={{ objectFit: "cover", borderRadius: "50%" }}
+                  />
+              }
             />
             <Column
               title="Tên nhân viên"
@@ -115,7 +123,7 @@ const TableMember = ({
               render={(text, record) => (
                 <h4
                   onClick={() => showModal(record)}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 >
                   {text}
                 </h4>
@@ -126,18 +134,18 @@ const TableMember = ({
               dataIndex="roleName"
               key="2"
               render={(roleName) => {
-                let displayRole
+                let displayRole;
                 switch (roleName) {
-                  case 'Manager':
-                    displayRole = 'Quản lý'
-                    break
-                  case 'Supervisor':
-                    displayRole = 'Giám sát'
-                    break
+                  case "Manager":
+                    displayRole = "Quản lý";
+                    break;
+                  case "Supervisor":
+                    displayRole = "Giám sát";
+                    break;
                   default:
-                    displayRole = roleName
+                    displayRole = roleName;
                 }
-                return <span>{displayRole}</span>
+                return <span>{displayRole}</span>;
               }}
             />
             <Column
@@ -145,7 +153,7 @@ const TableMember = ({
               dataIndex="status"
               key="4"
               render={(status) =>
-                status === 'Đang làm việc' ? (
+                status === "Đang làm việc" ? (
                   <Badge status="success" text="Đang làm việc" />
                 ) : (
                   <Badge status="error" text="Đã nghỉ việc" />
@@ -189,7 +197,7 @@ const TableMember = ({
             />
           </Table>
           <DetailMember
-            key={'detail-' + (selectedMember ? selectedMember.id : null)}
+            key={"detail-" + (selectedMember ? selectedMember.id : null)}
             isModalOpenDetail={isModalOpenDetail}
             closeModalDetail={closeModalDetail}
             selectedMember={selectedMember}
@@ -206,6 +214,6 @@ const TableMember = ({
         </>
       )}
     </>
-  )
-}
-export default TableMember
+  );
+};
+export default TableMember;
