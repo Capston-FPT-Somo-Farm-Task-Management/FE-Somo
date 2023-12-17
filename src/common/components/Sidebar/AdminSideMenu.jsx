@@ -34,6 +34,7 @@ import SubMenu from 'antd/es/menu/SubMenu'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { getMemberById, updatePassword } from 'features/slice/user/memberSlice'
+import { getAdminById } from 'features/slice/user/adminSlice'
 
 const { Sider } = Layout
 
@@ -57,10 +58,10 @@ const AdminSideMenu = () => {
   const isDesktop = useDesktopMediaQuery()
   const isTablet = useTabletMediaQuery()
 
-  const member = useSelector((state) => state.member.data)
+  const adminData = useSelector((state) => state.admin.data)
 
   useEffect(() => {
-    dispatch(getMemberById(authServices.getUserId()))
+    dispatch(getAdminById(authServices.getUserId()))
   }, [dispatch])
 
   useEffect(() => {
@@ -85,14 +86,14 @@ const AdminSideMenu = () => {
   const handleSubmitChangePassword = (values) => {
     const updatedPassword = {
       ...values,
-      id: member.id,
+      id: adminData.id,
       oldPassword: oldPasswordValue,
       password: newPasswordValue,
       confirmPassword: confirmPasswordValue,
     }
     dispatch(updatePassword(updatedPassword)).then(() => {
       setChangePasswordDrawer(false)
-      dispatch(getMemberById(authServices.getUserId()))
+      dispatch(getAdminById(authServices.getUserId()))
       setOldPasswordValue('')
       setNewPasswordValue('')
       setConfirmPasswordValue('')
@@ -179,8 +180,8 @@ const AdminSideMenu = () => {
               key="profile"
               title={
                 <Space>
-                  <Avatar shape="circle" size="small" src={member?.avatar} />
-                  <p>{member?.name}</p>
+                  <Avatar shape="circle" size="small" src={adminData?.avatar} />
+                  <p>{adminData?.name}</p>
                 </Space>
               }
             >
@@ -303,9 +304,9 @@ const AdminSideMenu = () => {
                         <Avatar
                           shape="circle"
                           size="small"
-                          src={member?.avatar}
+                          src={adminData?.avatar}
                         />
-                        <p>{member?.name}</p>
+                        <p>{adminData?.name}</p>
                       </Space>
                     }
                   >

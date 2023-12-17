@@ -1,11 +1,15 @@
-import React from 'react'
-import { Button, Modal, Descriptions, Avatar, Image } from 'antd'
+import React from "react";
+import { Button, Modal, Descriptions, Avatar, Image } from "antd";
+import dayjs from "dayjs";
 
 const DetailMember = ({
   isModalOpenDetail,
   closeModalDetail,
   selectedMember,
 }) => {
+  const formattedBirthDay = selectedMember
+    ? dayjs(selectedMember.birthday).format("DD-MM-YYYY")
+    : null;
   return (
     <Modal
       title="Thông tin nhân viên"
@@ -26,7 +30,7 @@ const DetailMember = ({
             {selectedMember.userName}
           </Descriptions.Item>
           <Descriptions.Item label="Ngày sinh">
-            {selectedMember.birthday}
+            {formattedBirthDay}
           </Descriptions.Item>
           <Descriptions.Item label="Địa chỉ">
             {selectedMember.address}
@@ -43,7 +47,7 @@ const DetailMember = ({
         </Descriptions>
       )}
     </Modal>
-  )
-}
+  );
+};
 
-export default DetailMember
+export default DetailMember;
