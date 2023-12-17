@@ -1,4 +1,4 @@
-@import "../../../../styles/Helper/mixin";
+@import '../../../../styles/Helper/mixin';
 .admin-displayByWeek {
   @include flex(row, space-around, center, wrap);
   .ant-card {

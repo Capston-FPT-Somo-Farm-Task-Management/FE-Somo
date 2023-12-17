@@ -37,9 +37,7 @@ const DetailPlantType = ({
               {selectedDataDetail.description}
             </Descriptions.Item>
             <Descriptions.Item label="Trạng thái">
-              {selectedDataDetail.isActive === true
-                ? 'Tồn tại'
-                : 'Không tồn tại'}
+              {selectedDataDetail.isActive === true ? 'Hiện' : 'Ẩn'}
             </Descriptions.Item>
           </Descriptions>
         </>

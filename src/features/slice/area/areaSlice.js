@@ -24,7 +24,7 @@ export const createArea = createAsyncThunk(
     try {
       const response = await axiosInstance.post('/Area', data)
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Thêm mới thành công')
         return response.data.data
       }
     } catch (error) {
@@ -40,7 +40,7 @@ export const updateArea = createAsyncThunk(
     try {
       const response = await axiosInstance.put(`/Area/${data.id}`, data)
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Cập nhật thành công')
       }
       return response.json()
     } catch (error) {
@@ -72,7 +72,7 @@ export const adminDeleteArea = createAsyncThunk(
     try {
       const response = await axiosInstance.delete(`/Area/${id}`)
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Xoá thành công')
         return response.data
       }
     } catch (error) {
