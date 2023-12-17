@@ -75,7 +75,6 @@ const TableMember = ({
           m.roleName !== "Admin"
       )
     : [];
-    console.log(searchMember);
   return (
     <>
       {loading ? (
