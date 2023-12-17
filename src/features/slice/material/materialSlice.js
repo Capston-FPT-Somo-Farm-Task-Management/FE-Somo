@@ -26,7 +26,7 @@ export const createMaterial = createAsyncThunk(
         },
       })
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Thêm mới thành công')
         return response.data.data
       }
     } catch (error) {
@@ -52,7 +52,7 @@ export const updateMaterial = createAsyncThunk(
       )
 
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Cập nhật thành công')
       }
       return response.json()
     } catch (error) {

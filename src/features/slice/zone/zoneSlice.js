@@ -10,8 +10,7 @@ export const getZoneActive = createAsyncThunk(
     try {
       const { data } = await axiosInstance.get('/Zone/Active')
       return data
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 )
 
@@ -21,7 +20,7 @@ export const createZone = createAsyncThunk(
     try {
       const response = await axiosInstance.post('/Zone', data)
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Thêm mới thành công')
         return response.data.data
       }
     } catch (error) {
@@ -37,7 +36,7 @@ export const updateZone = createAsyncThunk(
     try {
       const response = await axiosInstance.put(`/Zone/${data.id}`, data)
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Cập nhật thành công')
       }
       return response.json()
     } catch (error) {
@@ -69,7 +68,7 @@ export const adminDeleteZone = createAsyncThunk(
     try {
       const response = await axiosInstance.delete(`/Zone/${id}`)
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Xoá thành công')
         return response.data
       }
     } catch (error) {

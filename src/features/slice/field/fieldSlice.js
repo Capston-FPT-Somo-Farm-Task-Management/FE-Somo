@@ -10,7 +10,7 @@ export const createField = createAsyncThunk(
     try {
       const response = await axiosInstance.post('/Field', data)
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Thêm mới thành công')
         return response.data.data
       }
     } catch (error) {
@@ -38,7 +38,7 @@ export const updateField = createAsyncThunk(
     try {
       const response = await axiosInstance.put(`/Field/${data.id}`, data)
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Cập nhật thành công')
       }
       return response.json()
     } catch (error) {
@@ -54,7 +54,7 @@ export const deleteField = createAsyncThunk(
     try {
       const response = await axiosInstance.put(`/Field/Delete/${id}`)
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Đổi trạng thái thành công')
       }
       return response.data
     } catch (error) {
@@ -70,7 +70,7 @@ export const adminDeleteField = createAsyncThunk(
     try {
       const response = await axiosInstance.delete(`/Field/${id}`)
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Xoá thành công')
       }
       return response.data
     } catch (error) {

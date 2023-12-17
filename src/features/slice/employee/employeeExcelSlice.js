@@ -48,7 +48,7 @@ export const createEmployeeByExcel = createAsyncThunk(
         config
       )
       if (response.status === 200) {
-        toast.success(response.data.message)
+        toast.success('Thêm nhân viên thành công')
         return response.data.data
       }
     } catch (error) {
