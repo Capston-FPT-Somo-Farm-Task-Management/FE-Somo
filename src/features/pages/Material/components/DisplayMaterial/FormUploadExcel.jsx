@@ -37,7 +37,7 @@ const FormUploadExcel = ({
     return false
   }
 
-  const onChange = ({ file, fileList: newFileList }) => {
+  const onChange = ({ file }) => {
     const latestFile = file.status === 'removed' ? [] : [file]
     setFileList(latestFile)
     form.setFieldsValue({ excelFile: file })

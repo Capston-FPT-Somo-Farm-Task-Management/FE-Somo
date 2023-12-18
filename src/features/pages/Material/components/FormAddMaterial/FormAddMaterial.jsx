@@ -18,7 +18,7 @@ const FormAddMaterial = ({
 
   const handleFormReset = () => {
     form.resetFields()
-    setFileList([]) // Resetting fileList to its initial state
+    setFileList([])
     setUploadError(false)
   }
 

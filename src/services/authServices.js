@@ -39,15 +39,6 @@ const getUserId = () => {
   return null
 }
 
-const isLoggedIn = () => {
-  const token = getToken()
-  if (token) {
-    const payload = jwt_decode(token)
-    const isLogin = Date.now() < payload.exp * 1000
-    return isLogin
-  }
-}
-
 const logOut = () => {
   localStorage.removeItem('somoFarm')
   localStorage.removeItem('connectionId')
@@ -59,6 +50,5 @@ export const authServices = {
   getRole,
   getUserName,
   getUserId,
-  isLoggedIn,
   logOut,
 }
