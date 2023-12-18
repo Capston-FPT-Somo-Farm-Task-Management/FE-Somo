@@ -11,6 +11,7 @@ import {
   changeStatusToPendingAndCancel,
   changeStatusToDoing,
   createTaskClone,
+  updateStatusFromToDoToDraft,
 } from "features/slice/task/taskSlice";
 import { getEffort } from "features/slice/effort/effortSlice";
 import { taskTitle } from "./listTaskData";
@@ -35,6 +36,7 @@ import { getActivityByTaskId } from "features/slice/activity/activitySlice";
 import ModalReject from "./components/ModalReject";
 import dayjs from "dayjs";
 import ChangePendingToDoing from "./components/ChangePendingToDoing";
+import ChangeToDoToDraft from "./components/ChangeToDoToDraft";
 
 const List = () => {
   const [activity, setActivity] = useState([]);
@@ -54,6 +56,7 @@ const List = () => {
   const [taskDoneToDoingVisible, setTaskDoneToDoingVisible] = useState(false);
   const [taskDoingToPendingModalVisible, setTaskDoingToPendingModalVisible] =
     useState(false);
+  const [toDoToDraftModalVisible, setToDoToDraftModalVisible] = useState(false);
   const [taskToCancelModalVisible, setTaskToCancelModalVisible] =
     useState(false);
   const [description, setDescription] = useState("");
@@ -151,6 +154,8 @@ const List = () => {
     } else if (e.key === "changeToToDo") {
       openEditTaskModal(record);
       setCheckChangeToToDo(true);
+    } else if (e.key === "changeToDraft") {
+      openToDoToDraftModal(record.id);
     } else if (e.key === "cancel") {
       openChangeStatusToCancelModal(record);
     } else if (e.key === "changeToDoing") {
@@ -178,6 +183,16 @@ const List = () => {
   const closeCloseModal = () => {
     setSelectedTask(null);
     setCloseModalVisible(false);
+  };
+
+  const openToDoToDraftModal = (record) => {
+    setSelectedTask(record);
+    setToDoToDraftModalVisible(true);
+  };
+
+  const closeToDoToDraftModal = () => {
+    setSelectedTask(null);
+    setToDoToDraftModalVisible(false);
   };
 
   const openPendingToDoingModal = (record) => {
@@ -208,7 +223,7 @@ const List = () => {
   const closeRejectModal = () => {
     setSelectedTask(null);
     setRejectModalVisible(false);
-    setIsImportant(false)
+    setIsImportant(false);
   };
 
   const openDeleteModal = (record) => {
@@ -247,6 +262,15 @@ const List = () => {
 
   const closeChangeStatusToCancelModal = () => {
     setTaskToCancelModalVisible(false);
+  };
+
+  const handleChangeToDoToDraft = (id) => {
+    setIsSubmit(true);
+    dispatch(updateStatusFromToDoToDraft(id)).then(() => {
+      loadDataTask();
+      setToDoToDraftModalVisible(false);
+      setIsSubmit(false);
+    });
   };
 
   const handleRefuseTask = (id) => {
@@ -505,6 +529,7 @@ const List = () => {
           openCloseModal={openCloseModal}
           openChangeDoingToPendingModal={openChangeDoingToPendingModal}
           openChangeStatusToCancelModal={openChangeStatusToCancelModal}
+          openToDoToDraftModal={openToDoToDraftModal}
           handleTaskAdded={handleTaskAdded}
           handleDateChange={handleDateChange}
           loadDataTask={loadDataTask}
@@ -623,6 +648,13 @@ const List = () => {
         handleChangePendingAndCancelToDoing={
           handleChangePendingAndCancelToDoing
         }
+        isSubmit={isSubmit}
+      />
+      <ChangeToDoToDraft
+        selectedTaskId={selectedTask}
+        toDoToDraftModalVisible={toDoToDraftModalVisible}
+        closeToDoToDraftModal={closeToDoToDraftModal}
+        handleChangeToDoToDraft={handleChangeToDoToDraft}
         isSubmit={isSubmit}
       />
     </div>
