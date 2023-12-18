@@ -22,6 +22,8 @@ const ProfileAdmin = () => {
 
   const admin = useSelector((state) => state.admin.data);
 
+  const member = useSelector((state) => state.member.data)
+
   useEffect(() => {
     dispatch(getMemberById(authServices.getUserId()));
   }, [dispatch]);
@@ -60,12 +62,12 @@ const ProfileAdmin = () => {
     // const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`
     const editProfile = {
       ...values,
-      code: admin.code,
+      code: member.code,
       imageFile: fileList[0].originFileObj,
-      address: admin.address,
-      birthday: admin.birthday,
+      address: member.address,
+      birthday: member.birthday,
     };
-    dispatch(updateMember({ id: admin.id, body: editProfile })).then(() => {
+    dispatch(updateMember({ id: member.id, body: editProfile })).then(() => {
       dispatch(getAdminById(authServices.getUserId()));
       setIsModalEditVisible(false);
       setIsSubmitting(false);
