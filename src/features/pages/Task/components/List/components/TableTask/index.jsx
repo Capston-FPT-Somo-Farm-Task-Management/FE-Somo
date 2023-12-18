@@ -1,5 +1,5 @@
 import { Dropdown, Menu, Table } from "antd";
-import React, { useState } from "react";
+import React from "react";
 import {
   MoreOutlined,
   EditOutlined,
@@ -117,6 +117,7 @@ function TableTask({
                   record &&
                   (record.status === "Bản nháp" ||
                     record.status === "Chuẩn bị" ||
+                    record.status === "Đã giao" ||
                     record.status === "Từ chối");
                 const isStatusEffortTime =
                   record &&
