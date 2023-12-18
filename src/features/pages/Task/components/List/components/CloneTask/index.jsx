@@ -6,6 +6,7 @@ const CloneTask = ({
   cloneTaskModalVisible,
   closeCloneTaskModal,
   handleCloneTask,
+  isSubmit
 }) => {
   return (
     <>
@@ -19,6 +20,7 @@ const CloneTask = ({
             <Button
               type="primary"
               onClick={() => handleCloneTask(selectedTaskId)}
+              disabled={isSubmit}
             >
               Tạo bản sao
             </Button>,

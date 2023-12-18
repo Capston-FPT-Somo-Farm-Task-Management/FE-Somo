@@ -6,6 +6,7 @@ const ModalDelete = ({
   deleteModalVisible,
   closeDeleteModal,
   handleDelete,
+  isSubmit
 }) => {
   return (
     <>
@@ -20,6 +21,7 @@ const ModalDelete = ({
               type="primary"
               danger
               onClick={() => handleDelete(selectedTaskId)}
+              disabled={isSubmit}
             >
               Xóa công việc
             </Button>,
