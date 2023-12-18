@@ -8,6 +8,7 @@ const ModalReject = ({
   handleRefuseTask,
   isImportant,
   handleCheckImportant,
+  isSubmit
 }) => {
   return (
     <>
@@ -22,6 +23,7 @@ const ModalReject = ({
               type="primary"
               danger
               onClick={() => handleRefuseTask(selectedTaskId)}
+              disabled={isSubmit}
             >
               Đồng ý
             </Button>,

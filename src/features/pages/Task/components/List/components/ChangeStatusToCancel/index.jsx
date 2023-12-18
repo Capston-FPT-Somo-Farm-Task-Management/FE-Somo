@@ -13,6 +13,7 @@ const ChangeStatusToCancel = ({
   handleDescription,
   fileList,
   onFileChange,
+  isSubmit,
 }) => {
   return (
     <>
@@ -22,7 +23,12 @@ const ChangeStatusToCancel = ({
           open={taskToCancelModalVisible}
           onCancel={closeChangeStatusToCancelModal}
           footer={[
-            <Button form="doingToCancel" type="primary" htmlType="submit">
+            <Button
+              form="doingToCancel"
+              type="primary"
+              htmlType="submit"
+              disabled={isSubmit}
+            >
               Đồng ý
             </Button>,
           ]}
@@ -50,18 +56,18 @@ const ChangeStatusToCancel = ({
               />
             </Form.Item>
             <Form.Item label="Hình ảnh" name="imageFile">
-            <ImgCrop rotationSlider>
-              <Upload
-                listType="picture-card"
-                maxCount={1}
-                beforeUpload={() => false}
-                fileList={fileList}
-                onChange={onFileChange}
-              >
-                <UploadOutlined />
-              </Upload>
-            </ImgCrop>
-          </Form.Item>
+              <ImgCrop rotationSlider>
+                <Upload
+                  listType="picture-card"
+                  maxCount={1}
+                  beforeUpload={() => false}
+                  fileList={fileList}
+                  onChange={onFileChange}
+                >
+                  <UploadOutlined />
+                </Upload>
+              </ImgCrop>
+            </Form.Item>
           </Form>
         </Modal>
       )}

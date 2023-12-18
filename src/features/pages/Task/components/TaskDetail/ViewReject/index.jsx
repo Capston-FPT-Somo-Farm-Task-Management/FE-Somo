@@ -25,7 +25,7 @@ const ViewReject = ({
   handleCheckImportant,
 }) => {
   const evidence = useSelector((state) => state.evidence.data);
-  const evidenceData = evidence.data;
+  const evidenceData = evidence?.data;
 
   const [expandedDescriptions, setExpandedDescriptions] = useState([]);
   const handleToggleDescription = (evidenceId) => {

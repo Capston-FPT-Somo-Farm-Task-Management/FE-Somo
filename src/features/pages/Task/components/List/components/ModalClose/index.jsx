@@ -1,7 +1,13 @@
-import { Button, Modal } from 'antd'
-import React from 'react'
+import { Button, Modal } from "antd";
+import React from "react";
 
-const ModalClose = ({selectedTaskId, closeModalVisible, closeCloseModal, handleChangeDoneToCloseTask}) => {
+const ModalClose = ({
+  selectedTaskId,
+  closeModalVisible,
+  closeCloseModal,
+  handleChangeDoneToCloseTask,
+  isSubmit
+}) => {
   return (
     <>
       {closeModalVisible ? (
@@ -15,6 +21,7 @@ const ModalClose = ({selectedTaskId, closeModalVisible, closeCloseModal, handleC
               type="primary"
               danger
               onClick={() => handleChangeDoneToCloseTask(selectedTaskId)}
+              disabled={isSubmit}
             >
               Đóng công việc
             </Button>,
@@ -25,7 +32,7 @@ const ModalClose = ({selectedTaskId, closeModalVisible, closeCloseModal, handleC
         </Modal>
       ) : null}
     </>
-  )
-}
+  );
+};
 
-export default ModalClose
+export default ModalClose;

@@ -225,7 +225,7 @@ const TaskDetailHabitant = ({
           ) : (
             <div className="task-detail-text">
               <h5>Nhắc nhở trước khi bắt đầu</h5>
-              <p>Có</p>
+              <p>{taskData.remind} phút</p>
             </div>
           )}
           {taskData.isRepeat === true ? (

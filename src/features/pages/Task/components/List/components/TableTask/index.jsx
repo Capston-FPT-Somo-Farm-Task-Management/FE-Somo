@@ -1,5 +1,5 @@
 import { Dropdown, Menu, Table } from "antd";
-import React, { useState } from "react";
+import React from "react";
 import {
   MoreOutlined,
   EditOutlined,
@@ -12,6 +12,7 @@ import {
   SolutionOutlined,
   FormOutlined,
   CopyOutlined,
+  ArrowLeftOutlined
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { getEvidenceByTaskId } from "features/slice/task/taskEvidenceSlice";
@@ -40,6 +41,7 @@ function TableTask({
   openCloseModal,
   openChangeDoingToPendingModal,
   openChangeStatusToCancelModal,
+  openToDoToDraftModal,
   onChange,
   openModal,
 }) {
@@ -53,7 +55,7 @@ function TableTask({
 
   const isDesktopXL = useDesktopXLMediaQuery();
 
-  const isDesktopXXXL = useDesktopXXXLMediaQuery()
+  const isDesktopXXXL = useDesktopXXXLMediaQuery();
 
   const columns = taskTitle?.filter((column) => {
     if (isMobileSM) {
@@ -86,10 +88,10 @@ function TableTask({
 
   if (nameColumn && isDesktopXXXL) {
     nameColumn.width = "15%";
-  }else{
+  } else {
     nameColumn.width = "40%";
   }
-  
+
   return (
     <>
       {task && (
@@ -117,6 +119,7 @@ function TableTask({
                   record &&
                   (record.status === "Bản nháp" ||
                     record.status === "Chuẩn bị" ||
+                    record.status === "Đã giao" ||
                     record.status === "Từ chối");
                 const isStatusEffortTime =
                   record &&
@@ -177,6 +180,17 @@ function TableTask({
                                   style={{ color: "gold", marginRight: "8px" }}
                                 />
                                 Cập nhật công việc
+                              </span>
+                            </Menu.Item>
+                          ) : null}
+
+                          {record?.status === "Chuẩn bị" ? (
+                            <Menu.Item key="changeToDraft">
+                              <span onClick={() => openToDoToDraftModal(record.id)}>
+                                <ArrowLeftOutlined
+                                  style={{ color: "green", marginRight: "8px" }}
+                                />
+                                Chuyển sang bản nháp
                               </span>
                             </Menu.Item>
                           ) : null}

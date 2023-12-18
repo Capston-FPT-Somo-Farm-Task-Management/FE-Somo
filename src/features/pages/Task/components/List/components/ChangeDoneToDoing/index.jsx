@@ -35,7 +35,16 @@ const ChangeDoneToDoing = ({
             }}
             id="doneToDoing"
           >
-            <Form.Item label="Lý do phải làm lại" name="description">
+            <Form.Item
+              label="Lý do phải làm lại"
+              name="description"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng nhập lý do",
+                },
+              ]}
+            >
               <TextArea
                 placeholder="Nhập lý do"
                 value={description}

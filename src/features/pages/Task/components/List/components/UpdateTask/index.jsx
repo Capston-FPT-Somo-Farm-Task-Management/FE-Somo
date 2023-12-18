@@ -863,17 +863,8 @@ function UpdateTask({
         return (
           <Space
             nowrap
-            style={{ width: "100%", justifyContent: "space-between" }}
+            style={{ width: "100%", justifyContent: "flex-end" }}
           >
-            <Button
-              form="updateTask"
-              htmlType="submit"
-              onClick={handleUpdateDraftToPrepareButton}
-              disabled={isUpdateTask}
-            >
-              Chuyển sang chuẩn bị <FileDoneOutlined />
-            </Button>
-            ,
             <Button
               form="updateTask"
               type="primary"
@@ -904,18 +895,8 @@ function UpdateTask({
       return (
         <Space
           nowrap
-          style={{ width: "100%", justifyContent: "space-between" }}
+          style={{ width: "100%", justifyContent: "flex-end" }}
         >
-          <Button
-            form="updateTask"
-            htmlType="submit"
-            onClick={handleChangePrepareToDraft}
-            disabled={isUpdateTask}
-          >
-            Chuyển sang bản nháp
-            <FileOutlined />
-          </Button>
-          ,
           <Button
             form="updateTask"
             type="primary"
