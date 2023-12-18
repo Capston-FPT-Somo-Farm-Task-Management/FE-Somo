@@ -1,14 +1,4 @@
-import {
-  Button,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Modal,
-  Radio,
-  Select,
-  Upload,
-} from 'antd'
+import { Button, DatePicker, Form, Input, Modal, Select, Upload } from 'antd'
 import ImgCrop from 'antd-img-crop'
 import { useEffect, useState } from 'react'
 import { UploadOutlined } from '@ant-design/icons'
@@ -23,7 +13,6 @@ import {
 } from 'features/slice/location/locationSlice'
 import { useDispatch } from 'react-redux'
 import { Option } from 'antd/es/mentions'
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 
 const UpdateMember = ({
   isModalOpenUpdate,
@@ -68,14 +57,14 @@ const UpdateMember = ({
 
   useEffect(() => {
     if (selectedMember) {
-      // Phân tích địa chỉ
+      // Lấy cái địa chỉ chia làm 3 phần
       const addressParts = selectedMember.address.split(', ')
 
       const selectedCityName = addressParts[2]
       const selectedDistrictName = addressParts[1]
       const selectedWardName = addressParts[0]
 
-      // Tìm kiếm và so sánh thành phố, quận/huyện
+      // So sánh thành phố, quận/huyện
       const cityMatch = cities.find((city) => city.name === selectedCityName)
       if (cityMatch) {
         setSelectedCityCode(cityMatch.code)
@@ -102,18 +91,33 @@ const UpdateMember = ({
           }
         })
       }
+      // form.setFieldsValue({
+      //   name: selectedMember.name,
+      //   phoneNumber: selectedMember.phoneNumber,
+      //   email: selectedMember.email,
+      //   city: selectedCityCode,
+      //   district: selectedDistrictCode,
+      //   ward: selectedWardCode,
+      //   birthday: selectedMember.birthday
+      //     ? dayjs(selectedMember.birthday, 'YYYY-MM-DDTHH:mm:ss').format(
+      //         'YYYY-MM-DD'
+      //       )
+      //     : null,
+      //   // ... any other fields you want to set ...
+      // })
     }
   }, [selectedMember, cities, dispatch, form])
 
   const onFinish = (values) => {
+    if (values.birthday) {
+      values.birthday = values.birthday.format('YYYY-MM-DD')
+    }
     const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`
     const finalValues = {
       ...values,
-      // gender: values.gender === 'Male' ? false : true,
       id: selectedMember.id,
       imageFile: fileList[0].originFileObj,
       address: address,
-      // farmId: farmId,
     }
     onFinishUpdate(finalValues)
     closeModalUpdate()
@@ -195,12 +199,10 @@ const UpdateMember = ({
                   message: 'Vui lòng chọn ngày sinh',
                 },
               ]}
-              name="dateOfBirth"
-              // initialValue={
-              //   selectedData && selectedData.dateOfBirth
-              //     ? dayjs(selectedData.dateOfBirth).format('YYYY-MM-DD')
-              //     : null
-              // }
+              name="birthday"
+              initialValue={
+                selectedMember ? dayjs(selectedMember.birthday) : null
+              }
             >
               <DatePicker
                 format="YYYY-MM-DD"
@@ -337,41 +339,6 @@ const UpdateMember = ({
               <Input placeholder="Nhập mã khu vực" />
             </Form.Item>
 
-            {/* Mã */}
-            {/* <Form.Item
-              label="Tên người dùng"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập tên người dùng',
-                },
-              ]}
-              name="userName"
-              initialValue={selectedMember ? selectedMember.userName : ''}
-            >
-              <Input placeholder="Nhập tên người dùng" />
-            </Form.Item> */}
-
-            {/* Mã */}
-            {/* <Form.Item
-              label="Mật khẩu"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập mật khẩu',
-                },
-              ]}
-              name="password"
-              initialValue={selectedMember ? selectedMember.password : ''}
-            >
-              <Input.Password
-                placeholder="Nhập mật khẩu"
-                iconRender={(visible) =>
-                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                }
-              />
-            </Form.Item> */}
-
             <Form.Item label="Hình đại diện" name="avatar">
               <ImgCrop rotationSlider>
                 <Upload
@@ -385,23 +352,6 @@ const UpdateMember = ({
                 </Upload>
               </ImgCrop>
             </Form.Item>
-
-            {/* <Form.Item
-              label="Chức vụ"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng chọn chức vụ',
-                },
-              ]}
-              name="roleId"
-              initialValue={selectedMember ? selectedMember.roleName : ''}
-            >
-              <Radio.Group>
-                <Radio value="Manager">Ngưởi quản lý</Radio>
-                <Radio value="Supervisor">Ngưởi giám sát</Radio>
-              </Radio.Group>
-            </Form.Item> */}
           </div>
         </Form>
       </Modal>

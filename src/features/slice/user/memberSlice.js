@@ -40,15 +40,11 @@ export const updateMember = createAsyncThunk(
   'member/updateMember',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(
-        `/Member/${data.id}`,
-        data.body,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      )
+      const response = await axiosInstance.put(`/Member/${data.id}`, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
       if (response.status === 200) {
         toast.success('Cập nhật thành công')
         return response.data.data

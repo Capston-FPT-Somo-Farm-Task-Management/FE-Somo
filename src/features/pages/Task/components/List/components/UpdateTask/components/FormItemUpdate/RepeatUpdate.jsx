@@ -82,8 +82,6 @@ function RepeatUpdate({
     }
   };
 
-  console.log(editingTask.endDate);
-
   const disabledDate = (current) => {
     const currentDayjs = dayjs(current);
 
