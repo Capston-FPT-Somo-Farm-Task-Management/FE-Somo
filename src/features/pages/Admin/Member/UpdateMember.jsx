@@ -115,11 +115,10 @@ const UpdateMember = ({
     const address = `${selectedWardName}, ${selectedDistrictName}, ${selectedCityName}`
     const finalValues = {
       ...values,
-      id: selectedMember.id,
       imageFile: fileList[0].originFileObj,
       address: address,
     }
-    onFinishUpdate(finalValues)
+    onFinishUpdate({id: selectedMember.id, body: finalValues})
     closeModalUpdate()
     form.resetFields()
   }
