@@ -354,23 +354,6 @@ const UpdateMember = ({
                 </Upload>
               </ImgCrop>
             </Form.Item>
-
-            {/* <Form.Item
-              label="Chức vụ"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng chọn chức vụ',
-                },
-              ]}
-              name="roleId"
-              initialValue={selectedMember ? selectedMember.roleName : ''}
-            >
-              <Radio.Group>
-                <Radio value="Manager">Ngưởi quản lý</Radio>
-                <Radio value="Supervisor">Ngưởi giám sát</Radio>
-              </Radio.Group>
-            </Form.Item> */}
           </div>
         </Form>
       </Modal>
