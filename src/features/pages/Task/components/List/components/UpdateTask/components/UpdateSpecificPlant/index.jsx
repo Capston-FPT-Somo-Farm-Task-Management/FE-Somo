@@ -130,12 +130,12 @@ function UpdateSpecificPlant({
           material={material}
           editingTask={editingTask}
         />
-        <RemindUpdate
+        {/* <RemindUpdate
           remindValue={remindValue}
           handleSelectRemind={handleSelectRemind}
           editingTask={editingTask}
           remindData={remindData}
-        />
+        /> */}
         <RepeatUpdate
           repeatValue={repeatValue}
           handleSelectRepeat={handleSelectRepeat}

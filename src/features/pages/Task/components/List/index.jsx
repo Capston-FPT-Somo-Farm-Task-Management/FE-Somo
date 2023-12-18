@@ -34,6 +34,7 @@ import Activity from "./components/Activity";
 import { getActivityByTaskId } from "features/slice/activity/activitySlice";
 import ModalReject from "./components/ModalReject";
 import dayjs from "dayjs";
+import ChangePendingToDoing from "./components/ChangePendingToDoing";
 
 const List = () => {
   const [activity, setActivity] = useState([]);
@@ -47,6 +48,8 @@ const List = () => {
   const [rejectModalVisible, setRejectModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [closeModalVisible, setCloseModalVisible] = useState(false);
+  const [pendingToDoingModalVisible, setPendingToDoingModalVisible] =
+    useState(false);
   const [isImportant, setIsImportant] = useState(false);
   const [taskDoneToDoingVisible, setTaskDoneToDoingVisible] = useState(false);
   const [taskDoingToPendingModalVisible, setTaskDoingToPendingModalVisible] =
@@ -67,6 +70,7 @@ const List = () => {
   const [currentStep, setCurrentStep] = useState(-1);
   const [fileList, setFileList] = useState([]);
   const [deadlineForDone, setDeadlineForDone] = useState([]);
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const [form] = Form.useForm();
 
@@ -129,12 +133,14 @@ const List = () => {
 
   const disabledDate = (current) => {
     const endDate = selectedTask.endDate;
-    return current && dayjs(current).startOf("day") < dayjs(endDate).startOf("day");
+    return (
+      current && dayjs(current).startOf("day") < dayjs(endDate).startOf("day")
+    );
   };
 
   const handleSelectDeadlineForDone = (date) => {
-    setDeadlineForDone(date)
-  }
+    setDeadlineForDone(date);
+  };
 
   const handleMenuClick = (e, record) => {
     if (e.key === "edit") {
@@ -148,7 +154,7 @@ const List = () => {
     } else if (e.key === "cancel") {
       openChangeStatusToCancelModal(record);
     } else if (e.key === "changeToDoing") {
-      handleChangePendingAndCancelToDoing(record.id);
+      openPendingToDoingModal(record);
     } else if (e.key === "viewReject") {
       openViewRejectModal(record);
     } else if (e.key === "reAssign") {
@@ -174,6 +180,16 @@ const List = () => {
     setCloseModalVisible(false);
   };
 
+  const openPendingToDoingModal = (record) => {
+    setSelectedTask(record);
+    setPendingToDoingModalVisible(true);
+  };
+
+  const closePendingToDoingModal = () => {
+    setSelectedTask(null);
+    setPendingToDoingModalVisible(false);
+  };
+
   const openCloneTaskModal = (record) => {
     setSelectedTask(record);
     setCloneTaskModalVisible(true);
@@ -192,6 +208,7 @@ const List = () => {
   const closeRejectModal = () => {
     setSelectedTask(null);
     setRejectModalVisible(false);
+    setIsImportant(false)
   };
 
   const openDeleteModal = (record) => {
@@ -233,11 +250,13 @@ const List = () => {
   };
 
   const handleRefuseTask = (id) => {
-    dispatch(refuseTask({taskId: id, important: isImportant})).then(() => {
+    setIsSubmit(true);
+    dispatch(refuseTask({ taskId: id, important: isImportant })).then(() => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
-      setRejectModalVisible(false)
+      setRejectModalVisible(false);
+      setIsSubmit(false);
     });
     setModalVisible(false);
     setViewRejectModalVisible(false);
@@ -245,7 +264,11 @@ const List = () => {
 
   const handleChangeDoneToDoing = (id) => {
     dispatch(
-      changeStatusFromDoneToDoing({ taskId: id, date: deadlineForDone,  body: description })
+      changeStatusFromDoneToDoing({
+        taskId: id,
+        date: deadlineForDone,
+        body: description,
+      })
     ).then(() => {
       loadDataTask();
       handleDateChange();
@@ -256,6 +279,7 @@ const List = () => {
   };
 
   const handleChangeDoingToPendingTask = (id) => {
+    setIsSubmit(true);
     const descriptionValue = {
       description: description,
       imageFile: fileList[0],
@@ -270,11 +294,13 @@ const List = () => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
+      setIsSubmit(false);
     });
     setTaskDoingToPendingModalVisible(false);
   };
 
   const handleChangeStatusToCancelTask = (id) => {
+    setIsSubmit(true);
     const descriptionValue = {
       description: description,
       imageFile: fileList[0],
@@ -289,40 +315,50 @@ const List = () => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
+      setIsSubmit(false);
     });
     setTaskToCancelModalVisible(false);
   };
 
   const handleChangePendingAndCancelToDoing = (id) => {
+    setIsSubmit(true);
     dispatch(changeStatusToDoing(id)).then(() => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
+      setIsSubmit(false);
+      setPendingToDoingModalVisible(false);
     });
   };
 
   const handleCloneTask = (id) => {
+    setIsSubmit(true);
     dispatch(createTaskClone(id)).then(() => {
       loadDataTask();
       setPageIndex(1);
       setCloneTaskModalVisible(false);
+      setIsSubmit(false);
     });
   };
 
   const handleDelete = (id) => {
+    setIsSubmit(true);
     dispatch(deleteTask(id)).then(() => {
       loadDataTask();
       setPageIndex(1);
       setDeleteModalVisible(false);
+      setIsSubmit(false);
     });
   };
 
   const handleChangeDoneToCloseTask = (id) => {
+    setIsSubmit(true);
     dispatch(changeStatusDoneToClose(id)).then(() => {
       loadDataTask();
       handleDateChange();
       handleTaskAdded();
       setCloseModalVisible(false);
+      setIsSubmit(false);
     });
   };
 
@@ -344,6 +380,7 @@ const List = () => {
   const closeViewRejectModal = () => {
     setSelectedTask(null);
     setViewRejectModalVisible(false);
+    setIsImportant(false);
   };
 
   const openEditTaskModal = (record) => {
@@ -486,6 +523,7 @@ const List = () => {
         cloneTaskModalVisible={cloneTaskModalVisible}
         closeCloneTaskModal={closeCloneTaskModal}
         handleCloneTask={handleCloneTask}
+        isSubmit={isSubmit}
       />
       <ModalReject
         selectedTaskId={selectedTask}
@@ -494,18 +532,21 @@ const List = () => {
         handleRefuseTask={handleRefuseTask}
         isImportant={isImportant}
         handleCheckImportant={handleCheckImportant}
+        isSubmit={isSubmit}
       />
       <ModalDelete
         selectedTaskId={selectedTask}
         deleteModalVisible={deleteModalVisible}
         closeDeleteModal={closeDeleteModal}
         handleDelete={handleDelete}
+        isSubmit={isSubmit}
       />
       <ModalClose
         selectedTaskId={selectedTask}
         closeModalVisible={closeModalVisible}
         closeCloseModal={closeCloseModal}
         handleChangeDoneToCloseTask={handleChangeDoneToCloseTask}
+        isSubmit={isSubmit}
       />
       <ViewReject
         viewRejectModalVisible={viewRejectModalVisible}
@@ -562,6 +603,7 @@ const List = () => {
         handleDescription={handleDescription}
         fileList={fileList}
         onFileChange={onFileChange}
+        isSubmit={isSubmit}
       />
       <ChangeStatusToCancel
         currentTaskId={currentTaskId}
@@ -572,6 +614,16 @@ const List = () => {
         handleDescription={handleDescription}
         fileList={fileList}
         onFileChange={onFileChange}
+        isSubmit={isSubmit}
+      />
+      <ChangePendingToDoing
+        selectedTaskId={selectedTask}
+        pendingToDoingModalVisible={pendingToDoingModalVisible}
+        closePendingToDoingModal={closePendingToDoingModal}
+        handleChangePendingAndCancelToDoing={
+          handleChangePendingAndCancelToDoing
+        }
+        isSubmit={isSubmit}
       />
     </div>
   );

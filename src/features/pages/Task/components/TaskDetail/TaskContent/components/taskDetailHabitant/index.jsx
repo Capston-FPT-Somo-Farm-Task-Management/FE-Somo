@@ -217,7 +217,7 @@ const TaskDetailHabitant = ({
           Thông báo công việc
         </h2>
         <div className="task-detail-item">
-          {taskData.remind === 0 ? (
+          {/* {taskData.remind === 0 ? (
             <div className="task-detail-text">
               <h5>Nhắc nhở trước khi bắt đầu</h5>
               <p>Không</p>
@@ -227,7 +227,7 @@ const TaskDetailHabitant = ({
               <h5>Nhắc nhở trước khi bắt đầu</h5>
               <p>Có</p>
             </div>
-          )}
+          )} */}
           {taskData.isRepeat === true ? (
             <div className="task-detail-text">
               <h5>Lặp lại</h5>

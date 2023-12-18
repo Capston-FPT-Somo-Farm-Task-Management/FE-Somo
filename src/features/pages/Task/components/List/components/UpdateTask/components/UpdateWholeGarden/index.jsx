@@ -118,11 +118,11 @@ function UpdateWholeGarden({
           material={material}
           editingTask={editingTask}
         />
-        <RemindUpdate
+        {/* <RemindUpdate
           remindValue={remindValue}
           handleSelectRemind={handleSelectRemind}
           editingTask={editingTask}
-        />
+        /> */}
         <RepeatUpdate
           repeatValue={repeatValue}
           handleSelectRepeat={handleSelectRepeat}

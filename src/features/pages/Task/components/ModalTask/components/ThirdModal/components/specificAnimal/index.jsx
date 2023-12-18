@@ -120,10 +120,10 @@ function SpecificAnimal({
           handleMaterialChange={handleMaterialChange}
           material={material}
         />
-        <RemindSelect
+        {/* <RemindSelect
           remindValue={remindValue}
           handleSelectRemind={handleSelectRemind}
-        />
+        /> */}
         <RepeatSelect
           repeatValue={repeatValue}
           handleSelectRepeat={handleSelectRepeat}
