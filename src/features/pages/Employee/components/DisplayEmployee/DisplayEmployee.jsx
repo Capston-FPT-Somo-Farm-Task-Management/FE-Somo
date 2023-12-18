@@ -90,9 +90,9 @@ const DisplayEmployee = ({
               render={(text, record) => (
                 <Image
                   width={50}
-                  height={50}
+                  height={70}
                   src={record.avatar}
-                  style={{ objectFit: 'cover', borderRadius: '50%' }}
+                  style={{ objectFit: 'cover', borderRadius: '10%' }}
                 />
               )}
             />
