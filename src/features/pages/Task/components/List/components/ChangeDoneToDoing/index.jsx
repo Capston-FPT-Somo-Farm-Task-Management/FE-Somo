@@ -57,7 +57,7 @@ const ChangeDoneToDoing = ({
               rules={[
                 {
                   required: true,
-                  message: "Vui lòng chọn ngày bắt đầu",
+                  message: "Vui lòng chọn lại thời gian kết thúc",
                 },
               ]}
               name="endDay"
