@@ -39,7 +39,6 @@ export const createEmployee = createAsyncThunk(
 export const updateEmployee = createAsyncThunk(
   'employee/updateEmployee',
   async (data, { rejectWithValue }) => {
-    console.log(data)
     try {
       const response = await axiosInstance.put(`/Employee/${data.id}`, data, {
         headers: {

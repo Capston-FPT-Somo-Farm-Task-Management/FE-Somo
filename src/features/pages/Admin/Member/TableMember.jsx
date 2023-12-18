@@ -74,8 +74,7 @@ const TableMember = ({
           m.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
           m.roleName !== 'Admin'
       )
-    : []
-    
+    : [];
   return (
     <>
       {loading ? (

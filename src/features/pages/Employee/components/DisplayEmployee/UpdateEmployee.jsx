@@ -119,7 +119,6 @@ const UpdateEmployee = ({
       address: address,
       farmId: farmId,
     }
-    console.log(finalValues)
     onFinishUpdate(finalValues)
     closeModal()
     form.resetFields()

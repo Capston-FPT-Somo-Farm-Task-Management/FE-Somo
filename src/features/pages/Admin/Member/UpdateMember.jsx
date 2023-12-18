@@ -148,8 +148,6 @@ const UpdateMember = ({
     form.setFieldsValue({ ward: option.children })
   }
 
-  console.log(selectedMember?.birthday)
-
   return (
     <>
       <Modal

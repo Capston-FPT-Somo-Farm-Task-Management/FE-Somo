@@ -85,12 +85,35 @@ function RepeatUpdate({
   const disabledDate = (current) => {
     const currentDayjs = dayjs(current);
 
+    const formattedStartDate = dayjs(editingTask.startDate).format("YYYY-MM-DD");
+    const formattedEndDate = dayjs(editingTask.endDate).format("YYYY-MM-DD");
+
+
     // Tính khoảng cách ngày
     const daysDifference =
-      startDate || endDate
-        ? dayjs(endDate).diff(startDate, "day")
-        : dayjs(editingTask.endDate).diff(editingTask.startDate, "day");
+      startDate && endDate
+        ? dayjs(endDate.format("YYYY-MM-DD")).diff(startDate.format("YYYY-MM-DD"), "day")
+        : !startDate && endDate
+        ? dayjs(endDate.format("YYYY-MM-DD")).diff(formattedStartDate, "day")
+        : !startDate && !endDate
+        ? dayjs(formattedEndDate).diff(formattedStartDate, "day")
+        : startDate && !endDate
+        ? dayjs(formattedEndDate).diff(startDate.format("YYYY-MM-DD"), "day")
+        : null;
     // Disable ngày từ quá khứ đến endDate
+
+    if (
+      startDate
+        ? currentDayjs.isBefore(dayjs(), "day") ||
+          currentDayjs.isSame(dayjs(startDate), "day") ||
+          currentDayjs.isBefore(dayjs(startDate), "day")
+        : currentDayjs.isBefore(dayjs(), "day") ||
+          currentDayjs.isSame(dayjs(editingTask.startDate), "day") ||
+          currentDayjs.isBefore(dayjs(editingTask.startDate), "day")
+    ) {
+      return true;
+    }
+
     if (
       endDate
         ? currentDayjs.isBefore(dayjs(), "day") ||
