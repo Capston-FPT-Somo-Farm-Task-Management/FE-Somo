@@ -1,18 +1,14 @@
-# Getting Started with Create React App
+# Somo Farm Task Management
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a capstone project to complete the study program at FPT University for 5 members. In the front-end part, there will be 2 members, Nguyen Minh Anh and Nguyen Khanh Trinh.
 
-## Available Scripts
+## Main Functions
 
-In the project directory, you can run:
+### `Home Screen`
 
-### `npm start`
+![alt](https://drive.google.com/file/d/1TZjGPoIaKZjdE9CBDqK4F9gARQdjDu4x/view?usp=drive_link)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![alt](https://drive.google.com/file/d/1HkX0778pnBlMJhKb4G44GFExySvON8jV/view?usp=drive_link)
 
 ### `npm test`
 
